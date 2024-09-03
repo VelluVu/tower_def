@@ -1,0 +1,60 @@
+[gd_scene load_steps=3 format=3 uid="uid://bivgeq28fxi5f"]
+
+[ext_resource type="Script" path="res://scenes/ui/menu/menu.gd" id="1_3p1lh"]
+[ext_resource type="Theme" uid="uid://tqqtfp7oe2qf" path="res://assets/ui_themes/menu_ui_button_theme.tres" id="1_fxjng"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3p1lh")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -35.0
+offset_top = -54.5
+offset_right = 35.0
+offset_bottom = 54.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 8
+
+[node name="StartButton" type="Button" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(192, 64)
+layout_mode = 2
+focus_mode = 0
+theme = ExtResource("1_fxjng")
+text = "Start"
+
+[node name="OptionsButton" type="Button" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+focus_mode = 0
+theme = ExtResource("1_fxjng")
+text = "Options"
+
+[node name="QuitButton" type="Button" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+focus_mode = 0
+theme = ExtResource("1_fxjng")
+text = "Quit"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/OptionsButton" to="." method="_on_options_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
