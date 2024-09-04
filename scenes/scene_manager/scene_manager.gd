@@ -3,7 +3,7 @@ extends Node
 
 @export var ui_scenes : Array[PackedScene]
 @export var level_scenes : Array[PackedScene]
-var path_to_level_list : String = "res://scenes/levels"
+var path_to_level_list : String = "res://scenes/level/levels"
 var loaded_level_scenes : Array[Node]
 var loaded_ui_scenes : Array[Node]
 var current_level :Node = null

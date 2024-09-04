@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://b78nv1og0jf3p"]
+
+[ext_resource type="Script" path="res://scenes/building/buildings/wall.gd" id="1_kgbnu"]
+[ext_resource type="Texture2D" uid="uid://d1s2xw53fx6au" path="res://icon.svg" id="2_3vbux"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_4ih23"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8pj8t"]
+size = Vector2(16, 16)
+
+[node name="Wall" type="StaticBody2D" groups=["navigation"]]
+physics_material_override = SubResource("PhysicsMaterial_4ih23")
+script = ExtResource("1_kgbnu")
+closest_point_distance_limit = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_8pj8t")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.125, 0.125)
+texture = ExtResource("2_3vbux")
