@@ -21,6 +21,12 @@ MenuSignals="*res://scenes/menu_signals.gd"
 GameStateSignals="*res://scenes/game_state_signals.gd"
 UiSignals="*res://scenes/ui_signals.gd"
 BuildingPlacementDrawer="*res://scenes/building/building_placement_drawer.gd"
+GameSignals="*res://scenes/game_signals.gd"
+GroupNames="*res://scenes/group_names.gd"
+
+[debug]
+
+gdscript/warnings/unused_signal=0
 
 [dotnet]
 
@@ -91,6 +97,11 @@ SelectBuilding1={
 [layer_names]
 
 2d_physics/layer_1="blocked"
+2d_physics/layer_2="enemy"
+
+[physics]
+
+2d/default_gravity_vector=Vector2(0, 0)
 
 [rendering]
 

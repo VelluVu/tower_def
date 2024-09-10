@@ -5,10 +5,12 @@ extends StaticBody2D
 @onready var collision_shape : CollisionShape2D = $CollisionShape2D
 @export var player_index : int = 0
 @export var closest_point_distance_limit : float = 0.9
+@export var durability : int = 10
 var building_index : int = 0
 var is_overlapping_area : bool = false
 var is_overlapping_body : bool = false
 var grid_position : Vector2
+var previous_tile_atlas_coords : Vector2i = Vector2i.ZERO
 #var is_top_left_on_map : bool = false
 #var is_top_right_on_map : bool = false
 #var is_bottom_right_on_map : bool = false
@@ -53,9 +55,15 @@ var corners : Array[Vector2] :
 		return vector_array
 
 
+func take_damage(damage : int):
+	durability -= damage
+	if durability <= 0:
+		GameSignals.building_destroyed.emit(self)
+
+
 func _ready():
 	name = name + str(building_index) + str(player_index)
-
+	add_to_group(GroupNames.buildings)
 
 
 #func _process(_delta):

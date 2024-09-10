@@ -8,10 +8,11 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8pj8t"]
 size = Vector2(16, 16)
 
-[node name="Wall" type="StaticBody2D" groups=["navigation"]]
+[node name="Wall" type="StaticBody2D" groups=["buildings", "navigation"]]
 physics_material_override = SubResource("PhysicsMaterial_4ih23")
 script = ExtResource("1_kgbnu")
 closest_point_distance_limit = 1.0
+durability = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_8pj8t")
