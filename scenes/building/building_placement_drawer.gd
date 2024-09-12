@@ -12,10 +12,8 @@ func _ready():
 func draw_building(rect : Rect2, rect_position : Vector2, _is_valid : bool, _is_draw : bool) -> void:
 	self.is_draw = _is_draw
 	self.is_valid = _is_valid
-	#print("rect position before calculation ", rect_position, " ", draw_rectangle.position)
 	draw_rectangle = rect
 	draw_rectangle.position = (draw_rectangle.position + rect_position)
-	#print("After calculation ", rect_position, " ", draw_rectangle.position)
 	queue_redraw()
 
 

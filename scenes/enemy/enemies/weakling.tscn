@@ -6,8 +6,8 @@
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_43mte"]
 friction = 0.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_akjrx"]
-size = Vector2(14, 14)
+[sub_resource type="CircleShape2D" id="CircleShape2D_lot5f"]
+radius = 5.0
 
 [node name="Weakling" type="RigidBody2D"]
 collision_layer = 2
@@ -16,19 +16,11 @@ script = ExtResource("1_fgqrl")
 speed = 40.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_akjrx")
+shape = SubResource("CircleShape2D_lot5f")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.125, 0.125)
 texture = ExtResource("1_bvo4l")
-
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
-path_desired_distance = 1.0
-target_desired_distance = 1.0
-path_postprocessing = 1
-simplify_path = true
-radius = 16.0
-debug_enabled = true
 
 [node name="AttackTimer" type="Timer" parent="."]
 wait_time = 2.0

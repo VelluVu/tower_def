@@ -5,13 +5,12 @@ var path_to_building_list : String = "res://scenes/building/buildings"
 var current_building_option_name : String = "wall"
 var is_ready_to_build : bool = false
 var is_on_gui : bool = false
+var buildings_node_name = "Buildings"
 var placement_position : Vector2
-var navigation_polygon : NavigationPolygon
 var building : Building = null
 var level : Level
 var buildings : Array[PackedScene]
 var placed_buildings : Array[Building]
-var atlas_coords_tile_with_no_navigation : Vector2i = Vector2i(0,2)
 
 var is_placing_building : bool : 
 	get: 
@@ -28,13 +27,12 @@ var is_placing_building : bool :
 			UiSignals.building_option_deselected.emit()
 		else:
 			for item in buildings:
-				#print(_format_node_name_from_resource_path(item.resource_path), " ", current_building_option.buildingName)
 				if _format_node_name_from_resource_path(item.resource_path) == current_building_option_name.to_lower():
 					building = item.instantiate()
 					building.position = get_global_mouse_position()
 					building.is_placing = is_placing_building
 					level.add_child(building)
-					placement_position = snap_position_to_grid(get_global_mouse_position())
+					placement_position = level.snap_position_to_grid(get_global_mouse_position())
 					is_valid_placement = _validate_placement_position(placement_position)	
 
 var is_valid_placement : bool :
@@ -55,11 +53,10 @@ func _ready() -> void:
 
 
 func _on_building_destroyed(_building : Building):
-	level.tile_map.set_cell(level.tile_map.local_to_map(_building.position), 0, _building.previous_tile_atlas_coords)
+	level.free_position(_building.position)
 	placed_buildings.erase(_building)
 	_building.queue_free()
 	await get_tree().physics_frame
-	bake_navigation()
 
 
 func _get_buildings() -> Array[PackedScene]:
@@ -98,29 +95,12 @@ func _on_game_pause(is_paused : bool) -> void:
 
 func _on_level_loaded(_level : Level) -> void:
 	level = _level
-	#level.navigation_region.navigation_polygon = _create_navigation_polygon_for_tilemap()
-	#level.navigation_region.bake_navigation_polygon()
 	UiSignals.building_option_selected.connect(_start_building_placement)
 	UiSignals.mouse_on_gui.connect(mouse_is_on_gui)
 	print("Ready to build")
-	#level.navigation_region.bake_finished.connect(_on_bake_finished)
 	is_ready_to_build = true
 
-
-#func _create_navigation_polygon_for_tilemap() -> NavigationPolygon:
-	#if navigation_polygon != null:
-		#navigation_polygon.clear()
-		#
-	#navigation_polygon = NavigationPolygon.new()
-	#var tileMapRect = level.tile_map.get_used_rect().abs()
-	#var bounds = PackedVector2Array([Vector2(tileMapRect.position.x,tileMapRect.end.y) * 16, tileMapRect.position * 16, Vector2(tileMapRect.end.x, tileMapRect.position.y) * 16, tileMapRect.end * 16])
-	#navigation_polygon.add_outline(bounds)
-	#navigation_polygon.source_geometry_mode = NavigationPolygon.SOURCE_GEOMETRY_GROUPS_WITH_CHILDREN
-	#navigation_polygon.source_geometry_group_name = "navigation"
-	#navigation_polygon.agent_radius = 7.0
-	#return navigation_polygon
-
-
+ 
 func _on_game_stop() -> void:
 	is_ready_to_build = false
 	level = null
@@ -153,34 +133,22 @@ func _place_building_by_input():
 	
 	building.is_placed = true
 	
-	if level.has_node("Buildings"):
-		var buildings_node : Node2D = level.get_node("Buildings")
+	if level.has_node(buildings_node_name):
+		var buildings_node : Node2D = level.get_node(buildings_node_name)
 		building.reparent(buildings_node)
 	else:
 		var buildings_node = Node2D.new()
-		buildings_node.name = "Buildings"
+		buildings_node.name = buildings_node_name
 		level.add_child(buildings_node)
 		building.reparent(buildings_node)
 		
 	placed_buildings.append(building)
-	var building_coords_in_map : Vector2i = level.tile_map.local_to_map(building.position)
-	building.previous_tile_atlas_coords = level.tile_map.get_cell_atlas_coords(building_coords_in_map)
-	level.tile_map.set_cell(building_coords_in_map, 0, atlas_coords_tile_with_no_navigation)
-	bake_navigation()
+	level.block_position(building.global_position)
 	is_placing_building = false
 
 
-func bake_navigation() -> void:
-	pass
-	#level.navigation_region.bake_navigation_polygon(true)
-
-
-func _on_bake_finished() -> void:
-	GameSignals.navigation_rebaked.emit()
-
-
 func _move_building_with_cursor() -> void:
-	placement_position = snap_position_to_grid(get_global_mouse_position())
+	placement_position = level.snap_position_to_grid(get_global_mouse_position())
 	is_valid_placement = _validate_placement_position(placement_position)	
 
 
@@ -194,16 +162,18 @@ func is_position_overlapping_other_buildings(_pos : Vector2) -> bool:
 	return false
 
 
-func is_grid_position_non_buildable(_pos : Vector2) -> bool:
-	var cell_data = _get_cell_data_from_tile_pos(_pos)
+func is_grid_position_buildable(_pos : Vector2) -> bool:
+	if level.is_position_blocked(_pos):
+		return false
+	var cell_data = level.get_cell_data_from_tile_pos(_pos)
 	if cell_data == null:
-		return true
+		return false
 	var is_buildable : bool = cell_data.get_custom_data("Buildable")
-	return not is_buildable
+	return is_buildable
 
 
 func _validate_placement_position(_pos : Vector2):
-	if is_grid_position_non_buildable(_pos):
+	if not is_grid_position_buildable(_pos):
 		return false
 	
 	if is_position_overlapping_other_buildings(_pos):
@@ -216,14 +186,6 @@ func _validate_placement_position(_pos : Vector2):
 		return false
 	
 	return true
-
-
-func snap_position_to_grid(pos : Vector2):
-	return level.tile_map.map_to_local(level.tile_map.local_to_map(pos))
-
-
-func _get_cell_data_from_tile_pos(pos : Vector2) -> TileData:
-	return level.tile_map.get_cell_tile_data(level.tile_map.local_to_map(pos))
 
 
 func _input(event):

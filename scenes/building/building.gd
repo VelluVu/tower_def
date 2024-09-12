@@ -9,14 +9,7 @@ extends StaticBody2D
 var building_index : int = 0
 var is_overlapping_area : bool = false
 var is_overlapping_body : bool = false
-var grid_position : Vector2
-var previous_tile_atlas_coords : Vector2i = Vector2i.ZERO
-#var is_top_left_on_map : bool = false
-#var is_top_right_on_map : bool = false
-#var is_bottom_right_on_map : bool = false
-#var is_bottom_left_on_map : bool = false
-#var overlapping_areas : Array[Area2D]
-#var overlapping_bodies : Array[Node2D]
+
 
 var is_valid_placement : bool :
 	get:
@@ -38,6 +31,10 @@ var is_placing : bool :
 		is_placing = value
 		if not is_placing:
 			BuildingPlacementDrawer.draw_building(collision_shape.shape.get_rect(), collision_shape.position, is_valid_placement, is_placing)
+		else:
+			if collision_shape == null:
+				collision_shape = $CollisionShape2D
+			collision_shape.disabled = true
 
 var is_placed : bool:
 	get = get_is_placed,
@@ -64,33 +61,6 @@ func take_damage(damage : int):
 func _ready():
 	name = name + str(building_index) + str(player_index)
 	add_to_group(GroupNames.buildings)
-
-
-#func _process(_delta):
-	#if is_placed:
-		#return
-	#
-	#var rect := collision_shape.shape.get_rect()
-	#var top_left : Vector2 = rect.position + global_position + Vector2(0, rect.position.y)
-	#var top_right : Vector2 = Vector2(rect.end.x, rect.position.y) + global_position + Vector2(0, rect.position.y)
-	#var bottom_right : Vector2 = rect.end + global_position + Vector2(0, rect.position.y)
-	#var bottom_left : Vector2 = Vector2(rect.position.x, rect.end.y) + global_position + Vector2(0, rect.position.y)
-	#
-	#var map := get_world_2d().navigation_map
-	#is_top_left_on_map = is_point_on_navigation_map(top_left, map)
-	#is_top_right_on_map = is_point_on_navigation_map(top_right, map)
-	#is_bottom_right_on_map = is_point_on_navigation_map(bottom_right, map)
-	#is_bottom_left_on_map = is_point_on_navigation_map(bottom_left, map)
-	#
-	#is_overlapping_area = not (is_top_left_on_map and is_top_right_on_map and is_bottom_right_on_map and is_bottom_left_on_map)
-
-
-#func is_point_on_navigation_map(point : Vector2, map : RID) -> bool:
-	#var closest_point := NavigationServer2D.map_get_closest_point(map, point)
-	#var delta := closest_point - point
-	#var delta_length : float = delta.length()
-	#var is_on_map = (delta_length < closest_point_distance_limit and delta_length > -closest_point_distance_limit)
-	#return is_on_map
 
 
 func get_is_placed() -> bool:
