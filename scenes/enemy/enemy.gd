@@ -118,15 +118,17 @@ func start_attacking_closest_building() -> void:
 
 
 func get_closest_building() -> void:
-	var all_buildings = get_tree().get_nodes_in_group(GroupNames.buildings)
-	var shortest_distance : float = 99999
-	var current_distance : float = 0
+	var surrounding_cells : Array[Vector2i] = level.tile_map.get_surrounding_cells(level.tile_map.local_to_map(global_position))
+	var shortest_distance_to_end : float = 999999
+	var distance_to_end : float = 0
 	
-	for building in all_buildings:
-		current_distance = global_position.distance_to(building.global_position)
-		if current_distance < shortest_distance:
-			shortest_distance = current_distance
-			closest_building = building
+	for cell in surrounding_cells:
+		if level.has_building_in_cell_position(cell):
+			var cell_world_position : Vector2 = level.tile_map.map_to_local(cell)
+			distance_to_end = cell_world_position.distance_to(end_point.global_position)
+			if distance_to_end < shortest_distance_to_end:
+				shortest_distance_to_end = distance_to_end
+				closest_building = level.get_building_from_cell_position(cell)
 
 
 func attack() -> void:

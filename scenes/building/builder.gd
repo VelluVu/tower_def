@@ -6,6 +6,7 @@ var current_building_option_name : String = "wall"
 var is_ready_to_build : bool = false
 var is_on_gui : bool = false
 var buildings_node_name = "Buildings"
+var buildable_cell_custom_data_name : String = "Buildable"
 var placement_position : Vector2
 var building : Building = null
 var level : Level
@@ -54,6 +55,7 @@ func _ready() -> void:
 
 func _on_building_destroyed(_building : Building):
 	level.free_position(_building.position)
+	level.all_buildings.erase(_building)
 	placed_buildings.erase(_building)
 	_building.queue_free()
 	await get_tree().physics_frame
@@ -97,7 +99,6 @@ func _on_level_loaded(_level : Level) -> void:
 	level = _level
 	UiSignals.building_option_selected.connect(_start_building_placement)
 	UiSignals.mouse_on_gui.connect(mouse_is_on_gui)
-	print("Ready to build")
 	is_ready_to_build = true
 
  
@@ -141,7 +142,8 @@ func _place_building_by_input():
 		buildings_node.name = buildings_node_name
 		level.add_child(buildings_node)
 		building.reparent(buildings_node)
-		
+	
+	level.all_buildings.append(building)
 	placed_buildings.append(building)
 	level.block_position(building.global_position)
 	is_placing_building = false
@@ -168,7 +170,7 @@ func is_grid_position_buildable(_pos : Vector2) -> bool:
 	var cell_data = level.get_cell_data_from_tile_pos(_pos)
 	if cell_data == null:
 		return false
-	var is_buildable : bool = cell_data.get_custom_data("Buildable")
+	var is_buildable : bool = cell_data.get_custom_data(buildable_cell_custom_data_name)
 	return is_buildable
 
 
