@@ -5,6 +5,7 @@ var path_to_building_list : String = "res://scenes/building/buildings"
 var current_building_option_name : String = "wall"
 var is_ready_to_build : bool = false
 var is_on_gui : bool = false
+var gold : int = 6
 var buildings_node_name = "Buildings"
 var buildable_cell_custom_data_name : String = "Buildable"
 var placement_position : Vector2
@@ -50,7 +51,12 @@ func _ready() -> void:
 	GameStateSignals.game_pause.connect(_on_game_pause)
 	GameStateSignals.level_loaded.connect(_on_level_loaded)
 	GameSignals.building_destroyed.connect(_on_building_destroyed)
+	GameSignals.enemy_destroyed.connect(_on_enemy_destroyed)
 	buildings = _get_buildings()
+
+
+func _on_enemy_destroyed(enemy : Enemy) -> void:
+	gold += enemy.gold_loot
 
 
 func _on_building_destroyed(_building : Building):
@@ -175,6 +181,9 @@ func is_grid_position_buildable(_pos : Vector2) -> bool:
 
 
 func _validate_placement_position(_pos : Vector2):
+	if not has_enough_gold(building.cost):
+		return false
+	
 	if not is_grid_position_buildable(_pos):
 		return false
 	
@@ -188,6 +197,12 @@ func _validate_placement_position(_pos : Vector2):
 		return false
 	
 	return true
+
+
+func has_enough_gold(gold_needed : int) -> bool:
+	if GameStateSignals.testing:
+		return true
+	return gold_needed <= gold
 
 
 func _input(event):

@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://dgjmgs3g8oeq6"]
+
+[ext_resource type="Script" path="res://scenes/enemy/spawner.gd" id="1_bfkig"]
+
+[node name="Spawner" type="Node2D"]
+script = ExtResource("1_bfkig")
+
+[node name="SpawnIntervalTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="SpawnStartDelayTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true

@@ -3,9 +3,11 @@ extends RigidBody2D
 
 
 @onready var attack_timer : Timer = $AttackTimer
-@onready var end_point : Marker2D = $"../EndPoint"
 @export var speed : float = 3.0
 @export var damage : int = 1
+@export var health : int = 2
+@export var gold_loot : int = 1
+var end_point : Marker2D = null
 var is_nav_enabled : bool = false
 var current_waypoint_index : int = 0
 var minimum_distance_to_end : float = 9.0
@@ -40,7 +42,6 @@ var is_path_end_reached : bool :
 		is_path_end_reached = value
 		if is_path_end_reached:
 			print(name, " have reached the end of the current path")
-			is_attacking = true
 		
 var is_the_end_point_reached : bool :
 	get:
@@ -53,16 +54,20 @@ var is_the_end_point_reached : bool :
 		if not is_the_end_point_reached:
 			var distance_to_end = global_position.distance_to(end_point.global_position)
 			print(name, " can't path to the end point distance: ", distance_to_end)
+		else:
+			GameSignals.enemy_reached_end_point.emit(self)
+			linear_velocity = Vector2.ZERO
+			hide()
 
 
 func _ready() -> void:
-	GameStateSignals.level_loaded.connect(_on_level_loaded)
 	GameSignals.astar_grid_updated.connect(_on_astar_grid_updated)
 	attack_timer.timeout.connect(attack)
 
 
-func _on_level_loaded(_level : Level) -> void:
+func start_enemy(_level : Level, _end_point : Marker2D) -> void:
 	level = _level
+	end_point = _end_point
 	point_path = level.find_path(global_position, end_point.global_position)
 	current_waypoint_index = 0
 	is_nav_enabled = true
@@ -72,12 +77,21 @@ func _on_astar_grid_updated() -> void:
 	if level == null:
 		print(name, ", level is still initializing, unable to react to grid update")
 		return
+		
 	point_path = level.find_path(global_position, end_point.global_position)
+	
+	if point_path.size() > 1:
+		is_attacking = false
+		
+	var direction_to_first_waypoint : Vector2 = global_position.direction_to(point_path[0])
+	var dot = linear_velocity.dot(direction_to_first_waypoint)
 	current_waypoint_index = 0
-	is_attacking = false
+	
+	if dot < 0:
+		current_waypoint_index += 1
 
 
-func _integrate_forces(_state: PhysicsDirectBodyState2D) -> void:
+func _physics_process(_delta: float) -> void:
 	if not is_nav_enabled:
 		return
 	
@@ -89,6 +103,8 @@ func _integrate_forces(_state: PhysicsDirectBodyState2D) -> void:
 		linear_velocity = Vector2.ZERO
 		var distance_to_end = global_position.distance_to(end_point.global_position)
 		is_the_end_point_reached = distance_to_end < minimum_distance_to_end
+		if not is_attacking and not is_the_end_point_reached:
+			is_attacking = true
 		return
 	
 	if is_attacking:
@@ -138,3 +154,11 @@ func attack() -> void:
 		
 	print("attack")
 	closest_building.take_damage(damage)
+
+
+func take_damage(incoming_damage : int) -> void:
+	health -= incoming_damage
+	if health <= 0:
+		GameSignals.enemy_destroyed.emit(self)
+		linear_velocity = Vector2.ZERO
+		hide()

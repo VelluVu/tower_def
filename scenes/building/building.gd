@@ -5,7 +5,8 @@ extends StaticBody2D
 @onready var collision_shape : CollisionShape2D = $CollisionShape2D
 @export var player_index : int = 0
 @export var closest_point_distance_limit : float = 0.9
-@export var durability : int = 10
+@export var durability : int = 3
+@export var cost : int = 1
 var building_index : int = 0
 var is_overlapping_area : bool = false
 var is_overlapping_body : bool = false
