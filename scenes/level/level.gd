@@ -1,34 +1,16 @@
 class_name Level
 extends Node2D
 
+const NO_BUILDING_IN_CELL_POSITION_MESSAGE : String = " There is no building in cell position!"
+
 @onready var tile_map : TileMapLayer = $TileMapLayer
 @onready var end_point : Marker2D = $EndPoint
-var offset : Vector2
-var cell_size : Vector2i
-var astar_grid : AStarGrid2D
+@onready var player_stats : PlayerStats = $PlayerStats
+
+var offset : Vector2 = Vector2.ZERO
+var cell_size : Vector2i = Vector2i.ZERO
+var astar_grid : AStarGrid2D = null
 var all_buildings : Array[Building]
-
-
-func _ready() -> void:
-	create_astar_grid()
-	GameStateSignals.level_loaded.emit(self)
-
-
-func _exit_tree() -> void:
-	GameStateSignals.game_stop.emit()
-
-
-func create_astar_grid() -> void:
-	astar_grid = AStarGrid2D.new()
-	var tileMapRect : Rect2i = tile_map.get_used_rect()
-	var grid_region : Rect2i = tileMapRect
-	cell_size = tile_map.tile_set.tile_size
-	offset = Vector2(cell_size.x * -0.5 + cell_size.x, cell_size.y * 0.5)
-	astar_grid.region = grid_region
-	astar_grid.cell_size = cell_size
-	astar_grid.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_NEVER
-	astar_grid.offset = offset
-	astar_grid.update()
 
 
 func find_path(from : Vector2, to : Vector2) -> PackedVector2Array:
@@ -59,7 +41,7 @@ func get_building_from_cell_position(_grid_pos : Vector2i):
 	for building in all_buildings:
 		if world_position_to_grid(building.global_position) == _grid_pos:
 			return building
-	print("There is no building in cell position!")
+	print(name, NO_BUILDING_IN_CELL_POSITION_MESSAGE)
 	return null
 
 
@@ -84,6 +66,17 @@ func get_cell_data_from_tile_pos(_pos : Vector2) -> TileData:
 	return tile_map.get_cell_tile_data(world_position_to_grid(_pos))
 
 
+func _ready() -> void:
+	_create_astar_grid()
+	GameStateSignals.level_loaded.emit(self)
+	GameSignals.building_placed.connect(_on_building_placed)
+	GameSignals.building_destroyed.connect(_on_building_destroyed)
+
+
+func _exit_tree() -> void:
+	GameStateSignals.game_stop.emit()
+
+
 func _draw() -> void:
 	var top_left_corner : Vector2 = Vector2(astar_grid.region.position.x, astar_grid.region.position.y) * Vector2(cell_size)
 	var top_right_corner : Vector2 = Vector2(astar_grid.region.end.x, astar_grid.region.position.y) * Vector2(cell_size)
@@ -93,3 +86,24 @@ func _draw() -> void:
 	draw_line(top_right_corner, bottom_right_corner, Color.CHOCOLATE)
 	draw_line(bottom_right_corner, bottom_left_corner, Color.CHOCOLATE)
 	draw_line(bottom_left_corner, top_left_corner, Color.CHOCOLATE)
+
+
+func _on_building_placed(building : Building) -> void:
+	all_buildings.append(building)
+
+
+func _on_building_destroyed(building : Building) -> void:
+	all_buildings.erase(building)
+
+
+func _create_astar_grid() -> void:
+	astar_grid = AStarGrid2D.new()
+	var tileMapRect : Rect2i = tile_map.get_used_rect()
+	var grid_region : Rect2i = tileMapRect
+	cell_size = tile_map.tile_set.tile_size
+	offset = Vector2(cell_size.x * -0.5 + cell_size.x, cell_size.y * 0.5)
+	astar_grid.region = grid_region
+	astar_grid.cell_size = cell_size
+	astar_grid.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_NEVER
+	astar_grid.offset = offset
+	astar_grid.update()

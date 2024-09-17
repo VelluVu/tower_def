@@ -1,12 +1,9 @@
 extends Node2D
 
+
 var is_draw : bool = false
 var is_valid : bool = false
 var draw_rectangle : Rect2
-
-
-func _ready():
-	z_index = 1
 
 
 func draw_building(rect : Rect2, rect_position : Vector2, _is_valid : bool, _is_draw : bool) -> void:
@@ -15,6 +12,10 @@ func draw_building(rect : Rect2, rect_position : Vector2, _is_valid : bool, _is_
 	draw_rectangle = rect
 	draw_rectangle.position = (draw_rectangle.position + rect_position)
 	queue_redraw()
+
+
+func _ready():
+	z_index = 1
 
 
 func _draw():

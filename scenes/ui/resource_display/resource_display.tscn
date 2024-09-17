@@ -1,0 +1,65 @@
+[gd_scene load_steps=4 format=3 uid="uid://b24d3udvrbsfp"]
+
+[ext_resource type="Script" path="res://scenes/ui/resource_display/resource_display.gd" id="1_w2cxb"]
+[ext_resource type="Script" path="res://scenes/ui/resource_display/resource_display_element.gd" id="2_5bfoh"]
+[ext_resource type="Texture2D" uid="uid://d1s2xw53fx6au" path="res://icon.svg" id="2_spab5"]
+
+[node name="ResourceDisplay" type="Control" node_paths=PackedStringArray("resource_display_elements")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_w2cxb")
+resource_display_elements = [NodePath("MarginContainer/HBoxContainer/GoldResourceDisplayElement"), NodePath("MarginContainer/HBoxContainer/LifeResourceDisplayElement2")]
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(320, 32)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="GoldResourceDisplayElement" type="PanelContainer" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+script = ExtResource("2_5bfoh")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/GoldResourceDisplayElement"]
+layout_mode = 2
+alignment = 1
+
+[node name="Image" type="TextureRect" parent="MarginContainer/HBoxContainer/GoldResourceDisplayElement/HBoxContainer"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+texture = ExtResource("2_spab5")
+expand_mode = 1
+
+[node name="Value" type="Label" parent="MarginContainer/HBoxContainer/GoldResourceDisplayElement/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "10"
+
+[node name="LifeResourceDisplayElement2" type="PanelContainer" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+script = ExtResource("2_5bfoh")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/LifeResourceDisplayElement2"]
+layout_mode = 2
+alignment = 1
+
+[node name="Image" type="TextureRect" parent="MarginContainer/HBoxContainer/LifeResourceDisplayElement2/HBoxContainer"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+texture = ExtResource("2_spab5")
+expand_mode = 1
+
+[node name="Value" type="Label" parent="MarginContainer/HBoxContainer/LifeResourceDisplayElement2/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "10"

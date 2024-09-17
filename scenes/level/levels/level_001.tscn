@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=4 uid="uid://cfg8ubxjp0pxx"]
+[gd_scene load_steps=6 format=4 uid="uid://cfg8ubxjp0pxx"]
 
 [ext_resource type="Script" path="res://scenes/level/level.gd" id="1_h7i04"]
 [ext_resource type="TileSet" uid="uid://4xx1tx30t6cb" path="res://assets/tile_sets/green_land_tile_set.tres" id="1_smus0"]
 [ext_resource type="PackedScene" uid="uid://dgjmgs3g8oeq6" path="res://scenes/enemy/spawner.tscn" id="3_3va1j"]
 [ext_resource type="PackedScene" uid="uid://bljkhytt20h3f" path="res://scenes/enemy/enemies/weakling.tscn" id="3_1250y"]
+[ext_resource type="Script" path="res://scenes/level/player_stats.gd" id="5_bug8g"]
 
 [node name="Level001" type="Node2D"]
 script = ExtResource("1_h7i04")
@@ -23,3 +24,6 @@ position = Vector2(-364, -44)
 position = Vector2(412, 3)
 spawnable_packed_scene = ExtResource("3_1250y")
 end_point = NodePath("../EndPoint")
+
+[node name="PlayerStats" type="Node" parent="."]
+script = ExtResource("5_bug8g")

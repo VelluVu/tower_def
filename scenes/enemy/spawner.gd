@@ -1,15 +1,20 @@
 class_name Spawner
 extends Node2D
 
+
+const NO_SPAWNABLE_SCENE_WARNING : String = " There are no spawnable scene!"
+
 @onready var spawn_interval_timer : Timer = $SpawnIntervalTimer
 @onready var spawn_start_delay_timer : Timer = $SpawnStartDelayTimer
-@export var id : int = 0
-@export var spawnable_packed_scene : PackedScene
+
 @export var start_from_timer : bool = true
-@export var end_point : Marker2D
+@export var id : int = 0
 @export var max_spawns : int = 3
-var level : Level = null
+@export var spawnable_packed_scene : PackedScene
+@export var end_point : Marker2D
+
 var current_spawn_count : int = 0
+var level : Level = null
 
 
 func _ready() -> void:
@@ -26,7 +31,7 @@ func _on_spawn_delay_finished() -> void:
 
 func _on_spawn_interval_tick() -> void:
 	if spawnable_packed_scene == null:
-		push_warning("There are no spawnable scene")
+		push_warning(name, NO_SPAWNABLE_SCENE_WARNING)
 		return
 	
 	if current_spawn_count >= max_spawns:
