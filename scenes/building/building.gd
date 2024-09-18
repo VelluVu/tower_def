@@ -43,7 +43,7 @@ func remove():
 
 func _ready():
 	name = name + str(building_index) + str(player_index)
-	add_to_group(GroupNames.buildings)
+	add_to_group(GroupNames.BUILDINGS)
 
 
 func _get_is_placed() -> bool:

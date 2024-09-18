@@ -7,6 +7,7 @@ const MAIN_MENU_NAME : String = "menu"
 const OPTIONS_NAME : String = "options"
 const PAUSE_MENU_NAME : String = "pause_menu"
 const RESOURCE_DISPLAY_NAME : String = "resource_display"
+const BUILDING_PANEL_NAME : String = "building_panel"
 const LOSE_GAME_MENU_NAME : String = "lose_game_menu"
 
 var is_in_level : bool = false
@@ -30,7 +31,7 @@ func _input(event: InputEvent) -> void:
 			if scene_manager.is_scene_loaded(PAUSE_MENU_NAME, scene_manager.SceneType.UI):
 				MenuSignals.continue_from_pause_menu.emit()
 			else:
-				MenuSignals.to_menu.emit(false)
+				MenuSignals.to_menu.emit(false, "")
 
 
 func _on_level_loaded(_level : Level) -> void:
@@ -39,19 +40,14 @@ func _on_level_loaded(_level : Level) -> void:
 
 
 func _on_lose_game() -> void:
-	#display game lost ui
-	GameStateSignals.game_pause.emit()
+	GameStateSignals.game_pause.emit(true)
 	scene_manager.load_scene_by_name(LOSE_GAME_MENU_NAME, scene_manager.SceneType.UI, self)
-	# ^^ADD THIS MENU SCENE^^
 
 
-func _menu(_to_main_menu : bool) -> void:
-	if scene_manager.is_scene_loaded(OPTIONS_NAME, scene_manager.SceneType.UI):
-		scene_manager.unload_scene_by_name(OPTIONS_NAME, scene_manager.SceneType.UI)
-		
-	if scene_manager.is_scene_loaded(PAUSE_MENU_NAME, scene_manager.SceneType.UI):
-		scene_manager.unload_scene_by_name(PAUSE_MENU_NAME, scene_manager.SceneType.UI)
-		#save?
+func _menu(_to_main_menu : bool, from_scene_name : String) -> void:
+	if from_scene_name != "":
+		print(name, " trying to unload " , from_scene_name)
+		scene_manager.unload_scene_by_name(from_scene_name, scene_manager.SceneType.UI)
 		GameStateSignals.game_pause.emit(false)
 		
 	if _to_main_menu:
@@ -82,10 +78,11 @@ func _continue_from_pause_menu() -> void:
 
 func _load_game_play_interface() -> void:
 	scene_manager.load_scene_by_name(RESOURCE_DISPLAY_NAME, scene_manager.SceneType.UI, self)
-	#ADD BUILDINGS SELECTION PANEL
+	scene_manager.load_scene_by_name(BUILDING_PANEL_NAME, scene_manager.SceneType.UI, self)
 	#ADD SELECTION DISPLAY PANEL
 	UiSignals.game_play_interface_loaded.emit()
 
 
 func _unload_game_play_interface() -> void:
 	scene_manager.unload_scene_by_name(RESOURCE_DISPLAY_NAME, scene_manager.SceneType.UI)
+	scene_manager.unload_scene_by_name(BUILDING_PANEL_NAME, scene_manager.SceneType.UI)

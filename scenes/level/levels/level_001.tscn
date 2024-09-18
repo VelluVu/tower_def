@@ -27,3 +27,4 @@ end_point = NodePath("../EndPoint")
 
 [node name="PlayerStats" type="Node" parent="."]
 script = ExtResource("5_bug8g")
+life = 3

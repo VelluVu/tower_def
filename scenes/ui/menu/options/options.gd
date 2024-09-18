@@ -16,4 +16,4 @@ func _on_audio_pressed() -> void:
 
 
 func _on_back_pressed() -> void:
-	MenuSignals.to_menu.emit(in_main_menu)
+	MenuSignals.to_menu.emit(in_main_menu, name)

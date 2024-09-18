@@ -1,0 +1,78 @@
+[gd_scene load_steps=4 format=3 uid="uid://cfky3fr2vue8u"]
+
+[ext_resource type="Script" path="res://scenes/ui/building_panel/building_panel.gd" id="1_b5gn4"]
+[ext_resource type="Script" path="res://scenes/ui/building_panel/building_option.gd" id="2_2k6w3"]
+[ext_resource type="Texture2D" uid="uid://d1s2xw53fx6au" path="res://icon.svg" id="3_lqiog"]
+
+[node name="BuildingPanel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_b5gn4")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(128, 64)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.9
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_vertical = 0
+
+[node name="Panel" type="Panel" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 0
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/Panel/ScrollContainer"]
+layout_mode = 2
+columns = 16
+
+[node name="BuildingOption" type="Panel" parent="MarginContainer/Panel/ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+script = ExtResource("2_2k6w3")
+
+[node name="SelectBuildingButton" type="Button" parent="MarginContainer/Panel/ScrollContainer/GridContainer/BuildingOption"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+toggle_mode = true
+icon = ExtResource("3_lqiog")
+icon_alignment = 1
+expand_icon = true
+
+[node name="BuildingOption2" type="Panel" parent="MarginContainer/Panel/ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+script = ExtResource("2_2k6w3")
+
+[node name="SelectBuildingButton" type="Button" parent="MarginContainer/Panel/ScrollContainer/GridContainer/BuildingOption2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+toggle_mode = true
+icon = ExtResource("3_lqiog")
+icon_alignment = 1
+expand_icon = true
+
+[connection signal="pressed" from="MarginContainer/Panel/ScrollContainer/GridContainer/BuildingOption/SelectBuildingButton" to="MarginContainer/Panel/ScrollContainer/GridContainer/BuildingOption" method="_on_select_building_button_pressed"]
+[connection signal="toggled" from="MarginContainer/Panel/ScrollContainer/GridContainer/BuildingOption/SelectBuildingButton" to="MarginContainer/Panel/ScrollContainer/GridContainer/BuildingOption" method="_on_select_building_button_toggled"]
+[connection signal="pressed" from="MarginContainer/Panel/ScrollContainer/GridContainer/BuildingOption2/SelectBuildingButton" to="MarginContainer/Panel/ScrollContainer/GridContainer/BuildingOption2" method="_on_select_building_button_pressed"]
+[connection signal="toggled" from="MarginContainer/Panel/ScrollContainer/GridContainer/BuildingOption2/SelectBuildingButton" to="MarginContainer/Panel/ScrollContainer/GridContainer/BuildingOption2" method="_on_select_building_button_toggled"]

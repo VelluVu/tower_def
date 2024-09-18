@@ -1,4 +1,4 @@
 extends Node
 
-const BAKED_FOR_NAVIGATION_TAG : String = "navigation"
-const BUILDINGS_NAME : String = "BUILDINGS_NAME"
+const BAKED_FOR_NAVIGATION : String = "navigation"
+const BUILDINGS : String = "BUILDINGS_NAME"

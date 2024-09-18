@@ -1,11 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://04rsqgt1kqsc"]
+[gd_scene load_steps=9 format=3 uid="uid://04rsqgt1kqsc"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_0mimr"]
 [ext_resource type="Script" path="res://scenes/scene_manager/scene_manager.gd" id="1_2xphi"]
 [ext_resource type="PackedScene" uid="uid://bivgeq28fxi5f" path="res://scenes/ui/menu/menu.tscn" id="2_7wrsp"]
 [ext_resource type="PackedScene" uid="uid://cfg8ubxjp0pxx" path="res://scenes/level/levels/level_001.tscn" id="3_o16fr"]
-[ext_resource type="PackedScene" uid="uid://djl7a6i8t4tv4" path="res://scenes/ui/menu/options/options.tscn" id="4_wpgsg"]
-[ext_resource type="PackedScene" uid="uid://buomf6qw0bv80" path="res://scenes/ui/pause_menu/pause_menu.tscn" id="5_5gtsa"]
 [ext_resource type="Script" path="res://scenes/camera/game_camera.gd" id="5_nmsmd"]
 [ext_resource type="PackedScene" uid="uid://b24d3udvrbsfp" path="res://scenes/ui/resource_display/resource_display.tscn" id="6_3umoq"]
 [ext_resource type="Script" path="res://scenes/ui/ui.gd" id="7_2wt15"]
@@ -16,7 +14,7 @@ script = ExtResource("1_0mimr")
 
 [node name="SceneManager" type="Node" parent="."]
 script = ExtResource("1_2xphi")
-ui_scenes = Array[PackedScene]([ExtResource("2_7wrsp"), ExtResource("4_wpgsg"), ExtResource("5_5gtsa"), ExtResource("6_3umoq")])
+ui_scenes = Array[PackedScene]([ExtResource("2_7wrsp"), ExtResource("6_3umoq")])
 level_scenes = Array[PackedScene]([ExtResource("3_o16fr")])
 
 [node name="GameCamera" type="Camera2D" parent="."]

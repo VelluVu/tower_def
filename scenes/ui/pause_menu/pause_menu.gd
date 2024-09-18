@@ -8,7 +8,7 @@ func _on_options_pressed() -> void:
 
 func _on_quit_pressed() -> void:
 	#save?
-	MenuSignals.to_menu.emit(true)
+	MenuSignals.to_menu.emit(true, name)
 
 
 func _on_continue_pressed() -> void:
