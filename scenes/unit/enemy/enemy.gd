@@ -2,15 +2,16 @@ class_name Enemy
 extends RigidBody2D
 
 
-@onready var attack_timer : Timer = $AttackTimer
-@export var speed : float = 3.0
-@export var damage : int = 1
-@export var health : int = 2
-@export var gold_loot : int = 1
-
 const GRID_UPDATE_ERROR : String = ", level is still initializing, unable to react to grid update"
 const END_POINT_PATHING_ERROR : String = " can't path to the end point distance: "
 const REACHED_END_PATH_MESSAGE : String = " have reached the end of the current path"
+const PATH_TO_STAT_RESOURCE : String = "res://scenes/unit/stats/stat_resources/enemy_stats/"
+
+@onready var attack_timer : Timer = $AttackTimer
+
+@export var icon : Texture2D = null
+@export var stats_manager : StatsManager :
+	get = _get_stats_manager
 
 var is_nav_enabled : bool = false
 var current_waypoint_index : int = 0
@@ -22,6 +23,9 @@ var closest_building : Building = null
 var level : Level = null
 var point_path : PackedVector2Array
 
+var stats_resource_name : String :
+	get = _get_stats_resource_name
+	
 var is_attacking : bool :
 	get = _get_is_attacking,
 	set = _set_is_attacking
@@ -48,8 +52,8 @@ func start_enemy(_level : Level, _end_point : Marker2D) -> void:
 
 
 func take_damage(incoming_damage : int) -> void:
-	health -= incoming_damage
-	if health <= 0:
+	stats_manager.stats.health -= incoming_damage
+	if stats_manager.stats.health <= 0:
 		GameSignals.enemy_destroyed.emit(self)
 		linear_velocity = Vector2.ZERO
 		hide()
@@ -58,6 +62,8 @@ func take_damage(incoming_damage : int) -> void:
 func _ready() -> void:
 	GameSignals.astar_grid_updated.connect(_on_astar_grid_updated)
 	attack_timer.timeout.connect(_attack)
+	if not is_in_group(GroupNames.SELECTABLE):
+		add_to_group(GroupNames.SELECTABLE)
 
 
 func _physics_process(_delta: float) -> void:
@@ -110,7 +116,7 @@ func _move_towards_next_waypoint() -> void:
 	
 	next_waypoint = point_path[current_waypoint_index]
 	var direction : Vector2 = global_position.direction_to(next_waypoint)
-	var velocity : Vector2 = direction * speed
+	var velocity : Vector2 = direction * stats_manager.stats.speed
 	look_at(global_position + direction)
 	linear_velocity = velocity
 
@@ -126,7 +132,7 @@ func _attack() -> void:
 		return
 		
 	print("attack")
-	closest_building.take_damage(damage)
+	closest_building.take_damage(stats_manager.stats.damage)
 
 
 func _get_closest_building() -> void:
@@ -185,3 +191,17 @@ func _set_is_the_end_point_reached(value : bool) -> void:
 		GameSignals.enemy_reached_end_point.emit(self)
 		linear_velocity = Vector2.ZERO
 		hide()
+
+
+func _get_stats_manager() -> StatsManager:
+	if has_node("StatsManager"):
+		return $StatsManager
+	stats_manager = StatsManager.new()
+	stats_manager.base_stats = ResourceLoader.load(PATH_TO_STAT_RESOURCE + stats_resource_name)
+	stats_manager.name = "StatsManager"
+	add_child(stats_manager)
+	return stats_manager
+
+
+func _get_stats_resource_name() -> String:
+	return name.rstrip("0123456789") + "_stats.tres"

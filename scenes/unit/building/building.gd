@@ -1,18 +1,26 @@
 class_name Building
 extends StaticBody2D
 
+const PATH_TO_STAT_RESOURCE : String = "res://scenes/unit/stats/stat_resources/building_stats/"
+
+signal stat_changed()
 
 @onready var sprite : Sprite2D = $Sprite2D
 @onready var collision_shape : CollisionShape2D = $CollisionShape2D
 
 @export var player_index : int = 0
-@export var durability : int = 3
-@export var cost : int = 1
 @export var closest_point_distance_limit : float = 0.9
+@export var building_type : Utils.BuildingType = Utils.BuildingType.Wall
+@export var icon : Texture2D = null
+@export var stats_manager : StatsManager :
+	get = _get_stats_manager
 
 var is_overlapping_area : bool = false
 var is_overlapping_body : bool = false
 var building_index : int = 0
+
+var stats_resource_name : String :
+	get = _get_stats_resource_name
 
 var is_valid_placement : bool :
 	get = _get_is_valid_placement,
@@ -31,8 +39,8 @@ var corners : Array[Vector2] :
 
 
 func take_damage(damage : int):
-	durability -= damage
-	if durability <= 0:
+	stats_manager.stats.health -= damage
+	if stats_manager.stats.health <= 0:
 		GameSignals.building_destroyed.emit(self)
 
 
@@ -43,7 +51,6 @@ func remove():
 
 func _ready():
 	name = name + str(building_index) + str(player_index)
-	add_to_group(GroupNames.BUILDINGS)
 
 
 func _get_is_placed() -> bool:
@@ -54,9 +61,15 @@ func _set_is_placed(value : bool):
 	#print(name, " is placed: ", value)
 	if is_placed == value:
 		return
+		
 	is_placed = value
-	if value:
+	
+	if is_placed:
 		collision_shape.disabled = false
+		if not is_in_group(GroupNames.BUILDINGS):
+			add_to_group(GroupNames.BUILDINGS)
+		if not is_in_group(GroupNames.SELECTABLE):
+			add_to_group(GroupNames.SELECTABLE)
 
 
 func _get_is_valid_placement() -> bool:
@@ -99,3 +112,17 @@ func _get_corners() -> Array[Vector2]:
 	vector_array.append(Vector2(position.x - half_extends.x, position.y + half_extends.y))
 	vector_array.append(position + half_extends)
 	return vector_array
+
+
+func _get_stats_manager() -> StatsManager:
+	if has_node("StatsManager"):
+		return $StatsManager
+	stats_manager = StatsManager.new()
+	stats_manager.base_stats = ResourceLoader.load(PATH_TO_STAT_RESOURCE + stats_resource_name)
+	stats_manager.name = "StatsManager"
+	add_child(stats_manager)
+	return stats_manager
+
+
+func _get_stats_resource_name() -> String:
+	return name.rstrip("0123456789") + "_stats.tres"

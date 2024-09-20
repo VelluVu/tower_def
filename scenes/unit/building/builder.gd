@@ -5,7 +5,7 @@ extends Node2D
 const BUILDING_INDEX_OUT_OF_BOUNDS_WARNING : String = " Cannot start building index is out of buildings list bounds, index: "
 const UNABLE_TO_FIND_LEVEL_LIST_ERROR : String = "Cannot find level list from path: "
 const UNABLE_TO_FIND_LEVEL_RESOURCE_ERROR : String = "Unable to find level resource from path: "
-const PATH_TO_BUILDINGS_FOLDER : String = "res://scenes/building/buildings"
+const PATH_TO_BUILDINGS_FOLDER : String = "res://scenes/unit/building/buildings"
 const SCENE_ENDING : String = ".tscn"
 const BUILDINGS_NODE_NAME = "Buildings"
 const BUILDABLE_CELL_CUSTOM_DATA_NAME : String = "Buildable"
@@ -92,18 +92,18 @@ func _on_game_pause(is_paused : bool) -> void:
 func _on_level_loaded(_level : Level) -> void:
 	placed_buildings.clear()
 	level = _level
-	UiSignals.building_option_selected.connect(_on_building_placement_selected)
-	UiSignals.building_option_deselected.connect(_on_building_placement_deselected)
-	UiSignals.mouse_on_gui.connect(_mouse_is_on_gui)
+	UISignals.building_option_selected.connect(_on_building_placement_selected)
+	UISignals.building_option_deselected.connect(_on_building_placement_deselected)
+	UISignals.mouse_on_gui.connect(_mouse_is_on_gui)
 	is_ready_to_build = true
 
 
 func _on_game_stop() -> void:
 	is_ready_to_build = false
 	level = null
-	UiSignals.building_option_selected.disconnect(_on_building_placement_selected)
-	UiSignals.building_option_deselected.disconnect(_on_building_placement_deselected)
-	UiSignals.mouse_on_gui.disconnect(_mouse_is_on_gui)
+	UISignals.building_option_selected.disconnect(_on_building_placement_selected)
+	UISignals.building_option_deselected.disconnect(_on_building_placement_deselected)
+	UISignals.mouse_on_gui.disconnect(_mouse_is_on_gui)
 
 
 func _mouse_is_on_gui(is_on : bool) -> void:
@@ -121,10 +121,12 @@ func _on_building_placement_deselected(_building_option_index : int) -> void:
 func _start_building_placement(building_option_index : int) -> void:
 	if building_option_index >= buildings.size():
 		push_warning(name, BUILDING_INDEX_OUT_OF_BOUNDS_WARNING, building_option_index)
+		UISignals.focus_building_option.emit(-1)
 		_stop_building_placement()
 		return
 		
 	current_building_option_index = building_option_index
+	UISignals.focus_building_option.emit(current_building_option_index)
 	is_placing_building = true
 
 
@@ -132,7 +134,7 @@ func _format_node_name_from_resource_path(path : String):
 	var formattedName : String = path.split(SLASH)[-1]
 	formattedName = formattedName.left(-5)
 	return formattedName
-	
+
 
 func _stop_building_placement():
 	is_placing_building = false
@@ -142,7 +144,7 @@ func _place_building(building_index : int) -> void:
 	if not is_placing_building:
 		return
 	
-	if not has_enough_gold(current_building.cost):
+	if not has_enough_gold(current_building.stats_manager.stats.price):
 		return
 		
 	placement_position = level.snap_position_to_grid(get_global_mouse_position())
@@ -153,12 +155,12 @@ func _place_building(building_index : int) -> void:
 	
 	var buildings_node : Node2D = _find_or_create_buildings_container()
 	var placed_building : Building = buildings[building_index].instantiate()
-	print(placed_building.global_position, " ", placed_building.position)
 	buildings_node.add_child(placed_building)
 	placed_building.position = placement_position
 	placed_building.is_placing = false
 	level.block_position(placed_building.position)
 	placed_buildings.append(placed_building)
+	print(name, " placed building ", placed_building.name, " in global position: ", placed_building.global_position, ", local position: ", placed_building.position)
 	GameSignals.building_placed.emit(placed_building)
 
 
@@ -228,7 +230,7 @@ func _set_is_placing_building(value : bool) -> void:
 			current_building.queue_free()
 			current_building = null
 	
-	UiSignals.building_placement_change.emit(is_placing_building)
+	GameSignals.building_placement_change.emit(is_placing_building)
 
 
 func _get_is_valid_placement() -> bool:

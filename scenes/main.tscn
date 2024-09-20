@@ -7,7 +7,7 @@
 [ext_resource type="Script" path="res://scenes/camera/game_camera.gd" id="5_nmsmd"]
 [ext_resource type="PackedScene" uid="uid://b24d3udvrbsfp" path="res://scenes/ui/resource_display/resource_display.tscn" id="6_3umoq"]
 [ext_resource type="Script" path="res://scenes/ui/ui.gd" id="7_2wt15"]
-[ext_resource type="PackedScene" uid="uid://cmhdhb733fmmy" path="res://scenes/building/builder.tscn" id="8_ots7q"]
+[ext_resource type="PackedScene" uid="uid://cmhdhb733fmmy" path="res://scenes/unit/building/builder.tscn" id="8_ots7q"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_0mimr")

@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://b78nv1og0jf3p"]
 
-[ext_resource type="Script" path="res://scenes/building/buildings/wall.gd" id="1_kgbnu"]
+[ext_resource type="Script" path="res://scenes/unit/building/buildings/wall.gd" id="1_kgbnu"]
 [ext_resource type="Texture2D" uid="uid://d1s2xw53fx6au" path="res://icon.svg" id="2_3vbux"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_4ih23"]
@@ -8,10 +8,13 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8pj8t"]
 size = Vector2(16, 16)
 
-[node name="Wall" type="StaticBody2D" groups=["buildings", "navigation"]]
+[node name="Wall" type="StaticBody2D" groups=["buildings", "navigation", "selectable"]]
+collision_layer = 4
+collision_mask = 0
 physics_material_override = SubResource("PhysicsMaterial_4ih23")
 script = ExtResource("1_kgbnu")
 closest_point_distance_limit = 1.0
+icon = ExtResource("2_3vbux")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_8pj8t")

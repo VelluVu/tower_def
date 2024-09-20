@@ -2,11 +2,13 @@ class_name Level
 extends Node2D
 
 const NO_BUILDING_IN_CELL_POSITION_MESSAGE : String = " There is no building in cell position!"
+const PATH_TO_UNIT_SELECTION_SCENE : String = "res://scenes/unit/unit_selection/unit_selection.tscn"
 
 @onready var tile_map : TileMapLayer = $TileMapLayer
 @onready var end_point : Marker2D = $EndPoint
 @onready var player_stats : PlayerStats = $PlayerStats
 
+var unit_selection : UnitSelection
 var offset : Vector2 = Vector2.ZERO
 var cell_size : Vector2i = Vector2i.ZERO
 var astar_grid : AStarGrid2D = null
@@ -71,6 +73,7 @@ func _ready() -> void:
 	GameStateSignals.level_loaded.emit(self)
 	GameSignals.building_placed.connect(_on_building_placed)
 	GameSignals.building_destroyed.connect(_on_building_destroyed)
+	_get_unit_selection()
 
 
 func _exit_tree() -> void:
@@ -107,3 +110,11 @@ func _create_astar_grid() -> void:
 	astar_grid.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_NEVER
 	astar_grid.offset = offset
 	astar_grid.update()
+
+
+func _get_unit_selection() -> void:
+	if unit_selection == null:
+		if has_node("UnitSelection"):
+			unit_selection = get_node("UnitSelection")
+		else:
+			unit_selection = ResourceLoader.load(PATH_TO_UNIT_SELECTION_SCENE).instantiate()

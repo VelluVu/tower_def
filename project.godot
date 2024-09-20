@@ -19,10 +19,11 @@ config/icon="res://icon.svg"
 
 MenuSignals="*res://scenes/menu_signals.gd"
 GameStateSignals="*res://scenes/game_state_signals.gd"
-UiSignals="*res://scenes/ui_signals.gd"
-BuildingPlacementDrawer="*res://scenes/building/building_placement_drawer.gd"
+UISignals="*res://scenes/ui_signals.gd"
+BuildingPlacementDrawer="*res://scenes/unit/building/building_placement_drawer.gd"
 GameSignals="*res://scenes/game_signals.gd"
 GroupNames="*res://scenes/group_names.gd"
+Utils="*res://scenes/utils.gd"
 
 [debug]
 
@@ -31,6 +32,11 @@ gdscript/warnings/unused_signal=0
 [dotnet]
 
 project/assembly_name="tower_def"
+
+[global_group]
+
+buildings=""
+navigation=""
 
 [input]
 

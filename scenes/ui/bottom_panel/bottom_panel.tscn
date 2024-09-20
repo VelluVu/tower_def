@@ -1,0 +1,182 @@
+[gd_scene load_steps=6 format=3 uid="uid://cfky3fr2vue8u"]
+
+[ext_resource type="Script" path="res://scenes/ui/bottom_panel/bottom_panel.gd" id="1_4q4xm"]
+[ext_resource type="Script" path="res://scenes/ui/bottom_panel/building_panel.gd" id="2_mh1um"]
+[ext_resource type="Script" path="res://scenes/ui/bottom_panel/building_option.gd" id="3_5wo0p"]
+[ext_resource type="Texture2D" uid="uid://d1s2xw53fx6au" path="res://icon.svg" id="4_y8rhs"]
+[ext_resource type="Script" path="res://scenes/ui/bottom_panel/unit_selection_panel.gd" id="5_l2uok"]
+
+[node name="BottomPanel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4q4xm")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(128, 64)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.9
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_vertical = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="BuildingPanel" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("2_mh1um")
+
+[node name="BackgroundImage" type="Panel" parent="MarginContainer/HBoxContainer/BuildingPanel"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/HBoxContainer/BuildingPanel/BackgroundImage"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 0
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/HBoxContainer/BuildingPanel/BackgroundImage/ScrollContainer"]
+layout_mode = 2
+columns = 16
+
+[node name="BuildingOption" type="Panel" parent="MarginContainer/HBoxContainer/BuildingPanel/BackgroundImage/ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+script = ExtResource("3_5wo0p")
+
+[node name="SelectBuildingButton" type="Button" parent="MarginContainer/HBoxContainer/BuildingPanel/BackgroundImage/ScrollContainer/GridContainer/BuildingOption"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+toggle_mode = true
+icon = ExtResource("4_y8rhs")
+icon_alignment = 1
+expand_icon = true
+
+[node name="BuildingOption2" type="Panel" parent="MarginContainer/HBoxContainer/BuildingPanel/BackgroundImage/ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+script = ExtResource("3_5wo0p")
+building_index = 1
+
+[node name="SelectBuildingButton" type="Button" parent="MarginContainer/HBoxContainer/BuildingPanel/BackgroundImage/ScrollContainer/GridContainer/BuildingOption2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+toggle_mode = true
+icon = ExtResource("4_y8rhs")
+icon_alignment = 1
+expand_icon = true
+
+[node name="UnitSelectionPanel" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+script = ExtResource("5_l2uok")
+
+[node name="BackgroundImage" type="Panel" parent="MarginContainer/HBoxContainer/UnitSelectionPanel"]
+custom_minimum_size = Vector2(256, 64)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("4_y8rhs")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="UnitInfoGridContainer" type="GridContainer" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 0
+columns = 2
+
+[node name="InfoField" type="HBoxContainer" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/MarginContainer/HBoxContainer/UnitInfoGridContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/MarginContainer/HBoxContainer/UnitInfoGridContainer/InfoField"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "Name"
+
+[node name="Value" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/MarginContainer/HBoxContainer/UnitInfoGridContainer/InfoField"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "..."
+
+[node name="InfoField2" type="HBoxContainer" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/MarginContainer/HBoxContainer/UnitInfoGridContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/MarginContainer/HBoxContainer/UnitInfoGridContainer/InfoField2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "Health"
+
+[node name="Value" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/MarginContainer/HBoxContainer/UnitInfoGridContainer/InfoField2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "0
+"
+
+[node name="InfoField3" type="HBoxContainer" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/MarginContainer/HBoxContainer/UnitInfoGridContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/MarginContainer/HBoxContainer/UnitInfoGridContainer/InfoField3"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "Damage"
+
+[node name="Value" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/MarginContainer/HBoxContainer/UnitInfoGridContainer/InfoField3"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "0
+"
+
+[node name="InfoField4" type="HBoxContainer" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/MarginContainer/HBoxContainer/UnitInfoGridContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/MarginContainer/HBoxContainer/UnitInfoGridContainer/InfoField4"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "Price"
+
+[node name="Value" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/MarginContainer/HBoxContainer/UnitInfoGridContainer/InfoField4"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "0
+"
+
+[connection signal="pressed" from="MarginContainer/HBoxContainer/BuildingPanel/BackgroundImage/ScrollContainer/GridContainer/BuildingOption/SelectBuildingButton" to="MarginContainer/HBoxContainer/BuildingPanel/BackgroundImage/ScrollContainer/GridContainer/BuildingOption" method="_on_select_building_button_pressed"]
+[connection signal="toggled" from="MarginContainer/HBoxContainer/BuildingPanel/BackgroundImage/ScrollContainer/GridContainer/BuildingOption/SelectBuildingButton" to="MarginContainer/HBoxContainer/BuildingPanel/BackgroundImage/ScrollContainer/GridContainer/BuildingOption" method="_on_select_building_button_toggled"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/BuildingPanel/BackgroundImage/ScrollContainer/GridContainer/BuildingOption2/SelectBuildingButton" to="MarginContainer/HBoxContainer/BuildingPanel/BackgroundImage/ScrollContainer/GridContainer/BuildingOption2" method="_on_select_building_button_pressed"]
+[connection signal="toggled" from="MarginContainer/HBoxContainer/BuildingPanel/BackgroundImage/ScrollContainer/GridContainer/BuildingOption2/SelectBuildingButton" to="MarginContainer/HBoxContainer/BuildingPanel/BackgroundImage/ScrollContainer/GridContainer/BuildingOption2" method="_on_select_building_button_toggled"]

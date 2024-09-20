@@ -7,7 +7,7 @@ const MAIN_MENU_NAME : String = "menu"
 const OPTIONS_NAME : String = "options"
 const PAUSE_MENU_NAME : String = "pause_menu"
 const RESOURCE_DISPLAY_NAME : String = "resource_display"
-const BUILDING_PANEL_NAME : String = "building_panel"
+const BOTTOM_PANEL_NAME : String = "bottom_panel"
 const LOSE_GAME_MENU_NAME : String = "lose_game_menu"
 
 var is_in_level : bool = false
@@ -78,11 +78,10 @@ func _continue_from_pause_menu() -> void:
 
 func _load_game_play_interface() -> void:
 	scene_manager.load_scene_by_name(RESOURCE_DISPLAY_NAME, scene_manager.SceneType.UI, self)
-	scene_manager.load_scene_by_name(BUILDING_PANEL_NAME, scene_manager.SceneType.UI, self)
-	#ADD SELECTION DISPLAY PANEL
-	UiSignals.game_play_interface_loaded.emit()
+	scene_manager.load_scene_by_name(BOTTOM_PANEL_NAME, scene_manager.SceneType.UI, self)
+	UISignals.game_play_interface_loaded.emit()
 
 
 func _unload_game_play_interface() -> void:
 	scene_manager.unload_scene_by_name(RESOURCE_DISPLAY_NAME, scene_manager.SceneType.UI)
-	scene_manager.unload_scene_by_name(BUILDING_PANEL_NAME, scene_manager.SceneType.UI)
+	scene_manager.unload_scene_by_name(BOTTOM_PANEL_NAME, scene_manager.SceneType.UI)
