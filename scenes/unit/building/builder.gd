@@ -45,11 +45,12 @@ func _ready() -> void:
 	GameStateSignals.game_pause.connect(_on_game_pause)
 	GameStateSignals.level_loaded.connect(_on_level_loaded)
 	GameSignals.building_destroyed.connect(_on_building_destroyed)
+	GameSignals.lose_game.connect(_on_lose_game)
 	buildings = _get_buildings()
 
 
 func _input(event):
-	if is_cursor_on_gui:
+	if is_cursor_on_gui or not is_ready_to_build:
 		return
 	
 	if event.is_action_pressed(SELECT_BUILDING_ONE_ACTION_NAME):
@@ -78,6 +79,10 @@ func _validate_placement_position(_pos : Vector2):
 	return true
 
 
+func _on_lose_game() -> void:
+	_stop_building_placement()
+
+
 func _on_building_destroyed(_building : Building):
 	level.free_position(_building.position)
 	placed_buildings.erase(_building)
@@ -99,6 +104,7 @@ func _on_level_loaded(_level : Level) -> void:
 
 
 func _on_game_stop() -> void:
+	_stop_building_placement()
 	is_ready_to_build = false
 	level = null
 	UISignals.building_option_selected.disconnect(_on_building_placement_selected)
