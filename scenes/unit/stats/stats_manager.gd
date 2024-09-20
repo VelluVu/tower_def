@@ -3,6 +3,7 @@ extends Node
 
 
 @export var base_stats : Stats
+
 var stats : Stats
 
 

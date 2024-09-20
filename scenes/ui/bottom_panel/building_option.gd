@@ -3,7 +3,9 @@ extends Panel
 
 
 @onready var button : Button = $SelectBuildingButton
+
 @export var building_index : int = 0
+
 signal is_activated(is_activated : bool, option : BuildingOption)
 
 

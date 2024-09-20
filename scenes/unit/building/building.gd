@@ -3,8 +3,6 @@ extends StaticBody2D
 
 const PATH_TO_STAT_RESOURCE : String = "res://scenes/unit/stats/stat_resources/building_stats/"
 
-signal stat_changed()
-
 @onready var sprite : Sprite2D = $Sprite2D
 @onready var collision_shape : CollisionShape2D = $CollisionShape2D
 
@@ -125,4 +123,4 @@ func _get_stats_manager() -> StatsManager:
 
 
 func _get_stats_resource_name() -> String:
-	return name.rstrip("0123456789") + "_stats.tres"
+	return name.rstrip("0123456789").to_lower() + "_stats.tres"

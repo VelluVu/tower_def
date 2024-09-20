@@ -43,7 +43,7 @@ func _select():
 	var distance_to_body : float = 0
 	
 	if selected_unit != null:
-		selected_unit = null
+		_clear_selection()
 	
 	for body in overlapped_bodies:
 		if body.is_in_group(GroupNames.SELECTABLE):

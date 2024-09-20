@@ -2,6 +2,9 @@ class_name Enemy
 extends RigidBody2D
 
 
+const STATS_MANAGER_NAME : String = "StatsManager"
+const RESOURCE_NAME_END_PART : String = "_stats.tres"
+const NUMBERS : String = "0123456789"
 const GRID_UPDATE_ERROR : String = ", level is still initializing, unable to react to grid update"
 const END_POINT_PATHING_ERROR : String = " can't path to the end point distance: "
 const REACHED_END_PATH_MESSAGE : String = " have reached the end of the current path"
@@ -194,14 +197,14 @@ func _set_is_the_end_point_reached(value : bool) -> void:
 
 
 func _get_stats_manager() -> StatsManager:
-	if has_node("StatsManager"):
+	if has_node(STATS_MANAGER_NAME):
 		return $StatsManager
 	stats_manager = StatsManager.new()
 	stats_manager.base_stats = ResourceLoader.load(PATH_TO_STAT_RESOURCE + stats_resource_name)
-	stats_manager.name = "StatsManager"
+	stats_manager.name = STATS_MANAGER_NAME
 	add_child(stats_manager)
 	return stats_manager
 
 
 func _get_stats_resource_name() -> String:
-	return name.rstrip("0123456789") + "_stats.tres"
+	return name.rstrip(NUMBERS).to_lower() + RESOURCE_NAME_END_PART

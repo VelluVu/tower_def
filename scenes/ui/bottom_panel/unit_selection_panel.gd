@@ -27,7 +27,7 @@ func _on_unit_selected(unit_name : String, stats : Stats, icon : Texture2D):
 	price_value.text = str(stats.price)
 
 
-func _on_unit_deselected(unit_name : String, stats : Stats, icon : Texture2D):
+func _on_unit_deselected(_unit_name : String, _stats : Stats, _icon : Texture2D):
 	unit_icon.texture = null
 	name_value.text = "jesus?"
 	health_value.text = "0/0"
