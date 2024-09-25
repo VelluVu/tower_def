@@ -8,6 +8,7 @@ var selected_unit : Node2D = null
 
 func _ready() -> void:
 	GameSignals.building_placement_change.connect(_on_building_placement_change)
+	UISignals.on_sell_selected_building_pressed.connect(_on_selected_building_sell_pressed)
 
 
 func _input(event: InputEvent) -> void:
@@ -55,9 +56,9 @@ func _select():
 	if selected_unit == null:
 		return
 	
-	print(name, " selected ", selected_unit.name)
+	print(name, " selected ", selected_unit.name, " in group ", selected_unit.get_groups())
 	GameSignals.selected_unit.emit(selected_unit)
-	UISignals.selected_unit.emit(selected_unit.name, selected_unit.stats_manager.stats, selected_unit.icon)
+	UISignals.selected_unit.emit(selected_unit.name, selected_unit.stats_manager.stats, selected_unit.icon, selected_unit.is_in_group(GroupNames.BUILDINGS))
 	selected_unit.stats_manager.stats.changed.connect(_on_selected_data_change)
 
 
@@ -67,10 +68,18 @@ func _clear_selection():
 		
 	print(name, " clear selection ", selected_unit.name)
 	GameSignals.deselected_unit.emit(selected_unit)
-	UISignals.deselected_unit.emit(selected_unit.name, selected_unit.stats_manager.stats, selected_unit.icon)
+	UISignals.deselected_unit.emit(selected_unit.name, selected_unit.stats_manager.stats, selected_unit.icon, selected_unit.is_in_group(GroupNames.BUILDINGS))
 	selected_unit.stats_manager.stats.changed.disconnect(_on_selected_data_change)
 	selected_unit = null
 
 
 func _on_selected_data_change() -> void:
-	UISignals.selected_unit.emit(selected_unit.name, selected_unit.stats_manager.stats, selected_unit.icon)
+	UISignals.selected_unit.emit(selected_unit.name, selected_unit.stats_manager.stats, selected_unit.icon, selected_unit.is_in_group(GroupNames.BUILDINGS))
+
+
+func _on_selected_building_sell_pressed() -> void:
+	if selected_unit == null:
+		return
+	
+	GameSignals.sell_building.emit(selected_unit)
+	_clear_selection()

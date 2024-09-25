@@ -1,0 +1,161 @@
+[gd_scene load_steps=23 format=3 uid="uid://b07nrseyum0s4"]
+
+[ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/basic_enemy_bt.gd" id="1_ydxbq"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/selector.gd" id="2_2uw0o"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="3_lrixb"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/selector_reactive.gd" id="3_lx7vw"]
+[ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/has_path.gd" id="4_svmfx"]
+[ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/find_new_path.gd" id="5_blebd"]
+[ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/move_towards_next_waypoint.gd" id="5_f7fwc"]
+[ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/is_last_waypoint.gd" id="6_6ovot"]
+[ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/turn_to_move_direction.gd" id="6_gpoa8"]
+[ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/is_waypoint_reached.gd" id="8_dga4n"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/decorators/inverter.gd" id="10_mrg7q"]
+[ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/iterate_next_waypoint.gd" id="12_1wql7"]
+[ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/attack_closest_building.gd" id="12_2cft7"]
+[ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/is_building_close.gd" id="13_8op86"]
+[ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/is_colliding_building.gd" id="13_c7tue"]
+[ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/is_end_point_reached.gd" id="13_prp18"]
+[ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/stop_movement.gd" id="14_88qey"]
+[ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/end_point_is_reached.gd" id="14_qve25"]
+[ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/is_pathing_around_obstacle.gd" id="17_88r5e"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/decorators/cooldown.gd" id="17_prgp5"]
+[ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/is_moving.gd" id="17_rlqab"]
+[ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/emit_path_blocked.gd" id="19_yslga"]
+
+[node name="BasicEnemyBt" type="Node"]
+script = ExtResource("1_ydxbq")
+
+[node name="MainSelector" type="Node" parent="."]
+script = ExtResource("2_2uw0o")
+
+[node name="SequenceComposite" type="Node" parent="MainSelector"]
+script = ExtResource("3_lrixb")
+
+[node name="NotHasPath" type="Node" parent="MainSelector/SequenceComposite"]
+script = ExtResource("10_mrg7q")
+
+[node name="HasPath" type="Node" parent="MainSelector/SequenceComposite/NotHasPath"]
+script = ExtResource("4_svmfx")
+
+[node name="FindNewPath" type="Node" parent="MainSelector/SequenceComposite"]
+script = ExtResource("5_blebd")
+
+[node name="Traverse" type="Node" parent="MainSelector"]
+script = ExtResource("3_lx7vw")
+
+[node name="ChooseNextWaypoint" type="Node" parent="MainSelector/Traverse"]
+script = ExtResource("3_lrixb")
+
+[node name="NotLastWaypoint" type="Node" parent="MainSelector/Traverse/ChooseNextWaypoint"]
+script = ExtResource("10_mrg7q")
+
+[node name="IsLastWaypoint" type="Node" parent="MainSelector/Traverse/ChooseNextWaypoint/NotLastWaypoint"]
+script = ExtResource("6_6ovot")
+
+[node name="IsWaypointReached" type="Node" parent="MainSelector/Traverse/ChooseNextWaypoint"]
+script = ExtResource("8_dga4n")
+
+[node name="IterateNextWaypoint" type="Node" parent="MainSelector/Traverse/ChooseNextWaypoint"]
+script = ExtResource("12_1wql7")
+
+[node name="Move" type="Node" parent="MainSelector/Traverse"]
+script = ExtResource("3_lrixb")
+
+[node name="NotWaypointReached" type="Node" parent="MainSelector/Traverse/Move"]
+script = ExtResource("10_mrg7q")
+
+[node name="IsWaypointReached" type="Node" parent="MainSelector/Traverse/Move/NotWaypointReached"]
+script = ExtResource("8_dga4n")
+
+[node name="MoveTowardsNextWaypoint" type="Node" parent="MainSelector/Traverse/Move"]
+script = ExtResource("5_f7fwc")
+
+[node name="TurnToMoveDirection" type="Node" parent="MainSelector/Traverse/Move"]
+script = ExtResource("6_gpoa8")
+
+[node name="IsStuckOnTower" type="Node" parent="MainSelector/Traverse/Move"]
+script = ExtResource("3_lrixb")
+
+[node name="IsPathingAroundObstacle" type="Node" parent="MainSelector/Traverse/Move/IsStuckOnTower"]
+script = ExtResource("17_88r5e")
+
+[node name="IsCollidingBuilding" type="Node" parent="MainSelector/Traverse/Move/IsStuckOnTower"]
+script = ExtResource("13_c7tue")
+
+[node name="BuildingIsClose" type="Node" parent="MainSelector/Traverse/Move/IsStuckOnTower"]
+script = ExtResource("3_lrixb")
+
+[node name="IsBuildingClose" type="Node" parent="MainSelector/Traverse/Move/IsStuckOnTower/BuildingIsClose"]
+script = ExtResource("13_8op86")
+
+[node name="CooldownDecorator" type="Node" parent="MainSelector/Traverse/Move/IsStuckOnTower/BuildingIsClose"]
+script = ExtResource("17_prgp5")
+wait_time = 2.0
+
+[node name="AttackClosestBuilding" type="Node" parent="MainSelector/Traverse/Move/IsStuckOnTower/BuildingIsClose/CooldownDecorator"]
+script = ExtResource("12_2cft7")
+
+[node name="PathIsComplete" type="Node" parent="MainSelector/Traverse"]
+script = ExtResource("3_lrixb")
+
+[node name="IsLastWaypoint" type="Node" parent="MainSelector/Traverse/PathIsComplete"]
+script = ExtResource("6_6ovot")
+
+[node name="IsWaypointReached" type="Node" parent="MainSelector/Traverse/PathIsComplete"]
+script = ExtResource("8_dga4n")
+
+[node name="StopMovement" type="Node" parent="MainSelector/Traverse/PathIsComplete"]
+script = ExtResource("14_88qey")
+
+[node name="Stopped" type="Node" parent="MainSelector/Traverse/PathIsComplete"]
+script = ExtResource("3_lrixb")
+
+[node name="IsNotMoving" type="Node" parent="MainSelector/Traverse/PathIsComplete/Stopped"]
+script = ExtResource("10_mrg7q")
+
+[node name="IsMoving" type="Node" parent="MainSelector/Traverse/PathIsComplete/Stopped/IsNotMoving"]
+script = ExtResource("17_rlqab")
+
+[node name="WhyStop" type="Node" parent="MainSelector/Traverse/PathIsComplete/Stopped"]
+script = ExtResource("2_2uw0o")
+
+[node name="ReachedEnd" type="Node" parent="MainSelector/Traverse/PathIsComplete/Stopped/WhyStop"]
+script = ExtResource("3_lrixb")
+
+[node name="IsEndPointReached" type="Node" parent="MainSelector/Traverse/PathIsComplete/Stopped/WhyStop/ReachedEnd"]
+script = ExtResource("13_prp18")
+
+[node name="EndPointIsReached" type="Node" parent="MainSelector/Traverse/PathIsComplete/Stopped/WhyStop/ReachedEnd"]
+script = ExtResource("14_qve25")
+
+[node name="PathBlockedByArea" type="Node" parent="MainSelector/Traverse/PathIsComplete/Stopped/WhyStop"]
+script = ExtResource("3_lrixb")
+
+[node name="IsNotPathingAroundObstacle" type="Node" parent="MainSelector/Traverse/PathIsComplete/Stopped/WhyStop/PathBlockedByArea"]
+script = ExtResource("10_mrg7q")
+
+[node name="IsPathingAroundObstacle" type="Node" parent="MainSelector/Traverse/PathIsComplete/Stopped/WhyStop/PathBlockedByArea/IsNotPathingAroundObstacle"]
+script = ExtResource("17_88r5e")
+
+[node name="NotBuildingClose" type="Node" parent="MainSelector/Traverse/PathIsComplete/Stopped/WhyStop/PathBlockedByArea"]
+script = ExtResource("10_mrg7q")
+
+[node name="IsBuildingClose" type="Node" parent="MainSelector/Traverse/PathIsComplete/Stopped/WhyStop/PathBlockedByArea/NotBuildingClose"]
+script = ExtResource("13_8op86")
+
+[node name="EmitPathBlocked" type="Node" parent="MainSelector/Traverse/PathIsComplete/Stopped/WhyStop/PathBlockedByArea"]
+script = ExtResource("19_yslga")
+
+[node name="BuildingIsClose" type="Node" parent="MainSelector/Traverse/PathIsComplete/Stopped/WhyStop"]
+script = ExtResource("3_lrixb")
+
+[node name="IsBuildingClose" type="Node" parent="MainSelector/Traverse/PathIsComplete/Stopped/WhyStop/BuildingIsClose"]
+script = ExtResource("13_8op86")
+
+[node name="CooldownDecorator" type="Node" parent="MainSelector/Traverse/PathIsComplete/Stopped/WhyStop/BuildingIsClose"]
+script = ExtResource("17_prgp5")
+wait_time = 2.0
+
+[node name="AttackClosestBuilding" type="Node" parent="MainSelector/Traverse/PathIsComplete/Stopped/WhyStop/BuildingIsClose/CooldownDecorator"]
+script = ExtResource("12_2cft7")

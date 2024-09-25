@@ -1,10 +1,13 @@
 class_name Level
 extends Node2D
 
+
 const NO_BUILDING_IN_CELL_POSITION_MESSAGE : String = " There is no building in cell position!"
 const PATH_TO_UNIT_SELECTION_SCENE : String = "res://scenes/unit/unit_selection/unit_selection.tscn"
+const WALKABLE_CUSTOM_DATA_NAME : String = "Walkable"
+const BUILDABLE_CUSTOM_DATA_NAME : String = "Buildable"
 
-@onready var tile_map : TileMapLayer = $TileMapLayer
+@onready var tile_map_main_layer : TileMapLayer = $MainTileMapLayer
 @onready var end_point : Marker2D = $EndPoint
 @onready var player_stats : PlayerStats = $PlayerStats
 
@@ -48,24 +51,24 @@ func get_building_from_cell_position(_grid_pos : Vector2i):
 
 
 func free_position(_pos : Vector2):
-	astar_grid.set_point_solid(tile_map.local_to_map(_pos), false)
+	astar_grid.set_point_solid(tile_map_main_layer.local_to_map(_pos), false)
 	GameSignals.astar_grid_updated.emit()
 
 
 func grid_position_to_world(_grid_pos : Vector2i):
-	return tile_map.map_to_local(_grid_pos)
+	return tile_map_main_layer.map_to_local(_grid_pos)
 
 
 func world_position_to_grid(_pos : Vector2):
-	return tile_map.local_to_map(_pos)
+	return tile_map_main_layer.local_to_map(_pos)
 
 
 func snap_position_to_grid(_pos : Vector2):
 	return grid_position_to_world(world_position_to_grid(_pos))
 
 
-func get_cell_data_from_tile_pos(_pos : Vector2) -> TileData:
-	return tile_map.get_cell_tile_data(world_position_to_grid(_pos))
+func get_cell_data_from_position(_pos : Vector2) -> TileData:
+	return tile_map_main_layer.get_cell_tile_data(world_position_to_grid(_pos))
 
 
 func _ready() -> void:
@@ -101,15 +104,27 @@ func _on_building_destroyed(building : Building) -> void:
 
 func _create_astar_grid() -> void:
 	astar_grid = AStarGrid2D.new()
-	var tileMapRect : Rect2i = tile_map.get_used_rect()
+	var tileMapRect : Rect2i = tile_map_main_layer.get_used_rect()
 	var grid_region : Rect2i = tileMapRect
-	cell_size = tile_map.tile_set.tile_size
+	cell_size = tile_map_main_layer.tile_set.tile_size
 	offset = Vector2(cell_size.x * -0.5 + cell_size.x, cell_size.y * 0.5)
 	astar_grid.region = grid_region
 	astar_grid.cell_size = cell_size
 	astar_grid.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_NEVER
 	astar_grid.offset = offset
 	astar_grid.update()
+	handle_walkable_cells()
+
+
+func handle_walkable_cells() -> void:
+	for cell in tile_map_main_layer.get_used_cells():
+		var tile_data : TileData = tile_map_main_layer.get_cell_tile_data(cell)
+		var is_walkable : bool = tile_data.get_custom_data(WALKABLE_CUSTOM_DATA_NAME)
+		if not is_walkable:
+			astar_grid.set_point_solid(cell, true)
+		else:
+			astar_grid.set_point_solid(cell, false)
+	GameSignals.astar_grid_updated.emit()
 
 
 func _get_unit_selection() -> void:

@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bljkhytt20h3f"]
+[gd_scene load_steps=6 format=3 uid="uid://bljkhytt20h3f"]
 
 [ext_resource type="Texture2D" uid="uid://d1s2xw53fx6au" path="res://icon.svg" id="1_bvo4l"]
 [ext_resource type="Script" path="res://scenes/unit/enemy/enemies/weakling.gd" id="1_fgqrl"]
+[ext_resource type="PackedScene" uid="uid://b07nrseyum0s4" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/basic_enemy_bt.tscn" id="3_5rsgu"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_43mte"]
 friction = 0.0
@@ -9,9 +10,12 @@ friction = 0.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_lot5f"]
 radius = 5.0
 
-[node name="Weakling" type="RigidBody2D" groups=["buildings"]]
+[node name="Weakling" type="RigidBody2D"]
 collision_layer = 2
+collision_mask = 5
 physics_material_override = SubResource("PhysicsMaterial_43mte")
+contact_monitor = true
+max_contacts_reported = 1
 script = ExtResource("1_fgqrl")
 icon = ExtResource("1_bvo4l")
 
@@ -24,3 +28,5 @@ texture = ExtResource("1_bvo4l")
 
 [node name="AttackTimer" type="Timer" parent="."]
 wait_time = 2.0
+
+[node name="BasicEnemyBt" parent="." instance=ExtResource("3_5rsgu")]

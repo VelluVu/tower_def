@@ -8,16 +8,18 @@ extends MarginContainer
 @onready var health_value : Label = $BackgroundImage/MarginContainer/HBoxContainer/UnitInfoGridContainer/InfoField2/Value
 @onready var damage_value : Label = $BackgroundImage/MarginContainer/HBoxContainer/UnitInfoGridContainer/InfoField3/Value
 @onready var price_value : Label = $BackgroundImage/MarginContainer/HBoxContainer/UnitInfoGridContainer/InfoField4/Value
+@onready var sell_button : Button = $BackgroundImage/SellButton
 
 
 func _ready():
 	unit_info_grid_container.hide()
 	unit_icon.hide()
+	sell_button.hide()
 	UISignals.selected_unit.connect(_on_unit_selected)
 	UISignals.deselected_unit.connect(_on_unit_deselected)
 
 
-func _on_unit_selected(unit_name : String, stats : Stats, icon : Texture2D):
+func _on_unit_selected(unit_name : String, stats : Stats, icon : Texture2D, is_placed_by_player : bool):
 	unit_info_grid_container.show()
 	unit_icon.show()
 	unit_icon.texture = icon
@@ -25,9 +27,11 @@ func _on_unit_selected(unit_name : String, stats : Stats, icon : Texture2D):
 	health_value.text = str(stats.health) + "/" + str(stats.max_health)
 	damage_value.text = str(stats.damage)
 	price_value.text = str(stats.price)
+	if is_placed_by_player:
+		sell_button.show()
 
 
-func _on_unit_deselected(_unit_name : String, _stats : Stats, _icon : Texture2D):
+func _on_unit_deselected(_unit_name : String, _stats : Stats, _icon : Texture2D, is_placed_by_player : bool):
 	unit_icon.texture = null
 	name_value.text = "jesus?"
 	health_value.text = "0/0"
@@ -35,3 +39,9 @@ func _on_unit_deselected(_unit_name : String, _stats : Stats, _icon : Texture2D)
 	price_value.text = "0"
 	unit_info_grid_container.hide()
 	unit_icon.hide()
+	if is_placed_by_player:
+		sell_button.hide()
+
+
+func _on_sell_button_pressed() -> void:
+	UISignals.on_sell_selected_building_pressed.emit()

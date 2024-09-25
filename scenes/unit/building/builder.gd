@@ -18,6 +18,7 @@ const SLASH : String = "/"
 
 var is_ready_to_build : bool = false
 var is_cursor_on_gui : bool = false
+var is_walkable_tile_on_buildings_cells_free : bool = false
 var current_building_option_index : int = 0
 var placement_position : Vector2 = Vector2.ZERO
 var buildings : Array[PackedScene]
@@ -40,12 +41,22 @@ func has_enough_gold(gold_needed : int) -> bool:
 	return gold_needed <= level.player_stats.gold
 
 
+func remove_building(_building : Building):
+	level.free_position(_building.position)
+	placed_buildings.erase(_building)
+	_building.queue_free()
+	await get_tree().physics_frame
+	GameSignals.building_is_removed.emit()
+
+
 func _ready() -> void:
 	GameStateSignals.game_stop.connect(_on_game_stop)
 	GameStateSignals.game_pause.connect(_on_game_pause)
 	GameStateSignals.level_loaded.connect(_on_level_loaded)
+	GameSignals.sell_building.connect(_on_building_sell)
 	GameSignals.building_destroyed.connect(_on_building_destroyed)
 	GameSignals.lose_game.connect(_on_lose_game)
+	GameSignals.enemy_path_blocked_change.connect(_on_enemy_path_blocked_change)
 	buildings = _get_buildings()
 
 
@@ -70,7 +81,7 @@ func _input(event):
 
 
 func _validate_placement_position(_pos : Vector2):
-	if not _is_grid_position_buildable(_pos):
+	if not _is_position_buildable(_pos):
 		return false
 	
 	if _is_position_overlapping_other_buildings(_pos):
@@ -83,11 +94,23 @@ func _on_lose_game() -> void:
 	_stop_building_placement()
 
 
+func _on_building_sell(_building : Building):
+	remove_building(_building)
+
+
 func _on_building_destroyed(_building : Building):
-	level.free_position(_building.position)
-	placed_buildings.erase(_building)
-	_building.queue_free()
-	await get_tree().physics_frame
+	remove_building(_building)
+
+
+func _on_enemy_path_blocked_change(is_blocked : bool) -> void:
+	if is_blocked:
+		if not is_walkable_tile_on_buildings_cells_free:
+			_free_walkable_tiles_on_building_cells()
+			is_walkable_tile_on_buildings_cells_free = true
+	else:
+		if is_walkable_tile_on_buildings_cells_free:
+			_block_walkable_tiles_on_building_cells()
+			is_walkable_tile_on_buildings_cells_free = false
 
 
 func _on_game_pause(is_paused : bool) -> void:
@@ -122,6 +145,20 @@ func _on_building_placement_selected(building_option_index : int) -> void:
 
 func _on_building_placement_deselected(_building_option_index : int) -> void:
 	_stop_building_placement()
+
+
+func _free_walkable_tiles_on_building_cells() -> void:
+	for placed_building in placed_buildings:
+		var cell_data = level.get_cell_data_from_position(placed_building.position)
+		if cell_data.get_custom_data(level.WALKABLE_CUSTOM_DATA_NAME):
+			level.free_position(placed_building.position)
+
+
+func _block_walkable_tiles_on_building_cells() -> void:
+	for placed_building in placed_buildings:
+		var cell_data = level.get_cell_data_from_position(placed_building.position)
+		if cell_data.get_custom_data(level.WALKABLE_CUSTOM_DATA_NAME):
+			level.block_position(placed_building.position)
 
 
 func _start_building_placement(building_option_index : int) -> void:
@@ -203,10 +240,10 @@ func _is_position_overlapping_other_buildings(_pos : Vector2) -> bool:
 	return false
 
 
-func _is_grid_position_buildable(_pos : Vector2) -> bool:
+func _is_position_buildable(_pos : Vector2) -> bool:
 	if level.is_position_blocked(_pos):
 		return false
-	var cell_data = level.get_cell_data_from_tile_pos(_pos)
+	var cell_data = level.get_cell_data_from_position(_pos)
 	if cell_data == null:
 		return false
 	var is_buildable : bool = cell_data.get_custom_data(BUILDABLE_CELL_CUSTOM_DATA_NAME)

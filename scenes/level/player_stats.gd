@@ -10,6 +10,7 @@ func _ready() -> void:
 	GameSignals.enemy_reached_end_point.connect(_on_enemy_reach_base)
 	GameSignals.enemy_destroyed.connect(_on_enemy_destroyed)
 	GameSignals.building_placed.connect(_on_building_placed)
+	GameSignals.sell_building.connect(_on_building_sell)
 	UISignals.game_play_interface_loaded.connect(_on_game_play_interface_loaded)
 
 
@@ -36,4 +37,9 @@ func _on_enemy_destroyed(enemy : Enemy) -> void:
 
 func _on_building_placed(building : Building) -> void:
 	gold -= building.stats_manager.stats.price
+	GameSignals.resource_change.emit(gold, 0)
+
+
+func _on_building_sell(building : Building) -> void:
+	gold += building.stats_manager.stats.price
 	GameSignals.resource_change.emit(gold, 0)

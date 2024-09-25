@@ -24,6 +24,8 @@ BuildingPlacementDrawer="*res://scenes/unit/building/building_placement_drawer.g
 GameSignals="*res://scenes/game_signals.gd"
 GroupNames="*res://scenes/group_names.gd"
 Utils="*res://scenes/utils.gd"
+BeehaveGlobalMetrics="*res://addons/beehave/metrics/beehave_global_metrics.gd"
+BeehaveGlobalDebugger="*res://addons/beehave/debug/global_debugger.gd"
 
 [debug]
 
@@ -32,6 +34,10 @@ gdscript/warnings/unused_signal=0
 [dotnet]
 
 project/assembly_name="tower_def"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/beehave/plugin.cfg")
 
 [global_group]
 
@@ -109,6 +115,7 @@ Escape={
 
 2d_physics/layer_1="blocked"
 2d_physics/layer_2="enemy"
+2d_physics/layer_3="building"
 
 [physics]
 
