@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://crbx1w230gw8"]
+
+[ext_resource type="Script" path="res://scenes/unit/building/tower_skills/shoot_bolt.gd" id="1_3cuil"]
+
+[node name="ShootBolt" type="Node2D"]
+script = ExtResource("1_3cuil")

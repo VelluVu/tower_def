@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://b07nrseyum0s4"]
+[gd_scene load_steps=25 format=3 uid="uid://b07nrseyum0s4"]
 
 [ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/basic_enemy_bt.gd" id="1_ydxbq"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/selector.gd" id="2_2uw0o"]
@@ -22,6 +22,8 @@
 [ext_resource type="Script" path="res://addons/beehave/nodes/decorators/cooldown.gd" id="17_prgp5"]
 [ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/is_moving.gd" id="17_rlqab"]
 [ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/emit_path_blocked.gd" id="19_yslga"]
+[ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/is_dead.gd" id="20_0i8yp"]
+[ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/dead.gd" id="21_2myy1"]
 
 [node name="BasicEnemyBt" type="Node"]
 script = ExtResource("1_ydxbq")
@@ -43,6 +45,15 @@ script = ExtResource("5_blebd")
 
 [node name="Traverse" type="Node" parent="MainSelector"]
 script = ExtResource("3_lx7vw")
+
+[node name="IsDead" type="Node" parent="MainSelector/Traverse"]
+script = ExtResource("3_lrixb")
+
+[node name="IsDead" type="Node" parent="MainSelector/Traverse/IsDead"]
+script = ExtResource("20_0i8yp")
+
+[node name="Dead" type="Node" parent="MainSelector/Traverse/IsDead"]
+script = ExtResource("21_2myy1")
 
 [node name="ChooseNextWaypoint" type="Node" parent="MainSelector/Traverse"]
 script = ExtResource("3_lrixb")
@@ -74,26 +85,26 @@ script = ExtResource("5_f7fwc")
 [node name="TurnToMoveDirection" type="Node" parent="MainSelector/Traverse/Move"]
 script = ExtResource("6_gpoa8")
 
-[node name="IsStuckOnTower" type="Node" parent="MainSelector/Traverse/Move"]
+[node name="IsStuckAgainstBuilding" type="Node" parent="MainSelector/Traverse/Move"]
 script = ExtResource("3_lrixb")
 
-[node name="IsPathingAroundObstacle" type="Node" parent="MainSelector/Traverse/Move/IsStuckOnTower"]
-script = ExtResource("17_88r5e")
-
-[node name="IsCollidingBuilding" type="Node" parent="MainSelector/Traverse/Move/IsStuckOnTower"]
+[node name="IsCollidingBuilding" type="Node" parent="MainSelector/Traverse/Move/IsStuckAgainstBuilding"]
 script = ExtResource("13_c7tue")
 
-[node name="BuildingIsClose" type="Node" parent="MainSelector/Traverse/Move/IsStuckOnTower"]
+[node name="AttackBuilding" type="Node" parent="MainSelector/Traverse/Move/IsStuckAgainstBuilding"]
 script = ExtResource("3_lrixb")
 
-[node name="IsBuildingClose" type="Node" parent="MainSelector/Traverse/Move/IsStuckOnTower/BuildingIsClose"]
+[node name="IsPathingAroundObstacle" type="Node" parent="MainSelector/Traverse/Move/IsStuckAgainstBuilding/AttackBuilding"]
+script = ExtResource("17_88r5e")
+
+[node name="IsBuildingClose" type="Node" parent="MainSelector/Traverse/Move/IsStuckAgainstBuilding/AttackBuilding"]
 script = ExtResource("13_8op86")
 
-[node name="CooldownDecorator" type="Node" parent="MainSelector/Traverse/Move/IsStuckOnTower/BuildingIsClose"]
+[node name="CooldownDecorator" type="Node" parent="MainSelector/Traverse/Move/IsStuckAgainstBuilding/AttackBuilding"]
 script = ExtResource("17_prgp5")
 wait_time = 2.0
 
-[node name="AttackClosestBuilding" type="Node" parent="MainSelector/Traverse/Move/IsStuckOnTower/BuildingIsClose/CooldownDecorator"]
+[node name="AttackClosestBuilding" type="Node" parent="MainSelector/Traverse/Move/IsStuckAgainstBuilding/AttackBuilding/CooldownDecorator"]
 script = ExtResource("12_2cft7")
 
 [node name="PathIsComplete" type="Node" parent="MainSelector/Traverse"]
@@ -119,6 +130,15 @@ script = ExtResource("17_rlqab")
 
 [node name="WhyStop" type="Node" parent="MainSelector/Traverse/PathIsComplete/Stopped"]
 script = ExtResource("2_2uw0o")
+
+[node name="IsDead" type="Node" parent="MainSelector/Traverse/PathIsComplete/Stopped/WhyStop"]
+script = ExtResource("3_lrixb")
+
+[node name="IsDead" type="Node" parent="MainSelector/Traverse/PathIsComplete/Stopped/WhyStop/IsDead"]
+script = ExtResource("20_0i8yp")
+
+[node name="Dead" type="Node" parent="MainSelector/Traverse/PathIsComplete/Stopped/WhyStop/IsDead"]
+script = ExtResource("21_2myy1")
 
 [node name="ReachedEnd" type="Node" parent="MainSelector/Traverse/PathIsComplete/Stopped/WhyStop"]
 script = ExtResource("3_lrixb")

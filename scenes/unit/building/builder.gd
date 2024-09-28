@@ -313,5 +313,9 @@ func _get_buildings() -> Array[PackedScene]:
 				buildings.append(ResourceLoader.load(full_path))
 		else:
 			push_error(UNABLE_TO_FIND_LEVEL_RESOURCE_ERROR, full_path)
-			
+	buildings.reverse()
 	return buildings
+
+
+func sort_by_id(a, b) -> bool:
+	return a.id < b.id

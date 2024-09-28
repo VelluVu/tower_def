@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Stats" load_steps=2 format=3 uid="uid://bsu5socu3bed6"]
 
-[ext_resource type="Script" path="res://scenes/unit/stats/stats.gd" id="1_rw2ni"]
+[ext_resource type="Script" path="res://scenes/unit/stats.gd" id="1_rw2ni"]
 
 [resource]
 resource_local_to_scene = true
@@ -10,3 +10,4 @@ max_health = 2
 damage = 1
 price = 1
 speed = 30.0
+range = 0.0

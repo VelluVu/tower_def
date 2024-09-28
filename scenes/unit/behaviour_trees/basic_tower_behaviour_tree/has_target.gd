@@ -1,8 +1,8 @@
-class_name IsCollidingBuilding
+class_name HasTarget
 extends ConditionLeaf
 
 
 func tick(actor : Node, _blackboard : Blackboard) -> int:
-	if actor.is_colliding_building:
+	if actor.has_target:
 		return SUCCESS
 	return FAILURE

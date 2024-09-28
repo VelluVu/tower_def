@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Stats" load_steps=2 format=3 uid="uid://ctd8nbhnqplhf"]
+
+[ext_resource type="Script" path="res://scenes/unit/stats.gd" id="1_wacyu"]
+
+[resource]
+script = ExtResource("1_wacyu")
+health = 2
+max_health = 2
+damage = 1
+price = 2
+speed = 2.0
+attack_range = 6.0

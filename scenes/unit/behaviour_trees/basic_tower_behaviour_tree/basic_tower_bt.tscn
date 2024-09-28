@@ -1,0 +1,41 @@
+[gd_scene load_steps=9 format=3 uid="uid://88hwq47f7r6d"]
+
+[ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_tower_behaviour_tree/basic_tower_bt.gd" id="1_7rlk7"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/selector.gd" id="2_ilst7"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="3_0cx8r"]
+[ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_tower_behaviour_tree/has_target.gd" id="4_qe2bu"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/decorators/cooldown.gd" id="5_4hmry"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/leaves/action.gd" id="5_x2i7b"]
+[ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_tower_behaviour_tree/shoot.gd" id="6_25yli"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/decorators/inverter.gd" id="6_70qr6"]
+
+[node name="BasicTowerBt" type="Node"]
+script = ExtResource("1_7rlk7")
+
+[node name="MainSelector" type="Node" parent="."]
+script = ExtResource("2_ilst7")
+
+[node name="AttackEnemy" type="Node" parent="MainSelector"]
+script = ExtResource("3_0cx8r")
+
+[node name="HasTarget" type="Node" parent="MainSelector/AttackEnemy"]
+script = ExtResource("4_qe2bu")
+
+[node name="CooldownDecorator" type="Node" parent="MainSelector/AttackEnemy"]
+script = ExtResource("5_4hmry")
+wait_time = 1.0
+
+[node name="Shoot" type="Node" parent="MainSelector/AttackEnemy/CooldownDecorator"]
+script = ExtResource("6_25yli")
+
+[node name="Idle" type="Node" parent="MainSelector"]
+script = ExtResource("3_0cx8r")
+
+[node name="NotHasTarget" type="Node" parent="MainSelector/Idle"]
+script = ExtResource("6_70qr6")
+
+[node name="HasTarget" type="Node" parent="MainSelector/Idle/NotHasTarget"]
+script = ExtResource("4_qe2bu")
+
+[node name="Wait" type="Node" parent="MainSelector/Idle"]
+script = ExtResource("5_x2i7b")

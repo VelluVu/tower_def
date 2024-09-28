@@ -11,6 +11,7 @@ const REACHED_END_PATH_MESSAGE : String = " have reached the end of the current 
 const PATH_TO_STAT_RESOURCE : String = "res://scenes/unit/stats/stat_resources/enemy_stats/"
 
 @onready var attack_timer : Timer = $AttackTimer
+@onready var collider : CollisionShape2D = $CollisionShape2D
 
 @export var icon : Texture2D = null
 @export var stats_manager : StatsManager :
@@ -58,8 +59,6 @@ func take_damage(incoming_damage : int) -> void:
 	stats_manager.stats.health -= incoming_damage
 	if stats_manager.stats.health <= 0:
 		GameSignals.enemy_destroyed.emit(self)
-		velocity = Vector2.ZERO
-		hide()
 
 
 func _ready() -> void:
@@ -171,9 +170,17 @@ func _set_is_the_end_point_reached(value : bool) -> void:
 		var distance_to_end = global_position.distance_to(end_point.global_position)
 		push_warning(name, END_POINT_PATHING_ERROR, distance_to_end)
 	else:
+		print(name, " enemy has reached the end point")
 		GameSignals.enemy_reached_end_point.emit(self)
-		velocity = Vector2.ZERO
+		linear_velocity = Vector2.ZERO
 		hide()
+
+
+func Die() -> void:
+	linear_velocity = Vector2.ZERO
+	contact_monitor = false
+	collider.disabled = true
+	hide()
 
 
 func _get_stats_manager() -> StatsManager:

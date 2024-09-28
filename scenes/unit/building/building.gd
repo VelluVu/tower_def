@@ -6,9 +6,9 @@ const PATH_TO_STAT_RESOURCE : String = "res://scenes/unit/stats/stat_resources/b
 @onready var sprite : Sprite2D = $Sprite2D
 @onready var collision_shape : CollisionShape2D = $CollisionShape2D
 
+@export var id : int = 0
 @export var player_index : int = 0
 @export var closest_point_distance_limit : float = 0.9
-@export var building_type : Utils.BuildingType = Utils.BuildingType.Wall
 @export var icon : Texture2D = null
 @export var stats_manager : StatsManager :
 	get = _get_stats_manager
@@ -49,6 +49,16 @@ func remove():
 
 func _ready():
 	name = name + str(building_index) + str(player_index)
+	stats_manager.stats.changed.connect(_on_stats_changed)
+	stats_manager.stat_changed.connect(_on_stat_changed)
+
+
+func _on_stats_changed() -> void:
+	pass
+
+
+func _on_stat_changed(_stat_type, _stat_value) -> void:
+	pass
 
 
 func _get_is_placed() -> bool:
@@ -63,11 +73,15 @@ func _set_is_placed(value : bool):
 	is_placed = value
 	
 	if is_placed:
-		collision_shape.disabled = false
-		if not is_in_group(GroupNames.BUILDINGS):
-			add_to_group(GroupNames.BUILDINGS)
-		if not is_in_group(GroupNames.SELECTABLE):
-			add_to_group(GroupNames.SELECTABLE)
+		_enable_tower()
+
+
+func _enable_tower() -> void:
+	collision_shape.disabled = false
+	if not is_in_group(GroupNames.BUILDINGS):
+		add_to_group(GroupNames.BUILDINGS)
+	if not is_in_group(GroupNames.SELECTABLE):
+		add_to_group(GroupNames.SELECTABLE)
 
 
 func _get_is_valid_placement() -> bool:
@@ -123,4 +137,5 @@ func _get_stats_manager() -> StatsManager:
 
 
 func _get_stats_resource_name() -> String:
-	return name.rstrip("0123456789").to_lower() + "_stats.tres"
+	return name.rstrip("0123456789").to_snake_case().to_lower() + "_stats.tres"
+	

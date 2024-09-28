@@ -38,3 +38,10 @@ const STAT_CLASS_NAME : String = "Stat"
 			return
 		speed = new_value
 		emit_changed()
+
+@export var attack_range : float :
+	set(new_value):
+		if attack_range == new_value:
+			return
+		attack_range = new_value
+		emit_changed()

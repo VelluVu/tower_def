@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://jxr2ybiww67g"]
+
+[ext_resource type="Script" path="res://scenes/unit/building/tower_skills/projectiles/bolt.gd" id="1_e5q1r"]
+[ext_resource type="Texture2D" uid="uid://d1s2xw53fx6au" path="res://icon.svg" id="2_mt267"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rkk6h"]
+radius = 6.0
+
+[node name="FireboltProjectile" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_e5q1r")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_mt267")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_rkk6h")
+
+[node name="LiveTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

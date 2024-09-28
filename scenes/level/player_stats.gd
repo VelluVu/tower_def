@@ -17,6 +17,7 @@ func _ready() -> void:
 func _on_enemy_reach_base(enemy : Enemy) -> void:
 	life -= enemy.stats_manager.stats.damage
 	GameSignals.resource_change.emit(life, 1)
+	print("player taking damage, life left: " , life)
 	if life <= 0:
 		lose()
 
