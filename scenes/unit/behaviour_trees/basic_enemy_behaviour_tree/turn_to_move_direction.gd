@@ -3,5 +3,5 @@ extends ActionLeaf
 
 
 func tick(actor : Node, _blackboard : Blackboard) -> int:
-	actor.look_at(actor.global_position + actor.global_position.direction_to(actor.next_waypoint))
+	actor.animated_sprite.flip_h = actor.linear_velocity.x <= 0
 	return SUCCESS

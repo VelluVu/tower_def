@@ -9,9 +9,14 @@ const GRID_UPDATE_ERROR : String = ", level is still initializing, unable to rea
 const END_POINT_PATHING_ERROR : String = " can't path to the end point distance: "
 const REACHED_END_PATH_MESSAGE : String = " have reached the end of the current path"
 const PATH_TO_STAT_RESOURCE : String = "res://scenes/unit/stats/stat_resources/enemy_stats/"
+const DEATH_ANIMATION : String = "DEATH"
+const WALK_ANIMATION : String = "WALK"
+const ATTACK_ANIMATION : String = "ATTACK"
+const IDLE_ANIMATION : String = "IDLE"
 
 @onready var attack_timer : Timer = $AttackTimer
 @onready var collider : CollisionShape2D = $CollisionShape2D
+@onready var animated_sprite : AnimatedSprite2D = $AnimatedSprite2D
 
 @export var icon : Texture2D = null
 @export var stats_manager : StatsManager :
@@ -19,11 +24,13 @@ const PATH_TO_STAT_RESOURCE : String = "res://scenes/unit/stats/stat_resources/e
 
 var is_pathing_around_obstacle : bool = false
 var is_colliding_building : bool = false
+var is_attack_finished : bool = false
 var collision_body : Node = null
 var current_waypoint_index : int = 0
-var velocity : Vector2 = Vector2.ZERO
 var minimum_distance_to_end : float = 9.0
 var minimum_distance_to_next_waypoint : float = 1.0
+var velocity : Vector2 = Vector2.ZERO
+var last_position : Vector2
 var next_waypoint : Vector2 = Vector2.ZERO
 var end_point : Marker2D = null
 var closest_building : Building = null
@@ -32,10 +39,7 @@ var point_path : PackedVector2Array
 
 var stats_resource_name : String :
 	get = _get_stats_resource_name
-	
-var is_attacking : bool :
-	get = _get_is_attacking,
-	set = _set_is_attacking
+
 
 var is_path_end_reached : bool :
 	get = _get_is_path_end_reached,
@@ -53,6 +57,7 @@ var has_path : bool :
 func start_enemy(_level : Level, _end_point : Marker2D) -> void:
 	level = _level
 	end_point = _end_point
+	last_position = global_position
 
 
 func take_damage(incoming_damage : int) -> void:
@@ -64,9 +69,9 @@ func take_damage(incoming_damage : int) -> void:
 func _ready() -> void:
 	body_entered.connect(_on_body_enter)
 	body_exited.connect(_on_body_exit)
+	animated_sprite.animation_finished.connect(_on_animation_finished)
 	GameSignals.astar_grid_updated.connect(_on_astar_grid_updated)
 	GameSignals.building_is_removed.connect(_on_building_removed)
-	attack_timer.timeout.connect(_attack)
 	if not is_in_group(GroupNames.SELECTABLE):
 		add_to_group(GroupNames.SELECTABLE)
 
@@ -88,27 +93,25 @@ func _on_building_removed() -> void:
 	GameSignals.enemy_path_blocked_change.emit(false)
 
 
+func _on_animation_finished() -> void:
+	if animated_sprite.animation == ATTACK_ANIMATION:
+		is_attack_finished = true
+
+
 func _on_astar_grid_updated() -> void:
 	if level == null:
 		push_warning(name, GRID_UPDATE_ERROR)
 		return
-		
-	point_path = level.find_path(global_position, end_point.global_position)
 	
-	if point_path.size() > 1:
-		is_attacking = false
-		
+	point_path = level.find_path(global_position, end_point.global_position)
 	var direction_to_first_waypoint : Vector2 = global_position.direction_to(point_path[0])
 	var dot = velocity.dot(direction_to_first_waypoint)
 	current_waypoint_index = 0
 	
 	if dot < 0:
 		current_waypoint_index += 1
-
-
-func _attack() -> void:
-	print(name, " attacks tower for: ", stats_manager.stats.damage, " damage")
-	closest_building.take_damage(stats_manager.stats.damage)
+		
+	next_waypoint = point_path[current_waypoint_index]
 
 
 func _get_closest_building() -> void:
@@ -133,16 +136,6 @@ func _get_closest_building() -> void:
 			if distance_to_end < shortest_distance_to_end:
 				shortest_distance_to_end = distance_to_end
 				closest_building = level.get_building_from_cell_position(cell)
-
-
-func _get_is_attacking() -> bool:
-	return is_attacking
-
-
-func _set_is_attacking(value : bool) -> void:
-	if is_attacking == value:
-		return
-	is_attacking = value
 
 
 func _get_is_path_end_reached() -> bool:
@@ -171,16 +164,18 @@ func _set_is_the_end_point_reached(value : bool) -> void:
 		push_warning(name, END_POINT_PATHING_ERROR, distance_to_end)
 	else:
 		print(name, " enemy has reached the end point")
+		animated_sprite.play(IDLE_ANIMATION)
 		GameSignals.enemy_reached_end_point.emit(self)
 		linear_velocity = Vector2.ZERO
 		hide()
 
 
 func Die() -> void:
+	if not animated_sprite.animation == DEATH_ANIMATION:
+		animated_sprite.play(DEATH_ANIMATION)
 	linear_velocity = Vector2.ZERO
 	contact_monitor = false
 	collider.disabled = true
-	hide()
 
 
 func _get_stats_manager() -> StatsManager:
