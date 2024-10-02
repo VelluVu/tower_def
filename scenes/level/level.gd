@@ -22,6 +22,10 @@ func find_path(from : Vector2, to : Vector2) -> PackedVector2Array:
 	return astar_grid.get_point_path(world_position_to_grid(from), world_position_to_grid(to), true)
 
 
+func find_path_cell(from : Vector2i, to : Vector2i) -> PackedVector2Array:
+	return astar_grid.get_point_path(grid_position_to_world(from), grid_position_to_world(to), true)
+
+
 func block_position(_pos : Vector2):
 	var grid_pos : Vector2i = world_position_to_grid(_pos)
 	astar_grid.set_point_solid(grid_pos, true)
@@ -35,12 +39,18 @@ func is_position_blocked(_pos : Vector2):
 	return astar_grid.is_point_solid(to_map_coords)
 
 
-func has_building_in_cell_position(_grid_pos : Vector2i):
+func has_building_in_cell_position(_grid_pos : Vector2i) -> bool:
 	for building in all_buildings:
 		if world_position_to_grid(building.global_position) == _grid_pos:
 			return true
 	return false
 
+
+func has_building_in_world_position(pos : Vector2) -> bool:
+	for building in all_buildings:
+		if building.global_position == pos:
+			return true
+	return false
 
 func get_building_from_cell_position(_grid_pos : Vector2i):
 	for building in all_buildings:
@@ -114,6 +124,15 @@ func _create_astar_grid() -> void:
 	astar_grid.offset = offset
 	astar_grid.update()
 	handle_walkable_cells()
+
+
+func is_cell_walkable(cell : Vector2i) -> bool:
+	var tile_data : TileData = tile_map_main_layer.get_cell_tile_data(cell)
+	
+	if tile_data == null:
+		return false
+	
+	return tile_data.get_custom_data(WALKABLE_CUSTOM_DATA_NAME)
 
 
 func handle_walkable_cells() -> void:

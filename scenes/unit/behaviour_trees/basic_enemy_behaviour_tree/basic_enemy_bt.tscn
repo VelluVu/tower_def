@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://b07nrseyum0s4"]
+[gd_scene load_steps=24 format=3 uid="uid://b07nrseyum0s4"]
 
 [ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/basic_enemy_bt.gd" id="1_ydxbq"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/selector.gd" id="2_2uw0o"]
@@ -18,10 +18,11 @@
 [ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/stop_movement.gd" id="12_j2i8v"]
 [ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/is_moving.gd" id="13_57ku8"]
 [ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/is_building_close.gd" id="14_18r0c"]
-[ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/emit_path_blocked.gd" id="15_dug3h"]
+[ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/path_around_obstacle.gd" id="15_dug3h"]
 [ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/is_colliding_building.gd" id="16_hco3q"]
+[ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/is_building_in_closest_cell.gd" id="18_52s6p"]
 [ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/attack_closest_building.gd" id="18_f4i7b"]
-[ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/is_pathing_around_obstacle.gd" id="21_xkk8w"]
+[ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/path_around_building.gd" id="21_prh86"]
 
 [node name="BasicEnemyBt" type="Node"]
 script = ExtResource("1_ydxbq")
@@ -95,11 +96,11 @@ script = ExtResource("10_mrg7q")
 [node name="IsMoving" type="Node" parent="MainSelector/PathBlocked/EnvironmentBlock/NotMoving"]
 script = ExtResource("13_57ku8")
 
-[node name="NoBuildingClose" type="Node" parent="MainSelector/PathBlocked/EnvironmentBlock"]
+[node name="NoBuildingInClosestCell" type="Node" parent="MainSelector/PathBlocked/EnvironmentBlock"]
 script = ExtResource("10_mrg7q")
 
-[node name="IsBuildingClose" type="Node" parent="MainSelector/PathBlocked/EnvironmentBlock/NoBuildingClose"]
-script = ExtResource("14_18r0c")
+[node name="IsBuildingInClosestCell" type="Node" parent="MainSelector/PathBlocked/EnvironmentBlock/NoBuildingInClosestCell"]
+script = ExtResource("18_52s6p")
 
 [node name="IsLastWaypoint" type="Node" parent="MainSelector/PathBlocked/EnvironmentBlock"]
 script = ExtResource("9_rahgv")
@@ -107,52 +108,64 @@ script = ExtResource("9_rahgv")
 [node name="IsWaypointReached" type="Node" parent="MainSelector/PathBlocked/EnvironmentBlock"]
 script = ExtResource("8_dga4n")
 
-[node name="EmitPathBlocked" type="Node" parent="MainSelector/PathBlocked/EnvironmentBlock"]
+[node name="PathAroundObstacle" type="Node" parent="MainSelector/PathBlocked/EnvironmentBlock"]
 script = ExtResource("15_dug3h")
 
-[node name="BuildingBlock" type="Node" parent="MainSelector/PathBlocked"]
-script = ExtResource("2_2uw0o")
-
-[node name="Colliding" type="Node" parent="MainSelector/PathBlocked/BuildingBlock"]
+[node name="TryPathAroundBuilding" type="Node" parent="MainSelector/PathBlocked"]
 script = ExtResource("3_lrixb")
 
-[node name="NotMoving" type="Node" parent="MainSelector/PathBlocked/BuildingBlock/Colliding"]
+[node name="NotMoving" type="Node" parent="MainSelector/PathBlocked/TryPathAroundBuilding"]
 script = ExtResource("10_mrg7q")
 
-[node name="IsMoving" type="Node" parent="MainSelector/PathBlocked/BuildingBlock/Colliding/NotMoving"]
+[node name="IsMoving" type="Node" parent="MainSelector/PathBlocked/TryPathAroundBuilding/NotMoving"]
 script = ExtResource("13_57ku8")
 
-[node name="IsCollidingBuilding" type="Node" parent="MainSelector/PathBlocked/BuildingBlock/Colliding"]
-script = ExtResource("16_hco3q")
+[node name="IsBuildingInClosestCell" type="Node" parent="MainSelector/PathBlocked/TryPathAroundBuilding"]
+script = ExtResource("18_52s6p")
 
-[node name="AttackClosestBuilding" type="Node" parent="MainSelector/PathBlocked/BuildingBlock/Colliding"]
-script = ExtResource("18_f4i7b")
-
-[node name="BuildingNear" type="Node" parent="MainSelector/PathBlocked/BuildingBlock"]
-script = ExtResource("3_lrixb")
-
-[node name="NotMoving" type="Node" parent="MainSelector/PathBlocked/BuildingBlock/BuildingNear"]
-script = ExtResource("10_mrg7q")
-
-[node name="IsMoving" type="Node" parent="MainSelector/PathBlocked/BuildingBlock/BuildingNear/NotMoving"]
-script = ExtResource("13_57ku8")
-
-[node name="NotPathingAroundObstacle" type="Node" parent="MainSelector/PathBlocked/BuildingBlock/BuildingNear"]
-script = ExtResource("10_mrg7q")
-
-[node name="IsPathingAroundObstacle" type="Node" parent="MainSelector/PathBlocked/BuildingBlock/BuildingNear/NotPathingAroundObstacle"]
-script = ExtResource("21_xkk8w")
-
-[node name="IsLastWaypoint" type="Node" parent="MainSelector/PathBlocked/BuildingBlock/BuildingNear"]
+[node name="IsLastWaypoint" type="Node" parent="MainSelector/PathBlocked/TryPathAroundBuilding"]
 script = ExtResource("9_rahgv")
 
-[node name="IsWaypointReached" type="Node" parent="MainSelector/PathBlocked/BuildingBlock/BuildingNear"]
+[node name="IsWaypointReached" type="Node" parent="MainSelector/PathBlocked/TryPathAroundBuilding"]
 script = ExtResource("8_dga4n")
 
-[node name="IsBuildingClose" type="Node" parent="MainSelector/PathBlocked/BuildingBlock/BuildingNear"]
+[node name="PathAroundBuilding" type="Node" parent="MainSelector/PathBlocked/TryPathAroundBuilding"]
+script = ExtResource("21_prh86")
+
+[node name="Colliding" type="Node" parent="MainSelector/PathBlocked"]
+script = ExtResource("3_lrixb")
+
+[node name="NotMoving" type="Node" parent="MainSelector/PathBlocked/Colliding"]
+script = ExtResource("10_mrg7q")
+
+[node name="IsMoving" type="Node" parent="MainSelector/PathBlocked/Colliding/NotMoving"]
+script = ExtResource("13_57ku8")
+
+[node name="IsCollidingBuilding" type="Node" parent="MainSelector/PathBlocked/Colliding"]
+script = ExtResource("16_hco3q")
+
+[node name="AttackClosestBuilding" type="Node" parent="MainSelector/PathBlocked/Colliding"]
+script = ExtResource("18_f4i7b")
+
+[node name="BuildingNear" type="Node" parent="MainSelector/PathBlocked"]
+script = ExtResource("3_lrixb")
+
+[node name="NotMoving" type="Node" parent="MainSelector/PathBlocked/BuildingNear"]
+script = ExtResource("10_mrg7q")
+
+[node name="IsMoving" type="Node" parent="MainSelector/PathBlocked/BuildingNear/NotMoving"]
+script = ExtResource("13_57ku8")
+
+[node name="IsLastWaypoint" type="Node" parent="MainSelector/PathBlocked/BuildingNear"]
+script = ExtResource("9_rahgv")
+
+[node name="IsWaypointReached" type="Node" parent="MainSelector/PathBlocked/BuildingNear"]
+script = ExtResource("8_dga4n")
+
+[node name="IsBuildingClose" type="Node" parent="MainSelector/PathBlocked/BuildingNear"]
 script = ExtResource("14_18r0c")
 
-[node name="AttackClosestBuilding" type="Node" parent="MainSelector/PathBlocked/BuildingBlock/BuildingNear"]
+[node name="AttackClosestBuilding" type="Node" parent="MainSelector/PathBlocked/BuildingNear"]
 script = ExtResource("18_f4i7b")
 
 [node name="MoveOrIdle" type="Node" parent="MainSelector"]

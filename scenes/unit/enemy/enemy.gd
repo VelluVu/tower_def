@@ -36,10 +36,11 @@ var end_point : Marker2D = null
 var closest_building : Building = null
 var level : Level = null
 var point_path : PackedVector2Array
+var movement_history : Array[Vector2]
+var max_history_size : int = 10
 
 var stats_resource_name : String :
 	get = _get_stats_resource_name
-
 
 var is_path_end_reached : bool :
 	get = _get_is_path_end_reached,
@@ -66,6 +67,28 @@ func take_damage(incoming_damage : int) -> void:
 		GameSignals.enemy_destroyed.emit(self)
 
 
+func iterate_next_waypoint() -> void:
+	current_waypoint_index += 1
+	
+	if current_waypoint_index >= point_path.size():
+		return
+	
+	update_movement_history()
+	next_waypoint = point_path[current_waypoint_index]
+
+
+func update_movement_history() -> void:
+	var last_position_in_grid : Vector2 = level.snap_position_to_grid(global_position)
+	if not movement_history.has(last_position_in_grid):
+		movement_history.push_front(last_position_in_grid)
+	else:
+		var pos : Vector2 = movement_history.pop_at(movement_history.find(last_position_in_grid))
+		movement_history.push_front(pos)
+		
+	if movement_history.size() >= max_history_size:
+		movement_history.pop_back()
+
+
 func _ready() -> void:
 	body_entered.connect(_on_body_enter)
 	body_exited.connect(_on_body_exit)
@@ -89,8 +112,9 @@ func _on_body_exit(body : Node):
 
 
 func _on_building_removed() -> void:
-	is_pathing_around_obstacle = false
-	GameSignals.enemy_path_blocked_change.emit(false)
+	pass
+	#is_pathing_around_obstacle = false
+	#GameSignals.enemy_path_blocked_change.emit(false)
 
 
 func _on_animation_finished() -> void:
@@ -104,14 +128,48 @@ func _on_astar_grid_updated() -> void:
 		return
 	
 	point_path = level.find_path(global_position, end_point.global_position)
+	
+	if point_path.is_empty():
+		next_waypoint = global_position
+		return
+		
 	var direction_to_first_waypoint : Vector2 = global_position.direction_to(point_path[0])
 	var dot = velocity.dot(direction_to_first_waypoint)
 	current_waypoint_index = 0
 	
 	if dot < 0:
 		current_waypoint_index += 1
-		
+	
+	if current_waypoint_index >= point_path.size():
+		update_movement_history()
+		next_waypoint = point_path[0]
+		return
+	
+	update_movement_history()
 	next_waypoint = point_path[current_waypoint_index]
+
+
+func get_closest_cell() -> Vector2i:
+	var surrounding_cells : Array[Vector2i] = level.tile_map_main_layer.get_surrounding_cells(level.tile_map_main_layer.local_to_map(global_position))
+	var closest_distance : float = 999999999
+	var end_point_grid_pos : Vector2i = level.world_position_to_grid(end_point.global_position)
+	var closest_cell : Vector2i = Vector2i(-9999,-9999)
+	
+	for cell in surrounding_cells:
+		var world_point : Vector2 = level.grid_position_to_world(cell)
+		if point_path.has(world_point):
+			continue
+			
+		if not level.is_cell_walkable(cell):
+			continue
+			
+		var distance_to_end : float = (end_point_grid_pos - cell).length()
+		
+		if distance_to_end < closest_distance:
+			closest_distance = distance_to_end
+			closest_cell = cell
+	
+	return closest_cell
 
 
 func _get_closest_building() -> void:
