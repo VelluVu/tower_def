@@ -1,7 +1,7 @@
 extends Node
 
-
-const TILE_SIZE = 16
+const BAD_CELL : Vector2i = Vector2i(-9999,-9999)
+const TILE_SIZE : int = 16
 
 enum StatType
 {

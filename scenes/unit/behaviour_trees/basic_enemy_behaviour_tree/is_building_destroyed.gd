@@ -1,8 +1,8 @@
-class_name IsPathingAroundBuilding
+class_name IsBuildingDestroyed
 extends ConditionLeaf
 
 
 func tick(actor : Node, _blackboard : Blackboard) -> int:
-	if actor.is_pathing_around_building:
+	if actor.closest_building == null:
 		return SUCCESS
 	return FAILURE

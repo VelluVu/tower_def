@@ -22,7 +22,9 @@ navigation_visibility_mode = 1
 position = Vector2(-364, -44)
 
 [node name="Spawner" parent="." node_paths=PackedStringArray("end_point") instance=ExtResource("3_3va1j")]
+y_sort_enabled = true
 position = Vector2(75, 29)
+max_spawns = 2
 spawnable_packed_scene = ExtResource("3_1250y")
 end_point = NodePath("../EndPoint")
 

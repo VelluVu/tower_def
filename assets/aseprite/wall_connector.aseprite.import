@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://clru0pvlofeyr"
+path="res://.godot/imported/wall_connector.aseprite-bc8095ef5ccb3cfaf98e03dc61ddd26a.res"
+
+[deps]
+
+source_file="res://assets/aseprite/wall_connector.aseprite"
+dest_files=["res://.godot/imported/wall_connector.aseprite-bc8095ef5ccb3cfaf98e03dc61ddd26a.res"]
+
+[params]
+

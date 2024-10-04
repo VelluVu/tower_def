@@ -1,12 +1,52 @@
-[gd_scene load_steps=5 format=3 uid="uid://b78nv1og0jf3p"]
+[gd_scene load_steps=10 format=3 uid="uid://b78nv1og0jf3p"]
 
 [ext_resource type="Script" path="res://scenes/unit/building/buildings/wall.gd" id="1_kgbnu"]
 [ext_resource type="Texture2D" uid="uid://d1s2xw53fx6au" path="res://icon.svg" id="2_3vbux"]
+[ext_resource type="Texture2D" uid="uid://dpyani76dokd0" path="res://assets/2d_art/wall.png" id="3_esse3"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_4ih23"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8pj8t"]
 size = Vector2(16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ds7j"]
+atlas = ExtResource("3_esse3")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q5fwt"]
+atlas = ExtResource("3_esse3")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dyony"]
+atlas = ExtResource("3_esse3")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7wp3n"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ds7j")
+}],
+"loop": true,
+"name": &"CONNECTOR",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q5fwt")
+}],
+"loop": true,
+"name": &"HORIZONTAL",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dyony")
+}],
+"loop": true,
+"name": &"VERTICAL",
+"speed": 10.0
+}]
 
 [node name="Wall" type="StaticBody2D" groups=["buildings", "navigation", "selectable"]]
 collision_layer = 4
@@ -19,6 +59,20 @@ icon = ExtResource("2_3vbux")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_8pj8t")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.125, 0.125)
-texture = ExtResource("2_3vbux")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_7wp3n")
+animation = &"CONNECTOR"
+metadata/_aseprite_wizard_config_ = {
+"layer": "",
+"o_ex_p": "",
+"o_folder": "res://assets/2d_art",
+"o_name": "",
+"only_visible": false,
+"slice": "",
+"source": "res://assets/aseprite/wall.aseprite"
+}
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true
+}
+metadata/_aseprite_wizard_source_file_hash_ = "280ccf0effcf8b873b543cd7da33e62e"

@@ -10,7 +10,7 @@ var projectile_pool : Array[Node2D]
 func use(target, damage : int) -> void:
 	super(target, damage)
 	var projectile : Bolt = _get_projectile()
-	projectile.launch(_get_shooting_position(target.global_position), target, damage)
+	projectile.launch(global_position, target, damage)
 
 
 func _get_projectile() -> Node2D:
@@ -21,7 +21,7 @@ func _get_projectile() -> Node2D:
 	var projectile = projectile_scene.instantiate()
 	add_child(projectile)
 	projectile_pool.append(projectile)
-	projectile.name = name + str(projectile_pool.size())
+	projectile.name = projectile.name + str(projectile_pool.size())
 	return projectile
 
 

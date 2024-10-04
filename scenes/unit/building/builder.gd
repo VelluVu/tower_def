@@ -162,6 +162,7 @@ func _block_walkable_tiles_on_building_cells() -> void:
 
 
 func _start_building_placement(building_option_index : int) -> void:
+	_stop_building_placement()
 	if building_option_index >= buildings.size():
 		push_warning(name, BUILDING_INDEX_OUT_OF_BOUNDS_WARNING, building_option_index)
 		UISignals.focus_building_option.emit(-1)
@@ -199,12 +200,14 @@ func _place_building(building_index : int) -> void:
 	var buildings_node : Node2D = _find_or_create_buildings_container()
 	var placed_building : Building = buildings[building_index].instantiate()
 	buildings_node.add_child(placed_building)
-	placed_building.position = placement_position
+	placed_building.global_position = placement_position
+	placed_building.grid_position = level.world_position_to_grid(placed_building.global_position)
 	placed_building.is_placing = false
-	level.block_position(placed_building.position)
+	level.block_position(placed_building.global_position)
 	placed_buildings.append(placed_building)
 	print(name, " placed building ", placed_building.name, " in global position: ", placed_building.global_position, ", local position: ", placed_building.position)
 	GameSignals.building_placed.emit(placed_building)
+	placed_building.is_placed = true
 
 
 func _find_or_create_buildings_container() -> Node2D:
@@ -216,7 +219,8 @@ func _find_or_create_buildings_container() -> Node2D:
 		buildings_node = Node2D.new()
 		buildings_node.name = BUILDINGS_NODE_NAME
 		level.add_child(buildings_node)
-		
+	
+	buildings_node.y_sort_enabled = true
 	return buildings_node
 
 

@@ -3,7 +3,7 @@ extends StaticBody2D
 
 const PATH_TO_STAT_RESOURCE : String = "res://scenes/unit/stats/stat_resources/building_stats/"
 
-@onready var sprite : Sprite2D = $Sprite2D
+@onready var animated_sprite : AnimatedSprite2D = $AnimatedSprite2D
 @onready var collision_shape : CollisionShape2D = $CollisionShape2D
 
 @export var id : int = 0
@@ -16,6 +16,13 @@ const PATH_TO_STAT_RESOURCE : String = "res://scenes/unit/stats/stat_resources/b
 var is_overlapping_area : bool = false
 var is_overlapping_body : bool = false
 var building_index : int = 0
+var grid_position : Vector2i = Vector2i(0,0)
+
+var level : Level :
+	get :
+		if level == null:
+			level = get_parent().get_parent()
+		return level
 
 var stats_resource_name : String :
 	get = _get_stats_resource_name

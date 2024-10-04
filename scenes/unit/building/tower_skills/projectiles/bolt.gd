@@ -1,6 +1,9 @@
 class_name Bolt
 extends Area2D
 
+const WALK_ANIMATION : String = "WALK"
+const DEATH_ANIMATION : String = "DEATH"
+const FADE_ANIMATION : String = "FADE"
 
 signal hits_enemy_body(body)
 
@@ -8,7 +11,9 @@ signal hits_enemy_body(body)
 
 @onready var live_timer : Timer = $LiveTimer
 @onready var collider : CollisionShape2D = $CollisionShape2D
+@onready var animated_sprite : AnimatedSprite2D = $AnimatedSprite2D
 
+var is_hit : bool = false
 var target_is_destroyed : bool = false
 var damage : int = 0
 var target = null
@@ -19,6 +24,8 @@ func _ready() -> void:
 		live_timer.timeout.connect(_on_live_timer_timeout)
 	if not GameSignals.enemy_destroyed.is_connected(_on_enemy_destroyed):
 		GameSignals.enemy_destroyed.connect(_on_enemy_destroyed)
+	if not animated_sprite.animation_finished.is_connected(_on_animation_finished):
+		animated_sprite.animation_finished.connect(_on_animation_finished)
 
 
 func launch(start_point, _target, _damage) -> void:
@@ -32,6 +39,9 @@ func _physics_process(delta: float) -> void:
 	if target == null:
 		return
 	
+	if is_hit:
+		return
+	
 	if target_is_destroyed:
 		global_position += transform.x * projectile_speed * delta
 		return
@@ -42,21 +52,34 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_body_entered(body: Node2D) -> void:
+	if is_hit:
+		return
+	
 	if target == null:
 		return
 	
 	if body != target:
 		return
 	
+	is_hit = true
+	_disable_physics()
 	print(name, " hits ", body.name)
-	_deactivate()
 	body.take_damage(damage)
 	hits_enemy_body.emit(body)
+	animated_sprite.play(DEATH_ANIMATION)
+
+
+func _on_animation_finished() -> void:
+	if animated_sprite.animation == DEATH_ANIMATION:
+		_deactivate()
+	elif animated_sprite.animation == FADE_ANIMATION:
+		_deactivate()
 
 
 func _on_live_timer_timeout() -> void:
+	_disable_physics()
 	print(name, " timer timeout")
-	_deactivate()
+	animated_sprite.play(FADE_ANIMATION)
 
 
 func _on_enemy_destroyed(enemy : Enemy) -> void:
@@ -64,8 +87,16 @@ func _on_enemy_destroyed(enemy : Enemy) -> void:
 		target_is_destroyed = true
 
 
+func _disable_physics() -> void:
+	collider.set_deferred("disabled", true)
+	set_deferred("monitoring", false)
+	set_deferred("monitorable", false)
+
+
 func _activate() -> void:
+	is_hit = false
 	show()
+	animated_sprite.play(WALK_ANIMATION)
 	target_is_destroyed = false
 	collider.set_deferred("disabled", false)
 	set_deferred("monitoring", true)
@@ -79,7 +110,4 @@ func _activate() -> void:
 
 func _deactivate() -> void:
 	live_timer.stop()
-	collider.set_deferred("disabled", true)
-	set_deferred("monitoring", false)
-	set_deferred("monitorable", false)
 	hide()
