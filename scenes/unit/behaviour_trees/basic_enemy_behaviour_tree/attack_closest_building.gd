@@ -17,7 +17,7 @@ func tick(actor : Node, _blackboard : Blackboard) -> int:
 			var vector_to_closest_building = (actor.closest_building.global_position - actor.global_position)
 			actor.animated_sprite.flip_h = vector_to_closest_building.x < 0
 			actor.closest_building.take_damage(actor.stats_manager.stats.damage)
-			print(name, " attacks tower for: ", actor.stats_manager.stats.damage, " damage")
+			#print(name, " attacks tower for: ", actor.stats_manager.stats.damage, " damage")
 			actor.is_attack_finished = false
 			return SUCCESS
 		else:

@@ -27,6 +27,9 @@ func _ready() -> void:
 	spawn_start_delay_timer.wait_time = start_spawn_delay_time
 	spawn_interval_timer.timeout.connect(_on_spawn_interval_tick)
 	spawn_start_delay_timer.timeout.connect(_on_spawn_delay_finished)
+	
+	if level == null:
+		level = get_parent()
 
 
 func _on_spawn_delay_finished() -> void:
@@ -43,12 +46,9 @@ func _on_spawn_interval_tick() -> void:
 		return
 	
 	var spawn = spawnable_packed_scene.instantiate()
-	spawn.name = spawn.name + str(id) + str(current_spawn_count)
-	add_child(spawn)
 	
 	if spawn is Enemy:
-		if level == null:
-			level = get_parent()
-		spawn.start_enemy(level, end_point)
+		spawn.inject_objects(level, end_point)
 		
+	add_child(spawn)
 	current_spawn_count += 1

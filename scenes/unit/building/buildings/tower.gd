@@ -7,6 +7,8 @@ extends Building
 
 #basic shooting is added as component and basic bt tries to use it through this actor.
 #for basic shooting create and add projectile as component, tween the projectile to hit the target 100% accuracy.
+const IDLE_ANIMATION = "IDLE"
+const ATTACK_ANIMATION = "ATTACK"
 
 @onready var range_area : Area2D = $RangeArea 
 @onready var area_shape : CollisionShape2D = $RangeArea/CollisionShape2D
@@ -57,7 +59,9 @@ func _on_stat_changed(stat_type, stat_value) -> void:
 
 
 func get_first_target() -> Node2D:
-	return targets[0]
+	if has_target:
+		return targets[0]
+	return null
 
 
 func _enable_tower() -> void:

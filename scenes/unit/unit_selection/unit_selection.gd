@@ -2,6 +2,8 @@ class_name UnitSelection
 extends Area2D
 
 
+@onready var outline_shader_material : ShaderMaterial = ResourceLoader.load("res://assets/shaders/shader_materials/outline_shader_material.tres")
+
 var is_placing_building : bool = false
 var selected_unit : Node2D = null
 
@@ -60,6 +62,7 @@ func _select():
 	GameSignals.selected_unit.emit(selected_unit)
 	UISignals.selected_unit.emit(selected_unit.name, selected_unit.stats_manager.stats, selected_unit.icon, selected_unit.is_in_group(GroupNames.BUILDINGS))
 	selected_unit.stats_manager.stats.changed.connect(_on_selected_data_change)
+	selected_unit.animated_sprite.set_material(outline_shader_material)
 
 
 func _clear_selection():
@@ -70,6 +73,7 @@ func _clear_selection():
 	GameSignals.deselected_unit.emit(selected_unit)
 	UISignals.deselected_unit.emit(selected_unit.name, selected_unit.stats_manager.stats, selected_unit.icon, selected_unit.is_in_group(GroupNames.BUILDINGS))
 	selected_unit.stats_manager.stats.changed.disconnect(_on_selected_data_change)
+	selected_unit.animated_sprite.set_material(null)
 	selected_unit = null
 
 

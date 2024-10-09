@@ -54,17 +54,13 @@ var has_path : bool :
 		return not point_path.is_empty()
 
 
-func start_enemy(_level : Level, _end_point : Marker2D) -> void:
+func inject_objects(_level : Level, _end_point : Marker2D) -> void:
 	level = _level
 	end_point = _end_point
-	last_position = global_position
-	grid_position = level.world_position_to_grid(global_position)
 
 
 func take_damage(incoming_damage : int) -> void:
 	stats_manager.stats.health -= incoming_damage
-	if stats_manager.stats.health <= 0:
-		GameSignals.enemy_destroyed.emit(self)
 
 
 func iterate_next_waypoint() -> void:
@@ -107,9 +103,10 @@ func deactivate() -> void:
 
 
 func die() -> void:
-	if not animated_sprite.animation == DEATH_ANIMATION:
+	if animated_sprite.animation != DEATH_ANIMATION:
 		animated_sprite.play(DEATH_ANIMATION)
-	deactivate()
+		GameSignals.enemy_destroyed.emit(self)
+		deactivate()
 
 
 func get_closest_building() -> void:
@@ -142,6 +139,10 @@ func is_path_blocked(path : PackedVector2Array) -> bool:
 
 
 func _ready() -> void:
+	var new_name : String = name + str(level.all_enemies.size())
+	name = new_name
+	last_position = global_position
+	grid_position = level.world_position_to_grid(global_position)
 	body_entered.connect(_on_body_enter)
 	body_exited.connect(_on_body_exit)
 	animated_sprite.animation_finished.connect(_on_animation_finished)
@@ -149,6 +150,8 @@ func _ready() -> void:
 	
 	if not is_in_group(GroupNames.SELECTABLE):
 		add_to_group(GroupNames.SELECTABLE)
+		
+	GameSignals.enemy_spawned.emit(self)
 
 
 func _on_body_enter(body : Node) -> void:
@@ -211,9 +214,12 @@ func _set_is_the_end_point_reached(value : bool) -> void:
 
 func _get_stats_manager() -> StatsManager:
 	if has_node(STATS_MANAGER_NAME):
-		return $StatsManager
+		stats_manager = get_node(STATS_MANAGER_NAME)
+		return stats_manager
+		
 	stats_manager = StatsManager.new()
-	stats_manager.base_stats = ResourceLoader.load(PATH_TO_STAT_RESOURCE + stats_resource_name)
+	var base_stats_name : String = PATH_TO_STAT_RESOURCE + stats_resource_name
+	stats_manager.base_stats = ResourceLoader.load(base_stats_name)
 	stats_manager.name = STATS_MANAGER_NAME
 	add_child(stats_manager)
 	return stats_manager

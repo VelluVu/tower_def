@@ -1,10 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://cfky3fr2vue8u"]
+[gd_scene load_steps=9 format=3 uid="uid://cfky3fr2vue8u"]
 
 [ext_resource type="Script" path="res://scenes/ui/bottom_panel/bottom_panel.gd" id="1_4q4xm"]
 [ext_resource type="Script" path="res://scenes/ui/bottom_panel/building_panel.gd" id="2_mh1um"]
 [ext_resource type="Script" path="res://scenes/ui/bottom_panel/building_option.gd" id="3_5wo0p"]
+[ext_resource type="Texture2D" uid="uid://c5m2tdopql7kr" path="res://assets/2d_art/wall_icon.png" id="4_m3bwh"]
 [ext_resource type="Texture2D" uid="uid://d1s2xw53fx6au" path="res://icon.svg" id="4_y8rhs"]
 [ext_resource type="Script" path="res://scenes/ui/bottom_panel/unit_selection_panel.gd" id="5_l2uok"]
+[ext_resource type="Texture2D" uid="uid://vxk12gmmva1s" path="res://assets/2d_art/puffe_bolter_icon.png" id="5_rdyp6"]
 [ext_resource type="Theme" uid="uid://tqqtfp7oe2qf" path="res://assets/ui_themes/menu_ui_button_theme.tres" id="6_qr8g2"]
 
 [node name="BottomPanel" type="Control"]
@@ -64,7 +66,7 @@ grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
 toggle_mode = true
-icon = ExtResource("4_y8rhs")
+icon = ExtResource("4_m3bwh")
 icon_alignment = 1
 expand_icon = true
 
@@ -83,7 +85,7 @@ grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
 toggle_mode = true
-icon = ExtResource("4_y8rhs")
+icon = ExtResource("5_rdyp6")
 icon_alignment = 1
 expand_icon = true
 

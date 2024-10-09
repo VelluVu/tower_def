@@ -16,6 +16,7 @@ var offset : Vector2 = Vector2.ZERO
 var cell_size : Vector2i = Vector2i.ZERO
 var astar_grid : AStarGrid2D = null
 var all_buildings : Array[Building]
+var all_enemies : Array[Enemy]
 
 
 func find_path(from : Vector2, to : Vector2) -> PackedVector2Array:
@@ -137,6 +138,10 @@ func _ready() -> void:
 	GameSignals.building_placed.connect(_on_building_placed)
 	GameSignals.building_destroyed.connect(_on_building_erase)
 	GameSignals.sell_building.connect(_on_building_erase)
+	#enemy spawned signal add enemy to list
+	GameSignals.enemy_spawned.connect(_on_enemy_spawned)
+	#enemy destroyed signal erase enemy from list
+	GameSignals.enemy_destroyed.connect(_on_enemy_destroyed)
 	_get_unit_selection()
 
 
@@ -153,6 +158,14 @@ func _draw() -> void:
 	draw_line(top_right_corner, bottom_right_corner, Color.CHOCOLATE)
 	draw_line(bottom_right_corner, bottom_left_corner, Color.CHOCOLATE)
 	draw_line(bottom_left_corner, top_left_corner, Color.CHOCOLATE)
+
+
+func _on_enemy_spawned(enemy : Enemy) -> void:
+	all_enemies.append(enemy)
+
+
+func _on_enemy_destroyed(enemy : Enemy) -> void:
+	all_enemies.erase(enemy)
 
 
 func _on_building_placed(building : Building) -> void:

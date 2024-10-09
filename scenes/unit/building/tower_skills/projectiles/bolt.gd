@@ -40,7 +40,7 @@ func launch(start_point, _target, _damage) -> void:
 
 func _physics_process(delta: float) -> void:
 	if target == null:
-		return
+		target_is_destroyed = true
 	
 	if is_hit:
 		return

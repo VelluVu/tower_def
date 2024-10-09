@@ -18,7 +18,7 @@ script = ExtResource("2_0ofa6")
 [node name="ObjectTileMapLayer" type="TileMapLayer" parent="Tiles"]
 
 [node name="WaterTileMapLayer" type="TileMapLayer" parent="Tiles"]
-tile_map_data = PackedByteArray("AAD8/wIAAgAAABIAAAD9/wAAAgAAAAwAAAD9////AgAAAAQAAAD8////AgAAAAgAAAD+////AgAAAAoAAAD9//7/AgAAAAsAAAD8//7/AgAAAAsAAAD7/wIAAgAAAAwAAAD7/wEAAgAAAAEAAAD7/wAAAgAAAAEAAAD6/wAAAgAAAAkAAAD6/wEAAgAAAAkAAAD6////AgAAAAkAAAD7////AgAAAAUAAAD+//7/AgAAABQAAAD6/wIAAgAAABEAAAD7//7/AgAAAAsAAAD6//7/AgAAABMAAAD+/wAAAgAAABoAAAD8/wEAAgAAAAoAAAD8/wAAAgAAABYAAAA=")
+tile_map_data = PackedByteArray("AAD8/wIAAgAAABIAAAD9/wAAAgAAAAwAAAD9////AgAAAAQAAAD8////AgAAAAgAAAD+////AgAAAAoAAAD9//7/AgAAAAsAAAD8//7/AgAAAAsAAAD7/wIAAgAAAAwAAAD7/wEAAgAAAAgAAAD7/wAAAgAAAAgAAAD6/wAAAgAAAAkAAAD6/wEAAgAAAAkAAAD6////AgAAAAkAAAD7////AgAAAAgAAAD+//7/AgAAABQAAAD6/wIAAgAAABEAAAD7//7/AgAAAAsAAAD6//7/AgAAABMAAAD+/wAAAgAAABoAAAD8/wEAAgAAAAoAAAD8/wAAAgAAABYAAAA=")
 tile_set = ExtResource("3_i77tv")
 
 [node name="GroundTileMapLayer" type="TileMapLayer" parent="Tiles" groups=["navigation"]]
