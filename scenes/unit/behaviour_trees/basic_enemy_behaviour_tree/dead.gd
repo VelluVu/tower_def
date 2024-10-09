@@ -3,5 +3,8 @@ extends ActionLeaf
 
 
 func tick(actor : Node, _blackboard : Blackboard) -> int:
-	actor.Die()
-	return SUCCESS
+	if actor.stats_manager.stats.health > 0:
+		return FAILURE
+		
+	actor.die()
+	return RUNNING

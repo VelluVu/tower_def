@@ -6,7 +6,7 @@ func tick(actor : Node, _blackboard : Blackboard) -> int:
 	if actor.animated_sprite.animation != actor.ATTACK_ANIMATION:
 		actor.animated_sprite.play(actor.ATTACK_ANIMATION)
 	
-	actor._get_closest_building()
+	actor.get_closest_building()
 	
 	if actor.animated_sprite.animation == actor.ATTACK_ANIMATION:
 		if actor.is_attack_finished:

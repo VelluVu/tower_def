@@ -8,6 +8,8 @@ const FADE_ANIMATION : String = "FADE"
 signal hits_enemy_body(body)
 
 @export var projectile_speed : float = 100
+@export var live_time = 10.0
+@export var pierce : int = 1
 
 @onready var live_timer : Timer = $LiveTimer
 @onready var collider : CollisionShape2D = $CollisionShape2D
@@ -16,6 +18,7 @@ signal hits_enemy_body(body)
 var is_hit : bool = false
 var target_is_destroyed : bool = false
 var damage : int = 0
+var current_pierced : int = 0
 var target = null
 
 
@@ -55,18 +58,12 @@ func _on_body_entered(body: Node2D) -> void:
 	if is_hit:
 		return
 	
-	if target == null:
-		return
-	
-	if body != target:
-		return
-	
-	is_hit = true
-	_disable_physics()
-	print(name, " hits ", body.name)
+	current_pierced += 1
+	if current_pierced > pierce:
+		is_hit = true
+		animated_sprite.play(DEATH_ANIMATION)
 	body.take_damage(damage)
 	hits_enemy_body.emit(body)
-	animated_sprite.play(DEATH_ANIMATION)
 
 
 func _on_animation_finished() -> void:
@@ -78,13 +75,15 @@ func _on_animation_finished() -> void:
 
 func _on_live_timer_timeout() -> void:
 	_disable_physics()
-	print(name, " timer timeout")
 	animated_sprite.play(FADE_ANIMATION)
 
 
 func _on_enemy_destroyed(enemy : Enemy) -> void:
 	if enemy == target:
 		target_is_destroyed = true
+		live_timer.stop()
+		live_timer.wait_time = 2.0
+		live_timer.start()
 
 
 func _disable_physics() -> void:
@@ -94,6 +93,7 @@ func _disable_physics() -> void:
 
 
 func _activate() -> void:
+	live_timer.wait_time = live_time
 	is_hit = false
 	show()
 	animated_sprite.play(WALK_ANIMATION)

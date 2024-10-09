@@ -2,9 +2,24 @@ class_name Wall
 extends Building
 
 
-const CONNECTOR : String = "CONNECTOR"
+const CONNECTOR_LRDU : String = "CONNECTOR_LRDU"
+const CONNECTOR_LRD : String = "CONNECTOR_LRD"
+const CONNECTOR_RD : String = "CONNECTOR_RD"
+const CONNECTOR_LRU : String = "CONNECTOR_LRU"
+const CONNECTOR_LU : String = "CONNECTOR_LU"
+const CONNECTOR_LD : String = "CONNECTOR_LD"
+const CONNECTOR_LUD : String = "CONNECTOR_LUD"
+const CONNECTOR_RUD : String = "CONNECTOR_RUD"
+const CONNECTOR_UR : String = "CONNECTOR_UR"
+const CONNECTOR_X : String = "CONNECTOR_X"
+
 const HORIZONTAL : String = "HORIZONTAL"
+const HORIZONTAL_END_R : String = "HORIZONTAL_END_R"
+const HORIZONTAL_END_L : String = "HORIZONTAL_END_L"
+
 const VERTICAL : String = "VERTICAL"
+const VERTICAL_END_D : String = "VERTICAL_END_D"
+const VERTICAL_END_U : String = "VERTICAL_END_U"
 
 var neighbour_buildings : Array[Vector2i]
 
@@ -12,7 +27,7 @@ var neighbour_buildings : Array[Vector2i]
 func _set_is_placed(value : bool) -> void:
 	super(value)
 	if value:
-		var surrounding_cells : Array[Vector2i] = level.tile_map_main_layer.get_surrounding_cells(grid_position)
+		var surrounding_cells : Array[Vector2i] = level.tiles.ground_layer.get_surrounding_cells(grid_position)
 				
 		for cell in surrounding_cells:
 			if level.has_building_in_cell_position(cell):
@@ -48,17 +63,65 @@ func _update_sprite() -> void:
 	var has_building_up : bool = neighbour_buildings.has(grid_position - Vector2i(0,1))
 	var has_building_down : bool = neighbour_buildings.has(grid_position + Vector2i(0,1))
 	
-	#IS BUILDING LEFT
-	if has_building_left or has_building_right:
-		if has_building_up or has_building_down:
-			animated_sprite.play(CONNECTOR)
-			return
+	if has_building_left and has_building_right and has_building_down and has_building_up:
+		animated_sprite.play(CONNECTOR_LRDU)
+		return
+	
+	if not has_building_left and not has_building_right and not has_building_up and not has_building_down:
+		animated_sprite.play(CONNECTOR_X)
+		return
+	
+	if has_building_left and has_building_right and not has_building_down and not has_building_up:
 		animated_sprite.play(HORIZONTAL)
 		return
 	
-	if has_building_up or has_building_down:
-		if has_building_left or has_building_right:
-			animated_sprite.play(CONNECTOR)
-			return
+	if has_building_up and has_building_down and not has_building_left and not has_building_right:
 		animated_sprite.play(VERTICAL)
 		return
+	
+	if has_building_left and not has_building_right and not has_building_up and not has_building_down:
+		animated_sprite.play(HORIZONTAL_END_R)
+		return
+	
+	if has_building_right and not has_building_left and not has_building_up and not has_building_down:
+		animated_sprite.play(HORIZONTAL_END_L)
+		return
+	
+	if has_building_up and not has_building_right and not has_building_left and not has_building_down:
+		animated_sprite.play(VERTICAL_END_D)
+		return
+	
+	if has_building_down and not has_building_right and not has_building_left and not has_building_up:
+		animated_sprite.play(VERTICAL_END_U)
+		return
+	
+	if has_building_left and has_building_right and has_building_up and not has_building_down:
+		animated_sprite.play(CONNECTOR_LRU)
+		return
+	
+	if has_building_left and has_building_right and has_building_down and not has_building_up:
+		animated_sprite.play(CONNECTOR_LRD)
+		return
+	
+	if has_building_left and has_building_up and has_building_down and not has_building_right:
+		animated_sprite.play(CONNECTOR_LUD)
+		return
+	
+	if has_building_right and has_building_up and has_building_down and not has_building_left:
+		animated_sprite.play(CONNECTOR_RUD)
+		return
+	
+	if has_building_left and has_building_up and not has_building_right and not has_building_down:
+		animated_sprite.play(CONNECTOR_LU)
+		return
+	
+	if has_building_left and has_building_down and not has_building_right and not has_building_up:
+		animated_sprite.play(CONNECTOR_LD)
+		return
+	
+	if has_building_right and has_building_down and not has_building_left and not has_building_up:
+		animated_sprite.play(CONNECTOR_RD)
+		return
+	
+	if has_building_right and has_building_up and not has_building_left and not has_building_down:
+		animated_sprite.play(CONNECTOR_UR)

@@ -192,27 +192,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_s5wmt")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_85n5x")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4bl44")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_bno3i")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_g2310")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1rf70")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_cdeps")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_usfwy")
 }],
 "loop": true,
 "name": &"WALK",
@@ -228,11 +207,12 @@ y_sort_enabled = true
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("1_e5q1r")
+pierce = 0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_hvlxu")
-animation = &"DEATH"
+animation = &"WALK"
 metadata/_aseprite_wizard_interface_config_ = {
 "layer_section": true,
 "output_section": true,

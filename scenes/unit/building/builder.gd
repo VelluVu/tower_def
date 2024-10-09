@@ -42,7 +42,8 @@ func has_enough_gold(gold_needed : int) -> bool:
 
 
 func remove_building(_building : Building):
-	level.free_position(_building.position)
+	#level.free_position(_building.position)
+	level.astar_grid.set_point_weight_scale(_building.grid_position, 1.0)
 	placed_buildings.erase(_building)
 	_building.queue_free()
 	await get_tree().physics_frame
@@ -56,7 +57,6 @@ func _ready() -> void:
 	GameSignals.sell_building.connect(_on_building_sell)
 	GameSignals.building_destroyed.connect(_on_building_destroyed)
 	GameSignals.lose_game.connect(_on_lose_game)
-	GameSignals.enemy_path_blocked_change.connect(_on_enemy_path_blocked_change)
 	buildings = _get_buildings()
 
 
@@ -102,17 +102,6 @@ func _on_building_destroyed(_building : Building):
 	remove_building(_building)
 
 
-func _on_enemy_path_blocked_change(is_blocked : bool) -> void:
-	if is_blocked:
-		if not is_walkable_tile_on_buildings_cells_free:
-			_free_walkable_tiles_on_building_cells()
-			is_walkable_tile_on_buildings_cells_free = true
-	else:
-		if is_walkable_tile_on_buildings_cells_free:
-			_block_walkable_tiles_on_building_cells()
-			is_walkable_tile_on_buildings_cells_free = false
-
-
 func _on_game_pause(is_paused : bool) -> void:
 	is_ready_to_build = not is_paused
 
@@ -145,20 +134,6 @@ func _on_building_placement_selected(building_option_index : int) -> void:
 
 func _on_building_placement_deselected(_building_option_index : int) -> void:
 	_stop_building_placement()
-
-
-func _free_walkable_tiles_on_building_cells() -> void:
-	for placed_building in placed_buildings:
-		var cell_data = level.get_cell_data_from_position(placed_building.position)
-		if cell_data.get_custom_data(level.WALKABLE_CUSTOM_DATA_NAME):
-			level.free_position(placed_building.position)
-
-
-func _block_walkable_tiles_on_building_cells() -> void:
-	for placed_building in placed_buildings:
-		var cell_data = level.get_cell_data_from_position(placed_building.position)
-		if cell_data.get_custom_data(level.WALKABLE_CUSTOM_DATA_NAME):
-			level.block_position(placed_building.position)
 
 
 func _start_building_placement(building_option_index : int) -> void:
@@ -203,7 +178,8 @@ func _place_building(building_index : int) -> void:
 	placed_building.global_position = placement_position
 	placed_building.grid_position = level.world_position_to_grid(placed_building.global_position)
 	placed_building.is_placing = false
-	level.block_position(placed_building.global_position)
+	#level.block_position(placed_building.global_position)
+	level.astar_grid.set_point_weight_scale(placed_building.grid_position,100.0)
 	placed_buildings.append(placed_building)
 	print(name, " placed building ", placed_building.name, " in global position: ", placed_building.global_position, ", local position: ", placed_building.position)
 	GameSignals.building_placed.emit(placed_building)
@@ -245,12 +221,21 @@ func _is_position_overlapping_other_buildings(_pos : Vector2) -> bool:
 
 
 func _is_position_buildable(_pos : Vector2) -> bool:
-	if level.is_position_blocked(_pos):
+	#blocked cell is not automatically non buildable?
+	#if level.is_position_blocked(_pos):
+		#return false
+	if not level.is_position_in_bounds(_pos):
 		return false
-	var cell_data = level.get_cell_data_from_position(_pos)
-	if cell_data == null:
-		return false
-	var is_buildable : bool = cell_data.get_custom_data(BUILDABLE_CELL_CUSTOM_DATA_NAME)
+	
+	var is_buildable = level.is_position_buildable(_pos)
+	
+	#var cell_data = level.get_cell_data_from_position(_pos)
+	#
+	#if cell_data == null:
+		#return false
+	#
+	#check the other layers too? For case: if there is buildable land, but other layer tile which is not buildable, for example some rocks, or water.
+	#var is_buildable : bool = cell_data.get_custom_data(BUILDABLE_CELL_CUSTOM_DATA_NAME)
 	return is_buildable
 
 

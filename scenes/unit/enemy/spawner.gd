@@ -10,6 +10,8 @@ const NO_SPAWNABLE_SCENE_WARNING : String = " There are no spawnable scene!"
 @export var start_from_timer : bool = true
 @export var id : int = 0
 @export var max_spawns : int = 3
+@export var spawn_interval : float = 3.0
+@export var start_spawn_delay_time : float = 2.0
 @export var spawnable_packed_scene : PackedScene
 @export var end_point : Marker2D
 
@@ -20,7 +22,9 @@ var level : Level = null
 func _ready() -> void:
 	if start_from_timer:
 		spawn_start_delay_timer.start()
-		
+	
+	spawn_interval_timer.wait_time = spawn_interval
+	spawn_start_delay_timer.wait_time = start_spawn_delay_time
 	spawn_interval_timer.timeout.connect(_on_spawn_interval_tick)
 	spawn_start_delay_timer.timeout.connect(_on_spawn_delay_finished)
 
