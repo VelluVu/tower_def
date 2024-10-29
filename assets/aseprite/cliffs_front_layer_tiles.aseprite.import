@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://163pvf8n2mas"
+path="res://.godot/imported/cliffs_front_layer_tiles.aseprite-98cd482f3b4f6155e94a83488a2279dd.res"
+
+[deps]
+
+source_file="res://assets/aseprite/cliffs_front_layer_tiles.aseprite"
+dest_files=["res://.godot/imported/cliffs_front_layer_tiles.aseprite-98cd482f3b4f6155e94a83488a2279dd.res"]
+
+[params]
+

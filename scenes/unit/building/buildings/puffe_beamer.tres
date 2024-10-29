@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BuildingListElement" load_steps=4 format=3 uid="uid://dutt22ks5usvk"]
+
+[ext_resource type="Script" path="res://scenes/unit/building/building_list_element.gd" id="1_dd2vg"]
+[ext_resource type="Texture2D" uid="uid://d1s2xw53fx6au" path="res://icon.svg" id="1_snonx"]
+[ext_resource type="PackedScene" uid="uid://ck38qjjtmawki" path="res://scenes/unit/building/buildings/puffe_beamer.tscn" id="2_8j083"]
+
+[resource]
+script = ExtResource("1_dd2vg")
+scene = ExtResource("2_8j083")
+id = 2
+icon = ExtResource("1_snonx")

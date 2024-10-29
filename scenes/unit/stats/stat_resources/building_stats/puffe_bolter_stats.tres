@@ -6,7 +6,7 @@
 script = ExtResource("1_wacyu")
 health = 2
 max_health = 2
-damage = 1
+damage = 2
 price = 2
 speed = 2.0
 attack_range = 6.0

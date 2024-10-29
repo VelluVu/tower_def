@@ -3,4 +3,4 @@ extends Control
 
 
 func _on_quit_button_pressed() -> void:
-	MenuSignals.to_menu.emit(true, name)
+	UISignals.resign_level.emit()

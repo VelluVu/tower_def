@@ -15,28 +15,54 @@ const WALK_ANIMATION : String = "WALK"
 const ATTACK_ANIMATION : String = "ATTACK"
 const IDLE_ANIMATION : String = "IDLE"
 
-@onready var attack_timer : Timer = $AttackTimer
 @onready var collider : CollisionShape2D = $CollisionShape2D
-@onready var animated_sprite : AnimatedSprite2D = $AnimatedSprite2D
+@onready var animation_control : AnimationControl = $AnimatedSprite2D
+@onready var hit_box : Area2D = $Hitbox
+@onready var hit_animation_player : AnimationPlayer = $HitAnimationPlayer
+@onready var gore_emitter : GoreEmitter = $GoreEmitter
 
+@export var beehave_tree : BeehaveTree :
+	get:
+		if beehave_tree == null:
+			for child in get_children():
+				if child is BeehaveTree:
+					beehave_tree = child
+		return beehave_tree
+		
+@export var attack_frame : int = 0
 @export var icon : Texture2D = null
 @export var stats_manager : StatsManager :
 	get = _get_stats_manager
 
+var is_selected : bool = false
 var is_colliding_building : bool = false
 var is_attack_finished : bool = false
 var current_waypoint_index : int = 0
+var time : float = 0
 var minimum_distance_to_end : float = 9.0
-var minimum_distance_to_next_waypoint : float = 1.0
+var minimum_distance_to_next_waypoint : float = 2.0
 var grid_position : Vector2i
 var velocity : Vector2 = Vector2.ZERO
 var last_position : Vector2
 var next_waypoint : Vector2 = Vector2.ZERO
+var previous_material : Material = null
+var original_material : Material = null
 var collision_body : Node = null
 var end_point : Marker2D = null
 var closest_building : Building = null
 var level : Level = null
 var point_path : PackedVector2Array
+
+var current_time_scale : float = 1.0
+var time_is_altered : bool = false
+
+var body_center : Vector2 :
+	get:
+		return hit_box.global_position
+
+var is_dead : bool :
+	get:
+		return stats_manager.stats.health <= 0
 
 var stats_resource_name : String :
 	get = _get_stats_resource_name
@@ -60,7 +86,23 @@ func inject_objects(_level : Level, _end_point : Marker2D) -> void:
 
 
 func take_damage(incoming_damage : int) -> void:
+	print(name, " takes damage: ", incoming_damage)
 	stats_manager.stats.health -= incoming_damage
+	gore_emitter.emit_gore(incoming_damage)
+	
+	if hit_animation_player.is_playing():
+		hit_animation_player.stop()
+		
+	hit_animation_player.play("hit")
+
+
+func change_material(_material : Material) -> void:
+	if _material == null:
+		animation_control.material = original_material
+		return
+	
+	previous_material = animation_control.material
+	animation_control.material = _material
 
 
 func iterate_next_waypoint() -> void:
@@ -100,34 +142,32 @@ func deactivate() -> void:
 	linear_velocity = Vector2.ZERO
 	contact_monitor = false
 	collider.disabled = true
+	hit_box.monitoring = false
+	hit_box.monitorable = false
+
+
+func reactivate() -> void:
+	stats_manager.stats.health = stats_manager.stats.max_health
+	contact_monitor = true
+	collider.disabled = false
+	hit_box.monitoring = true
+	hit_box.monitorable = true
 
 
 func die() -> void:
-	if animated_sprite.animation != DEATH_ANIMATION:
-		animated_sprite.play(DEATH_ANIMATION)
+	if animation_control.animation != DEATH_ANIMATION:
+		animation_control.play(DEATH_ANIMATION)
 		GameSignals.enemy_destroyed.emit(self)
 		deactivate()
 
 
-func get_closest_building() -> void:
-	var surrounding_cells : Array[Vector2i] = level.tiles.ground_layer.get_surrounding_cells(level.tiles.ground_layer.local_to_map(global_position))
-	var shortest_distance_to_end : float = 999999
-	var distance_to_end : float = 0
+func get_building_in_next_waypoint() -> Building:
+	closest_building = null
 	
-	for cell in surrounding_cells:
-		
-		var is_walkable : bool = level.is_cell_walkable(cell)
-		
-		if not is_walkable:
-			continue
-		
-		if level.has_building_in_cell_position(cell):
-			var cell_world_position : Vector2 = level.tiles.ground_layer.map_to_local(cell)
-			distance_to_end = cell_world_position.distance_to(end_point.global_position)
-			
-			if distance_to_end < shortest_distance_to_end:
-				shortest_distance_to_end = distance_to_end
-				closest_building = level.get_building_from_cell_position(cell)
+	if level.has_building_in_world_position(next_waypoint):
+		closest_building = level.get_building_from_world_position(next_waypoint)
+	
+	return closest_building
 
 
 func is_path_blocked(path : PackedVector2Array) -> bool:
@@ -139,19 +179,29 @@ func is_path_blocked(path : PackedVector2Array) -> bool:
 
 
 func _ready() -> void:
+	time = 0
 	var new_name : String = name + str(level.all_enemies.size())
 	name = new_name
 	last_position = global_position
 	grid_position = level.world_position_to_grid(global_position)
 	body_entered.connect(_on_body_enter)
 	body_exited.connect(_on_body_exit)
-	animated_sprite.animation_finished.connect(_on_animation_finished)
 	GameSignals.astar_grid_updated.connect(_on_astar_grid_updated)
+	previous_material = animation_control.material
+	original_material = animation_control.material
 	
 	if not is_in_group(GroupNames.SELECTABLE):
 		add_to_group(GroupNames.SELECTABLE)
 		
 	GameSignals.enemy_spawned.emit(self)
+	GameSignals.time_scale_change.connect(_on_time_scale_change)
+	_on_time_scale_change(Utils.game_control.time_scale)
+
+
+func _process(delta: float) -> void:
+	if time_is_altered:
+		delta *= current_time_scale
+	time += delta
 
 
 func _on_body_enter(body : Node) -> void:
@@ -168,17 +218,18 @@ func _on_body_exit(body : Node):
 		closest_building = null
 
 
-func _on_animation_finished() -> void:
-	if animated_sprite.animation == ATTACK_ANIMATION:
-		is_attack_finished = true
-
-
 func _on_astar_grid_updated() -> void:
 	if level == null:
 		push_warning(name, GRID_UPDATE_ERROR)
 		return
 
 	path_to(global_position, end_point.global_position)
+
+
+func _on_time_scale_change(time_scale : float) -> void:
+	current_time_scale = time_scale
+	time_is_altered = current_time_scale != 1.0
+	animation_control.speed_scale = current_time_scale
 
 
 func _get_is_path_end_reached() -> bool:

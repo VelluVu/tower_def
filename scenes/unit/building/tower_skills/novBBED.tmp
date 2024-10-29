@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://cfw0up3crwaou"]
+
+[ext_resource type="Script" path="res://scenes/unit/building/tower_skills/nova.gd" id="1_taevx"]
+[ext_resource type="PackedScene" uid="uid://dgedhlikxb2ml" path="res://scenes/unit/building/tower_skills/frost_nova.tscn" id="2_0166e"]
+
+[node name="Nova" type="Node2D"]
+script = ExtResource("1_taevx")
+area_effect_scene = ExtResource("2_0166e")

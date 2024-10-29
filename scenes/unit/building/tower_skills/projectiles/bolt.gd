@@ -19,16 +19,23 @@ var is_hit : bool = false
 var target_is_destroyed : bool = false
 var damage : int = 0
 var current_pierced : int = 0
+var is_time_altered : bool = false
+var current_time_scale : float = 1.0
+var scaled_live_time : float = 10.0
 var target = null
 
 
 func _ready() -> void:
+	scaled_live_time = live_time
 	if not live_timer.timeout.is_connected(_on_live_timer_timeout):
 		live_timer.timeout.connect(_on_live_timer_timeout)
 	if not GameSignals.enemy_destroyed.is_connected(_on_enemy_destroyed):
 		GameSignals.enemy_destroyed.connect(_on_enemy_destroyed)
 	if not animated_sprite.animation_finished.is_connected(_on_animation_finished):
 		animated_sprite.animation_finished.connect(_on_animation_finished)
+	if not GameSignals.time_scale_change.is_connected(_on_time_scale_change):
+		GameSignals.time_scale_change.is_connected(_on_time_scale_change)
+		_on_time_scale_change(Utils.game_control.time_scale)
 
 
 func launch(start_point, _target, _damage) -> void:
@@ -45,23 +52,35 @@ func _physics_process(delta: float) -> void:
 	if is_hit:
 		return
 	
+	delta *= current_time_scale
+	
 	if target_is_destroyed:
 		global_position += transform.x * projectile_speed * delta
 		return
 		
-	var move_direction : Vector2 = (target.global_position - global_position).normalized()
-	look_at(target.global_position)
+	var move_direction : Vector2 = (target.body_center - global_position).normalized()
+	look_at(target.body_center)
 	global_position += move_direction * projectile_speed * delta
 
 
 func _on_body_entered(body: Node2D) -> void:
+	_hit(body)
+
+
+func _on_area_entered(area: Area2D) -> void:
+	_hit(area.actor)
+
+
+func _hit(body : Node2D) -> void:
 	if is_hit:
 		return
-	
+		
 	current_pierced += 1
+	
 	if current_pierced > pierce:
 		is_hit = true
 		animated_sprite.play(DEATH_ANIMATION)
+		
 	body.take_damage(damage)
 	hits_enemy_body.emit(body)
 
@@ -82,8 +101,14 @@ func _on_enemy_destroyed(enemy : Enemy) -> void:
 	if enemy == target:
 		target_is_destroyed = true
 		live_timer.stop()
-		live_timer.wait_time = 2.0
+		live_timer.wait_time = (live_time * 0.2)
 		live_timer.start()
+
+
+func _on_time_scale_change(time_scale : float) -> void:
+	current_time_scale = time_scale
+	is_time_altered = current_time_scale != 0.0
+	scaled_live_time = live_time * (1 / current_time_scale)
 
 
 func _disable_physics() -> void:
@@ -93,7 +118,7 @@ func _disable_physics() -> void:
 
 
 func _activate() -> void:
-	live_timer.wait_time = live_time
+	live_timer.wait_time = scaled_live_time
 	is_hit = false
 	show()
 	animated_sprite.play(WALK_ANIMATION)

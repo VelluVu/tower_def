@@ -1,92 +1,95 @@
-[gd_scene load_steps=22 format=3 uid="uid://bhmw5jig6ecq1"]
+[gd_scene load_steps=28 format=3 uid="uid://bhmw5jig6ecq1"]
 
-[ext_resource type="Script" path="res://scenes/unit/building/buildings/tower.gd" id="1_wwpqv"]
+[ext_resource type="Script" path="res://scenes/unit/building/tower.gd" id="1_wwpqv"]
 [ext_resource type="Texture2D" uid="uid://dm0adggydo2b4" path="res://assets/2d_art/puffe_bolter.png" id="2_agjov"]
 [ext_resource type="Texture2D" uid="uid://vxk12gmmva1s" path="res://assets/2d_art/puffe_bolter_icon.png" id="2_dnce2"]
 [ext_resource type="PackedScene" uid="uid://crbx1w230gw8" path="res://scenes/unit/building/tower_skills/shoot_bolt.tscn" id="3_8jepy"]
+[ext_resource type="Material" uid="uid://c3sja1ms0jrnf" path="res://assets/shaders/shader_materials/building_hit_shader_material.tres" id="3_ev5ok"]
 [ext_resource type="PackedScene" uid="uid://jxr2ybiww67g" path="res://scenes/unit/building/tower_skills/projectiles/firebolt_projectile.tscn" id="4_vamui"]
+[ext_resource type="Script" path="res://scenes/unit/building/range_area.gd" id="5_5p6tn"]
 [ext_resource type="PackedScene" uid="uid://88hwq47f7r6d" path="res://scenes/unit/behaviour_trees/basic_tower_behaviour_tree/basic_tower_bt.tscn" id="5_6ycpu"]
+[ext_resource type="Script" path="res://scenes/unit/animation_control.gd" id="5_rj1sk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jxaqe"]
 size = Vector2(16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_mcoea"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_yevyw"]
 atlas = ExtResource("2_agjov")
-region = Rect2(0, 0, 16, 32)
+region = Rect2(0, 0, 18, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_0fmyb"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_88p6v"]
 atlas = ExtResource("2_agjov")
-region = Rect2(0, 32, 16, 32)
+region = Rect2(0, 34, 18, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_xahvf"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_djisq"]
 atlas = ExtResource("2_agjov")
-region = Rect2(16, 32, 16, 32)
+region = Rect2(18, 34, 18, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_12f2h"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_73ugv"]
 atlas = ExtResource("2_agjov")
-region = Rect2(32, 32, 16, 32)
+region = Rect2(36, 34, 18, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_bc220"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_43lpx"]
 atlas = ExtResource("2_agjov")
-region = Rect2(48, 32, 16, 32)
+region = Rect2(54, 34, 18, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_eh7o8"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ig4bj"]
 atlas = ExtResource("2_agjov")
-region = Rect2(0, 64, 16, 32)
+region = Rect2(0, 68, 18, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_d1urv"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_8qkp1"]
 atlas = ExtResource("2_agjov")
-region = Rect2(16, 64, 16, 32)
+region = Rect2(18, 68, 18, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vaib0"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_g4sge"]
 atlas = ExtResource("2_agjov")
-region = Rect2(32, 64, 16, 32)
+region = Rect2(36, 68, 18, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_oyl6t"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ji8al"]
 atlas = ExtResource("2_agjov")
-region = Rect2(48, 64, 16, 32)
+region = Rect2(54, 68, 18, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_bec8j"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_4cyt8"]
 atlas = ExtResource("2_agjov")
-region = Rect2(16, 0, 16, 32)
+region = Rect2(18, 0, 18, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_qff7j"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_2h0vb"]
 atlas = ExtResource("2_agjov")
-region = Rect2(32, 0, 16, 32)
+region = Rect2(36, 0, 18, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wgf4i"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_xu366"]
 atlas = ExtResource("2_agjov")
-region = Rect2(48, 0, 16, 32)
+region = Rect2(54, 0, 18, 34)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_snyl6"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_keisi"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_mcoea")
+"texture": SubResource("AtlasTexture_yevyw")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_0fmyb")
+"texture": SubResource("AtlasTexture_88p6v")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_xahvf")
+"texture": SubResource("AtlasTexture_djisq")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_12f2h")
+"texture": SubResource("AtlasTexture_73ugv")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_bc220")
+"texture": SubResource("AtlasTexture_43lpx")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_eh7o8")
+"texture": SubResource("AtlasTexture_ig4bj")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_d1urv")
+"texture": SubResource("AtlasTexture_8qkp1")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vaib0")
+"texture": SubResource("AtlasTexture_g4sge")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_oyl6t")
+"texture": SubResource("AtlasTexture_ji8al")
 }],
 "loop": false,
 "name": &"ATTACK",
@@ -94,16 +97,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_mcoea")
+"texture": SubResource("AtlasTexture_yevyw")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_bec8j")
+"texture": SubResource("AtlasTexture_4cyt8")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_qff7j")
+"texture": SubResource("AtlasTexture_2h0vb")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_wgf4i")
+"texture": SubResource("AtlasTexture_xu366")
 }],
 "loop": true,
 "name": &"IDLE",
@@ -113,7 +116,43 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_nklau"]
 radius = 96.0
 
-[node name="PuffeBolter" type="StaticBody2D" node_paths=PackedStringArray("skill") groups=["buildings", "navigation", "selectable"]]
+[sub_resource type="Animation" id="Animation_4gyud"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/enabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_ljeel"]
+resource_name = "hit"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/enabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yhdvm"]
+_data = {
+"RESET": SubResource("Animation_4gyud"),
+"hit": SubResource("Animation_ljeel")
+}
+
+[node name="PuffeBolter" type="StaticBody2D" node_paths=PackedStringArray("skill") groups=["buildings", "selectable"]]
 y_sort_enabled = true
 collision_layer = 4
 collision_mask = 0
@@ -127,9 +166,11 @@ shape = SubResource("RectangleShape2D_jxaqe")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
+material = ExtResource("3_ev5ok")
 position = Vector2(0, -8)
-sprite_frames = SubResource("SpriteFrames_snyl6")
-animation = &"IDLE"
+sprite_frames = SubResource("SpriteFrames_keisi")
+animation = &"ATTACK"
+script = ExtResource("5_rj1sk")
 metadata/_aseprite_wizard_config_ = {
 "layer": "",
 "o_ex_p": "",
@@ -142,20 +183,27 @@ metadata/_aseprite_wizard_config_ = {
 metadata/_aseprite_wizard_interface_config_ = {
 "output_section": true
 }
-metadata/_aseprite_wizard_source_file_hash_ = "8a0f5d9440e2c74ca853979d8edd1bae"
+metadata/_aseprite_wizard_source_file_hash_ = "b9499546fe8daa9eb67c95b8af0aeb2e"
 
 [node name="RangeArea" type="Area2D" parent="."]
+z_index = 10
 collision_layer = 0
 collision_mask = 2
+script = ExtResource("5_5p6tn")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RangeArea"]
 shape = SubResource("CircleShape2D_nklau")
 
 [node name="ShootBolt" parent="." instance=ExtResource("3_8jepy")]
-position = Vector2(4, -10)
+position = Vector2(2, -10)
 projectile_scene = ExtResource("4_vamui")
 
 [node name="BasicTowerBt" parent="." instance=ExtResource("5_6ycpu")]
+
+[node name="HitAnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_yhdvm")
+}
 
 [connection signal="body_entered" from="RangeArea" to="." method="_on_range_area_body_entered"]
 [connection signal="body_exited" from="RangeArea" to="." method="_on_range_area_body_exited"]

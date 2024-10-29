@@ -1,0 +1,6 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dd0v2dt1bya8r"]
+
+[ext_resource type="Shader" path="res://assets/shaders/beam_animation.gdshader" id="1_gbrmv"]
+
+[resource]
+shader = ExtResource("1_gbrmv")

@@ -3,9 +3,19 @@ extends StaticBody2D
 
 const PATH_TO_STAT_RESOURCE : String = "res://scenes/unit/stats/stat_resources/building_stats/"
 
-@onready var animated_sprite : AnimatedSprite2D = $AnimatedSprite2D
-@onready var collision_shape : CollisionShape2D = $CollisionShape2D
+signal selected(value : bool)
 
+@onready var animation_control : AnimationControl = $AnimatedSprite2D
+@onready var collision_shape : CollisionShape2D = $CollisionShape2D
+@onready var hit_animation_player : AnimationPlayer = $HitAnimationPlayer
+
+@export var beehave_tree : BeehaveTree :
+	get: 
+		if beehave_tree == null:
+			for child in get_children():
+				if child is BeehaveTree:
+					beehave_tree = child
+		return beehave_tree
 @export var id : int = 0
 @export var player_index : int = 0
 @export var closest_point_distance_limit : float = 0.9
@@ -17,7 +27,12 @@ var is_overlapping_area : bool = false
 var is_overlapping_body : bool = false
 var building_index : int = 0
 var grid_position : Vector2i = Vector2i(0,0)
+var previous_material : Material = null
+var original_material : Material = null
 
+var is_selected : bool  = false :
+	set = _set_is_selected
+	
 var level : Level :
 	get :
 		if level == null:
@@ -43,10 +58,34 @@ var corners : Array[Vector2] :
 	get = _get_corners
 
 
+func place(value : Vector2) -> void:
+	is_placing = false
+	global_position = value
+	grid_position = level.world_position_to_grid(global_position)
+	level.astar_grid.set_point_weight_scale(grid_position, 100.0)
+	is_placed = true
+	GameSignals.building_placed.emit(self)
+
+
 func take_damage(damage : int):
 	stats_manager.stats.health -= damage
+	
+	if hit_animation_player.is_playing():
+		hit_animation_player.stop()
+		
+	hit_animation_player.play("hit")
+	
 	if stats_manager.stats.health <= 0:
 		GameSignals.building_destroyed.emit(self)
+
+
+func change_material(_material : Material) -> void:
+	if _material == null:
+		animation_control.material = original_material
+		return
+		
+	previous_material = animation_control.material	
+	animation_control.material = _material
 
 
 func remove():
@@ -58,6 +97,10 @@ func _ready():
 	name = name + str(building_index) + str(player_index)
 	stats_manager.stats.changed.connect(_on_stats_changed)
 	stats_manager.stat_changed.connect(_on_stat_changed)
+	previous_material = animation_control.material
+	original_material = animation_control.material
+	GameSignals.time_scale_change.connect(_on_time_scale_change)
+	_on_time_scale_change(Utils.game_control.time_scale)
 
 
 func _on_stats_changed() -> void:
@@ -66,6 +109,11 @@ func _on_stats_changed() -> void:
 
 func _on_stat_changed(_stat_type, _stat_value) -> void:
 	pass
+
+
+func _on_time_scale_change(time_scale : float) -> void:
+	animation_control.speed_scale = time_scale
+	
 
 
 func _get_is_placed() -> bool:
@@ -89,6 +137,7 @@ func _enable_tower() -> void:
 		add_to_group(GroupNames.BUILDINGS)
 	if not is_in_group(GroupNames.SELECTABLE):
 		add_to_group(GroupNames.SELECTABLE)
+	GameSignals.forced_selection.emit(self)
 
 
 func _get_is_valid_placement() -> bool:
@@ -101,7 +150,7 @@ func _set_is_valid_placement(value : bool) -> void:
 		show()
 	else:
 		hide()
-	BuildingPlacementDrawer.draw_building(collision_shape.shape.get_rect(), position, is_valid_placement, is_placing)
+	BuildingPlacementDrawer.draw_building(collision_shape.shape.get_rect(), position + animation_control.offset, is_valid_placement, is_placing)
 
 
 func _get_is_placing() -> bool:
@@ -115,11 +164,12 @@ func _set_is_placing(value : bool) -> void:
 	is_placing = value
 	
 	if not is_placing:
-		BuildingPlacementDrawer.draw_building(collision_shape.shape.get_rect(), collision_shape.position, is_valid_placement, is_placing)
+		BuildingPlacementDrawer.draw_building(collision_shape.shape.get_rect(), collision_shape.position + animation_control.offset, is_valid_placement, is_placing)
 	else:
 		if collision_shape == null:
 			collision_shape = $CollisionShape2D
 		collision_shape.disabled = true
+		GameSignals.building_is_placing.emit(self)
 
 
 func _get_corners() -> Array[Vector2]:
@@ -145,4 +195,11 @@ func _get_stats_manager() -> StatsManager:
 
 func _get_stats_resource_name() -> String:
 	return name.rstrip("0123456789").to_snake_case().to_lower() + "_stats.tres"
-	
+
+
+func _set_is_selected(value : bool) -> void:
+	if is_selected == value:
+		return
+			
+	is_selected = value
+	selected.emit(is_selected)

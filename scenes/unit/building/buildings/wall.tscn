@@ -1,8 +1,10 @@
-[gd_scene load_steps=23 format=3 uid="uid://b78nv1og0jf3p"]
+[gd_scene load_steps=28 format=3 uid="uid://b78nv1og0jf3p"]
 
-[ext_resource type="Script" path="res://scenes/unit/building/buildings/wall.gd" id="1_kgbnu"]
+[ext_resource type="Script" path="res://scenes/unit/building/wall.gd" id="1_kgbnu"]
 [ext_resource type="Texture2D" uid="uid://c5m2tdopql7kr" path="res://assets/2d_art/wall_icon.png" id="2_0awu8"]
 [ext_resource type="Texture2D" uid="uid://dpyani76dokd0" path="res://assets/2d_art/wall.png" id="3_esse3"]
+[ext_resource type="Material" uid="uid://c3sja1ms0jrnf" path="res://assets/shaders/shader_materials/building_hit_shader_material.tres" id="3_gn0ww"]
+[ext_resource type="Script" path="res://scenes/unit/animation_control.gd" id="5_dl2w2"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_4ih23"]
 
@@ -204,6 +206,42 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="Animation" id="Animation_7p052"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/enabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_vkir5"]
+resource_name = "hit"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/enabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7alhp"]
+_data = {
+"RESET": SubResource("Animation_7p052"),
+"hit": SubResource("Animation_vkir5")
+}
+
 [node name="Wall" type="StaticBody2D" groups=["buildings", "navigation", "selectable"]]
 collision_layer = 4
 collision_mask = 2
@@ -217,8 +255,10 @@ shape = SubResource("RectangleShape2D_8pj8t")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
+material = ExtResource("3_gn0ww")
 sprite_frames = SubResource("SpriteFrames_lao3g")
 animation = &"VERTICAL_END_D"
+script = ExtResource("5_dl2w2")
 metadata/_aseprite_wizard_config_ = {
 "layer": "",
 "o_ex_p": "",
@@ -232,3 +272,8 @@ metadata/_aseprite_wizard_interface_config_ = {
 "output_section": true
 }
 metadata/_aseprite_wizard_source_file_hash_ = "c9c19047ac7fabf11ce78b5847c20a9f"
+
+[node name="HitAnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_7alhp")
+}

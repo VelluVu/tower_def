@@ -6,7 +6,7 @@ const BUILDING_INDEX_OUT_OF_BOUNDS_WARNING : String = " Cannot start building in
 const UNABLE_TO_FIND_LEVEL_LIST_ERROR : String = "Cannot find level list from path: "
 const UNABLE_TO_FIND_LEVEL_RESOURCE_ERROR : String = "Unable to find level resource from path: "
 const PATH_TO_BUILDINGS_FOLDER : String = "res://scenes/unit/building/buildings"
-const SCENE_ENDING : String = ".tscn"
+const RESOURCE_ENDING : String = ".tres"
 const BUILDINGS_NODE_NAME = "Buildings"
 const BUILDABLE_CELL_CUSTOM_DATA_NAME : String = "Buildable"
 const SELECT_BUILDING_ONE_ACTION_NAME : String = "SelectBuilding1"
@@ -16,12 +16,15 @@ const ESCAPE_ACTION_NAME : String = "Escape"
 const WALL_BUILDING_NAME : String = "wall"
 const SLASH : String = "/"
 
+@export var buildings : Array[BuildingListElement]
+
 var is_ready_to_build : bool = false
 var is_cursor_on_gui : bool = false
 var is_walkable_tile_on_buildings_cells_free : bool = false
 var current_building_option_index : int = 0
+var grid_position : Vector2i = Vector2.ZERO
 var placement_position : Vector2 = Vector2.ZERO
-var buildings : Array[PackedScene]
+var previous_pos : Vector2 = Vector2.ZERO
 var current_building : Building = null
 var level : Level = null
 var placed_buildings : Array[Building]
@@ -36,13 +39,12 @@ var is_valid_placement : bool :
 
 
 func has_enough_gold(gold_needed : int) -> bool:
-	if GameStateSignals.testing:
+	if GameSignals.testing:
 		return true
 	return gold_needed <= level.player_stats.gold
 
 
 func remove_building(_building : Building):
-	#level.free_position(_building.position)
 	level.astar_grid.set_point_weight_scale(_building.grid_position, 1.0)
 	placed_buildings.erase(_building)
 	_building.queue_free()
@@ -51,13 +53,14 @@ func remove_building(_building : Building):
 
 
 func _ready() -> void:
-	GameStateSignals.game_stop.connect(_on_game_stop)
-	GameStateSignals.game_pause.connect(_on_game_pause)
-	GameStateSignals.level_loaded.connect(_on_level_loaded)
+	GameSignals.game_stop.connect(_on_game_stop)
+	GameSignals.game_pause.connect(_on_game_pause)
+	GameSignals.level_loaded.connect(_on_level_loaded)
 	GameSignals.sell_building.connect(_on_building_sell)
 	GameSignals.building_destroyed.connect(_on_building_destroyed)
 	GameSignals.lose_game.connect(_on_lose_game)
-	buildings = _get_buildings()
+	UISignals.game_play_interface_loaded.connect(_on_game_interface_loaded)
+	_get_buildings()
 
 
 func _input(event):
@@ -112,7 +115,31 @@ func _on_level_loaded(_level : Level) -> void:
 	UISignals.building_option_selected.connect(_on_building_placement_selected)
 	UISignals.building_option_deselected.connect(_on_building_placement_deselected)
 	UISignals.mouse_on_gui.connect(_mouse_is_on_gui)
+
+
+func _on_game_interface_loaded() -> void:
+	_update_building_options_by_progress()
 	is_ready_to_build = true
+
+
+func _update_building_options_by_progress() -> void:
+	var buildings_available : int = PlayerProgress.level_progress
+	
+	if GameSignals.testing:
+		buildings_available = buildings.size()
+	
+	#there can be more levels than buildings
+	if buildings_available > buildings.size():
+		buildings_available = buildings.size()
+	
+	for element in buildings:
+		if element.id >= buildings_available:
+			print(name, " element id" , element.id , " buildings available ", buildings_available)
+			break
+		
+		UISignals.building_option_updated.emit(element.id, element.icon)
+	
+	UISignals.buildings_updated.emit(buildings_available)
 
 
 func _on_game_stop() -> void:
@@ -165,48 +192,37 @@ func _place_building(building_index : int) -> void:
 	
 	if not has_enough_gold(current_building.stats_manager.stats.price):
 		return
-		
-	placement_position = level.snap_position_to_grid(get_global_mouse_position())
+	
+	grid_position = level.world_position_to_grid(get_global_mouse_position())
+	placement_position = level.grid_position_to_world(grid_position)
 	is_valid_placement = _validate_placement_position(placement_position)
 	
 	if not is_valid_placement:
 		return
 	
-	var buildings_node : Node2D = _find_or_create_buildings_container()
-	var placed_building : Building = buildings[building_index].instantiate()
+	var buildings_node : Node2D = _get_buildings_container()
+	var placed_building : Building = buildings[building_index].scene.instantiate()
 	buildings_node.add_child(placed_building)
-	placed_building.global_position = placement_position
-	placed_building.grid_position = level.world_position_to_grid(placed_building.global_position)
-	placed_building.is_placing = false
-	#level.block_position(placed_building.global_position)
-	level.astar_grid.set_point_weight_scale(placed_building.grid_position,100.0)
+	placed_building.place(placement_position)
 	placed_buildings.append(placed_building)
-	print(name, " placed building ", placed_building.name, " in global position: ", placed_building.global_position, ", local position: ", placed_building.position)
-	GameSignals.building_placed.emit(placed_building)
-	placed_building.is_placed = true
-
-
-func _find_or_create_buildings_container() -> Node2D:
-	var buildings_node : Node2D = null
-	
-	if level.has_node(BUILDINGS_NODE_NAME):
-		buildings_node = level.get_node(BUILDINGS_NODE_NAME)
-	else:
-		buildings_node = Node2D.new()
-		buildings_node.name = BUILDINGS_NODE_NAME
-		level.add_child(buildings_node)
-	
-	buildings_node.y_sort_enabled = true
-	return buildings_node
+	current_building.is_valid_placement = false
 
 
 func _move_building_with_cursor(building : Building) -> void:
 	if not is_placing_building:
 		return
+	
+	grid_position = level.world_position_to_grid(get_global_mouse_position())
+	placement_position = level.grid_position_to_world(grid_position)
+	
+	if placement_position == previous_pos:
+		return
 		
-	placement_position = level.snap_position_to_grid(get_global_mouse_position())
+	previous_pos = placement_position
+	
 	is_valid_placement = _validate_placement_position(placement_position)
-	building.position = placement_position
+	
+	building.global_position = placement_position
 	building.is_valid_placement = is_valid_placement
 
 
@@ -215,27 +231,17 @@ func _is_position_overlapping_other_buildings(_pos : Vector2) -> bool:
 		return false
 	
 	for placed_building in placed_buildings:
-		if placed_building.position == _pos:
+		if placed_building.global_position == _pos:
 			return true
 	return false
 
 
 func _is_position_buildable(_pos : Vector2) -> bool:
-	#blocked cell is not automatically non buildable?
-	#if level.is_position_blocked(_pos):
-		#return false
 	if not level.is_position_in_bounds(_pos):
 		return false
-	
+
 	var is_buildable = level.is_position_buildable(_pos)
 	
-	#var cell_data = level.get_cell_data_from_position(_pos)
-	#
-	#if cell_data == null:
-		#return false
-	#
-	#check the other layers too? For case: if there is buildable land, but other layer tile which is not buildable, for example some rocks, or water.
-	#var is_buildable : bool = cell_data.get_custom_data(BUILDABLE_CELL_CUSTOM_DATA_NAME)
 	return is_buildable
 
 
@@ -251,7 +257,7 @@ func _set_is_placing_building(value : bool) -> void:
 	
 	if is_placing_building:
 		if current_building == null:
-			current_building = buildings[current_building_option_index].instantiate()
+			current_building = buildings[current_building_option_index].scene.instantiate()
 			add_child(current_building)
 			_move_building_with_cursor(current_building)
 	
@@ -276,34 +282,46 @@ func _set_is_valid_placement(value : bool) -> void:
 	is_valid_placement = value
 
 
-func _get_buildings() -> Array[PackedScene]:
-	var dir := DirAccess.open(PATH_TO_BUILDINGS_FOLDER)	
+func _get_buildings_container() -> Node2D:
+	var buildings_node : Node2D = null
+	
+	if level.has_node(BUILDINGS_NODE_NAME):
+		buildings_node = level.get_node(BUILDINGS_NODE_NAME)
+	else:
+		buildings_node = Node2D.new()
+		buildings_node.name = BUILDINGS_NODE_NAME
+		level.add_child(buildings_node)
+	
+	buildings_node.y_sort_enabled = true
+	return buildings_node
+
+
+func _get_buildings() -> void:
+	var dir := DirAccess.open(PATH_TO_BUILDINGS_FOLDER)
+	
 	if not dir:
 		push_error(UNABLE_TO_FIND_LEVEL_LIST_ERROR, PATH_TO_BUILDINGS_FOLDER)
-		return buildings
+		return
 	
-	var level_file_names = dir.get_files()
+	var file_names = dir.get_files()
 	
-	for building_file_name in level_file_names:
-		if not building_file_name.contains(SCENE_ENDING):
+	for file_name in file_names:
+		if not file_name.contains(RESOURCE_ENDING):
 			continue
-			
-		var full_path : String = PATH_TO_BUILDINGS_FOLDER + SLASH + building_file_name
 		
-		if ResourceLoader.exists(full_path):
-			var has_scene : bool = false
-			
-			if not buildings.is_empty():
-				for building_scene in buildings:
-					if building_scene.get_path() == full_path:
-						has_scene = true
-						
-			if not has_scene:
-				buildings.append(ResourceLoader.load(full_path))
-		else:
+		var full_path : String = PATH_TO_BUILDINGS_FOLDER + SLASH + file_name
+		
+		if not ResourceLoader.exists(full_path):
 			push_error(UNABLE_TO_FIND_LEVEL_RESOURCE_ERROR, full_path)
-	buildings.reverse()
-	return buildings
+			continue
+		
+		if not buildings.is_empty():
+			for element in buildings:
+				if element.scene.get_path() == full_path:
+					continue
+		
+		buildings.append(ResourceLoader.load(full_path))
+	buildings.sort_custom(sort_by_id)
 
 
 func sort_by_id(a, b) -> bool:

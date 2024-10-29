@@ -4,7 +4,7 @@ extends Panel
 
 @onready var button : Button = $SelectBuildingButton
 
-@export var building_index : int = 0
+var building_index : int = 0
 
 signal is_activated(is_activated : bool, option : BuildingOption)
 
@@ -12,6 +12,7 @@ signal is_activated(is_activated : bool, option : BuildingOption)
 func _ready() -> void:
 	GameSignals.building_placement_change.connect(_on_building_placement_change)
 	UISignals.focus_building_option.connect(_focus_building_changed)
+	UISignals.building_option_updated.connect(_on_building_option_updated)
 
 
 func _on_building_placement_change(is_placing : bool) -> void:
@@ -31,3 +32,10 @@ func _focus_building_changed(index : int):
 func _on_select_building_button_pressed() -> void:
 	is_activated.emit(button.button_pressed, self)
 	UISignals.building_option_selected.emit(building_index)
+
+
+func _on_building_option_updated(_building_index : int, _icon : Texture2D) -> void:
+	if building_index != _building_index:
+		return
+		
+	button.icon = _icon

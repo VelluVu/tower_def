@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cl0b24mabiwbl"
+path="res://.godot/imported/puffe_coin.aseprite-f8b2e319b8c73a2e68bfdd56506d0960.res"
+
+[deps]
+
+source_file="res://assets/aseprite/puffe_coin.aseprite"
+dest_files=["res://.godot/imported/puffe_coin.aseprite-f8b2e319b8c73a2e68bfdd56506d0960.res"]
+
+[params]
+

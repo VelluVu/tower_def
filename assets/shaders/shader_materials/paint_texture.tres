@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://dbkrwih4g521s"]
+
+[ext_resource type="Shader" path="res://assets/shaders/paint_texture.gdshader" id="1_tyoyh"]
+[ext_resource type="Texture2D" uid="uid://dlmx44mayige" path="res://assets/2d_art/bloodsplat_01.png" id="2_d8yn0"]
+
+[resource]
+shader = ExtResource("1_tyoyh")
+shader_parameter/added_texture = ExtResource("2_d8yn0")

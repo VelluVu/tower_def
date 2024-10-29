@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://cm7dgpn6dmws5"]
+
+[ext_resource type="Shader" uid="uid://bntr8mx5cvbka" path="res://assets/shaders/hit_flash.tres" id="1_d0gte"]
+
+[resource]
+resource_local_to_scene = true
+shader = ExtResource("1_d0gte")
+shader_parameter/enabled = false
+shader_parameter/hit_color = Color(1, 0.117647, 0.0980392, 1)

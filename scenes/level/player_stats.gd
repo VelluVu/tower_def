@@ -5,6 +5,10 @@ extends Node
 @export var gold : int = 6
 @export var life : int = 10
 
+var is_alive : bool :
+	get:
+		return life > 0
+
 
 func _ready() -> void:
 	GameSignals.enemy_reached_end_point.connect(_on_enemy_reach_base)

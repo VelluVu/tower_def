@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://b24d3udvrbsfp"]
+[gd_scene load_steps=5 format=3 uid="uid://b24d3udvrbsfp"]
 
 [ext_resource type="Script" path="res://scenes/ui/resource_display/resource_display.gd" id="1_w2cxb"]
 [ext_resource type="Script" path="res://scenes/ui/resource_display/resource_display_element.gd" id="2_5bfoh"]
-[ext_resource type="Texture2D" uid="uid://d1s2xw53fx6au" path="res://icon.svg" id="2_spab5"]
+[ext_resource type="Texture2D" uid="uid://bn6l506rjobtd" path="res://assets/2d_art/puffe_coin.png" id="3_vxrfw"]
+[ext_resource type="Texture2D" uid="uid://31a5cefrei6a" path="res://assets/2d_art/heart.png" id="4_57krd"]
 
 [node name="ResourceDisplay" type="Control" node_paths=PackedStringArray("resource_display_elements")]
 layout_mode = 3
@@ -11,6 +12,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_w2cxb")
 resource_display_elements = [NodePath("MarginContainer/HBoxContainer/GoldResourceDisplayElement"), NodePath("MarginContainer/HBoxContainer/LifeResourceDisplayElement2")]
 
@@ -36,7 +38,7 @@ alignment = 1
 [node name="Image" type="TextureRect" parent="MarginContainer/HBoxContainer/GoldResourceDisplayElement/HBoxContainer"]
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
-texture = ExtResource("2_spab5")
+texture = ExtResource("3_vxrfw")
 expand_mode = 1
 
 [node name="Value" type="Label" parent="MarginContainer/HBoxContainer/GoldResourceDisplayElement/HBoxContainer"]
@@ -56,7 +58,7 @@ alignment = 1
 [node name="Image" type="TextureRect" parent="MarginContainer/HBoxContainer/LifeResourceDisplayElement2/HBoxContainer"]
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
-texture = ExtResource("2_spab5")
+texture = ExtResource("4_57krd")
 expand_mode = 1
 
 [node name="Value" type="Label" parent="MarginContainer/HBoxContainer/LifeResourceDisplayElement2/HBoxContainer"]

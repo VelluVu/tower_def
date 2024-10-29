@@ -5,9 +5,9 @@
 [resource]
 resource_local_to_scene = true
 script = ExtResource("1_f7mih")
-health = 3
-max_health = 3
+health = 10
+max_health = 10
 damage = 0
 price = 1
 speed = 0.0
-range = 0.0
+attack_range = 0.0

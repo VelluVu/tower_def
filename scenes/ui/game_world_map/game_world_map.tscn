@@ -1,0 +1,294 @@
+[gd_scene load_steps=3 format=3 uid="uid://cqxju7k2sxa4q"]
+
+[ext_resource type="Script" path="res://scenes/ui/game_world_map/game_world_map.gd" id="1_mqsag"]
+[ext_resource type="Script" path="res://scenes/ui/game_world_map/map_level_element.gd" id="2_uc0yk"]
+
+[node name="GameWorldMap" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_mqsag")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Map" type="TextureRect" parent="MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Level_001" type="Panel" parent="MarginContainer/Map"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 0
+offset_left = 112.0
+offset_top = 534.0
+offset_right = 152.0
+offset_bottom = 574.0
+script = ExtResource("2_uc0yk")
+
+[node name="SelectButton" type="Button" parent="MarginContainer/Map/Level_001"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Tooltip" type="Panel" parent="MarginContainer/Map/Level_001"]
+visible = false
+custom_minimum_size = Vector2(128, 256)
+layout_mode = 0
+offset_left = 65.0
+offset_top = -192.0
+offset_right = 193.0
+offset_bottom = 64.0
+mouse_filter = 2
+
+[node name="StartButton" type="Button" parent="MarginContainer/Map/Level_001/Tooltip"]
+custom_minimum_size = Vector2(64, 32)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -8.0
+offset_top = -8.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "start"
+
+[node name="CloseButton" type="Button" parent="MarginContainer/Map/Level_001/Tooltip"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -8.0
+offset_bottom = 8.0
+grow_horizontal = 0
+text = "x"
+
+[node name="InfoMarginContainer" type="MarginContainer" parent="MarginContainer/Map/Level_001/Tooltip"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 32
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Map/Level_001/Tooltip/InfoMarginContainer"]
+layout_mode = 2
+
+[node name="LevelName" type="Label" parent="MarginContainer/Map/Level_001/Tooltip/InfoMarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+size_flags_vertical = 0
+text = "Level 001"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LevelInfo" type="Label" parent="MarginContainer/Map/Level_001/Tooltip/InfoMarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(112, 152)
+layout_mode = 2
+size_flags_vertical = 1
+text = "asdasdasdasdasdsadasdsadasdasdasdasdasdasdasdsdasdasdadsasd"
+autowrap_mode = 3
+
+[node name="Level_002" type="Panel" parent="MarginContainer/Map"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 0
+offset_left = 331.0
+offset_top = 442.0
+offset_right = 395.0
+offset_bottom = 506.0
+script = ExtResource("2_uc0yk")
+is_locked = true
+level_number = 2
+
+[node name="SelectButton" type="Button" parent="MarginContainer/Map/Level_002"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Tooltip" type="Panel" parent="MarginContainer/Map/Level_002"]
+visible = false
+custom_minimum_size = Vector2(128, 256)
+layout_mode = 0
+offset_left = 65.0
+offset_top = -192.0
+offset_right = 193.0
+offset_bottom = 64.0
+mouse_filter = 2
+
+[node name="StartButton" type="Button" parent="MarginContainer/Map/Level_002/Tooltip"]
+custom_minimum_size = Vector2(64, 32)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -8.0
+offset_top = -8.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "start"
+
+[node name="CloseButton" type="Button" parent="MarginContainer/Map/Level_002/Tooltip"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -8.0
+offset_bottom = 8.0
+grow_horizontal = 0
+text = "x"
+
+[node name="InfoMarginContainer" type="MarginContainer" parent="MarginContainer/Map/Level_002/Tooltip"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 32
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Map/Level_002/Tooltip/InfoMarginContainer"]
+layout_mode = 2
+
+[node name="LevelName" type="Label" parent="MarginContainer/Map/Level_002/Tooltip/InfoMarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+size_flags_vertical = 0
+text = "Level 002"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LevelInfo" type="Label" parent="MarginContainer/Map/Level_002/Tooltip/InfoMarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(112, 152)
+layout_mode = 2
+size_flags_vertical = 1
+text = "asdasdasdasdasdsadasdsadasdasdasdasdasdasdasdsdasdasdadsasd"
+autowrap_mode = 3
+
+[node name="Level_003" type="Panel" parent="MarginContainer/Map"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 0
+offset_left = 152.0
+offset_top = 259.0
+offset_right = 216.0
+offset_bottom = 323.0
+script = ExtResource("2_uc0yk")
+is_locked = true
+level_number = 3
+
+[node name="SelectButton" type="Button" parent="MarginContainer/Map/Level_003"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Tooltip" type="Panel" parent="MarginContainer/Map/Level_003"]
+visible = false
+custom_minimum_size = Vector2(128, 256)
+layout_mode = 0
+offset_left = 65.0
+offset_top = -192.0
+offset_right = 193.0
+offset_bottom = 64.0
+mouse_filter = 2
+
+[node name="StartButton" type="Button" parent="MarginContainer/Map/Level_003/Tooltip"]
+custom_minimum_size = Vector2(64, 32)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -8.0
+offset_top = -8.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "start"
+
+[node name="CloseButton" type="Button" parent="MarginContainer/Map/Level_003/Tooltip"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -8.0
+offset_bottom = 8.0
+grow_horizontal = 0
+text = "x"
+
+[node name="InfoMarginContainer" type="MarginContainer" parent="MarginContainer/Map/Level_003/Tooltip"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 32
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Map/Level_003/Tooltip/InfoMarginContainer"]
+layout_mode = 2
+
+[node name="LevelName" type="Label" parent="MarginContainer/Map/Level_003/Tooltip/InfoMarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+size_flags_vertical = 0
+text = "Level 003"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LevelInfo" type="Label" parent="MarginContainer/Map/Level_003/Tooltip/InfoMarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(112, 152)
+layout_mode = 2
+size_flags_vertical = 1
+text = "asdasdasdasdasdsadasdsadasdasdasdasdasdasdasdsdasdasdadsasd"
+autowrap_mode = 3
+
+[node name="ToMenuButton" type="Button" parent="."]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -8.0
+offset_bottom = 8.0
+grow_horizontal = 0
+text = "Menu"

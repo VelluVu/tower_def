@@ -64,64 +64,64 @@ func _update_sprite() -> void:
 	var has_building_down : bool = neighbour_buildings.has(grid_position + Vector2i(0,1))
 	
 	if has_building_left and has_building_right and has_building_down and has_building_up:
-		animated_sprite.play(CONNECTOR_LRDU)
+		animation_control.play(CONNECTOR_LRDU)
 		return
 	
 	if not has_building_left and not has_building_right and not has_building_up and not has_building_down:
-		animated_sprite.play(CONNECTOR_X)
+		animation_control.play(CONNECTOR_X)
 		return
 	
 	if has_building_left and has_building_right and not has_building_down and not has_building_up:
-		animated_sprite.play(HORIZONTAL)
+		animation_control.play(HORIZONTAL)
 		return
 	
 	if has_building_up and has_building_down and not has_building_left and not has_building_right:
-		animated_sprite.play(VERTICAL)
+		animation_control.play(VERTICAL)
 		return
 	
 	if has_building_left and not has_building_right and not has_building_up and not has_building_down:
-		animated_sprite.play(HORIZONTAL_END_R)
+		animation_control.play(HORIZONTAL_END_R)
 		return
 	
 	if has_building_right and not has_building_left and not has_building_up and not has_building_down:
-		animated_sprite.play(HORIZONTAL_END_L)
+		animation_control.play(HORIZONTAL_END_L)
 		return
 	
 	if has_building_up and not has_building_right and not has_building_left and not has_building_down:
-		animated_sprite.play(VERTICAL_END_D)
+		animation_control.play(VERTICAL_END_D)
 		return
 	
 	if has_building_down and not has_building_right and not has_building_left and not has_building_up:
-		animated_sprite.play(VERTICAL_END_U)
+		animation_control.play(VERTICAL_END_U)
 		return
 	
 	if has_building_left and has_building_right and has_building_up and not has_building_down:
-		animated_sprite.play(CONNECTOR_LRU)
+		animation_control.play(CONNECTOR_LRU)
 		return
 	
 	if has_building_left and has_building_right and has_building_down and not has_building_up:
-		animated_sprite.play(CONNECTOR_LRD)
+		animation_control.play(CONNECTOR_LRD)
 		return
 	
 	if has_building_left and has_building_up and has_building_down and not has_building_right:
-		animated_sprite.play(CONNECTOR_LUD)
+		animation_control.play(CONNECTOR_LUD)
 		return
 	
 	if has_building_right and has_building_up and has_building_down and not has_building_left:
-		animated_sprite.play(CONNECTOR_RUD)
+		animation_control.play(CONNECTOR_RUD)
 		return
 	
 	if has_building_left and has_building_up and not has_building_right and not has_building_down:
-		animated_sprite.play(CONNECTOR_LU)
+		animation_control.play(CONNECTOR_LU)
 		return
 	
 	if has_building_left and has_building_down and not has_building_right and not has_building_up:
-		animated_sprite.play(CONNECTOR_LD)
+		animation_control.play(CONNECTOR_LD)
 		return
 	
 	if has_building_right and has_building_down and not has_building_left and not has_building_up:
-		animated_sprite.play(CONNECTOR_RD)
+		animation_control.play(CONNECTOR_RD)
 		return
 	
 	if has_building_right and has_building_up and not has_building_left and not has_building_down:
-		animated_sprite.play(CONNECTOR_UR)
+		animation_control.play(CONNECTOR_UR)

@@ -7,8 +7,12 @@ extends TowerSkill
 var projectile_pool : Array[Node2D]
 
 
-func use(target, damage : int) -> void:
-	super(target, damage)
+func use(_target) -> void:
+	super(_target)
+
+
+func activate() -> void:
+	super()
 	var projectile : Bolt = _get_projectile()
 	projectile.launch(global_position, target, damage)
 

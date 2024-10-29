@@ -5,9 +5,9 @@
 [resource]
 resource_local_to_scene = true
 script = ExtResource("1_rw2ni")
-health = 2
-max_health = 2
+health = 10
+max_health = 10
 damage = 1
 price = 1
-speed = 30.0
-range = 0.0
+speed = 25.0
+attack_range = 0.0

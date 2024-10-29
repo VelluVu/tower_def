@@ -9,6 +9,7 @@ signal stat_changed(stat_type, value)
 var stats : Stats
 var previous_stats : Stats
 
+
 func _ready() -> void:
 	stats = base_stats.duplicate()
 	previous_stats = stats.duplicate()
@@ -40,6 +41,9 @@ func _on_stats_changed() -> void:
 		stat_changed.emit(Utils.StatType.AttackRange, stats.attack_range)
 		previous_stats.attack_range = stats.attack_range
 
+
+func get_range_in_tiles() -> float:
+	return stats.attack_range * Utils.TILE_SIZE + (Utils.TILE_SIZE * 0.5)
 
 #func set_health(new_value : int):
 	#if stats.health == new_value:

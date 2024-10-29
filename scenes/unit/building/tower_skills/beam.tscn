@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://ubcjqg1p0ppt"]
+
+[ext_resource type="Script" path="res://scenes/unit/building/tower_skills/beam.gd" id="1_cdk7v"]
+[ext_resource type="Texture2D" uid="uid://bixi4wfgm28ri" path="res://assets/2d_art/frost_beam.png" id="2_032iv"]
+[ext_resource type="Material" uid="uid://dd0v2dt1bya8r" path="res://assets/shaders/shader_materials/beam_shader_material.tres" id="2_wehkd"]
+[ext_resource type="Script" path="res://scenes/custom_timer.gd" id="4_7sxsx"]
+
+[node name="Beam" type="Node2D"]
+script = ExtResource("1_cdk7v")
+
+[node name="Line2D" type="Line2D" parent="."]
+z_index = 10
+texture_repeat = 2
+material = ExtResource("2_wehkd")
+points = PackedVector2Array(0, 0, 0, 0)
+width = 16.0
+texture = ExtResource("2_032iv")
+texture_mode = 1
+
+[node name="DamageTimer" type="Timer" parent="."]
+script = ExtResource("4_7sxsx")
+
+[node name="CooldownTimer" type="Timer" parent="."]
+one_shot = true
+script = ExtResource("4_7sxsx")
+
+[node name="CastTimer" type="Timer" parent="."]
+one_shot = true
+script = ExtResource("4_7sxsx")

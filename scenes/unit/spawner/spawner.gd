@@ -30,6 +30,8 @@ func _ready() -> void:
 	
 	if level == null:
 		level = get_parent()
+	
+	level.total_spawns += max_spawns
 
 
 func _on_spawn_delay_finished() -> void:

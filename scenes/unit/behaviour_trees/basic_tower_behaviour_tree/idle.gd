@@ -3,11 +3,11 @@ extends ActionLeaf
 
 
 func tick(actor : Node, _blackboard : Blackboard) -> int:
-	if actor.animated_sprite.animation != actor.IDLE_ANIMATION:
-		actor.animated_sprite.play(actor.IDLE_ANIMATION)
+	if actor.animation_control.animation != actor.IDLE_ANIMATION:
+		actor.animation_control.play(actor.IDLE_ANIMATION)
 		return SUCCESS
 	else:
-		if not actor.animated_sprite.is_playing():
-			actor.animated_sprite.play(actor.IDLE_ANIMATION)
+		if not actor.animation_control.is_playing():
+			actor.animation_control.play(actor.IDLE_ANIMATION)
 		
 	return SUCCESS

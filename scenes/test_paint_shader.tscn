@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cynwrump0vdfy"]
+
+[ext_resource type="Material" uid="uid://dbkrwih4g521s" path="res://assets/shaders/shader_materials/paint_texture.tres" id="1_8clm3"]
+[ext_resource type="Texture2D" uid="uid://c5m2tdopql7kr" path="res://assets/2d_art/wall_icon.png" id="2_co2fv"]
+
+[node name="TestPaintShader" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = ExtResource("1_8clm3")
+texture = ExtResource("2_co2fv")

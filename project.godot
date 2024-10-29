@@ -17,8 +17,6 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-MenuSignals="*res://scenes/menu_signals.gd"
-GameStateSignals="*res://scenes/game_state_signals.gd"
 UISignals="*res://scenes/ui_signals.gd"
 BuildingPlacementDrawer="*res://scenes/unit/building/building_placement_drawer.gd"
 GameSignals="*res://scenes/game_signals.gd"
@@ -26,10 +24,15 @@ GroupNames="*res://scenes/group_names.gd"
 Utils="*res://scenes/utils.gd"
 BeehaveGlobalMetrics="*res://addons/beehave/metrics/beehave_global_metrics.gd"
 BeehaveGlobalDebugger="*res://addons/beehave/debug/global_debugger.gd"
+PlayerProgress="*res://scenes/player_progress.gd"
 
 [debug]
 
 gdscript/warnings/unused_signal=0
+
+[display]
+
+window/stretch/mode="viewport"
 
 [dotnet]
 
@@ -42,7 +45,6 @@ enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg", "res://addon
 [global_group]
 
 buildings=""
-navigation=""
 selectable=""
 
 [input]

@@ -25,14 +25,15 @@ var loaded_level_scenes : Array[Node]
 enum SceneType {Level, UI}
 
 
-func load_level_by_number(level_number : int, parent_scene : Node):
+func load_level_by_number(level_number : int, parent_scene : Node) -> void:
 	for level in level_scenes:
 		var current_level_name_formatted : String = _remove_ending_after_marking_from_file_name(level.get_path(), SLASH, ENDING_CHAR_COUNT)
-		var current_level_number : int = _get_level_number_from_level_name(current_level_name_formatted)
+		var current_level_number = _get_level_number_from_level_name(current_level_name_formatted)
 		
 		if current_level_number == level_number:
 			current_level = level.instantiate()
 			parent_scene.add_child(current_level)
+			return
 
 
 func load_scene_by_name(scene_name : String, scene_type : SceneType, parent_scene : Node):
@@ -86,29 +87,36 @@ func is_scene_loaded(scene_name : String, scene_type : SceneType) -> bool:
 	return false
 
 
+func unload_all_ui_scenes() -> void:
+	for scene in loaded_ui_scenes:
+		scene.queue_free()
+	loaded_ui_scenes.clear()
+
+
 func unload_current_level():
 	current_level.queue_free()
-	
-	
+
+
 func unload_scene_by_name(scene_name : String, scene_type : SceneType):
-	scene_name = scene_name.to_lower()
-	scene_name = scene_name.replace("_", "")
+	scene_name = scene_name.to_snake_case()
 	
 	if scene_type == SceneType.Level:
 		for scene in loaded_level_scenes:
-			var current_scene_name : String = scene.name.to_lower()
+			var current_scene_name : String = scene.name.to_snake_case()
 			
 			if current_scene_name == scene_name:
 				loaded_level_scenes.erase(scene)
 				scene.queue_free()
+				return
 				
 	elif scene_type == SceneType.UI:
 		for scene in loaded_ui_scenes:
-			var current_scene_name : String = scene.name.to_lower()
+			var current_scene_name : String = scene.name.to_snake_case()
 			
 			if current_scene_name == scene_name:
 				loaded_ui_scenes.erase(scene)
 				scene.queue_free()
+				return
 
 
 func _ready() -> void:

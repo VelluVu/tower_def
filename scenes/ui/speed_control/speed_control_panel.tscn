@@ -1,0 +1,68 @@
+[gd_scene load_steps=2 format=3 uid="uid://bob4ocak1ttmy"]
+
+[ext_resource type="Script" path="res://scenes/ui/speed_control/speed_control_panel.gd" id="1_v0xnj"]
+
+[node name="SpeedControlPanel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_v0xnj")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -108.0
+offset_bottom = 40.0
+grow_horizontal = 0
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+
+[node name="Panel" type="Panel" parent="MarginContainer"]
+custom_minimum_size = Vector2(108, 32)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Slower" type="Button" parent="MarginContainer/Panel/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+text = "<<"
+
+[node name="Faster" type="Button" parent="MarginContainer/Panel/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+text = ">>"
+
+[node name="SpeedInfo" type="Panel" parent="MarginContainer/Panel/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+
+[node name="Value" type="Label" parent="MarginContainer/Panel/MarginContainer/HBoxContainer/SpeedInfo"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "0.0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="MarginContainer/Panel/MarginContainer/HBoxContainer/Slower" to="." method="_on_slower_pressed"]
+[connection signal="pressed" from="MarginContainer/Panel/MarginContainer/HBoxContainer/Faster" to="." method="_on_faster_pressed"]

@@ -34,12 +34,18 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/separation = 8
 
+[node name="ContinueButton" type="Button" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(192, 64)
+layout_mode = 2
+theme = ExtResource("1_fxjng")
+text = "Continue"
+
 [node name="StartButton" type="Button" parent="MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(192, 64)
 layout_mode = 2
 focus_mode = 0
 theme = ExtResource("1_fxjng")
-text = "Start"
+text = "Start New Game"
 
 [node name="OptionsButton" type="Button" parent="MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 64)
@@ -55,6 +61,7 @@ focus_mode = 0
 theme = ExtResource("1_fxjng")
 text = "Quit"
 
+[connection signal="pressed" from="MarginContainer/VBoxContainer/ContinueButton" to="." method="_on_continue_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/OptionsButton" to="." method="_on_options_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

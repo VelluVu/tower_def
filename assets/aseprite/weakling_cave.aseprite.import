@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://c3y6ym3sihcx0"
+path="res://.godot/imported/weakling_cave.aseprite-378f5b5aad10945cd20a4b68f897ec08.res"
+
+[deps]
+
+source_file="res://assets/aseprite/weakling_cave.aseprite"
+dest_files=["res://.godot/imported/weakling_cave.aseprite-378f5b5aad10945cd20a4b68f897ec08.res"]
+
+[params]
+
