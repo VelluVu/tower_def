@@ -1,6 +1,6 @@
 [gd_scene load_steps=25 format=3 uid="uid://dgedhlikxb2ml"]
 
-[ext_resource type="Script" path="res://scenes/unit/building/tower_skills/area_effect.gd" id="1_0o8jt"]
+[ext_resource type="Script" path="res://scenes/unit/skills/area_effect.gd" id="1_0o8jt"]
 [ext_resource type="Texture2D" uid="uid://bil4lbsq3ndsw" path="res://assets/2d_art/frost_nova.png" id="2_epe6g"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8able"]
@@ -203,6 +203,7 @@ collision_layer = 0
 collision_mask = 2
 script = ExtResource("1_0o8jt")
 animation_name = "frost_nova"
+damage_type = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_8able")

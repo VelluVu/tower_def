@@ -32,3 +32,25 @@ enum TileEffect
 	Burning = 1 << 5,
 	Poisoning = 1 << 6,
 }
+
+enum DamageType
+{
+	Normal,
+	Fire,
+	Frost,
+	Poison,
+}
+
+
+func get_damage_type_color(damage_type : DamageType) -> Color:
+	match(damage_type):
+		DamageType.Normal:
+			return Color.WHITE
+		DamageType.Fire:
+			return Color.FIREBRICK
+		DamageType.Frost:
+			return Color.CYAN
+		DamageType.Poison:
+			return Color.CHARTREUSE
+		_:
+			return Color.WHITE

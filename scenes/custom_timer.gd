@@ -1,7 +1,7 @@
 class_name CustomTimer
 extends Timer
 
-
+#updates time scale!
 var base_wait_time : float = 0.0 :
 	set(value):
 		if value < 0.0:

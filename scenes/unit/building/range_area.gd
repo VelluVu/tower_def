@@ -10,13 +10,17 @@ var actor : Node2D :
 
 
 func _ready() -> void:
-	actor.selected.connect(_on_selected)
+	GameSignals.deselected_unit.connect(_on_selected)
+	GameSignals.selected_unit.connect(_on_selected)
 
 
-func _on_selected(_value : bool) -> void:
+func _on_selected(unit : Node2D) -> void:
+	if unit != actor:
+		return
+		
 	queue_redraw()
 
 
 func _draw() -> void:
-	if not actor.is_placed or actor.is_selected:
+	if actor.selectable.is_selected:
 		draw_circle(Vector2(0,0), actor.stats_manager.get_range_in_tiles(), Color.DARK_VIOLET, false)

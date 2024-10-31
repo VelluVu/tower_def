@@ -33,7 +33,6 @@ func get_gore() -> GoreEffect:
 func create_gore() -> GoreEffect:
 	var new_gore : GoreEffect = gore_effect_scene.instantiate()
 	var new_name : String = new_gore.name + str(pool.size())
-	print(new_name)
 	new_gore.name = new_name
 	add_child(new_gore)
 	pool.push_back(new_gore)

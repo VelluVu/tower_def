@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://7w5d3s6v07hi"]
+
+[ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect.gd" id="1_unacm"]
+[ext_resource type="Script" path="res://scenes/custom_timer.gd" id="2_hs0e7"]
+
+[node name="OvertimeEffect" type="Node"]
+script = ExtResource("1_unacm")
+
+[node name="TickTimer" type="Timer" parent="."]
+script = ExtResource("2_hs0e7")

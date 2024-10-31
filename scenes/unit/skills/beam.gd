@@ -1,10 +1,11 @@
 class_name Beam
-extends TowerSkill
+extends Skill
 
 
 @onready var line : Line2D = $Line2D
 @onready var damage_timer : CustomTimer = $DamageTimer
 
+@export var damage_type : Utils.DamageType = Utils.DamageType.Normal
 @export var end_line_index : int = 1
 @export var tick_speed : float = 1.0
 
@@ -29,24 +30,11 @@ func _process(delta: float) -> void:
 	if position_update_timer > position_update_interval:
 		position_update_timer = 0
 		
-		if target == null:
-			is_beaming = false
-			return
-			
-		if not actor.targets.has(target) or target.is_dead:
+		if not is_valid_target:
 			is_beaming = false
 			return
 		
 		line.set_point_position(end_line_index, (target.body_center - global_position))
-
-
-func use(_target):
-	if is_beaming:
-		return
-	if _target == null:
-		is_beaming = false
-		return
-	super(_target)
 
 
 func activate() -> void:
@@ -54,17 +42,18 @@ func activate() -> void:
 	is_beaming = true
 
 
+func stop() -> void:
+	super()
+	is_beaming = false
+
+
 func _on_timer_tick() -> void:
-	if target == null:
-		is_beaming = false
-		return
-	
-	if target.is_dead:
+	if not is_valid_target:
 		is_beaming = false
 		return
 	
 	line.set_point_position(end_line_index, (target.body_center - global_position))
-	target.take_damage(damage)
+	target.take_damage(damage, damage_type)
 
 
 func _set_is_beaming(value : bool) -> void:
@@ -75,7 +64,9 @@ func _set_is_beaming(value : bool) -> void:
 	
 	if is_beaming:
 		line.set_point_position(end_line_index, (target.body_center - global_position))
+		target.take_damage(damage, damage_type)
 		damage_timer.start()
 	else:
 		line.set_point_position(1, Vector2.ZERO)
 		damage_timer.stop()
+		is_ready = true

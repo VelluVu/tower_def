@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://bljkhytt20h3f"]
+[gd_scene load_steps=39 format=3 uid="uid://bljkhytt20h3f"]
 
 [ext_resource type="Script" path="res://scenes/unit/enemy/enemy.gd" id="1_pnuqq"]
 [ext_resource type="Texture2D" uid="uid://yv52buwdecha" path="res://assets/2d_art/weakling_icon.png" id="2_w8sqj"]
@@ -9,6 +9,8 @@
 [ext_resource type="Script" path="res://scenes/unit/animation_control.gd" id="5_ulvdv"]
 [ext_resource type="Script" path="res://scenes/unit/gore_emitter.gd" id="7_6ioyy"]
 [ext_resource type="PackedScene" uid="uid://brhay0uy0kf4" path="res://scenes/unit/blood_spill.tscn" id="8_st5r0"]
+[ext_resource type="PackedScene" uid="uid://dd11cco5cukhw" path="res://scenes/unit/unit_selection/selectable_unit.tscn" id="10_hy764"]
+[ext_resource type="PackedScene" uid="uid://cuv1fhpdbb5su" path="res://scenes/unit/skills/melee_attack.tscn" id="11_rdqhh"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_43mte"]
 friction = 0.0
@@ -225,7 +227,7 @@ _data = {
 "hit": SubResource("Animation_1eqk6")
 }
 
-[node name="Weakling" type="RigidBody2D" groups=["selectable"]]
+[node name="Weakling" type="RigidBody2D"]
 collision_layer = 2
 collision_mask = 0
 physics_material_override = SubResource("PhysicsMaterial_43mte")
@@ -261,7 +263,7 @@ metadata/_aseprite_wizard_interface_config_ = {
 }
 metadata/_aseprite_wizard_source_file_hash_ = "910676993686eead82d0d7cd19a81c3d"
 
-[node name="BasicEnemyBt" parent="." instance=ExtResource("3_5rsgu")]
+[node name="BeehaveTree" parent="." instance=ExtResource("3_5rsgu")]
 
 [node name="Hitbox" type="Area2D" parent="."]
 position = Vector2(0, -4)
@@ -281,3 +283,12 @@ libraries = {
 position = Vector2(0, -5)
 script = ExtResource("7_6ioyy")
 gore_effect_scene = ExtResource("8_st5r0")
+
+[node name="SelectableUnit" parent="." instance=ExtResource("10_hy764")]
+
+[node name="MeleeAttack" parent="." instance=ExtResource("11_rdqhh")]
+base_cast_time = 0.5
+base_cooldown = 1.5
+
+[node name="PopUpSpot" type="Node2D" parent="."]
+position = Vector2(0, -13)

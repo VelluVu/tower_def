@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://dla7not0kpg61"]
+[gd_scene load_steps=36 format=3 uid="uid://dla7not0kpg61"]
 
 [ext_resource type="Script" path="res://scenes/unit/enemy/enemy.gd" id="1_lrdqx"]
 [ext_resource type="Texture2D" uid="uid://bcsx4skuwfa4w" path="res://assets/2d_art/fastling.png" id="3_mh7rb"]
@@ -8,6 +8,8 @@
 [ext_resource type="Script" path="res://scenes/unit/hitbox.gd" id="6_1aaoe"]
 [ext_resource type="Script" path="res://scenes/unit/gore_emitter.gd" id="7_834u5"]
 [ext_resource type="PackedScene" uid="uid://brhay0uy0kf4" path="res://scenes/unit/blood_spill.tscn" id="8_seeal"]
+[ext_resource type="PackedScene" uid="uid://dd11cco5cukhw" path="res://scenes/unit/unit_selection/selectable_unit.tscn" id="9_njrru"]
+[ext_resource type="PackedScene" uid="uid://cuv1fhpdbb5su" path="res://scenes/unit/skills/melee_attack.tscn" id="10_jqtfa"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_43mte"]
 friction = 0.0
@@ -210,14 +212,13 @@ _data = {
 "hit": SubResource("Animation_1eqk6")
 }
 
-[node name="Fastling" type="RigidBody2D" groups=["selectable"]]
+[node name="Fastling" type="RigidBody2D"]
 collision_layer = 2
 collision_mask = 0
 physics_material_override = SubResource("PhysicsMaterial_43mte")
 contact_monitor = true
 max_contacts_reported = 1
 script = ExtResource("1_lrdqx")
-attack_frame = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_lot5f")
@@ -247,7 +248,7 @@ metadata/_aseprite_wizard_interface_config_ = {
 }
 metadata/_aseprite_wizard_source_file_hash_ = "a9cb54de91f9bfa789113d06c277ba8f"
 
-[node name="BasicEnemyBt" parent="." instance=ExtResource("5_nnof0")]
+[node name="BeehaveTree" parent="." instance=ExtResource("5_nnof0")]
 
 [node name="Hitbox" type="Area2D" parent="."]
 position = Vector2(0, -4)
@@ -268,3 +269,12 @@ libraries = {
 position = Vector2(0, -5)
 script = ExtResource("7_834u5")
 gore_effect_scene = ExtResource("8_seeal")
+
+[node name="SelectableUnit" parent="." instance=ExtResource("9_njrru")]
+
+[node name="MeleeAttack" parent="." instance=ExtResource("10_jqtfa")]
+base_cast_time = 0.5
+base_cooldown = 1.5
+
+[node name="PopUpSpot" type="Node2D" parent="."]
+position = Vector2(0, -8)

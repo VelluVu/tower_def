@@ -1,19 +1,10 @@
 class_name Tower
 extends Building
 
-#let the tower to be behaviour tree driven, and add features as components to allow reuse of this inherited class on other towers aswell.
-#support behaviour tree functionality, functions for selecting enemy targets on range, cast projectile/spell etc...
-#how to select targets in range without area2D in godot, or use circle area2d?
-
-#basic shooting is added as component and basic bt tries to use it through this actor.
-#for basic shooting create and add projectile as component, tween the projectile to hit the target 100% accuracy.
-const IDLE_ANIMATION = "IDLE"
-const ATTACK_ANIMATION = "ATTACK"
-
 @onready var range_area : Area2D = $RangeArea 
 @onready var area_shape : CollisionShape2D = $RangeArea/CollisionShape2D
 
-@export var skill : TowerSkill
+@export var skill : Skill
 
 var targets : Array[Node2D]
 var target : Node2D = null
@@ -55,12 +46,10 @@ func _on_enemy_destroyed(enemy : Enemy) -> void:
 
 
 func _on_range_area_body_entered(body: Node2D) -> void:
-	print(body.name, " entered range area")
 	targets.append(body)
 
 
 func _on_range_area_body_exited(body: Node2D) -> void:
-	print(body.name, " left range area")
 	if body == target:
 		target = null
 		
@@ -88,10 +77,12 @@ func get_closest_target_to_end() -> Node2D:
 		return null
 	
 	var closest : Node2D = targets[0]
+	
 	for ctarget in targets:
 		if ctarget.is_dead or ctarget == closest:
 			continue
-		if ctarget.point_path.size() <= closest.point_path.size():
+		
+		if ctarget.get_remaining_path_waypoint_count() < closest.get_remaining_path_waypoint_count():
 			closest = ctarget
 	
 	return closest

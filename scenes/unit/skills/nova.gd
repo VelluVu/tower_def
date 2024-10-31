@@ -1,5 +1,5 @@
 class_name Nova
-extends TowerSkill
+extends Skill
 
 
 @export var area_effect_scene : PackedScene

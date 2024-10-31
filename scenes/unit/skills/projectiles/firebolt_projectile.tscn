@@ -1,7 +1,9 @@
-[gd_scene load_steps=29 format=3 uid="uid://jxr2ybiww67g"]
+[gd_scene load_steps=31 format=3 uid="uid://jxr2ybiww67g"]
 
-[ext_resource type="Script" path="res://scenes/unit/building/tower_skills/projectiles/bolt.gd" id="1_e5q1r"]
+[ext_resource type="Script" path="res://scenes/unit/skills/projectiles/bolt.gd" id="1_e5q1r"]
 [ext_resource type="Texture2D" uid="uid://4oayuhhcof32" path="res://assets/2d_art/fire_bolt.png" id="2_t0jib"]
+[ext_resource type="Script" path="res://scenes/unit/animation_control.gd" id="3_co6gi"]
+[ext_resource type="Script" path="res://scenes/custom_timer.gd" id="3_ep36g"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_85n5x"]
 atlas = ExtResource("2_t0jib")
@@ -207,12 +209,15 @@ y_sort_enabled = true
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("1_e5q1r")
+damage_type = 1
 pierce = 0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_hvlxu")
 animation = &"WALK"
+frame_progress = 0.746731
+script = ExtResource("3_co6gi")
 metadata/_aseprite_wizard_interface_config_ = {
 "layer_section": true,
 "output_section": true,
@@ -235,6 +240,7 @@ shape = SubResource("CircleShape2D_rkk6h")
 [node name="LiveTimer" type="Timer" parent="."]
 wait_time = 5.0
 one_shot = true
+script = ExtResource("3_ep36g")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -2,6 +2,8 @@ class_name BloodSplat
 extends Node2D
 
 
+@onready var live_timer : CustomTimer = $LiveTimer
+
 @export var textures : Array[Texture2D]
 @export var life_time : float = 15.0
 
@@ -11,6 +13,9 @@ var is_draw : bool :
 
 
 func splat(_pos : Vector2) -> void:
+	if not live_timer.timeout.is_connected(_on_life_time_end):
+		live_timer.timeout.connect(_on_life_time_end)
+	live_timer.base_wait_time = life_time
 	global_position = _pos
 	is_draw = true
 
@@ -29,7 +34,7 @@ func _set_is_draw(value : bool) -> void:
 	if is_draw:
 		texture_to_draw = textures.pick_random()
 		queue_redraw()
-		get_tree().create_timer(life_time).timeout.connect(_on_life_time_end)
+		live_timer.start()
 
 
 func _on_life_time_end() -> void:

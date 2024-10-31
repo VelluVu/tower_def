@@ -1,5 +1,5 @@
 class_name ShootBolt
-extends TowerSkill
+extends Skill
 
 
 @export var projectile_scene : PackedScene

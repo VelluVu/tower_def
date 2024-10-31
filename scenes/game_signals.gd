@@ -10,6 +10,7 @@ signal building_placement_change(is_placing : bool)
 signal enemy_reached_end_point(enemy : Enemy)
 signal enemy_destroyed(enemy : Enemy)
 signal enemy_spawned(enemy : Enemy)
+signal damage_taken(position : Vector2, amount : int, type : Utils.DamageType)
 
 signal selected_unit(unit : Node2D)
 signal deselected_unit(unit : Node2D)

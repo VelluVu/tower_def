@@ -1,13 +1,16 @@
 class_name Building
 extends StaticBody2D
 
-const PATH_TO_STAT_RESOURCE : String = "res://scenes/unit/stats/stat_resources/building_stats/"
 
-signal selected(value : bool)
+const PATH_TO_STAT_RESOURCE : String = "res://scenes/unit/stats/stat_resources/building_stats/"
 
 @onready var animation_control : AnimationControl = $AnimatedSprite2D
 @onready var collision_shape : CollisionShape2D = $CollisionShape2D
 @onready var hit_animation_player : AnimationPlayer = $HitAnimationPlayer
+@onready var selectable : SelectableUnit = $SelectableUnit
+@onready var placement_validator : PlacementValidator = $PlacementValidator
+@onready var pop_up_spot : Node2D = $PopUpSpot
+
 
 @export var beehave_tree : BeehaveTree :
 	get: 
@@ -23,16 +26,14 @@ signal selected(value : bool)
 @export var stats_manager : StatsManager :
 	get = _get_stats_manager
 
+var is_dead : bool :
+	get:
+		return stats_manager.stats.health <= 0
 var is_overlapping_area : bool = false
 var is_overlapping_body : bool = false
 var building_index : int = 0
 var grid_position : Vector2i = Vector2i(0,0)
-var previous_material : Material = null
-var original_material : Material = null
 
-var is_selected : bool  = false :
-	set = _set_is_selected
-	
 var level : Level :
 	get :
 		if level == null:
@@ -67,8 +68,9 @@ func place(value : Vector2) -> void:
 	GameSignals.building_placed.emit(self)
 
 
-func take_damage(damage : int):
+func take_damage(damage : int, damage_type : Utils.DamageType):
 	stats_manager.stats.health -= damage
+	GameSignals.damage_taken.emit(pop_up_spot.global_position, damage, damage_type)
 	
 	if hit_animation_player.is_playing():
 		hit_animation_player.stop()
@@ -79,26 +81,18 @@ func take_damage(damage : int):
 		GameSignals.building_destroyed.emit(self)
 
 
-func change_material(_material : Material) -> void:
-	if _material == null:
-		animation_control.material = original_material
-		return
-		
-	previous_material = animation_control.material	
-	animation_control.material = _material
-
-
 func remove():
 	collision_shape.disabled = true
 	queue_free()
 
 
 func _ready():
+	if not is_in_group(GroupNames.BUILDINGS):
+		add_to_group(GroupNames.BUILDINGS)
+		
 	name = name + str(building_index) + str(player_index)
 	stats_manager.stats.changed.connect(_on_stats_changed)
 	stats_manager.stat_changed.connect(_on_stat_changed)
-	previous_material = animation_control.material
-	original_material = animation_control.material
 	GameSignals.time_scale_change.connect(_on_time_scale_change)
 	_on_time_scale_change(Utils.game_control.time_scale)
 
@@ -111,9 +105,8 @@ func _on_stat_changed(_stat_type, _stat_value) -> void:
 	pass
 
 
-func _on_time_scale_change(time_scale : float) -> void:
-	animation_control.speed_scale = time_scale
-	
+func _on_time_scale_change(_time_scale : float) -> void:
+	pass
 
 
 func _get_is_placed() -> bool:
@@ -133,10 +126,7 @@ func _set_is_placed(value : bool):
 
 func _enable_tower() -> void:
 	collision_shape.disabled = false
-	if not is_in_group(GroupNames.BUILDINGS):
-		add_to_group(GroupNames.BUILDINGS)
-	if not is_in_group(GroupNames.SELECTABLE):
-		add_to_group(GroupNames.SELECTABLE)
+	placement_validator.activate(false)
 	GameSignals.forced_selection.emit(self)
 
 
@@ -146,11 +136,13 @@ func _get_is_valid_placement() -> bool:
 
 func _set_is_valid_placement(value : bool) -> void:
 	is_valid_placement = value
+	
 	if is_valid_placement:
 		show()
 	else:
 		hide()
-	BuildingPlacementDrawer.draw_building(collision_shape.shape.get_rect(), position + animation_control.offset, is_valid_placement, is_placing)
+		
+	BuildingPlacementDrawer.draw_building(collision_shape.shape.get_rect(), global_position, is_valid_placement, is_placing)
 
 
 func _get_is_placing() -> bool:
@@ -164,10 +156,11 @@ func _set_is_placing(value : bool) -> void:
 	is_placing = value
 	
 	if not is_placing:
-		BuildingPlacementDrawer.draw_building(collision_shape.shape.get_rect(), collision_shape.position + animation_control.offset, is_valid_placement, is_placing)
+		BuildingPlacementDrawer.draw_building(collision_shape.shape.get_rect(), global_position, is_valid_placement, is_placing)
 	else:
 		if collision_shape == null:
 			collision_shape = $CollisionShape2D
+			
 		collision_shape.disabled = true
 		GameSignals.building_is_placing.emit(self)
 
@@ -195,11 +188,3 @@ func _get_stats_manager() -> StatsManager:
 
 func _get_stats_resource_name() -> String:
 	return name.rstrip("0123456789").to_snake_case().to_lower() + "_stats.tres"
-
-
-func _set_is_selected(value : bool) -> void:
-	if is_selected == value:
-		return
-			
-	is_selected = value
-	selected.emit(is_selected)

@@ -1,95 +1,98 @@
-[gd_scene load_steps=28 format=3 uid="uid://bhmw5jig6ecq1"]
+[gd_scene load_steps=31 format=3 uid="uid://bhmw5jig6ecq1"]
 
 [ext_resource type="Script" path="res://scenes/unit/building/tower.gd" id="1_wwpqv"]
-[ext_resource type="Texture2D" uid="uid://dm0adggydo2b4" path="res://assets/2d_art/puffe_bolter.png" id="2_agjov"]
 [ext_resource type="Texture2D" uid="uid://vxk12gmmva1s" path="res://assets/2d_art/puffe_bolter_icon.png" id="2_dnce2"]
-[ext_resource type="PackedScene" uid="uid://crbx1w230gw8" path="res://scenes/unit/building/tower_skills/shoot_bolt.tscn" id="3_8jepy"]
+[ext_resource type="PackedScene" uid="uid://crbx1w230gw8" path="res://scenes/unit/skills/shoot_bolt.tscn" id="3_8jepy"]
 [ext_resource type="Material" uid="uid://c3sja1ms0jrnf" path="res://assets/shaders/shader_materials/building_hit_shader_material.tres" id="3_ev5ok"]
-[ext_resource type="PackedScene" uid="uid://jxr2ybiww67g" path="res://scenes/unit/building/tower_skills/projectiles/firebolt_projectile.tscn" id="4_vamui"]
+[ext_resource type="Texture2D" uid="uid://c1n3lijl3jmcp" path="res://assets/2d_art/puffe_bolter_no_tower.png" id="4_bettg"]
+[ext_resource type="PackedScene" uid="uid://jxr2ybiww67g" path="res://scenes/unit/skills/projectiles/firebolt_projectile.tscn" id="4_vamui"]
 [ext_resource type="Script" path="res://scenes/unit/building/range_area.gd" id="5_5p6tn"]
 [ext_resource type="PackedScene" uid="uid://88hwq47f7r6d" path="res://scenes/unit/behaviour_trees/basic_tower_behaviour_tree/basic_tower_bt.tscn" id="5_6ycpu"]
 [ext_resource type="Script" path="res://scenes/unit/animation_control.gd" id="5_rj1sk"]
+[ext_resource type="PackedScene" uid="uid://dd11cco5cukhw" path="res://scenes/unit/unit_selection/selectable_unit.tscn" id="10_0ilh6"]
+[ext_resource type="PackedScene" uid="uid://ccc725wgsiq36" path="res://scenes/unit/building/placement_validator.tscn" id="11_4t8in"]
+[ext_resource type="Texture2D" uid="uid://cq0qswfnh2bah" path="res://assets/2d_art/basic_tower.png" id="12_ql25o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jxaqe"]
 size = Vector2(16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_yevyw"]
-atlas = ExtResource("2_agjov")
+[sub_resource type="AtlasTexture" id="AtlasTexture_j0h4p"]
+atlas = ExtResource("4_bettg")
 region = Rect2(0, 0, 18, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_88p6v"]
-atlas = ExtResource("2_agjov")
+[sub_resource type="AtlasTexture" id="AtlasTexture_n3kj2"]
+atlas = ExtResource("4_bettg")
 region = Rect2(0, 34, 18, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_djisq"]
-atlas = ExtResource("2_agjov")
+[sub_resource type="AtlasTexture" id="AtlasTexture_0cnam"]
+atlas = ExtResource("4_bettg")
 region = Rect2(18, 34, 18, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_73ugv"]
-atlas = ExtResource("2_agjov")
+[sub_resource type="AtlasTexture" id="AtlasTexture_7oxpn"]
+atlas = ExtResource("4_bettg")
 region = Rect2(36, 34, 18, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_43lpx"]
-atlas = ExtResource("2_agjov")
+[sub_resource type="AtlasTexture" id="AtlasTexture_vddlx"]
+atlas = ExtResource("4_bettg")
 region = Rect2(54, 34, 18, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ig4bj"]
-atlas = ExtResource("2_agjov")
+[sub_resource type="AtlasTexture" id="AtlasTexture_80xbr"]
+atlas = ExtResource("4_bettg")
 region = Rect2(0, 68, 18, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_8qkp1"]
-atlas = ExtResource("2_agjov")
+[sub_resource type="AtlasTexture" id="AtlasTexture_42bxt"]
+atlas = ExtResource("4_bettg")
 region = Rect2(18, 68, 18, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_g4sge"]
-atlas = ExtResource("2_agjov")
+[sub_resource type="AtlasTexture" id="AtlasTexture_3euvh"]
+atlas = ExtResource("4_bettg")
 region = Rect2(36, 68, 18, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ji8al"]
-atlas = ExtResource("2_agjov")
+[sub_resource type="AtlasTexture" id="AtlasTexture_e5krh"]
+atlas = ExtResource("4_bettg")
 region = Rect2(54, 68, 18, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_4cyt8"]
-atlas = ExtResource("2_agjov")
+[sub_resource type="AtlasTexture" id="AtlasTexture_l0r7f"]
+atlas = ExtResource("4_bettg")
 region = Rect2(18, 0, 18, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_2h0vb"]
-atlas = ExtResource("2_agjov")
+[sub_resource type="AtlasTexture" id="AtlasTexture_3jngn"]
+atlas = ExtResource("4_bettg")
 region = Rect2(36, 0, 18, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_xu366"]
-atlas = ExtResource("2_agjov")
+[sub_resource type="AtlasTexture" id="AtlasTexture_hds28"]
+atlas = ExtResource("4_bettg")
 region = Rect2(54, 0, 18, 34)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_keisi"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_jjspw"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_yevyw")
+"texture": SubResource("AtlasTexture_j0h4p")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_88p6v")
+"texture": SubResource("AtlasTexture_n3kj2")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_djisq")
+"texture": SubResource("AtlasTexture_0cnam")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_73ugv")
+"texture": SubResource("AtlasTexture_7oxpn")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_43lpx")
+"texture": SubResource("AtlasTexture_vddlx")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ig4bj")
+"texture": SubResource("AtlasTexture_80xbr")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_8qkp1")
+"texture": SubResource("AtlasTexture_42bxt")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_g4sge")
+"texture": SubResource("AtlasTexture_3euvh")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ji8al")
+"texture": SubResource("AtlasTexture_e5krh")
 }],
 "loop": false,
 "name": &"ATTACK",
@@ -97,16 +100,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_yevyw")
+"texture": SubResource("AtlasTexture_j0h4p")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_4cyt8")
+"texture": SubResource("AtlasTexture_l0r7f")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_2h0vb")
+"texture": SubResource("AtlasTexture_3jngn")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_xu366")
+"texture": SubResource("AtlasTexture_hds28")
 }],
 "loop": true,
 "name": &"IDLE",
@@ -152,7 +155,7 @@ _data = {
 "hit": SubResource("Animation_ljeel")
 }
 
-[node name="PuffeBolter" type="StaticBody2D" node_paths=PackedStringArray("skill") groups=["buildings", "selectable"]]
+[node name="PuffeBolter" type="StaticBody2D" node_paths=PackedStringArray("skill")]
 y_sort_enabled = true
 collision_layer = 4
 collision_mask = 0
@@ -168,7 +171,7 @@ shape = SubResource("RectangleShape2D_jxaqe")
 texture_filter = 1
 material = ExtResource("3_ev5ok")
 position = Vector2(0, -8)
-sprite_frames = SubResource("SpriteFrames_keisi")
+sprite_frames = SubResource("SpriteFrames_jjspw")
 animation = &"ATTACK"
 script = ExtResource("5_rj1sk")
 metadata/_aseprite_wizard_config_ = {
@@ -178,12 +181,34 @@ metadata/_aseprite_wizard_config_ = {
 "o_name": "",
 "only_visible": false,
 "slice": "",
-"source": "res://assets/aseprite/puffe_bolter.aseprite"
+"source": "res://assets/aseprite/puffe_bolter_no_tower.aseprite"
 }
 metadata/_aseprite_wizard_interface_config_ = {
 "output_section": true
 }
-metadata/_aseprite_wizard_source_file_hash_ = "b9499546fe8daa9eb67c95b8af0aeb2e"
+metadata/_aseprite_wizard_source_file_hash_ = "0fdb7ac7f888dd811c748b8384b7c665"
+
+[node name="TowerBaseSprite" type="Sprite2D" parent="AnimatedSprite2D"]
+show_behind_parent = true
+texture_filter = 1
+position = Vector2(0, 1)
+texture = ExtResource("12_ql25o")
+metadata/_aseprite_wizard_config_ = {
+"i_mode": 1,
+"keep_anim_length": false,
+"layer": "",
+"o_ex_p": "",
+"o_folder": "res://assets/2d_art",
+"o_name": "",
+"only_visible": false,
+"player": "",
+"slice": "",
+"source": "res://assets/aseprite/basic_tower.aseprite"
+}
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true
+}
+metadata/_aseprite_wizard_source_file_hash_ = "7d8e8aeec8ba8ee47def2fdd3f07eb67"
 
 [node name="RangeArea" type="Area2D" parent="."]
 z_index = 10
@@ -204,6 +229,13 @@ projectile_scene = ExtResource("4_vamui")
 libraries = {
 "": SubResource("AnimationLibrary_yhdvm")
 }
+
+[node name="SelectableUnit" parent="." instance=ExtResource("10_0ilh6")]
+
+[node name="PlacementValidator" parent="." instance=ExtResource("11_4t8in")]
+
+[node name="PopUpSpot" type="Node2D" parent="."]
+position = Vector2(0, -19)
 
 [connection signal="body_entered" from="RangeArea" to="." method="_on_range_area_body_entered"]
 [connection signal="body_exited" from="RangeArea" to="." method="_on_range_area_body_exited"]

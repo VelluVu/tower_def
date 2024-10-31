@@ -1,41 +1,38 @@
 class_name Bolt
 extends Area2D
 
-const WALK_ANIMATION : String = "WALK"
-const DEATH_ANIMATION : String = "DEATH"
-const FADE_ANIMATION : String = "FADE"
 
 signal hits_enemy_body(body)
 
+@export var damage_type : Utils.DamageType = Utils.DamageType.Normal
 @export var projectile_speed : float = 100
 @export var live_time = 10.0
 @export var pierce : int = 1
 
-@onready var live_timer : Timer = $LiveTimer
+@onready var live_timer : CustomTimer = $LiveTimer
 @onready var collider : CollisionShape2D = $CollisionShape2D
-@onready var animated_sprite : AnimatedSprite2D = $AnimatedSprite2D
+@onready var animation_control : AnimationControl = $AnimatedSprite2D
 
 var is_hit : bool = false
 var target_is_destroyed : bool = false
 var damage : int = 0
 var current_pierced : int = 0
-var is_time_altered : bool = false
+var is_time_altered : bool = false :
+	get:
+		return current_time_scale != 1.0
 var current_time_scale : float = 1.0
-var scaled_live_time : float = 10.0
 var target = null
 
 
 func _ready() -> void:
-	scaled_live_time = live_time
 	if not live_timer.timeout.is_connected(_on_live_timer_timeout):
 		live_timer.timeout.connect(_on_live_timer_timeout)
 	if not GameSignals.enemy_destroyed.is_connected(_on_enemy_destroyed):
 		GameSignals.enemy_destroyed.connect(_on_enemy_destroyed)
-	if not animated_sprite.animation_finished.is_connected(_on_animation_finished):
-		animated_sprite.animation_finished.connect(_on_animation_finished)
+	if not animation_control.animation_finished.is_connected(_on_animation_finished):
+		animation_control.animation_finished.connect(_on_animation_finished)
 	if not GameSignals.time_scale_change.is_connected(_on_time_scale_change):
 		GameSignals.time_scale_change.is_connected(_on_time_scale_change)
-		_on_time_scale_change(Utils.game_control.time_scale)
 
 
 func launch(start_point, _target, _damage) -> void:
@@ -51,7 +48,7 @@ func _physics_process(delta: float) -> void:
 	
 	if is_hit:
 		return
-	
+		
 	delta *= current_time_scale
 	
 	if target_is_destroyed:
@@ -79,57 +76,55 @@ func _hit(body : Node2D) -> void:
 	
 	if current_pierced > pierce:
 		is_hit = true
-		animated_sprite.play(DEATH_ANIMATION)
+		_change_collision_state(false)
+		animation_control.play_animation(GlobalAnimationNames.DEATH_ANIMATION)
 		
-	body.take_damage(damage)
+	body.take_damage(damage, damage_type)
 	hits_enemy_body.emit(body)
 
 
 func _on_animation_finished() -> void:
-	if animated_sprite.animation == DEATH_ANIMATION:
+	if animation_control.animation == GlobalAnimationNames.DEATH_ANIMATION:
 		_deactivate()
-	elif animated_sprite.animation == FADE_ANIMATION:
+	elif animation_control.animation == GlobalAnimationNames.FADE_ANIMATION:
 		_deactivate()
 
 
 func _on_live_timer_timeout() -> void:
-	_disable_physics()
-	animated_sprite.play(FADE_ANIMATION)
+	_change_collision_state(false)
+	animation_control.play_animation(GlobalAnimationNames.FADE_ANIMATION)
 
 
 func _on_enemy_destroyed(enemy : Enemy) -> void:
 	if enemy == target:
 		target_is_destroyed = true
 		live_timer.stop()
-		live_timer.wait_time = (live_time * 0.2)
+		live_timer.base_wait_time = (live_time * 0.2) 
 		live_timer.start()
 
 
 func _on_time_scale_change(time_scale : float) -> void:
 	current_time_scale = time_scale
-	is_time_altered = current_time_scale != 0.0
-	scaled_live_time = live_time * (1 / current_time_scale)
 
 
-func _disable_physics() -> void:
-	collider.set_deferred("disabled", true)
-	set_deferred("monitoring", false)
-	set_deferred("monitorable", false)
+func _change_collision_state(state : bool) -> void:
+	collider.set_deferred("disabled", not state)
+	set_deferred("monitoring", state)
+	set_deferred("monitorable", state)
 
 
 func _activate() -> void:
-	live_timer.wait_time = scaled_live_time
+	_on_time_scale_change(Utils.game_control.time_scale)
 	is_hit = false
 	show()
-	animated_sprite.play(WALK_ANIMATION)
+	animation_control.play_animation(GlobalAnimationNames.WALK_ANIMATION)
 	target_is_destroyed = false
-	collider.set_deferred("disabled", false)
-	set_deferred("monitoring", true)
-	set_deferred("monitorable", true)
+	_change_collision_state(true)
 	
 	if not live_timer.is_stopped():
 		live_timer.stop()
 		
+	live_timer.base_wait_time = live_time
 	live_timer.start()
 
 

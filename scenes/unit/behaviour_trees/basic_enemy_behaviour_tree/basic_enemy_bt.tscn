@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://b07nrseyum0s4"]
+[gd_scene load_steps=23 format=3 uid="uid://b07nrseyum0s4"]
 
 [ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/basic_enemy_bt.gd" id="1_ydxbq"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/selector.gd" id="2_2uw0o"]
@@ -18,7 +18,10 @@
 [ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/stop_movement.gd" id="12_j2i8v"]
 [ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/is_colliding_building.gd" id="16_hco3q"]
 [ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/attack_closest_building.gd" id="18_f4i7b"]
+[ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/is_attacking.gd" id="18_wu7yw"]
+[ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/is_moving.gd" id="20_m2lu4"]
 [ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/is_building_in_next_waypoint.gd" id="21_l46o4"]
+[ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_tower_behaviour_tree/idle.gd" id="21_uf82c"]
 
 [node name="BasicEnemyBt" type="Node"]
 script = ExtResource("1_ydxbq")
@@ -116,6 +119,18 @@ script = ExtResource("10_mrg7q")
 [node name="IsWaypointReached" type="Node" parent="MainSelector/MoveOrIdle/Move/NotWaypointReached"]
 script = ExtResource("8_dga4n")
 
+[node name="NotBuildingInNextWaypoint" type="Node" parent="MainSelector/MoveOrIdle/Move"]
+script = ExtResource("10_mrg7q")
+
+[node name="IsBuildingInNextWaypoint" type="Node" parent="MainSelector/MoveOrIdle/Move/NotBuildingInNextWaypoint"]
+script = ExtResource("21_l46o4")
+
+[node name="NotCollidingBuilding" type="Node" parent="MainSelector/MoveOrIdle/Move"]
+script = ExtResource("10_mrg7q")
+
+[node name="IsCollidingBuilding" type="Node" parent="MainSelector/MoveOrIdle/Move/NotCollidingBuilding"]
+script = ExtResource("16_hco3q")
+
 [node name="MoveTowardsNextWaypoint" type="Node" parent="MainSelector/MoveOrIdle/Move"]
 script = ExtResource("5_f7fwc")
 
@@ -125,11 +140,20 @@ script = ExtResource("6_gpoa8")
 [node name="Idle" type="Node" parent="MainSelector/MoveOrIdle"]
 script = ExtResource("3_lrixb")
 
-[node name="IsLastWaypoint" type="Node" parent="MainSelector/MoveOrIdle/Idle"]
-script = ExtResource("9_rahgv")
+[node name="NotAttacking" type="Node" parent="MainSelector/MoveOrIdle/Idle"]
+script = ExtResource("10_mrg7q")
 
-[node name="IsWaypointReached" type="Node" parent="MainSelector/MoveOrIdle/Idle"]
-script = ExtResource("8_dga4n")
+[node name="IsAttacking" type="Node" parent="MainSelector/MoveOrIdle/Idle/NotAttacking"]
+script = ExtResource("18_wu7yw")
+
+[node name="NotMoving" type="Node" parent="MainSelector/MoveOrIdle/Idle"]
+script = ExtResource("10_mrg7q")
+
+[node name="IsMoving" type="Node" parent="MainSelector/MoveOrIdle/Idle/NotMoving"]
+script = ExtResource("20_m2lu4")
 
 [node name="StopMovement" type="Node" parent="MainSelector/MoveOrIdle/Idle"]
 script = ExtResource("12_j2i8v")
+
+[node name="Idle" type="Node" parent="MainSelector/MoveOrIdle/Idle"]
+script = ExtResource("21_uf82c")

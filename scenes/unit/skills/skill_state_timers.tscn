@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://bp7hd4rdex5do"]
+
+[ext_resource type="Script" path="res://scenes/custom_timer.gd" id="1_fkqs3"]
+
+[node name="SkillStateTimers" type="Node"]
+
+[node name="CooldownTimer" type="Timer" parent="."]
+one_shot = true
+script = ExtResource("1_fkqs3")
+
+[node name="CastTimer" type="Timer" parent="."]
+one_shot = true
+script = ExtResource("1_fkqs3")
+
+[node name="ActiveTimer" type="Timer" parent="."]
+one_shot = true
+script = ExtResource("1_fkqs3")

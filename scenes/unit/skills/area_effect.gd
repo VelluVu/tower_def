@@ -11,12 +11,15 @@ extends Area2D
 		return collider
 
 @export var animation_name : String = "default"
+@export var damage_type : Utils.DamageType = Utils.DamageType.Normal
 
 var damage : float = 0
 var max_radius : float = 0
 
 var current_time_scale : float = 1.0
-var is_time_altered : bool = false
+var is_time_altered : bool:
+	get:
+		return current_time_scale != 1.0
 
 
 func _ready() -> void:
@@ -63,10 +66,9 @@ func _deactivate() -> void:
 
 func _on_enemy_hit(area_hit : Area2D) -> void:
 	print(name, " hits ", area_hit.actor.name)
-	area_hit.actor.take_damage(damage)
+	area_hit.actor.take_damage(damage, damage_type)
 
 
 func _on_time_scale_change(time_scale : float) -> void:
 	current_time_scale = time_scale
-	is_time_altered = current_time_scale != 1.0
 	animation_player.speed_scale = current_time_scale

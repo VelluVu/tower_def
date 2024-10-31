@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://ccc725wgsiq36"]
+
+[ext_resource type="Script" path="res://scenes/unit/building/placement_validator.gd" id="1_uy7gp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u74yf"]
+size = Vector2(14, 14)
+
+[node name="PlacementValidator" type="Area2D"]
+collision_layer = 0
+collision_mask = 6
+script = ExtResource("1_uy7gp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_u74yf")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

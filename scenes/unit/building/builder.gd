@@ -24,7 +24,7 @@ var is_walkable_tile_on_buildings_cells_free : bool = false
 var current_building_option_index : int = 0
 var grid_position : Vector2i = Vector2.ZERO
 var placement_position : Vector2 = Vector2.ZERO
-var previous_pos : Vector2 = Vector2.ZERO
+#var previous_pos : Vector2 = Vector2.ZERO
 var current_building : Building = null
 var level : Level = null
 var placed_buildings : Array[Building]
@@ -32,10 +32,6 @@ var placed_buildings : Array[Building]
 var is_placing_building : bool : 
 	get = _get_is_placing_building,
 	set = _set_is_placing_building
-
-var is_valid_placement : bool :
-	get = _get_is_valid_placement,
-	set = _set_is_valid_placement
 
 
 func has_enough_gold(gold_needed : int) -> bool:
@@ -80,15 +76,21 @@ func _input(event):
 		_stop_building_placement()
 		
 	if event is InputEventMouseMotion:
-		_move_building_with_cursor(current_building)
+		_move_building_with_cursor()
 
 
 func _validate_placement_position(_pos : Vector2):
 	if not _is_position_buildable(_pos):
 		return false
 	
-	if _is_position_overlapping_other_buildings(_pos):
+	if not current_building.placement_validator.is_valid:
 		return false
+	
+	#if _is_position_overlapping_other_buildings(_pos):
+		#return false
+		
+	#if _is_position_overlapping_enemies(_pos):
+		#return false
 	
 	return true
 
@@ -195,45 +197,57 @@ func _place_building(building_index : int) -> void:
 	
 	grid_position = level.world_position_to_grid(get_global_mouse_position())
 	placement_position = level.grid_position_to_world(grid_position)
-	is_valid_placement = _validate_placement_position(placement_position)
 	
-	if not is_valid_placement:
+	current_building.is_valid_placement = _validate_placement_position(placement_position)
+	
+	if not current_building.is_valid_placement:
 		return
 	
+	current_building.is_valid_placement = false
 	var buildings_node : Node2D = _get_buildings_container()
 	var placed_building : Building = buildings[building_index].scene.instantiate()
 	buildings_node.add_child(placed_building)
 	placed_building.place(placement_position)
 	placed_buildings.append(placed_building)
-	current_building.is_valid_placement = false
 
 
-func _move_building_with_cursor(building : Building) -> void:
+func _move_building_with_cursor() -> void:
 	if not is_placing_building:
 		return
-	
+		
 	grid_position = level.world_position_to_grid(get_global_mouse_position())
 	placement_position = level.grid_position_to_world(grid_position)
 	
-	if placement_position == previous_pos:
-		return
+	#if placement_position == previous_pos:
+		#return
 		
-	previous_pos = placement_position
+	#previous_pos = placement_position
 	
-	is_valid_placement = _validate_placement_position(placement_position)
-	
-	building.global_position = placement_position
-	building.is_valid_placement = is_valid_placement
+	current_building.global_position = placement_position
+	current_building.is_valid_placement = _validate_placement_position(placement_position)
 
 
-func _is_position_overlapping_other_buildings(_pos : Vector2) -> bool:
-	if placed_buildings.is_empty():
-		return false
-	
-	for placed_building in placed_buildings:
-		if placed_building.global_position == _pos:
-			return true
-	return false
+#func _is_position_overlapping_other_buildings(_pos : Vector2) -> bool:
+	#if placed_buildings.is_empty():
+		#return false
+	#
+	#for placed_building in placed_buildings:
+		#if placed_building.global_position == _pos:
+			#return true
+	#return false
+
+
+#func _is_position_overlapping_enemies(_pos : Vector2) -> bool:
+	##var enemies : Array[Node] = get_tree().get_nodes_in_group(GroupNames.ENEMIES)
+	##var grid_position : Vector2i = level.world_position_to_grid(_pos)
+	#
+	##for enemy in enemies:
+	##	if enemy.grid_position == grid_position:
+	##		return true
+	#
+	#
+	#
+	#return false
 
 
 func _is_position_buildable(_pos : Vector2) -> bool:
@@ -259,7 +273,7 @@ func _set_is_placing_building(value : bool) -> void:
 		if current_building == null:
 			current_building = buildings[current_building_option_index].scene.instantiate()
 			add_child(current_building)
-			_move_building_with_cursor(current_building)
+			_move_building_with_cursor()
 	
 	current_building.is_placing = is_placing_building
 	
@@ -269,17 +283,6 @@ func _set_is_placing_building(value : bool) -> void:
 			current_building = null
 	
 	GameSignals.building_placement_change.emit(is_placing_building)
-
-
-func _get_is_valid_placement() -> bool:
-	return is_valid_placement
-
-
-func _set_is_valid_placement(value : bool) -> void:
-	if is_valid_placement == value:
-		return
-		
-	is_valid_placement = value
 
 
 func _get_buildings_container() -> Node2D:

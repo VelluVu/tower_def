@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://bj8fmaeegual3"]
+[gd_scene load_steps=36 format=3 uid="uid://bj8fmaeegual3"]
 
 [ext_resource type="Script" path="res://scenes/unit/enemy/enemy.gd" id="1_kifef"]
 [ext_resource type="Texture2D" uid="uid://chay1016dk3e" path="res://assets/2d_art/beefling.png" id="3_mdpb3"]
@@ -8,6 +8,8 @@
 [ext_resource type="Script" path="res://scenes/unit/hitbox.gd" id="6_abypk"]
 [ext_resource type="Script" path="res://scenes/unit/gore_emitter.gd" id="6_wxcyt"]
 [ext_resource type="PackedScene" uid="uid://brhay0uy0kf4" path="res://scenes/unit/blood_spill.tscn" id="7_fryta"]
+[ext_resource type="PackedScene" uid="uid://dd11cco5cukhw" path="res://scenes/unit/unit_selection/selectable_unit.tscn" id="9_vbtac"]
+[ext_resource type="PackedScene" uid="uid://cuv1fhpdbb5su" path="res://scenes/unit/skills/melee_attack.tscn" id="10_l8gd0"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_43mte"]
 friction = 0.0
@@ -213,13 +215,14 @@ _data = {
 "hit": SubResource("Animation_1eqk6")
 }
 
-[node name="Beefling" type="RigidBody2D" groups=["selectable"]]
+[node name="Beefling" type="RigidBody2D" node_paths=PackedStringArray("skill")]
 collision_layer = 2
 collision_mask = 0
 physics_material_override = SubResource("PhysicsMaterial_43mte")
 contact_monitor = true
 max_contacts_reported = 1
 script = ExtResource("1_kifef")
+skill = NodePath("MeleeAttack")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_lot5f")
@@ -269,3 +272,12 @@ libraries = {
 position = Vector2(0, -5)
 script = ExtResource("6_wxcyt")
 gore_effect_scene = ExtResource("7_fryta")
+
+[node name="SelectableUnit" parent="." instance=ExtResource("9_vbtac")]
+
+[node name="MeleeAttack" parent="." instance=ExtResource("10_l8gd0")]
+base_cast_time = 0.75
+base_cooldown = 1.5
+
+[node name="PopUpSpot" type="Node2D" parent="."]
+position = Vector2(0, -19)

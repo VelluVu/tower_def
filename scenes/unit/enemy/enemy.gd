@@ -10,51 +10,57 @@ const END_POINT_PATHING_ERROR : String = " can't path to the end point distance:
 const REACHED_END_PATH_MESSAGE : String = " have reached the end of the current path"
 const PATH_TO_STAT_RESOURCE : String = "res://scenes/unit/stats/stat_resources/enemy_stats/"
 
-const DEATH_ANIMATION : String = "DEATH"
-const WALK_ANIMATION : String = "WALK"
-const ATTACK_ANIMATION : String = "ATTACK"
-const IDLE_ANIMATION : String = "IDLE"
-
 @onready var collider : CollisionShape2D = $CollisionShape2D
 @onready var animation_control : AnimationControl = $AnimatedSprite2D
 @onready var hit_box : Area2D = $Hitbox
 @onready var hit_animation_player : AnimationPlayer = $HitAnimationPlayer
 @onready var gore_emitter : GoreEmitter = $GoreEmitter
+@onready var selectable : SelectableUnit = $SelectableUnit
+@onready var pop_up_spot : Node2D = $PopUpSpot
 
-@export var beehave_tree : BeehaveTree :
+@export var skill : Skill :
+	get:
+		if skill == null:
+			for child in get_children():
+				if child is Skill:
+					skill = child
+		return skill
+
+
+var beehave_tree : BeehaveTree :
 	get:
 		if beehave_tree == null:
 			for child in get_children():
 				if child is BeehaveTree:
 					beehave_tree = child
 		return beehave_tree
-		
-@export var attack_frame : int = 0
+
 @export var icon : Texture2D = null
-@export var stats_manager : StatsManager :
+
+var stats_manager : StatsManager :
 	get = _get_stats_manager
 
-var is_selected : bool = false
-var is_colliding_building : bool = false
-var is_attack_finished : bool = false
+var is_colliding_building : bool = false :
+	get:
+		return collision_body != null
+		
+var time_is_altered : bool = false
 var current_waypoint_index : int = 0
 var time : float = 0
 var minimum_distance_to_end : float = 9.0
 var minimum_distance_to_next_waypoint : float = 2.0
-var grid_position : Vector2i
+var current_time_scale : float = 1.0
+var grid_position : Vector2i = Vector2i.ZERO
 var velocity : Vector2 = Vector2.ZERO
-var last_position : Vector2
+var last_position : Vector2 = Vector2.ZERO
 var next_waypoint : Vector2 = Vector2.ZERO
-var previous_material : Material = null
-var original_material : Material = null
 var collision_body : Node = null
 var end_point : Marker2D = null
 var closest_building : Building = null
 var level : Level = null
 var point_path : PackedVector2Array
+var target : Node = null
 
-var current_time_scale : float = 1.0
-var time_is_altered : bool = false
 
 var body_center : Vector2 :
 	get:
@@ -85,24 +91,16 @@ func inject_objects(_level : Level, _end_point : Marker2D) -> void:
 	end_point = _end_point
 
 
-func take_damage(incoming_damage : int) -> void:
+func take_damage(incoming_damage : int, damage_type : Utils.DamageType) -> void:
 	print(name, " takes damage: ", incoming_damage)
 	stats_manager.stats.health -= incoming_damage
+	GameSignals.damage_taken.emit(pop_up_spot.global_position, incoming_damage, damage_type)
 	gore_emitter.emit_gore(incoming_damage)
 	
 	if hit_animation_player.is_playing():
 		hit_animation_player.stop()
 		
 	hit_animation_player.play("hit")
-
-
-func change_material(_material : Material) -> void:
-	if _material == null:
-		animation_control.material = original_material
-		return
-	
-	previous_material = animation_control.material
-	animation_control.material = _material
 
 
 func iterate_next_waypoint() -> void:
@@ -155,10 +153,9 @@ func reactivate() -> void:
 
 
 func die() -> void:
-	if animation_control.animation != DEATH_ANIMATION:
-		animation_control.play(DEATH_ANIMATION)
-		GameSignals.enemy_destroyed.emit(self)
-		deactivate()
+	animation_control.play_animation(GlobalAnimationNames.DEATH_ANIMATION)
+	GameSignals.enemy_destroyed.emit(self)
+	deactivate()
 
 
 func get_building_in_next_waypoint() -> Building:
@@ -170,6 +167,10 @@ func get_building_in_next_waypoint() -> Building:
 	return closest_building
 
 
+func get_remaining_path_waypoint_count() -> int:
+	return range(current_waypoint_index, point_path.size()).size()
+
+
 func is_path_blocked(path : PackedVector2Array) -> bool:
 	if path.is_empty():
 		return true
@@ -179,6 +180,9 @@ func is_path_blocked(path : PackedVector2Array) -> bool:
 
 
 func _ready() -> void:
+	if not is_in_group(GroupNames.ENEMIES):
+		add_to_group(GroupNames.ENEMIES)
+		
 	time = 0
 	var new_name : String = name + str(level.all_enemies.size())
 	name = new_name
@@ -187,12 +191,6 @@ func _ready() -> void:
 	body_entered.connect(_on_body_enter)
 	body_exited.connect(_on_body_exit)
 	GameSignals.astar_grid_updated.connect(_on_astar_grid_updated)
-	previous_material = animation_control.material
-	original_material = animation_control.material
-	
-	if not is_in_group(GroupNames.SELECTABLE):
-		add_to_group(GroupNames.SELECTABLE)
-		
 	GameSignals.enemy_spawned.emit(self)
 	GameSignals.time_scale_change.connect(_on_time_scale_change)
 	_on_time_scale_change(Utils.game_control.time_scale)
@@ -206,14 +204,12 @@ func _process(delta: float) -> void:
 
 func _on_body_enter(body : Node) -> void:
 	if body.is_in_group(GroupNames.BUILDINGS):
-		is_colliding_building = true
 		collision_body = body
 		closest_building = collision_body
 
 
 func _on_body_exit(body : Node):
 	if body.is_in_group(GroupNames.BUILDINGS):
-		is_colliding_building = false
 		collision_body = null
 		closest_building = null
 
@@ -229,7 +225,6 @@ func _on_astar_grid_updated() -> void:
 func _on_time_scale_change(time_scale : float) -> void:
 	current_time_scale = time_scale
 	time_is_altered = current_time_scale != 1.0
-	animation_control.speed_scale = current_time_scale
 
 
 func _get_is_path_end_reached() -> bool:

@@ -1,5 +1,5 @@
 extends Node
 
-const BAKED_FOR_NAVIGATION : String = "navigation"
-const SELECTABLE : String = "selectable"
-const BUILDINGS : String = "buildings"
+const ENEMIES : String = "Enemies"
+const SELECTABLE : String = "Selectables"
+const BUILDINGS : String = "Buildings"
