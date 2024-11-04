@@ -15,13 +15,14 @@ signal hits_enemy_body(body)
 
 var is_hit : bool = false
 var target_is_destroyed : bool = false
-var damage : int = 0
 var current_pierced : int = 0
+var target : Node = null
+var skill : Skill = null
+
+var current_time_scale : float = 1.0
 var is_time_altered : bool = false :
 	get:
 		return current_time_scale != 1.0
-var current_time_scale : float = 1.0
-var target = null
 
 
 func _ready() -> void:
@@ -35,10 +36,10 @@ func _ready() -> void:
 		GameSignals.time_scale_change.is_connected(_on_time_scale_change)
 
 
-func launch(start_point, _target, _damage) -> void:
-	target = _target
-	global_position = start_point
-	damage = _damage
+func launch(_skill : Skill) -> void:
+	skill = _skill
+	target = skill.target
+	global_position = skill.global_position
 	_activate()
 
 
@@ -79,7 +80,7 @@ func _hit(body : Node2D) -> void:
 		_change_collision_state(false)
 		animation_control.play_animation(GlobalAnimationNames.DEATH_ANIMATION)
 		
-	body.take_damage(damage, damage_type)
+	body.take_damage(skill.damage_data)
 	hits_enemy_body.emit(body)
 
 

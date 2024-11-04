@@ -7,11 +7,11 @@ extends Node2D
 var pool : Array[GoreEffect]
 
 
-func emit_gore(damage : int) -> void:
+func emit_gore(damage_data : DamageData) -> void:
 	var gore : GoreEffect = get_gore()
 	gore.main_effect_offset = position
 	gore.emitter_name = get_parent().name
-	gore.amount = damage * 2
+	gore.amount = damage_data.damage * 2
 	gore.emitting = true
 
 

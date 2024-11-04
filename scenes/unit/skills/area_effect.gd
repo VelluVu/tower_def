@@ -13,7 +13,7 @@ extends Area2D
 @export var animation_name : String = "default"
 @export var damage_type : Utils.DamageType = Utils.DamageType.Normal
 
-var damage : float = 0
+var skill : Skill = null
 var max_radius : float = 0
 
 var current_time_scale : float = 1.0
@@ -29,9 +29,8 @@ func _ready() -> void:
 	_on_time_scale_change(Utils.game_control.time_scale)
 
 
-func start_nova(_max_radius : float, _damage : float) -> void:
-	damage = _damage
-	max_radius = _max_radius
+func start_nova(_skill : Skill) -> void:
+	max_radius = skill.actor.stats_manager.get_range_in_tiles()
 	animated_sprite.scale = Vector2(max_radius * 0.01, max_radius * 0.01 )
 	var nova_animation : Animation = animation_player.get_animation(animation_name)
 	nova_animation.track_set_key_value(0, nova_animation.track_find_key(0,1.0,Animation.FIND_MODE_EXACT), max_radius)
@@ -56,7 +55,6 @@ func activate() -> void:
 
 
 func _deactivate() -> void:
-	damage = 0
 	collider.shape.radius = 0
 	collider.disabled = true
 	monitoring = false
@@ -66,7 +64,7 @@ func _deactivate() -> void:
 
 func _on_enemy_hit(area_hit : Area2D) -> void:
 	print(name, " hits ", area_hit.actor.name)
-	area_hit.actor.take_damage(damage, damage_type)
+	area_hit.actor.take_damage(skill.damage_data)
 
 
 func _on_time_scale_change(time_scale : float) -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://ck38qjjtmawki"]
+[gd_scene load_steps=33 format=3 uid="uid://ck38qjjtmawki"]
 
 [ext_resource type="Script" path="res://scenes/unit/building/tower.gd" id="1_cyr4l"]
 [ext_resource type="Texture2D" uid="uid://d1s2xw53fx6au" path="res://icon.svg" id="2_8pdqy"]
@@ -9,8 +9,11 @@
 [ext_resource type="Script" path="res://scenes/unit/animation_control.gd" id="5_mwcin"]
 [ext_resource type="Script" path="res://scenes/unit/building/range_area.gd" id="5_s0u5l"]
 [ext_resource type="PackedScene" uid="uid://dd11cco5cukhw" path="res://scenes/unit/unit_selection/selectable_unit.tscn" id="9_gmkxw"]
+[ext_resource type="Script" path="res://scenes/unit/skills/damage_data.gd" id="9_y18tw"]
 [ext_resource type="PackedScene" uid="uid://ccc725wgsiq36" path="res://scenes/unit/building/placement_validator.tscn" id="10_3twny"]
+[ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_data.gd" id="10_igp4j"]
 [ext_resource type="Texture2D" uid="uid://cq0qswfnh2bah" path="res://assets/2d_art/basic_tower.png" id="11_2t7ql"]
+[ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_handler.gd" id="12_cmlai"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nli7h"]
 size = Vector2(16, 16)
@@ -220,7 +223,19 @@ shape = SubResource("CircleShape2D_yksuc")
 
 [node name="Beam" parent="." instance=ExtResource("4_2p66l")]
 position = Vector2(3, -10)
+
+[node name="DamageData" type="Node" parent="Beam"]
+script = ExtResource("9_y18tw")
+damage = 0
+critical_chance = 0.0
 damage_type = 2
+
+[node name="OvertimeEffectData" type="Node" parent="Beam/DamageData"]
+script = ExtResource("10_igp4j")
+max_ticks = 5
+tick_interval = 3.0
+damage_type = 2
+effectType = 1
 
 [node name="BeamTowerBt" parent="." instance=ExtResource("5_3fi0f")]
 
@@ -235,6 +250,9 @@ libraries = {
 
 [node name="PopUpSpot" type="Node2D" parent="."]
 position = Vector2(0, -19)
+
+[node name="OvertimeEffectHandler" type="Node" parent="."]
+script = ExtResource("12_cmlai")
 
 [connection signal="body_entered" from="RangeArea" to="." method="_on_range_area_body_entered"]
 [connection signal="body_exited" from="RangeArea" to="." method="_on_range_area_body_exited"]

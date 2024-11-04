@@ -28,4 +28,4 @@ func activate() -> void:
 		add_child(effect)
 	
 	effects.push_back(effect)
-	effect.start_nova(actor.stats_manager.get_range_in_tiles(), damage)
+	effect.start_nova(self)

@@ -11,9 +11,9 @@ func _ready() -> void:
 	GameSignals.damage_taken.connect(_on_damage_taken)
 
 
-func _on_damage_taken(_position : Vector2, _amount : int, _type : Utils.DamageType) -> void:
+func _on_damage_taken(_position : Vector2, _damage_data : DamageData) -> void:
 	var damage_number : DamageNumber = _get_damage_number()
-	damage_number.activate(_position, _amount, _type)
+	damage_number.activate(_position, _damage_data)
 
 #fix this signal is not happening
 func _get_damage_number() -> DamageNumber:

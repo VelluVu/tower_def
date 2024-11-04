@@ -5,8 +5,6 @@ extends Skill
 @onready var attack_area : Area2D = $AttackArea
 @onready var collision_shape : CollisionShape2D = $AttackArea/CollisionShape2D
 
-@export var damage_type : Utils.DamageType = Utils.DamageType.Normal
-
 
 func _ready() -> void:
 	super()
@@ -29,7 +27,7 @@ func activate() -> void:
 
 func _on_attack_area_body_entered(body: Node2D) -> void:
 	activate_collision_detection(false)
-	body.take_damage(damage, damage_type)
+	body.take_damage(damage_data)
 
 
 func _on_active_end() -> void:

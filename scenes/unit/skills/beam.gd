@@ -5,7 +5,6 @@ extends Skill
 @onready var line : Line2D = $Line2D
 @onready var damage_timer : CustomTimer = $DamageTimer
 
-@export var damage_type : Utils.DamageType = Utils.DamageType.Normal
 @export var end_line_index : int = 1
 @export var tick_speed : float = 1.0
 
@@ -53,7 +52,7 @@ func _on_timer_tick() -> void:
 		return
 	
 	line.set_point_position(end_line_index, (target.body_center - global_position))
-	target.take_damage(damage, damage_type)
+	target.take_damage(damage_data)
 
 
 func _set_is_beaming(value : bool) -> void:
@@ -64,7 +63,7 @@ func _set_is_beaming(value : bool) -> void:
 	
 	if is_beaming:
 		line.set_point_position(end_line_index, (target.body_center - global_position))
-		target.take_damage(damage, damage_type)
+		target.take_damage(damage_data)
 		damage_timer.start()
 	else:
 		line.set_point_position(1, Vector2.ZERO)

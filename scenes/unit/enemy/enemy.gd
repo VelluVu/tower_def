@@ -17,6 +17,7 @@ const PATH_TO_STAT_RESOURCE : String = "res://scenes/unit/stats/stat_resources/e
 @onready var gore_emitter : GoreEmitter = $GoreEmitter
 @onready var selectable : SelectableUnit = $SelectableUnit
 @onready var pop_up_spot : Node2D = $PopUpSpot
+@onready var overtime_effect_handler : OvertimeEffectHandler = $OvertimeEffectHandler
 
 @export var skill : Skill :
 	get:
@@ -91,11 +92,12 @@ func inject_objects(_level : Level, _end_point : Marker2D) -> void:
 	end_point = _end_point
 
 
-func take_damage(incoming_damage : int, damage_type : Utils.DamageType) -> void:
-	print(name, " takes damage: ", incoming_damage)
-	stats_manager.stats.health -= incoming_damage
-	GameSignals.damage_taken.emit(pop_up_spot.global_position, incoming_damage, damage_type)
-	gore_emitter.emit_gore(incoming_damage)
+func take_damage(damage_data : DamageData) -> void:
+	print(name, " takes damage: ", damage_data.damage)
+	stats_manager.stats.health -= damage_data.damage
+	GameSignals.damage_taken.emit(pop_up_spot.global_position, damage_data)
+	gore_emitter.emit_gore(damage_data)
+	overtime_effect_handler.handle_overtime_effects(damage_data.overtime_effect_datas)
 	
 	if hit_animation_player.is_playing():
 		hit_animation_player.stop()

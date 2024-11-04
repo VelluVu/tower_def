@@ -1,6 +1,7 @@
 class_name Tower
 extends Building
 
+
 @onready var range_area : Area2D = $RangeArea 
 @onready var area_shape : CollisionShape2D = $RangeArea/CollisionShape2D
 

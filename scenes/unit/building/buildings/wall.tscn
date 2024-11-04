@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://b78nv1og0jf3p"]
+[gd_scene load_steps=31 format=3 uid="uid://b78nv1og0jf3p"]
 
 [ext_resource type="Script" path="res://scenes/unit/building/wall.gd" id="1_kgbnu"]
 [ext_resource type="Texture2D" uid="uid://c5m2tdopql7kr" path="res://assets/2d_art/wall_icon.png" id="2_0awu8"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://scenes/unit/animation_control.gd" id="5_dl2w2"]
 [ext_resource type="PackedScene" uid="uid://dd11cco5cukhw" path="res://scenes/unit/unit_selection/selectable_unit.tscn" id="6_8lkbl"]
 [ext_resource type="PackedScene" uid="uid://ccc725wgsiq36" path="res://scenes/unit/building/placement_validator.tscn" id="7_3p3cj"]
+[ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_handler.gd" id="8_4v5nb"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_4ih23"]
 
@@ -286,3 +287,6 @@ libraries = {
 
 [node name="PopUpSpot" type="Node2D" parent="."]
 position = Vector2(0, -10)
+
+[node name="OvertimeEffectHandler" type="Node" parent="."]
+script = ExtResource("8_4v5nb")

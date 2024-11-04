@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://bljkhytt20h3f"]
+[gd_scene load_steps=41 format=3 uid="uid://bljkhytt20h3f"]
 
 [ext_resource type="Script" path="res://scenes/unit/enemy/enemy.gd" id="1_pnuqq"]
 [ext_resource type="Texture2D" uid="uid://yv52buwdecha" path="res://assets/2d_art/weakling_icon.png" id="2_w8sqj"]
@@ -11,6 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://brhay0uy0kf4" path="res://scenes/unit/blood_spill.tscn" id="8_st5r0"]
 [ext_resource type="PackedScene" uid="uid://dd11cco5cukhw" path="res://scenes/unit/unit_selection/selectable_unit.tscn" id="10_hy764"]
 [ext_resource type="PackedScene" uid="uid://cuv1fhpdbb5su" path="res://scenes/unit/skills/melee_attack.tscn" id="11_rdqhh"]
+[ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_handler.gd" id="12_fwlqx"]
+[ext_resource type="Script" path="res://scenes/unit/skills/damage_data.gd" id="12_iu2a5"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_43mte"]
 friction = 0.0
@@ -290,5 +292,12 @@ gore_effect_scene = ExtResource("8_st5r0")
 base_cast_time = 0.5
 base_cooldown = 1.5
 
+[node name="DamageData" type="Node" parent="MeleeAttack"]
+script = ExtResource("12_iu2a5")
+damage = 0
+
 [node name="PopUpSpot" type="Node2D" parent="."]
 position = Vector2(0, -13)
+
+[node name="OvertimeEffectHandler" type="Node" parent="."]
+script = ExtResource("12_fwlqx")

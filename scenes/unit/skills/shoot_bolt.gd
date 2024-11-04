@@ -14,7 +14,7 @@ func use(_target) -> void:
 func activate() -> void:
 	super()
 	var projectile : Bolt = _get_projectile()
-	projectile.launch(global_position, target, damage)
+	projectile.launch(self)
 
 
 func _get_projectile() -> Node2D:

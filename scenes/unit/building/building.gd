@@ -10,6 +10,7 @@ const PATH_TO_STAT_RESOURCE : String = "res://scenes/unit/stats/stat_resources/b
 @onready var selectable : SelectableUnit = $SelectableUnit
 @onready var placement_validator : PlacementValidator = $PlacementValidator
 @onready var pop_up_spot : Node2D = $PopUpSpot
+@onready var overtime_effect_handler : OvertimeEffectHandler = $OvertimeEffectHandler
 
 
 @export var beehave_tree : BeehaveTree :
@@ -68,9 +69,10 @@ func place(value : Vector2) -> void:
 	GameSignals.building_placed.emit(self)
 
 
-func take_damage(damage : int, damage_type : Utils.DamageType):
-	stats_manager.stats.health -= damage
-	GameSignals.damage_taken.emit(pop_up_spot.global_position, damage, damage_type)
+func take_damage(damage_data : DamageData):
+	stats_manager.stats.health -= damage_data.damage
+	GameSignals.damage_taken.emit(pop_up_spot.global_position, damage_data)
+	overtime_effect_handler.handle_overtime_effects(damage_data.overtime_effect_datas)
 	
 	if hit_animation_player.is_playing():
 		hit_animation_player.stop()

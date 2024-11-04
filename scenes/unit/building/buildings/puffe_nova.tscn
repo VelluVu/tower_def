@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://bddvvyp8cnh6u"]
+[gd_scene load_steps=33 format=3 uid="uid://bddvvyp8cnh6u"]
 
 [ext_resource type="Script" path="res://scenes/unit/building/tower.gd" id="1_t60dc"]
 [ext_resource type="Texture2D" uid="uid://vxk12gmmva1s" path="res://assets/2d_art/puffe_bolter_icon.png" id="2_x2eef"]
@@ -9,8 +9,11 @@
 [ext_resource type="Texture2D" uid="uid://cq0qswfnh2bah" path="res://assets/2d_art/basic_tower.png" id="6_2iol5"]
 [ext_resource type="PackedScene" uid="uid://cfw0up3crwaou" path="res://scenes/unit/skills/nova.tscn" id="6_udwjg"]
 [ext_resource type="PackedScene" uid="uid://88hwq47f7r6d" path="res://scenes/unit/behaviour_trees/basic_tower_behaviour_tree/basic_tower_bt.tscn" id="7_68ipj"]
+[ext_resource type="Script" path="res://scenes/unit/skills/damage_data.gd" id="9_k17ms"]
 [ext_resource type="PackedScene" uid="uid://dd11cco5cukhw" path="res://scenes/unit/unit_selection/selectable_unit.tscn" id="9_tgbdh"]
+[ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_data.gd" id="10_38tdv"]
 [ext_resource type="PackedScene" uid="uid://ccc725wgsiq36" path="res://scenes/unit/building/placement_validator.tscn" id="10_mthul"]
+[ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_handler.gd" id="12_pje5b"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jxaqe"]
 size = Vector2(16, 16)
@@ -220,6 +223,18 @@ shape = SubResource("CircleShape2D_nklau")
 
 [node name="Nova" parent="." instance=ExtResource("6_udwjg")]
 
+[node name="DamageData" type="Node" parent="Nova"]
+script = ExtResource("9_k17ms")
+damage = 0
+critical_chance = 0.1
+damage_type = 2
+
+[node name="OvertimeEffectData" type="Node" parent="Nova/DamageData"]
+script = ExtResource("10_38tdv")
+max_ticks = 1
+damage_type = 2
+effectType = 1
+
 [node name="BasicTowerBt" parent="." instance=ExtResource("7_68ipj")]
 
 [node name="HitAnimationPlayer" type="AnimationPlayer" parent="."]
@@ -233,6 +248,9 @@ libraries = {
 
 [node name="PopUpSpot" type="Node2D" parent="."]
 position = Vector2(0, -19)
+
+[node name="OvertimeEffectHandler" type="Node" parent="."]
+script = ExtResource("12_pje5b")
 
 [connection signal="body_entered" from="RangeArea" to="." method="_on_range_area_body_entered"]
 [connection signal="body_exited" from="RangeArea" to="." method="_on_range_area_body_exited"]

@@ -5,6 +5,8 @@ extends Node2D
 @onready var cast_timer : CustomTimer = $SkillStateTimers/CastTimer
 @onready var cooldown_timer : CustomTimer = $SkillStateTimers/CooldownTimer
 @onready var active_timer : CustomTimer = $SkillStateTimers/ActiveTimer
+@onready var damage_data : DamageData = $DamageData :
+	get = _get_damage_data
 
 @export var is_continuous : bool = false
 @export var base_cast_time : float = 0.0
@@ -17,9 +19,6 @@ extends Node2D
 		return actor
 
 var is_ready : bool = true
-var damage : int = 0 :
-	get:
-		return actor.stats_manager.stats.damage
 var current_time_scale : float = 1.0
 var target : Node2D = null :
 	set = _set_target
@@ -76,20 +75,6 @@ func start_skill_cast() -> void:
 		return
 	
 	activate()
-
-
-func _set_target(new_target : Node2D) -> void:
-	if new_target == target:
-		return
-		
-	target = new_target
-	
-	# if continuous interrupt previous skill and cast when new target is set
-	if is_continuous:
-		if not is_ready:
-			stop()
-		
-		start_skill_cast()
 
 
 func activate() -> void:
@@ -169,3 +154,26 @@ func _get_is_valid_target() -> bool:
 		return false
 		
 	return true
+
+
+func _set_target(new_target : Node2D) -> void:
+	if new_target == target:
+		return
+		
+	target = new_target
+	
+	# if continuous interrupt previous skill and cast when new target is set
+	if is_continuous:
+		if not is_ready:
+			stop()
+		
+		start_skill_cast()
+
+
+func _get_damage_data() -> DamageData:
+	var _damage_data : DamageData = damage_data.duplicate()
+	#add actor stats
+	_damage_data.source = actor
+	_damage_data.damage += actor.stats_manager.stats.damage
+	_damage_data.calculate_critical()
+	return _damage_data

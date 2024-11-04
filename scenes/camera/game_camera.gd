@@ -19,6 +19,7 @@ enum CameraMode {Static, Free}
 @export var zoom_speed : float = 10
 @export var zoom_min = Vector2(1, 1)
 @export var zoom_max = Vector2(5,5)
+@export var pan_speed_scale : float = 20.0
 
 var zoom_in : float = 1.1
 var zoom_out : float = 0.9
@@ -142,7 +143,7 @@ func _pan_camera_smoothly(delta : float):
 	var limit_min = Vector2(limit_left + viewport_half.x, limit_top + viewport_half.y)
 	var limit_max = Vector2(limit_right - viewport_half.x, limit_bottom - viewport_half.y)
 	pan_lerp_target_pos = pan_lerp_target_pos.clamp(limit_min, limit_max)
-	global_position = global_position.lerp(pan_lerp_target_pos, pan_speed * delta)
+	global_position = global_position.slerp(pan_lerp_target_pos, pan_speed * pan_speed_scale * delta)
 	global_position = global_position.clamp(limit_min, limit_max)
 
 

@@ -25,7 +25,7 @@ limit_top = -448
 limit_right = 704
 limit_bottom = 448
 script = ExtResource("5_nmsmd")
-pan_speed = 200.0
+pan_speed = 16.0
 zoom_min = Vector2(2, 2)
 
 [node name="DamageNumberManager" parent="." instance=ExtResource("8_1x856")]
