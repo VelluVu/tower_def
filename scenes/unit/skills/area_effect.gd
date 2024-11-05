@@ -30,7 +30,8 @@ func _ready() -> void:
 
 
 func start_nova(_skill : Skill) -> void:
-	max_radius = skill.actor.stats_manager.get_range_in_tiles()
+	skill = _skill
+	max_radius = skill.actor.stats.get_range_in_tiles()
 	animated_sprite.scale = Vector2(max_radius * 0.01, max_radius * 0.01 )
 	var nova_animation : Animation = animation_player.get_animation(animation_name)
 	nova_animation.track_set_key_value(0, nova_animation.track_find_key(0,1.0,Animation.FIND_MODE_EXACT), max_radius)

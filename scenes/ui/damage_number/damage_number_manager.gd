@@ -12,6 +12,8 @@ func _ready() -> void:
 
 
 func _on_damage_taken(_position : Vector2, _damage_data : DamageData) -> void:
+	if _damage_data.damage <= 0.0:
+		return
 	var damage_number : DamageNumber = _get_damage_number()
 	damage_number.activate(_position, _damage_data)
 

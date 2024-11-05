@@ -11,7 +11,7 @@ const PATH_TO_STAT_RESOURCE : String = "res://scenes/unit/stats/stat_resources/b
 @onready var placement_validator : PlacementValidator = $PlacementValidator
 @onready var pop_up_spot : Node2D = $PopUpSpot
 @onready var overtime_effect_handler : OvertimeEffectHandler = $OvertimeEffectHandler
-
+@onready var stats : Stats = $Stats
 
 @export var beehave_tree : BeehaveTree :
 	get: 
@@ -24,12 +24,10 @@ const PATH_TO_STAT_RESOURCE : String = "res://scenes/unit/stats/stat_resources/b
 @export var player_index : int = 0
 @export var closest_point_distance_limit : float = 0.9
 @export var icon : Texture2D = null
-@export var stats_manager : StatsManager :
-	get = _get_stats_manager
 
 var is_dead : bool :
 	get:
-		return stats_manager.stats.health <= 0
+		return stats.get_stat_value(Utils.StatType.Health) <= 0.0
 var is_overlapping_area : bool = false
 var is_overlapping_body : bool = false
 var building_index : int = 0
@@ -70,16 +68,16 @@ func place(value : Vector2) -> void:
 
 
 func take_damage(damage_data : DamageData):
-	stats_manager.stats.health -= damage_data.damage
+	stats.get_stat(Utils.StatType.Health).value -= damage_data.damage
 	GameSignals.damage_taken.emit(pop_up_spot.global_position, damage_data)
 	overtime_effect_handler.handle_overtime_effects(damage_data.overtime_effect_datas)
 	
-	if hit_animation_player.is_playing():
-		hit_animation_player.stop()
-		
-	hit_animation_player.play("hit")
+	if damage_data.damage > 0.0:
+		if hit_animation_player.is_playing():
+			hit_animation_player.stop()
+		hit_animation_player.play("hit")
 	
-	if stats_manager.stats.health <= 0:
+	if stats.get_stat_value(Utils.StatType.Health) <= 0.0:
 		GameSignals.building_destroyed.emit(self)
 
 
@@ -93,18 +91,8 @@ func _ready():
 		add_to_group(GroupNames.BUILDINGS)
 		
 	name = name + str(building_index) + str(player_index)
-	stats_manager.stats.changed.connect(_on_stats_changed)
-	stats_manager.stat_changed.connect(_on_stat_changed)
 	GameSignals.time_scale_change.connect(_on_time_scale_change)
 	_on_time_scale_change(Utils.game_control.time_scale)
-
-
-func _on_stats_changed() -> void:
-	pass
-
-
-func _on_stat_changed(_stat_type, _stat_value) -> void:
-	pass
 
 
 func _on_time_scale_change(_time_scale : float) -> void:
@@ -178,14 +166,14 @@ func _get_corners() -> Array[Vector2]:
 	return vector_array
 
 
-func _get_stats_manager() -> StatsManager:
-	if has_node("StatsManager"):
-		return $StatsManager
-	stats_manager = StatsManager.new()
-	stats_manager.base_stats = ResourceLoader.load(PATH_TO_STAT_RESOURCE + stats_resource_name)
-	stats_manager.name = "StatsManager"
-	add_child(stats_manager)
-	return stats_manager
+#func _get_stats_manager() -> StatsManager:
+	#if has_node("StatsManager"):
+		#return $StatsManager
+	#stats_manager = StatsManager.new()
+	#stats_manager.base_stats = ResourceLoader.load(PATH_TO_STAT_RESOURCE + stats_resource_name)
+	#stats_manager.name = "StatsManager"
+	#add_child(stats_manager)
+	#return stats_manager
 
 
 func _get_stats_resource_name() -> String:

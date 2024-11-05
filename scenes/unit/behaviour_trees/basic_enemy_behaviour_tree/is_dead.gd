@@ -3,6 +3,6 @@ extends ConditionLeaf
 
 
 func tick(actor : Node, _blackboard : Blackboard) -> int:
-	if actor.stats_manager.stats.health <= 0:
+	if actor.is_dead:
 		return SUCCESS
 	return FAILURE

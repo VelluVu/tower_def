@@ -66,20 +66,20 @@ func _set_is_selected(value : bool) -> void:
 	if is_selected:
 		change_material(outline_shader_material)
 		var is_building : bool = actor.is_in_group(GroupNames.BUILDINGS)
-		UISignals.selected_unit.emit(actor.name, actor.stats_manager.stats, actor.icon, is_building)
+		UISignals.selected_unit.emit(actor.name, actor.stats, actor.icon, is_building)
 		
 		if is_building:
 			if not actor.is_placed:
 				return
 		
-		if not actor.stats_manager.stats.changed.is_connected(_on_selected_data_change):
-			actor.stats_manager.stats.changed.connect(_on_selected_data_change)
+		if not actor.stats.stats_changed.is_connected(_on_selected_data_change):
+			actor.stats.stats_changed.connect(_on_selected_data_change)
 	else:
 		change_material(null)
-		UISignals.deselected_unit.emit(actor.name, actor.stats_manager.stats, actor.icon, actor.is_in_group(GroupNames.BUILDINGS))
-		if actor.stats_manager.stats.changed.is_connected(_on_selected_data_change):
-			actor.stats_manager.stats.changed.disconnect(_on_selected_data_change)
+		UISignals.deselected_unit.emit(actor.name, actor.stats, actor.icon, actor.is_in_group(GroupNames.BUILDINGS))
+		if actor.stats.stats_changed.is_connected(_on_selected_data_change):
+			actor.stats.stats_changed.disconnect(_on_selected_data_change)
 
 
 func _on_selected_data_change() -> void:
-	UISignals.selected_unit.emit(actor.name, actor.stats_manager.stats, actor.icon, actor.is_in_group(GroupNames.BUILDINGS))
+	UISignals.selected_unit.emit(actor.name, actor.stats, actor.icon, actor.is_in_group(GroupNames.BUILDINGS))

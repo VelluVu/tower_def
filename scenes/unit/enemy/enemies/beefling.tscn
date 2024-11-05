@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://bj8fmaeegual3"]
+[gd_scene load_steps=41 format=3 uid="uid://bj8fmaeegual3"]
 
 [ext_resource type="Script" path="res://scenes/unit/enemy/enemy.gd" id="1_kifef"]
 [ext_resource type="Texture2D" uid="uid://chay1016dk3e" path="res://assets/2d_art/beefling.png" id="3_mdpb3"]
@@ -13,6 +13,8 @@
 [ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_handler.gd" id="11_kbqik"]
 [ext_resource type="Script" path="res://scenes/unit/skills/damage_data.gd" id="11_v321t"]
 [ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_data.gd" id="12_8jq7h"]
+[ext_resource type="Script" path="res://scenes/unit/stats/stats.gd" id="14_3odyu"]
+[ext_resource type="Script" path="res://scenes/unit/stats/stat.gd" id="15_blw40"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_43mte"]
 friction = 0.0
@@ -284,7 +286,6 @@ base_cooldown = 1.5
 
 [node name="DamageData" type="Node" parent="MeleeAttack"]
 script = ExtResource("11_v321t")
-damage = 0
 
 [node name="DamageOvertimeData" type="Node" parent="MeleeAttack/DamageData"]
 script = ExtResource("12_8jq7h")
@@ -295,3 +296,41 @@ position = Vector2(0, -19)
 
 [node name="OvertimeEffectHandler" type="Node" parent="."]
 script = ExtResource("11_kbqik")
+
+[node name="Stats" type="Node" parent="."]
+script = ExtResource("14_3odyu")
+
+[node name="MaxHealthStat" type="Node" parent="Stats"]
+script = ExtResource("15_blw40")
+base_value = 30.0
+value = 30.0
+type = 1
+
+[node name="HealthStat" type="Node" parent="Stats"]
+script = ExtResource("15_blw40")
+base_value = 30.0
+value = 30.0
+
+[node name="DamageStat" type="Node" parent="Stats"]
+script = ExtResource("15_blw40")
+base_value = 2.0
+value = 2.0
+type = 2
+
+[node name="PriceStat" type="Node" parent="Stats"]
+script = ExtResource("15_blw40")
+base_value = 5.0
+value = 5.0
+type = 3
+
+[node name="SpeedStat" type="Node" parent="Stats"]
+script = ExtResource("15_blw40")
+base_value = 16.0
+value = 16.0
+type = 4
+
+[node name="AttackRangeStat" type="Node" parent="Stats"]
+script = ExtResource("15_blw40")
+base_value = 3.0
+value = 3.0
+type = 5

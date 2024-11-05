@@ -174,6 +174,6 @@ func _get_damage_data() -> DamageData:
 	var _damage_data : DamageData = damage_data.duplicate()
 	#add actor stats
 	_damage_data.source = actor
-	_damage_data.damage += actor.stats_manager.stats.damage
+	_damage_data.damage += actor.stats.get_stat_value(Utils.StatType.Damage)
 	_damage_data.calculate_critical()
 	return _damage_data

@@ -8,10 +8,12 @@ var pool : Array[GoreEffect]
 
 
 func emit_gore(damage_data : DamageData) -> void:
+	if damage_data.damage <= 0.0:
+		return
 	var gore : GoreEffect = get_gore()
 	gore.main_effect_offset = position
 	gore.emitter_name = get_parent().name
-	gore.amount = damage_data.damage * 2
+	gore.amount = round(damage_data.damage * 2)
 	gore.emitting = true
 
 

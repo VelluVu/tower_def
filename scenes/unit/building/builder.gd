@@ -24,7 +24,6 @@ var is_walkable_tile_on_buildings_cells_free : bool = false
 var current_building_option_index : int = 0
 var grid_position : Vector2i = Vector2.ZERO
 var placement_position : Vector2 = Vector2.ZERO
-#var previous_pos : Vector2 = Vector2.ZERO
 var current_building : Building = null
 var level : Level = null
 var placed_buildings : Array[Building]
@@ -34,7 +33,7 @@ var is_placing_building : bool :
 	set = _set_is_placing_building
 
 
-func has_enough_gold(gold_needed : int) -> bool:
+func has_enough_gold(gold_needed : float) -> bool:
 	if GameSignals.testing:
 		return true
 	return gold_needed <= level.player_stats.gold
@@ -85,12 +84,6 @@ func _validate_placement_position(_pos : Vector2):
 	
 	if not current_building.placement_validator.is_valid:
 		return false
-	
-	#if _is_position_overlapping_other_buildings(_pos):
-		#return false
-		
-	#if _is_position_overlapping_enemies(_pos):
-		#return false
 	
 	return true
 
@@ -192,7 +185,7 @@ func _place_building(building_index : int) -> void:
 	if not is_placing_building:
 		return
 	
-	if not has_enough_gold(current_building.stats_manager.stats.price):
+	if not has_enough_gold(current_building.stats.get_stat_value(Utils.StatType.Price)):
 		return
 	
 	grid_position = level.world_position_to_grid(get_global_mouse_position())
@@ -218,36 +211,9 @@ func _move_building_with_cursor() -> void:
 	grid_position = level.world_position_to_grid(get_global_mouse_position())
 	placement_position = level.grid_position_to_world(grid_position)
 	
-	#if placement_position == previous_pos:
-		#return
-		
-	#previous_pos = placement_position
-	
 	current_building.global_position = placement_position
 	current_building.is_valid_placement = _validate_placement_position(placement_position)
 
-
-#func _is_position_overlapping_other_buildings(_pos : Vector2) -> bool:
-	#if placed_buildings.is_empty():
-		#return false
-	#
-	#for placed_building in placed_buildings:
-		#if placed_building.global_position == _pos:
-			#return true
-	#return false
-
-
-#func _is_position_overlapping_enemies(_pos : Vector2) -> bool:
-	##var enemies : Array[Node] = get_tree().get_nodes_in_group(GroupNames.ENEMIES)
-	##var grid_position : Vector2i = level.world_position_to_grid(_pos)
-	#
-	##for enemy in enemies:
-	##	if enemy.grid_position == grid_position:
-	##		return true
-	#
-	#
-	#
-	#return false
 
 
 func _is_position_buildable(_pos : Vector2) -> bool:

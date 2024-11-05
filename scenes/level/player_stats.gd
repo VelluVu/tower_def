@@ -2,7 +2,7 @@ class_name PlayerStats
 extends Node
 
 #level based player resources
-@export var gold : int = 6
+@export var gold : float = 6.0
 @export var life : int = 10
 
 var is_alive : bool :
@@ -19,7 +19,7 @@ func _ready() -> void:
 
 
 func _on_enemy_reach_base(enemy : Enemy) -> void:
-	life -= enemy.stats_manager.stats.damage
+	life -= round(enemy.stats.get_stat_value(Utils.StatType.Damage))
 	GameSignals.resource_change.emit(life, 1)
 	print("player taking damage, life left: " , life)
 	if life <= 0:
@@ -36,15 +36,15 @@ func _on_game_play_interface_loaded() -> void:
 
 
 func _on_enemy_destroyed(enemy : Enemy) -> void:
-	gold += enemy.stats_manager.stats.price
+	gold += enemy.stats.get_stat_value(Utils.StatType.Price)
 	GameSignals.resource_change.emit(gold, 0)
 
 
 func _on_building_placed(building : Building) -> void:
-	gold -= building.stats_manager.stats.price
+	gold -= building.stats.get_stat_value(Utils.StatType.Price)
 	GameSignals.resource_change.emit(gold, 0)
 
 
 func _on_building_sell(building : Building) -> void:
-	gold += building.stats_manager.stats.price
+	gold += building.stats.get_stat_value(Utils.StatType.Price)
 	GameSignals.resource_change.emit(gold, 0)

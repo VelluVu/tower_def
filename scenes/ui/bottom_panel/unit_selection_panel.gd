@@ -24,9 +24,9 @@ func _on_unit_selected(unit_name : String, stats : Stats, icon : Texture2D, is_p
 	unit_icon.show()
 	unit_icon.texture = icon
 	name_value.text = unit_name
-	health_value.text = str(stats.health) + "/" + str(stats.max_health)
-	damage_value.text = str(stats.damage)
-	price_value.text = str(stats.price)
+	health_value.text = str(stats.get_stat_value(Utils.StatType.Health)) + "/" + str(stats.get_stat_value(Utils.StatType.MaxHealth))
+	damage_value.text = str(stats.get_stat_value(Utils.StatType.Damage))
+	price_value.text = str(stats.get_stat_value(Utils.StatType.Price))
 	if is_placed_by_player:
 		sell_button.show()
 

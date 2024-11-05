@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://ck38qjjtmawki"]
+[gd_scene load_steps=36 format=3 uid="uid://ck38qjjtmawki"]
 
 [ext_resource type="Script" path="res://scenes/unit/building/tower.gd" id="1_cyr4l"]
 [ext_resource type="Texture2D" uid="uid://d1s2xw53fx6au" path="res://icon.svg" id="2_8pdqy"]
@@ -13,7 +13,10 @@
 [ext_resource type="PackedScene" uid="uid://ccc725wgsiq36" path="res://scenes/unit/building/placement_validator.tscn" id="10_3twny"]
 [ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_data.gd" id="10_igp4j"]
 [ext_resource type="Texture2D" uid="uid://cq0qswfnh2bah" path="res://assets/2d_art/basic_tower.png" id="11_2t7ql"]
+[ext_resource type="Script" path="res://scenes/unit/stats/modifier.gd" id="11_jvphu"]
 [ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_handler.gd" id="12_cmlai"]
+[ext_resource type="Script" path="res://scenes/unit/stats/stats.gd" id="15_yqf0r"]
+[ext_resource type="Script" path="res://scenes/unit/stats/stat.gd" id="16_mlf80"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nli7h"]
 size = Vector2(16, 16)
@@ -226,16 +229,20 @@ position = Vector2(3, -10)
 
 [node name="DamageData" type="Node" parent="Beam"]
 script = ExtResource("9_y18tw")
-damage = 0
 critical_chance = 0.0
 damage_type = 2
 
 [node name="OvertimeEffectData" type="Node" parent="Beam/DamageData"]
 script = ExtResource("10_igp4j")
-max_ticks = 5
+max_count = 0
+tick_damage = 0.0
 tick_interval = 3.0
 damage_type = 2
 effectType = 1
+
+[node name="SlowModifier" type="Node" parent="Beam/DamageData/OvertimeEffectData"]
+script = ExtResource("11_jvphu")
+value = -0.1
 
 [node name="BeamTowerBt" parent="." instance=ExtResource("5_3fi0f")]
 
@@ -253,6 +260,42 @@ position = Vector2(0, -19)
 
 [node name="OvertimeEffectHandler" type="Node" parent="."]
 script = ExtResource("12_cmlai")
+
+[node name="Stats" type="Node" parent="."]
+script = ExtResource("15_yqf0r")
+
+[node name="MaxHealthStat" type="Node" parent="Stats"]
+script = ExtResource("16_mlf80")
+base_value = 5.0
+value = 5.0
+type = 1
+
+[node name="HealthStat" type="Node" parent="Stats"]
+script = ExtResource("16_mlf80")
+base_value = 6.0
+value = 6.0
+
+[node name="DamageStat" type="Node" parent="Stats"]
+script = ExtResource("16_mlf80")
+type = 2
+
+[node name="PriceStat" type="Node" parent="Stats"]
+script = ExtResource("16_mlf80")
+base_value = 4.0
+value = 4.0
+type = 3
+
+[node name="SpeedStat" type="Node" parent="Stats"]
+script = ExtResource("16_mlf80")
+base_value = 16.0
+value = 16.0
+type = 4
+
+[node name="AttackRangeStat" type="Node" parent="Stats"]
+script = ExtResource("16_mlf80")
+base_value = 4.0
+value = 4.0
+type = 5
 
 [connection signal="body_entered" from="RangeArea" to="." method="_on_range_area_body_entered"]
 [connection signal="body_exited" from="RangeArea" to="." method="_on_range_area_body_exited"]

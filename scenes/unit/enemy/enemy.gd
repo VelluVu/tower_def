@@ -18,6 +18,9 @@ const PATH_TO_STAT_RESOURCE : String = "res://scenes/unit/stats/stat_resources/e
 @onready var selectable : SelectableUnit = $SelectableUnit
 @onready var pop_up_spot : Node2D = $PopUpSpot
 @onready var overtime_effect_handler : OvertimeEffectHandler = $OvertimeEffectHandler
+@onready var stats : Stats = $Stats
+
+@export var icon : Texture2D = null
 
 @export var skill : Skill :
 	get:
@@ -36,15 +39,13 @@ var beehave_tree : BeehaveTree :
 					beehave_tree = child
 		return beehave_tree
 
-@export var icon : Texture2D = null
 
-var stats_manager : StatsManager :
-	get = _get_stats_manager
 
 var is_colliding_building : bool = false :
 	get:
 		return collision_body != null
-		
+
+var is_deactivated : bool = false
 var time_is_altered : bool = false
 var current_waypoint_index : int = 0
 var time : float = 0
@@ -69,7 +70,7 @@ var body_center : Vector2 :
 
 var is_dead : bool :
 	get:
-		return stats_manager.stats.health <= 0
+		return stats.get_stat_value(Utils.StatType.Health) <= 0.0
 
 var stats_resource_name : String :
 	get = _get_stats_resource_name
@@ -93,16 +94,16 @@ func inject_objects(_level : Level, _end_point : Marker2D) -> void:
 
 
 func take_damage(damage_data : DamageData) -> void:
-	print(name, " takes damage: ", damage_data.damage)
-	stats_manager.stats.health -= damage_data.damage
+	#print(name, " takes damage: ", damage_data.damage)
+	stats.get_stat(Utils.StatType.Health).value -= damage_data.damage
 	GameSignals.damage_taken.emit(pop_up_spot.global_position, damage_data)
-	gore_emitter.emit_gore(damage_data)
 	overtime_effect_handler.handle_overtime_effects(damage_data.overtime_effect_datas)
 	
-	if hit_animation_player.is_playing():
-		hit_animation_player.stop()
-		
-	hit_animation_player.play("hit")
+	if damage_data.damage > 0.0:
+		gore_emitter.emit_gore(damage_data)
+		if hit_animation_player.is_playing():
+			hit_animation_player.stop()
+		hit_animation_player.play("hit")
 
 
 func iterate_next_waypoint() -> void:
@@ -144,17 +145,22 @@ func deactivate() -> void:
 	collider.disabled = true
 	hit_box.monitoring = false
 	hit_box.monitorable = false
+	is_deactivated = true
 
 
 func reactivate() -> void:
-	stats_manager.stats.health = stats_manager.stats.max_health
+	stats.get_stat(Utils.StatType.Health).value = stats.get_stat_value(Utils.StatType.MaxHealth)
 	contact_monitor = true
 	collider.disabled = false
 	hit_box.monitoring = true
 	hit_box.monitorable = true
+	is_deactivated = false
 
 
 func die() -> void:
+	if is_deactivated:
+		return
+		
 	animation_control.play_animation(GlobalAnimationNames.DEATH_ANIMATION)
 	GameSignals.enemy_destroyed.emit(self)
 	deactivate()
@@ -260,17 +266,17 @@ func _set_is_the_end_point_reached(value : bool) -> void:
 		hide()
 
 
-func _get_stats_manager() -> StatsManager:
-	if has_node(STATS_MANAGER_NAME):
-		stats_manager = get_node(STATS_MANAGER_NAME)
-		return stats_manager
-		
-	stats_manager = StatsManager.new()
-	var base_stats_name : String = PATH_TO_STAT_RESOURCE + stats_resource_name
-	stats_manager.base_stats = ResourceLoader.load(base_stats_name)
-	stats_manager.name = STATS_MANAGER_NAME
-	add_child(stats_manager)
-	return stats_manager
+#func _get_stats_manager() -> StatsManager:
+	#if has_node(STATS_MANAGER_NAME):
+		#stats_manager = get_node(STATS_MANAGER_NAME)
+		#return stats_manager
+		#
+	#stats_manager = StatsManager.new()
+	#var base_stats_name : String = PATH_TO_STAT_RESOURCE + stats_resource_name
+	#stats_manager.base_stats = ResourceLoader.load(base_stats_name)
+	#stats_manager.name = STATS_MANAGER_NAME
+	#add_child(stats_manager)
+	#return stats_manager
 
 
 func _get_stats_resource_name() -> String:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://dla7not0kpg61"]
+[gd_scene load_steps=40 format=3 uid="uid://dla7not0kpg61"]
 
 [ext_resource type="Script" path="res://scenes/unit/enemy/enemy.gd" id="1_lrdqx"]
 [ext_resource type="Texture2D" uid="uid://bcsx4skuwfa4w" path="res://assets/2d_art/fastling.png" id="3_mh7rb"]
@@ -12,6 +12,8 @@
 [ext_resource type="PackedScene" uid="uid://cuv1fhpdbb5su" path="res://scenes/unit/skills/melee_attack.tscn" id="10_jqtfa"]
 [ext_resource type="Script" path="res://scenes/unit/skills/damage_data.gd" id="11_0yfjs"]
 [ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_handler.gd" id="11_i2avb"]
+[ext_resource type="Script" path="res://scenes/unit/stats/stats.gd" id="13_4y7u7"]
+[ext_resource type="Script" path="res://scenes/unit/stats/stat.gd" id="14_axnq6"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_43mte"]
 friction = 0.0
@@ -280,10 +282,47 @@ base_cooldown = 1.5
 
 [node name="DamageData" type="Node" parent="MeleeAttack"]
 script = ExtResource("11_0yfjs")
-damage = 0
 
 [node name="PopUpSpot" type="Node2D" parent="."]
 position = Vector2(0, -8)
 
 [node name="OvertimeEffectHandler" type="Node" parent="."]
 script = ExtResource("11_i2avb")
+
+[node name="Stats" type="Node" parent="."]
+script = ExtResource("13_4y7u7")
+
+[node name="MaxHealthStat" type="Node" parent="Stats"]
+script = ExtResource("14_axnq6")
+base_value = 10.0
+value = 10.0
+type = 1
+
+[node name="HealthStat" type="Node" parent="Stats"]
+script = ExtResource("14_axnq6")
+base_value = 10.0
+value = 10.0
+
+[node name="DamageStat" type="Node" parent="Stats"]
+script = ExtResource("14_axnq6")
+base_value = 1.0
+value = 1.0
+type = 2
+
+[node name="PriceStat" type="Node" parent="Stats"]
+script = ExtResource("14_axnq6")
+base_value = 1.0
+value = 1.0
+type = 3
+
+[node name="SpeedStat" type="Node" parent="Stats"]
+script = ExtResource("14_axnq6")
+base_value = 32.0
+value = 32.0
+type = 4
+
+[node name="AttackRangeStat" type="Node" parent="Stats"]
+script = ExtResource("14_axnq6")
+base_value = 3.0
+value = 3.0
+type = 5

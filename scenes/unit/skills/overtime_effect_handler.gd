@@ -45,7 +45,7 @@ func add_overtime_effect(overtime_effect_data : OvertimeEffectData) -> void:
 			# if there is previous overtime stack, 
 			if child.source == overtime_effect_data.source and child.damage_type == overtime_effect_data.damage_type:
 				# reset timer instead creating new and add damage to overtime
-				child.add_stack(overtime_effect_data.tick_damage)
+				child.add_stack(overtime_effect_data)
 				#leave function since we added the stack into existing timer
 				return
 	
@@ -57,6 +57,7 @@ func _get_overtime_effect() -> OvertimeEffect:
 	var effect : OvertimeEffect = overtime_effect_scene.instantiate() if pool.is_empty() else pool.pop_back()
 	
 	if effect.get_parent() == null:
+		effect.name = effect.name + str(get_child_count())
 		add_child(effect)
 		
 	if not effect.damage_overtime_finished.is_connected(_on_overtime_effect_finished):

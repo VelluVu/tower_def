@@ -23,4 +23,4 @@ func _on_selected(unit : Node2D) -> void:
 
 func _draw() -> void:
 	if actor.selectable.is_selected:
-		draw_circle(Vector2(0,0), actor.stats_manager.get_range_in_tiles(), Color.DARK_VIOLET, false)
+		draw_circle(Vector2(0,0), actor.stats.get_range_in_tiles(), Color.DARK_VIOLET, false)

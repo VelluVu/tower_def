@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://bddvvyp8cnh6u"]
+[gd_scene load_steps=36 format=3 uid="uid://bddvvyp8cnh6u"]
 
 [ext_resource type="Script" path="res://scenes/unit/building/tower.gd" id="1_t60dc"]
 [ext_resource type="Texture2D" uid="uid://vxk12gmmva1s" path="res://assets/2d_art/puffe_bolter_icon.png" id="2_x2eef"]
@@ -13,7 +13,10 @@
 [ext_resource type="PackedScene" uid="uid://dd11cco5cukhw" path="res://scenes/unit/unit_selection/selectable_unit.tscn" id="9_tgbdh"]
 [ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_data.gd" id="10_38tdv"]
 [ext_resource type="PackedScene" uid="uid://ccc725wgsiq36" path="res://scenes/unit/building/placement_validator.tscn" id="10_mthul"]
+[ext_resource type="Script" path="res://scenes/unit/stats/modifier.gd" id="11_vohnx"]
 [ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_handler.gd" id="12_pje5b"]
+[ext_resource type="Script" path="res://scenes/unit/stats/stats.gd" id="15_gqyqb"]
+[ext_resource type="Script" path="res://scenes/unit/stats/stat.gd" id="16_ho6cm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jxaqe"]
 size = Vector2(16, 16)
@@ -225,15 +228,20 @@ shape = SubResource("CircleShape2D_nklau")
 
 [node name="DamageData" type="Node" parent="Nova"]
 script = ExtResource("9_k17ms")
-damage = 0
 critical_chance = 0.1
 damage_type = 2
 
 [node name="OvertimeEffectData" type="Node" parent="Nova/DamageData"]
 script = ExtResource("10_38tdv")
-max_ticks = 1
+max_count = 50
+tick_damage = 0.0
+tick_interval = 5.0
 damage_type = 2
 effectType = 1
+
+[node name="SlowModifier" type="Node" parent="Nova/DamageData/OvertimeEffectData"]
+script = ExtResource("11_vohnx")
+value = -0.1
 
 [node name="BasicTowerBt" parent="." instance=ExtResource("7_68ipj")]
 
@@ -251,6 +259,42 @@ position = Vector2(0, -19)
 
 [node name="OvertimeEffectHandler" type="Node" parent="."]
 script = ExtResource("12_pje5b")
+
+[node name="Stats" type="Node" parent="."]
+script = ExtResource("15_gqyqb")
+
+[node name="MaxHealthStat" type="Node" parent="Stats"]
+script = ExtResource("16_ho6cm")
+base_value = 10.0
+value = 10.0
+type = 1
+
+[node name="HealthStat" type="Node" parent="Stats"]
+script = ExtResource("16_ho6cm")
+base_value = 10.0
+value = 10.0
+
+[node name="DamageStat" type="Node" parent="Stats"]
+script = ExtResource("16_ho6cm")
+type = 2
+
+[node name="PriceStat" type="Node" parent="Stats"]
+script = ExtResource("16_ho6cm")
+base_value = 5.0
+value = 5.0
+type = 3
+
+[node name="SpeedStat" type="Node" parent="Stats"]
+script = ExtResource("16_ho6cm")
+base_value = 16.0
+value = 16.0
+type = 4
+
+[node name="AttackRangeStat" type="Node" parent="Stats"]
+script = ExtResource("16_ho6cm")
+base_value = 2.0
+value = 2.0
+type = 5
 
 [connection signal="body_entered" from="RangeArea" to="." method="_on_range_area_body_entered"]
 [connection signal="body_exited" from="RangeArea" to="." method="_on_range_area_body_exited"]

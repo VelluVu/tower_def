@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://bhmw5jig6ecq1"]
+[gd_scene load_steps=36 format=3 uid="uid://bhmw5jig6ecq1"]
 
 [ext_resource type="Script" path="res://scenes/unit/building/tower.gd" id="1_wwpqv"]
 [ext_resource type="Texture2D" uid="uid://vxk12gmmva1s" path="res://assets/2d_art/puffe_bolter_icon.png" id="2_dnce2"]
@@ -15,6 +15,8 @@
 [ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_data.gd" id="11_se6n4"]
 [ext_resource type="Texture2D" uid="uid://cq0qswfnh2bah" path="res://assets/2d_art/basic_tower.png" id="12_ql25o"]
 [ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_handler.gd" id="13_1yoqa"]
+[ext_resource type="Script" path="res://scenes/unit/stats/stats.gd" id="16_uqw4x"]
+[ext_resource type="Script" path="res://scenes/unit/stats/stat.gd" id="17_m7bv2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jxaqe"]
 size = Vector2(16, 16)
@@ -228,13 +230,12 @@ projectile_scene = ExtResource("4_vamui")
 
 [node name="DamageData" type="Node" parent="ShootBolt"]
 script = ExtResource("10_mch2d")
-damage = 0
+damage = 2.0
 critical_chance = 0.1
 damage_type = 1
 
 [node name="OvertimeEffectData" type="Node" parent="ShootBolt/DamageData"]
 script = ExtResource("11_se6n4")
-max_ticks = 2
 chance_to_apply = 0.2
 damage_type = 1
 
@@ -254,6 +255,42 @@ position = Vector2(0, -19)
 
 [node name="OvertimeEffectHandler" type="Node" parent="."]
 script = ExtResource("13_1yoqa")
+
+[node name="Stats" type="Node" parent="."]
+script = ExtResource("16_uqw4x")
+
+[node name="MaxHealthStat" type="Node" parent="Stats"]
+script = ExtResource("17_m7bv2")
+base_value = 5.0
+value = 5.0
+type = 1
+
+[node name="HealthStat" type="Node" parent="Stats"]
+script = ExtResource("17_m7bv2")
+base_value = 5.0
+value = 5.0
+
+[node name="DamageStat" type="Node" parent="Stats"]
+script = ExtResource("17_m7bv2")
+type = 2
+
+[node name="PriceStat" type="Node" parent="Stats"]
+script = ExtResource("17_m7bv2")
+base_value = 1.0
+value = 1.0
+type = 3
+
+[node name="SpeedStat" type="Node" parent="Stats"]
+script = ExtResource("17_m7bv2")
+base_value = 16.0
+value = 16.0
+type = 4
+
+[node name="AttackRangeStat" type="Node" parent="Stats"]
+script = ExtResource("17_m7bv2")
+base_value = 3.0
+value = 3.0
+type = 5
 
 [connection signal="body_entered" from="RangeArea" to="." method="_on_range_area_body_entered"]
 [connection signal="body_exited" from="RangeArea" to="." method="_on_range_area_body_exited"]

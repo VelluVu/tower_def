@@ -2,6 +2,8 @@ class_name Tower
 extends Building
 
 
+const RANGE_AREA_OBJECT_NULL_ERROR_MESSAGE : String = "NO RANGE AREA ON TOWER, UNABLE FIND TARGETS!"
+
 @onready var range_area : Area2D = $RangeArea 
 @onready var area_shape : CollisionShape2D = $RangeArea/CollisionShape2D
 
@@ -25,11 +27,12 @@ var behaviour_tree : BeehaveTree :
 
 func _ready() -> void:
 	super()
-	area_shape.shape.radius = stats_manager.get_range_in_tiles()
+	area_shape.shape.radius = stats.get_range_in_tiles()
+	stats.get_stat(Utils.StatType.AttackRange).changed.connect(_on_attack_range_stat_changed)
 	GameSignals.enemy_destroyed.connect(_on_enemy_destroyed)
 	
 	if range_area == null:
-		push_warning("NO RANGE AREA ON TOWER, UNABLE FIND TARGETS!")
+		push_warning(RANGE_AREA_OBJECT_NULL_ERROR_MESSAGE)
 	
 	if not range_area.body_entered.is_connected(_on_range_area_body_entered):
 		range_area.body_entered.connect(_on_range_area_body_entered)
@@ -57,14 +60,9 @@ func _on_range_area_body_exited(body: Node2D) -> void:
 	targets.erase(body)
 
 
-func _on_stats_changed() -> void:
-	super()
-
-
-func _on_stat_changed(stat_type, stat_value) -> void:
-	print(str(Utils.StatType.keys()[stat_type]), " changed to ", str(stat_value))
-	if stat_type == Utils.StatType.AttackRange:
-		area_shape.shape.radius = Utils.TILE_SIZE * stats_manager.stats.attack_range
+func _on_attack_range_stat_changed(_stat : Stat) -> void:
+	print(_stat.name, " changed to ", str(_stat.value))
+	area_shape.shape.radius = Utils.TILE_SIZE * _stat.value
 
 
 func get_first_target() -> Node2D:

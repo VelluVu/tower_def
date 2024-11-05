@@ -29,6 +29,8 @@ func _input(event: InputEvent) -> void:
 
 func _on_building_placement_change(is_placing : bool) -> void:
 	is_placing_building = is_placing
+	if not is_placing_building:
+		_clear_selection()
 
 
 func _on_forced_selection(selection : Node2D) -> void:

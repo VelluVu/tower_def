@@ -47,6 +47,12 @@ enum OvertimeEffectType
 	Stack,
 }
 
+enum ModifyType
+{
+	Flat,
+	Multiply,
+}
+
 func get_damage_type_color(damage_type : DamageType) -> Color:
 	match(damage_type):
 		DamageType.Normal:
