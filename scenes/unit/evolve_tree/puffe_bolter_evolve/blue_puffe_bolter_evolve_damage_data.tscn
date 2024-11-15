@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://dg4samicdip6b"]
+
+[ext_resource type="Script" path="res://scenes/unit/skills/damage_data.gd" id="1_s7xre"]
+[ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_data.gd" id="2_q2gwu"]
+[ext_resource type="Script" path="res://scenes/unit/stats/modifier.gd" id="3_s7761"]
+
+[node name="BluePuffeBolterEvolveDamageData" type="Node"]
+script = ExtResource("1_s7xre")
+damage = 2.0
+damage_type = 2
+
+[node name="OvertimeEffectData" type="Node" parent="."]
+script = ExtResource("2_q2gwu")
+max_count = 50
+tick_damage = 0.0
+tick_interval = 3.0
+damage_type = 2
+effectType = 1
+
+[node name="Modifier" type="Node" parent="OvertimeEffectData"]
+script = ExtResource("3_s7761")
+value = -0.3

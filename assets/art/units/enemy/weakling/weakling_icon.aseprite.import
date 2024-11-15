@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bxeaj34p7nkpe"
+path="res://.godot/imported/weakling_icon.aseprite-3d449949f1f8b6bdb3f798d3009a20dc.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/weakling/weakling_icon.aseprite"
+dest_files=["res://.godot/imported/weakling_icon.aseprite-3d449949f1f8b6bdb3f798d3009a20dc.res"]
+
+[params]
+

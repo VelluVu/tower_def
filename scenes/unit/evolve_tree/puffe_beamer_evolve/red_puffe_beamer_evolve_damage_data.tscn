@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://b087583254nj7"]
+
+[ext_resource type="Script" path="res://scenes/unit/skills/damage_data.gd" id="1_np73t"]
+[ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_data.gd" id="2_rlv5h"]
+
+[node name="RedPuffeBeamerEvolveDamageData" type="Node"]
+script = ExtResource("1_np73t")
+damage_type = 1
+
+[node name="OvertimeEffectData" type="Node" parent="."]
+script = ExtResource("2_rlv5h")
+max_count = 4
+tick_interval = 5.0
+chance_to_apply = 0.1
+damage_type = 1
+effectType = 1

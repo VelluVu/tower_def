@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="BuildingListElement" load_steps=4 format=3 uid="uid://dhop8fsw2y8mw"]
 
 [ext_resource type="Script" path="res://scenes/unit/building/building_list_element.gd" id="1_4u06c"]
-[ext_resource type="Texture2D" uid="uid://c5m2tdopql7kr" path="res://assets/2d_art/wall_icon.png" id="1_njrqw"]
+[ext_resource type="Texture2D" uid="uid://c5m2tdopql7kr" path="res://assets/art/units/building/wall/wall_icon.png" id="1_njrqw"]
 [ext_resource type="PackedScene" uid="uid://b78nv1og0jf3p" path="res://scenes/unit/building/buildings/wall.tscn" id="2_oyljx"]
 
 [resource]

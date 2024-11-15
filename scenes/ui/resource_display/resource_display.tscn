@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://scenes/ui/resource_display/resource_display.gd" id="1_w2cxb"]
 [ext_resource type="Script" path="res://scenes/ui/resource_display/resource_display_element.gd" id="2_5bfoh"]
-[ext_resource type="Texture2D" uid="uid://bn6l506rjobtd" path="res://assets/2d_art/puffe_coin.png" id="3_vxrfw"]
-[ext_resource type="Texture2D" uid="uid://31a5cefrei6a" path="res://assets/2d_art/heart.png" id="4_57krd"]
+[ext_resource type="Texture2D" uid="uid://bn6l506rjobtd" path="res://assets/art/ui/puffe_coin.png" id="3_vxrfw"]
+[ext_resource type="Texture2D" uid="uid://31a5cefrei6a" path="res://assets/art/ui/heart.png" id="4_57krd"]
 
 [node name="ResourceDisplay" type="Control" node_paths=PackedStringArray("resource_display_elements")]
 layout_mode = 3

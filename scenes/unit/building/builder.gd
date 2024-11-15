@@ -27,6 +27,7 @@ var placement_position : Vector2 = Vector2.ZERO
 var current_building : Building = null
 var level : Level = null
 var placed_buildings : Array[Building]
+var placed_building_id : int = 0
 
 var is_placing_building : bool : 
 	get = _get_is_placing_building,
@@ -106,6 +107,7 @@ func _on_game_pause(is_paused : bool) -> void:
 
 func _on_level_loaded(_level : Level) -> void:
 	placed_buildings.clear()
+	placed_building_id = 0
 	level = _level
 	UISignals.building_option_selected.connect(_on_building_placement_selected)
 	UISignals.building_option_deselected.connect(_on_building_placement_deselected)
@@ -200,8 +202,10 @@ func _place_building(building_index : int) -> void:
 	var buildings_node : Node2D = _get_buildings_container()
 	var placed_building : Building = buildings[building_index].scene.instantiate()
 	buildings_node.add_child(placed_building)
+	placed_building.id = placed_building_id
 	placed_building.place(placement_position)
 	placed_buildings.append(placed_building)
+	placed_building_id += 1
 
 
 func _move_building_with_cursor() -> void:

@@ -1,0 +1,57 @@
+[gd_scene load_steps=8 format=3 uid="uid://dxbpe6mkrqtxy"]
+
+[ext_resource type="Material" uid="uid://bvbirfo7s5qnw" path="res://assets/shaders/shader_materials/fade_shader_material.tres" id="1_hl2hd"]
+[ext_resource type="Texture2D" uid="uid://bx2hc83bc4tx5" path="res://assets/art/projectile/fire_nova_particle.png" id="1_yvpry"]
+[ext_resource type="Script" path="res://scenes/unit/skills/projectiles/straight_moving_projectile.gd" id="2_8p1ij"]
+[ext_resource type="Script" path="res://scenes/custom_timer.gd" id="4_x5ytx"]
+
+[sub_resource type="Animation" id="Animation_jd4tk"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/fade")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_xddre"]
+resource_name = "fade"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/fade")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.266667, 0.5, 0.766667, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kvafo"]
+_data = {
+"RESET": SubResource("Animation_jd4tk"),
+"fade": SubResource("Animation_xddre")
+}
+
+[node name="FireNovaParticle" type="Sprite2D"]
+y_sort_enabled = true
+material = ExtResource("1_hl2hd")
+texture = ExtResource("1_yvpry")
+script = ExtResource("2_8p1ij")
+
+[node name="LiveTimer" type="Timer" parent="."]
+one_shot = true
+script = ExtResource("4_x5ytx")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_kvafo")
+}

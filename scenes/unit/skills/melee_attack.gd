@@ -28,6 +28,7 @@ func activate() -> void:
 func _on_attack_area_body_entered(body: Node2D) -> void:
 	activate_collision_detection(false)
 	body.take_damage(damage_data)
+	actor.dealt_damage(body, damage_data)
 
 
 func _on_active_end() -> void:

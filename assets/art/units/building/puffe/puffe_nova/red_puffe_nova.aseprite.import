@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://mssjf1nys6jj"
+path="res://.godot/imported/red_puffe_nova.aseprite-b7295c9d0853c6ea8f0b32a2872cf0ec.res"
+
+[deps]
+
+source_file="res://assets/art/units/building/puffe/puffe_nova/red_puffe_nova.aseprite"
+dest_files=["res://.godot/imported/red_puffe_nova.aseprite-b7295c9d0853c6ea8f0b32a2872cf0ec.res"]
+
+[params]
+

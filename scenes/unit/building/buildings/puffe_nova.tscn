@@ -1,136 +1,161 @@
-[gd_scene load_steps=36 format=3 uid="uid://bddvvyp8cnh6u"]
+[gd_scene load_steps=57 format=3 uid="uid://bddvvyp8cnh6u"]
 
 [ext_resource type="Script" path="res://scenes/unit/building/tower.gd" id="1_t60dc"]
-[ext_resource type="Texture2D" uid="uid://vxk12gmmva1s" path="res://assets/2d_art/puffe_bolter_icon.png" id="2_x2eef"]
+[ext_resource type="Texture2D" uid="uid://crquejaub2fde" path="res://assets/art/units/building/puffe/puffe_nova/puffe_nova_icon.png" id="2_amlqn"]
 [ext_resource type="Material" uid="uid://c3sja1ms0jrnf" path="res://assets/shaders/shader_materials/building_hit_shader_material.tres" id="3_ahivo"]
-[ext_resource type="Texture2D" uid="uid://c1n3lijl3jmcp" path="res://assets/2d_art/puffe_bolter_no_tower.png" id="4_l6yi3"]
+[ext_resource type="Texture2D" uid="uid://cf0jxm031ar8b" path="res://assets/art/units/building/puffe/puffe_nova/puffe_nova.png" id="4_xlmif"]
 [ext_resource type="Script" path="res://scenes/unit/animation_control.gd" id="5_2ccpq"]
 [ext_resource type="Script" path="res://scenes/unit/building/range_area.gd" id="5_7letq"]
-[ext_resource type="Texture2D" uid="uid://cq0qswfnh2bah" path="res://assets/2d_art/basic_tower.png" id="6_2iol5"]
-[ext_resource type="PackedScene" uid="uid://cfw0up3crwaou" path="res://scenes/unit/skills/nova.tscn" id="6_udwjg"]
+[ext_resource type="Texture2D" uid="uid://cq0qswfnh2bah" path="res://assets/art/units/building/puffe/basic_tower.png" id="6_2iol5"]
 [ext_resource type="PackedScene" uid="uid://88hwq47f7r6d" path="res://scenes/unit/behaviour_trees/basic_tower_behaviour_tree/basic_tower_bt.tscn" id="7_68ipj"]
 [ext_resource type="Script" path="res://scenes/unit/skills/damage_data.gd" id="9_k17ms"]
 [ext_resource type="PackedScene" uid="uid://dd11cco5cukhw" path="res://scenes/unit/unit_selection/selectable_unit.tscn" id="9_tgbdh"]
-[ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_data.gd" id="10_38tdv"]
 [ext_resource type="PackedScene" uid="uid://ccc725wgsiq36" path="res://scenes/unit/building/placement_validator.tscn" id="10_mthul"]
-[ext_resource type="Script" path="res://scenes/unit/stats/modifier.gd" id="11_vohnx"]
+[ext_resource type="PackedScene" uid="uid://crbx1w230gw8" path="res://scenes/unit/skills/launch_projectile.tscn" id="10_v02ro"]
+[ext_resource type="PackedScene" uid="uid://dqcs123jiyqlj" path="res://scenes/unit/skills/projectiles/normal_nova_area_effect.tscn" id="11_77qvb"]
+[ext_resource type="PackedScene" uid="uid://42b6l31iaaki" path="res://scenes/unit/skills/projectiles/frost_nova_area_effect.tscn" id="11_mm4fc"]
 [ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_handler.gd" id="12_pje5b"]
+[ext_resource type="PackedScene" uid="uid://c5o05ed0n7tdq" path="res://scenes/unit/evolve_level_up_particle_effect.tscn" id="14_1jyj5"]
 [ext_resource type="Script" path="res://scenes/unit/stats/stats.gd" id="15_gqyqb"]
 [ext_resource type="Script" path="res://scenes/unit/stats/stat.gd" id="16_ho6cm"]
+[ext_resource type="Script" path="res://scenes/unit/evolve_tree/evolve_tree.gd" id="17_x1ya5"]
+[ext_resource type="Script" path="res://scenes/unit/evolve_tree/evolve_branch.gd" id="18_1q0mh"]
+[ext_resource type="Script" path="res://scenes/unit/evolve_tree/element_evolve_leaf.gd" id="19_qeikc"]
+[ext_resource type="PackedScene" uid="uid://oieqtkcxo2sp" path="res://scenes/unit/evolve_tree/puffe_nova_evolve/normal_puffe_nova_evolve_damage_data.tscn" id="20_58cmo"]
+[ext_resource type="Texture2D" uid="uid://yeifd50gnqjq" path="res://assets/art/ui/normal_element_icon.png" id="22_4cpb3"]
+[ext_resource type="PackedScene" uid="uid://dkyb5m1hngnkt" path="res://scenes/unit/skills/projectiles/fire_nova_area_effect.tscn" id="22_eyqrv"]
+[ext_resource type="Texture2D" uid="uid://c807qi0g23lj3" path="res://assets/art/units/building/puffe/puffe_nova/red_puffe_nova_icon.png" id="22_u5e7f"]
+[ext_resource type="PackedScene" uid="uid://bbm8vbrsgi3yx" path="res://scenes/unit/evolve_tree/puffe_nova_evolve/red_puffe_nova.tscn" id="23_iiqqs"]
+[ext_resource type="PackedScene" uid="uid://bxufdyartlfvv" path="res://scenes/unit/evolve_tree/puffe_nova_evolve/red_puffe_nova_evolve_damage_data.tscn" id="24_yqrbt"]
+[ext_resource type="PackedScene" uid="uid://dcyg0fkqsho2j" path="res://scenes/unit/evolve_tree/puffe_nova_evolve/blue_puffe_nova.tscn" id="26_rr1ji"]
+[ext_resource type="PackedScene" uid="uid://4qhwjgmx7yqq" path="res://scenes/unit/evolve_tree/puffe_nova_evolve/blue_puffe_nova_evolve_damage_data.tscn" id="27_eue1b"]
+[ext_resource type="Texture2D" uid="uid://dfd2tr771fghw" path="res://assets/art/units/building/puffe/puffe_nova/blue_puffe_nova_icon.png" id="27_fapa0"]
+[ext_resource type="Texture2D" uid="uid://csytae52ooqga" path="res://assets/art/ui/fire_element_icon.png" id="27_hmvri"]
+[ext_resource type="PackedScene" uid="uid://b3u3u3ubuydtt" path="res://scenes/unit/skills/projectiles/poison_nova_area_effect.tscn" id="28_4bt8w"]
+[ext_resource type="PackedScene" uid="uid://57c15jgfhmxk" path="res://scenes/unit/evolve_tree/puffe_nova_evolve/green_puffe_nova.tscn" id="29_5ite4"]
+[ext_resource type="PackedScene" uid="uid://c4fcgnykrshlq" path="res://scenes/unit/evolve_tree/puffe_nova_evolve/green_puffe_nova_evolve_damage_data.tscn" id="30_jsgjd"]
+[ext_resource type="Texture2D" uid="uid://c5h4vuole8dgv" path="res://assets/art/units/building/puffe/puffe_nova/green_puffe_nova_icon.png" id="32_1be7x"]
+[ext_resource type="Texture2D" uid="uid://4vr2yacqou07" path="res://assets/art/ui/frost_element_icon.png" id="32_u1lqf"]
+[ext_resource type="Texture2D" uid="uid://b6lo5eq5siv2u" path="res://assets/art/ui/poison_element_icon.png" id="37_ywbce"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jxaqe"]
 size = Vector2(16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_qfxpm"]
-atlas = ExtResource("4_l6yi3")
+[sub_resource type="AtlasTexture" id="AtlasTexture_217ea"]
+atlas = ExtResource("4_xlmif")
 region = Rect2(0, 0, 18, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_nb63u"]
-atlas = ExtResource("4_l6yi3")
-region = Rect2(0, 34, 18, 34)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_76ouf"]
-atlas = ExtResource("4_l6yi3")
-region = Rect2(18, 34, 18, 34)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vswhd"]
-atlas = ExtResource("4_l6yi3")
-region = Rect2(36, 34, 18, 34)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_deox2"]
-atlas = ExtResource("4_l6yi3")
-region = Rect2(54, 34, 18, 34)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_frhb1"]
-atlas = ExtResource("4_l6yi3")
-region = Rect2(0, 68, 18, 34)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_im32h"]
-atlas = ExtResource("4_l6yi3")
-region = Rect2(18, 68, 18, 34)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5c3c1"]
-atlas = ExtResource("4_l6yi3")
-region = Rect2(36, 68, 18, 34)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_mdr4n"]
-atlas = ExtResource("4_l6yi3")
-region = Rect2(54, 68, 18, 34)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_rc633"]
-atlas = ExtResource("4_l6yi3")
+[sub_resource type="AtlasTexture" id="AtlasTexture_jfma1"]
+atlas = ExtResource("4_xlmif")
 region = Rect2(18, 0, 18, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_6e6un"]
-atlas = ExtResource("4_l6yi3")
+[sub_resource type="AtlasTexture" id="AtlasTexture_0n6l0"]
+atlas = ExtResource("4_xlmif")
 region = Rect2(36, 0, 18, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ppdru"]
-atlas = ExtResource("4_l6yi3")
+[sub_resource type="AtlasTexture" id="AtlasTexture_dmvky"]
+atlas = ExtResource("4_xlmif")
 region = Rect2(54, 0, 18, 34)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_xhvrh"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_fbted"]
+atlas = ExtResource("4_xlmif")
+region = Rect2(0, 34, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jnvvk"]
+atlas = ExtResource("4_xlmif")
+region = Rect2(18, 34, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r6c2p"]
+atlas = ExtResource("4_xlmif")
+region = Rect2(36, 34, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nhvra"]
+atlas = ExtResource("4_xlmif")
+region = Rect2(54, 34, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rllc6"]
+atlas = ExtResource("4_xlmif")
+region = Rect2(0, 68, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cxj7d"]
+atlas = ExtResource("4_xlmif")
+region = Rect2(18, 68, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h35ff"]
+atlas = ExtResource("4_xlmif")
+region = Rect2(36, 68, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uicy3"]
+atlas = ExtResource("4_xlmif")
+region = Rect2(54, 68, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1ueda"]
+atlas = ExtResource("4_xlmif")
+region = Rect2(0, 102, 18, 34)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fhwnl"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_qfxpm")
+"texture": SubResource("AtlasTexture_217ea")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_nb63u")
+"texture": SubResource("AtlasTexture_jfma1")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_76ouf")
+"texture": SubResource("AtlasTexture_0n6l0")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vswhd")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_deox2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_frhb1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_im32h")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_5c3c1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_mdr4n")
-}],
-"loop": false,
-"name": &"ATTACK",
-"speed": 10.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_qfxpm")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_rc633")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_6e6un")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ppdru")
+"texture": SubResource("AtlasTexture_dmvky")
 }],
 "loop": true,
 "name": &"IDLE",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fbted")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jnvvk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r6c2p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nhvra")
+}],
+"loop": false,
+"name": &"START_ATTACK",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rllc6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cxj7d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h35ff")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uicy3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1ueda")
+}],
+"loop": false,
+"name": &"STOP_ATTACK",
+"speed": 10.0
 }]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_nklau"]
-resource_local_to_scene = true
-radius = 48.0
 
 [sub_resource type="Animation" id="Animation_4gyud"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/enabled")
+tracks/0/path = NodePath(".:material:shader_parameter/enabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -142,10 +167,11 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_ljeel"]
 resource_name = "hit"
+length = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/enabled")
+tracks/0/path = NodePath(".:material:shader_parameter/enabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -161,14 +187,17 @@ _data = {
 "hit": SubResource("Animation_ljeel")
 }
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_nklau"]
+resource_local_to_scene = true
+radius = 48.0
+
 [node name="PuffeNova" type="StaticBody2D" node_paths=PackedStringArray("skill")]
 y_sort_enabled = true
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("1_t60dc")
-skill = NodePath("Nova")
-id = 3
-icon = ExtResource("2_x2eef")
+skill = NodePath("LaunchProjectile")
+icon = ExtResource("2_amlqn")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_jxaqe")
@@ -177,8 +206,8 @@ shape = SubResource("RectangleShape2D_jxaqe")
 texture_filter = 1
 material = ExtResource("3_ahivo")
 position = Vector2(0, -8)
-sprite_frames = SubResource("SpriteFrames_xhvrh")
-animation = &"ATTACK"
+sprite_frames = SubResource("SpriteFrames_fhwnl")
+animation = &"START_ATTACK"
 script = ExtResource("5_2ccpq")
 metadata/_aseprite_wizard_config_ = {
 "layer": "",
@@ -187,12 +216,12 @@ metadata/_aseprite_wizard_config_ = {
 "o_name": "",
 "only_visible": false,
 "slice": "",
-"source": "res://assets/aseprite/puffe_bolter_no_tower.aseprite"
+"source": "res://assets/aseprite/puffe_nova.aseprite"
 }
 metadata/_aseprite_wizard_interface_config_ = {
 "output_section": true
 }
-metadata/_aseprite_wizard_source_file_hash_ = "0fdb7ac7f888dd811c748b8384b7c665"
+metadata/_aseprite_wizard_source_file_hash_ = "6d0f468f16b361a00899c361806dc38d"
 
 [node name="TowerBaseSprite" type="Sprite2D" parent="AnimatedSprite2D"]
 show_behind_parent = true
@@ -216,6 +245,11 @@ metadata/_aseprite_wizard_interface_config_ = {
 }
 metadata/_aseprite_wizard_source_file_hash_ = "7d8e8aeec8ba8ee47def2fdd3f07eb67"
 
+[node name="HitAnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite2D"]
+libraries = {
+"": SubResource("AnimationLibrary_yhdvm")
+}
+
 [node name="RangeArea" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 2
@@ -224,38 +258,25 @@ script = ExtResource("5_7letq")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RangeArea"]
 shape = SubResource("CircleShape2D_nklau")
 
-[node name="Nova" parent="." instance=ExtResource("6_udwjg")]
-
-[node name="DamageData" type="Node" parent="Nova"]
-script = ExtResource("9_k17ms")
-critical_chance = 0.1
-damage_type = 2
-
-[node name="OvertimeEffectData" type="Node" parent="Nova/DamageData"]
-script = ExtResource("10_38tdv")
-max_count = 50
-tick_damage = 0.0
-tick_interval = 5.0
-damage_type = 2
-effectType = 1
-
-[node name="SlowModifier" type="Node" parent="Nova/DamageData/OvertimeEffectData"]
-script = ExtResource("11_vohnx")
-value = -0.1
-
 [node name="BasicTowerBt" parent="." instance=ExtResource("7_68ipj")]
 
-[node name="HitAnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_yhdvm")
-}
-
 [node name="SelectableUnit" parent="." instance=ExtResource("9_tgbdh")]
+
+[node name="LaunchProjectile" parent="." instance=ExtResource("10_v02ro")]
+projectile_scene = ExtResource("11_77qvb")
+base_cast_time = 0.0
+
+[node name="DamageData" type="Node" parent="LaunchProjectile"]
+script = ExtResource("9_k17ms")
+critical_chance = 0.1
 
 [node name="PlacementValidator" parent="." instance=ExtResource("10_mthul")]
 
 [node name="PopUpSpot" type="Node2D" parent="."]
 position = Vector2(0, -19)
+
+[node name="EvolveLevelUpParticleEffect" parent="." instance=ExtResource("14_1jyj5")]
+position = Vector2(0, -5)
 
 [node name="OvertimeEffectHandler" type="Node" parent="."]
 script = ExtResource("12_pje5b")
@@ -295,6 +316,46 @@ script = ExtResource("16_ho6cm")
 base_value = 2.0
 value = 2.0
 type = 5
+
+[node name="EvolveTree" type="Node" parent="."]
+script = ExtResource("17_x1ya5")
+
+[node name="EvolveBranch" type="Node" parent="EvolveTree"]
+script = ExtResource("18_1q0mh")
+
+[node name="NormalElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch"]
+script = ExtResource("19_qeikc")
+selected_icon = ExtResource("2_amlqn")
+new_damage_data_scene = ExtResource("20_58cmo")
+icon = ExtResource("22_4cpb3")
+info = "Normal"
+
+[node name="FireElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch"]
+script = ExtResource("19_qeikc")
+selected_icon = ExtResource("22_u5e7f")
+new_projectile_scene = ExtResource("22_eyqrv")
+new_animated_sprite_scene = ExtResource("23_iiqqs")
+new_damage_data_scene = ExtResource("24_yqrbt")
+icon = ExtResource("27_hmvri")
+info = "Fire"
+
+[node name="FrostElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch"]
+script = ExtResource("19_qeikc")
+selected_icon = ExtResource("27_fapa0")
+new_projectile_scene = ExtResource("11_mm4fc")
+new_animated_sprite_scene = ExtResource("26_rr1ji")
+new_damage_data_scene = ExtResource("27_eue1b")
+icon = ExtResource("32_u1lqf")
+info = "Frost"
+
+[node name="PoisonElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch"]
+script = ExtResource("19_qeikc")
+selected_icon = ExtResource("32_1be7x")
+new_projectile_scene = ExtResource("28_4bt8w")
+new_animated_sprite_scene = ExtResource("29_5ite4")
+new_damage_data_scene = ExtResource("30_jsgjd")
+icon = ExtResource("37_ywbce")
+info = "Poison"
 
 [connection signal="body_entered" from="RangeArea" to="." method="_on_range_area_body_entered"]
 [connection signal="body_exited" from="RangeArea" to="." method="_on_range_area_body_exited"]

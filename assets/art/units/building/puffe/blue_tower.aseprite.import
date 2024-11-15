@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://ia6dv4kin6b1"
+path="res://.godot/imported/blue_tower.aseprite-6758c28bd7856a20326902f4aa7c0c9a.res"
+
+[deps]
+
+source_file="res://assets/art/units/building/puffe/blue_tower.aseprite"
+dest_files=["res://.godot/imported/blue_tower.aseprite-6758c28bd7856a20326902f4aa7c0c9a.res"]
+
+[params]
+

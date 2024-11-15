@@ -4,6 +4,7 @@ extends Area2D
 
 var is_placing_building : bool = false
 var selected_unit : Node2D = null
+var is_cursor_on_gui : bool = false
 
 
 func _ready() -> void:
@@ -11,20 +12,27 @@ func _ready() -> void:
 	GameSignals.forced_selection.connect(_on_forced_selection)
 	GameSignals.building_is_placing.connect(_on_building_is_placing)
 	UISignals.on_sell_selected_building_pressed.connect(_on_selected_building_sell_pressed)
+	UISignals.mouse_on_gui.connect(_mouse_is_on_gui)
 
 
-func _input(event: InputEvent) -> void:
+func _mouse_is_on_gui(is_on_ui : bool) -> void:
+	is_cursor_on_gui = is_on_ui
+	#wtf true false at the same time
+	#print(is_cursor_on_gui)
+
+
+func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		_move_selection_area_with_cursor()
 	
 	if is_placing_building:
 		return
 	
-	if event.is_action_pressed("LeftClick"):
-		_select()
-	
 	if event.is_action_pressed("RightClick") or event.is_action_pressed("Escape"):
 		_clear_selection()
+	
+	if event.is_action_pressed("LeftClick") and not is_cursor_on_gui:
+		_select()
 
 
 func _on_building_placement_change(is_placing : bool) -> void:

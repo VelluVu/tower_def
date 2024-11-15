@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://2sjjjjxjutxw"
+path="res://.godot/imported/puffe.aseprite-5c18b046b87af0201aa639e81dc9b3e0.res"
+
+[deps]
+
+source_file="res://assets/art/units/building/puffe/puffe.aseprite"
+dest_files=["res://.godot/imported/puffe.aseprite-5c18b046b87af0201aa639e81dc9b3e0.res"]
+
+[params]
+

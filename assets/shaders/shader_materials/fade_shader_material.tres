@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://bvbirfo7s5qnw"]
+
+[ext_resource type="Shader" path="res://assets/shaders/fade.gdshader" id="1_iec5f"]
+
+[resource]
+resource_local_to_scene = true
+shader = ExtResource("1_iec5f")
+shader_parameter/fade = 0
+shader_parameter/tiling = 16

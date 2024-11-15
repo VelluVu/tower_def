@@ -1,0 +1,68 @@
+[gd_scene load_steps=9 format=3 uid="uid://dkyb5m1hngnkt"]
+
+[ext_resource type="Script" path="res://scenes/unit/skills/projectiles/custom_area_effect.gd" id="1_wiqmp"]
+[ext_resource type="Script" path="res://scenes/unit/skills/emitter.gd" id="2_wjrpt"]
+[ext_resource type="PackedScene" uid="uid://dxbpe6mkrqtxy" path="res://scenes/unit/skills/projectiles/fire_nova_particle.tscn" id="3_hljr2"]
+[ext_resource type="Script" path="res://scenes/custom_timer.gd" id="4_ykhl8"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vgh1l"]
+resource_local_to_scene = true
+radius = 0.01
+
+[sub_resource type="Animation" id="Animation_ccddx"]
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape2D:shape:radius")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.01]
+}
+
+[sub_resource type="Animation" id="Animation_agnky"]
+resource_name = "default"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape2D:shape:radius")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [16.0, 16.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4s3dd"]
+_data = {
+"RESET": SubResource("Animation_ccddx"),
+"default": SubResource("Animation_agnky")
+}
+
+[node name="FireNovaAreaEffect" type="Area2D"]
+y_sort_enabled = true
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_wiqmp")
+
+[node name="Emitter" type="Node2D" parent="."]
+script = ExtResource("2_wjrpt")
+particle_scene = ExtResource("3_hljr2")
+
+[node name="CustomTimer" type="Timer" parent="Emitter"]
+wait_time = 3.0
+one_shot = true
+script = ExtResource("4_ykhl8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_vgh1l")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_4s3dd")
+}

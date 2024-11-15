@@ -1,135 +1,186 @@
-[gd_scene load_steps=36 format=3 uid="uid://ck38qjjtmawki"]
+[gd_scene load_steps=59 format=3 uid="uid://ck38qjjtmawki"]
 
 [ext_resource type="Script" path="res://scenes/unit/building/tower.gd" id="1_cyr4l"]
-[ext_resource type="Texture2D" uid="uid://d1s2xw53fx6au" path="res://icon.svg" id="2_8pdqy"]
+[ext_resource type="Texture2D" uid="uid://d3x1xfq7cnf40" path="res://assets/art/units/building/puffe/puffe_beamer/puffe_beamer_icon.png" id="2_1w6ba"]
 [ext_resource type="Material" uid="uid://c3sja1ms0jrnf" path="res://assets/shaders/shader_materials/building_hit_shader_material.tres" id="3_5wcu4"]
-[ext_resource type="Texture2D" uid="uid://c1n3lijl3jmcp" path="res://assets/2d_art/puffe_bolter_no_tower.png" id="4_2c6ng"]
 [ext_resource type="PackedScene" uid="uid://ubcjqg1p0ppt" path="res://scenes/unit/skills/beam.tscn" id="4_2p66l"]
+[ext_resource type="Texture2D" uid="uid://5vat2yovydxi" path="res://assets/art/units/building/puffe/puffe_beamer/puffe_beamer.png" id="4_qfv3q"]
 [ext_resource type="PackedScene" uid="uid://jc86qe0kr0a6" path="res://scenes/unit/behaviour_trees/basic_tower_behaviour_tree/beam_tower_bt.tscn" id="5_3fi0f"]
 [ext_resource type="Script" path="res://scenes/unit/animation_control.gd" id="5_mwcin"]
 [ext_resource type="Script" path="res://scenes/unit/building/range_area.gd" id="5_s0u5l"]
 [ext_resource type="PackedScene" uid="uid://dd11cco5cukhw" path="res://scenes/unit/unit_selection/selectable_unit.tscn" id="9_gmkxw"]
 [ext_resource type="Script" path="res://scenes/unit/skills/damage_data.gd" id="9_y18tw"]
 [ext_resource type="PackedScene" uid="uid://ccc725wgsiq36" path="res://scenes/unit/building/placement_validator.tscn" id="10_3twny"]
-[ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_data.gd" id="10_igp4j"]
-[ext_resource type="Texture2D" uid="uid://cq0qswfnh2bah" path="res://assets/2d_art/basic_tower.png" id="11_2t7ql"]
-[ext_resource type="Script" path="res://scenes/unit/stats/modifier.gd" id="11_jvphu"]
+[ext_resource type="Texture2D" uid="uid://cq0qswfnh2bah" path="res://assets/art/units/building/puffe/basic_tower.png" id="11_2t7ql"]
 [ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_handler.gd" id="12_cmlai"]
+[ext_resource type="PackedScene" uid="uid://c5o05ed0n7tdq" path="res://scenes/unit/evolve_level_up_particle_effect.tscn" id="13_e0s16"]
 [ext_resource type="Script" path="res://scenes/unit/stats/stats.gd" id="15_yqf0r"]
+[ext_resource type="Script" path="res://scenes/unit/evolve_tree/evolve_tree.gd" id="16_dryip"]
 [ext_resource type="Script" path="res://scenes/unit/stats/stat.gd" id="16_mlf80"]
+[ext_resource type="Script" path="res://scenes/unit/evolve_tree/evolve_branch.gd" id="17_wlcq3"]
+[ext_resource type="Script" path="res://scenes/unit/evolve_tree/element_evolve_leaf.gd" id="18_wr5qw"]
+[ext_resource type="PackedScene" uid="uid://vxhhxnovjoo7" path="res://scenes/unit/evolve_tree/puffe_beamer_evolve/normal_puffe_beamer_evolve_damage_data.tscn" id="19_jj2s0"]
+[ext_resource type="Texture2D" uid="uid://xsw677gkgt01" path="res://assets/art/projectile/fire_beam.png" id="21_8at6e"]
+[ext_resource type="PackedScene" uid="uid://bv332w34l6mpw" path="res://scenes/unit/evolve_tree/puffe_beamer_evolve/red_puffe_beamer.tscn" id="21_q5eu1"]
+[ext_resource type="Texture2D" uid="uid://b5sv4hjr1qbk" path="res://assets/art/units/building/puffe/puffe_beamer/red_puffe_beamer_icon.png" id="21_wo18e"]
+[ext_resource type="Texture2D" uid="uid://yeifd50gnqjq" path="res://assets/art/ui/normal_element_icon.png" id="21_xun3a"]
+[ext_resource type="PackedScene" uid="uid://b087583254nj7" path="res://scenes/unit/evolve_tree/puffe_beamer_evolve/red_puffe_beamer_evolve_damage_data.tscn" id="22_3bcl3"]
+[ext_resource type="Texture2D" uid="uid://bixi4wfgm28ri" path="res://assets/art/projectile/frost_beam.png" id="24_0irea"]
+[ext_resource type="PackedScene" uid="uid://bl6husul4ceqd" path="res://scenes/unit/evolve_tree/puffe_beamer_evolve/blue_puffe_beamer.tscn" id="24_2h2rt"]
+[ext_resource type="PackedScene" uid="uid://betnuhvodnqmf" path="res://scenes/unit/evolve_tree/puffe_beamer_evolve/blue_puffe_beamer_evolve_damage_data.tscn" id="25_gnxl0"]
+[ext_resource type="Texture2D" uid="uid://csytae52ooqga" path="res://assets/art/ui/fire_element_icon.png" id="26_ljtca"]
+[ext_resource type="Texture2D" uid="uid://b6c7ooiuarnw7" path="res://assets/art/units/building/puffe/puffe_beamer/blue_puffe_beamer_icon.png" id="26_pjfpn"]
+[ext_resource type="PackedScene" uid="uid://cnvmkfrypkx6d" path="res://scenes/unit/evolve_tree/puffe_beamer_evolve/green_puffe_beamer.tscn" id="27_wav4t"]
+[ext_resource type="PackedScene" uid="uid://b0ev0ydt8qls7" path="res://scenes/unit/evolve_tree/puffe_beamer_evolve/green_puffe_beamer_evolve_damage_data.tscn" id="28_3xrpj"]
+[ext_resource type="Texture2D" uid="uid://dofarsfqm1snu" path="res://assets/art/projectile/poison_beam.png" id="29_rgmys"]
+[ext_resource type="Texture2D" uid="uid://deqxyurdint7k" path="res://assets/art/units/building/puffe/puffe_beamer/green_puffe_beamer_icon.png" id="31_mv0to"]
+[ext_resource type="Texture2D" uid="uid://4vr2yacqou07" path="res://assets/art/ui/frost_element_icon.png" id="31_qbv05"]
+[ext_resource type="Texture2D" uid="uid://b6lo5eq5siv2u" path="res://assets/art/ui/poison_element_icon.png" id="36_kci3i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nli7h"]
 size = Vector2(16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_p6gwt"]
-atlas = ExtResource("4_2c6ng")
-region = Rect2(0, 0, 18, 34)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5died"]
-atlas = ExtResource("4_2c6ng")
-region = Rect2(0, 34, 18, 34)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_dflu1"]
-atlas = ExtResource("4_2c6ng")
-region = Rect2(18, 34, 18, 34)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_m8y6y"]
-atlas = ExtResource("4_2c6ng")
-region = Rect2(36, 34, 18, 34)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_s6lpl"]
-atlas = ExtResource("4_2c6ng")
-region = Rect2(54, 34, 18, 34)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_pbak6"]
-atlas = ExtResource("4_2c6ng")
+[sub_resource type="AtlasTexture" id="AtlasTexture_75r8j"]
+atlas = ExtResource("4_qfv3q")
 region = Rect2(0, 68, 18, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_6wfwu"]
-atlas = ExtResource("4_2c6ng")
+[sub_resource type="AtlasTexture" id="AtlasTexture_ewavn"]
+atlas = ExtResource("4_qfv3q")
 region = Rect2(18, 68, 18, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_mivnp"]
-atlas = ExtResource("4_2c6ng")
+[sub_resource type="AtlasTexture" id="AtlasTexture_81f4f"]
+atlas = ExtResource("4_qfv3q")
 region = Rect2(36, 68, 18, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_qfmq5"]
-atlas = ExtResource("4_2c6ng")
-region = Rect2(54, 68, 18, 34)
+[sub_resource type="AtlasTexture" id="AtlasTexture_eir4l"]
+atlas = ExtResource("4_qfv3q")
+region = Rect2(0, 0, 18, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vtqxv"]
-atlas = ExtResource("4_2c6ng")
+[sub_resource type="AtlasTexture" id="AtlasTexture_b7stg"]
+atlas = ExtResource("4_qfv3q")
 region = Rect2(18, 0, 18, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_xejcv"]
-atlas = ExtResource("4_2c6ng")
+[sub_resource type="AtlasTexture" id="AtlasTexture_vrvtt"]
+atlas = ExtResource("4_qfv3q")
 region = Rect2(36, 0, 18, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_07lpf"]
-atlas = ExtResource("4_2c6ng")
+[sub_resource type="AtlasTexture" id="AtlasTexture_qdcr4"]
+atlas = ExtResource("4_qfv3q")
 region = Rect2(54, 0, 18, 34)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_g6nhp"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_vpgr4"]
+atlas = ExtResource("4_qfv3q")
+region = Rect2(0, 34, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gc5iu"]
+atlas = ExtResource("4_qfv3q")
+region = Rect2(18, 34, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_47atc"]
+atlas = ExtResource("4_qfv3q")
+region = Rect2(36, 34, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ww5d7"]
+atlas = ExtResource("4_qfv3q")
+region = Rect2(54, 34, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_csytx"]
+atlas = ExtResource("4_qfv3q")
+region = Rect2(54, 68, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_to0pv"]
+atlas = ExtResource("4_qfv3q")
+region = Rect2(0, 102, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vg6vo"]
+atlas = ExtResource("4_qfv3q")
+region = Rect2(18, 102, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c2fmm"]
+atlas = ExtResource("4_qfv3q")
+region = Rect2(36, 102, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hlhso"]
+atlas = ExtResource("4_qfv3q")
+region = Rect2(54, 102, 18, 34)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_oqp6n"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_p6gwt")
+"texture": SubResource("AtlasTexture_75r8j")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_5died")
+"texture": SubResource("AtlasTexture_ewavn")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_dflu1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_m8y6y")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_s6lpl")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_pbak6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_6wfwu")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_mivnp")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_qfmq5")
+"texture": SubResource("AtlasTexture_81f4f")
 }],
-"loop": false,
+"loop": true,
 "name": &"ATTACK",
 "speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_p6gwt")
+"texture": SubResource("AtlasTexture_eir4l")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vtqxv")
+"texture": SubResource("AtlasTexture_b7stg")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_xejcv")
+"texture": SubResource("AtlasTexture_vrvtt")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_07lpf")
+"texture": SubResource("AtlasTexture_qdcr4")
 }],
 "loop": true,
 "name": &"IDLE",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vpgr4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gc5iu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_47atc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ww5d7")
+}],
+"loop": false,
+"name": &"START_ATTACK",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_csytx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_to0pv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vg6vo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c2fmm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hlhso")
+}],
+"loop": false,
+"name": &"STOP_ATTACK",
+"speed": 10.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_yksuc"]
-radius = 160.0
-
-[sub_resource type="Animation" id="Animation_stk78"]
+[sub_resource type="Animation" id="Animation_4gyud"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/enabled")
+tracks/0/path = NodePath(".:material:shader_parameter/enabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -139,12 +190,13 @@ tracks/0/keys = {
 "values": [false]
 }
 
-[sub_resource type="Animation" id="Animation_vu7jh"]
+[sub_resource type="Animation" id="Animation_ljeel"]
 resource_name = "hit"
+length = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/enabled")
+tracks/0/path = NodePath(".:material:shader_parameter/enabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -154,19 +206,21 @@ tracks/0/keys = {
 "values": [true, false]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_lmidr"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yhdvm"]
 _data = {
-"RESET": SubResource("Animation_stk78"),
-"hit": SubResource("Animation_vu7jh")
+"RESET": SubResource("Animation_4gyud"),
+"hit": SubResource("Animation_ljeel")
 }
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yksuc"]
+radius = 160.0
 
 [node name="PuffeBeamer" type="StaticBody2D" node_paths=PackedStringArray("skill")]
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("1_cyr4l")
 skill = NodePath("Beam")
-id = 2
-icon = ExtResource("2_8pdqy")
+icon = ExtResource("2_1w6ba")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_nli7h")
@@ -175,7 +229,7 @@ shape = SubResource("RectangleShape2D_nli7h")
 texture_filter = 1
 material = ExtResource("3_5wcu4")
 position = Vector2(0, -8)
-sprite_frames = SubResource("SpriteFrames_g6nhp")
+sprite_frames = SubResource("SpriteFrames_oqp6n")
 animation = &"ATTACK"
 script = ExtResource("5_mwcin")
 metadata/_aseprite_wizard_interface_config_ = {
@@ -190,9 +244,9 @@ metadata/_aseprite_wizard_config_ = {
 "o_name": "",
 "only_visible": false,
 "slice": "",
-"source": "res://assets/aseprite/puffe_bolter_no_tower.aseprite"
+"source": "res://assets/aseprite/puffe_beamer.aseprite"
 }
-metadata/_aseprite_wizard_source_file_hash_ = "0fdb7ac7f888dd811c748b8384b7c665"
+metadata/_aseprite_wizard_source_file_hash_ = "ce80e646e05334cad0b8482af2897884"
 
 [node name="TowerBaseSprite" type="Sprite2D" parent="AnimatedSprite2D"]
 show_behind_parent = true
@@ -216,6 +270,11 @@ metadata/_aseprite_wizard_interface_config_ = {
 }
 metadata/_aseprite_wizard_source_file_hash_ = "7d8e8aeec8ba8ee47def2fdd3f07eb67"
 
+[node name="HitAnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite2D"]
+libraries = {
+"": SubResource("AnimationLibrary_yhdvm")
+}
+
 [node name="RangeArea" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 2
@@ -225,31 +284,13 @@ script = ExtResource("5_s0u5l")
 shape = SubResource("CircleShape2D_yksuc")
 
 [node name="Beam" parent="." instance=ExtResource("4_2p66l")]
-position = Vector2(3, -10)
+position = Vector2(5, -11)
 
 [node name="DamageData" type="Node" parent="Beam"]
 script = ExtResource("9_y18tw")
 critical_chance = 0.0
-damage_type = 2
-
-[node name="OvertimeEffectData" type="Node" parent="Beam/DamageData"]
-script = ExtResource("10_igp4j")
-max_count = 0
-tick_damage = 0.0
-tick_interval = 3.0
-damage_type = 2
-effectType = 1
-
-[node name="SlowModifier" type="Node" parent="Beam/DamageData/OvertimeEffectData"]
-script = ExtResource("11_jvphu")
-value = -0.1
 
 [node name="BeamTowerBt" parent="." instance=ExtResource("5_3fi0f")]
-
-[node name="HitAnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_lmidr")
-}
 
 [node name="SelectableUnit" parent="." instance=ExtResource("9_gmkxw")]
 
@@ -257,6 +298,9 @@ libraries = {
 
 [node name="PopUpSpot" type="Node2D" parent="."]
 position = Vector2(0, -19)
+
+[node name="EvolveLevelUpParticleEffect" parent="." instance=ExtResource("13_e0s16")]
+position = Vector2(0, -5)
 
 [node name="OvertimeEffectHandler" type="Node" parent="."]
 script = ExtResource("12_cmlai")
@@ -272,8 +316,8 @@ type = 1
 
 [node name="HealthStat" type="Node" parent="Stats"]
 script = ExtResource("16_mlf80")
-base_value = 6.0
-value = 6.0
+base_value = 5.0
+value = 5.0
 
 [node name="DamageStat" type="Node" parent="Stats"]
 script = ExtResource("16_mlf80")
@@ -296,6 +340,46 @@ script = ExtResource("16_mlf80")
 base_value = 4.0
 value = 4.0
 type = 5
+
+[node name="EvolveTree" type="Node" parent="."]
+script = ExtResource("16_dryip")
+
+[node name="EvolveBranch" type="Node" parent="EvolveTree"]
+script = ExtResource("17_wlcq3")
+
+[node name="NormalElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch"]
+script = ExtResource("18_wr5qw")
+selected_icon = ExtResource("2_1w6ba")
+new_damage_data_scene = ExtResource("19_jj2s0")
+icon = ExtResource("21_xun3a")
+info = "Normal"
+
+[node name="FireElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch"]
+script = ExtResource("18_wr5qw")
+selected_icon = ExtResource("21_wo18e")
+new_beam_texture = ExtResource("21_8at6e")
+new_animated_sprite_scene = ExtResource("21_q5eu1")
+new_damage_data_scene = ExtResource("22_3bcl3")
+icon = ExtResource("26_ljtca")
+info = "Fire"
+
+[node name="FrostElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch"]
+script = ExtResource("18_wr5qw")
+selected_icon = ExtResource("26_pjfpn")
+new_beam_texture = ExtResource("24_0irea")
+new_animated_sprite_scene = ExtResource("24_2h2rt")
+new_damage_data_scene = ExtResource("25_gnxl0")
+icon = ExtResource("31_qbv05")
+info = "Frost"
+
+[node name="PoisonElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch"]
+script = ExtResource("18_wr5qw")
+selected_icon = ExtResource("31_mv0to")
+new_beam_texture = ExtResource("29_rgmys")
+new_animated_sprite_scene = ExtResource("27_wav4t")
+new_damage_data_scene = ExtResource("28_3xrpj")
+icon = ExtResource("36_kci3i")
+info = "Poison"
 
 [connection signal="body_entered" from="RangeArea" to="." method="_on_range_area_body_entered"]
 [connection signal="body_exited" from="RangeArea" to="." method="_on_range_area_body_exited"]

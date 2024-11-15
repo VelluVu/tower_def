@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://hgbdb1jyi6v"]
+
+[ext_resource type="Script" path="res://scenes/unit/skills/damage_data.gd" id="1_iimh6"]
+[ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_data.gd" id="2_p6kec"]
+
+[node name="RedPuffeBolterEvolveDamageData" type="Node"]
+script = ExtResource("1_iimh6")
+damage = 2.0
+damage_type = 1
+
+[node name="OvertimeEffectData" type="Node" parent="."]
+script = ExtResource("2_p6kec")
+max_count = 2
+chance_to_apply = 0.1
+damage_type = 1

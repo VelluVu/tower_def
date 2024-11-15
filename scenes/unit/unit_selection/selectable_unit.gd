@@ -33,6 +33,10 @@ func change_material(_material : Material) -> void:
 	sprite.material = _material
 
 
+func data_change() -> void:
+	_signal_data_for_selection_panel(is_selected)
+
+
 func _ready() -> void:
 	if not actor.is_in_group(GroupNames.SELECTABLE):
 		actor.add_to_group(GroupNames.SELECTABLE)
@@ -63,23 +67,44 @@ func _set_is_selected(value : bool) -> void:
 	
 	is_selected = value
 	
+	
 	if is_selected:
 		change_material(outline_shader_material)
+		
 		var is_building : bool = actor.is_in_group(GroupNames.BUILDINGS)
-		UISignals.selected_unit.emit(actor.name, actor.stats, actor.icon, is_building)
 		
 		if is_building:
 			if not actor.is_placed:
+				UISignals.selected_unit.emit(actor.name, actor.stats, actor.icon)
 				return
-		
+				
+		_signal_data_for_selection_panel(is_selected)
 		if not actor.stats.stats_changed.is_connected(_on_selected_data_change):
 			actor.stats.stats_changed.connect(_on_selected_data_change)
 	else:
 		change_material(null)
-		UISignals.deselected_unit.emit(actor.name, actor.stats, actor.icon, actor.is_in_group(GroupNames.BUILDINGS))
+		#get the upgrade data if there is any for starter element choices!
+		_signal_data_for_selection_panel(is_selected)
+		
 		if actor.stats.stats_changed.is_connected(_on_selected_data_change):
 			actor.stats.stats_changed.disconnect(_on_selected_data_change)
 
 
 func _on_selected_data_change() -> void:
-	UISignals.selected_unit.emit(actor.name, actor.stats, actor.icon, actor.is_in_group(GroupNames.BUILDINGS))
+	#get the upgrade data if there is any for starter element choices!
+	_signal_data_for_selection_panel(is_selected)
+
+
+func _signal_data_for_selection_panel(_is_selected : bool) -> void:
+	var is_building : bool = actor.is_in_group(GroupNames.BUILDINGS)
+	
+	if is_building: 
+		if _is_selected:
+			UISignals.selected_unit.emit(actor.name, actor.stats, actor.icon, is_building, actor._get_building_data())
+		else:
+			UISignals.deselected_unit.emit(actor.name, actor.stats, actor.icon, is_building, actor._get_building_data())
+	else:
+		if _is_selected:
+			UISignals.selected_unit.emit(actor.name, actor.stats, actor.icon)
+		else:
+			UISignals.deselected_unit.emit(actor.name, actor.stats, actor.icon)

@@ -2,6 +2,20 @@ class_name AnimationControl
 extends AnimatedSprite2D
 
 
+@export var hit_animation_player : AnimationPlayer :
+	get:
+		if hit_animation_player == null:
+			for child in get_children():
+				if child is AnimationPlayer:
+					hit_animation_player = child
+		return hit_animation_player
+
+var actor : Node2D :
+	get:
+		if actor == null:
+			actor = get_parent()
+		return actor
+
 #stored time scale values
 var is_time_altered : bool = false :
 	get:
@@ -10,6 +24,48 @@ var current_time_scale : float = 1.0
 
 #the wanted animation duration in seconds, 0.0 == original animation length
 var current_wanted_playtime : float = 0.0
+
+
+func play_animation(animation_name : String, wanted_play_time : float = 0.0, is_no_slowing : bool = false) -> void:
+	
+	current_wanted_playtime = wanted_play_time
+	
+	#if looping animation is ongoing, then only alter the animation speed
+	if animation == animation_name:
+		if sprite_frames.get_animation_loop(animation_name):
+			if is_playing():
+				_alter_current_animation_speed(is_no_slowing)
+				return
+	
+	#one shot animation is started before altering
+	play(animation_name)
+	_alter_current_animation_speed(is_no_slowing)
+
+
+func play_hit_animation() -> void:
+	if hit_animation_player == null:
+		push_warning(actor.name, " Is unable to play hit animation, no hit animation player as child")
+		return
+	
+	if hit_animation_player.is_playing():
+		hit_animation_player.stop()
+		
+	hit_animation_player.play("hit")
+
+
+func is_current_animation_finished() -> bool:
+	if is_playing():
+		return sprite_frames.get_animation_loop(animation)
+	return true
+
+
+func flip(flip_direction : Vector2) -> void:
+	var new_flip_state : bool = (flip_direction.x < 0.0)
+	
+	if new_flip_state == flip_h:
+		return
+		
+	flip_h = new_flip_state
 
 
 func _ready() -> void:
@@ -21,22 +77,7 @@ func _ready() -> void:
 	_on_time_scale_change(Utils.game_control.time_scale)
 
 
-func play_animation(animation_name : String, wanted_play_time : float = 0.0) -> void:
-	current_wanted_playtime = wanted_play_time
-	
-	#if looping animation is ongoing, then only alter the animation speed
-	if animation == animation_name:
-		if sprite_frames.get_animation_loop(animation_name):
-			if is_playing():
-				_alter_current_animation_speed()
-				return
-	
-	#one shot animation is started before altering
-	play(animation_name)
-	_alter_current_animation_speed()
-
-
-func _alter_current_animation_speed() -> void:
+func _alter_current_animation_speed(no_slowing : bool = false) -> void:
 	if not is_playing():
 		return
 	
@@ -53,8 +94,11 @@ func _alter_current_animation_speed() -> void:
 	for n in range(frames_count):
 		var absolute_frame_duration : float = sprite_frames.get_frame_duration(animation, n) / (animation_fps * current_playing_speed)
 		animation_duration += absolute_frame_duration
-		
+	
+	
 	var scaler : float = 1 / (current_wanted_playtime / animation_duration)
+	if no_slowing and scaler < 1.0:
+		scaler = 1.0
 	speed_scale = scaler * current_time_scale if scaler != 1.0 else speed_scale
 
 

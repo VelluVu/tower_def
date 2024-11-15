@@ -1,7 +1,8 @@
-[gd_scene load_steps=41 format=3 uid="uid://bj8fmaeegual3"]
+[gd_scene load_steps=42 format=3 uid="uid://bj8fmaeegual3"]
 
 [ext_resource type="Script" path="res://scenes/unit/enemy/enemy.gd" id="1_kifef"]
-[ext_resource type="Texture2D" uid="uid://chay1016dk3e" path="res://assets/2d_art/beefling.png" id="3_mdpb3"]
+[ext_resource type="Texture2D" uid="uid://g5ruw0cdagou" path="res://assets/art/units/enemy/beefling/beefling_icon.png" id="2_kr4lh"]
+[ext_resource type="Texture2D" uid="uid://chay1016dk3e" path="res://assets/art/units/enemy/beefling/beefling.png" id="3_mdpb3"]
 [ext_resource type="Material" uid="uid://cm7dgpn6dmws5" path="res://assets/shaders/shader_materials/enemy_hit_shader_material.tres" id="3_pjfb5"]
 [ext_resource type="Script" path="res://scenes/unit/animation_control.gd" id="4_ju45r"]
 [ext_resource type="PackedScene" uid="uid://b07nrseyum0s4" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/basic_enemy_bt.tscn" id="5_dhgr8"]
@@ -180,9 +181,6 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_54wmh"]
-size = Vector2(7, 21)
-
 [sub_resource type="Animation" id="Animation_rbbaw"]
 length = 0.001
 tracks/0/type = "value"
@@ -220,6 +218,9 @@ _data = {
 "hit": SubResource("Animation_1eqk6")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_54wmh"]
+size = Vector2(7, 21)
+
 [node name="Beefling" type="RigidBody2D" node_paths=PackedStringArray("skill")]
 collision_layer = 2
 collision_mask = 0
@@ -227,6 +228,7 @@ physics_material_override = SubResource("PhysicsMaterial_43mte")
 contact_monitor = true
 max_contacts_reported = 1
 script = ExtResource("1_kifef")
+icon = ExtResource("2_kr4lh")
 skill = NodePath("MeleeAttack")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -237,7 +239,7 @@ texture_filter = 1
 material = ExtResource("3_pjfb5")
 position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_7q4j5")
-animation = &"ATTACK"
+animation = &"DEATH"
 autoplay = "IDLE"
 script = ExtResource("4_ju45r")
 metadata/_aseprite_wizard_config_ = {
@@ -256,6 +258,12 @@ metadata/_aseprite_wizard_interface_config_ = {
 }
 metadata/_aseprite_wizard_source_file_hash_ = "397d50cef9de226c604658f2e991e10b"
 
+[node name="HitAnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite2D"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_lugag")
+}
+
 [node name="BeehaveTree" parent="." instance=ExtResource("5_dhgr8")]
 
 [node name="Hitbox" type="Area2D" parent="."]
@@ -267,11 +275,6 @@ script = ExtResource("6_abypk")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2(-0.5, -2.5)
 shape = SubResource("RectangleShape2D_54wmh")
-
-[node name="HitAnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_lugag")
-}
 
 [node name="GoreEmitter" type="Node2D" parent="."]
 position = Vector2(0, -5)
@@ -286,6 +289,7 @@ base_cooldown = 1.5
 
 [node name="DamageData" type="Node" parent="MeleeAttack"]
 script = ExtResource("11_v321t")
+damage = 0.0
 
 [node name="DamageOvertimeData" type="Node" parent="MeleeAttack/DamageData"]
 script = ExtResource("12_8jq7h")

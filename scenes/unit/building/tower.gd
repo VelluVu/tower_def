@@ -7,8 +7,6 @@ const RANGE_AREA_OBJECT_NULL_ERROR_MESSAGE : String = "NO RANGE AREA ON TOWER, U
 @onready var range_area : Area2D = $RangeArea 
 @onready var area_shape : CollisionShape2D = $RangeArea/CollisionShape2D
 
-@export var skill : Skill
-
 var targets : Array[Node2D]
 var target : Node2D = null
 

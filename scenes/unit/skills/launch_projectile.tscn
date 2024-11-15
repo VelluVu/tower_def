@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://crbx1w230gw8"]
+
+[ext_resource type="Script" path="res://scenes/unit/skills/launch_projectile.gd" id="1_3cuil"]
+[ext_resource type="PackedScene" uid="uid://bp7hd4rdex5do" path="res://scenes/unit/skills/skill_state_timers.tscn" id="2_4wxg6"]
+
+[node name="LaunchProjectile" type="Node2D"]
+script = ExtResource("1_3cuil")
+base_cast_time = 0.2
+
+[node name="SkillStateTimers" parent="." instance=ExtResource("2_4wxg6")]

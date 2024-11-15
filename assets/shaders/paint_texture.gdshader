@@ -17,5 +17,3 @@ void fragment() {
 	vec4 added_texture_pixel_color = get_color_from_uv_pos(UV);
 	COLOR.rgb = added_texture_pixel_color.rgb;
 }
-
-

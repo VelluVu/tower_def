@@ -1,15 +1,18 @@
-[gd_scene load_steps=33 format=3 uid="uid://b78nv1og0jf3p"]
+[gd_scene load_steps=36 format=3 uid="uid://b78nv1og0jf3p"]
 
 [ext_resource type="Script" path="res://scenes/unit/building/wall.gd" id="1_kgbnu"]
-[ext_resource type="Texture2D" uid="uid://c5m2tdopql7kr" path="res://assets/2d_art/wall_icon.png" id="2_0awu8"]
-[ext_resource type="Texture2D" uid="uid://dpyani76dokd0" path="res://assets/2d_art/wall.png" id="3_esse3"]
+[ext_resource type="Texture2D" uid="uid://c5m2tdopql7kr" path="res://assets/art/units/building/wall/wall_icon.png" id="2_0awu8"]
+[ext_resource type="Texture2D" uid="uid://dpyani76dokd0" path="res://assets/art/units/building/wall/wall.png" id="3_esse3"]
 [ext_resource type="Material" uid="uid://c3sja1ms0jrnf" path="res://assets/shaders/shader_materials/building_hit_shader_material.tres" id="3_gn0ww"]
 [ext_resource type="Script" path="res://scenes/unit/animation_control.gd" id="5_dl2w2"]
 [ext_resource type="PackedScene" uid="uid://dd11cco5cukhw" path="res://scenes/unit/unit_selection/selectable_unit.tscn" id="6_8lkbl"]
 [ext_resource type="PackedScene" uid="uid://ccc725wgsiq36" path="res://scenes/unit/building/placement_validator.tscn" id="7_3p3cj"]
 [ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_handler.gd" id="8_4v5nb"]
+[ext_resource type="PackedScene" uid="uid://c5o05ed0n7tdq" path="res://scenes/unit/evolve_level_up_particle_effect.tscn" id="8_h4ufm"]
 [ext_resource type="Script" path="res://scenes/unit/stats/stats.gd" id="9_llimg"]
 [ext_resource type="Script" path="res://scenes/unit/stats/stat.gd" id="10_7keqx"]
+[ext_resource type="Script" path="res://scenes/unit/evolve_tree/evolve_tree.gd" id="11_0j38t"]
+[ext_resource type="Script" path="res://scenes/unit/evolve_tree/evolve_branch.gd" id="12_ipd6y"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_4ih23"]
 
@@ -211,12 +214,12 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="Animation" id="Animation_7p052"]
+[sub_resource type="Animation" id="Animation_4gyud"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/enabled")
+tracks/0/path = NodePath(".:material:shader_parameter/enabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -226,12 +229,13 @@ tracks/0/keys = {
 "values": [false]
 }
 
-[sub_resource type="Animation" id="Animation_vkir5"]
+[sub_resource type="Animation" id="Animation_ljeel"]
 resource_name = "hit"
+length = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/enabled")
+tracks/0/path = NodePath(".:material:shader_parameter/enabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -241,10 +245,10 @@ tracks/0/keys = {
 "values": [true, false]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_7alhp"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yhdvm"]
 _data = {
-"RESET": SubResource("Animation_7p052"),
-"hit": SubResource("Animation_vkir5")
+"RESET": SubResource("Animation_4gyud"),
+"hit": SubResource("Animation_ljeel")
 }
 
 [node name="Wall" type="StaticBody2D"]
@@ -278,9 +282,9 @@ metadata/_aseprite_wizard_interface_config_ = {
 }
 metadata/_aseprite_wizard_source_file_hash_ = "977dac06589e336ff09895fb969dfd75"
 
-[node name="HitAnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="HitAnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite2D"]
 libraries = {
-"": SubResource("AnimationLibrary_7alhp")
+"": SubResource("AnimationLibrary_yhdvm")
 }
 
 [node name="SelectableUnit" parent="." instance=ExtResource("6_8lkbl")]
@@ -289,6 +293,9 @@ libraries = {
 
 [node name="PopUpSpot" type="Node2D" parent="."]
 position = Vector2(0, -10)
+
+[node name="EvolveLevelUpParticleEffect" parent="." instance=ExtResource("8_h4ufm")]
+position = Vector2(0, -5)
 
 [node name="OvertimeEffectHandler" type="Node" parent="."]
 script = ExtResource("8_4v5nb")
@@ -328,3 +335,9 @@ script = ExtResource("10_7keqx")
 base_value = 3.0
 value = 3.0
 type = 5
+
+[node name="EvolveTree" type="Node" parent="."]
+script = ExtResource("11_0j38t")
+
+[node name="EvolveBranch" type="Node" parent="EvolveTree"]
+script = ExtResource("12_ipd6y")

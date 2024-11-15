@@ -1,8 +1,8 @@
 class_name BuildingPanel
-extends MarginContainer
+extends Panel
 
 
-@onready var grid_container : GridContainer = $BackgroundImage/ScrollContainer/GridContainer
+@onready var grid_container : GridContainer = $MarginContainer/BackgroundImage/ScrollContainer/GridContainer
 
 var building_options : Array[BuildingOption]
 

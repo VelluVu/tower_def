@@ -1,0 +1,226 @@
+[gd_scene load_steps=25 format=3 uid="uid://bv332w34l6mpw"]
+
+[ext_resource type="Material" uid="uid://c3sja1ms0jrnf" path="res://assets/shaders/shader_materials/building_hit_shader_material.tres" id="1_4nb4c"]
+[ext_resource type="Texture2D" uid="uid://dsmefgskuy8cy" path="res://assets/art/units/building/puffe/puffe_beamer/red_puffe_beamer.png" id="1_cxim4"]
+[ext_resource type="Script" path="res://scenes/unit/animation_control.gd" id="2_5p1yc"]
+[ext_resource type="Texture2D" uid="uid://divya72e1w7f3" path="res://assets/art/units/building/puffe/red_tower.png" id="3_0esi0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_enmmw"]
+atlas = ExtResource("1_cxim4")
+region = Rect2(0, 68, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7eu66"]
+atlas = ExtResource("1_cxim4")
+region = Rect2(18, 68, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_086bm"]
+atlas = ExtResource("1_cxim4")
+region = Rect2(36, 68, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fg4wx"]
+atlas = ExtResource("1_cxim4")
+region = Rect2(0, 0, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xufwv"]
+atlas = ExtResource("1_cxim4")
+region = Rect2(18, 0, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g4ya6"]
+atlas = ExtResource("1_cxim4")
+region = Rect2(36, 0, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_53w4t"]
+atlas = ExtResource("1_cxim4")
+region = Rect2(54, 0, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_26xs4"]
+atlas = ExtResource("1_cxim4")
+region = Rect2(0, 34, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6wkfs"]
+atlas = ExtResource("1_cxim4")
+region = Rect2(18, 34, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_buwr8"]
+atlas = ExtResource("1_cxim4")
+region = Rect2(36, 34, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wpmhu"]
+atlas = ExtResource("1_cxim4")
+region = Rect2(54, 34, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oc2vf"]
+atlas = ExtResource("1_cxim4")
+region = Rect2(54, 68, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nathl"]
+atlas = ExtResource("1_cxim4")
+region = Rect2(0, 102, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kigqc"]
+atlas = ExtResource("1_cxim4")
+region = Rect2(18, 102, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s3w06"]
+atlas = ExtResource("1_cxim4")
+region = Rect2(36, 102, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gy1ey"]
+atlas = ExtResource("1_cxim4")
+region = Rect2(54, 102, 18, 34)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_00lou"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_enmmw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7eu66")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_086bm")
+}],
+"loop": true,
+"name": &"ATTACK",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fg4wx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xufwv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g4ya6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_53w4t")
+}],
+"loop": true,
+"name": &"IDLE",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_26xs4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6wkfs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_buwr8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wpmhu")
+}],
+"loop": false,
+"name": &"START_ATTACK",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oc2vf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nathl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kigqc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s3w06")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gy1ey")
+}],
+"loop": false,
+"name": &"STOP_ATTACK",
+"speed": 10.0
+}]
+
+[sub_resource type="Animation" id="Animation_4gyud"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/enabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_ljeel"]
+resource_name = "hit"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/enabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yhdvm"]
+_data = {
+"RESET": SubResource("Animation_4gyud"),
+"hit": SubResource("Animation_ljeel")
+}
+
+[node name="RedPuffeBeamer" type="AnimatedSprite2D"]
+texture_filter = 1
+material = ExtResource("1_4nb4c")
+sprite_frames = SubResource("SpriteFrames_00lou")
+animation = &"IDLE"
+frame_progress = 0.0524444
+script = ExtResource("2_5p1yc")
+metadata/_aseprite_wizard_config_ = {
+"layer": "",
+"o_ex_p": "",
+"o_folder": "res://assets/2d_art",
+"o_name": "",
+"only_visible": false,
+"slice": "",
+"source": "res://assets/aseprite/red_puffe_beamer.aseprite"
+}
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true
+}
+metadata/_aseprite_wizard_source_file_hash_ = "01fec3377a59f705fd5dd6f19fb4db15"
+
+[node name="TowerBaseSprite" type="Sprite2D" parent="."]
+show_behind_parent = true
+texture_filter = 1
+position = Vector2(0, 1)
+texture = ExtResource("3_0esi0")
+metadata/_aseprite_wizard_config_ = {
+"i_mode": 1,
+"keep_anim_length": false,
+"layer": "",
+"o_ex_p": "",
+"o_folder": "res://assets/2d_art",
+"o_name": "",
+"only_visible": false,
+"player": "",
+"slice": "",
+"source": "res://assets/aseprite/red_tower.aseprite"
+}
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true
+}
+metadata/_aseprite_wizard_source_file_hash_ = "77e1d7c0176308b6aed9f96d58ff886b"
+
+[node name="HitAnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_yhdvm")
+}

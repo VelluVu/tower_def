@@ -1,0 +1,199 @@
+[gd_scene load_steps=22 format=3 uid="uid://bbm8vbrsgi3yx"]
+
+[ext_resource type="Material" uid="uid://c3sja1ms0jrnf" path="res://assets/shaders/shader_materials/building_hit_shader_material.tres" id="1_8m6em"]
+[ext_resource type="Texture2D" uid="uid://d2ig6ptmr5lpr" path="res://assets/art/units/building/puffe/puffe_nova/red_puffe_nova.png" id="1_r0as1"]
+[ext_resource type="Script" path="res://scenes/unit/animation_control.gd" id="2_g8xlo"]
+[ext_resource type="Texture2D" uid="uid://divya72e1w7f3" path="res://assets/art/units/building/puffe/red_tower.png" id="3_c2b3d"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y68t3"]
+atlas = ExtResource("1_r0as1")
+region = Rect2(0, 0, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qntx4"]
+atlas = ExtResource("1_r0as1")
+region = Rect2(18, 0, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7ode8"]
+atlas = ExtResource("1_r0as1")
+region = Rect2(36, 0, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gmqnh"]
+atlas = ExtResource("1_r0as1")
+region = Rect2(54, 0, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ca0nj"]
+atlas = ExtResource("1_r0as1")
+region = Rect2(0, 34, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oonqq"]
+atlas = ExtResource("1_r0as1")
+region = Rect2(18, 34, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sfefc"]
+atlas = ExtResource("1_r0as1")
+region = Rect2(36, 34, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qj4s1"]
+atlas = ExtResource("1_r0as1")
+region = Rect2(54, 34, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cjurg"]
+atlas = ExtResource("1_r0as1")
+region = Rect2(0, 68, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qegpy"]
+atlas = ExtResource("1_r0as1")
+region = Rect2(18, 68, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uuu4g"]
+atlas = ExtResource("1_r0as1")
+region = Rect2(36, 68, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rlcqc"]
+atlas = ExtResource("1_r0as1")
+region = Rect2(54, 68, 18, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ulvmj"]
+atlas = ExtResource("1_r0as1")
+region = Rect2(0, 102, 18, 34)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7xkvh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y68t3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qntx4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7ode8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gmqnh")
+}],
+"loop": true,
+"name": &"IDLE",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ca0nj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oonqq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sfefc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qj4s1")
+}],
+"loop": false,
+"name": &"START_ATTACK",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cjurg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qegpy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uuu4g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rlcqc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ulvmj")
+}],
+"loop": false,
+"name": &"STOP_ATTACK",
+"speed": 10.0
+}]
+
+[sub_resource type="Animation" id="Animation_4gyud"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/enabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_ljeel"]
+resource_name = "hit"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/enabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yhdvm"]
+_data = {
+"RESET": SubResource("Animation_4gyud"),
+"hit": SubResource("Animation_ljeel")
+}
+
+[node name="RedPuffeBolter" type="AnimatedSprite2D"]
+texture_filter = 1
+material = ExtResource("1_8m6em")
+sprite_frames = SubResource("SpriteFrames_7xkvh")
+animation = &"START_ATTACK"
+script = ExtResource("2_g8xlo")
+metadata/_aseprite_wizard_config_ = {
+"layer": "",
+"o_ex_p": "",
+"o_folder": "res://assets/2d_art",
+"o_name": "",
+"only_visible": false,
+"slice": "",
+"source": "res://assets/aseprite/red_puffe_nova.aseprite"
+}
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true
+}
+metadata/_aseprite_wizard_source_file_hash_ = "a34b9469208c48be6f6a80f1f9f6b456"
+
+[node name="TowerBaseSprite" type="Sprite2D" parent="."]
+show_behind_parent = true
+texture_filter = 1
+position = Vector2(0, 1)
+texture = ExtResource("3_c2b3d")
+metadata/_aseprite_wizard_config_ = {
+"i_mode": 1,
+"keep_anim_length": false,
+"layer": "",
+"o_ex_p": "",
+"o_folder": "res://assets/2d_art",
+"o_name": "",
+"only_visible": false,
+"player": "",
+"slice": "",
+"source": "res://assets/aseprite/red_tower.aseprite"
+}
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true
+}
+metadata/_aseprite_wizard_source_file_hash_ = "77e1d7c0176308b6aed9f96d58ff886b"
+
+[node name="HitAnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_yhdvm")
+}

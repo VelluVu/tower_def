@@ -1,10 +1,10 @@
 [gd_scene load_steps=43 format=3 uid="uid://bljkhytt20h3f"]
 
 [ext_resource type="Script" path="res://scenes/unit/enemy/enemy.gd" id="1_pnuqq"]
-[ext_resource type="Texture2D" uid="uid://yv52buwdecha" path="res://assets/2d_art/weakling_icon.png" id="2_w8sqj"]
+[ext_resource type="Texture2D" uid="uid://yv52buwdecha" path="res://assets/art/units/enemy/weakling/weakling_icon.png" id="2_w8sqj"]
 [ext_resource type="PackedScene" uid="uid://b07nrseyum0s4" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/basic_enemy_bt.tscn" id="3_5rsgu"]
 [ext_resource type="Material" uid="uid://cm7dgpn6dmws5" path="res://assets/shaders/shader_materials/enemy_hit_shader_material.tres" id="3_gs1d4"]
-[ext_resource type="Texture2D" uid="uid://cksjau2eblfpq" path="res://assets/2d_art/weakling_animated_sprite.png" id="3_s3w73"]
+[ext_resource type="Texture2D" uid="uid://cksjau2eblfpq" path="res://assets/art/units/enemy/weakling/weakling_animated_sprite.png" id="3_s3w73"]
 [ext_resource type="Script" path="res://scenes/unit/hitbox.gd" id="5_kx3h7"]
 [ext_resource type="Script" path="res://scenes/unit/animation_control.gd" id="5_ulvdv"]
 [ext_resource type="Script" path="res://scenes/unit/gore_emitter.gd" id="7_6ioyy"]
@@ -191,9 +191,6 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_54wmh"]
-size = Vector2(4, 14)
-
 [sub_resource type="Animation" id="Animation_rbbaw"]
 length = 0.001
 tracks/0/type = "value"
@@ -231,6 +228,9 @@ _data = {
 "hit": SubResource("Animation_1eqk6")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_54wmh"]
+size = Vector2(4, 14)
+
 [node name="Weakling" type="RigidBody2D"]
 collision_layer = 2
 collision_mask = 0
@@ -267,6 +267,12 @@ metadata/_aseprite_wizard_interface_config_ = {
 }
 metadata/_aseprite_wizard_source_file_hash_ = "910676993686eead82d0d7cd19a81c3d"
 
+[node name="HitAnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite2D"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_lugag")
+}
+
 [node name="BeehaveTree" parent="." instance=ExtResource("3_5rsgu")]
 
 [node name="Hitbox" type="Area2D" parent="."]
@@ -277,11 +283,6 @@ script = ExtResource("5_kx3h7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 shape = SubResource("RectangleShape2D_54wmh")
-
-[node name="HitAnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_lugag")
-}
 
 [node name="GoreEmitter" type="Node2D" parent="."]
 position = Vector2(0, -5)
@@ -296,6 +297,7 @@ base_cooldown = 1.5
 
 [node name="DamageData" type="Node" parent="MeleeAttack"]
 script = ExtResource("12_iu2a5")
+damage = 0.0
 
 [node name="PopUpSpot" type="Node2D" parent="."]
 position = Vector2(0, -13)

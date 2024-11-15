@@ -18,6 +18,8 @@ extends Node2D
 			actor = get_parent()
 		return actor
 
+var flip_h : bool = false :
+	set = _set_flip_h
 var is_ready : bool = true
 var current_time_scale : float = 1.0
 var target : Node2D = null :
@@ -35,40 +37,42 @@ var total_duration : float :
 		return base_cast_time + base_active_time
 
 
-func _ready() -> void:
-	cast_timer.timeout.connect(_on_cast_finished)
-	cooldown_timer.timeout.connect(_on_cooldown_end)
-	active_timer.timeout.connect(_on_active_end)
-	GameSignals.time_scale_change.connect(_on_time_scale_change)
-	
-	#alternat these with actor speed scale?
-	cast_timer.base_wait_time = base_cast_time
-	cooldown_timer.base_wait_time = base_cooldown
-	active_timer.base_wait_time = base_active_time
-	
-	_on_time_scale_change(Utils.game_control.time_scale)
-
-
 func use(_target) -> void:
 	if not is_continuous and not is_ready:
 		return
 	
-	if not _is_target_valid(_target):
-		print(name, " use failed, not valid target... returning")
-		return
-	
 	target = _target
-	
+
 	# if one shot skill, cast everytime when used even on same target
 	if not is_continuous:
 		start_skill_cast()
 
 
-func start_skill_cast() -> void:
-	print(name, " use skill ")
+func _set_flip_h(_is_flipped : bool) -> void:
+	if _is_flipped == flip_h:
+		return
 	
+	flip_h = _is_flipped
+	position.x = position.x * -1
+
+
+func replace_damage_data(new_damage_data_scene : PackedScene) -> void:
+	damage_data.queue_free()
+	damage_data = new_damage_data_scene.instantiate()
+	add_child(damage_data)
+
+
+func start_skill_cast() -> void:
+	#print(name, " use skill ")
+	if target == null:
+		return
+		
 	is_ready = false
-	actor.animation_control.play_animation(GlobalAnimationNames.ATTACK_ANIMATION, cast_timer.wait_time)
+	
+	if actor.animation_control.sprite_frames.has_animation(GlobalAnimationNames.START_ATTACK_ANIMATION):
+		actor.animation_control.play_animation(GlobalAnimationNames.START_ATTACK_ANIMATION, cast_timer.wait_time if cast_timer.wait_time > 0.0 else 1.0)
+	else:
+		actor.animation_control.play_animation(GlobalAnimationNames.ATTACK_ANIMATION, cast_timer.wait_time)
 	
 	if cast_timer.wait_time > 0.0:
 		cast_timer.start()
@@ -78,7 +82,7 @@ func start_skill_cast() -> void:
 
 
 func activate() -> void:
-	print(name, " is active ")
+	#print(name, " is active ")
 	
 	#is ready is enabled elsewhere for continuous skill and it is active until is ready change
 	if is_continuous:
@@ -104,23 +108,37 @@ func stop() -> void:
 	is_ready = true
 
 
+func _ready() -> void:
+	cast_timer.timeout.connect(_on_cast_finished)
+	cooldown_timer.timeout.connect(_on_cooldown_end)
+	active_timer.timeout.connect(_on_active_end)
+	GameSignals.time_scale_change.connect(_on_time_scale_change)
+	
+	#alternat these with actor speed scale?
+	cast_timer.base_wait_time = base_cast_time
+	cooldown_timer.base_wait_time = base_cooldown
+	active_timer.base_wait_time = base_active_time
+	
+	_on_time_scale_change(Utils.game_control.time_scale)
+
+
 func _on_cast_finished() -> void:
-	print(name, " cast finished ")
+	#print(name, " cast finished ")
 	activate()
 
 
 func _on_active_end() -> void:
-	print(name, " active end ")
+	#print(name, " active end ")
 	pass
 
 
 func _interrupted_active() -> void:
-	print(name, " interrupted active ")
+	#print(name, " interrupted active ")
 	pass
 
 
 func _on_cooldown_end() -> void:
-	print(name, " cooldown end ")
+	#print(name, " cooldown end ")
 	is_ready = true
 
 
@@ -171,6 +189,11 @@ func _set_target(new_target : Node2D) -> void:
 
 
 func _get_damage_data() -> DamageData:
+	if damage_data == null:
+		for child in get_children():
+			if child == DamageData:
+				damage_data = child
+	
 	var _damage_data : DamageData = damage_data.duplicate()
 	#add actor stats
 	_damage_data.source = actor

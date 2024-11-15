@@ -1,14 +1,15 @@
-[gd_scene load_steps=10 format=3 uid="uid://88hwq47f7r6d"]
+[gd_scene load_steps=11 format=3 uid="uid://88hwq47f7r6d"]
 
 [ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_tower_behaviour_tree/basic_tower_bt.gd" id="1_7rlk7"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/selector.gd" id="2_ilst7"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="3_0cx8r"]
 [ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_tower_behaviour_tree/has_target.gd" id="4_qe2bu"]
-[ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_tower_behaviour_tree/select_target.gd" id="5_bpwr7"]
+[ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_tower_behaviour_tree/select_target_closest_target_to_end.gd" id="5_bpwr7"]
 [ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_tower_behaviour_tree/shoot.gd" id="6_25yli"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/decorators/inverter.gd" id="6_70qr6"]
 [ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_tower_behaviour_tree/turn_to_target_direction.gd" id="6_yedpb"]
 [ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_tower_behaviour_tree/idle.gd" id="7_bhcea"]
+[ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_tower_behaviour_tree/null_skill_target.gd" id="9_gt86p"]
 
 [node name="BasicTowerBt" type="Node"]
 script = ExtResource("1_7rlk7")
@@ -39,6 +40,9 @@ script = ExtResource("6_70qr6")
 
 [node name="HasTarget" type="Node" parent="MainSelector/Idle/NotHasTarget"]
 script = ExtResource("4_qe2bu")
+
+[node name="NullSkillTarget" type="Node" parent="MainSelector/Idle"]
+script = ExtResource("9_gt86p")
 
 [node name="Idle" type="Node" parent="MainSelector/Idle"]
 script = ExtResource("7_bhcea")

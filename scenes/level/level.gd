@@ -124,6 +124,33 @@ func handle_walkable_cells() -> void:
 	GameSignals.astar_grid_updated.emit()
 
 
+func get_neighbour_buildings_from_world_position(_position : Vector2) -> Array[Building]:
+	var neighbour_building_grid_positions : Array[Building]
+	var grid_position = world_position_to_grid(_position)
+	
+	var building : Building = get_building_from_cell_position(grid_position - Vector2i(1,0))
+	
+	if building != null:
+		neighbour_building_grid_positions.append(building)
+	
+	building = get_building_from_cell_position(grid_position + Vector2i(1,0))
+	
+	if building != null:
+		neighbour_building_grid_positions.append(building)
+	
+	building = get_building_from_cell_position(grid_position + Vector2i(0,1))
+	
+	if building != null:
+		neighbour_building_grid_positions.append(building)
+	
+	building = get_building_from_cell_position(grid_position - Vector2i(0,1))
+	
+	if building != null:
+		neighbour_building_grid_positions.append(building)
+	
+	return neighbour_building_grid_positions
+
+
 func has_building_in_cell_position(_grid_pos : Vector2i) -> bool:
 	for building in all_buildings:
 		if world_position_to_grid(building.global_position) == _grid_pos:
@@ -224,6 +251,7 @@ func _on_building_placed(building : Building) -> void:
 
 func _on_building_erase(building : Building) -> void:
 	all_buildings.erase(building)
+	GameSignals.astar_grid_updated.emit()
 
 
 func _check_level_end_conditions() -> void:

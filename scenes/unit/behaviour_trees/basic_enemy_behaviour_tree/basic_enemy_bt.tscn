@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://b07nrseyum0s4"]
+[gd_scene load_steps=24 format=3 uid="uid://b07nrseyum0s4"]
 
 [ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/basic_enemy_bt.gd" id="1_ydxbq"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/selector.gd" id="2_2uw0o"]
@@ -18,6 +18,7 @@
 [ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/stop_movement.gd" id="12_j2i8v"]
 [ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/is_colliding_building.gd" id="16_hco3q"]
 [ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/attack_closest_building.gd" id="18_f4i7b"]
+[ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/warp_to_previous_waypoint.gd" id="18_uiblo"]
 [ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/is_attacking.gd" id="18_wu7yw"]
 [ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/is_moving.gd" id="20_m2lu4"]
 [ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/is_building_in_next_waypoint.gd" id="21_l46o4"]
@@ -101,11 +102,8 @@ script = ExtResource("3_lrixb")
 [node name="IsCollidingBuilding" type="Node" parent="MainSelector/PathBlocked/Colliding"]
 script = ExtResource("16_hco3q")
 
-[node name="StopMovement" type="Node" parent="MainSelector/PathBlocked/Colliding"]
-script = ExtResource("12_j2i8v")
-
-[node name="AttackClosestBuilding" type="Node" parent="MainSelector/PathBlocked/Colliding"]
-script = ExtResource("18_f4i7b")
+[node name="WarpToPreviousWaypoint" type="Node" parent="MainSelector/PathBlocked/Colliding"]
+script = ExtResource("18_uiblo")
 
 [node name="MoveOrIdle" type="Node" parent="MainSelector"]
 script = ExtResource("2_2uw0o")

@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://c7x53uvowmc0b"
+path="res://.godot/imported/puffe_castle.aseprite-ce32f2c06a4a97f15aebf69e30d028aa.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/props/puffe_castle.aseprite"
+dest_files=["res://.godot/imported/puffe_castle.aseprite-ce32f2c06a4a97f15aebf69e30d028aa.res"]
+
+[params]
+

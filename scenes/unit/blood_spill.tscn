@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://brhay0uy0kf4"]
 
-[ext_resource type="Texture2D" uid="uid://bhdusqguwd3rx" path="res://assets/2d_art/blood_particle.png" id="1_6l5vv"]
+[ext_resource type="Texture2D" uid="uid://bhdusqguwd3rx" path="res://assets/art/gore/blood_particle.png" id="1_6l5vv"]
 [ext_resource type="Script" path="res://scenes/unit/gore_effect.gd" id="2_udqgn"]
 [ext_resource type="PackedScene" uid="uid://dfv20i7prjo4e" path="res://scenes/unit/blood_splat.tscn" id="3_in36g"]
 

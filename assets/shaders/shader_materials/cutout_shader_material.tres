@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://okxbg7gada6f"]
+
+[ext_resource type="Shader" path="res://assets/shaders/cutout_shader.gdshader" id="1_w1e77"]
+[ext_resource type="Texture2D" uid="uid://cq0qswfnh2bah" path="res://assets/art/units/building/puffe/basic_tower.png" id="2_858u2"]
+
+[resource]
+resource_local_to_scene = true
+shader = ExtResource("1_w1e77")
+shader_parameter/mask = ExtResource("2_858u2")

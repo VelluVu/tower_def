@@ -1,14 +1,15 @@
-[gd_scene load_steps=10 format=3 uid="uid://jc86qe0kr0a6"]
+[gd_scene load_steps=11 format=3 uid="uid://jc86qe0kr0a6"]
 
 [ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_tower_behaviour_tree/basic_tower_bt.gd" id="1_1phm6"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/selector.gd" id="2_hjs30"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="3_oiqih"]
 [ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_tower_behaviour_tree/has_target.gd" id="4_d1u1u"]
-[ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_tower_behaviour_tree/select_target.gd" id="5_d2p72"]
+[ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_tower_behaviour_tree/select_target_closest_target_to_end.gd" id="5_d2p72"]
 [ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_tower_behaviour_tree/turn_to_target_direction.gd" id="6_3vs5m"]
 [ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_tower_behaviour_tree/shoot.gd" id="6_7i5w5"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/decorators/inverter.gd" id="6_akw04"]
 [ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_tower_behaviour_tree/idle.gd" id="7_roes0"]
+[ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_tower_behaviour_tree/null_skill_target.gd" id="9_ej14e"]
 
 [node name="BeamTowerBt" type="Node"]
 script = ExtResource("1_1phm6")
@@ -22,7 +23,7 @@ script = ExtResource("3_oiqih")
 [node name="HasTarget" type="Node" parent="MainSelector/AttackEnemy"]
 script = ExtResource("4_d1u1u")
 
-[node name="SelectTarget" type="Node" parent="MainSelector/AttackEnemy"]
+[node name="SelectClosestTargetToEnd" type="Node" parent="MainSelector/AttackEnemy"]
 script = ExtResource("5_d2p72")
 
 [node name="TurnToTargetDirection" type="Node" parent="MainSelector/AttackEnemy"]
@@ -39,6 +40,9 @@ script = ExtResource("6_akw04")
 
 [node name="HasTarget" type="Node" parent="MainSelector/Idle/NotHasTarget"]
 script = ExtResource("4_d1u1u")
+
+[node name="NullSkillTarget" type="Node" parent="MainSelector/Idle"]
+script = ExtResource("9_ej14e")
 
 [node name="Idle" type="Node" parent="MainSelector/Idle"]
 script = ExtResource("7_roes0")

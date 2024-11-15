@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://dfv20i7prjo4e"]
 
 [ext_resource type="Script" path="res://scenes/unit/blood_splat.gd" id="1_4t27h"]
-[ext_resource type="Texture2D" uid="uid://dlmx44mayige" path="res://assets/2d_art/bloodsplat_01.png" id="2_50fpv"]
-[ext_resource type="Texture2D" uid="uid://b1q0rcgdgni31" path="res://assets/2d_art/bloodsplat_02.png" id="3_a1f6t"]
+[ext_resource type="Texture2D" uid="uid://dlmx44mayige" path="res://assets/art/gore/bloodsplat_01.png" id="2_50fpv"]
+[ext_resource type="Texture2D" uid="uid://b1q0rcgdgni31" path="res://assets/art/gore/bloodsplat_02.png" id="3_a1f6t"]
 [ext_resource type="Script" path="res://scenes/custom_timer.gd" id="4_r6lhm"]
 
 [node name="BloodSplat" type="Node2D"]

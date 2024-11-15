@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://8ymvxoy2wkw"
+path="res://.godot/imported/basic_tower.aseprite-c33cc83ab92c8c29c4cefbdb66228db3.res"
+
+[deps]
+
+source_file="res://assets/art/units/building/puffe/basic_tower.aseprite"
+dest_files=["res://.godot/imported/basic_tower.aseprite-c33cc83ab92c8c29c4cefbdb66228db3.res"]
+
+[params]
+

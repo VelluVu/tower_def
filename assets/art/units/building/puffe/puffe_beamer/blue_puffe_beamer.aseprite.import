@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bs76ylsqloerh"
+path="res://.godot/imported/blue_puffe_beamer.aseprite-48e7822a38f86e16d2bc6dcad2f8479b.res"
+
+[deps]
+
+source_file="res://assets/art/units/building/puffe/puffe_beamer/blue_puffe_beamer.aseprite"
+dest_files=["res://.godot/imported/blue_puffe_beamer.aseprite-48e7822a38f86e16d2bc6dcad2f8479b.res"]
+
+[params]
+

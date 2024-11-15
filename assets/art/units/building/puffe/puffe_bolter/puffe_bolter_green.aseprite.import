@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://c1jchcu7gi4xc"
+path="res://.godot/imported/puffe_bolter_green.aseprite-7e6df5e81106d9b79dde490f47cfb0dc.res"
+
+[deps]
+
+source_file="res://assets/art/units/building/puffe/puffe_bolter/puffe_bolter_green.aseprite"
+dest_files=["res://.godot/imported/puffe_bolter_green.aseprite-7e6df5e81106d9b79dde490f47cfb0dc.res"]
+
+[params]
+

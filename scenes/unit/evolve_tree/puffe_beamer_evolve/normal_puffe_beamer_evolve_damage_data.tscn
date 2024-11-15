@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://vxhhxnovjoo7"]
+
+[ext_resource type="Script" path="res://scenes/unit/skills/damage_data.gd" id="1_papnx"]
+
+[node name="NormalPuffeBeamerEvolveDamageData" type="Node"]
+script = ExtResource("1_papnx")
+critical_chance = 0.2

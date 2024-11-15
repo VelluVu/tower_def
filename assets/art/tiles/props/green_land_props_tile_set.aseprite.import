@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://b8kefci4alkfr"
+path="res://.godot/imported/green_land_props_tile_set.aseprite-16411755a34c21a3e4bf561aca117c3f.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/props/green_land_props_tile_set.aseprite"
+dest_files=["res://.godot/imported/green_land_props_tile_set.aseprite-16411755a34c21a3e4bf561aca117c3f.res"]
+
+[params]
+

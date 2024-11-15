@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://b0ev0ydt8qls7"]
+
+[ext_resource type="Script" path="res://scenes/unit/skills/damage_data.gd" id="1_uhpv2"]
+[ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_data.gd" id="2_n17uq"]
+
+[node name="GreenPuffeBeamerEvolveDamageData" type="Node"]
+script = ExtResource("1_uhpv2")
+damage_type = 3
+
+[node name="OvertimeEffectData" type="Node" parent="."]
+script = ExtResource("2_n17uq")
+max_count = 2
+damage_type = 3

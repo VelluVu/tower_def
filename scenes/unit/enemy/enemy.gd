@@ -13,7 +13,6 @@ const PATH_TO_STAT_RESOURCE : String = "res://scenes/unit/stats/stat_resources/e
 @onready var collider : CollisionShape2D = $CollisionShape2D
 @onready var animation_control : AnimationControl = $AnimatedSprite2D
 @onready var hit_box : Area2D = $Hitbox
-@onready var hit_animation_player : AnimationPlayer = $HitAnimationPlayer
 @onready var gore_emitter : GoreEmitter = $GoreEmitter
 @onready var selectable : SelectableUnit = $SelectableUnit
 @onready var pop_up_spot : Node2D = $PopUpSpot
@@ -55,6 +54,7 @@ var current_time_scale : float = 1.0
 var grid_position : Vector2i = Vector2i.ZERO
 var velocity : Vector2 = Vector2.ZERO
 var last_position : Vector2 = Vector2.ZERO
+var previous_waypoint : Vector2 = Vector2.ZERO
 var next_waypoint : Vector2 = Vector2.ZERO
 var collision_body : Node = null
 var end_point : Marker2D = null
@@ -71,9 +71,6 @@ var body_center : Vector2 :
 var is_dead : bool :
 	get:
 		return stats.get_stat_value(Utils.StatType.Health) <= 0.0
-
-var stats_resource_name : String :
-	get = _get_stats_resource_name
 
 var is_path_end_reached : bool :
 	get = _get_is_path_end_reached,
@@ -101,16 +98,23 @@ func take_damage(damage_data : DamageData) -> void:
 	
 	if damage_data.damage > 0.0:
 		gore_emitter.emit_gore(damage_data)
-		if hit_animation_player.is_playing():
-			hit_animation_player.stop()
-		hit_animation_player.play("hit")
+		animation_control.play_hit_animation()
+
+
+func dealt_damage(_target : Node2D, _damage_data : DamageData) -> void:
+	#print(name, " dealt ", _damage_data.damage ," damage to ", _target.name)
+	pass
 
 
 func iterate_next_waypoint() -> void:
 	if (current_waypoint_index + 1) >= point_path.size():
 		next_waypoint = point_path[current_waypoint_index]
+		
+		if previous_waypoint == next_waypoint:
+			previous_waypoint = level.world_position_to_grid(global_position)
 		return
 	
+	previous_waypoint = point_path[current_waypoint_index]
 	current_waypoint_index += 1
 	next_waypoint = point_path[current_waypoint_index]
 
@@ -130,7 +134,9 @@ func path_to(from : Vector2, to : Vector2) -> void:
 	
 	if dot < 0:
 		iterate_next_waypoint()
+		return
 	
+	previous_waypoint = level.world_position_to_grid(global_position)
 	next_waypoint = point_path[current_waypoint_index]
 
 
@@ -167,11 +173,7 @@ func die() -> void:
 
 
 func get_building_in_next_waypoint() -> Building:
-	closest_building = null
-	
-	if level.has_building_in_world_position(next_waypoint):
-		closest_building = level.get_building_from_world_position(next_waypoint)
-	
+	closest_building = level.get_building_from_world_position(next_waypoint)
 	return closest_building
 
 
@@ -187,10 +189,27 @@ func is_path_blocked(path : PackedVector2Array) -> bool:
 	return not is_last_path_position_end
 
 
+func get_closest_building() -> Building:
+	var closest = level.get_building_from_world_position(global_position)
+	
+	if closest != null:
+		return closest
+	
+	#save found buildings to variable?
+	var neightbour_buildings : Array[Building] = level.get_neighbour_buildings_from_world_position(global_position)
+	
+	if not neightbour_buildings.is_empty():
+		closest = neightbour_buildings[0]
+	
+	return closest
+
+
 func _ready() -> void:
+	process_mode = ProcessMode.PROCESS_MODE_PAUSABLE
+	
 	if not is_in_group(GroupNames.ENEMIES):
 		add_to_group(GroupNames.ENEMIES)
-		
+	
 	time = 0
 	var new_name : String = name + str(level.all_enemies.size())
 	name = new_name
@@ -223,6 +242,9 @@ func _on_body_exit(body : Node):
 
 
 func _on_astar_grid_updated() -> void:
+	if is_dead or is_deactivated:
+		return
+		
 	if level == null:
 		push_warning(name, GRID_UPDATE_ERROR)
 		return
@@ -264,20 +286,3 @@ func _set_is_the_end_point_reached(value : bool) -> void:
 		GameSignals.enemy_reached_end_point.emit(self)
 		deactivate()
 		hide()
-
-
-#func _get_stats_manager() -> StatsManager:
-	#if has_node(STATS_MANAGER_NAME):
-		#stats_manager = get_node(STATS_MANAGER_NAME)
-		#return stats_manager
-		#
-	#stats_manager = StatsManager.new()
-	#var base_stats_name : String = PATH_TO_STAT_RESOURCE + stats_resource_name
-	#stats_manager.base_stats = ResourceLoader.load(base_stats_name)
-	#stats_manager.name = STATS_MANAGER_NAME
-	#add_child(stats_manager)
-	#return stats_manager
-
-
-func _get_stats_resource_name() -> String:
-	return name.rstrip(NUMBERS).to_lower() + RESOURCE_NAME_END_PART
