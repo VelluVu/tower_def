@@ -26,6 +26,7 @@ BeehaveGlobalMetrics="*res://addons/beehave/metrics/beehave_global_metrics.gd"
 BeehaveGlobalDebugger="*res://addons/beehave/debug/global_debugger.gd"
 PlayerProgress="*res://scenes/player_progress.gd"
 GlobalAnimationNames="*res://scenes/global_animation_names.gd"
+RandomEvolveResourceCollection="*res://scenes/unit/evolve_tree/random_evolve_resource_collection.gd"
 
 [debug]
 
@@ -48,6 +49,7 @@ enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg", "res://addon
 Buildings=""
 Enemies="group for enemies"
 Selectables=""
+Spawner=""
 
 [input]
 

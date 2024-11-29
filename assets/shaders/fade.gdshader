@@ -30,7 +30,7 @@ float get_grid( vec2 uv )
 	grids[1] *= clamp( 3.0 - float_fade, 0.0, 1.0 );
 	grids[2] *= clamp( 4.0 - float_fade, 0.0, 1.0 );
 	grids[3] *= clamp( 2.0 - float_fade, 0.0, 1.0 );
-	
+
 	return grids[0] + grids[1] + grids[2] + grids[3];
 }
 

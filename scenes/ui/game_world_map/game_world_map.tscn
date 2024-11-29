@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://cqxju7k2sxa4q"]
+[gd_scene load_steps=5 format=3 uid="uid://cqxju7k2sxa4q"]
 
 [ext_resource type="Script" path="res://scenes/ui/game_world_map/game_world_map.gd" id="1_mqsag"]
 [ext_resource type="Script" path="res://scenes/ui/game_world_map/map_level_element.gd" id="2_uc0yk"]
 [ext_resource type="Texture2D" uid="uid://d2m8dgwklqvpn" path="res://assets/art/ui/world_map.png" id="2_velws"]
+[ext_resource type="Texture2D" uid="uid://dvame6v3pp2k8" path="res://assets/art/ui/lock.png" id="4_wvp4h"]
 
 [node name="GameWorldMap" type="Control"]
 layout_mode = 3
@@ -112,6 +113,19 @@ size_flags_vertical = 1
 text = "asdasdasdasdasdsadasdsadasdasdasdasdasdasdasdsdasdasdadsasd"
 autowrap_mode = 3
 
+[node name="LockTexture" type="TextureRect" parent="MarginContainer/Map/Level_001"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -24.0
+offset_top = -15.0
+offset_right = 8.0
+offset_bottom = 17.0
+grow_horizontal = 0
+texture = ExtResource("4_wvp4h")
+stretch_mode = 2
+
 [node name="Level_002" type="Panel" parent="MarginContainer/Map"]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 0
@@ -120,7 +134,6 @@ offset_top = 442.0
 offset_right = 395.0
 offset_bottom = 506.0
 script = ExtResource("2_uc0yk")
-is_locked = true
 level_number = 2
 
 [node name="SelectButton" type="Button" parent="MarginContainer/Map/Level_002"]
@@ -198,6 +211,19 @@ size_flags_vertical = 1
 text = "asdasdasdasdasdsadasdsadasdasdasdasdasdasdasdsdasdasdadsasd"
 autowrap_mode = 3
 
+[node name="LockTexture" type="TextureRect" parent="MarginContainer/Map/Level_002"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -24.0
+offset_top = -15.0
+offset_right = 8.0
+offset_bottom = 17.0
+grow_horizontal = 0
+texture = ExtResource("4_wvp4h")
+stretch_mode = 2
+
 [node name="Level_003" type="Panel" parent="MarginContainer/Map"]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 0
@@ -206,7 +232,6 @@ offset_top = 259.0
 offset_right = 216.0
 offset_bottom = 323.0
 script = ExtResource("2_uc0yk")
-is_locked = true
 level_number = 3
 
 [node name="SelectButton" type="Button" parent="MarginContainer/Map/Level_003"]
@@ -283,6 +308,19 @@ layout_mode = 2
 size_flags_vertical = 1
 text = "asdasdasdasdasdsadasdsadasdasdasdasdasdasdasdsdasdasdadsasd"
 autowrap_mode = 3
+
+[node name="LockTexture" type="TextureRect" parent="MarginContainer/Map/Level_003"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -24.0
+offset_top = -15.0
+offset_right = 8.0
+offset_bottom = 17.0
+grow_horizontal = 0
+texture = ExtResource("4_wvp4h")
+stretch_mode = 2
 
 [node name="ToMenuButton" type="Button" parent="."]
 custom_minimum_size = Vector2(64, 64)

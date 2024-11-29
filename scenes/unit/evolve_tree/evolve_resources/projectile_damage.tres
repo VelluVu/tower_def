@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="EvolveResource" load_steps=3 format=3 uid="uid://bbqde27g202o0"]
+
+[ext_resource type="Texture2D" uid="uid://d1s2xw53fx6au" path="res://icon.svg" id="1_3645q"]
+[ext_resource type="Script" path="res://scenes/unit/evolve_tree/evolve_resource.gd" id="2_66qho"]
+
+[resource]
+script = ExtResource("2_66qho")
+evolve_icon = ExtResource("1_3645q")
+evolve_level_reguirement = 0
+is_skill_modifier = true
+skill_type = 2
+skill_name = "Skill"
+elements = 15
+modify_stat_type = 2
+modify_type = 1
+modify_Value = 0.15
+evolve_name = "Projectile Damage"

@@ -210,7 +210,6 @@ collision_layer = 0
 collision_mask = 2
 script = ExtResource("1_1jspm")
 projectile_name = "HomingFirebolt"
-damage_type = 1
 pierce = 0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

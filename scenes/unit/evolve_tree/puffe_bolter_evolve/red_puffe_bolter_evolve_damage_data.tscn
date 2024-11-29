@@ -5,11 +5,13 @@
 
 [node name="RedPuffeBolterEvolveDamageData" type="Node"]
 script = ExtResource("1_iimh6")
-damage = 2.0
-damage_type = 1
+damage_type = 2
 
 [node name="OvertimeEffectData" type="Node" parent="."]
 script = ExtResource("2_p6kec")
-max_count = 2
-chance_to_apply = 0.1
-damage_type = 1
+max_count = 4
+tick_damage = 0.0
+tick_interval = 10.0
+chance_to_apply = 0.25
+damage_type = 2
+effectType = 1

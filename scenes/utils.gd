@@ -12,7 +12,11 @@ enum StatType
 	Damage,
 	Price,
 	Speed,
-	AttackRange
+	AttackRange,
+	AttackSpeed,
+	CriticalChance,
+	CriticalMultiplier,
+	ActiveDuration
 }
 
 enum TileType
@@ -26,19 +30,19 @@ enum TileType
 enum TileEffect
 {
 	NoEffect = 1 << 0,
-	Slowing = 1 << 2,
-	Freezing = 1 << 3,
-	Damaging = 1 << 4,
-	Burning = 1 << 5,
-	Poisoning = 1 << 6,
+	Slowing = 1 << 1,
+	Freezing = 1 << 2,
+	Damaging = 1 << 3,
+	Burning = 1 << 4,
+	Poisoning = 1 << 5,
 }
 
 enum DamageType
 {
-	Normal,
-	Fire,
-	Frost,
-	Poison,
+	Normal = 1 << 0,
+	Fire = 1 << 1,
+	Frost = 1 << 2,
+	Poison = 1 << 3,
 }
 
 enum OvertimeEffectType
@@ -51,6 +55,22 @@ enum ModifyType
 {
 	Flat,
 	Multiply,
+}
+
+enum Element
+{
+	Normal = 1 << 0,
+	Fire = 1 << 1,
+	Frost = 1 << 2,
+	Poison = 1 << 3,
+}
+
+enum SkillType
+{
+	Melee = 1 << 0,
+	Projectile = 1 << 1,
+	Area = 1 << 2,
+	Beaming = 1 << 3,
 }
 
 func get_damage_type_color(damage_type : DamageType) -> Color:

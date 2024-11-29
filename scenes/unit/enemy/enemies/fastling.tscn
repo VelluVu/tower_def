@@ -280,12 +280,43 @@ gore_effect_scene = ExtResource("8_seeal")
 [node name="SelectableUnit" parent="." instance=ExtResource("9_njrru")]
 
 [node name="MeleeAttack" parent="." instance=ExtResource("10_jqtfa")]
+skill_type = 16
 base_cast_time = 0.5
 base_cooldown = 1.5
 
 [node name="DamageData" type="Node" parent="MeleeAttack"]
 script = ExtResource("11_0yfjs")
-damage = 0.0
+
+[node name="Stats" type="Node" parent="MeleeAttack"]
+script = ExtResource("13_4y7u7")
+
+[node name="Damage" type="Node" parent="MeleeAttack/Stats"]
+script = ExtResource("14_axnq6")
+base_value = 1.0
+value = 1.0
+type = 2
+
+[node name="AttackRange" type="Node" parent="MeleeAttack/Stats"]
+script = ExtResource("14_axnq6")
+type = 5
+
+[node name="AttackSpeed" type="Node" parent="MeleeAttack/Stats"]
+script = ExtResource("14_axnq6")
+type = 6
+
+[node name="CriticalChance" type="Node" parent="MeleeAttack/Stats"]
+script = ExtResource("14_axnq6")
+base_value = 0.1
+value = 0.1
+type = 7
+
+[node name="CriticalMultiplier" type="Node" parent="MeleeAttack/Stats"]
+script = ExtResource("14_axnq6")
+type = 8
+
+[node name="ActiveDuration" type="Node" parent="MeleeAttack/Stats"]
+script = ExtResource("14_axnq6")
+type = 9
 
 [node name="PopUpSpot" type="Node2D" parent="."]
 position = Vector2(0, -8)
@@ -296,37 +327,51 @@ script = ExtResource("11_i2avb")
 [node name="Stats" type="Node" parent="."]
 script = ExtResource("13_4y7u7")
 
-[node name="MaxHealthStat" type="Node" parent="Stats"]
+[node name="MaxHealth" type="Node" parent="Stats"]
 script = ExtResource("14_axnq6")
-base_value = 10.0
-value = 10.0
+base_value = 100.0
+value = 100.0
 type = 1
 
-[node name="HealthStat" type="Node" parent="Stats"]
+[node name="Health" type="Node" parent="Stats"]
 script = ExtResource("14_axnq6")
-base_value = 10.0
-value = 10.0
+base_value = 100.0
+value = 100.0
 
-[node name="DamageStat" type="Node" parent="Stats"]
+[node name="Damage" type="Node" parent="Stats"]
 script = ExtResource("14_axnq6")
-base_value = 1.0
-value = 1.0
 type = 2
 
-[node name="PriceStat" type="Node" parent="Stats"]
+[node name="Price" type="Node" parent="Stats"]
 script = ExtResource("14_axnq6")
-base_value = 1.0
-value = 1.0
+base_value = 2.0
+value = 2.0
 type = 3
 
-[node name="SpeedStat" type="Node" parent="Stats"]
+[node name="Speed" type="Node" parent="Stats"]
 script = ExtResource("14_axnq6")
 base_value = 32.0
 value = 32.0
 type = 4
 
-[node name="AttackRangeStat" type="Node" parent="Stats"]
+[node name="AttackRange" type="Node" parent="Stats"]
 script = ExtResource("14_axnq6")
-base_value = 3.0
-value = 3.0
 type = 5
+
+[node name="AttackSpeed" type="Node" parent="Stats"]
+script = ExtResource("14_axnq6")
+type = 6
+
+[node name="CriticalChance" type="Node" parent="Stats"]
+script = ExtResource("14_axnq6")
+type = 7
+
+[node name="CriticalMultiplier" type="Node" parent="Stats"]
+script = ExtResource("14_axnq6")
+base_value = 2.0
+value = 2.0
+type = 8
+
+[node name="ActiveDuration" type="Node" parent="Stats"]
+script = ExtResource("14_axnq6")
+type = 9

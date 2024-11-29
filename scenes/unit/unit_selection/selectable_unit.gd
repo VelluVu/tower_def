@@ -33,7 +33,7 @@ func change_material(_material : Material) -> void:
 	sprite.material = _material
 
 
-func data_change() -> void:
+func _data_change() -> void:
 	_signal_data_for_selection_panel(is_selected)
 
 
@@ -67,27 +67,32 @@ func _set_is_selected(value : bool) -> void:
 	
 	is_selected = value
 	
-	
 	if is_selected:
-		change_material(outline_shader_material)
-		
+		#for sell button
 		var is_building : bool = actor.is_in_group(GroupNames.BUILDINGS)
 		
 		if is_building:
 			if not actor.is_placed:
-				UISignals.selected_unit.emit(actor.name, actor.stats, actor.icon)
+				UISignals.selected_unit.emit(actor.name, actor.stats, actor.skill, actor.icon)
 				return
-				
-		_signal_data_for_selection_panel(is_selected)
+		
 		if not actor.stats.stats_changed.is_connected(_on_selected_data_change):
 			actor.stats.stats_changed.connect(_on_selected_data_change)
+		
+		if not actor.stats_changed.is_connected(_data_change):
+			actor.stats_changed.connect(_data_change)
 	else:
-		change_material(null)
-		#get the upgrade data if there is any for starter element choices!
-		_signal_data_for_selection_panel(is_selected)
 		
 		if actor.stats.stats_changed.is_connected(_on_selected_data_change):
 			actor.stats.stats_changed.disconnect(_on_selected_data_change)
+		
+		if actor.stats_changed.is_connected(_data_change):
+			actor.stats_changed.disconnect(_data_change)
+	
+	change_material(null if not is_selected else outline_shader_material)
+	#get the upgrade data if there is any for starter element choices!
+	_signal_data_for_selection_panel(is_selected)
+	actor.selected.emit(is_selected)
 
 
 func _on_selected_data_change() -> void:
@@ -100,11 +105,13 @@ func _signal_data_for_selection_panel(_is_selected : bool) -> void:
 	
 	if is_building: 
 		if _is_selected:
-			UISignals.selected_unit.emit(actor.name, actor.stats, actor.icon, is_building, actor._get_building_data())
+			UISignals.selected_unit.emit(actor.name, actor.stats, actor.skill, actor.icon, is_building)
+			UISignals.upgrade_options_change.emit(actor._get_building_data())
 		else:
-			UISignals.deselected_unit.emit(actor.name, actor.stats, actor.icon, is_building, actor._get_building_data())
+			UISignals.deselected_unit.emit()
+			UISignals.upgrade_options_change.emit(null)
 	else:
 		if _is_selected:
-			UISignals.selected_unit.emit(actor.name, actor.stats, actor.icon)
+			UISignals.selected_unit.emit(actor.name, actor.stats, actor.skill, actor.icon)
 		else:
-			UISignals.deselected_unit.emit(actor.name, actor.stats, actor.icon)
+			UISignals.deselected_unit.emit()

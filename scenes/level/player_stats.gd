@@ -2,8 +2,10 @@ class_name PlayerStats
 extends Node
 
 #level based player resources
-@export var gold : float = 6.0
-@export var life : int = 10
+@export var gold : float = 6.0 :
+	set = _set_gold
+@export var life : float = 10.0 :
+	set = _set_life
 
 var is_alive : bool :
 	get:
@@ -48,3 +50,23 @@ func _on_building_placed(building : Building) -> void:
 func _on_building_sell(building : Building) -> void:
 	gold += building.stats.get_stat_value(Utils.StatType.Price)
 	GameSignals.resource_change.emit(gold, 0)
+
+
+func _set_life(value : float) -> void:
+	if life == value:
+		return
+	
+	life = value
+	
+	if life < 0.0:
+		life = 0.0
+
+
+func _set_gold(value : float) -> void:
+	if gold == value:
+		return
+	
+	gold = value
+	
+	if gold < 0.0:
+		gold = 0.0

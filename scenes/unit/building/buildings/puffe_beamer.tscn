@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=3 uid="uid://ck38qjjtmawki"]
+[gd_scene load_steps=66 format=3 uid="uid://ck38qjjtmawki"]
 
 [ext_resource type="Script" path="res://scenes/unit/building/tower.gd" id="1_cyr4l"]
 [ext_resource type="Texture2D" uid="uid://d3x1xfq7cnf40" path="res://assets/art/units/building/puffe/puffe_beamer/puffe_beamer_icon.png" id="2_1w6ba"]
@@ -25,6 +25,7 @@
 [ext_resource type="Texture2D" uid="uid://b5sv4hjr1qbk" path="res://assets/art/units/building/puffe/puffe_beamer/red_puffe_beamer_icon.png" id="21_wo18e"]
 [ext_resource type="Texture2D" uid="uid://yeifd50gnqjq" path="res://assets/art/ui/normal_element_icon.png" id="21_xun3a"]
 [ext_resource type="PackedScene" uid="uid://b087583254nj7" path="res://scenes/unit/evolve_tree/puffe_beamer_evolve/red_puffe_beamer_evolve_damage_data.tscn" id="22_3bcl3"]
+[ext_resource type="Script" path="res://scenes/unit/stats/modifier.gd" id="23_umsju"]
 [ext_resource type="Texture2D" uid="uid://bixi4wfgm28ri" path="res://assets/art/projectile/frost_beam.png" id="24_0irea"]
 [ext_resource type="PackedScene" uid="uid://bl6husul4ceqd" path="res://scenes/unit/evolve_tree/puffe_beamer_evolve/blue_puffe_beamer.tscn" id="24_2h2rt"]
 [ext_resource type="PackedScene" uid="uid://betnuhvodnqmf" path="res://scenes/unit/evolve_tree/puffe_beamer_evolve/blue_puffe_beamer_evolve_damage_data.tscn" id="25_gnxl0"]
@@ -36,9 +37,46 @@
 [ext_resource type="Texture2D" uid="uid://deqxyurdint7k" path="res://assets/art/units/building/puffe/puffe_beamer/green_puffe_beamer_icon.png" id="31_mv0to"]
 [ext_resource type="Texture2D" uid="uid://4vr2yacqou07" path="res://assets/art/ui/frost_element_icon.png" id="31_qbv05"]
 [ext_resource type="Texture2D" uid="uid://b6lo5eq5siv2u" path="res://assets/art/ui/poison_element_icon.png" id="36_kci3i"]
+[ext_resource type="Texture2D" uid="uid://cw3b3xwravgoe" path="res://assets/art/units/evolve_glow.png" id="37_wqnxk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nli7h"]
 size = Vector2(16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_usbqs"]
+atlas = ExtResource("37_wqnxk")
+region = Rect2(0, 0, 32, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f8uaa"]
+atlas = ExtResource("37_wqnxk")
+region = Rect2(32, 0, 32, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qlxsh"]
+atlas = ExtResource("37_wqnxk")
+region = Rect2(0, 28, 32, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4vmd5"]
+atlas = ExtResource("37_wqnxk")
+region = Rect2(32, 28, 32, 28)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_uxfr2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_usbqs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f8uaa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qlxsh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4vmd5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_75r8j"]
 atlas = ExtResource("4_qfv3q")
@@ -225,6 +263,27 @@ icon = ExtResource("2_1w6ba")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_nli7h")
 
+[node name="EvolveGlow" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -11)
+sprite_frames = SubResource("SpriteFrames_uxfr2")
+autoplay = "default"
+frame_progress = 0.479549
+script = ExtResource("5_mwcin")
+metadata/_aseprite_wizard_config_ = {
+"layer": "",
+"o_ex_p": "",
+"o_folder": "res://assets/art/units",
+"o_name": "",
+"only_visible": false,
+"slice": "",
+"source": "res://assets/art/units/evolve_glow.aseprite"
+}
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true
+}
+metadata/_aseprite_wizard_source_file_hash_ = "fbdbd2bbea6178ca26a0b94d13795d3e"
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 material = ExtResource("3_5wcu4")
@@ -285,10 +344,42 @@ shape = SubResource("CircleShape2D_yksuc")
 
 [node name="Beam" parent="." instance=ExtResource("4_2p66l")]
 position = Vector2(5, -11)
+skill_type = 8
+skill_name = "Beam"
 
 [node name="DamageData" type="Node" parent="Beam"]
 script = ExtResource("9_y18tw")
-critical_chance = 0.0
+
+[node name="Stats" type="Node" parent="Beam"]
+script = ExtResource("15_yqf0r")
+
+[node name="Damage" type="Node" parent="Beam/Stats"]
+script = ExtResource("16_mlf80")
+base_value = 5.0
+value = 5.0
+type = 2
+
+[node name="AttackRange" type="Node" parent="Beam/Stats"]
+script = ExtResource("16_mlf80")
+base_value = 4.0
+value = 4.0
+type = 5
+
+[node name="AttackSpeed" type="Node" parent="Beam/Stats"]
+script = ExtResource("16_mlf80")
+type = 6
+
+[node name="CriticalChance" type="Node" parent="Beam/Stats"]
+script = ExtResource("16_mlf80")
+type = 7
+
+[node name="CriticalMultiplier" type="Node" parent="Beam/Stats"]
+script = ExtResource("16_mlf80")
+type = 8
+
+[node name="ActiveDuration" type="Node" parent="Beam/Stats"]
+script = ExtResource("16_mlf80")
+type = 9
 
 [node name="BeamTowerBt" parent="." instance=ExtResource("5_3fi0f")]
 
@@ -308,44 +399,61 @@ script = ExtResource("12_cmlai")
 [node name="Stats" type="Node" parent="."]
 script = ExtResource("15_yqf0r")
 
-[node name="MaxHealthStat" type="Node" parent="Stats"]
+[node name="MaxHealth" type="Node" parent="Stats"]
 script = ExtResource("16_mlf80")
 base_value = 5.0
 value = 5.0
 type = 1
 
-[node name="HealthStat" type="Node" parent="Stats"]
+[node name="Health" type="Node" parent="Stats"]
 script = ExtResource("16_mlf80")
 base_value = 5.0
 value = 5.0
 
-[node name="DamageStat" type="Node" parent="Stats"]
+[node name="Damage" type="Node" parent="Stats"]
 script = ExtResource("16_mlf80")
+base_value = 5.0
+value = 5.0
 type = 2
 
-[node name="PriceStat" type="Node" parent="Stats"]
+[node name="Price" type="Node" parent="Stats"]
 script = ExtResource("16_mlf80")
 base_value = 4.0
 value = 4.0
 type = 3
 
-[node name="SpeedStat" type="Node" parent="Stats"]
+[node name="Speed" type="Node" parent="Stats"]
 script = ExtResource("16_mlf80")
-base_value = 16.0
-value = 16.0
 type = 4
 
-[node name="AttackRangeStat" type="Node" parent="Stats"]
+[node name="AttackRange" type="Node" parent="Stats"]
 script = ExtResource("16_mlf80")
-base_value = 4.0
-value = 4.0
 type = 5
+
+[node name="AttackSpeed" type="Node" parent="Stats"]
+script = ExtResource("16_mlf80")
+type = 6
+
+[node name="CriticalChance" type="Node" parent="Stats"]
+script = ExtResource("16_mlf80")
+type = 7
+
+[node name="CriticalMultiplier" type="Node" parent="Stats"]
+script = ExtResource("16_mlf80")
+base_value = 2.0
+value = 2.0
+type = 8
+
+[node name="ActiveDuration" type="Node" parent="Stats"]
+script = ExtResource("16_mlf80")
+type = 9
 
 [node name="EvolveTree" type="Node" parent="."]
 script = ExtResource("16_dryip")
 
 [node name="EvolveBranch" type="Node" parent="EvolveTree"]
 script = ExtResource("17_wlcq3")
+evolve_level = 1
 
 [node name="NormalElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch"]
 script = ExtResource("18_wr5qw")
@@ -354,8 +462,21 @@ new_damage_data_scene = ExtResource("19_jj2s0")
 icon = ExtResource("21_xun3a")
 info = "Normal"
 
-[node name="FireElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch"]
+[node name="CriticalModifier" type="Node" parent="EvolveTree/EvolveBranch/NormalElementEvolveLeaf"]
+script = ExtResource("23_umsju")
+is_skill_modifier = true
+skill_name = "Beam"
+type = 0
+stat = 7
+value = 0.2
+
+[node name="EvolveBranch2" type="Node" parent="EvolveTree"]
+script = ExtResource("17_wlcq3")
+evolve_level = 1
+
+[node name="FireElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch2"]
 script = ExtResource("18_wr5qw")
+evolve_element = 2
 selected_icon = ExtResource("21_wo18e")
 new_beam_texture = ExtResource("21_8at6e")
 new_animated_sprite_scene = ExtResource("21_q5eu1")
@@ -363,8 +484,13 @@ new_damage_data_scene = ExtResource("22_3bcl3")
 icon = ExtResource("26_ljtca")
 info = "Fire"
 
-[node name="FrostElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch"]
+[node name="EvolveBranch3" type="Node" parent="EvolveTree"]
+script = ExtResource("17_wlcq3")
+evolve_level = 1
+
+[node name="FrostElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch3"]
 script = ExtResource("18_wr5qw")
+evolve_element = 4
 selected_icon = ExtResource("26_pjfpn")
 new_beam_texture = ExtResource("24_0irea")
 new_animated_sprite_scene = ExtResource("24_2h2rt")
@@ -372,8 +498,13 @@ new_damage_data_scene = ExtResource("25_gnxl0")
 icon = ExtResource("31_qbv05")
 info = "Frost"
 
-[node name="PoisonElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch"]
+[node name="EvolveBranch4" type="Node" parent="EvolveTree"]
+script = ExtResource("17_wlcq3")
+evolve_level = 1
+
+[node name="PoisonElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch4"]
 script = ExtResource("18_wr5qw")
+evolve_element = 8
 selected_icon = ExtResource("31_mv0to")
 new_beam_texture = ExtResource("29_rgmys")
 new_animated_sprite_scene = ExtResource("27_wav4t")

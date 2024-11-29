@@ -4,4 +4,3 @@
 
 [node name="NormalPuffeBeamerEvolveDamageData" type="Node"]
 script = ExtResource("1_papnx")
-critical_chance = 0.2

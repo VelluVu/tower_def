@@ -26,7 +26,7 @@ var position_update_interval : float = 0.25
 
 func _ready() -> void:
 	line.texture = beam_texture
-	damage_timer.base_wait_time = tick_speed
+	damage_timer.unscaled_base_value = tick_speed
 	damage_timer.timeout.connect(_on_timer_tick)
 	super()
 
@@ -57,6 +57,20 @@ func stop() -> void:
 	is_active = false
 
 
+func _on_skill_stat_changed(stat : Stat) -> void:
+	super(stat)
+	
+	if stat.type == Utils.StatType.AttackSpeed:
+		damage_timer.scale_wait_time(actor.stats.get_stat_value(Utils.StatType.AttackSpeed) + stat.value)
+
+
+func _on_actor_stat_changed(stat : Stat) -> void:
+	super(stat)
+	
+	if stat.type == Utils.StatType.AttackSpeed:
+		damage_timer.scale_wait_time(stats.get_stat_value(Utils.StatType.AttackSpeed) + stat.value)
+
+
 func _on_timer_tick() -> void:
 	if not is_valid_target:
 		is_active = false
@@ -64,7 +78,6 @@ func _on_timer_tick() -> void:
 	
 	line.set_point_position(end_line_index, (target.body_center - global_position))
 	target.take_damage(damage_data)
-	actor.dealt_damage(target, damage_data)
 
 
 func _set_is_active(value : bool) -> void:
@@ -77,7 +90,6 @@ func _set_is_active(value : bool) -> void:
 		actor.animation_control.play_animation(GlobalAnimationNames.ATTACK_ANIMATION)
 		line.set_point_position(end_line_index, (target.body_center - global_position))
 		target.take_damage(damage_data)
-		actor.dealt_damage(target, damage_data)
 		damage_timer.start()
 	else:
 		line.set_point_position(1, Vector2.ZERO)
@@ -96,3 +108,7 @@ func _set_beam_texture(new_texture : CompressedTexture2D) -> void:
 		return
 
 	line.texture = beam_texture
+
+
+func _get_attack_speed() -> float:
+	return damage_timer.wait_time

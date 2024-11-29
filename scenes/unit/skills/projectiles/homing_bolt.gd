@@ -6,7 +6,6 @@ signal hits_enemy_body(body)
 signal finished(node : Node2D)
 
 @export var projectile_name : String = "HomingBolt"
-@export var damage_type : Utils.DamageType = Utils.DamageType.Normal
 @export var projectile_speed : float = 100
 @export var live_time = 10.0
 @export var pierce : int = 1
@@ -83,7 +82,6 @@ func _hit(body : Node2D) -> void:
 		animation_control.play_animation(GlobalAnimationNames.DEATH_ANIMATION)
 		
 	body.take_damage(skill_data.damage_data)
-	skill_data.damage_data.source.dealt_damage(body, skill_data.damage_data)
 	hits_enemy_body.emit(body)
 
 

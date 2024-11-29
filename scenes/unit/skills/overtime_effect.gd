@@ -6,6 +6,8 @@ extends Node
 
 var is_finished : bool = false
 var is_reached_max_stack : bool = false
+var is_shielding : bool = false
+var is_healing : bool = false
 var tick_count : int = 0
 var max_count : int = 0
 var tick_damage : float = 0.0
@@ -14,7 +16,7 @@ var source : Node = null
 var damage_type : Utils.DamageType = Utils.DamageType.Normal
 var effect_type : Utils.OvertimeEffectType = Utils.OvertimeEffectType.Tick
 var effect_data : OvertimeEffectData = null
-var added_modifiers : Array[Modifier]
+var added_modifier_datas : Array[ModifierData]
 
 #for pool
 signal damage_overtime_finished(overtime_effect : OvertimeEffect)
@@ -23,6 +25,8 @@ signal damage_overtime_finished(overtime_effect : OvertimeEffect)
 func start(overtime_effect_data : OvertimeEffectData, _actor : Node) -> void:
 	actor = _actor
 	effect_data = overtime_effect_data
+	is_shielding = overtime_effect_data.is_shielding
+	is_healing = overtime_effect_data.is_healing
 	source = effect_data.source
 	tick_damage = effect_data.tick_damage
 	damage_type = effect_data.damage_type
@@ -32,7 +36,6 @@ func start(overtime_effect_data : OvertimeEffectData, _actor : Node) -> void:
 	tick_count = 0
 	is_finished = false
 	is_reached_max_stack = false
-	added_modifiers.clear()
 	
 	if effect_data.is_critical:
 		add_extra_effects()
@@ -69,21 +72,18 @@ func add_stack(overtime_effect_data : OvertimeEffectData) -> void:
 
 
 func add_extra_effects() -> void:
-	if effect_data.modifiers.is_empty():
-		return
-		
-	for modifier in effect_data.modifiers:
-		actor.stats.get_stat(modifier.stat).add_modifier(modifier)
-		added_modifiers.append(modifier)
+	if not effect_data.modifier_datas.is_empty():
+		for modifier in effect_data.modifier_datas:
+			actor.stats.get_stat(modifier.stat).add_modifier_data(modifier)
+			added_modifier_datas.append(modifier)
 
 
 func remove_extra_effects() -> void:
-	if effect_data.modifiers.is_empty():
-		return
+	if not effect_data.modifier_datas.is_empty():
+		for modifier in effect_data.modifier_datas:
+			actor.stats.get_stat(modifier.stat).remove_modifier_data(modifier)
 	
-	for modifier in effect_data.modifiers:
-		for mod in added_modifiers:
-			actor.stats.get_stat(modifier.stat).remove_modifier(mod)
+	added_modifier_datas.clear()
 
 
 func _on_damage_tick() -> void:
@@ -93,7 +93,7 @@ func _on_damage_tick() -> void:
 	# handle different tick if stacking
 	match(effect_type):
 		Utils.OvertimeEffectType.Tick:
-			if tick_count >= max_count:
+			if max_count > 0 and tick_count >= max_count:
 				stop()
 			
 		Utils.OvertimeEffectType.Stack:
@@ -105,6 +105,14 @@ func _on_damage_tick() -> void:
 
 func _create_damage_data() -> DamageData:
 	var damage_data : DamageData = DamageData.new()
+	
+	if source != null:
+		damage_data.source = source
+		#improve damage with stats "overtime damage" or just with damage derived to some kind of multiplier
+	
+	damage_data.is_overtime = true
 	damage_data.damage = tick_damage
 	damage_data.damage_type = damage_type
+	damage_data.is_shielding = is_shielding
+	
 	return damage_data

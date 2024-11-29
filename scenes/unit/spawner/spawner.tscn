@@ -1,13 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://dgjmgs3g8oeq6"]
+[gd_scene load_steps=3 format=3 uid="uid://dgjmgs3g8oeq6"]
 
 [ext_resource type="Script" path="res://scenes/unit/spawner/spawner.gd" id="1_bfkig"]
+[ext_resource type="Script" path="res://scenes/custom_timer.gd" id="2_q7e7o"]
 
 [node name="Spawner" type="Node2D"]
 script = ExtResource("1_bfkig")
 
 [node name="SpawnIntervalTimer" type="Timer" parent="."]
 wait_time = 2.0
+script = ExtResource("2_q7e7o")
 
 [node name="SpawnStartDelayTimer" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
+script = ExtResource("2_q7e7o")

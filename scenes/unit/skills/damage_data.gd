@@ -2,12 +2,29 @@ class_name DamageData
 extends Node
 
 
-@export var damage : float = 1.0
-@export var critical_chance : float = 0.05
-@export var critical_multiplier : float = 2.0
-@export var damage_type : Utils.DamageType
+@export var damage_type : Utils.DamageType = Utils.DamageType.Normal
 
-var is_critical : bool
+var is_overtime : bool = false
+var is_shielding : bool = false
+var is_critical : bool = false
+
+var is_healing : bool = false :
+	get:
+		return true if damage < 0.0 else false 
+
+var damage : float = 0.0 :
+	set(value):
+		if damage == value:
+			return
+		damage = snappedf(value, 0.01)
+		rounded_damage = damage
+
+var rounded_damage : float = 0.0 :
+	set(value):
+		if rounded_damage == value:
+			return
+		
+		rounded_damage = round(value)
 
 var source : Node = null :
 	set = _set_source
@@ -30,13 +47,6 @@ var modifiers : Array[Modifier] :
 					continue
 				modifiers.append(child)
 		return modifiers
-
-
-func calculate_critical() -> void:
-	is_critical = randf() < critical_chance
-	damage = round(critical_multiplier * damage) if is_critical else damage
-	for effect_data in overtime_effect_datas:
-		effect_data.is_critical = is_critical
 
 
 func _set_source(new_source : Node) -> void:

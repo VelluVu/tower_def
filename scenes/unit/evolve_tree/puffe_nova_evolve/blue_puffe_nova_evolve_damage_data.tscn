@@ -6,17 +6,16 @@
 
 [node name="BluePuffeBolterEvolveDamageData" type="Node"]
 script = ExtResource("1_2docs")
-damage = 2.0
-damage_type = 2
+damage_type = 4
 
 [node name="OvertimeEffectData" type="Node" parent="."]
 script = ExtResource("2_0tgvw")
 max_count = 50
-tick_damage = 0.0
+tick_damage = 0.1
 tick_interval = 3.0
-damage_type = 2
+damage_type = 4
 effectType = 1
 
 [node name="Modifier" type="Node" parent="OvertimeEffectData"]
 script = ExtResource("3_o0a8b")
-value = -0.3
+value = -0.2

@@ -2,12 +2,14 @@ class_name Stat
 extends Node
 
 
-@export var base_value : float = 0
-@export var value : float = 0 :
+@export var base_value : float = 0.0
+@export var value : float = 0.0 :
+	get = _get_value,
 	set = _set_value
 @export var type : Utils.StatType = Utils.StatType.Health
-var flat_modifiers : Array[Modifier]
-var multiply_modifiers : Array[Modifier]
+
+var flat_modifiers : Array[ModifierData]
+var multiply_modifiers : Array[ModifierData]
 
 signal changed(stat : Stat)
 
@@ -16,7 +18,7 @@ func _ready() -> void:
 	name = str(Utils.StatType.keys()[type])
 
 
-func add_modifier(modifier : Modifier) -> void:
+func add_modifier_data(modifier : ModifierData) -> void:
 	match modifier.type:
 		Utils.ModifyType.Flat:
 			flat_modifiers.append(modifier)
@@ -31,12 +33,21 @@ func add_modifier(modifier : Modifier) -> void:
 	
 	if not multiply_modifiers.is_empty():
 		for mod in multiply_modifiers:
-			modified_value += modified_value * mod.value
+			if modified_value != 0.0:
+				modified_value *= (1.0 + mod.value)
+			else:
+				modified_value += mod.value
 	
+	#limit speed
+	if type == Utils.StatType.Speed:
+		var minimum_value : float = base_value * 0.1
+		modified_value = modified_value if modified_value >= minimum_value else minimum_value
+	
+	print(name, " modified value: ", modified_value)
 	value = modified_value
 
 
-func remove_modifier(modifier : Modifier) -> void:
+func remove_modifier_data(modifier : ModifierData) -> void:
 	match modifier.type:
 		Utils.ModifyType.Flat:
 			flat_modifiers.erase(modifier)
@@ -51,13 +62,25 @@ func remove_modifier(modifier : Modifier) -> void:
 	
 	if not multiply_modifiers.is_empty():
 		for mod in multiply_modifiers:
-			modified_value += modified_value * mod.value
+			if modified_value != 0.0:
+				modified_value *= (1.0 + mod.value)
+			else:
+				modified_value += mod.value
+	
+	#limit speed
+	if type == Utils.StatType.Speed:
+		var minimum_value : float = base_value * 0.1
+		modified_value = modified_value if modified_value >= minimum_value else minimum_value
 	
 	value = modified_value
 
 
 func reset_stat_value() -> void:
 	value = base_value
+
+
+func _get_value() -> float:
+	return value
 
 
 func _set_value(new_value : float) -> void:

@@ -12,7 +12,7 @@ const TILE_TYPE_CUSTOM_DATA_NAME : String = "TileType"
 @onready var end_point : Marker2D = $EndPoint
 @onready var player_stats : PlayerStats = $PlayerStats
 
-var total_spawns : int = 0
+	
 var cell_size : Vector2i = Vector2i.ZERO
 var offset : Vector2 = Vector2.ZERO
 var astar_grid : AStarGrid2D = null
@@ -23,6 +23,8 @@ var existing_enemies : Array[Enemy]
 
 var tile_test_flags : int = 0
 
+var total_spawns : int = 0 : 
+	get = _get_total_spawns
 
 func find_path(from : Vector2, to : Vector2) -> PackedVector2Array:
 	return astar_grid.get_point_path(world_position_to_grid(from), world_position_to_grid(to), true)
@@ -218,17 +220,6 @@ func _exit_tree() -> void:
 	GameSignals.game_stop.emit()
 
 
-#func _draw() -> void:
-	#var top_left_corner : Vector2 = Vector2(astar_grid.region.position.x, astar_grid.region.position.y) * Vector2(cell_size)
-	#var top_right_corner : Vector2 = Vector2(astar_grid.region.end.x, astar_grid.region.position.y) * Vector2(cell_size)
-	#var bottom_right_corner : Vector2 = Vector2(astar_grid.region.end.x, astar_grid.region.end.y) * Vector2(cell_size)
-	#var bottom_left_corner : Vector2 = Vector2(astar_grid.region.position.x, astar_grid.region.end.y) * Vector2(cell_size)
-	#draw_line(top_left_corner, top_right_corner, Color.CHOCOLATE)
-	#draw_line(top_right_corner, bottom_right_corner, Color.CHOCOLATE)
-	#draw_line(bottom_right_corner, bottom_left_corner, Color.CHOCOLATE)
-	#draw_line(bottom_left_corner, top_left_corner, Color.CHOCOLATE)
-
-
 func _on_enemy_spawned(enemy : Enemy) -> void:
 	all_enemies.append(enemy)
 	existing_enemies.append(enemy)
@@ -255,7 +246,7 @@ func _on_building_erase(building : Building) -> void:
 
 
 func _check_level_end_conditions() -> void:
-	if existing_enemies.is_empty() and total_spawns >= all_enemies.size() and player_stats.is_alive:
+	if existing_enemies.is_empty() and player_stats.is_alive and all_enemies.size() >= total_spawns:
 		GameSignals.level_completed.emit(self)
 
 
@@ -279,3 +270,13 @@ func _get_unit_selection() -> void:
 			unit_selection = get_node("UnitSelection")
 		else:
 			unit_selection = ResourceLoader.load(PATH_TO_UNIT_SELECTION_SCENE).instantiate()
+
+
+func _get_total_spawns() -> int:
+	if total_spawns > 0:
+		return total_spawns
+	
+	var spawners : Array[Node] = get_tree().get_nodes_in_group(GroupNames.SPAWNER)
+	for spawner in spawners:
+		total_spawns += spawner.max_spawns
+	return total_spawns

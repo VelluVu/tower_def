@@ -37,8 +37,6 @@ func launch(_skill_data : SkillData) -> void:
 	nova_animation.track_set_key_value(0,0, 0.01)
 	nova_animation.track_set_key_value(0, nova_animation.track_find_key(0, skill_data.active_time, Animation.FIND_MODE_EXACT), skill_data.max_range)
 	
-	print(name, " ", nova_animation.track_get_key_value(0,0), " ", nova_animation.track_get_key_value(0,1))
-	
 	activate()
 	animation_player.play(animation_name)
 	emitter.start(skill_data.max_range, skill_data.active_time)
@@ -88,7 +86,6 @@ func _deactivate() -> void:
 func _on_enemy_hit(area_hit : Area2D) -> void:
 	#print(name, " hits ", area_hit.actor.name)
 	area_hit.actor.take_damage(skill_data.damage_data)
-	skill_data.damage_data.source.dealt_damage(area_hit.actor, skill_data.damage_data)
 
 
 func _on_time_scale_change(time_scale : float) -> void:

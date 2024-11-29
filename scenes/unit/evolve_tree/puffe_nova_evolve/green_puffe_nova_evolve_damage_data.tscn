@@ -5,9 +5,9 @@
 
 [node name="GreenPuffeBolterEvolveDamageData" type="Node"]
 script = ExtResource("1_tx3xo")
-damage_type = 3
+damage_type = 8
 
 [node name="OvertimeEffectData" type="Node" parent="."]
 script = ExtResource("2_mj0il")
-max_count = 2
-damage_type = 3
+tick_damage = 0.0
+damage_type = 8

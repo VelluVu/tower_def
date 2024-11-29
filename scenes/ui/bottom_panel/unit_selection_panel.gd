@@ -4,13 +4,27 @@ extends Panel
 
 @onready var unit_info_grid_container : GridContainer = $BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer
 @onready var unit_icon : TextureRect = $BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitIcon
-@onready var name_value : Label = $BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/InfoField/Value
-@onready var health_value : Label = $BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/InfoField2/Value
-@onready var damage_value : Label = $BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/InfoField3/Value
-@onready var price_value : Label = $BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/InfoField4/Value
+@onready var name_value : Label = $BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/Name/Value
 @onready var sell_button : Button = $BackgroundImage/HBoxContainer/ButtonPanel/MarginContainer/SellButton
 @onready var upgrade_panel : UpgradePanel = $BackgroundImage/HBoxContainer/UpgradePanel
 
+var horizontal_stat_fields : Array[HorizontalStatField] :
+	get:
+		if not horizontal_stat_fields.is_empty():
+			return horizontal_stat_fields
+		for child in unit_info_grid_container.get_children():
+			if child is HorizontalStatField:
+				horizontal_stat_fields.append(child)
+		return horizontal_stat_fields
+
+var listed_stat_enums : Array[Utils.StatType] = [
+	Utils.StatType.Health, 
+	Utils.StatType.Damage, 
+	Utils.StatType.AttackSpeed, 
+	Utils.StatType.CriticalChance, 
+	Utils.StatType.CriticalMultiplier, 
+	Utils.StatType.AttackRange, 
+	Utils.StatType.Price]
 
 
 func _ready():
@@ -21,37 +35,29 @@ func _ready():
 	UISignals.deselected_unit.connect(_on_unit_deselected)
 
 
-func _on_unit_selected(unit_name : String, stats : Stats, icon : Texture2D, _is_building : bool = false, building_data : BuildingData = null):
+func _on_unit_selected(unit_name : String, actor_stats : Stats, main_skill : Skill, icon : Texture2D, _is_building : bool = false):
 	unit_info_grid_container.show()
 	unit_icon.show()
 	unit_icon.texture = icon
 	name_value.text = unit_name
-	health_value.text = str(stats.get_stat_value(Utils.StatType.Health)) + "/" + str(stats.get_stat_value(Utils.StatType.MaxHealth))
-	damage_value.text = str(stats.get_stat_value(Utils.StatType.Damage))
-	price_value.text = str(stats.get_stat_value(Utils.StatType.Price))
 	
-	if not _is_building:
-		return
+	var index : int = 0
+	for field in horizontal_stat_fields:
+		field.set_field(listed_stat_enums[index],actor_stats, main_skill)
+		index += 1
+		
+	sell_button.visible = _is_building
 
-	sell_button.show()
-	upgrade_panel.initialize_upgrade_options(building_data)
 
-
-
-func _on_unit_deselected(_unit_name : String, _stats : Stats, _icon : Texture2D, _is_building : bool = false, _building_data : BuildingData = null):
+func _on_unit_deselected():
 	unit_icon.texture = null
 	name_value.text = "jesus?"
-	health_value.text = "0/0"
-	damage_value.text = "0"
-	price_value.text = "0"
+	#nulls the stat fields
+	for field in horizontal_stat_fields:
+		field.set_field()
 	unit_info_grid_container.hide()
 	unit_icon.hide()
-	
-	if not _is_building:
-		return
-	
-	upgrade_panel.hide()
-	sell_button.hide()
+	sell_button.visible = false
 
 
 func _on_sell_button_pressed() -> void:

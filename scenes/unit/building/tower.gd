@@ -9,6 +9,9 @@ const RANGE_AREA_OBJECT_NULL_ERROR_MESSAGE : String = "NO RANGE AREA ON TOWER, U
 
 var targets : Array[Node2D]
 var target : Node2D = null
+var radius : float :
+	get:
+		return stats.get_range_in_tiles() + skill.stats.get_range_in_tiles()
 
 var has_target : bool :
 	get:
@@ -25,7 +28,7 @@ var behaviour_tree : BeehaveTree :
 
 func _ready() -> void:
 	super()
-	area_shape.shape.radius = stats.get_range_in_tiles()
+	area_shape.shape.radius = radius
 	stats.get_stat(Utils.StatType.AttackRange).changed.connect(_on_attack_range_stat_changed)
 	GameSignals.enemy_destroyed.connect(_on_enemy_destroyed)
 	
@@ -60,7 +63,7 @@ func _on_range_area_body_exited(body: Node2D) -> void:
 
 func _on_attack_range_stat_changed(_stat : Stat) -> void:
 	print(_stat.name, " changed to ", str(_stat.value))
-	area_shape.shape.radius = Utils.TILE_SIZE * _stat.value
+	area_shape.shape.radius = radius
 
 
 func get_first_target() -> Node2D:

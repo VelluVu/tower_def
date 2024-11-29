@@ -5,13 +5,25 @@ extends Node2D
 @onready var cast_timer : CustomTimer = $SkillStateTimers/CastTimer
 @onready var cooldown_timer : CustomTimer = $SkillStateTimers/CooldownTimer
 @onready var active_timer : CustomTimer = $SkillStateTimers/ActiveTimer
+
 @onready var damage_data : DamageData = $DamageData :
 	get = _get_damage_data
 
+@onready var stats : Stats = $Stats :
+	get:
+		if stats == null:
+			for child in get_children():
+				if child is Stats:
+					stats = child
+		return stats
+
+@export var skill_type : Utils.SkillType = Utils.SkillType.Projectile
+@export var skill_name : String = "Skill"
 @export var is_continuous : bool = false
 @export var base_cast_time : float = 0.0
 @export var base_active_time : float = 0.0
 @export var base_cooldown : float = 2.0
+
 @export var actor : Node :
 	get:
 		if actor == null:
@@ -34,7 +46,10 @@ var is_time_altered : bool = false :
 
 var total_duration : float :
 	get:
-		return base_cast_time + base_active_time
+		return cast_timer.base_wait_time + active_timer.base_wait_time
+
+var attack_speed : float :
+	get = _get_attack_speed
 
 
 func use(_target) -> void:
@@ -112,14 +127,41 @@ func _ready() -> void:
 	cast_timer.timeout.connect(_on_cast_finished)
 	cooldown_timer.timeout.connect(_on_cooldown_end)
 	active_timer.timeout.connect(_on_active_end)
+	stats.stat_changed.connect(_on_skill_stat_changed)
+	actor.stats.stat_changed.connect(_on_actor_stat_changed)
 	GameSignals.time_scale_change.connect(_on_time_scale_change)
 	
-	#alternat these with actor speed scale?
-	cast_timer.base_wait_time = base_cast_time
-	cooldown_timer.base_wait_time = base_cooldown
-	active_timer.base_wait_time = base_active_time
+	cast_timer.unscaled_base_value = base_cast_time
+	cooldown_timer.unscaled_base_value = base_cooldown
+	active_timer.unscaled_base_value = base_active_time 
 	
 	_on_time_scale_change(Utils.game_control.time_scale)
+
+
+#add existing weapon/element type modifiers when new skill is provided runtime
+#func add_modifiers(modifiers : Array[ModifierData]) -> void:
+#	for modifier in modifiers:
+#		diipadaapa
+
+
+func _on_skill_stat_changed(stat : Stat) -> void:
+	if stat.type == Utils.StatType.AttackSpeed:
+		var attack_speed_stat_value : float = actor.stats.get_stat_value(Utils.StatType.AttackSpeed) + stat.value
+		cooldown_timer.scale_wait_time(attack_speed_stat_value)
+		cast_timer.scale_wait_time(attack_speed_stat_value)
+		
+	if stat.type == Utils.StatType.ActiveDuration:
+		active_timer.scale_wait_time(actor.stats.get_stat_value(Utils.StatType.ActiveDuration) + stat.value)
+
+
+func _on_actor_stat_changed(stat : Stat) -> void:
+	if stat.type == Utils.StatType.AttackSpeed:
+		var attack_speed_stat : float = stats.get_stat_value(Utils.StatType.AttackSpeed) + stat.value
+		cooldown_timer.scale_wait_time(attack_speed_stat)
+		cast_timer.scale_wait_time(attack_speed_stat)
+	
+	if stat.type == Utils.StatType.ActiveDuration:
+		active_timer.scale_wait_time(stats.get_stat_value(Utils.StatType.ActiveDuration) + stat.value)
 
 
 func _on_cast_finished() -> void:
@@ -190,13 +232,22 @@ func _set_target(new_target : Node2D) -> void:
 
 func _get_damage_data() -> DamageData:
 	if damage_data == null:
-		for child in get_children():
-			if child == DamageData:
-				damage_data = child
+		damage_data = $DamageData
 	
+	#Optimization, don't create duplicate on every get, create only when needed
 	var _damage_data : DamageData = damage_data.duplicate()
-	#add actor stats
 	_damage_data.source = actor
-	_damage_data.damage += actor.stats.get_stat_value(Utils.StatType.Damage)
-	_damage_data.calculate_critical()
+	_damage_data.damage = actor.stats.get_stat_value(Utils.StatType.Damage) + stats.get_stat_value(Utils.StatType.Damage)
+	var random_f : float = randf()
+	var critical_chance : float = actor.stats.get_stat_value(Utils.StatType.CriticalChance) + stats.get_stat_value(Utils.StatType.CriticalChance)
+	_damage_data.is_critical = random_f < critical_chance
+	_damage_data.damage = round((actor.stats.get_stat_value(Utils.StatType.CriticalMultiplier) + stats.get_stat_value(Utils.StatType.CriticalMultiplier)) * _damage_data.damage) if _damage_data.is_critical else _damage_data.damage
+	
+	for effect_data in _damage_data.overtime_effect_datas:
+		effect_data.is_critical = _damage_data.is_critical
+		
 	return _damage_data
+
+
+func _get_attack_speed() -> float:
+	return (cast_timer.wait_time + cooldown_timer.wait_time)

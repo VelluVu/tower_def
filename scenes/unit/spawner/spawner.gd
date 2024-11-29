@@ -16,22 +16,22 @@ const NO_SPAWNABLE_SCENE_WARNING : String = " There are no spawnable scene!"
 @export var end_point : Marker2D
 
 var current_spawn_count : int = 0
-var level : Level = null
 
 
 func _ready() -> void:
-	if start_from_timer:
-		spawn_start_delay_timer.start()
+	if not is_in_group(GroupNames.SPAWNER):
+		add_to_group(GroupNames.SPAWNER)
 	
 	spawn_interval_timer.wait_time = spawn_interval
 	spawn_start_delay_timer.wait_time = start_spawn_delay_time
 	spawn_interval_timer.timeout.connect(_on_spawn_interval_tick)
 	spawn_start_delay_timer.timeout.connect(_on_spawn_delay_finished)
 	
-	if level == null:
-		level = get_parent()
+	if start_from_timer:
+		spawn_start_delay_timer.start()
+		return
 	
-	level.total_spawns += max_spawns
+	spawn_interval_timer.start()
 
 
 func _on_spawn_delay_finished() -> void:
@@ -50,7 +50,7 @@ func _on_spawn_interval_tick() -> void:
 	var spawn = spawnable_packed_scene.instantiate()
 	
 	if spawn is Enemy:
-		spawn.inject_objects(level, end_point)
+		spawn.end_point = end_point
 		
 	add_child(spawn)
 	current_spawn_count += 1

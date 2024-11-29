@@ -1,8 +1,9 @@
-[gd_scene load_steps=56 format=3 uid="uid://bhmw5jig6ecq1"]
+[gd_scene load_steps=63 format=3 uid="uid://bhmw5jig6ecq1"]
 
 [ext_resource type="Script" path="res://scenes/unit/building/tower.gd" id="1_wwpqv"]
 [ext_resource type="PackedScene" uid="uid://crbx1w230gw8" path="res://scenes/unit/skills/launch_projectile.tscn" id="3_8jepy"]
 [ext_resource type="Material" uid="uid://c3sja1ms0jrnf" path="res://assets/shaders/shader_materials/building_hit_shader_material.tres" id="3_ev5ok"]
+[ext_resource type="Texture2D" uid="uid://cw3b3xwravgoe" path="res://assets/art/units/evolve_glow.png" id="3_oxu88"]
 [ext_resource type="Texture2D" uid="uid://bau620mvy8fxq" path="res://assets/art/units/building/puffe/puffe.png" id="4_04kgf"]
 [ext_resource type="Script" path="res://scenes/unit/building/range_area.gd" id="5_5p6tn"]
 [ext_resource type="PackedScene" uid="uid://88hwq47f7r6d" path="res://scenes/unit/behaviour_trees/basic_tower_behaviour_tree/basic_tower_bt.tscn" id="5_6ycpu"]
@@ -27,6 +28,7 @@
 [ext_resource type="PackedScene" uid="uid://jxr2ybiww67g" path="res://scenes/unit/skills/projectiles/homing_firebolt.tscn" id="21_t17ii"]
 [ext_resource type="PackedScene" uid="uid://cy7jekug1i824" path="res://scenes/unit/evolve_tree/puffe_bolter_evolve/red_puffe_bolter.tscn" id="22_ll5c1"]
 [ext_resource type="PackedScene" uid="uid://hgbdb1jyi6v" path="res://scenes/unit/evolve_tree/puffe_bolter_evolve/red_puffe_bolter_evolve_damage_data.tscn" id="23_pbrrj"]
+[ext_resource type="Script" path="res://scenes/unit/stats/modifier.gd" id="24_v32av"]
 [ext_resource type="PackedScene" uid="uid://bfmqupw2s7jym" path="res://scenes/unit/evolve_tree/puffe_bolter_evolve/blue_puffe_bolter.tscn" id="26_alotc"]
 [ext_resource type="PackedScene" uid="uid://k4mkywtd06go" path="res://scenes/unit/skills/projectiles/homing_frost_bolt.tscn" id="26_k77d7"]
 [ext_resource type="Texture2D" uid="uid://mhgkc5urkqee" path="res://assets/art/units/building/puffe/puffe_bolter/blue_puffe_bolter_icon.png" id="26_nwa4t"]
@@ -40,6 +42,42 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jxaqe"]
 size = Vector2(16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_usbqs"]
+atlas = ExtResource("3_oxu88")
+region = Rect2(0, 0, 32, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f8uaa"]
+atlas = ExtResource("3_oxu88")
+region = Rect2(32, 0, 32, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qlxsh"]
+atlas = ExtResource("3_oxu88")
+region = Rect2(0, 28, 32, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4vmd5"]
+atlas = ExtResource("3_oxu88")
+region = Rect2(32, 28, 32, 28)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xjm1p"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_usbqs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f8uaa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qlxsh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4vmd5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gvblh"]
 atlas = ExtResource("4_04kgf")
@@ -197,6 +235,26 @@ icon = ExtResource("19_tlf38")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_jxaqe")
 
+[node name="EvolveGlow" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -11)
+sprite_frames = SubResource("SpriteFrames_xjm1p")
+autoplay = "default"
+script = ExtResource("5_rj1sk")
+metadata/_aseprite_wizard_config_ = {
+"layer": "",
+"o_ex_p": "",
+"o_folder": "res://assets/art/units",
+"o_name": "",
+"only_visible": false,
+"slice": "",
+"source": "res://assets/art/units/evolve_glow.aseprite"
+}
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true
+}
+metadata/_aseprite_wizard_source_file_hash_ = "fbdbd2bbea6178ca26a0b94d13795d3e"
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 material = ExtResource("3_ev5ok")
@@ -258,11 +316,43 @@ shape = SubResource("CircleShape2D_nklau")
 [node name="LaunchProjectile" parent="." instance=ExtResource("3_8jepy")]
 position = Vector2(2, -10)
 projectile_scene = ExtResource("9_elqq4")
+skill_name = "Bolt"
 
 [node name="DamageData" type="Node" parent="LaunchProjectile"]
 script = ExtResource("10_mch2d")
-damage = 2.0
-critical_chance = 0.1
+
+[node name="Stats" type="Node" parent="LaunchProjectile"]
+script = ExtResource("16_uqw4x")
+
+[node name="Damage" type="Node" parent="LaunchProjectile/Stats"]
+script = ExtResource("17_m7bv2")
+base_value = 10.0
+value = 10.0
+type = 2
+
+[node name="AttackRange" type="Node" parent="LaunchProjectile/Stats"]
+script = ExtResource("17_m7bv2")
+base_value = 3.0
+value = 3.0
+type = 5
+
+[node name="AttackSpeed" type="Node" parent="LaunchProjectile/Stats"]
+script = ExtResource("17_m7bv2")
+type = 6
+
+[node name="CriticalChance" type="Node" parent="LaunchProjectile/Stats"]
+script = ExtResource("17_m7bv2")
+base_value = 0.1
+value = 0.1
+type = 7
+
+[node name="CriticalMultiplier" type="Node" parent="LaunchProjectile/Stats"]
+script = ExtResource("17_m7bv2")
+type = 8
+
+[node name="ActiveDuration" type="Node" parent="LaunchProjectile/Stats"]
+script = ExtResource("17_m7bv2")
+type = 9
 
 [node name="BasicTowerBt" parent="." instance=ExtResource("5_6ycpu")]
 
@@ -282,44 +372,61 @@ script = ExtResource("13_1yoqa")
 [node name="Stats" type="Node" parent="."]
 script = ExtResource("16_uqw4x")
 
-[node name="MaxHealthStat" type="Node" parent="Stats"]
+[node name="MaxHealth" type="Node" parent="Stats"]
 script = ExtResource("17_m7bv2")
 base_value = 5.0
 value = 5.0
 type = 1
 
-[node name="HealthStat" type="Node" parent="Stats"]
+[node name="Health" type="Node" parent="Stats"]
 script = ExtResource("17_m7bv2")
 base_value = 5.0
 value = 5.0
 
-[node name="DamageStat" type="Node" parent="Stats"]
+[node name="Damage" type="Node" parent="Stats"]
 script = ExtResource("17_m7bv2")
+base_value = 10.0
+value = 10.0
 type = 2
 
-[node name="PriceStat" type="Node" parent="Stats"]
+[node name="Price" type="Node" parent="Stats"]
 script = ExtResource("17_m7bv2")
-base_value = 1.0
-value = 1.0
 type = 3
 
-[node name="SpeedStat" type="Node" parent="Stats"]
+[node name="Speed" type="Node" parent="Stats"]
 script = ExtResource("17_m7bv2")
 base_value = 16.0
 value = 16.0
 type = 4
 
-[node name="AttackRangeStat" type="Node" parent="Stats"]
+[node name="AttackRange" type="Node" parent="Stats"]
 script = ExtResource("17_m7bv2")
-base_value = 3.0
-value = 3.0
 type = 5
+
+[node name="AttackSpeed" type="Node" parent="Stats"]
+script = ExtResource("17_m7bv2")
+type = 6
+
+[node name="CriticalChance" type="Node" parent="Stats"]
+script = ExtResource("17_m7bv2")
+type = 7
+
+[node name="CriticalMultiplier" type="Node" parent="Stats"]
+script = ExtResource("17_m7bv2")
+base_value = 2.0
+value = 2.0
+type = 8
+
+[node name="ActiveDuration" type="Node" parent="Stats"]
+script = ExtResource("17_m7bv2")
+type = 9
 
 [node name="EvolveTree" type="Node" parent="."]
 script = ExtResource("16_l8ube")
 
 [node name="EvolveBranch" type="Node" parent="EvolveTree"]
 script = ExtResource("17_bv0np")
+evolve_level = 1
 
 [node name="NormalElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch"]
 script = ExtResource("19_wcrsl")
@@ -328,8 +435,28 @@ new_damage_data_scene = ExtResource("20_ccteo")
 icon = ExtResource("21_eqv60")
 info = "Normal"
 
-[node name="FireElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch"]
+[node name="DamageModifier" type="Node" parent="EvolveTree/EvolveBranch/NormalElementEvolveLeaf"]
+script = ExtResource("24_v32av")
+type = 0
+stat = 2
+value = 1.0
+
+[node name="CriticalChanceModifier" type="Node" parent="EvolveTree/EvolveBranch/NormalElementEvolveLeaf"]
+script = ExtResource("24_v32av")
+type = 0
+stat = 7
+
+[node name="EvolveBranch4" type="Node" parent="EvolveTree/EvolveBranch"]
+script = ExtResource("17_bv0np")
+evolve_level = 4
+
+[node name="EvolveBranch2" type="Node" parent="EvolveTree"]
+script = ExtResource("17_bv0np")
+evolve_level = 1
+
+[node name="FireElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch2"]
 script = ExtResource("19_wcrsl")
+evolve_element = 2
 selected_icon = ExtResource("20_qaoyh")
 new_projectile_scene = ExtResource("21_t17ii")
 new_animated_sprite_scene = ExtResource("22_ll5c1")
@@ -337,8 +464,23 @@ new_damage_data_scene = ExtResource("23_pbrrj")
 icon = ExtResource("19_ubw0q")
 info = "Fire"
 
-[node name="FrostElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch"]
+[node name="DamageFlatModifier" type="Node" parent="EvolveTree/EvolveBranch2/FireElementEvolveLeaf"]
+script = ExtResource("24_v32av")
+type = 0
+stat = 2
+value = 1.0
+
+[node name="EvolveBranch5" type="Node" parent="EvolveTree/EvolveBranch2"]
+script = ExtResource("17_bv0np")
+evolve_level = 4
+
+[node name="EvolveBranch3" type="Node" parent="EvolveTree"]
+script = ExtResource("17_bv0np")
+evolve_level = 1
+
+[node name="FrostElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch3"]
 script = ExtResource("19_wcrsl")
+evolve_element = 4
 selected_icon = ExtResource("26_nwa4t")
 new_projectile_scene = ExtResource("26_k77d7")
 new_animated_sprite_scene = ExtResource("26_alotc")
@@ -346,14 +488,27 @@ new_damage_data_scene = ExtResource("27_pf0qb")
 icon = ExtResource("31_t8h32")
 info = "Frost"
 
-[node name="PoisonElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch"]
+[node name="EvolveBranch6" type="Node" parent="EvolveTree/EvolveBranch3"]
+script = ExtResource("17_bv0np")
+evolve_level = 4
+
+[node name="EvolveBranch4" type="Node" parent="EvolveTree"]
+script = ExtResource("17_bv0np")
+evolve_level = 1
+
+[node name="PoisonElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch4"]
 script = ExtResource("19_wcrsl")
+evolve_element = 8
 selected_icon = ExtResource("29_pjst3")
 new_projectile_scene = ExtResource("29_bqugu")
 new_animated_sprite_scene = ExtResource("28_4x4pp")
 new_damage_data_scene = ExtResource("29_ajupy")
 icon = ExtResource("36_5eit6")
 info = "Poison"
+
+[node name="EvolveBranch7" type="Node" parent="EvolveTree/EvolveBranch4"]
+script = ExtResource("17_bv0np")
+evolve_level = 4
 
 [connection signal="body_entered" from="RangeArea" to="." method="_on_range_area_body_entered"]
 [connection signal="body_exited" from="RangeArea" to="." method="_on_range_area_body_exited"]

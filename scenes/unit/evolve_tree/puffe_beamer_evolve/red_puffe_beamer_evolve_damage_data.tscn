@@ -5,12 +5,13 @@
 
 [node name="RedPuffeBeamerEvolveDamageData" type="Node"]
 script = ExtResource("1_np73t")
-damage_type = 1
+damage_type = 2
 
 [node name="OvertimeEffectData" type="Node" parent="."]
 script = ExtResource("2_rlv5h")
 max_count = 4
+tick_damage = 0.0
 tick_interval = 5.0
 chance_to_apply = 0.1
-damage_type = 1
+damage_type = 2
 effectType = 1

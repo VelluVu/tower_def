@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="EvolveResource" load_steps=3 format=3 uid="uid://7vy2fuql53hw"]
+
+[ext_resource type="Texture2D" uid="uid://d1s2xw53fx6au" path="res://icon.svg" id="1_wdi1p"]
+[ext_resource type="Script" path="res://scenes/unit/evolve_tree/evolve_resource.gd" id="2_cj2l6"]
+
+[resource]
+script = ExtResource("2_cj2l6")
+evolve_icon = ExtResource("1_wdi1p")
+evolve_level_reguirement = 0
+is_skill_modifier = true
+skill_type = 4
+skill_name = "Skill"
+elements = 15
+modify_stat_type = 2
+modify_type = 1
+modify_Value = 0.15
+evolve_name = "Area Damage"

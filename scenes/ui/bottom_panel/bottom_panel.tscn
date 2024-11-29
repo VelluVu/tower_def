@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cfky3fr2vue8u"]
+[gd_scene load_steps=10 format=3 uid="uid://cfky3fr2vue8u"]
 
 [ext_resource type="Script" path="res://scenes/ui/bottom_panel/bottom_panel.gd" id="1_4q4xm"]
 [ext_resource type="Script" path="res://scenes/ui/bottom_panel/building_panel.gd" id="2_mh1um"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://d1s2xw53fx6au" path="res://icon.svg" id="4_y8rhs"]
 [ext_resource type="Script" path="res://scenes/ui/bottom_panel/unit_selection_panel.gd" id="5_l2uok"]
 [ext_resource type="Script" path="res://scenes/ui/bottom_panel/upgrade_panel.gd" id="6_02jxa"]
+[ext_resource type="Script" path="res://scenes/ui/bottom_panel/horizontal_stat_field.gd" id="6_or30t"]
 [ext_resource type="Theme" uid="uid://tqqtfp7oe2qf" path="res://assets/ui_themes/menu_ui_button_theme.tres" id="6_qr8g2"]
 [ext_resource type="Script" path="res://scenes/ui/bottom_panel/upgrade_option.gd" id="7_l5nxo"]
 
@@ -482,64 +483,135 @@ theme_override_constants/h_separation = 8
 theme_override_constants/v_separation = 0
 columns = 2
 
-[node name="InfoField" type="HBoxContainer" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer"]
+[node name="Name" type="HBoxContainer" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 8
 
-[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/InfoField"]
+[node name="StatName" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/Name"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 11
-text = "Name"
+text = "Name:"
 
-[node name="Value" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/InfoField"]
+[node name="Value" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/Name"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 11
 text = "..."
 
-[node name="InfoField2" type="HBoxContainer" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer"]
+[node name="HealthHorizontalStatField" type="HBoxContainer" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 8
+script = ExtResource("6_or30t")
 
-[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/InfoField2"]
+[node name="StatName" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/HealthHorizontalStatField"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 11
 text = "Health"
 
-[node name="Value" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/InfoField2"]
+[node name="Value" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/HealthHorizontalStatField"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 11
 text = "0
 "
 
-[node name="InfoField3" type="HBoxContainer" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer"]
+[node name="DamageHorizontalStatField" type="HBoxContainer" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 8
+script = ExtResource("6_or30t")
 
-[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/InfoField3"]
+[node name="StatName" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/DamageHorizontalStatField"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 11
 text = "Damage"
 
-[node name="Value" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/InfoField3"]
+[node name="Value" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/DamageHorizontalStatField"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 11
 text = "0
 "
 
-[node name="InfoField4" type="HBoxContainer" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer"]
+[node name="AttackSpeedHorizontalStatField" type="HBoxContainer" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 8
+script = ExtResource("6_or30t")
 
-[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/InfoField4"]
+[node name="StatName" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/AttackSpeedHorizontalStatField"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "Attack Speed"
+
+[node name="Value" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/AttackSpeedHorizontalStatField"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "0
+"
+
+[node name="CriticalChanceHorizontalStatField" type="HBoxContainer" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+script = ExtResource("6_or30t")
+
+[node name="StatName" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/CriticalChanceHorizontalStatField"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "Critical Chance"
+
+[node name="Value" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/CriticalChanceHorizontalStatField"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "0
+"
+
+[node name="CriticalMultiplierHorizontalStatField" type="HBoxContainer" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+script = ExtResource("6_or30t")
+
+[node name="StatName" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/CriticalMultiplierHorizontalStatField"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "Critical Multiplier"
+
+[node name="Value" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/CriticalMultiplierHorizontalStatField"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "0
+"
+
+[node name="AttackRangeHorizontalStatField" type="HBoxContainer" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+script = ExtResource("6_or30t")
+
+[node name="StatName" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/AttackRangeHorizontalStatField"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "Attack Range"
+
+[node name="Value" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/AttackRangeHorizontalStatField"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "0
+"
+
+[node name="PriceHorizontalStatField" type="HBoxContainer" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+script = ExtResource("6_or30t")
+
+[node name="StatName" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/PriceHorizontalStatField"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 11
 text = "Price"
 
-[node name="Value" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/InfoField4"]
+[node name="Value" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/PriceHorizontalStatField"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 11
 text = "0
@@ -582,6 +654,7 @@ grow_vertical = 2
 size_flags_horizontal = 3
 icon_alignment = 1
 vertical_icon_alignment = 2
+expand_icon = true
 
 [node name="Label" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/UpgradePanel/MarginContainer/UpgradeOptionContainer/UpgradeOption1"]
 layout_mode = 1
@@ -590,8 +663,9 @@ anchor_right = 1.0
 anchor_bottom = 0.359
 offset_bottom = 0.0239983
 grow_horizontal = 2
-text = "asdasd"
+text = "asdas"
 horizontal_alignment = 1
+autowrap_mode = 3
 
 [node name="UpgradeOption2" type="Panel" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/UpgradePanel/MarginContainer/UpgradeOptionContainer"]
 layout_mode = 2
@@ -609,6 +683,7 @@ grow_vertical = 2
 size_flags_horizontal = 3
 icon_alignment = 1
 vertical_icon_alignment = 2
+expand_icon = true
 
 [node name="Label" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/UpgradePanel/MarginContainer/UpgradeOptionContainer/UpgradeOption2"]
 layout_mode = 1
@@ -619,6 +694,7 @@ offset_bottom = 0.0239983
 grow_horizontal = 2
 text = "asdasd"
 horizontal_alignment = 1
+autowrap_mode = 3
 
 [node name="UpgradeOption3" type="Panel" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/UpgradePanel/MarginContainer/UpgradeOptionContainer"]
 layout_mode = 2
@@ -636,6 +712,7 @@ grow_vertical = 2
 size_flags_horizontal = 3
 icon_alignment = 1
 vertical_icon_alignment = 2
+expand_icon = true
 
 [node name="Label" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/UpgradePanel/MarginContainer/UpgradeOptionContainer/UpgradeOption3"]
 layout_mode = 1
@@ -646,6 +723,7 @@ offset_bottom = 0.0239983
 grow_horizontal = 2
 text = "asdasd"
 horizontal_alignment = 1
+autowrap_mode = 3
 
 [node name="UpgradeOption4" type="Panel" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/UpgradePanel/MarginContainer/UpgradeOptionContainer"]
 layout_mode = 2
@@ -663,6 +741,7 @@ grow_vertical = 2
 size_flags_horizontal = 3
 icon_alignment = 1
 vertical_icon_alignment = 2
+expand_icon = true
 
 [node name="Label" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/UpgradePanel/MarginContainer/UpgradeOptionContainer/UpgradeOption4"]
 layout_mode = 1
@@ -673,6 +752,7 @@ offset_bottom = 0.0239983
 grow_horizontal = 2
 text = "adasd"
 horizontal_alignment = 1
+autowrap_mode = 3
 
 [node name="ButtonPanel" type="Panel" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer"]
 custom_minimum_size = Vector2(64, 0)

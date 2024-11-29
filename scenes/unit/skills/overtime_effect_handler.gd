@@ -19,25 +19,41 @@ class OvertimeEffectStack:
 		return actor
 
 var pool : Array[OvertimeEffect]
+var start_overtime_effect_datas : Array[OvertimeEffectData]
 
 
-func handle_overtime_effects(overtime_effect_datas : Array[OvertimeEffectData]) -> void:
+func handle_start_overtime_effects(value : float) -> void:
+	for child in get_children():
+		if child is OvertimeEffectData:
+			start_overtime_effect_datas.append(child)
+	
+	handle_overtime_effects(start_overtime_effect_datas, value)
+
+
+func handle_overtime_effects(overtime_effect_datas : Array[OvertimeEffectData], value : float) -> void:
 	if overtime_effect_datas.is_empty():
 		return
 		
-	for overtime_effect in overtime_effect_datas:
-		if overtime_effect.chance_to_apply >= 1.0:
-			add_overtime_effect(overtime_effect)
+	for overtime_effect_data in overtime_effect_datas:
+		if overtime_effect_data.chance_to_apply >= 1.0:
+			add_overtime_effect(overtime_effect_data, value)
 			continue
-		if randf() < overtime_effect.chance_to_apply:
-			add_overtime_effect(overtime_effect)
+		if randf() < overtime_effect_data.chance_to_apply:
+			add_overtime_effect(overtime_effect_data, value)
 
 
-func add_overtime_effect(overtime_effect_data : OvertimeEffectData) -> void:
+func add_overtime_effect(overtime_effect_data : OvertimeEffectData, value : float) -> void:
+	#this 0.1 == 10% of original damage, if no fixed damage is set
+	if overtime_effect_data.tick_damage == 0.0:
+		overtime_effect_data.tick_damage = value * (-0.1 if overtime_effect_data.is_healing else 0.1)
+	
 	# see if stack,
 	if overtime_effect_data.effectType == Utils.OvertimeEffectType.Stack:
 		# then find the previous overtime from source
 		for child in get_children():
+			if child is not OvertimeEffect:
+				continue
+			
 			#if child is not active
 			if child.is_finished or child.is_reached_max_stack:
 				continue
@@ -49,6 +65,7 @@ func add_overtime_effect(overtime_effect_data : OvertimeEffectData) -> void:
 				#leave function since we added the stack into existing timer
 				return
 	
+	#create new overtime effect
 	var overtime_effect : OvertimeEffect = _get_overtime_effect()
 	overtime_effect.start(overtime_effect_data, actor)
 
@@ -64,6 +81,13 @@ func _get_overtime_effect() -> OvertimeEffect:
 		effect.damage_overtime_finished.connect(_on_overtime_effect_finished)
 	
 	return effect
+
+
+func clear_overtime_effects() -> void:
+	for child in get_children():
+		if child is OvertimeEffect:
+			child.stop()
+			child.queue_free()
 
 
 func _on_overtime_effect_finished(overtime_effect : OvertimeEffect) -> void:

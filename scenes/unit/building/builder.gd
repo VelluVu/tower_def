@@ -242,7 +242,7 @@ func _set_is_placing_building(value : bool) -> void:
 	if is_placing_building:
 		if current_building == null:
 			current_building = buildings[current_building_option_index].scene.instantiate()
-			add_child(current_building)
+			level.add_child(current_building)
 			_move_building_with_cursor()
 	
 	current_building.is_placing = is_placing_building
@@ -279,6 +279,9 @@ func _get_buildings() -> void:
 	var file_names = dir.get_files()
 	
 	for file_name in file_names:
+		if file_name.ends_with(".remap"):
+			file_name = file_name.replace(".remap", "")
+		
 		if not file_name.contains(RESOURCE_ENDING):
 			continue
 		

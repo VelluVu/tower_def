@@ -7,10 +7,15 @@ var building_data : BuildingData = null
 
 
 func _ready() -> void:
-	hide()
+	UISignals.upgrade_options_change.connect(_on_upgrade_options_change)
+	_on_upgrade_options_change(null)
 
 
-func initialize_upgrade_options(_building_data : BuildingData) -> void:
+func _on_upgrade_options_change(_building_data : BuildingData) -> void:
+	change_upgrade_options(_building_data)
+
+
+func change_upgrade_options(_building_data : BuildingData) -> void:
 	if _building_data == null:
 		hide()
 		return

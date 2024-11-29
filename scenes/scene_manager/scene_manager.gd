@@ -166,6 +166,9 @@ func _find_and_append_all_ui_scenes_from_file_names_in_directory_path(file_names
 		return
 	
 	for file_name in file_names:
+		if file_name.ends_with(".remap"):
+			file_name = file_name.replace(".remap", "")
+			
 		var file_path : String = directory_path + SLASH + file_name
 		
 		if not ResourceLoader.exists(file_path):
@@ -199,6 +202,9 @@ func _get_level_packed_scenes_from_project_folder():
 	var level_file_names = dir.get_files()
 	
 	for level_file_name in level_file_names:
+		if level_file_name.ends_with(".remap"):
+			level_file_name = level_file_name.replace(".remap", "")
+			
 		var full_path : String = PATH_TO_LEVEL_FOLDER + SLASH + level_file_name
 		
 		if ResourceLoader.exists(full_path):

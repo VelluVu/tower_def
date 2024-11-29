@@ -32,7 +32,7 @@ func activate() -> void:
 	skill_data.damage_data = damage_data
 	skill_data.target = target
 	skill_data.active_time = active_timer.wait_time
-	skill_data.max_range = actor.stats.get_range_in_tiles()
+	skill_data.max_range = actor.stats.get_range_in_tiles() + stats.get_range_in_tiles()
 	projectile.launch(skill_data)
 	
 	if cast_timer.wait_time == 0:
@@ -69,13 +69,13 @@ func _get_projectile() -> Node2D:
 	
 	if projectile == null:
 		projectile = projectile_scene.instantiate()
+		count += 1
+		projectile.name = actor.name + "'s " + projectile.name + str(count)
 		launched_projectiles.append(projectile)
 	
 	if projectile.get_parent() == null:
 		Utils.game_control.add_child(projectile)
 		
-	count += 1
-	projectile.name = projectile.name + str(count)
 	projectile.global_position = global_position
 	
 	if not projectile.finished.is_connected(_on_projectile_finished):

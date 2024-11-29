@@ -49,7 +49,7 @@ func play_hit_animation() -> void:
 	
 	if hit_animation_player.is_playing():
 		hit_animation_player.stop()
-		
+	
 	hit_animation_player.play("hit")
 
 

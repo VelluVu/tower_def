@@ -16,8 +16,18 @@ const PATH_TO_STAT_RESOURCE : String = "res://scenes/unit/stats/stat_resources/e
 @onready var gore_emitter : GoreEmitter = $GoreEmitter
 @onready var selectable : SelectableUnit = $SelectableUnit
 @onready var pop_up_spot : Node2D = $PopUpSpot
-@onready var overtime_effect_handler : OvertimeEffectHandler = $OvertimeEffectHandler
-@onready var stats : Stats = $Stats
+
+@onready var overtime_effect_handler : OvertimeEffectHandler = $OvertimeEffectHandler :
+	get:
+		if overtime_effect_handler == null:
+			overtime_effect_handler = $OvertimeEffectHandler
+		return overtime_effect_handler
+
+@onready var stats : Stats = $Stats :
+	get:
+		if stats == null:
+			stats = $Stats
+		return stats
 
 @export var icon : Texture2D = null
 
@@ -29,7 +39,6 @@ const PATH_TO_STAT_RESOURCE : String = "res://scenes/unit/stats/stat_resources/e
 					skill = child
 		return skill
 
-
 var beehave_tree : BeehaveTree :
 	get:
 		if beehave_tree == null:
@@ -37,8 +46,6 @@ var beehave_tree : BeehaveTree :
 				if child is BeehaveTree:
 					beehave_tree = child
 		return beehave_tree
-
-
 
 var is_colliding_building : bool = false :
 	get:
@@ -59,10 +66,14 @@ var next_waypoint : Vector2 = Vector2.ZERO
 var collision_body : Node = null
 var end_point : Marker2D = null
 var closest_building : Building = null
-var level : Level = null
 var point_path : PackedVector2Array
 var target : Node = null
 
+var level : Level = null :
+	get:
+		if level == null:
+			level = Utils.game_control.scene_manager.current_level
+		return level
 
 var body_center : Vector2 :
 	get:
@@ -85,18 +96,28 @@ var has_path : bool :
 		return not point_path.is_empty()
 
 
-func inject_objects(_level : Level, _end_point : Marker2D) -> void:
-	level = _level
-	end_point = _end_point
+signal stats_changed() 
+signal selected(is_selected : bool)
 
 
 func take_damage(damage_data : DamageData) -> void:
 	#print(name, " takes damage: ", damage_data.damage)
-	stats.get_stat(Utils.StatType.Health).value -= damage_data.damage
+	if is_dead:
+		return
+	
+	var health : Stat = stats.get_stat(Utils.StatType.Health)
+	var maxHealth : Stat = stats.get_stat(Utils.StatType.MaxHealth)
+	health.value -= damage_data.damage
+	
+	if health.value > maxHealth.value and damage_data.is_healing and not damage_data.is_shielding:
+		health.value = maxHealth.value
+		
 	GameSignals.damage_taken.emit(pop_up_spot.global_position, damage_data)
-	overtime_effect_handler.handle_overtime_effects(damage_data.overtime_effect_datas)
+	overtime_effect_handler.handle_overtime_effects(damage_data.overtime_effect_datas, damage_data.damage)
 	
 	if damage_data.damage > 0.0:
+		if damage_data.source != null:
+			damage_data.source.dealt_damage(self, damage_data)
 		gore_emitter.emit_gore(damage_data)
 		animation_control.play_hit_animation()
 
@@ -146,6 +167,7 @@ func clear_path() -> void:
 
 
 func deactivate() -> void:
+	overtime_effect_handler.clear_overtime_effects()
 	linear_velocity = Vector2.ZERO
 	contact_monitor = false
 	collider.disabled = true
@@ -161,6 +183,7 @@ func reactivate() -> void:
 	hit_box.monitoring = true
 	hit_box.monitorable = true
 	is_deactivated = false
+	overtime_effect_handler.handle_start_overtime_effects(stats.get_stat_value(Utils.StatType.MaxHealth))
 
 
 func die() -> void:
@@ -221,6 +244,7 @@ func _ready() -> void:
 	GameSignals.enemy_spawned.emit(self)
 	GameSignals.time_scale_change.connect(_on_time_scale_change)
 	_on_time_scale_change(Utils.game_control.time_scale)
+	overtime_effect_handler.handle_start_overtime_effects(stats.get_stat_value(Utils.StatType.MaxHealth))
 
 
 func _process(delta: float) -> void:

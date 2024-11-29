@@ -1,7 +1,8 @@
-[gd_scene load_steps=36 format=3 uid="uid://b78nv1og0jf3p"]
+[gd_scene load_steps=45 format=3 uid="uid://b78nv1og0jf3p"]
 
 [ext_resource type="Script" path="res://scenes/unit/building/wall.gd" id="1_kgbnu"]
 [ext_resource type="Texture2D" uid="uid://c5m2tdopql7kr" path="res://assets/art/units/building/wall/wall_icon.png" id="2_0awu8"]
+[ext_resource type="Texture2D" uid="uid://cw3b3xwravgoe" path="res://assets/art/units/evolve_glow.png" id="3_4bole"]
 [ext_resource type="Texture2D" uid="uid://dpyani76dokd0" path="res://assets/art/units/building/wall/wall.png" id="3_esse3"]
 [ext_resource type="Material" uid="uid://c3sja1ms0jrnf" path="res://assets/shaders/shader_materials/building_hit_shader_material.tres" id="3_gn0ww"]
 [ext_resource type="Script" path="res://scenes/unit/animation_control.gd" id="5_dl2w2"]
@@ -13,8 +14,47 @@
 [ext_resource type="Script" path="res://scenes/unit/stats/stat.gd" id="10_7keqx"]
 [ext_resource type="Script" path="res://scenes/unit/evolve_tree/evolve_tree.gd" id="11_0j38t"]
 [ext_resource type="Script" path="res://scenes/unit/evolve_tree/evolve_branch.gd" id="12_ipd6y"]
+[ext_resource type="Script" path="res://scenes/unit/skills/skill.gd" id="15_b5dxh"]
+[ext_resource type="PackedScene" uid="uid://bp7hd4rdex5do" path="res://scenes/unit/skills/skill_state_timers.tscn" id="16_waran"]
+[ext_resource type="Script" path="res://scenes/unit/skills/damage_data.gd" id="17_35ks3"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_4ih23"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_usbqs"]
+atlas = ExtResource("3_4bole")
+region = Rect2(0, 0, 32, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f8uaa"]
+atlas = ExtResource("3_4bole")
+region = Rect2(32, 0, 32, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qlxsh"]
+atlas = ExtResource("3_4bole")
+region = Rect2(0, 28, 32, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4vmd5"]
+atlas = ExtResource("3_4bole")
+region = Rect2(32, 28, 32, 28)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jfwiu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_usbqs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f8uaa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qlxsh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4vmd5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8pj8t"]
 size = Vector2(16, 16)
@@ -251,13 +291,34 @@ _data = {
 "hit": SubResource("Animation_ljeel")
 }
 
-[node name="Wall" type="StaticBody2D"]
+[node name="Wall" type="StaticBody2D" node_paths=PackedStringArray("skill")]
 collision_layer = 4
 collision_mask = 2
 physics_material_override = SubResource("PhysicsMaterial_4ih23")
 script = ExtResource("1_kgbnu")
 closest_point_distance_limit = 1.0
+skill = NodePath("Skill")
 icon = ExtResource("2_0awu8")
+
+[node name="EvolveGlow" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -3)
+sprite_frames = SubResource("SpriteFrames_jfwiu")
+autoplay = "default"
+script = ExtResource("5_dl2w2")
+metadata/_aseprite_wizard_config_ = {
+"layer": "",
+"o_ex_p": "",
+"o_folder": "res://assets/art/units",
+"o_name": "",
+"only_visible": false,
+"slice": "",
+"source": "res://assets/art/units/evolve_glow.aseprite"
+}
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true
+}
+metadata/_aseprite_wizard_source_file_hash_ = "fbdbd2bbea6178ca26a0b94d13795d3e"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_8pj8t")
@@ -303,41 +364,87 @@ script = ExtResource("8_4v5nb")
 [node name="Stats" type="Node" parent="."]
 script = ExtResource("9_llimg")
 
-[node name="MaxHealthStat" type="Node" parent="Stats"]
+[node name="MaxHealth" type="Node" parent="Stats"]
 script = ExtResource("10_7keqx")
 base_value = 30.0
 value = 30.0
 type = 1
 
-[node name="HealthStat" type="Node" parent="Stats"]
+[node name="Health" type="Node" parent="Stats"]
 script = ExtResource("10_7keqx")
 base_value = 30.0
 value = 30.0
 
-[node name="DamageStat" type="Node" parent="Stats"]
+[node name="Damage" type="Node" parent="Stats"]
 script = ExtResource("10_7keqx")
 type = 2
 
-[node name="PriceStat" type="Node" parent="Stats"]
+[node name="Price" type="Node" parent="Stats"]
 script = ExtResource("10_7keqx")
-base_value = 1.0
-value = 1.0
 type = 3
 
-[node name="SpeedStat" type="Node" parent="Stats"]
+[node name="Speed" type="Node" parent="Stats"]
 script = ExtResource("10_7keqx")
-base_value = 16.0
-value = 16.0
 type = 4
 
-[node name="AttackRangeStat" type="Node" parent="Stats"]
+[node name="AttackRange" type="Node" parent="Stats"]
 script = ExtResource("10_7keqx")
-base_value = 3.0
-value = 3.0
 type = 5
+
+[node name="AttackSpeed" type="Node" parent="Stats"]
+script = ExtResource("10_7keqx")
+type = 6
+
+[node name="CriticalChance" type="Node" parent="Stats"]
+script = ExtResource("10_7keqx")
+type = 7
+
+[node name="CriticalMultiplier" type="Node" parent="Stats"]
+script = ExtResource("10_7keqx")
+type = 8
+
+[node name="ActiveDuration" type="Node" parent="Stats"]
+script = ExtResource("10_7keqx")
+type = 9
 
 [node name="EvolveTree" type="Node" parent="."]
 script = ExtResource("11_0j38t")
 
 [node name="EvolveBranch" type="Node" parent="EvolveTree"]
 script = ExtResource("12_ipd6y")
+
+[node name="Skill" type="Node2D" parent="."]
+script = ExtResource("15_b5dxh")
+skill_type = 1
+
+[node name="Stats" type="Node" parent="Skill"]
+script = ExtResource("9_llimg")
+
+[node name="Damage" type="Node" parent="Skill/Stats"]
+script = ExtResource("10_7keqx")
+type = 2
+
+[node name="AttackRange" type="Node" parent="Skill/Stats"]
+script = ExtResource("10_7keqx")
+type = 5
+
+[node name="AttackSpeed" type="Node" parent="Skill/Stats"]
+script = ExtResource("10_7keqx")
+type = 6
+
+[node name="CriticalChance" type="Node" parent="Skill/Stats"]
+script = ExtResource("10_7keqx")
+type = 7
+
+[node name="CriticalMultiplier" type="Node" parent="Skill/Stats"]
+script = ExtResource("10_7keqx")
+type = 8
+
+[node name="ActiveDuration" type="Node" parent="Skill/Stats"]
+script = ExtResource("10_7keqx")
+type = 9
+
+[node name="SkillStateTimers" parent="Skill" instance=ExtResource("16_waran")]
+
+[node name="DamageData" type="Node" parent="Skill"]
+script = ExtResource("17_35ks3")

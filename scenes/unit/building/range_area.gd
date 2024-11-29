@@ -10,17 +10,26 @@ var actor : Node2D :
 
 
 func _ready() -> void:
-	GameSignals.deselected_unit.connect(_on_selected)
-	GameSignals.selected_unit.connect(_on_selected)
+	actor.selected.connect(_on_selected)
 
 
-func _on_selected(unit : Node2D) -> void:
-	if unit != actor:
-		return
-		
+func _on_stats_changed() -> void:
 	queue_redraw()
+
+
+func _on_selected(is_selected : bool) -> void:
+	queue_redraw()
+	
+	if not is_selected:
+		if actor.stats_changed.is_connected(_on_stats_changed):
+			actor.stats_changed.disconnect(_on_stats_changed)
+		return
+	
+	if not actor.stats_changed.is_connected(_on_stats_changed):
+		actor.stats_changed.connect(_on_stats_changed)
+	
 
 
 func _draw() -> void:
 	if actor.selectable.is_selected:
-		draw_circle(Vector2(0,0), actor.stats.get_range_in_tiles(), Color.DARK_VIOLET, false)
+		draw_circle(Vector2(0,0), actor.stats.get_range_in_tiles() + actor.skill.stats.get_range_in_tiles(), Color.DARK_VIOLET, false)

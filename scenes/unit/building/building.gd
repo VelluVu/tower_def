@@ -9,8 +9,17 @@ extends StaticBody2D
 @onready var placement_validator : PlacementValidator = $PlacementValidator
 @onready var pop_up_spot : Node2D = $PopUpSpot
 @onready var overtime_effect_handler : OvertimeEffectHandler = $OvertimeEffectHandler
-@onready var stats : Stats = $Stats
+@onready var stats : Stats = $Stats :
+	get:
+		if stats == null:
+			stats = $Stats
+		return stats
 @onready var evolve_tree : EvolveTree = $EvolveTree
+@onready var evolve_glow : AnimationControl = $EvolveGlow : 
+	get:
+		if evolve_glow == null:
+			evolve_glow = $EvolveGlow
+		return evolve_glow
 
 @export var player_index : int = 0
 @export var closest_point_distance_limit : float = 0.9
@@ -63,6 +72,9 @@ var is_placed : bool:
 var corners : Array[Vector2] : 
 	get = _get_corners
 
+signal stats_changed() 
+signal selected(is_selected : bool)
+
 
 func place(value : Vector2) -> void:
 	is_placing = false
@@ -74,12 +86,23 @@ func place(value : Vector2) -> void:
 
 
 func take_damage(damage_data : DamageData):
-	stats.get_stat(Utils.StatType.Health).value -= damage_data.damage
+	if is_dead:
+		return
+	
+	var health : Stat = stats.get_stat(Utils.StatType.Health)
+	var maxHealth : Stat = stats.get_stat(Utils.StatType.MaxHealth)
+	health.value -= damage_data.damage
+	
+	if health.value > maxHealth.value and damage_data.is_healing and not damage_data.is_shielding:
+		health.value = maxHealth.value
+	
 	GameSignals.damage_taken.emit(pop_up_spot.global_position, damage_data)
-	overtime_effect_handler.handle_overtime_effects(damage_data.overtime_effect_datas)
+	overtime_effect_handler.handle_overtime_effects(damage_data.overtime_effect_datas, damage_data.damage)
 	
 	if damage_data.damage > 0.0:
 		animation_control.play_hit_animation()
+		if damage_data.source != null:
+			damage_data.source.dealt_damage(self, damage_data)
 	
 	if stats.get_stat_value(Utils.StatType.Health) <= 0.0:
 		GameSignals.building_destroyed.emit(self)
@@ -117,6 +140,7 @@ func remove():
 
 
 func _ready():
+	evolve_glow.visible = false
 	process_mode = ProcessMode.PROCESS_MODE_PAUSABLE
 	if not is_in_group(GroupNames.BUILDINGS):
 		add_to_group(GroupNames.BUILDINGS)
@@ -130,14 +154,29 @@ func _on_time_scale_change(_time_scale : float) -> void:
 
 func _on_evolve_level_gained() -> void:
 	evolve_level_up_particle_effect.emitting = true
+	animation_control.play_hit_animation()
 
 
 func _on_evolve_level_changed() -> void:
-	selectable.data_change()
+	stats_changed.emit()
 
 
 func _on_evolved() -> void:
-	selectable.data_change()
+	stats_changed.emit()
+
+
+func _enable_tower() -> void:
+	collision_shape.disabled = false
+	placement_validator.activate(false)
+	GameSignals.forced_selection.emit(self)
+	GameSignals.time_scale_change.connect(_on_time_scale_change)
+	_on_time_scale_change(Utils.game_control.time_scale)
+	overtime_effect_handler.handle_start_overtime_effects(stats.get_stat_value(Utils.StatType.MaxHealth))
+	
+	if evolve_tree != null:
+		evolve_tree.evolve_level_changed.connect(_on_evolve_level_changed)
+		evolve_tree.evolved.connect(_on_evolved)
+		evolve_tree.evolve_level_gained.connect(_on_evolve_level_gained)
 
 
 func _get_is_placed() -> bool:
@@ -153,18 +192,6 @@ func _set_is_placed(value : bool):
 	
 	if is_placed:
 		_enable_tower()
-
-
-func _enable_tower() -> void:
-	collision_shape.disabled = false
-	placement_validator.activate(false)
-	GameSignals.forced_selection.emit(self)
-	GameSignals.time_scale_change.connect(_on_time_scale_change)
-	_on_time_scale_change(Utils.game_control.time_scale)
-	if evolve_tree != null:
-		evolve_tree.evolve_level_changed.connect(_on_evolve_level_changed)
-		evolve_tree.evolved.connect(_on_evolved)
-		evolve_tree.evolve_level_gained.connect(_on_evolve_level_gained)
 
 
 func _get_is_valid_placement() -> bool:
@@ -219,8 +246,14 @@ func _get_building_data() -> BuildingData:
 	if evolve_tree == null:
 		return building_data
 	
+	if evolve_tree.current_leafs.is_empty():
+		for option in evolve_tree.current_random_evolve_choices:
+			building_data.upgrade_option_icons.append(option.evolve_icon)
+			building_data.upgrade_option_infos.append(option.evolve_name)
+		building_data.id = id
+		return building_data
+	
 	building_data.upgrade_option_icons = evolve_tree.get_available_evolve_icons()
 	building_data.upgrade_option_infos = evolve_tree.get_available_evolve_infos()
-	#something to get correct building
 	building_data.id = id
 	return building_data

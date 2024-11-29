@@ -9,9 +9,10 @@ signal on_sell_selected_building_pressed()
 signal buildings_updated(available_buildings : int)
 signal building_option_updated(building_index : int, new_icon : Texture2D)
 signal upgrade_option_selected(index : int, building_id : int)
+signal upgrade_options_change(building_data : BuildingData)
 
-signal selected_unit(unit_name : String, stats : Stats, icon : Texture2D, is_building : bool, building_data : BuildingData)
-signal deselected_unit(unit_name : String, stats : Stats, icon : Texture2D, is_building : bool, building_data : BuildingData)
+signal selected_unit(unit_name : String, stats : Stats, skill : Skill, icon : Texture2D, is_building : bool)
+signal deselected_unit()
 
 signal game_play_interface_loaded()
 signal continue_next_level_pressed()
