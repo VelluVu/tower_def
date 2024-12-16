@@ -2,11 +2,12 @@
 class_name Modifier
 extends Node
 
-@export var is_skill_modifier : bool = false
+
+@export var modifier_type : Utils.ModifierType = Utils.ModifierType.StatModifier
 @export var skill_name : String = "Skill"
-@export var skill_type : Utils.SkillType = Utils.SkillType.Projectile
-@export var type : Utils.ModifyType = Utils.ModifyType.Multiply
-@export var stat : Utils.StatType = Utils.StatType.Speed
+@export_flags("Melee", "Projectile", "Area", "Beaming") var skill_type : int = 0
+@export var calculate_type : Utils.ModifyType = Utils.ModifyType.Multiply
+@export var stat_type : Utils.StatType = Utils.StatType.Speed
 @export var value : float = 0.1
 
 

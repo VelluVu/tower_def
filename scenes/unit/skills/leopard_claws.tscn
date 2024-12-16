@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://cv1jn2uajfuis"]
+
+[ext_resource type="Script" path="res://scenes/unit/skills/melee_attack.gd" id="1_3kjnb"]
+[ext_resource type="PackedScene" uid="uid://bp7hd4rdex5do" path="res://scenes/unit/skills/skill_state_timers.tscn" id="2_i4wy2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3b7ho"]
+
+[node name="LeopardClaws" type="Node2D"]
+script = ExtResource("1_3kjnb")
+attack_mask = 2
+skill_type = 1
+skill_name = "LeopardClaws"
+base_cooldown = 8.0
+
+[node name="SkillStateTimers" parent="." instance=ExtResource("2_i4wy2")]
+
+[node name="AttackArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+shape = SubResource("RectangleShape2D_3b7ho")
+disabled = true
+
+[connection signal="body_entered" from="AttackArea" to="." method="_on_attack_area_body_entered"]

@@ -10,6 +10,5 @@ func tick(actor : Node, _blackBoard : Blackboard) -> int:
 	# then check if x component value is negative
 	# flip horizontal is set to above condition
 	var target_direction : Vector2 = (actor.target.global_position - actor.global_position).normalized()
-	actor.animation_control.flip(target_direction)
-	actor.skill.flip_h = actor.animation_control.flip_h
+	actor.flip(target_direction)
 	return SUCCESS

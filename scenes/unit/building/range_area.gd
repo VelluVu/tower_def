@@ -32,4 +32,4 @@ func _on_selected(is_selected : bool) -> void:
 
 func _draw() -> void:
 	if actor.selectable.is_selected:
-		draw_circle(Vector2(0,0), actor.stats.get_range_in_tiles() + actor.skill.stats.get_range_in_tiles(), Color.DARK_VIOLET, false)
+		draw_circle(Vector2(0,0), actor.radius, Color.DARK_VIOLET, false)

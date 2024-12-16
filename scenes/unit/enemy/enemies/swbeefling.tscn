@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://5vvf4bpqplat"]
+[gd_scene load_steps=43 format=3 uid="uid://5vvf4bpqplat"]
 
 [ext_resource type="Script" path="res://scenes/unit/enemy/enemy.gd" id="1_rlxr3"]
 [ext_resource type="Texture2D" uid="uid://g5ruw0cdagou" path="res://assets/art/units/enemy/beefling/beefling_icon.png" id="2_n88ha"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" path="res://scenes/unit/stats/stats.gd" id="14_x7u3f"]
 [ext_resource type="Script" path="res://scenes/unit/stats/stat.gd" id="15_rofak"]
 [ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_handler.gd" id="16_nm5r2"]
+[ext_resource type="Script" path="res://scenes/unit/modifier_manager.gd" id="17_bmhjo"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_43mte"]
 friction = 0.0
@@ -285,6 +286,7 @@ gore_effect_scene = ExtResource("9_p7pir")
 [node name="SelectableUnit" parent="." instance=ExtResource("10_rjd41")]
 
 [node name="MeleeAttack" parent="." instance=ExtResource("11_73k7n")]
+attack_distance = 8.0
 skill_type = 16
 base_cast_time = 0.75
 base_cooldown = 1.5
@@ -336,7 +338,7 @@ script = ExtResource("16_nm5r2")
 [node name="PermanentHealingOvertimeEffectData" type="Node" parent="OvertimeEffectHandler"]
 script = ExtResource("13_ntgc7")
 max_count = 0
-tick_damage = -10.0
+tick_damage = -3.0
 tick_interval = 5.0
 is_healing = true
 
@@ -345,14 +347,14 @@ script = ExtResource("14_x7u3f")
 
 [node name="MaxHealth" type="Node" parent="Stats"]
 script = ExtResource("15_rofak")
-base_value = 500.0
-value = 500.0
+base_value = 70.0
+value = 70.0
 type = 1
 
 [node name="Health" type="Node" parent="Stats"]
 script = ExtResource("15_rofak")
-base_value = 500.0
-value = 500.0
+base_value = 70.0
+value = 70.0
 
 [node name="Damage" type="Node" parent="Stats"]
 script = ExtResource("15_rofak")
@@ -391,3 +393,6 @@ type = 8
 [node name="ActiveDuration" type="Node" parent="Stats"]
 script = ExtResource("15_rofak")
 type = 9
+
+[node name="ModifierManager" type="Node" parent="."]
+script = ExtResource("17_bmhjo")

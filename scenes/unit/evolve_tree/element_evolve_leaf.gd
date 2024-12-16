@@ -63,14 +63,4 @@ func evolve(actor : Node) -> void:
 		actor.evolve_tree.evolve_element = evolve_element
 		
 		for modifier in modifiers:
-			#what if multiple skills?
-			if modifier.is_skill_modifier:
-				if modifier.skill_type != actor.skill.skill_type:
-					continue
-					
-				if modifier.skill_name != actor.skill.skill_name and modifier.skill_name != "Skill":
-					continue
-					
-				actor.skill.stats.get_stat(modifier.stat).add_modifier_data(modifier.get_modifier_data())
-			else:
-				actor.stats.get_stat(modifier.stat).add_modifier_data(modifier.get_modifier_data())
+			actor.modifier_manager.add_modifier(modifier.get_modifier_data())

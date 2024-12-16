@@ -8,6 +8,9 @@ size = Vector2(10, 10)
 
 [node name="MeleeAttack" type="Node2D"]
 script = ExtResource("1_fy7tn")
+attack_mask = 4
+skill_type = 1
+skill_name = "MeleeAttack"
 base_cast_time = 1.0
 base_active_time = 0.2
 
@@ -20,6 +23,5 @@ collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
 shape = SubResource("RectangleShape2D_3b7ho")
-disabled = true
 
 [connection signal="body_entered" from="AttackArea" to="." method="_on_attack_area_body_entered"]

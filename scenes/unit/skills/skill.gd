@@ -51,6 +51,8 @@ var total_duration : float :
 var attack_speed : float :
 	get = _get_attack_speed
 
+signal is_ready_signal(value : bool)
+
 
 func use(_target) -> void:
 	if not is_continuous and not is_ready:
@@ -89,7 +91,7 @@ func start_skill_cast() -> void:
 	else:
 		actor.animation_control.play_animation(GlobalAnimationNames.ATTACK_ANIMATION, cast_timer.wait_time)
 	
-	if cast_timer.wait_time > 0.0:
+	if cast_timer.base_wait_time > 0.0:
 		cast_timer.start()
 		return
 	
@@ -103,15 +105,15 @@ func activate() -> void:
 	if is_continuous:
 		return
 	
-	if active_timer.wait_time > 0.0:
+	if active_timer.base_wait_time > 0.0:
 		#interrupt active skill
-		if active_timer.time_left > 0.0:
+		if active_timer.base_wait_time > 0.0:
 			active_timer.stop()
 			_interrupted_active()
 		
 		active_timer.start()
 	
-	if cooldown_timer.wait_time > 0.0:
+	if cooldown_timer.base_wait_time > 0.0:
 		cooldown_timer.start()
 		return
 
@@ -138,30 +140,24 @@ func _ready() -> void:
 	_on_time_scale_change(Utils.game_control.time_scale)
 
 
-#add existing weapon/element type modifiers when new skill is provided runtime
-#func add_modifiers(modifiers : Array[ModifierData]) -> void:
-#	for modifier in modifiers:
-#		diipadaapa
-
-
 func _on_skill_stat_changed(stat : Stat) -> void:
 	if stat.type == Utils.StatType.AttackSpeed:
-		var attack_speed_stat_value : float = actor.stats.get_stat_value(Utils.StatType.AttackSpeed) + stat.value
+		var attack_speed_stat_value : float = stat.value
 		cooldown_timer.scale_wait_time(attack_speed_stat_value)
 		cast_timer.scale_wait_time(attack_speed_stat_value)
 		
 	if stat.type == Utils.StatType.ActiveDuration:
-		active_timer.scale_wait_time(actor.stats.get_stat_value(Utils.StatType.ActiveDuration) + stat.value)
+		active_timer.scale_wait_time(stat.value)
 
 
 func _on_actor_stat_changed(stat : Stat) -> void:
 	if stat.type == Utils.StatType.AttackSpeed:
-		var attack_speed_stat : float = stats.get_stat_value(Utils.StatType.AttackSpeed) + stat.value
+		var attack_speed_stat : float = stats.get_stat_value(Utils.StatType.AttackSpeed)
 		cooldown_timer.scale_wait_time(attack_speed_stat)
 		cast_timer.scale_wait_time(attack_speed_stat)
 	
 	if stat.type == Utils.StatType.ActiveDuration:
-		active_timer.scale_wait_time(stats.get_stat_value(Utils.StatType.ActiveDuration) + stat.value)
+		active_timer.scale_wait_time(stats.get_stat_value(Utils.StatType.ActiveDuration))
 
 
 func _on_cast_finished() -> void:
@@ -182,6 +178,7 @@ func _interrupted_active() -> void:
 func _on_cooldown_end() -> void:
 	#print(name, " cooldown end ")
 	is_ready = true
+	is_ready_signal.emit(is_ready)
 
 
 func _on_time_scale_change(time_scale : float) -> void:
@@ -234,14 +231,13 @@ func _get_damage_data() -> DamageData:
 	if damage_data == null:
 		damage_data = $DamageData
 	
-	#Optimization, don't create duplicate on every get, create only when needed
 	var _damage_data : DamageData = damage_data.duplicate()
+	var damage : float = stats.get_stat_value(Utils.StatType.Damage)
+	var critical_chance : float = stats.get_stat_value(Utils.StatType.CriticalChance)
+	
 	_damage_data.source = actor
-	_damage_data.damage = actor.stats.get_stat_value(Utils.StatType.Damage) + stats.get_stat_value(Utils.StatType.Damage)
-	var random_f : float = randf()
-	var critical_chance : float = actor.stats.get_stat_value(Utils.StatType.CriticalChance) + stats.get_stat_value(Utils.StatType.CriticalChance)
-	_damage_data.is_critical = random_f < critical_chance
-	_damage_data.damage = round((actor.stats.get_stat_value(Utils.StatType.CriticalMultiplier) + stats.get_stat_value(Utils.StatType.CriticalMultiplier)) * _damage_data.damage) if _damage_data.is_critical else _damage_data.damage
+	_damage_data.is_critical = randf() < critical_chance
+	_damage_data.damage = stats.get_stat_value(Utils.StatType.CriticalMultiplier) * damage if _damage_data.is_critical else damage
 	
 	for effect_data in _damage_data.overtime_effect_datas:
 		effect_data.is_critical = _damage_data.is_critical

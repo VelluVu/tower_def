@@ -61,14 +61,14 @@ func _on_skill_stat_changed(stat : Stat) -> void:
 	super(stat)
 	
 	if stat.type == Utils.StatType.AttackSpeed:
-		damage_timer.scale_wait_time(actor.stats.get_stat_value(Utils.StatType.AttackSpeed) + stat.value)
+		damage_timer.scale_wait_time(stat.value)
 
 
 func _on_actor_stat_changed(stat : Stat) -> void:
 	super(stat)
 	
 	if stat.type == Utils.StatType.AttackSpeed:
-		damage_timer.scale_wait_time(stats.get_stat_value(Utils.StatType.AttackSpeed) + stat.value)
+		damage_timer.scale_wait_time(stats.get_stat_value(Utils.StatType.AttackSpeed))
 
 
 func _on_timer_tick() -> void:

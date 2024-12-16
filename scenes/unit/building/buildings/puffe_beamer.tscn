@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=3 uid="uid://ck38qjjtmawki"]
+[gd_scene load_steps=67 format=3 uid="uid://ck38qjjtmawki"]
 
 [ext_resource type="Script" path="res://scenes/unit/building/tower.gd" id="1_cyr4l"]
 [ext_resource type="Texture2D" uid="uid://d3x1xfq7cnf40" path="res://assets/art/units/building/puffe/puffe_beamer/puffe_beamer_icon.png" id="2_1w6ba"]
@@ -38,6 +38,7 @@
 [ext_resource type="Texture2D" uid="uid://4vr2yacqou07" path="res://assets/art/ui/frost_element_icon.png" id="31_qbv05"]
 [ext_resource type="Texture2D" uid="uid://b6lo5eq5siv2u" path="res://assets/art/ui/poison_element_icon.png" id="36_kci3i"]
 [ext_resource type="Texture2D" uid="uid://cw3b3xwravgoe" path="res://assets/art/units/evolve_glow.png" id="37_wqnxk"]
+[ext_resource type="Script" path="res://scenes/unit/modifier_manager.gd" id="39_8emt4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nli7h"]
 size = Vector2(16, 16)
@@ -344,8 +345,7 @@ shape = SubResource("CircleShape2D_yksuc")
 
 [node name="Beam" parent="." instance=ExtResource("4_2p66l")]
 position = Vector2(5, -11)
-skill_type = 8
-skill_name = "Beam"
+tick_speed = 1.5
 
 [node name="DamageData" type="Node" parent="Beam"]
 script = ExtResource("9_y18tw")
@@ -355,8 +355,8 @@ script = ExtResource("15_yqf0r")
 
 [node name="Damage" type="Node" parent="Beam/Stats"]
 script = ExtResource("16_mlf80")
-base_value = 5.0
-value = 5.0
+base_value = 1.0
+value = 1.0
 type = 2
 
 [node name="AttackRange" type="Node" parent="Beam/Stats"]
@@ -412,8 +412,8 @@ value = 5.0
 
 [node name="Damage" type="Node" parent="Stats"]
 script = ExtResource("16_mlf80")
-base_value = 5.0
-value = 5.0
+base_value = 1.0
+value = 1.0
 type = 2
 
 [node name="Price" type="Node" parent="Stats"]
@@ -453,7 +453,7 @@ script = ExtResource("16_dryip")
 
 [node name="EvolveBranch" type="Node" parent="EvolveTree"]
 script = ExtResource("17_wlcq3")
-evolve_level = 1
+evolve_level = 2
 
 [node name="NormalElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch"]
 script = ExtResource("18_wr5qw")
@@ -464,15 +464,14 @@ info = "Normal"
 
 [node name="CriticalModifier" type="Node" parent="EvolveTree/EvolveBranch/NormalElementEvolveLeaf"]
 script = ExtResource("23_umsju")
-is_skill_modifier = true
 skill_name = "Beam"
-type = 0
-stat = 7
-value = 0.2
+calculate_type = 0
+stat_type = 7
+value = 0.05
 
 [node name="EvolveBranch2" type="Node" parent="EvolveTree"]
 script = ExtResource("17_wlcq3")
-evolve_level = 1
+evolve_level = 2
 
 [node name="FireElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch2"]
 script = ExtResource("18_wr5qw")
@@ -486,7 +485,7 @@ info = "Fire"
 
 [node name="EvolveBranch3" type="Node" parent="EvolveTree"]
 script = ExtResource("17_wlcq3")
-evolve_level = 1
+evolve_level = 2
 
 [node name="FrostElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch3"]
 script = ExtResource("18_wr5qw")
@@ -500,7 +499,7 @@ info = "Frost"
 
 [node name="EvolveBranch4" type="Node" parent="EvolveTree"]
 script = ExtResource("17_wlcq3")
-evolve_level = 1
+evolve_level = 2
 
 [node name="PoisonElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch4"]
 script = ExtResource("18_wr5qw")
@@ -511,6 +510,9 @@ new_animated_sprite_scene = ExtResource("27_wav4t")
 new_damage_data_scene = ExtResource("28_3xrpj")
 icon = ExtResource("36_kci3i")
 info = "Poison"
+
+[node name="ModifierManager" type="Node" parent="."]
+script = ExtResource("39_8emt4")
 
 [connection signal="body_entered" from="RangeArea" to="." method="_on_range_area_body_entered"]
 [connection signal="body_exited" from="RangeArea" to="." method="_on_range_area_body_exited"]

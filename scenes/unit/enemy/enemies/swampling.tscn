@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://ddq4tsy8ik5n5"]
+[gd_scene load_steps=45 format=3 uid="uid://ddq4tsy8ik5n5"]
 
 [ext_resource type="Script" path="res://scenes/unit/enemy/enemy.gd" id="1_taso1"]
 [ext_resource type="Texture2D" uid="uid://yv52buwdecha" path="res://assets/art/units/enemy/weakling/weakling_icon.png" id="2_xqnym"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" path="res://scenes/unit/stats/stat.gd" id="14_c6gai"]
 [ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_handler.gd" id="15_fit3y"]
 [ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_data.gd" id="16_e8rvt"]
+[ext_resource type="Script" path="res://scenes/unit/modifier_manager.gd" id="17_om7rs"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_43mte"]
 friction = 0.0
@@ -294,6 +295,7 @@ gore_effect_scene = ExtResource("9_catu8")
 [node name="SelectableUnit" parent="." instance=ExtResource("10_s7l8d")]
 
 [node name="MeleeAttack" parent="." instance=ExtResource("11_7urbq")]
+attack_distance = 8.0
 skill_type = 16
 base_cast_time = 0.5
 base_cooldown = 1.5
@@ -306,8 +308,8 @@ script = ExtResource("13_lvyud")
 
 [node name="Damage" type="Node" parent="MeleeAttack/Stats"]
 script = ExtResource("14_c6gai")
-base_value = 2.0
-value = 2.0
+base_value = 1.0
+value = 1.0
 type = 2
 
 [node name="AttackRange" type="Node" parent="MeleeAttack/Stats"]
@@ -341,7 +343,7 @@ script = ExtResource("15_fit3y")
 [node name="PermanentHealingOvertimeEffectData" type="Node" parent="OvertimeEffectHandler"]
 script = ExtResource("16_e8rvt")
 max_count = 0
-tick_damage = -10.0
+tick_damage = -2.0
 tick_interval = 5.0
 is_healing = true
 
@@ -350,8 +352,8 @@ script = ExtResource("13_lvyud")
 
 [node name="MaxHealth" type="Node" parent="Stats"]
 script = ExtResource("14_c6gai")
-base_value = 200.0
-value = 200.0
+base_value = 30.0
+value = 30.0
 type = 1
 
 [node name="Health" type="Node" parent="Stats"]
@@ -361,6 +363,8 @@ value = 200.0
 
 [node name="Damage" type="Node" parent="Stats"]
 script = ExtResource("14_c6gai")
+base_value = 2.0
+value = 2.0
 type = 2
 
 [node name="Price" type="Node" parent="Stats"]
@@ -396,3 +400,6 @@ type = 8
 [node name="ActiveDuration" type="Node" parent="Stats"]
 script = ExtResource("14_c6gai")
 type = 9
+
+[node name="ModifierManager" type="Node" parent="."]
+script = ExtResource("17_om7rs")

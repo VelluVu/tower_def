@@ -27,6 +27,9 @@ var current_wanted_playtime : float = 0.0
 
 
 func play_animation(animation_name : String, wanted_play_time : float = 0.0, is_no_slowing : bool = false) -> void:
+	if not sprite_frames.has_animation(animation_name):
+		push_warning(name, " has no animation with name: ", animation_name)
+		return
 	
 	current_wanted_playtime = wanted_play_time
 	

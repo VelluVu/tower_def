@@ -26,60 +26,10 @@ func evolve(actor : Node) -> void:
 
 
 func add_modifier_datas(actor : Node) -> void:
-	var stat : Stat = null
-	
 	for modifier in modifier_datas:
-		#skill stat
-		if modifier.is_skill_modifier:
-			if modifier.skill_type != actor.skill.skill_type:
-				continue
-			if modifier.skill_name != actor.skill.skill_name and modifier.skill_name != "Skill":
-				continue
-			
-			stat = actor.skill.stats.get_stat(modifier.stat)
-		
-			if stat == null:
-				print(name , " tried to modify unexisting stat: ", modifier.stat, " for ", actor.name)
-				continue
-			
-			stat.add_modifier_data(modifier)
-			continue
-		
-		# actor stat
-		stat = actor.stats.get_stat(modifier.stat)
-		
-		if stat == null:
-			print(name , " tried to modify unexisting stat: ", modifier.stat, " for ", actor.name)
-			continue
-		
-		stat.add_modifier_data(modifier)
+		actor.modifier_manager.add_modifier(modifier)
 
 
 func add_modifiers(actor : Node) -> void:
-	var stat : Stat = null
-	
 	for modifier in modifiers:
-		#skill stat
-		if modifier.is_skill_modifier:
-			if modifier.skill_type != actor.skill.skill_type:
-				continue
-			if modifier.skill_name != actor.skill.skill_name and modifier.skill_name != "Skill":
-				continue
-			
-			stat = actor.skill.stats.get_stat(modifier.stat)
-		
-			if stat == null:
-				print(name , " tried to modify unexisting stat: ", modifier.stat, " for ", actor.name)
-				continue
-			
-			stat.add_modifier_data(modifier.get_modifier_data())
-			continue
-		
-		# actor stat
-		stat = actor.stats.get_stat(modifier.stat)
-		
-		if stat == null:
-			print(name , " tried to modify unexisting stat: ", modifier.stat, " for ", actor.name)
-			continue
-		
-		stat.add_modifier_data(modifier.get_modifier_data())
+		actor.modifier_manager.add_modifier(modifier.get_modifier_data())

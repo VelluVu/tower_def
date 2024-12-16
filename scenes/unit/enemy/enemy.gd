@@ -17,6 +17,12 @@ const PATH_TO_STAT_RESOURCE : String = "res://scenes/unit/stats/stat_resources/e
 @onready var selectable : SelectableUnit = $SelectableUnit
 @onready var pop_up_spot : Node2D = $PopUpSpot
 
+@onready var modifier_manager : ModifierManager = $ModifierManager :
+	get:
+		if modifier_manager == null:
+			modifier_manager = $ModifierManager
+		return modifier_manager 
+
 @onready var overtime_effect_handler : OvertimeEffectHandler = $OvertimeEffectHandler :
 	get:
 		if overtime_effect_handler == null:
@@ -197,7 +203,21 @@ func die() -> void:
 
 func get_building_in_next_waypoint() -> Building:
 	closest_building = level.get_building_from_world_position(next_waypoint)
+	if closest_building is Trap:
+		closest_building = null
 	return closest_building
+
+
+func get_first_nearby_free_position() -> Vector2:
+	#find free position, a walkable position without tower or wall in it
+	var cells : Array[Vector2i] = level.get_walkable_surrounding_cells(grid_position)
+	
+	if not cells.is_empty():
+		return level.grid_position_to_world(cells.pick_random())
+	
+	level.get_building_from_cell_position(grid_position).destroy_building()
+	push_warning(name, " unable to find free position, destroying building in the way.")
+	return global_position
 
 
 func get_remaining_path_waypoint_count() -> int:
@@ -207,6 +227,7 @@ func get_remaining_path_waypoint_count() -> int:
 func is_path_blocked(path : PackedVector2Array) -> bool:
 	if path.is_empty():
 		return true
+	
 	var end_point_position : Vector2 = level.snap_position_to_grid(end_point.global_position)
 	var is_last_path_position_end : bool = path[-1] == end_point_position
 	return not is_last_path_position_end
@@ -216,13 +237,20 @@ func get_closest_building() -> Building:
 	var closest = level.get_building_from_world_position(global_position)
 	
 	if closest != null:
-		return closest
+		if closest is Trap:
+			closest = null
+		else:
+			return closest
 	
 	#save found buildings to variable?
-	var neightbour_buildings : Array[Building] = level.get_neighbour_buildings_from_world_position(global_position)
+	var neighbour_buildings : Array[Building] = level.get_neighbour_buildings_from_world_position(global_position)
 	
-	if not neightbour_buildings.is_empty():
-		closest = neightbour_buildings[0]
+	if not neighbour_buildings.is_empty():
+		for building in neighbour_buildings:
+			if building is Trap:
+				continue
+				
+			return building
 	
 	return closest
 
@@ -255,6 +283,8 @@ func _process(delta: float) -> void:
 
 func _on_body_enter(body : Node) -> void:
 	if body.is_in_group(GroupNames.BUILDINGS):
+		if body is Trap:
+			return
 		collision_body = body
 		closest_building = collision_body
 

@@ -223,8 +223,8 @@ func _move_building_with_cursor() -> void:
 func _is_position_buildable(_pos : Vector2) -> bool:
 	if not level.is_position_in_bounds(_pos):
 		return false
-
-	var is_buildable = level.is_position_buildable(_pos)
+	
+	var is_buildable = level.is_position_buildable(_pos) if current_building is not Trap else level.is_position_walkable(_pos)
 	
 	return is_buildable
 

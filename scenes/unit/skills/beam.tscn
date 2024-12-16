@@ -9,6 +9,8 @@
 [node name="Beam" type="Node2D"]
 script = ExtResource("1_cdk7v")
 beam_texture = ExtResource("3_6wol3")
+skill_type = 8
+skill_name = "Beam"
 is_continuous = true
 base_cast_time = 0.1
 base_cooldown = 0.0

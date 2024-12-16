@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://b78nv1og0jf3p"]
+[gd_scene load_steps=46 format=3 uid="uid://b78nv1og0jf3p"]
 
 [ext_resource type="Script" path="res://scenes/unit/building/wall.gd" id="1_kgbnu"]
 [ext_resource type="Texture2D" uid="uid://c5m2tdopql7kr" path="res://assets/art/units/building/wall/wall_icon.png" id="2_0awu8"]
@@ -17,6 +17,7 @@
 [ext_resource type="Script" path="res://scenes/unit/skills/skill.gd" id="15_b5dxh"]
 [ext_resource type="PackedScene" uid="uid://bp7hd4rdex5do" path="res://scenes/unit/skills/skill_state_timers.tscn" id="16_waran"]
 [ext_resource type="Script" path="res://scenes/unit/skills/damage_data.gd" id="17_35ks3"]
+[ext_resource type="Script" path="res://scenes/unit/modifier_manager.gd" id="18_l28n7"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_4ih23"]
 
@@ -366,14 +367,14 @@ script = ExtResource("9_llimg")
 
 [node name="MaxHealth" type="Node" parent="Stats"]
 script = ExtResource("10_7keqx")
-base_value = 30.0
-value = 30.0
+base_value = 100.0
+value = 100.0
 type = 1
 
 [node name="Health" type="Node" parent="Stats"]
 script = ExtResource("10_7keqx")
-base_value = 30.0
-value = 30.0
+base_value = 100.0
+value = 100.0
 
 [node name="Damage" type="Node" parent="Stats"]
 script = ExtResource("10_7keqx")
@@ -412,6 +413,7 @@ script = ExtResource("11_0j38t")
 
 [node name="EvolveBranch" type="Node" parent="EvolveTree"]
 script = ExtResource("12_ipd6y")
+evolve_level = 2
 
 [node name="Skill" type="Node2D" parent="."]
 script = ExtResource("15_b5dxh")
@@ -448,3 +450,6 @@ type = 9
 
 [node name="DamageData" type="Node" parent="Skill"]
 script = ExtResource("17_35ks3")
+
+[node name="ModifierManager" type="Node" parent="."]
+script = ExtResource("18_l28n7")

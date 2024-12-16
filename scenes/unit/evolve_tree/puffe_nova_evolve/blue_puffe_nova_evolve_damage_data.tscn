@@ -18,4 +18,4 @@ effectType = 1
 
 [node name="Modifier" type="Node" parent="OvertimeEffectData"]
 script = ExtResource("3_o0a8b")
-value = -0.2
+value = -0.1

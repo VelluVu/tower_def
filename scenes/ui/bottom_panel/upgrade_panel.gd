@@ -33,7 +33,5 @@ func change_upgrade_options(_building_data : BuildingData) -> void:
 			continue
 		
 		child.show()
-		child.button.icon = building_data.upgrade_option_icons[index]
-		child.label.text = building_data.upgrade_option_infos[index]
 		child.building_data = _building_data
 		index += 1

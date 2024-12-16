@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BuildingListElement" load_steps=4 format=3 uid="uid://dkjgv8b753d73"]
+
+[ext_resource type="Texture2D" uid="uid://dshkxaaj6nj66" path="res://assets/art/units/building/leopard_trap/lebu_trap_icon.png" id="1_0ch3o"]
+[ext_resource type="Script" path="res://scenes/unit/building/building_list_element.gd" id="1_ie4jr"]
+[ext_resource type="PackedScene" uid="uid://6t4e2c8di3ko" path="res://scenes/unit/building/buildings/leopard_trap.tscn" id="2_4jj3c"]
+
+[resource]
+script = ExtResource("1_ie4jr")
+scene = ExtResource("2_4jj3c")
+id = 4
+icon = ExtResource("1_0ch3o")

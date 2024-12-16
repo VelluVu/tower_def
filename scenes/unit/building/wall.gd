@@ -31,6 +31,8 @@ func _set_is_placed(value : bool) -> void:
 				
 		for cell in surrounding_cells:
 			if level.has_building_in_cell_position(cell):
+				if level.get_building_from_cell_position(cell) is Trap:
+					continue
 				neighbour_buildings.append(cell)
 		
 		_update_sprite()
@@ -42,6 +44,9 @@ func _set_is_placed(value : bool) -> void:
 
 
 func _on_building_destroyed(building : Building) -> void:
+	if building is Trap:
+		return
+		
 	if not neighbour_buildings.has(building.grid_position):
 		return
 		
@@ -50,6 +55,9 @@ func _on_building_destroyed(building : Building) -> void:
 
 
 func _on_building_placed(building : Building) -> void:
+	if building is Trap:
+		return
+	
 	if neighbour_buildings.has(building.grid_position):
 		return
 	

@@ -32,7 +32,7 @@ func activate() -> void:
 	skill_data.damage_data = damage_data
 	skill_data.target = target
 	skill_data.active_time = active_timer.wait_time
-	skill_data.max_range = actor.stats.get_range_in_tiles() + stats.get_range_in_tiles()
+	skill_data.max_range = stats.get_range_in_tiles()
 	projectile.launch(skill_data)
 	
 	if cast_timer.wait_time == 0:

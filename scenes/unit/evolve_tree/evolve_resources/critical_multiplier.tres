@@ -4,14 +4,16 @@
 [ext_resource type="Script" path="res://scenes/unit/evolve_tree/evolve_resource.gd" id="2_tw21r"]
 
 [resource]
+resource_local_to_scene = true
 script = ExtResource("2_tw21r")
 evolve_icon = ExtResource("1_fcaai")
 evolve_level_reguirement = 0
-is_skill_modifier = false
+modifier_type = 0
 skill_type = 0
 skill_name = "Skill"
 elements = 15
 modify_stat_type = 8
 modify_type = 0
-modify_Value = 0.025
+is_percent = true
+modify_value = 0.05
 evolve_name = "Critical Multiplier"

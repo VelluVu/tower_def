@@ -74,14 +74,14 @@ func add_stack(overtime_effect_data : OvertimeEffectData) -> void:
 func add_extra_effects() -> void:
 	if not effect_data.modifier_datas.is_empty():
 		for modifier in effect_data.modifier_datas:
-			actor.stats.get_stat(modifier.stat).add_modifier_data(modifier)
+			actor.modifier_manager.add_modifier(modifier)
 			added_modifier_datas.append(modifier)
 
 
 func remove_extra_effects() -> void:
-	if not effect_data.modifier_datas.is_empty():
-		for modifier in effect_data.modifier_datas:
-			actor.stats.get_stat(modifier.stat).remove_modifier_data(modifier)
+	if not added_modifier_datas.is_empty():
+		for modifier in added_modifier_datas:
+			actor.modifier_manager.remove_modifier(modifier)
 	
 	added_modifier_datas.clear()
 
@@ -108,7 +108,6 @@ func _create_damage_data() -> DamageData:
 	
 	if source != null:
 		damage_data.source = source
-		#improve damage with stats "overtime damage" or just with damage derived to some kind of multiplier
 	
 	damage_data.is_overtime = true
 	damage_data.damage = tick_damage

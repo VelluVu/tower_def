@@ -9,12 +9,18 @@ extends StaticBody2D
 @onready var placement_validator : PlacementValidator = $PlacementValidator
 @onready var pop_up_spot : Node2D = $PopUpSpot
 @onready var overtime_effect_handler : OvertimeEffectHandler = $OvertimeEffectHandler
+@onready var evolve_tree : EvolveTree = $EvolveTree
+
+@onready var modifier_manager : ModifierManager = $ModifierManager :
+	get:
+		if modifier_manager == null:
+			modifier_manager = $ModifierManager
+		return modifier_manager 
 @onready var stats : Stats = $Stats :
 	get:
 		if stats == null:
 			stats = $Stats
 		return stats
-@onready var evolve_tree : EvolveTree = $EvolveTree
 @onready var evolve_glow : AnimationControl = $EvolveGlow : 
 	get:
 		if evolve_glow == null:
@@ -41,6 +47,7 @@ extends StaticBody2D
 		return beehave_tree
 
 @export var icon : Texture2D = null
+@export var astar_weight : float = 100.0
 
 var is_dead : bool :
 	get:
@@ -69,6 +76,9 @@ var is_placed : bool:
 	get = _get_is_placed,
 	set = _set_is_placed
 
+var radius : float :
+	get = _get_radius
+
 var corners : Array[Vector2] : 
 	get = _get_corners
 
@@ -80,7 +90,7 @@ func place(value : Vector2) -> void:
 	is_placing = false
 	global_position = value
 	grid_position = level.world_position_to_grid(global_position)
-	level.astar_grid.set_point_weight_scale(grid_position, 100.0)
+	level.astar_grid.set_point_weight_scale(grid_position, astar_weight)
 	is_placed = true
 	GameSignals.building_placed.emit(self)
 
@@ -105,14 +115,18 @@ func take_damage(damage_data : DamageData):
 			damage_data.source.dealt_damage(self, damage_data)
 	
 	if stats.get_stat_value(Utils.StatType.Health) <= 0.0:
-		GameSignals.building_destroyed.emit(self)
+		destroy_building()
+
+
+func destroy_building() -> void:
+	GameSignals.building_destroyed.emit(self)
 
 
 func dealt_damage(_target : Node2D, _damage_data : DamageData) -> void:
 	#print(name, " dealt ", _damage_data.damage ," damage to ", _target.name)
 	#gain evolve meter! "xp"
 	if _target.is_dead:
-		evolve_tree.evolve_xp += _target.stats.get_stat_value(Utils.StatType.MaxHealth)
+		evolve_tree.evolve_xp += _target.stats.get_stat_value(Utils.StatType.MaxHealth) * 2
 
 
 func replace_skill(new_skill_scene : PackedScene) -> void:
@@ -134,9 +148,14 @@ func replace_animation_control(new_animation_control_scene : PackedScene) -> voi
 	animation_control.play_animation(current_animation)
 
 
-func remove():
+func remove() -> void:
 	collision_shape.disabled = true
 	queue_free()
+
+
+func flip(target_direction : Vector2) -> void:
+	animation_control.flip(target_direction)
+	skill.flip_h = animation_control.flip_h
 
 
 func _ready():
@@ -144,8 +163,16 @@ func _ready():
 	process_mode = ProcessMode.PROCESS_MODE_PAUSABLE
 	if not is_in_group(GroupNames.BUILDINGS):
 		add_to_group(GroupNames.BUILDINGS)
-		
+	
 	name = name + str(id) + str(player_index)
+	_add_main_stats_to_skill_stats()
+
+#no need to add main stats to skill stats !
+func _add_main_stats_to_skill_stats() -> void:
+	for stat in stats.stats:
+		var skill_stat : Stat = skill.stats.get_stat(stat.type)
+		if skill_stat != null:
+			skill_stat.value += stat.value
 
 
 func _on_time_scale_change(_time_scale : float) -> void:
@@ -154,15 +181,18 @@ func _on_time_scale_change(_time_scale : float) -> void:
 
 func _on_evolve_level_gained() -> void:
 	evolve_level_up_particle_effect.emitting = true
+	evolve_glow.visible = evolve_tree.has_evolve_choices
 	animation_control.play_hit_animation()
 
 
 func _on_evolve_level_changed() -> void:
 	stats_changed.emit()
+	evolve_glow.visible = evolve_tree.has_evolve_choices
 
 
 func _on_evolved() -> void:
 	stats_changed.emit()
+	evolve_glow.visible = evolve_tree.has_evolve_choices
 
 
 func _enable_tower() -> void:
@@ -250,6 +280,7 @@ func _get_building_data() -> BuildingData:
 		for option in evolve_tree.current_random_evolve_choices:
 			building_data.upgrade_option_icons.append(option.evolve_icon)
 			building_data.upgrade_option_infos.append(option.evolve_name)
+			building_data.random_upgrade_resource.append(option)
 		building_data.id = id
 		return building_data
 	
@@ -257,3 +288,13 @@ func _get_building_data() -> BuildingData:
 	building_data.upgrade_option_infos = evolve_tree.get_available_evolve_infos()
 	building_data.id = id
 	return building_data
+
+
+func _get_radius() -> float:
+	if stats == null:
+		return 0.0
+	
+	if skill == null:
+		return stats.get_range_in_tiles()
+	
+	return skill.stats.get_range_in_tiles()

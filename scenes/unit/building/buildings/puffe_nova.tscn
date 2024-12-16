@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=3 uid="uid://bddvvyp8cnh6u"]
+[gd_scene load_steps=65 format=3 uid="uid://bddvvyp8cnh6u"]
 
 [ext_resource type="Script" path="res://scenes/unit/building/tower.gd" id="1_t60dc"]
 [ext_resource type="Texture2D" uid="uid://crquejaub2fde" path="res://assets/art/units/building/puffe/puffe_nova/puffe_nova_icon.png" id="2_amlqn"]
@@ -39,6 +39,7 @@
 [ext_resource type="Texture2D" uid="uid://c5h4vuole8dgv" path="res://assets/art/units/building/puffe/puffe_nova/green_puffe_nova_icon.png" id="32_1be7x"]
 [ext_resource type="Texture2D" uid="uid://4vr2yacqou07" path="res://assets/art/ui/frost_element_icon.png" id="32_u1lqf"]
 [ext_resource type="Texture2D" uid="uid://b6lo5eq5siv2u" path="res://assets/art/ui/poison_element_icon.png" id="37_ywbce"]
+[ext_resource type="Script" path="res://scenes/unit/modifier_manager.gd" id="40_wh8uf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jxaqe"]
 size = Vector2(16, 16)
@@ -335,8 +336,8 @@ script = ExtResource("15_gqyqb")
 
 [node name="Damage" type="Node" parent="LaunchProjectile/Stats"]
 script = ExtResource("16_ho6cm")
-base_value = 5.0
-value = 5.0
+base_value = 1.0
+value = 1.0
 type = 2
 
 [node name="AttackRange" type="Node" parent="LaunchProjectile/Stats"]
@@ -390,8 +391,8 @@ value = 10.0
 
 [node name="Damage" type="Node" parent="Stats"]
 script = ExtResource("16_ho6cm")
-base_value = 5.0
-value = 5.0
+base_value = 1.0
+value = 1.0
 type = 2
 
 [node name="Price" type="Node" parent="Stats"]
@@ -433,7 +434,7 @@ script = ExtResource("17_x1ya5")
 
 [node name="EvolveBranch" type="Node" parent="EvolveTree"]
 script = ExtResource("18_1q0mh")
-evolve_level = 1
+evolve_level = 2
 
 [node name="NormalElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch"]
 script = ExtResource("19_qeikc")
@@ -444,15 +445,13 @@ info = "Normal"
 
 [node name="CriticalChance" type="Node" parent="EvolveTree/EvolveBranch/NormalElementEvolveLeaf"]
 script = ExtResource("24_2wu8h")
-is_skill_modifier = true
 skill_name = "Nova"
-skill_type = 1
-type = 0
-stat = 7
+calculate_type = 0
+stat_type = 7
 
 [node name="EvolveBranch2" type="Node" parent="EvolveTree"]
 script = ExtResource("18_1q0mh")
-evolve_level = 1
+evolve_level = 2
 
 [node name="FireElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch2"]
 script = ExtResource("19_qeikc")
@@ -467,7 +466,7 @@ info = "Fire"
 
 [node name="EvolveBranch3" type="Node" parent="EvolveTree"]
 script = ExtResource("18_1q0mh")
-evolve_level = 1
+evolve_level = 2
 
 [node name="FrostElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch3"]
 script = ExtResource("19_qeikc")
@@ -482,7 +481,7 @@ info = "Frost"
 
 [node name="EvolveBranch4" type="Node" parent="EvolveTree"]
 script = ExtResource("18_1q0mh")
-evolve_level = 1
+evolve_level = 2
 
 [node name="PoisonElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch4"]
 script = ExtResource("19_qeikc")
@@ -494,6 +493,9 @@ new_damage_data_scene = ExtResource("30_jsgjd")
 evolve_glow_color = Color(0.571428, 1, 0.494981, 1)
 icon = ExtResource("37_ywbce")
 info = "Poison"
+
+[node name="ModifierManager" type="Node" parent="."]
+script = ExtResource("40_wh8uf")
 
 [connection signal="body_entered" from="RangeArea" to="." method="_on_range_area_body_entered"]
 [connection signal="body_exited" from="RangeArea" to="." method="_on_range_area_body_exited"]

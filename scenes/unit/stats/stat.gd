@@ -10,6 +10,13 @@ extends Node
 
 var flat_modifiers : Array[ModifierData]
 var multiply_modifiers : Array[ModifierData]
+var global_flat_modifiers : Array[ModifierData]
+var global_multiply_modifiers :Array[ModifierData]
+
+var has_modifiers : bool = false : 
+	get:
+		return not flat_modifiers.is_empty() or not multiply_modifiers.is_empty() or not global_flat_modifiers.is_empty() or not global_multiply_modifiers.is_empty()
+		
 
 signal changed(stat : Stat)
 
@@ -18,61 +25,32 @@ func _ready() -> void:
 	name = str(Utils.StatType.keys()[type])
 
 
-func add_modifier_data(modifier : ModifierData) -> void:
-	match modifier.type:
+func add_modifier(modifier : ModifierData) -> void:
+	match modifier.modifier_type:
 		Utils.ModifyType.Flat:
-			flat_modifiers.append(modifier)
-		Utils.ModifyType.Multiply:
-			multiply_modifiers.append(modifier)
-	
-	var modified_value : float = base_value
-	
-	if not flat_modifiers.is_empty():
-		for mod in flat_modifiers:
-			modified_value += mod.value
-	
-	if not multiply_modifiers.is_empty():
-		for mod in multiply_modifiers:
-			if modified_value != 0.0:
-				modified_value *= (1.0 + mod.value)
+			if modifier.modifier_type == Utils.ModifierType.GlobalModifier:
+				global_flat_modifiers.append(modifier)
 			else:
-				modified_value += mod.value
-	
-	#limit speed
-	if type == Utils.StatType.Speed:
-		var minimum_value : float = base_value * 0.1
-		modified_value = modified_value if modified_value >= minimum_value else minimum_value
-	
-	print(name, " modified value: ", modified_value)
-	value = modified_value
+				flat_modifiers.append(modifier)
+		Utils.ModifyType.Multiply:
+			if modifier.modifier_type == Utils.ModifierType.GlobalModifier:
+				global_multiply_modifiers.append(modifier)
+			else:
+				multiply_modifiers.append(modifier)
 
 
-func remove_modifier_data(modifier : ModifierData) -> void:
-	match modifier.type:
+func remove_modifier(modifier : ModifierData) -> void:
+	match modifier.modifier_type:
 		Utils.ModifyType.Flat:
-			flat_modifiers.erase(modifier)
-		Utils.ModifyType.Multiply:
-			multiply_modifiers.erase(modifier)
-	
-	var modified_value : float = base_value
-	
-	if not flat_modifiers.is_empty():
-		for mod in flat_modifiers:
-			modified_value += mod.value
-	
-	if not multiply_modifiers.is_empty():
-		for mod in multiply_modifiers:
-			if modified_value != 0.0:
-				modified_value *= (1.0 + mod.value)
+			if modifier.modifier_type == Utils.ModifierType.GlobalModifier:
+				global_flat_modifiers.erase(modifier)
 			else:
-				modified_value += mod.value
-	
-	#limit speed
-	if type == Utils.StatType.Speed:
-		var minimum_value : float = base_value * 0.1
-		modified_value = modified_value if modified_value >= minimum_value else minimum_value
-	
-	value = modified_value
+				flat_modifiers.erase(modifier)
+		Utils.ModifyType.Multiply:
+			if modifier.modifier_type == Utils.ModifierType.GlobalModifier:
+				global_multiply_modifiers.erase(modifier)
+			else:
+				multiply_modifiers.erase(modifier)
 
 
 func reset_stat_value() -> void:

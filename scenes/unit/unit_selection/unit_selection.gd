@@ -67,28 +67,53 @@ func _forced_select(selection : Node2D) -> void:
 
 
 func _select() -> void:
-	var overlapped_bodies : Array[Node2D] = get_overlapping_bodies()
+	if selected_unit != null:
+		_clear_selection()
+	
+	var overlapped_bodies : Array[Node2D] = get_overlapping_bodies().filter(filter_selectable)
 	
 	if overlapped_bodies.is_empty():
 		return
 	
-	var closest_distance : float = 9999
-	var distance_to_body : float = 0
+	var evolved_buildings : Array[Node2D] = overlapped_bodies.filter(filter_evolved_buildings)
 	
-	if selected_unit != null:
-		_clear_selection()
+	selected_unit = find_closest(evolved_buildings)
 	
-	for body in overlapped_bodies:
-		if body.is_in_group(GroupNames.SELECTABLE):
-			distance_to_body = global_position.distance_to(body.global_position)
-			if distance_to_body < closest_distance:
-				selected_unit = body
-				closest_distance = distance_to_body
+	if selected_unit == null:
+		selected_unit = find_closest(overlapped_bodies)
 	
 	if selected_unit == null:
 		return
 	
 	GameSignals.selected_unit.emit(selected_unit)
+
+
+func find_closest(node_list : Array[Node2D]) -> Node2D:
+	if node_list.is_empty():
+		return null
+		
+	var closest_node : Node2D = null
+	var closest_distance : float = 9999
+	var distance_to_body : float = 0
+	
+	for node in node_list:
+		distance_to_body = global_position.distance_to(node.global_position)
+		if distance_to_body < closest_distance:
+			closest_node = node
+			closest_distance = distance_to_body
+	
+	return closest_node
+
+
+func filter_evolved_buildings(node : Node2D) -> bool:
+	if node is Building:
+		if node.evolve_tree.can_evolve:
+			return true
+	return false
+
+
+func filter_selectable(node : Node2D) -> bool:
+	return node.is_in_group(GroupNames.SELECTABLE)
 
 
 func _clear_selection() -> void:

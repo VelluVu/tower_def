@@ -4,14 +4,16 @@
 [ext_resource type="Texture2D" uid="uid://d1s2xw53fx6au" path="res://icon.svg" id="1_ev0ge"]
 
 [resource]
+resource_local_to_scene = true
 script = ExtResource("1_5egej")
 evolve_icon = ExtResource("1_ev0ge")
 evolve_level_reguirement = 0
-is_skill_modifier = false
+modifier_type = 0
 skill_type = 0
 skill_name = "Skill"
 elements = 15
 modify_stat_type = 2
 modify_type = 1
-modify_Value = 0.1
+is_percent = true
+modify_value = 0.1
 evolve_name = "Damage"

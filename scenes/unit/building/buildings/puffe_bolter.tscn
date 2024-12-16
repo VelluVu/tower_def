@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=3 uid="uid://bhmw5jig6ecq1"]
+[gd_scene load_steps=64 format=3 uid="uid://bhmw5jig6ecq1"]
 
 [ext_resource type="Script" path="res://scenes/unit/building/tower.gd" id="1_wwpqv"]
 [ext_resource type="PackedScene" uid="uid://crbx1w230gw8" path="res://scenes/unit/skills/launch_projectile.tscn" id="3_8jepy"]
@@ -39,6 +39,7 @@
 [ext_resource type="Texture2D" uid="uid://ckuyok58lmswj" path="res://assets/art/units/building/puffe/puffe_bolter/green_puffe_bolter_icon.png" id="29_pjst3"]
 [ext_resource type="Texture2D" uid="uid://4vr2yacqou07" path="res://assets/art/ui/frost_element_icon.png" id="31_t8h32"]
 [ext_resource type="Texture2D" uid="uid://b6lo5eq5siv2u" path="res://assets/art/ui/poison_element_icon.png" id="36_5eit6"]
+[ext_resource type="Script" path="res://scenes/unit/modifier_manager.gd" id="40_o7aqn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jxaqe"]
 size = Vector2(16, 16)
@@ -326,8 +327,8 @@ script = ExtResource("16_uqw4x")
 
 [node name="Damage" type="Node" parent="LaunchProjectile/Stats"]
 script = ExtResource("17_m7bv2")
-base_value = 10.0
-value = 10.0
+base_value = 2.0
+value = 2.0
 type = 2
 
 [node name="AttackRange" type="Node" parent="LaunchProjectile/Stats"]
@@ -385,8 +386,8 @@ value = 5.0
 
 [node name="Damage" type="Node" parent="Stats"]
 script = ExtResource("17_m7bv2")
-base_value = 10.0
-value = 10.0
+base_value = 1.0
+value = 1.0
 type = 2
 
 [node name="Price" type="Node" parent="Stats"]
@@ -426,7 +427,7 @@ script = ExtResource("16_l8ube")
 
 [node name="EvolveBranch" type="Node" parent="EvolveTree"]
 script = ExtResource("17_bv0np")
-evolve_level = 1
+evolve_level = 2
 
 [node name="NormalElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch"]
 script = ExtResource("19_wcrsl")
@@ -437,22 +438,18 @@ info = "Normal"
 
 [node name="DamageModifier" type="Node" parent="EvolveTree/EvolveBranch/NormalElementEvolveLeaf"]
 script = ExtResource("24_v32av")
-type = 0
-stat = 2
+calculate_type = 0
+stat_type = 2
 value = 1.0
 
 [node name="CriticalChanceModifier" type="Node" parent="EvolveTree/EvolveBranch/NormalElementEvolveLeaf"]
 script = ExtResource("24_v32av")
-type = 0
-stat = 7
-
-[node name="EvolveBranch4" type="Node" parent="EvolveTree/EvolveBranch"]
-script = ExtResource("17_bv0np")
-evolve_level = 4
+calculate_type = 0
+stat_type = 7
 
 [node name="EvolveBranch2" type="Node" parent="EvolveTree"]
 script = ExtResource("17_bv0np")
-evolve_level = 1
+evolve_level = 2
 
 [node name="FireElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch2"]
 script = ExtResource("19_wcrsl")
@@ -466,17 +463,13 @@ info = "Fire"
 
 [node name="DamageFlatModifier" type="Node" parent="EvolveTree/EvolveBranch2/FireElementEvolveLeaf"]
 script = ExtResource("24_v32av")
-type = 0
-stat = 2
+calculate_type = 0
+stat_type = 2
 value = 1.0
-
-[node name="EvolveBranch5" type="Node" parent="EvolveTree/EvolveBranch2"]
-script = ExtResource("17_bv0np")
-evolve_level = 4
 
 [node name="EvolveBranch3" type="Node" parent="EvolveTree"]
 script = ExtResource("17_bv0np")
-evolve_level = 1
+evolve_level = 2
 
 [node name="FrostElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch3"]
 script = ExtResource("19_wcrsl")
@@ -488,13 +481,9 @@ new_damage_data_scene = ExtResource("27_pf0qb")
 icon = ExtResource("31_t8h32")
 info = "Frost"
 
-[node name="EvolveBranch6" type="Node" parent="EvolveTree/EvolveBranch3"]
-script = ExtResource("17_bv0np")
-evolve_level = 4
-
 [node name="EvolveBranch4" type="Node" parent="EvolveTree"]
 script = ExtResource("17_bv0np")
-evolve_level = 1
+evolve_level = 2
 
 [node name="PoisonElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch4"]
 script = ExtResource("19_wcrsl")
@@ -506,9 +495,8 @@ new_damage_data_scene = ExtResource("29_ajupy")
 icon = ExtResource("36_5eit6")
 info = "Poison"
 
-[node name="EvolveBranch7" type="Node" parent="EvolveTree/EvolveBranch4"]
-script = ExtResource("17_bv0np")
-evolve_level = 4
+[node name="ModifierManager" type="Node" parent="."]
+script = ExtResource("40_o7aqn")
 
 [connection signal="body_entered" from="RangeArea" to="." method="_on_range_area_body_entered"]
 [connection signal="body_exited" from="RangeArea" to="." method="_on_range_area_body_exited"]

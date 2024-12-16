@@ -1,0 +1,378 @@
+[gd_scene load_steps=41 format=3 uid="uid://6t4e2c8di3ko"]
+
+[ext_resource type="Script" path="res://scenes/unit/building/trap.gd" id="1_oqrf3"]
+[ext_resource type="Texture2D" uid="uid://dshkxaaj6nj66" path="res://assets/art/units/building/leopard_trap/lebu_trap_icon.png" id="2_g6rll"]
+[ext_resource type="Texture2D" uid="uid://cw3b3xwravgoe" path="res://assets/art/units/evolve_glow.png" id="3_2qty6"]
+[ext_resource type="Script" path="res://scenes/unit/animation_control.gd" id="4_bksc7"]
+[ext_resource type="Material" uid="uid://c3sja1ms0jrnf" path="res://assets/shaders/shader_materials/building_hit_shader_material.tres" id="5_s6oh0"]
+[ext_resource type="Texture2D" uid="uid://by7db4v3yqky6" path="res://assets/art/units/building/leopard_trap/lebu_trap.png" id="6_hqhud"]
+[ext_resource type="PackedScene" uid="uid://dd11cco5cukhw" path="res://scenes/unit/unit_selection/selectable_unit.tscn" id="7_ft1wp"]
+[ext_resource type="PackedScene" uid="uid://ccc725wgsiq36" path="res://scenes/unit/building/placement_validator.tscn" id="8_ung7c"]
+[ext_resource type="PackedScene" uid="uid://c5o05ed0n7tdq" path="res://scenes/unit/evolve_level_up_particle_effect.tscn" id="9_h1cjc"]
+[ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_handler.gd" id="10_58yvx"]
+[ext_resource type="Script" path="res://scenes/unit/stats/stats.gd" id="11_5kva3"]
+[ext_resource type="Script" path="res://scenes/unit/stats/stat.gd" id="12_l0gwn"]
+[ext_resource type="Script" path="res://scenes/unit/evolve_tree/evolve_tree.gd" id="13_3jr76"]
+[ext_resource type="Script" path="res://scenes/unit/evolve_tree/evolve_branch.gd" id="14_p70yp"]
+[ext_resource type="PackedScene" uid="uid://cv1jn2uajfuis" path="res://scenes/unit/skills/leopard_claws.tscn" id="15_bukoe"]
+[ext_resource type="Script" path="res://scenes/unit/building/range_area.gd" id="17_06el6"]
+[ext_resource type="Script" path="res://scenes/unit/skills/damage_data.gd" id="17_ykudp"]
+[ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_data.gd" id="18_gagl5"]
+[ext_resource type="Script" path="res://scenes/unit/modifier_manager.gd" id="19_3ukhc"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_4ih23"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_usbqs"]
+atlas = ExtResource("3_2qty6")
+region = Rect2(0, 0, 32, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f8uaa"]
+atlas = ExtResource("3_2qty6")
+region = Rect2(32, 0, 32, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qlxsh"]
+atlas = ExtResource("3_2qty6")
+region = Rect2(0, 28, 32, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4vmd5"]
+atlas = ExtResource("3_2qty6")
+region = Rect2(32, 28, 32, 28)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jfwiu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_usbqs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f8uaa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qlxsh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4vmd5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8pj8t"]
+size = Vector2(16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nkgt1"]
+atlas = ExtResource("6_hqhud")
+region = Rect2(0, 20, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xd10m"]
+atlas = ExtResource("6_hqhud")
+region = Rect2(20, 20, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d1e0g"]
+atlas = ExtResource("6_hqhud")
+region = Rect2(40, 20, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ccjf"]
+atlas = ExtResource("6_hqhud")
+region = Rect2(0, 40, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lejbf"]
+atlas = ExtResource("6_hqhud")
+region = Rect2(20, 40, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c23v5"]
+atlas = ExtResource("6_hqhud")
+region = Rect2(40, 40, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ok487"]
+atlas = ExtResource("6_hqhud")
+region = Rect2(0, 0, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_elbc7"]
+atlas = ExtResource("6_hqhud")
+region = Rect2(20, 0, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x5s2i"]
+atlas = ExtResource("6_hqhud")
+region = Rect2(40, 0, 20, 20)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0yamy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nkgt1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xd10m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d1e0g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5ccjf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lejbf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c23v5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xd10m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nkgt1")
+}],
+"loop": false,
+"name": &"ATTACK",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ok487")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ok487")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_elbc7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_elbc7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x5s2i")
+}],
+"loop": true,
+"name": &"IDLE",
+"speed": 10.0
+}]
+
+[sub_resource type="Animation" id="Animation_4gyud"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/enabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_ljeel"]
+resource_name = "hit"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/enabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yhdvm"]
+_data = {
+"RESET": SubResource("Animation_4gyud"),
+"hit": SubResource("Animation_ljeel")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wlrxm"]
+
+[node name="LeopardTrap" type="StaticBody2D" node_paths=PackedStringArray("skill") groups=["Buildings"]]
+collision_layer = 4
+collision_mask = 0
+physics_material_override = SubResource("PhysicsMaterial_4ih23")
+script = ExtResource("1_oqrf3")
+skill = NodePath("LeopardClaws")
+icon = ExtResource("2_g6rll")
+astar_weight = 1.0
+
+[node name="EvolveGlow" type="AnimatedSprite2D" parent="."]
+modulate = Color(0.917647, 0.996078, 0.286275, 1)
+texture_filter = 1
+position = Vector2(0, -3)
+sprite_frames = SubResource("SpriteFrames_jfwiu")
+autoplay = "default"
+script = ExtResource("4_bksc7")
+metadata/_aseprite_wizard_config_ = {
+"layer": "",
+"o_ex_p": "",
+"o_folder": "res://assets/art/units",
+"o_name": "",
+"only_visible": false,
+"slice": "",
+"source": "res://assets/art/units/evolve_glow.aseprite"
+}
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true
+}
+metadata/_aseprite_wizard_source_file_hash_ = "fbdbd2bbea6178ca26a0b94d13795d3e"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_8pj8t")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+material = ExtResource("5_s6oh0")
+position = Vector2(0, -5)
+sprite_frames = SubResource("SpriteFrames_0yamy")
+animation = &"IDLE"
+autoplay = "IDLE"
+script = ExtResource("4_bksc7")
+metadata/_aseprite_wizard_config_ = {
+"layer": "",
+"o_ex_p": "",
+"o_folder": "res://assets/art/units/building/leopard_trap",
+"o_name": "",
+"only_visible": false,
+"slice": "",
+"source": "res://assets/art/units/building/leopard_trap/lebu_trap.aseprite"
+}
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true
+}
+metadata/_aseprite_wizard_source_file_hash_ = "57c2507458784f6b19664948d7c85923"
+
+[node name="HitAnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite2D"]
+libraries = {
+"": SubResource("AnimationLibrary_yhdvm")
+}
+
+[node name="SelectableUnit" parent="." instance=ExtResource("7_ft1wp")]
+
+[node name="PlacementValidator" parent="." instance=ExtResource("8_ung7c")]
+collision_mask = 4
+
+[node name="PopUpSpot" type="Node2D" parent="."]
+position = Vector2(0, -10)
+
+[node name="EvolveLevelUpParticleEffect" parent="." instance=ExtResource("9_h1cjc")]
+position = Vector2(0, -5)
+
+[node name="OvertimeEffectHandler" type="Node" parent="."]
+script = ExtResource("10_58yvx")
+
+[node name="Stats" type="Node" parent="."]
+script = ExtResource("11_5kva3")
+
+[node name="MaxHealth" type="Node" parent="Stats"]
+script = ExtResource("12_l0gwn")
+base_value = 100.0
+value = 100.0
+type = 1
+
+[node name="Health" type="Node" parent="Stats"]
+script = ExtResource("12_l0gwn")
+base_value = 100.0
+value = 100.0
+
+[node name="Damage" type="Node" parent="Stats"]
+script = ExtResource("12_l0gwn")
+base_value = 1.0
+value = 1.0
+type = 2
+
+[node name="Price" type="Node" parent="Stats"]
+script = ExtResource("12_l0gwn")
+base_value = 5.0
+value = 5.0
+type = 3
+
+[node name="Speed" type="Node" parent="Stats"]
+script = ExtResource("12_l0gwn")
+type = 4
+
+[node name="AttackRange" type="Node" parent="Stats"]
+script = ExtResource("12_l0gwn")
+base_value = 1.0
+value = 1.0
+type = 5
+
+[node name="AttackSpeed" type="Node" parent="Stats"]
+script = ExtResource("12_l0gwn")
+type = 6
+
+[node name="CriticalChance" type="Node" parent="Stats"]
+script = ExtResource("12_l0gwn")
+base_value = 0.25
+value = 0.25
+type = 7
+
+[node name="CriticalMultiplier" type="Node" parent="Stats"]
+script = ExtResource("12_l0gwn")
+base_value = 2.0
+value = 2.0
+type = 8
+
+[node name="ActiveDuration" type="Node" parent="Stats"]
+script = ExtResource("12_l0gwn")
+type = 9
+
+[node name="EvolveTree" type="Node" parent="."]
+script = ExtResource("13_3jr76")
+
+[node name="EvolveBranch" type="Node" parent="EvolveTree"]
+script = ExtResource("14_p70yp")
+evolve_level = 2
+
+[node name="RangeArea" type="Area2D" parent="."]
+z_index = 10
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("17_06el6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RangeArea"]
+shape = SubResource("CircleShape2D_wlrxm")
+
+[node name="LeopardClaws" parent="." node_paths=PackedStringArray("actor") instance=ExtResource("15_bukoe")]
+attack_size = 32.0
+actor = NodePath("..")
+
+[node name="Stats" type="Node" parent="LeopardClaws"]
+script = ExtResource("11_5kva3")
+
+[node name="Damage" type="Node" parent="LeopardClaws/Stats"]
+script = ExtResource("12_l0gwn")
+base_value = 4.0
+value = 4.0
+type = 2
+
+[node name="AttackRange" type="Node" parent="LeopardClaws/Stats"]
+script = ExtResource("12_l0gwn")
+type = 5
+
+[node name="AttackSpeed" type="Node" parent="LeopardClaws/Stats"]
+script = ExtResource("12_l0gwn")
+type = 6
+
+[node name="CriticalChance" type="Node" parent="LeopardClaws/Stats"]
+script = ExtResource("12_l0gwn")
+type = 7
+
+[node name="CriticalMultiplier" type="Node" parent="LeopardClaws/Stats"]
+script = ExtResource("12_l0gwn")
+type = 8
+
+[node name="ActiveDuration" type="Node" parent="LeopardClaws/Stats"]
+script = ExtResource("12_l0gwn")
+type = 9
+
+[node name="DamageData" type="Node" parent="LeopardClaws"]
+script = ExtResource("17_ykudp")
+
+[node name="OvertimeEffectData" type="Node" parent="LeopardClaws/DamageData"]
+script = ExtResource("18_gagl5")
+tick_damage = 0.0
+
+[node name="ModifierManager" type="Node" parent="."]
+script = ExtResource("19_3ukhc")

@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="EvolveResource" load_steps=3 format=3 uid="uid://bg6j6fbsnisw5"]
+
+[ext_resource type="Texture2D" uid="uid://d1s2xw53fx6au" path="res://icon.svg" id="1_pfl4w"]
+[ext_resource type="Script" path="res://scenes/unit/evolve_tree/evolve_resource.gd" id="2_gqfgy"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("2_gqfgy")
+evolve_icon = ExtResource("1_pfl4w")
+evolve_level_reguirement = 0
+modifier_type = 0
+skill_type = 14
+skill_name = "Skill"
+elements = 15
+modify_stat_type = 5
+modify_type = 0
+is_randomized_modify_value = false
+is_percent = false
+modify_value = 1.0
+evolve_name = "Attack Range"

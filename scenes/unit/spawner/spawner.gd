@@ -4,8 +4,8 @@ extends Node2D
 
 const NO_SPAWNABLE_SCENE_WARNING : String = " There are no spawnable scene!"
 
-@onready var spawn_interval_timer : Timer = $SpawnIntervalTimer
-@onready var spawn_start_delay_timer : Timer = $SpawnStartDelayTimer
+@onready var spawn_interval_timer : CustomTimer = $SpawnIntervalTimer
+@onready var spawn_start_delay_timer : CustomTimer = $SpawnStartDelayTimer
 
 @export var start_from_timer : bool = true
 @export var id : int = 0

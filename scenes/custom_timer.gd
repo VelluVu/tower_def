@@ -18,7 +18,7 @@ var base_wait_time : float = 0.0 :
 			
 		base_wait_time = value
 		
-		if value <= 0.0:
+		if base_wait_time <= 0.0:
 			return
 		
 		wait_time = base_wait_time / Utils.game_control.time_scale

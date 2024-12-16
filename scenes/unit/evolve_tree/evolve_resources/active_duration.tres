@@ -4,14 +4,16 @@
 [ext_resource type="Script" path="res://scenes/unit/evolve_tree/evolve_resource.gd" id="2_tvfte"]
 
 [resource]
+resource_local_to_scene = true
 script = ExtResource("2_tvfte")
 evolve_icon = ExtResource("1_jqr5n")
 evolve_level_reguirement = 0
-is_skill_modifier = false
+modifier_type = 0
 skill_type = 0
 skill_name = "Skill"
 elements = 15
 modify_stat_type = 9
 modify_type = 1
-modify_Value = 0.1
+is_percent = true
+modify_value = 0.1
 evolve_name = "Active Duration"

@@ -3,6 +3,8 @@ extends ConditionLeaf
 
 
 func tick(actor : Node, _blackboard : Blackboard) -> int:
-	if actor.level.has_building_in_world_position(actor.next_waypoint):
+	var building : Building = actor.get_building_in_next_waypoint()
+	
+	if building != null:
 		return SUCCESS
 	return FAILURE

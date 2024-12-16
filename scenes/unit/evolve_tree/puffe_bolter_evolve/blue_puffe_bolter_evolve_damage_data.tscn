@@ -18,4 +18,4 @@ effectType = 1
 
 [node name="SlowModifier" type="Node" parent="SlowingOvertimeEffectData"]
 script = ExtResource("3_s7761")
-value = -0.2
+value = -0.1

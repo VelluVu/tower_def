@@ -22,13 +22,15 @@ func get_possible_evolve_resources(evolve_level : int, evolve_element : Utils.El
 			continue
 		
 		if skill != null:
+			#restrict on some skills, like all range on melee skill
+			if skill.skill_type == Utils.SkillType.Melee:
+				if resource.modify_stat_type == Utils.StatType.AttackRange:
+					continue
+				
 			if skill.base_active_time <= 0.0 and resource.modify_stat_type == Utils.StatType.ActiveDuration:
 				continue
 		
-		#fix this mis match with enum and flags
-		if resource.is_skill_modifier:
-			#print("Testing skill match in resource ", resource.evolve_name, " , skill type: ", skill.skill_type, " against skill type flags value: ", resource.skill_type)
-			#if skill modifier only accept resources with flagged skill types
+		if resource.modifier_type == Utils.ModifierType.SkillModifier:
 			if not has_flag(resource.skill_type, skill.skill_type):
 				continue
 		
@@ -48,6 +50,8 @@ func get_random_evolve_resources(evolve_level : int, evolve_element : Utils.Elem
 	
 	for n in max_evolve_resources:
 		var random_resource : EvolveResource = possible_resources.pick_random()
+		if random_resource == null:
+			continue
 		resources_to_return.append(random_resource)
 		possible_resources.erase(random_resource)
 	

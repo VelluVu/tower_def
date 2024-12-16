@@ -57,6 +57,13 @@ enum ModifyType
 	Multiply,
 }
 
+enum ModifierType
+{
+	StatModifier,
+	SkillModifier,
+	GlobalModifier,
+}
+
 enum Element
 {
 	Normal = 1 << 0,

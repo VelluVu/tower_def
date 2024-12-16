@@ -9,5 +9,4 @@ damage_type = 8
 
 [node name="OvertimeEffectData" type="Node" parent="."]
 script = ExtResource("2_mj0il")
-tick_damage = 0.0
 damage_type = 8

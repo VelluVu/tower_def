@@ -2,16 +2,25 @@ class_name Stats
 extends Node
 
 
-var stats : Array[Stat]
+var stats : Array[Stat] :
+	get = _get_stats
+
 signal stat_changed(stat : Stat)
 signal stats_changed(stat : Stat)
 
 
 func _ready() -> void:
-	for child in get_children():
-		if child is Stat:
-			stats.append(child)
-			child.changed.connect(_on_stat_changed)
+	stats = _get_stats()
+
+
+func _get_stats() -> Array[Stat]:
+	if stats.is_empty():
+		for child in get_children():
+			if child is Stat:
+				stats.append(child)
+				if not child.changed.is_connected(_on_stat_changed):
+					child.changed.connect(_on_stat_changed)
+	return stats
 
 
 func _on_stat_changed(_stat : Stat) -> void:

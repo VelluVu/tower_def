@@ -85,6 +85,10 @@ func has_flag(a : int, b : int) -> bool:
 	return a & b != 0
 
 
+func is_position_walkable(_position : Vector2) -> bool:
+	return is_cell_walkable(world_position_to_grid(_position))
+
+
 func is_cell_walkable(cell : Vector2i) -> bool:
 	#get data from tiles class, and iterate through all layers
 	var tile_data : TileData = null
@@ -116,6 +120,24 @@ func is_cell_walkable(cell : Vector2i) -> bool:
 	return is_walkable
 
 
+func get_walkable_surrounding_cells(cell : Vector2i) -> Array[Vector2i]:
+	#just quick way to get cell coordinates around the cell
+	var surrounding_cells : Array[Vector2i] = tiles.ground_layer.get_surrounding_cells(cell).filter(filter_walkable_cells)
+	return surrounding_cells.filter(filter_out_buildings)
+ 
+
+func filter_out_buildings(cell : Vector2i) -> bool:
+	if has_building_in_cell_position(cell):
+		if get_building_from_cell_position(cell) is Trap:
+			return true
+		return false
+	return true
+
+
+func filter_walkable_cells(cell : Vector2i) -> bool:
+	return is_cell_walkable(cell)
+
+
 func handle_walkable_cells() -> void:
 	for cell in tiles.ground_layer.get_used_cells():
 		var is_walkable : bool = is_cell_walkable(cell)
@@ -127,30 +149,18 @@ func handle_walkable_cells() -> void:
 
 
 func get_neighbour_buildings_from_world_position(_position : Vector2) -> Array[Building]:
-	var neighbour_building_grid_positions : Array[Building]
 	var grid_position = world_position_to_grid(_position)
+	var neighbour_buildings : Array[Building]
+	var surrounding_cells : Array[Vector2i] = tiles.ground_layer.get_surrounding_cells(grid_position).filter(filter_cells_with_buildings)
 	
-	var building : Building = get_building_from_cell_position(grid_position - Vector2i(1,0))
+	for building_cell in surrounding_cells:
+		neighbour_buildings.append(get_building_from_cell_position(building_cell))
 	
-	if building != null:
-		neighbour_building_grid_positions.append(building)
-	
-	building = get_building_from_cell_position(grid_position + Vector2i(1,0))
-	
-	if building != null:
-		neighbour_building_grid_positions.append(building)
-	
-	building = get_building_from_cell_position(grid_position + Vector2i(0,1))
-	
-	if building != null:
-		neighbour_building_grid_positions.append(building)
-	
-	building = get_building_from_cell_position(grid_position - Vector2i(0,1))
-	
-	if building != null:
-		neighbour_building_grid_positions.append(building)
-	
-	return neighbour_building_grid_positions
+	return neighbour_buildings
+
+
+func filter_cells_with_buildings(cell : Vector2i) -> bool:
+	return has_building_in_cell_position(cell)
 
 
 func has_building_in_cell_position(_grid_pos : Vector2i) -> bool:

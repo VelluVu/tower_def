@@ -5,6 +5,7 @@
 
 [node name="LaunchProjectile" type="Node2D"]
 script = ExtResource("1_3cuil")
+skill_name = "LaunchProjectile"
 base_cast_time = 0.2
 
 [node name="SkillStateTimers" parent="." instance=ExtResource("2_4wxg6")]

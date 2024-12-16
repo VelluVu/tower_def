@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://bj8fmaeegual3"]
+[gd_scene load_steps=43 format=3 uid="uid://bj8fmaeegual3"]
 
 [ext_resource type="Script" path="res://scenes/unit/enemy/enemy.gd" id="1_kifef"]
 [ext_resource type="Texture2D" uid="uid://g5ruw0cdagou" path="res://assets/art/units/enemy/beefling/beefling_icon.png" id="2_kr4lh"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_data.gd" id="12_8jq7h"]
 [ext_resource type="Script" path="res://scenes/unit/stats/stats.gd" id="14_3odyu"]
 [ext_resource type="Script" path="res://scenes/unit/stats/stat.gd" id="15_blw40"]
+[ext_resource type="Script" path="res://scenes/unit/modifier_manager.gd" id="17_ylvba"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_43mte"]
 friction = 0.0
@@ -284,6 +285,7 @@ gore_effect_scene = ExtResource("7_fryta")
 [node name="SelectableUnit" parent="." instance=ExtResource("9_vbtac")]
 
 [node name="MeleeAttack" parent="." instance=ExtResource("10_l8gd0")]
+attack_distance = 8.0
 skill_type = 16
 base_cast_time = 0.75
 base_cooldown = 1.5
@@ -337,17 +339,19 @@ script = ExtResource("14_3odyu")
 
 [node name="MaxHealth" type="Node" parent="Stats"]
 script = ExtResource("15_blw40")
-base_value = 300.0
-value = 300.0
+base_value = 40.0
+value = 40.0
 type = 1
 
 [node name="Health" type="Node" parent="Stats"]
 script = ExtResource("15_blw40")
-base_value = 300.0
-value = 300.0
+base_value = 40.0
+value = 40.0
 
 [node name="Damage" type="Node" parent="Stats"]
 script = ExtResource("15_blw40")
+base_value = 1.0
+value = 1.0
 type = 2
 
 [node name="Price" type="Node" parent="Stats"]
@@ -383,3 +387,6 @@ type = 8
 [node name="ActiveDuration" type="Node" parent="Stats"]
 script = ExtResource("15_blw40")
 type = 9
+
+[node name="ModifierManager" type="Node" parent="."]
+script = ExtResource("17_ylvba")
