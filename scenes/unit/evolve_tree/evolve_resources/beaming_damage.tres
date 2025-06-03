@@ -14,6 +14,7 @@ skill_name = "Skill"
 elements = 15
 modify_stat_type = 2
 modify_type = 1
+is_randomized_modify_value = true
 is_percent = true
 modify_value = 0.15
 evolve_name = "Beaming Damage"

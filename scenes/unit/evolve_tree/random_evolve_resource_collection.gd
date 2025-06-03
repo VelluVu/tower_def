@@ -18,7 +18,7 @@ func get_possible_evolve_resources(evolve_level : int, evolve_element : Utils.El
 		
 		#only accept resources with flagged elements
 		#print("Testing elements match in resource ", resource.evolve_name, " , element type: ", evolve_element, " against element type flags value: ", resource.elements)
-		if not has_flag(resource.elements, evolve_element):
+		if not has_flags(resource.elements, evolve_element):
 			continue
 		
 		if skill != null:
@@ -31,7 +31,7 @@ func get_possible_evolve_resources(evolve_level : int, evolve_element : Utils.El
 				continue
 		
 		if resource.modifier_type == Utils.ModifierType.SkillModifier:
-			if not has_flag(resource.skill_type, skill.skill_type):
+			if not has_flags(resource.skill_type, skill.skill_type):
 				continue
 		
 		possible_resources.append(resource)
@@ -57,10 +57,14 @@ func get_random_evolve_resources(evolve_level : int, evolve_element : Utils.Elem
 	
 	return resources_to_return
 
-#IS THIS WORKING ?!? !??!? ?!??
+
 func has_flag(a : int, b : int) -> bool:
 	#print("test if in flags " , a , " is ", b, " result: ", (a & b), " is: ", ((a&b) == b))
 	return (a & b) == b
+
+
+func has_flags(a : int, b : int) -> bool:
+	return (a & b) != 0
 
 
 func _get_all_evolve_resources() -> void:

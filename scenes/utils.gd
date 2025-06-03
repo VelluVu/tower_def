@@ -21,6 +21,7 @@ enum StatType
 
 enum TileType
 {
+	None = 0,
 	Normal = 1 << 0, #1
 	Blocking = 1 << 1, #2
 	OnlyBuildable = 1 << 2, #4
@@ -29,6 +30,7 @@ enum TileType
 
 enum TileEffect
 {
+	None = 0,
 	NoEffect = 1 << 0,
 	Slowing = 1 << 1,
 	Freezing = 1 << 2,
@@ -39,6 +41,7 @@ enum TileEffect
 
 enum DamageType
 {
+	None = 0,
 	Normal = 1 << 0,
 	Fire = 1 << 1,
 	Frost = 1 << 2,
@@ -66,6 +69,7 @@ enum ModifierType
 
 enum Element
 {
+	None = 0,
 	Normal = 1 << 0,
 	Fire = 1 << 1,
 	Frost = 1 << 2,
@@ -74,6 +78,7 @@ enum Element
 
 enum SkillType
 {
+	None = 0,
 	Melee = 1 << 0,
 	Projectile = 1 << 1,
 	Area = 1 << 2,
