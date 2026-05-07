@@ -98,7 +98,7 @@ func place(value : Vector2) -> void:
 func take_damage(damage_data : DamageData):
 	if is_dead:
 		return
-	
+		
 	var health : Stat = stats.get_stat(Utils.StatType.Health)
 	var maxHealth : Stat = stats.get_stat(Utils.StatType.MaxHealth)
 	health.value -= damage_data.damage

@@ -23,6 +23,8 @@ func _ready() -> void:
 		shape.size.y = attack_size
 	if shape is CircleShape2D:
 		shape.radius = attack_size
+	
+	activate_collision_detection(false)
 
 
 func use(_target) -> void:

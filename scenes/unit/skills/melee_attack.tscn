@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cuv1fhpdbb5su"]
 
-[ext_resource type="Script" path="res://scenes/unit/skills/melee_attack.gd" id="1_fy7tn"]
+[ext_resource type="Script" uid="uid://3l6dyrgd3fua" path="res://scenes/unit/skills/melee_attack.gd" id="1_fy7tn"]
 [ext_resource type="PackedScene" uid="uid://bp7hd4rdex5do" path="res://scenes/unit/skills/skill_state_timers.tscn" id="2_kim70"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3b7ho"]

@@ -1,3 +1,4 @@
+@tool
 class_name StopMovement
 extends ActionLeaf
 

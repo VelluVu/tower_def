@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://b4ke4d7vk1ycf"]
+[gd_resource type="TileSet" format=3 uid="uid://b4ke4d7vk1ycf"]
 
 [ext_resource type="Texture2D" uid="uid://dky2cchs5826k" path="res://assets/art/tiles/water/water_animated_tile_set.png" id="1_jcafv"]
 

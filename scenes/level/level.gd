@@ -263,6 +263,7 @@ func _check_level_end_conditions() -> void:
 func _create_astar_grid() -> void:
 	astar_grid = AStarGrid2D.new()
 	var tileMapRect : Rect2i = tiles.ground_layer.get_used_rect()
+	print(tileMapRect)
 	var grid_region : Rect2i = tileMapRect
 	cell_size = tiles.ground_layer.tile_set.tile_size
 	offset = Vector2(cell_size.x * -0.5 + cell_size.x, cell_size.y * 0.5)

@@ -8,11 +8,15 @@
 
 config_version=5
 
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
 [application]
 
 config/name="tower_def"
 run/main_scene="res://scenes/main.tscn"
-config/features=PackedStringArray("4.3", "Mobile")
+config/features=PackedStringArray("4.6", "Mobile")
 config/icon="res://icon.svg"
 
 [autoload]
@@ -22,8 +26,8 @@ BuildingPlacementDrawer="*res://scenes/unit/building/building_placement_drawer.g
 GameSignals="*res://scenes/game_signals.gd"
 GroupNames="*res://scenes/group_names.gd"
 Utils="*res://scenes/utils.gd"
-BeehaveGlobalMetrics="*res://addons/beehave/metrics/beehave_global_metrics.gd"
-BeehaveGlobalDebugger="*res://addons/beehave/debug/global_debugger.gd"
+BeehaveGlobalMetrics="*uid://cepohe75ol73t"
+BeehaveGlobalDebugger="*uid://bm7qww333rkys"
 PlayerProgress="*res://scenes/player_progress.gd"
 GlobalAnimationNames="*res://scenes/global_animation_names.gd"
 RandomEvolveResourceCollection="*res://scenes/unit/evolve_tree/random_evolve_resource_collection.gd"
@@ -123,6 +127,10 @@ Escape={
 2d_physics/layer_1="blocked"
 2d_physics/layer_2="enemy"
 2d_physics/layer_3="building"
+
+[navigation]
+
+2d/use_edge_connections=false
 
 [physics]
 

@@ -147,7 +147,7 @@ func iterate_next_waypoint() -> void:
 
 
 func path_to(from : Vector2, to : Vector2) -> void:
-	to = level.snap_position_to_grid(to)
+	#to = level.snap_position_to_grid(to)
 	
 	point_path = level.find_path(from, to)
 	current_waypoint_index = 0

@@ -168,6 +168,8 @@ func _find_and_append_all_ui_scenes_from_file_names_in_directory_path(file_names
 	for file_name in file_names:
 		if file_name.ends_with(".remap"):
 			file_name = file_name.replace(".remap", "")
+		if file_name.ends_with(".uid"):
+			file_name = file_name.replace(".uid", "")
 			
 		var file_path : String = directory_path + SLASH + file_name
 		

@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://cbq3heog26w0o"]
+[gd_resource type="TileSet" format=3 uid="uid://cbq3heog26w0o"]
 
 [ext_resource type="Texture2D" uid="uid://dmbsllogy2x0b" path="res://assets/art/tiles/green_land/background_tiles.png" id="1_4a8w5"]
 

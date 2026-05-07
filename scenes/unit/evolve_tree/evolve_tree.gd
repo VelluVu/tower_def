@@ -6,7 +6,7 @@ extends Node
 
 @onready var all_branches : Array[EvolveBranch] :
 	get = _get_all_branches
-
+@export var isRandomChoicesEnabled : bool = false
 var available_evolve_level : int = 1
 var is_visited : bool = true
 var evolve_element : Utils.Element = Utils.Element.Normal
@@ -80,7 +80,7 @@ func _select_evolve_choices() -> void:
 	current_leafs = _get_current_leafs()
 	
 	#if unable to get preset leafs, provide set of random evolve choices.
-	if current_leafs.is_empty():
+	if current_leafs.is_empty() and isRandomChoicesEnabled:
 		current_random_evolve_choices = RandomEvolveResourceCollection.get_random_evolve_resources(current_evolve_level, evolve_element, actor.skill)
 
 

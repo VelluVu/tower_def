@@ -1,4 +1,4 @@
-[gd_resource type="VisualShader" load_steps=5 format=3 uid="uid://bntr8mx5cvbka"]
+[gd_resource type="VisualShader" format=3 uid="uid://bntr8mx5cvbka"]
 
 [sub_resource type="VisualShaderNodeColorParameter" id="VisualShaderNodeColorParameter_1jyd0"]
 parameter_name = "hit_color"
@@ -17,51 +17,6 @@ expanded_output_ports = [0]
 input_name = "color"
 
 [resource]
-code = "shader_type canvas_item;
-render_mode blend_mix;
-
-uniform bool enabled = false;
-uniform vec4 hit_color : source_color = vec4(0.831373, 0.133333, 0.000000, 1.000000);
-
-
-
-void fragment() {
-// BooleanParameter:3
-	bool n_out3p0 = enabled;
-
-
-// ColorParameter:2
-	vec4 n_out2p0 = hit_color;
-
-
-// Input:5
-	vec4 n_out5p0 = COLOR;
-
-
-	vec3 n_out4p0;
-// If:4
-	float n_in4p1 = 1.00000;
-	float n_in4p2 = 0.00001;
-	if(abs((n_out3p0 ? 1.0 : 0.0) - n_in4p1) < n_in4p2)
-	{
-		n_out4p0 = vec3(n_out2p0.xyz);
-	}
-	else if((n_out3p0 ? 1.0 : 0.0) < n_in4p1)
-	{
-		n_out4p0 = vec3(n_out5p0.xyz);
-	}
-	else
-	{
-		n_out4p0 = vec3(n_out5p0.xyz);
-	}
-
-
-// Output:0
-	COLOR.rgb = n_out4p0;
-
-
-}
-"
 mode = 1
 flags/light_only = false
 nodes/fragment/0/position = Vector2(960, 60)

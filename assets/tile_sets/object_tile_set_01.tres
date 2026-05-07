@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=9 format=3 uid="uid://w2n0xsqqegbc"]
+[gd_resource type="TileSet" format=3 uid="uid://w2n0xsqqegbc"]
 
 [ext_resource type="Texture2D" uid="uid://b2dbvg576xrif" path="res://assets/art/tiles/props/puffe_castle.png" id="1_1w8xv"]
 [ext_resource type="Texture2D" uid="uid://btpk4r7plnahu" path="res://assets/art/tiles/props/weakling_cave_set.png" id="2_65qo7"]
