@@ -27,7 +27,7 @@ func _ready() -> void:
 	activate_collision_detection(false)
 
 
-func use(_target) -> void:
+func use(_target : Node2D) -> void:
 	if _target == null:
 		return
 	

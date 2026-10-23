@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://bljkhytt20h3f"]
+[gd_scene load_steps=41 format=3 uid="uid://bljkhytt20h3f"]
 
 [ext_resource type="Script" path="res://scenes/unit/enemy/enemy.gd" id="1_pnuqq"]
 [ext_resource type="Texture2D" uid="uid://yv52buwdecha" path="res://assets/art/units/enemy/weakling/weakling_icon.png" id="2_w8sqj"]
@@ -192,43 +192,6 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="Animation" id="Animation_rbbaw"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/enabled")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-
-[sub_resource type="Animation" id="Animation_1eqk6"]
-resource_name = "hit"
-length = 0.2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/enabled")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_lugag"]
-_data = {
-"RESET": SubResource("Animation_rbbaw"),
-"hit": SubResource("Animation_1eqk6")
-}
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_54wmh"]
 size = Vector2(4, 14)
 
@@ -267,12 +230,6 @@ metadata/_aseprite_wizard_interface_config_ = {
 "slice_section": true
 }
 metadata/_aseprite_wizard_source_file_hash_ = "910676993686eead82d0d7cd19a81c3d"
-
-[node name="HitAnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite2D"]
-root_node = NodePath("../..")
-libraries = {
-"": SubResource("AnimationLibrary_lugag")
-}
 
 [node name="BeehaveTree" parent="." instance=ExtResource("3_5rsgu")]
 

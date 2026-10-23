@@ -92,13 +92,13 @@ signal selected(is_selected : bool)
 func place(value : Vector2) -> void:
 	is_placing = false
 	global_position = value
-	grid_position = level.world_position_to_grid(global_position)
-	level.astar_grid.set_point_weight_scale(grid_position, astar_weight)
+	grid_position = level.grid.world_position_to_grid(global_position)
+	level.grid.set_cell_weight(grid_position, astar_weight)
 	is_placed = true
 	GameSignals.building_placed.emit(self)
 
 
-func take_damage(damage_data : DamageData):
+func take_damage(damage_data : DamageData) -> void:
 	if is_dead:
 		return
 		
@@ -198,6 +198,7 @@ func replace_animation_control(new_animation_control_scene : PackedScene) -> voi
 	add_child(animation_control)
 	animation_control.position = _position
 	animation_control.play_animation(current_animation)
+	selectable.set_sprite(animation_control)
 
 
 func remove() -> void:
@@ -210,7 +211,7 @@ func flip(target_direction : Vector2) -> void:
 	skill.flip_h = animation_control.flip_h
 
 
-func _ready():
+func _ready() -> void:
 	evolve_glow.visible = false
 	process_mode = ProcessMode.PROCESS_MODE_PAUSABLE
 	if not is_in_group(GroupNames.BUILDINGS):
@@ -244,7 +245,7 @@ func _get_is_placed() -> bool:
 	return is_placed
 
 
-func _set_is_placed(value : bool):
+func _set_is_placed(value : bool) -> void:
 	#print(name, " is placed: ", value)
 	if is_placed == value:
 		return

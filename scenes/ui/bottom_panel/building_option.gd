@@ -21,7 +21,7 @@ func _on_building_placement_change(is_placing : bool) -> void:
 			button.button_pressed = false
 
 
-func _focus_building_changed(index : int):
+func _focus_building_changed(index : int) -> void:
 	if index < 0:
 		if button.button_pressed:
 			button.button_pressed = false

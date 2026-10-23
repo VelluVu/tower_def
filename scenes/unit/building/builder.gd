@@ -40,8 +40,8 @@ func has_enough_gold(gold_needed : float) -> bool:
 	return gold_needed <= level.player_stats.gold
 
 
-func remove_building(_building : Building):
-	level.astar_grid.set_point_weight_scale(_building.grid_position, 1.0)
+func remove_building(_building : Building) -> void:
+	level.grid.set_cell_weight(_building.grid_position, 1.0)
 	placed_buildings.erase(_building)
 	_building.queue_free()
 	await get_tree().physics_frame
@@ -61,7 +61,7 @@ func _ready() -> void:
 	_get_buildings()
 
 
-func _input(event):
+func _input(event : InputEvent) -> void:
 	if is_cursor_on_gui or not is_ready_to_build:
 		return
 
@@ -85,7 +85,7 @@ func _input(event):
 		_move_building_with_cursor()
 
 
-func _validate_placement_position(_pos : Vector2):
+func _validate_placement_position(_pos : Vector2) -> bool:
 	#shown red too, so a click that cannot pay does not look like a bug
 	if not has_enough_gold(current_building.stats.get_stat_value(Utils.StatType.Price)):
 		return false
@@ -109,11 +109,11 @@ func _on_level_completed(_level : Level) -> void:
 	is_ready_to_build = false
 
 
-func _on_building_sell(_building : Building):
+func _on_building_sell(_building : Building) -> void:
 	remove_building(_building)
 
 
-func _on_building_destroyed(_building : Building):
+func _on_building_destroyed(_building : Building) -> void:
 	remove_building(_building)
 
 
@@ -185,13 +185,13 @@ func _start_building_placement(building_option_index : int) -> void:
 	is_placing_building = true
 
 
-func _format_node_name_from_resource_path(path : String):
+func _format_node_name_from_resource_path(path : String) -> String:
 	var formattedName : String = path.split(SLASH)[-1]
 	formattedName = formattedName.left(-5)
 	return formattedName
 
 
-func _stop_building_placement():
+func _stop_building_placement() -> void:
 	is_placing_building = false
 
 
@@ -202,8 +202,8 @@ func _place_building(building_index : int) -> void:
 	if not has_enough_gold(current_building.stats.get_stat_value(Utils.StatType.Price)):
 		return
 	
-	grid_position = level.world_position_to_grid(get_global_mouse_position())
-	placement_position = level.grid_position_to_world(grid_position)
+	grid_position = level.grid.world_position_to_grid(get_global_mouse_position())
+	placement_position = level.grid.grid_position_to_world(grid_position)
 	
 	current_building.is_valid_placement = _validate_placement_position(placement_position)
 	
@@ -224,8 +224,8 @@ func _move_building_with_cursor() -> void:
 	if not is_placing_building:
 		return
 		
-	grid_position = level.world_position_to_grid(get_global_mouse_position())
-	placement_position = level.grid_position_to_world(grid_position)
+	grid_position = level.grid.world_position_to_grid(get_global_mouse_position())
+	placement_position = level.grid.grid_position_to_world(grid_position)
 	
 	current_building.global_position = placement_position
 	current_building.is_valid_placement = _validate_placement_position(placement_position)
@@ -233,10 +233,10 @@ func _move_building_with_cursor() -> void:
 
 
 func _is_position_buildable(_pos : Vector2) -> bool:
-	if not level.is_position_in_bounds(_pos):
+	if not level.grid.is_position_in_bounds(_pos):
 		return false
 	
-	var is_buildable = level.is_position_buildable(_pos) if current_building is not Trap else level.is_position_walkable(_pos)
+	var is_buildable = level.grid.is_position_buildable(_pos) if current_building is not Trap else level.grid.is_position_walkable(_pos)
 	
 	return is_buildable
 
@@ -311,5 +311,5 @@ func _get_buildings() -> void:
 	buildings.sort_custom(sort_by_id)
 
 
-func sort_by_id(a, b) -> bool:
+func sort_by_id(a : BuildingListElement, b : BuildingListElement) -> bool:
 	return a.id < b.id

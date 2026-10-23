@@ -14,11 +14,11 @@ func draw_building(rect : Rect2, rect_position : Vector2, _is_valid : bool, _is_
 	queue_redraw()
 
 
-func _ready():
+func _ready() -> void:
 	z_index = 1
 
 
-func _draw():
+func _draw() -> void:
 	if not is_draw:
 		return
 	
