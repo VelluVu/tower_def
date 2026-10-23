@@ -1,58 +1,39 @@
 extends Node
 
-const FULL_SAVE_PATH : String = "user://player_progress.save"
+## The player's level progress, saved through the save system (SaveWiring).
 
-var _level_progress : int = 1
+const NO_SAVE_LOADED_WARNING : String = "No progress loaded, keeping the current progress"
+
+var _save : SaveWiring = SaveWiring.new()
+
+## Only ever goes up; new_game() is the way back to level 1.
 var level_progress : int :
 	get:
-		return _level_progress
+		return _save.progress.level_progress
 	set(new_level_number):
-		if new_level_number <= _level_progress:
+		if new_level_number <= _save.progress.level_progress:
 			return
-			
-		_level_progress = new_level_number
+
+		_save.progress.level_progress = new_level_number
 
 var has_save : bool :
 	get:
-		return FileAccess.file_exists(FULL_SAVE_PATH)
+		return _save.has_save()
+
+
+func _init() -> void:
+	add_child(_save)
 
 
 func load_last_progress_data() -> void:
-	print("loading last progress data")
-	#load from json file
-	if not has_save:
-		return
-	
-	var save_file = FileAccess.open(FULL_SAVE_PATH, FileAccess.READ)
-	var json = JSON.new()
-	var error = json.parse(save_file.get_as_text())
-	save_file.close()
-	
-	if error != OK:
-		return
-	
-	print(json.data)
-	_level_progress = json.data["level_progress"]
+	if not _save.load_game():
+		push_warning(NO_SAVE_LOADED_WARNING)
 
 
 func save_progress() -> void:
-	print("saving data")
-	#save data to json file
-	var save_dict = {
-		"level_progress" : level_progress
-	}
-	
-	var save_file = FileAccess.open(FULL_SAVE_PATH, FileAccess.WRITE)
-	save_file.store_line(JSON.stringify(save_dict))
-	save_file.close()
+	_save.save_game()
 
 
 func new_game() -> void:
-	print("new game started")
-	_reset_progress()
-
-
-func _reset_progress() -> void:
-	print("resetting data")
-	_level_progress = 1
+	_save.progress = ProgressData.new()
 	save_progress()
