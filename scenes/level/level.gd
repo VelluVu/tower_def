@@ -2,29 +2,37 @@ class_name Level
 extends Node2D
 
 
-const NO_BUILDING_IN_CELL_POSITION_MESSAGE : String = " There is no building in cell position!"
 const PATH_TO_UNIT_SELECTION_SCENE : String = "res://scenes/unit/unit_selection/unit_selection.tscn"
 const WALKABLE_CUSTOM_DATA_NAME : String = "Walkable"
 const BUILDABLE_CUSTOM_DATA_NAME : String = "Buildable"
 const TILE_TYPE_CUSTOM_DATA_NAME : String = "TileType"
+const WAVE_RUNNER_NAME : String = "WaveRunner"
+const BUILDING_TYPE_UPGRADES_NAME : String = "BuildingTypeUpgrades"
+const NO_LEVEL_DATA_WARNING : String = " Level has no LevelData, no waves will spawn!"
 
 @onready var tiles : Tiles = $Tiles
 @onready var end_point : Marker2D = $EndPoint
 @onready var player_stats : PlayerStats = $PlayerStats
+
+@export var level_data : LevelData = null
 
 	
 var cell_size : Vector2i = Vector2i.ZERO
 var offset : Vector2 = Vector2.ZERO
 var astar_grid : AStarGrid2D = null
 var unit_selection : UnitSelection
+var upgrades : LevelUpgrades
+var building_type_upgrades : BuildingTypeUpgrades
+var wave_runner : WaveRunner
 var all_buildings : Array[Building]
 var all_enemies : Array[Enemy]
 var existing_enemies : Array[Enemy]
 
 var tile_test_flags : int = 0
 
-var total_spawns : int = 0 : 
-	get = _get_total_spawns
+#what starting the next wave now pays, only while enemies of the previous waves are alive
+var early_start_bonus : float :
+	get = _get_early_start_bonus
 
 func find_path(from : Vector2, to : Vector2) -> PackedVector2Array:
 	return astar_grid.get_point_path(world_position_to_grid(from), world_position_to_grid(to), true)
@@ -181,7 +189,6 @@ func get_building_from_cell_position(_grid_pos : Vector2i) -> Building:
 	for building in all_buildings:
 		if world_position_to_grid(building.global_position) == _grid_pos:
 			return building
-	print(name, NO_BUILDING_IN_CELL_POSITION_MESSAGE)
 	return null
 
 
@@ -223,6 +230,16 @@ func _ready() -> void:
 	GameSignals.enemy_destroyed.connect(_on_enemy_destroyed)
 	GameSignals.enemy_reached_end_point.connect(_on_enemy_reached_end)
 	_get_unit_selection()
+	#before LevelUpgrades: both handle building_placed, and the element must be applied before the cards
+	building_type_upgrades = BuildingTypeUpgrades.new()
+	building_type_upgrades.name = BUILDING_TYPE_UPGRADES_NAME
+	add_child(building_type_upgrades)
+	upgrades = LevelUpgrades.new()
+	upgrades.name = "LevelUpgrades"
+	add_child(upgrades)
+	_setup_waves()
+	UISignals.start_wave_pressed.connect(_on_start_wave_pressed)
+	UISignals.game_play_interface_loaded.connect(_emit_wave_state)
 	GameSignals.level_loaded.emit(self)
 
 
@@ -256,14 +273,67 @@ func _on_building_erase(building : Building) -> void:
 
 
 func _check_level_end_conditions() -> void:
-	if existing_enemies.is_empty() and player_stats.is_alive and all_enemies.size() >= total_spawns:
+	if not existing_enemies.is_empty() or wave_runner.is_spawning or wave_runner.wave_number == 0:
+		return
+	
+	if not player_stats.is_alive:
+		return
+	
+	if wave_runner.is_last_wave_started:
 		GameSignals.level_completed.emit(self)
+		return
+	
+	GameSignals.wave_cleared.emit(wave_runner.wave_number)
+	_emit_wave_state()
+
+
+func _setup_waves() -> void:
+	wave_runner = WaveRunner.new()
+	wave_runner.name = WAVE_RUNNER_NAME
+	add_child(wave_runner)
+	wave_runner.spawning_finished.connect(_on_wave_spawning_finished)
+	
+	if level_data == null:
+		push_warning(name, NO_LEVEL_DATA_WARNING)
+		return
+	
+	player_stats.gold = level_data.starting_gold
+	player_stats.life = level_data.starting_life
+	var spawners : Array[Spawner] = []
+	
+	for node in get_tree().get_nodes_in_group(GroupNames.SPAWNER):
+		if node is Spawner and is_ancestor_of(node):
+			spawners.append(node)
+	
+	wave_runner.setup(level_data.waves, spawners)
+
+
+func _on_start_wave_pressed() -> void:
+	if not wave_runner.can_start_next_wave:
+		return
+	
+	#read before starting, the bonus depends on the wave that comes next
+	var bonus : float = early_start_bonus
+	wave_runner.start_next_wave()
+	
+	if bonus > 0.0:
+		player_stats.add_gold(bonus)
+	
+	_emit_wave_state()
+
+
+func _on_wave_spawning_finished() -> void:
+	_emit_wave_state()
+	_check_level_end_conditions()
+
+
+func _emit_wave_state() -> void:
+	GameSignals.wave_state_changed.emit(wave_runner.wave_number, wave_runner.wave_count, wave_runner.can_start_next_wave, early_start_bonus)
 
 
 func _create_astar_grid() -> void:
 	astar_grid = AStarGrid2D.new()
 	var tileMapRect : Rect2i = tiles.ground_layer.get_used_rect()
-	print(tileMapRect)
 	var grid_region : Rect2i = tileMapRect
 	cell_size = tiles.ground_layer.tile_set.tile_size
 	offset = Vector2(cell_size.x * -0.5 + cell_size.x, cell_size.y * 0.5)
@@ -283,11 +353,8 @@ func _get_unit_selection() -> void:
 			unit_selection = ResourceLoader.load(PATH_TO_UNIT_SELECTION_SCENE).instantiate()
 
 
-func _get_total_spawns() -> int:
-	if total_spawns > 0:
-		return total_spawns
+func _get_early_start_bonus() -> float:
+	if existing_enemies.is_empty() or wave_runner.next_wave == null:
+		return 0.0
 	
-	var spawners : Array[Node] = get_tree().get_nodes_in_group(GroupNames.SPAWNER)
-	for spawner in spawners:
-		total_spawns += spawner.max_spawns
-	return total_spawns
+	return wave_runner.next_wave.early_start_bonus

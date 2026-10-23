@@ -19,7 +19,7 @@
 [ext_resource type="Script" uid="uid://cbedtr00kr6bu" path="res://scenes/unit/stats/stat.gd" id="16_mlf80"]
 [ext_resource type="Script" uid="uid://bgskfvwvcxaj0" path="res://scenes/unit/evolve_tree/evolve_branch.gd" id="17_wlcq3"]
 [ext_resource type="Script" uid="uid://c1tx6yjym6cq2" path="res://scenes/unit/evolve_tree/element_evolve_leaf.gd" id="18_wr5qw"]
-[ext_resource type="PackedScene" uid="uid://vxhhxnovjoo7" path="res://scenes/unit/evolve_tree/puffe_beamer_evolve/normal_puffe_beamer_evolve_damage_data.tscn" id="19_jj2s0"]
+[ext_resource type="PackedScene" uid="uid://vxhhxnovjoo7" path="res://scenes/unit/evolve_tree/puffe_beamer_evolve/physical_puffe_beamer_evolve_damage_data.tscn" id="19_jj2s0"]
 [ext_resource type="Texture2D" uid="uid://xsw677gkgt01" path="res://assets/art/projectile/fire_beam.png" id="21_8at6e"]
 [ext_resource type="PackedScene" uid="uid://bv332w34l6mpw" path="res://scenes/unit/evolve_tree/puffe_beamer_evolve/red_puffe_beamer.tscn" id="21_q5eu1"]
 [ext_resource type="Texture2D" uid="uid://b5sv4hjr1qbk" path="res://assets/art/units/building/puffe/puffe_beamer/red_puffe_beamer_icon.png" id="21_wo18e"]
@@ -39,6 +39,7 @@
 [ext_resource type="Texture2D" uid="uid://b6lo5eq5siv2u" path="res://assets/art/ui/poison_element_icon.png" id="36_kci3i"]
 [ext_resource type="Texture2D" uid="uid://cw3b3xwravgoe" path="res://assets/art/units/evolve_glow.png" id="37_wqnxk"]
 [ext_resource type="Script" uid="uid://t7tjigistc7i" path="res://scenes/unit/modifier_manager.gd" id="39_8emt4"]
+[ext_resource type="Resource" path="res://scenes/upgrades/building_upgrades/tower_upgrade_data.tres" id="0_upgradedata"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nli7h"]
 size = Vector2(16, 16)
@@ -450,19 +451,20 @@ type = 9
 
 [node name="EvolveTree" type="Node" parent="."]
 script = ExtResource("16_dryip")
+upgrade_data = ExtResource("0_upgradedata")
 
 [node name="EvolveBranch" type="Node" parent="EvolveTree"]
 script = ExtResource("17_wlcq3")
 evolve_level = 2
 
-[node name="NormalElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch"]
+[node name="PhysicalElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch"]
 script = ExtResource("18_wr5qw")
 selected_icon = ExtResource("2_1w6ba")
 new_damage_data_scene = ExtResource("19_jj2s0")
 icon = ExtResource("21_xun3a")
-info = "Normal"
+info = "Physical"
 
-[node name="CriticalModifier" type="Node" parent="EvolveTree/EvolveBranch/NormalElementEvolveLeaf"]
+[node name="CriticalModifier" type="Node" parent="EvolveTree/EvolveBranch/PhysicalElementEvolveLeaf"]
 script = ExtResource("23_umsju")
 skill_name = "Beam"
 calculate_type = 0

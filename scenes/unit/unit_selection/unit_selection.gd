@@ -75,13 +75,8 @@ func _select() -> void:
 	if overlapped_bodies.is_empty():
 		return
 	
-	var evolved_buildings : Array[Node2D] = overlapped_bodies.filter(filter_evolved_buildings)
-	
-	selected_unit = find_closest(evolved_buildings)
-	
-	if selected_unit == null:
-		selected_unit = find_closest(overlapped_bodies)
-	
+	selected_unit = find_closest(overlapped_bodies)
+
 	if selected_unit == null:
 		return
 	
@@ -103,13 +98,6 @@ func find_closest(node_list : Array[Node2D]) -> Node2D:
 			closest_distance = distance_to_body
 	
 	return closest_node
-
-
-func filter_evolved_buildings(node : Node2D) -> bool:
-	if node is Building:
-		if node.evolve_tree.can_evolve:
-			return true
-	return false
 
 
 func filter_selectable(node : Node2D) -> bool:

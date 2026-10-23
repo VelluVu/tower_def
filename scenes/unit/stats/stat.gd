@@ -12,10 +12,12 @@ var flat_modifiers : Array[ModifierData]
 var multiply_modifiers : Array[ModifierData]
 var global_flat_modifiers : Array[ModifierData]
 var global_multiply_modifiers :Array[ModifierData]
+var additive_modifiers : Array[ModifierData]
+var global_additive_modifiers : Array[ModifierData]
 
 var has_modifiers : bool = false : 
 	get:
-		return not flat_modifiers.is_empty() or not multiply_modifiers.is_empty() or not global_flat_modifiers.is_empty() or not global_multiply_modifiers.is_empty()
+		return not flat_modifiers.is_empty() or not multiply_modifiers.is_empty() or not additive_modifiers.is_empty() or not global_flat_modifiers.is_empty() or not global_multiply_modifiers.is_empty() or not global_additive_modifiers.is_empty()
 		
 
 signal changed(stat : Stat)
@@ -26,31 +28,23 @@ func _ready() -> void:
 
 
 func add_modifier(modifier : ModifierData) -> void:
-	match modifier.modifier_type:
-		Utils.ModifyType.Flat:
-			if modifier.modifier_type == Utils.ModifierType.GlobalModifier:
-				global_flat_modifiers.append(modifier)
-			else:
-				flat_modifiers.append(modifier)
-		Utils.ModifyType.Multiply:
-			if modifier.modifier_type == Utils.ModifierType.GlobalModifier:
-				global_multiply_modifiers.append(modifier)
-			else:
-				multiply_modifiers.append(modifier)
+	_get_modifier_list(modifier).append(modifier)
 
 
 func remove_modifier(modifier : ModifierData) -> void:
-	match modifier.modifier_type:
+	_get_modifier_list(modifier).erase(modifier)
+
+
+func _get_modifier_list(modifier : ModifierData) -> Array[ModifierData]:
+	var is_global : bool = modifier.modifier_type == Utils.ModifierType.GlobalModifier
+
+	match modifier.calculate_type:
 		Utils.ModifyType.Flat:
-			if modifier.modifier_type == Utils.ModifierType.GlobalModifier:
-				global_flat_modifiers.erase(modifier)
-			else:
-				flat_modifiers.erase(modifier)
-		Utils.ModifyType.Multiply:
-			if modifier.modifier_type == Utils.ModifierType.GlobalModifier:
-				global_multiply_modifiers.erase(modifier)
-			else:
-				multiply_modifiers.erase(modifier)
+			return global_flat_modifiers if is_global else flat_modifiers
+		Utils.ModifyType.Additive:
+			return global_additive_modifiers if is_global else additive_modifiers
+
+	return global_multiply_modifiers if is_global else multiply_modifiers
 
 
 func reset_stat_value() -> void:

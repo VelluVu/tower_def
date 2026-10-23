@@ -2,7 +2,7 @@ class_name DamageData
 extends Node
 
 
-@export var damage_type : Utils.DamageType = Utils.DamageType.Normal
+@export var damage_type : Utils.DamageType = Utils.DamageType.Physical
 
 var is_overtime : bool = false
 var is_shielding : bool = false

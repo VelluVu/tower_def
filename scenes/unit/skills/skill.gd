@@ -136,8 +136,17 @@ func _ready() -> void:
 	cast_timer.unscaled_base_value = base_cast_time
 	cooldown_timer.unscaled_base_value = base_cooldown
 	active_timer.unscaled_base_value = base_active_time 
+	#a skill swapped in by an element starts with stats that already carry upgrades
+	_scale_timers_to_stats()
 	
 	_on_time_scale_change(Utils.game_control.time_scale)
+
+
+func _scale_timers_to_stats() -> void:
+	var attack_speed_stat_value : float = stats.get_stat_value(Utils.StatType.AttackSpeed)
+	cooldown_timer.scale_wait_time(attack_speed_stat_value)
+	cast_timer.scale_wait_time(attack_speed_stat_value)
+	active_timer.extend_wait_time(stats.get_stat_value(Utils.StatType.ActiveDuration))
 
 
 func _on_skill_stat_changed(stat : Stat) -> void:
@@ -147,7 +156,7 @@ func _on_skill_stat_changed(stat : Stat) -> void:
 		cast_timer.scale_wait_time(attack_speed_stat_value)
 		
 	if stat.type == Utils.StatType.ActiveDuration:
-		active_timer.scale_wait_time(stat.value)
+		active_timer.extend_wait_time(stat.value)
 
 
 func _on_actor_stat_changed(stat : Stat) -> void:
@@ -157,7 +166,7 @@ func _on_actor_stat_changed(stat : Stat) -> void:
 		cast_timer.scale_wait_time(attack_speed_stat)
 	
 	if stat.type == Utils.StatType.ActiveDuration:
-		active_timer.scale_wait_time(stats.get_stat_value(Utils.StatType.ActiveDuration))
+		active_timer.extend_wait_time(stats.get_stat_value(Utils.StatType.ActiveDuration))
 
 
 func _on_cast_finished() -> void:

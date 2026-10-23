@@ -8,7 +8,7 @@
 [ext_resource type="Script" path="res://scenes/unit/building/range_area.gd" id="5_5p6tn"]
 [ext_resource type="PackedScene" uid="uid://88hwq47f7r6d" path="res://scenes/unit/behaviour_trees/basic_tower_behaviour_tree/basic_tower_bt.tscn" id="5_6ycpu"]
 [ext_resource type="Script" path="res://scenes/unit/animation_control.gd" id="5_rj1sk"]
-[ext_resource type="PackedScene" uid="uid://b1bd66gyf4ln5" path="res://scenes/unit/skills/projectiles/homing_normal_bolt.tscn" id="9_elqq4"]
+[ext_resource type="PackedScene" uid="uid://b1bd66gyf4ln5" path="res://scenes/unit/skills/projectiles/homing_physical_bolt.tscn" id="9_elqq4"]
 [ext_resource type="PackedScene" uid="uid://dd11cco5cukhw" path="res://scenes/unit/unit_selection/selectable_unit.tscn" id="10_0ilh6"]
 [ext_resource type="Script" path="res://scenes/unit/skills/damage_data.gd" id="10_mch2d"]
 [ext_resource type="PackedScene" uid="uid://ccc725wgsiq36" path="res://scenes/unit/building/placement_validator.tscn" id="11_4t8in"]
@@ -22,7 +22,7 @@
 [ext_resource type="Texture2D" uid="uid://dtccb0f0th8be" path="res://assets/art/units/building/puffe/puffe_bolter/puffe_bolter_icon.png" id="19_tlf38"]
 [ext_resource type="Texture2D" uid="uid://csytae52ooqga" path="res://assets/art/ui/fire_element_icon.png" id="19_ubw0q"]
 [ext_resource type="Script" path="res://scenes/unit/evolve_tree/element_evolve_leaf.gd" id="19_wcrsl"]
-[ext_resource type="PackedScene" uid="uid://2hn2kni2law3" path="res://scenes/unit/evolve_tree/puffe_bolter_evolve/normal_puffe_bolter_evolve_damage_data.tscn" id="20_ccteo"]
+[ext_resource type="PackedScene" uid="uid://2hn2kni2law3" path="res://scenes/unit/evolve_tree/puffe_bolter_evolve/physical_puffe_bolter_evolve_damage_data.tscn" id="20_ccteo"]
 [ext_resource type="Texture2D" uid="uid://vxk12gmmva1s" path="res://assets/art/units/building/puffe/puffe_bolter/red_puffe_bolter_icon.png" id="20_qaoyh"]
 [ext_resource type="Texture2D" uid="uid://yeifd50gnqjq" path="res://assets/art/ui/normal_element_icon.png" id="21_eqv60"]
 [ext_resource type="PackedScene" uid="uid://jxr2ybiww67g" path="res://scenes/unit/skills/projectiles/homing_firebolt.tscn" id="21_t17ii"]
@@ -40,6 +40,7 @@
 [ext_resource type="Texture2D" uid="uid://4vr2yacqou07" path="res://assets/art/ui/frost_element_icon.png" id="31_t8h32"]
 [ext_resource type="Texture2D" uid="uid://b6lo5eq5siv2u" path="res://assets/art/ui/poison_element_icon.png" id="36_5eit6"]
 [ext_resource type="Script" path="res://scenes/unit/modifier_manager.gd" id="40_o7aqn"]
+[ext_resource type="Resource" path="res://scenes/upgrades/building_upgrades/tower_upgrade_data.tres" id="0_upgradedata"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jxaqe"]
 size = Vector2(16, 16)
@@ -392,6 +393,8 @@ type = 2
 
 [node name="Price" type="Node" parent="Stats"]
 script = ExtResource("17_m7bv2")
+base_value = 4.0
+value = 4.0
 type = 3
 
 [node name="Speed" type="Node" parent="Stats"]
@@ -424,25 +427,26 @@ type = 9
 
 [node name="EvolveTree" type="Node" parent="."]
 script = ExtResource("16_l8ube")
+upgrade_data = ExtResource("0_upgradedata")
 
 [node name="EvolveBranch" type="Node" parent="EvolveTree"]
 script = ExtResource("17_bv0np")
 evolve_level = 2
 
-[node name="NormalElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch"]
+[node name="PhysicalElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch"]
 script = ExtResource("19_wcrsl")
 selected_icon = ExtResource("19_tlf38")
 new_damage_data_scene = ExtResource("20_ccteo")
 icon = ExtResource("21_eqv60")
-info = "Normal"
+info = "Physical"
 
-[node name="DamageModifier" type="Node" parent="EvolveTree/EvolveBranch/NormalElementEvolveLeaf"]
+[node name="DamageModifier" type="Node" parent="EvolveTree/EvolveBranch/PhysicalElementEvolveLeaf"]
 script = ExtResource("24_v32av")
 calculate_type = 0
 stat_type = 2
 value = 1.0
 
-[node name="CriticalChanceModifier" type="Node" parent="EvolveTree/EvolveBranch/NormalElementEvolveLeaf"]
+[node name="CriticalChanceModifier" type="Node" parent="EvolveTree/EvolveBranch/PhysicalElementEvolveLeaf"]
 script = ExtResource("24_v32av")
 calculate_type = 0
 stat_type = 7

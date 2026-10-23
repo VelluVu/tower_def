@@ -25,28 +25,42 @@ var base_wait_time : float = 0.0 :
 		#print(name, " base wait time is set to: ", base_wait_time)
 
 
+#the game speed the running countdown was scaled for
+var current_time_scale : float = 1.0
+
+
+# a higher stat value shortens the wait (attack speed)
 func scale_wait_time(stat_value : float) -> void:
-	print(name, " ", stat_value)
 	base_wait_time = unscaled_base_value * (1 / (1.0 + stat_value))
 
 
+# a higher stat value lengthens the wait (active duration)
+func extend_wait_time(stat_value : float) -> void:
+	base_wait_time = unscaled_base_value * (1.0 + stat_value)
+
+
 func _ready() -> void:
+	if Utils.game_control != null:
+		current_time_scale = Utils.game_control.time_scale
+
 	GameSignals.time_scale_change.connect(_on_time_scale_change)
 
 
-func alter_time_left() -> void:
+func alter_time_left(new_time_scale : float) -> void:
+	var old_time_scale : float = current_time_scale
+	current_time_scale = new_time_scale
+
 	if time_left <= 0.0:
 		return
-		
-	var timer_time_left : float = time_left
+
+	var timer_time_left : float = time_left * old_time_scale / new_time_scale
 	stop()
-	timer_time_left = timer_time_left / Utils.game_control.time_scale
 	start(timer_time_left)
 
 
 func _on_time_scale_change(new_time_scale : float) -> void:
-	alter_time_left()
-	
+	alter_time_left(new_time_scale)
+
 	if base_wait_time <= 0.0:
 		return
 

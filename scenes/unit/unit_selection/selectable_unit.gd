@@ -106,10 +106,8 @@ func _signal_data_for_selection_panel(_is_selected : bool) -> void:
 	if is_building: 
 		if _is_selected:
 			UISignals.selected_unit.emit(actor.name, actor.stats, actor.skill, actor.icon, is_building)
-			UISignals.upgrade_options_change.emit(actor._get_building_data())
 		else:
 			UISignals.deselected_unit.emit()
-			UISignals.upgrade_options_change.emit(null)
 	else:
 		if _is_selected:
 			UISignals.selected_unit.emit(actor.name, actor.stats, actor.skill, actor.icon)

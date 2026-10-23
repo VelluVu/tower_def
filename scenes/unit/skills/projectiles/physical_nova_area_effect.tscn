@@ -1,8 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://dqcs123jiyqlj"]
+[gd_scene format=3 uid="uid://dqcs123jiyqlj"]
 
 [ext_resource type="Script" path="res://scenes/unit/skills/projectiles/custom_area_effect.gd" id="1_vbr3b"]
 [ext_resource type="Script" path="res://scenes/unit/skills/emitter.gd" id="2_tsbiq"]
-[ext_resource type="PackedScene" uid="uid://6y8vekvh4qnh" path="res://scenes/unit/skills/projectiles/normal_nova_particle.tscn" id="3_k0ida"]
+[ext_resource type="PackedScene" uid="uid://6y8vekvh4qnh" path="res://scenes/unit/skills/projectiles/physical_nova_particle.tscn" id="3_k0ida"]
 [ext_resource type="Script" path="res://scenes/custom_timer.gd" id="4_j43h7"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vgh1l"]
@@ -44,7 +44,7 @@ _data = {
 "default": SubResource("Animation_agnky")
 }
 
-[node name="NormalNovaAreaEffect" type="Area2D"]
+[node name="PhysicalNovaAreaEffect" type="Area2D"]
 y_sort_enabled = true
 collision_layer = 0
 collision_mask = 2

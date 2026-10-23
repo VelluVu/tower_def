@@ -6,7 +6,6 @@ extends Control
 
 
 func _ready() -> void:
-	print("in menu")
 	Utils.game_control.reset_time_scale()
 	continue_button.visible = PlayerProgress.has_save
 

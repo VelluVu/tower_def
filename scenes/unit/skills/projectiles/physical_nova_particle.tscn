@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://6y8vekvh4qnh"]
+[gd_scene format=3 uid="uid://6y8vekvh4qnh"]
 
 [ext_resource type="Material" uid="uid://bvbirfo7s5qnw" path="res://assets/shaders/shader_materials/fade_shader_material.tres" id="1_h3c8q"]
 [ext_resource type="Texture2D" uid="uid://cwakeldnkx6me" path="res://assets/art/projectile/normal_nova_particle.png" id="1_nhxju"]
@@ -41,7 +41,7 @@ _data = {
 "fade": SubResource("Animation_xddre")
 }
 
-[node name="NormalNovaParticle" type="Sprite2D"]
+[node name="PhysicalNovaParticle" type="Sprite2D"]
 y_sort_enabled = true
 material = ExtResource("1_h3c8q")
 texture = ExtResource("1_nhxju")

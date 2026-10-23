@@ -43,11 +43,11 @@ func activate() -> void:
 
 
 func _on_attack_area_body_entered(body: Node2D) -> void:
-	activate_collision_detection(false)
-	
-	if body is Trap:
+	# only the chosen target takes the hit; the area also overlaps buildings next to the path
+	if body != target:
 		return
-	
+
+	activate_collision_detection(false)
 	body.take_damage(damage_data)
 
 

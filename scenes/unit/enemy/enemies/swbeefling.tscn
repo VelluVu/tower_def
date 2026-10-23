@@ -22,7 +22,7 @@
 friction = 0.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lot5f"]
-radius = 5.0
+radius = 3.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3n0sw"]
 atlas = ExtResource("4_47bxs")

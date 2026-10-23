@@ -131,7 +131,6 @@ func _update_building_options_by_progress() -> void:
 	
 	for element in buildings:
 		if element.id >= buildings_available:
-			print(name, " element id" , element.id , " buildings available ", buildings_available)
 			break
 		
 		UISignals.building_option_updated.emit(element.id, element.icon)
