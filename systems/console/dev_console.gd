@@ -1,0 +1,279 @@
+class_name DevConsole
+extends Panel
+
+## A collapsible, resizable console: a log and a command line, independent of any game.
+## Feed log_line(), register commands on `registry`, set open_action and cancel_action; the
+## project's parts live in ConsoleWiring.
+
+const COLLAPSE_ICON: String = "▼"
+const EXPAND_ICON: String = "▲"
+## Per category, so a chatty source cannot push the rest out.
+const MAX_LOG_LINES: int = 400
+
+const MIN_SIZE: Vector2 = Vector2(180, 90)
+## Capped so the console cannot cover whatever shares its corner (its mouse_filter is STOP).
+const MAX_SIZE: Vector2 = Vector2(440, 200)
+
+const FOCUS_STYLE_BORDER_COLOR: Color = Color(0.85, 0.65, 0.25)
+
+@onready var resize_handle: Control = $ResizeHandle
+@onready var toggle_button: Button = %ToggleButton
+@onready var title_label: Label = %TitleLabel
+@onready var body_vbox: VBoxContainer = %BodyVBox
+@onready var log_scroll: ScrollContainer = %LogScroll
+@onready var log_label: RichTextLabel = %LogLabel
+@onready var input_line_edit: LineEdit = %InputLineEdit
+
+## The dispatch table. Register commands on it, or add a ConsoleCommandSet.
+var registry: ConsoleCommandRegistry
+## InputMap actions: one opens and focuses the console, the other closes it. Empty = unused.
+var open_action: StringName = &""
+var cancel_action: StringName = &""
+
+var _is_collapsed: bool = true
+var _expanded_size: Vector2
+
+var _is_resizing: bool = false
+var _resize_start_mouse: Vector2
+var _resize_start_offset_left: float
+var _resize_start_offset_top: float
+
+## Every logged line as [bbcode, category], oldest first, hidden ones included.
+var _log_entries: Array = []
+## Categories (StringName) whose lines are kept but not shown.
+var _hidden_categories: Dictionary = {}
+## Tabs above the log (add_view()): each is [title, Array of the categories it shows].
+var _views: Array = []
+var _current_view: int = 0
+var _view_tabs: TabBar = null
+
+
+func _ready() -> void:
+	_expanded_size = size
+
+	toggle_button.pressed.connect(_on_toggle_pressed)
+	input_line_edit.text_submitted.connect(_on_command_submitted)
+	input_line_edit.focus_entered.connect(_apply_focus_style.bind(true))
+	input_line_edit.focus_exited.connect(_apply_focus_style.bind(false))
+	resize_handle.gui_input.connect(_on_resize_handle_gui_input)
+
+	registry = ConsoleCommandRegistry.new(log_line)
+	var wiring := ConsoleWiring.new()
+	wiring.name = "ConsoleWiring"
+	add_child(wiring)
+	# Registered after the wiring's sets, so `help` lists the project's commands first.
+	registry.register("clear", _cmd_clear)
+	registry.register("help", registry.print_help, "", "", false, false)
+
+	_apply_focus_style(false)
+	_apply_collapsed_state()
+
+
+## _input(), not _unhandled_input(): it re-reads focus on every key. The open key opens or
+## focuses, or types while the field has focus; cancel closes it first.
+func _input(event: InputEvent) -> void:
+	if open_action != &"" and event.is_action_pressed(open_action):
+		if input_line_edit.has_focus():
+			return
+		_open_and_focus_input()
+		get_viewport().set_input_as_handled()
+		return
+
+	if cancel_action != &"" and event.is_action_pressed(cancel_action) and is_console_active():
+		input_line_edit.release_focus()
+		if not _is_collapsed:
+			_on_toggle_pressed()
+		get_viewport().set_input_as_handled()
+
+
+## True while the console is open or focused, so the host's own shortcuts can back off.
+func is_console_active() -> bool:
+	return not _is_collapsed or input_line_edit.has_focus()
+
+
+## Appends a BBCode line. A `category` can be hidden (set_category_hidden) without losing
+## its lines, each category capped at MAX_LOG_LINES on its own.
+func log_line(bbcode_line: String, category: StringName = &"") -> void:
+	_log_entries.append([bbcode_line, category])
+	var oldest: int = _oldest_beyond_cap(category)
+	if oldest != -1:
+		var shown_before: int = _shown_count_before(oldest)
+		var was_shown: bool = _shows(_log_entries[oldest][1])
+		_log_entries.remove_at(oldest)
+		if was_shown:
+			log_label.remove_paragraph(shown_before)
+	if _shows(category):
+		log_label.append_text(bbcode_line + "\n")
+	_scroll_log_to_bottom()
+
+
+## Index of the oldest line of `category` once it has more than MAX_LOG_LINES, else -1.
+func _oldest_beyond_cap(category: StringName) -> int:
+	var first: int = -1
+	var count: int = 0
+	for i: int in _log_entries.size():
+		if _log_entries[i][1] == category:
+			count += 1
+			if first == -1:
+				first = i
+	return first if count > MAX_LOG_LINES else -1
+
+
+func _shown_count_before(index: int) -> int:
+	var count: int = 0
+	for i: int in index:
+		if _shows(_log_entries[i][1]):
+			count += 1
+	return count
+
+
+## Adds a tab above the log that shows only lines of `categories` (the default category
+## is &""). With no views the log shows every category that is not hidden.
+func add_view(title: String, categories: Array[StringName]) -> void:
+	if _view_tabs == null:
+		_view_tabs = TabBar.new()
+		_view_tabs.focus_mode = Control.FOCUS_NONE
+		_view_tabs.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		_view_tabs.tab_changed.connect(_on_view_changed)
+		title_label.get_parent().add_child(_view_tabs)
+		title_label.get_parent().move_child(_view_tabs, title_label.get_index() + 1)
+		_view_tabs.visible = not _is_collapsed
+		title_label.visible = _is_collapsed
+	_views.append([title, categories])
+	_view_tabs.add_tab(title)
+	_redraw_log()
+
+
+func _on_view_changed(index: int) -> void:
+	_current_view = index
+	_redraw_log()
+	_scroll_log_to_bottom()
+
+
+func _shows(category: StringName) -> bool:
+	if _hidden_categories.has(category):
+		return false
+	return _views.is_empty() or (_views[_current_view][1] as Array).has(category)
+
+
+func set_category_hidden(category: StringName, is_hidden: bool) -> void:
+	if is_hidden:
+		_hidden_categories[category] = true
+	else:
+		_hidden_categories.erase(category)
+	_redraw_log()
+	_scroll_log_to_bottom()
+
+
+func is_category_hidden(category: StringName) -> bool:
+	return _hidden_categories.has(category)
+
+
+func _redraw_log() -> void:
+	var shown: PackedStringArray = []
+	for entry: Array in _log_entries:
+		if _shows(entry[1]):
+			shown.append(entry[0])
+	log_label.clear()
+	if not shown.is_empty():
+		log_label.append_text("\n".join(shown) + "\n")
+
+
+func _open_and_focus_input() -> void:
+	if _is_collapsed:
+		_on_toggle_pressed()
+	input_line_edit.grab_focus()
+
+
+func _on_toggle_pressed() -> void:
+	_is_collapsed = not _is_collapsed
+	_apply_collapsed_state()
+
+
+## Collapsed it shrinks to just its header, so it covers as little of its corner as possible.
+func _apply_collapsed_state() -> void:
+	resize_handle.visible = not _is_collapsed
+	# Open, the tabs take the title's place in the narrow header.
+	if _view_tabs != null:
+		_view_tabs.visible = not _is_collapsed
+		title_label.visible = _is_collapsed
+	if _is_collapsed:
+		_expanded_size = size
+		body_vbox.hide()
+		toggle_button.text = EXPAND_ICON
+		var header: Vector2 = _header_size()
+		offset_left = offset_right - header.x
+		offset_top = offset_bottom - header.y
+	else:
+		body_vbox.show()
+		toggle_button.text = COLLAPSE_ICON
+		offset_left = offset_right - _expanded_size.x
+		offset_top = offset_bottom - _expanded_size.y
+
+
+## The header plus the margins around it.
+func _header_size() -> Vector2:
+	return %HeaderHBox.get_combined_minimum_size() + Vector2(12.0, 10.0)
+
+
+## Drag-resize from the top-left corner, the bottom-right staying anchored; only expanded.
+func _on_resize_handle_gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if event.pressed:
+			_is_resizing = true
+			_resize_start_mouse = get_global_mouse_position()
+			_resize_start_offset_left = offset_left
+			_resize_start_offset_top = offset_top
+		else:
+			_is_resizing = false
+	elif event is InputEventMouseMotion and _is_resizing:
+		var delta := get_global_mouse_position() - _resize_start_mouse
+		var new_width: float = clampf(-(_resize_start_offset_left + delta.x) + offset_right, MIN_SIZE.x, MAX_SIZE.x)
+		var new_height: float = clampf(-(_resize_start_offset_top + delta.y) + offset_bottom, MIN_SIZE.y, MAX_SIZE.y)
+		offset_left = offset_right - new_width
+		offset_top = offset_bottom - new_height
+		_expanded_size = Vector2(new_width, new_height)
+
+
+func _apply_focus_style(is_focused: bool) -> void:
+	var box := StyleBoxFlat.new()
+	box.bg_color = Color(0.05, 0.05, 0.05, 0.9)
+	box.set_border_width_all(2 if is_focused else 1)
+	box.border_color = FOCUS_STYLE_BORDER_COLOR if is_focused else Color(0.3, 0.3, 0.3)
+	box.set_corner_radius_all(3)
+	input_line_edit.add_theme_stylebox_override("normal", box)
+	input_line_edit.add_theme_stylebox_override("focus", box)
+
+
+## LogScroll's max_value updates after layout, so wait a frame before scrolling down.
+func _scroll_log_to_bottom() -> void:
+	# A line logged while the menu's console is being freed has no tree to wait on.
+	if not is_inside_tree():
+		return
+	await get_tree().process_frame
+	if not is_inside_tree():
+		return
+	log_scroll.scroll_vertical = int(log_scroll.get_v_scroll_bar().max_value)
+
+
+## LineEdit drops focus on Enter, so grab it back to keep the input ready.
+func _on_command_submitted(raw_text: String) -> void:
+	var text := raw_text.strip_edges()
+	input_line_edit.clear()
+	input_line_edit.grab_focus()
+	if text.is_empty():
+		return
+
+	# A command's answer goes to the default category, so show a tab that has it.
+	if not _shows(&""):
+		for index: int in _views.size():
+			if (_views[index][1] as Array).has(&""):
+				_view_tabs.current_tab = index
+				break
+	log_line("[color=gray]> %s[/color]" % text)
+	registry.execute(text)
+
+
+func _cmd_clear(_args: PackedStringArray) -> void:
+	log_label.clear()
+	_log_entries.clear()

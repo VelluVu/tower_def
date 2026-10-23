@@ -1,3 +1,7 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+
+# Cheat command sets stay local (see systems/console/console_wiring.gd)
+scenes/console/dev_mode_commands.gd*
+scenes/console/level_cheat_commands.gd*

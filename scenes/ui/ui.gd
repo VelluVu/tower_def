@@ -31,7 +31,8 @@ func initialize(_scene_manager : SceneManager):
 	GameSignals.level_completed.connect(_on_level_completed)
 	GameSignals.upgrade_level_gained.connect(_on_upgrade_level_gained)
 	GameSignals.upgrade_cards_closed.connect(_on_upgrade_cards_closed)
-	$DeveloperModeNotification.visible = GameSignals.testing
+	$DeveloperModeNotification.visible = GameSignals.developer_mode
+	GameSignals.developer_mode_changed.connect(_on_developer_mode_changed)
 
 
 func load_game_world_map(from_menu : bool) -> void:
@@ -61,6 +62,10 @@ func _input(event: InputEvent) -> void:
 
 func _on_level_loaded(_level : Level) -> void:
 	_load_game_play_interface()
+
+
+func _on_developer_mode_changed(is_enabled : bool) -> void:
+	$DeveloperModeNotification.visible = is_enabled
 
 
 func _on_resign_level() -> void:

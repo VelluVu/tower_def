@@ -57,8 +57,12 @@ func _process(delta: float) -> void:
 	if current_mode == CameraMode.Static:
 		return
 	
-	_zoom()
-	_movement()
+	#keys typed into a text field (the console) must not move the camera
+	if get_viewport().gui_get_focus_owner() is LineEdit:
+		move_direction = Vector2.ZERO
+	else:
+		_zoom()
+		_movement()
 	_pan()
 	_move_camera_smoothly(delta)
 	_zoom_camera_smoothly(delta)
