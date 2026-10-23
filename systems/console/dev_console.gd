@@ -5,8 +5,6 @@ extends Panel
 ## Feed log_line(), register commands on `registry`, set open_action and cancel_action; the
 ## project's parts live in ConsoleWiring.
 
-const COLLAPSE_ICON: String = "▼"
-const EXPAND_ICON: String = "▲"
 ## Per category, so a chatty source cannot push the rest out.
 const MAX_LOG_LINES: int = 400
 
@@ -29,6 +27,11 @@ var registry: ConsoleCommandRegistry
 ## InputMap actions: one opens and focuses the console, the other closes it. Empty = unused.
 var open_action: StringName = &""
 var cancel_action: StringName = &""
+## Collapsed, the console is hidden instead of shrinking to its header; only open_action brings it back.
+var hide_when_collapsed: bool = false
+## Toggle button texts; replace them when the project's font lacks the arrows.
+var collapse_icon: String = "▼"
+var expand_icon: String = "▲"
 
 var _is_collapsed: bool = true
 var _expanded_size: Vector2
@@ -192,6 +195,7 @@ func _on_toggle_pressed() -> void:
 
 ## Collapsed it shrinks to just its header, so it covers as little of its corner as possible.
 func _apply_collapsed_state() -> void:
+	visible = not (_is_collapsed and hide_when_collapsed)
 	resize_handle.visible = not _is_collapsed
 	# Open, the tabs take the title's place in the narrow header.
 	if _view_tabs != null:
@@ -200,13 +204,13 @@ func _apply_collapsed_state() -> void:
 	if _is_collapsed:
 		_expanded_size = size
 		body_vbox.hide()
-		toggle_button.text = EXPAND_ICON
+		toggle_button.text = expand_icon
 		var header: Vector2 = _header_size()
 		offset_left = offset_right - header.x
 		offset_top = offset_bottom - header.y
 	else:
 		body_vbox.show()
-		toggle_button.text = COLLAPSE_ICON
+		toggle_button.text = collapse_icon
 		offset_left = offset_right - _expanded_size.x
 		offset_top = offset_bottom - _expanded_size.y
 

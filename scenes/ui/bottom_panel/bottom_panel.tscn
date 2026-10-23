@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cfky3fr2vue8u"]
+[gd_scene load_steps=7 format=3 uid="uid://cfky3fr2vue8u"]
 
 [ext_resource type="Script" path="res://scenes/ui/bottom_panel/bottom_panel.gd" id="1_4q4xm"]
 [ext_resource type="Script" path="res://scenes/ui/bottom_panel/building_panel.gd" id="2_mh1um"]
@@ -6,37 +6,37 @@
 [ext_resource type="Texture2D" uid="uid://d1s2xw53fx6au" path="res://icon.svg" id="4_y8rhs"]
 [ext_resource type="Script" path="res://scenes/ui/bottom_panel/unit_selection_panel.gd" id="5_l2uok"]
 [ext_resource type="Script" path="res://scenes/ui/bottom_panel/horizontal_stat_field.gd" id="6_or30t"]
-[ext_resource type="Theme" uid="uid://tqqtfp7oe2qf" path="res://assets/ui_themes/menu_ui_button_theme.tres" id="6_qr8g2"]
 
-[node name="BottomPanel" type="Panel"]
-custom_minimum_size = Vector2(0, 72)
-anchors_preset = -1
-anchor_top = 0.889
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -0.0720215
-grow_horizontal = 2
-grow_vertical = 0
-script = ExtResource("1_4q4xm")
-
-[node name="MarginContainer" type="MarginContainer" parent="."]
-layout_mode = 1
+[node name="BottomPanel" type="Control"]
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 2
-theme_override_constants/margin_top = 2
-theme_override_constants/margin_right = 2
-theme_override_constants/margin_bottom = 2
+mouse_filter = 2
+grow_vertical = 0
+script = ExtResource("1_4q4xm")
+
+[node name="MarginContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_top = -2.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_type_variation = &"HornPanelContainer"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
+theme_override_constants/separation = 4
 
 [node name="BuildingPanel" type="Panel" parent="MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(376.86, 72)
+custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
+theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_mh1um")
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/BuildingPanel"]
@@ -46,13 +46,14 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 2
-theme_override_constants/margin_top = 2
-theme_override_constants/margin_right = 2
-theme_override_constants/margin_bottom = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
 
 [node name="BackgroundImage" type="Panel" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer"]
 layout_mode = 2
+theme_type_variation = &"EmptyPanel"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage"]
 layout_mode = 1
@@ -65,15 +66,19 @@ horizontal_scroll_mode = 0
 
 [node name="GridContainer" type="GridContainer" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer"]
 layout_mode = 2
+theme_override_constants/h_separation = 3
+theme_override_constants/v_separation = 3
 columns = 10
 
 [node name="BuildingOption" type="Panel" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2(32, 32)
+custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
+theme_type_variation = &"EmptyPanel"
 script = ExtResource("3_5wo0p")
 
 [node name="SelectBuildingButton" type="Button" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption"]
 layout_mode = 1
+theme_type_variation = &"SlotButton"
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -86,12 +91,14 @@ icon_alignment = 1
 expand_icon = true
 
 [node name="BuildingOption2" type="Panel" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2(32, 32)
+custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
+theme_type_variation = &"EmptyPanel"
 script = ExtResource("3_5wo0p")
 
 [node name="SelectBuildingButton" type="Button" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption2"]
 layout_mode = 1
+theme_type_variation = &"SlotButton"
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -104,12 +111,14 @@ icon_alignment = 1
 expand_icon = true
 
 [node name="BuildingOption3" type="Panel" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2(32, 32)
+custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
+theme_type_variation = &"EmptyPanel"
 script = ExtResource("3_5wo0p")
 
 [node name="SelectBuildingButton" type="Button" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption3"]
 layout_mode = 1
+theme_type_variation = &"SlotButton"
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -122,12 +131,14 @@ icon_alignment = 1
 expand_icon = true
 
 [node name="BuildingOption4" type="Panel" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2(32, 32)
+custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
+theme_type_variation = &"EmptyPanel"
 script = ExtResource("3_5wo0p")
 
 [node name="SelectBuildingButton" type="Button" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption4"]
 layout_mode = 1
+theme_type_variation = &"SlotButton"
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -140,12 +151,14 @@ icon_alignment = 1
 expand_icon = true
 
 [node name="BuildingOption5" type="Panel" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2(32, 32)
+custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
+theme_type_variation = &"EmptyPanel"
 script = ExtResource("3_5wo0p")
 
 [node name="SelectBuildingButton" type="Button" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption5"]
 layout_mode = 1
+theme_type_variation = &"SlotButton"
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -158,12 +171,14 @@ icon_alignment = 1
 expand_icon = true
 
 [node name="BuildingOption6" type="Panel" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2(32, 32)
+custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
+theme_type_variation = &"EmptyPanel"
 script = ExtResource("3_5wo0p")
 
 [node name="SelectBuildingButton" type="Button" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption6"]
 layout_mode = 1
+theme_type_variation = &"SlotButton"
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -176,12 +191,14 @@ icon_alignment = 1
 expand_icon = true
 
 [node name="BuildingOption7" type="Panel" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2(32, 32)
+custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
+theme_type_variation = &"EmptyPanel"
 script = ExtResource("3_5wo0p")
 
 [node name="SelectBuildingButton" type="Button" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption7"]
 layout_mode = 1
+theme_type_variation = &"SlotButton"
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -194,12 +211,14 @@ icon_alignment = 1
 expand_icon = true
 
 [node name="BuildingOption8" type="Panel" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2(32, 32)
+custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
+theme_type_variation = &"EmptyPanel"
 script = ExtResource("3_5wo0p")
 
 [node name="SelectBuildingButton" type="Button" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption8"]
 layout_mode = 1
+theme_type_variation = &"SlotButton"
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -212,12 +231,14 @@ icon_alignment = 1
 expand_icon = true
 
 [node name="BuildingOption9" type="Panel" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2(32, 32)
+custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
+theme_type_variation = &"EmptyPanel"
 script = ExtResource("3_5wo0p")
 
 [node name="SelectBuildingButton" type="Button" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption9"]
 layout_mode = 1
+theme_type_variation = &"SlotButton"
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -230,12 +251,14 @@ icon_alignment = 1
 expand_icon = true
 
 [node name="BuildingOption10" type="Panel" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2(32, 32)
+custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
+theme_type_variation = &"EmptyPanel"
 script = ExtResource("3_5wo0p")
 
 [node name="SelectBuildingButton" type="Button" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption10"]
 layout_mode = 1
+theme_type_variation = &"SlotButton"
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -248,12 +271,14 @@ icon_alignment = 1
 expand_icon = true
 
 [node name="BuildingOption11" type="Panel" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2(32, 32)
+custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
+theme_type_variation = &"EmptyPanel"
 script = ExtResource("3_5wo0p")
 
 [node name="SelectBuildingButton" type="Button" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption11"]
 layout_mode = 1
+theme_type_variation = &"SlotButton"
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -266,12 +291,14 @@ icon_alignment = 1
 expand_icon = true
 
 [node name="BuildingOption12" type="Panel" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2(32, 32)
+custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
+theme_type_variation = &"EmptyPanel"
 script = ExtResource("3_5wo0p")
 
 [node name="SelectBuildingButton" type="Button" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption12"]
 layout_mode = 1
+theme_type_variation = &"SlotButton"
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -284,12 +311,14 @@ icon_alignment = 1
 expand_icon = true
 
 [node name="BuildingOption13" type="Panel" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2(32, 32)
+custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
+theme_type_variation = &"EmptyPanel"
 script = ExtResource("3_5wo0p")
 
 [node name="SelectBuildingButton" type="Button" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption13"]
 layout_mode = 1
+theme_type_variation = &"SlotButton"
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -302,12 +331,14 @@ icon_alignment = 1
 expand_icon = true
 
 [node name="BuildingOption14" type="Panel" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2(32, 32)
+custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
+theme_type_variation = &"EmptyPanel"
 script = ExtResource("3_5wo0p")
 
 [node name="SelectBuildingButton" type="Button" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption14"]
 layout_mode = 1
+theme_type_variation = &"SlotButton"
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -320,12 +351,14 @@ icon_alignment = 1
 expand_icon = true
 
 [node name="BuildingOption15" type="Panel" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2(32, 32)
+custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
+theme_type_variation = &"EmptyPanel"
 script = ExtResource("3_5wo0p")
 
 [node name="SelectBuildingButton" type="Button" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption15"]
 layout_mode = 1
+theme_type_variation = &"SlotButton"
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -338,12 +371,14 @@ icon_alignment = 1
 expand_icon = true
 
 [node name="BuildingOption16" type="Panel" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2(32, 32)
+custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
+theme_type_variation = &"EmptyPanel"
 script = ExtResource("3_5wo0p")
 
 [node name="SelectBuildingButton" type="Button" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption16"]
 layout_mode = 1
+theme_type_variation = &"SlotButton"
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -356,12 +391,14 @@ icon_alignment = 1
 expand_icon = true
 
 [node name="BuildingOption17" type="Panel" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2(32, 32)
+custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
+theme_type_variation = &"EmptyPanel"
 script = ExtResource("3_5wo0p")
 
 [node name="SelectBuildingButton" type="Button" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption17"]
 layout_mode = 1
+theme_type_variation = &"SlotButton"
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -374,12 +411,14 @@ icon_alignment = 1
 expand_icon = true
 
 [node name="BuildingOption18" type="Panel" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2(32, 32)
+custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
+theme_type_variation = &"EmptyPanel"
 script = ExtResource("3_5wo0p")
 
 [node name="SelectBuildingButton" type="Button" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption18"]
 layout_mode = 1
+theme_type_variation = &"SlotButton"
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -392,12 +431,14 @@ icon_alignment = 1
 expand_icon = true
 
 [node name="BuildingOption19" type="Panel" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2(32, 32)
+custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
+theme_type_variation = &"EmptyPanel"
 script = ExtResource("3_5wo0p")
 
 [node name="SelectBuildingButton" type="Button" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption19"]
 layout_mode = 1
+theme_type_variation = &"SlotButton"
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -410,12 +451,14 @@ icon_alignment = 1
 expand_icon = true
 
 [node name="BuildingOption20" type="Panel" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2(32, 32)
+custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
+theme_type_variation = &"EmptyPanel"
 script = ExtResource("3_5wo0p")
 
 [node name="SelectBuildingButton" type="Button" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption20"]
 layout_mode = 1
+theme_type_variation = &"SlotButton"
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -427,12 +470,35 @@ icon = ExtResource("4_y8rhs")
 icon_alignment = 1
 expand_icon = true
 
-[node name="UnitSelectionPanel" type="Panel" parent="MarginContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
+[node name="UnitSelectionPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -280.0
+offset_top = -100.0
+offset_right = 280.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 0
 script = ExtResource("5_l2uok")
 
-[node name="BackgroundImage" type="Panel" parent="MarginContainer/HBoxContainer/UnitSelectionPanel"]
+[node name="BackgroundImage" type="Panel" parent="UnitSelectionPanel"]
+layout_mode = 1
+theme_type_variation = &"EmptyPanel"
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UnitSelectionPanel/BackgroundImage"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -440,213 +506,210 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage"]
+[node name="InfoPanel" type="Panel" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"InsetPanel"
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="InfoPanel" type="Panel" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer"]
-layout_mode = 2
 size_flags_horizontal = 3
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel"]
-layout_mode = 2
-offset_left = 4.0
-offset_right = 253.0
-offset_bottom = 64.0
-size_flags_horizontal = 3
-theme_override_constants/margin_left = 2
-theme_override_constants/margin_top = 2
-theme_override_constants/margin_right = 2
-theme_override_constants/margin_bottom = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 8
 
-[node name="UnitIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(64, 64)
+[node name="UnitIcon" type="TextureRect" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
+size_flags_vertical = 4
 texture = ExtResource("4_y8rhs")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="UnitInfoGridContainer" type="GridContainer" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer"]
+[node name="UnitInfoGridContainer" type="GridContainer" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_constants/h_separation = 8
 theme_override_constants/v_separation = 0
 columns = 2
 
-[node name="Name" type="HBoxContainer" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer"]
+[node name="Name" type="HBoxContainer" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 8
 
-[node name="StatName" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/Name"]
+[node name="StatName" type="Label" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/Name"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 8
 text = "Name:"
 
-[node name="Value" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/Name"]
+[node name="Value" type="Label" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/Name"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 8
 text = "..."
 
-[node name="HealthHorizontalStatField" type="HBoxContainer" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer"]
+[node name="HealthHorizontalStatField" type="HBoxContainer" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 8
 script = ExtResource("6_or30t")
 
-[node name="StatName" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/HealthHorizontalStatField"]
+[node name="StatName" type="Label" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/HealthHorizontalStatField"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 8
 text = "Health"
 
-[node name="Value" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/HealthHorizontalStatField"]
+[node name="Value" type="Label" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/HealthHorizontalStatField"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 8
 text = "0
 "
 
-[node name="DamageHorizontalStatField" type="HBoxContainer" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer"]
+[node name="DamageHorizontalStatField" type="HBoxContainer" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 8
 script = ExtResource("6_or30t")
 
-[node name="StatName" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/DamageHorizontalStatField"]
+[node name="StatName" type="Label" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/DamageHorizontalStatField"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 8
 text = "Damage"
 
-[node name="Value" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/DamageHorizontalStatField"]
+[node name="Value" type="Label" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/DamageHorizontalStatField"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 8
 text = "0
 "
 
-[node name="AttackSpeedHorizontalStatField" type="HBoxContainer" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer"]
+[node name="AttackSpeedHorizontalStatField" type="HBoxContainer" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 8
 script = ExtResource("6_or30t")
 
-[node name="StatName" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/AttackSpeedHorizontalStatField"]
+[node name="StatName" type="Label" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/AttackSpeedHorizontalStatField"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 8
 text = "Attack Speed"
 
-[node name="Value" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/AttackSpeedHorizontalStatField"]
+[node name="Value" type="Label" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/AttackSpeedHorizontalStatField"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 8
 text = "0
 "
 
-[node name="CriticalChanceHorizontalStatField" type="HBoxContainer" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer"]
+[node name="CriticalChanceHorizontalStatField" type="HBoxContainer" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 8
 script = ExtResource("6_or30t")
 
-[node name="StatName" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/CriticalChanceHorizontalStatField"]
+[node name="StatName" type="Label" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/CriticalChanceHorizontalStatField"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 8
 text = "Critical Chance"
 
-[node name="Value" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/CriticalChanceHorizontalStatField"]
+[node name="Value" type="Label" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/CriticalChanceHorizontalStatField"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 8
 text = "0
 "
 
-[node name="CriticalMultiplierHorizontalStatField" type="HBoxContainer" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer"]
+[node name="CriticalMultiplierHorizontalStatField" type="HBoxContainer" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 8
 script = ExtResource("6_or30t")
 
-[node name="StatName" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/CriticalMultiplierHorizontalStatField"]
+[node name="StatName" type="Label" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/CriticalMultiplierHorizontalStatField"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 8
 text = "Critical Multiplier"
 
-[node name="Value" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/CriticalMultiplierHorizontalStatField"]
+[node name="Value" type="Label" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/CriticalMultiplierHorizontalStatField"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 8
 text = "0
 "
 
-[node name="AttackRangeHorizontalStatField" type="HBoxContainer" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer"]
+[node name="AttackRangeHorizontalStatField" type="HBoxContainer" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 8
 script = ExtResource("6_or30t")
 
-[node name="StatName" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/AttackRangeHorizontalStatField"]
+[node name="StatName" type="Label" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/AttackRangeHorizontalStatField"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 8
 text = "Attack Range"
 
-[node name="Value" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/AttackRangeHorizontalStatField"]
+[node name="Value" type="Label" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/AttackRangeHorizontalStatField"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 8
 text = "0
 "
 
-[node name="PriceHorizontalStatField" type="HBoxContainer" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer"]
+[node name="PriceHorizontalStatField" type="HBoxContainer" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 8
 script = ExtResource("6_or30t")
 
-[node name="StatName" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/PriceHorizontalStatField"]
+[node name="StatName" type="Label" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/PriceHorizontalStatField"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 8
 text = "Price"
 
-[node name="Value" type="Label" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/PriceHorizontalStatField"]
+[node name="Value" type="Label" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/PriceHorizontalStatField"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 8
 text = "0
 "
 
-[node name="Spacer" type="Control" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer"]
-custom_minimum_size = Vector2(120, 32)
+[node name="Spacer" type="Control" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer"]
+custom_minimum_size = Vector2(4, 0)
 layout_mode = 2
-size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="UpgradePanel" type="Panel" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer"]
+[node name="UpgradePanel" type="Panel" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer"]
 custom_minimum_size = Vector2(156, 0)
 layout_mode = 2
+theme_type_variation = &"InsetPanel"
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/UpgradePanel"]
+[node name="MarginContainer" type="MarginContainer" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/UpgradePanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 2
-theme_override_constants/margin_top = 2
-theme_override_constants/margin_right = 2
-theme_override_constants/margin_bottom = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
 
-[node name="UpgradeOptionContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/UpgradePanel/MarginContainer"]
+[node name="UpgradeOptionContainer" type="HBoxContainer" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/UpgradePanel/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 2
 alignment = 1
 
-[node name="ButtonPanel" type="Panel" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer"]
-custom_minimum_size = Vector2(64, 0)
+[node name="ButtonPanel" type="Panel" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer"]
+custom_minimum_size = Vector2(36, 0)
 layout_mode = 2
+theme_type_variation = &"EmptyPanel"
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/ButtonPanel"]
+[node name="MarginContainer" type="MarginContainer" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/ButtonPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -658,17 +721,18 @@ theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
-[node name="SellButton" type="Button" parent="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/ButtonPanel/MarginContainer"]
+[node name="SellButton" type="Button" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/ButtonPanel/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 4
-theme = ExtResource("6_qr8g2")
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 8
 text = "Sell"
 icon_alignment = 1
 
-[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="MarginContainer" to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="MarginContainer" to="." method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="UnitSelectionPanel" to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="UnitSelectionPanel" to="." method="_on_mouse_exited"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption/SelectBuildingButton" to="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption" method="_on_select_building_button_pressed"]
 [connection signal="toggled" from="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption/SelectBuildingButton" to="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption" method="_on_select_building_button_toggled"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption2/SelectBuildingButton" to="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption2" method="_on_select_building_button_pressed"]
@@ -709,4 +773,4 @@ icon_alignment = 1
 [connection signal="toggled" from="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption19/SelectBuildingButton" to="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption19" method="_on_select_building_button_toggled"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption20/SelectBuildingButton" to="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption20" method="_on_select_building_button_pressed"]
 [connection signal="toggled" from="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption20/SelectBuildingButton" to="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption20" method="_on_select_building_button_toggled"]
-[connection signal="pressed" from="MarginContainer/HBoxContainer/UnitSelectionPanel/BackgroundImage/HBoxContainer/ButtonPanel/MarginContainer/SellButton" to="MarginContainer/HBoxContainer/UnitSelectionPanel" method="_on_sell_button_pressed"]
+[connection signal="pressed" from="UnitSelectionPanel/BackgroundImage/HBoxContainer/ButtonPanel/MarginContainer/SellButton" to="UnitSelectionPanel" method="_on_sell_button_pressed"]

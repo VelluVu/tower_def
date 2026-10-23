@@ -3,11 +3,18 @@ extends Node
 
 
 const damage_number_scene : PackedScene = preload("res://scenes/ui/damage_number/damage_number.tscn")
+const NUMBER_LAYER_NAME : String = "DamageNumberLayer"
+
 var damage_number_pool : Array[DamageNumber]
+#screen space, so the numbers stay crisp at any camera zoom; drawn under the UI layer that follows in Main
+var number_layer : CanvasLayer = null
 var spawned_count : int = 0
 
 
 func _ready() -> void:
+	number_layer = CanvasLayer.new()
+	number_layer.name = NUMBER_LAYER_NAME
+	add_child(number_layer)
 	GameSignals.damage_taken.connect(_on_damage_taken)
 
 
@@ -25,7 +32,7 @@ func _get_damage_number() -> DamageNumber:
 		number = damage_number_scene.instantiate()
 		spawned_count += 1
 		number.name = number.name + str(spawned_count)
-		add_child(number)
+		number_layer.add_child(number)
 	else:
 		number = damage_number_pool.pop_back()
 	

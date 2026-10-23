@@ -7,7 +7,7 @@ const UPGRADE_BUTTON_TEXT : String = "%s
 const EVOLVE_BUTTON_TEXT : String = "%dg"
 const UPGRADE_BUTTON_MIN_SIZE : Vector2 = Vector2(36, 0)
 const UPGRADE_BUTTON_ICON_SIZE : int = 16
-const UPGRADE_BUTTON_FONT_SIZE : int = 11
+const UPGRADE_BUTTON_FONT_SIZE : int = 8
 
 @onready var unit_info_grid_container : GridContainer = $BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer
 @onready var unit_icon : TextureRect = $BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitIcon
@@ -36,6 +36,7 @@ var listed_stat_enums : Array[Utils.StatType] = [
 
 
 func _ready():
+	hide()
 	unit_info_grid_container.hide()
 	unit_icon.hide()
 	sell_button.hide()
@@ -46,6 +47,7 @@ func _ready():
 
 
 func _on_unit_selected(unit_name : String, actor_stats : Stats, main_skill : Skill, icon : Texture2D, _is_building : bool = false):
+	show()
 	unit_info_grid_container.show()
 	unit_icon.show()
 	unit_icon.texture = icon
@@ -68,6 +70,7 @@ func _on_unit_deselected():
 	unit_info_grid_container.hide()
 	unit_icon.hide()
 	sell_button.visible = false
+	hide()
 
 
 func _on_sell_button_pressed() -> void:

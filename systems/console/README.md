@@ -13,6 +13,7 @@ registry, developer-only commands, and command sets that group commands by domai
 | `DevConsole.registry.add_command_set(set)` | Adds a `ConsoleCommandSet` (a group of commands with its own `register()`) |
 | `DevConsole.registry.developer_mode_check` | A Callable returning whether dev-only commands may run (default: always) |
 | `DevConsole.open_action` / `cancel_action` | InputMap actions that open and focus the console, and close it (empty = unused) |
+| `DevConsole.hide_when_collapsed`, `collapse_icon` / `expand_icon` | Hide the console instead of collapsing it to its header (open_action shows it); the toggle button texts |
 | `DevConsole.is_console_active()` | True while open or focused, so your own shortcuts can back off |
 
 `clear` and `help` are built in. The registry's wording (unknown command, help headers) is a set of

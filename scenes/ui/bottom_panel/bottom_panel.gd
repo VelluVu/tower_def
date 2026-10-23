@@ -1,5 +1,5 @@
 class_name BottomPanel
-extends Panel
+extends Control
 
 
 func _on_mouse_entered() -> void:
