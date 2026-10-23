@@ -39,7 +39,7 @@
 [ext_resource type="Texture2D" uid="uid://b6lo5eq5siv2u" path="res://assets/art/ui/poison_element_icon.png" id="36_kci3i"]
 [ext_resource type="Texture2D" uid="uid://cw3b3xwravgoe" path="res://assets/art/units/evolve_glow.png" id="37_wqnxk"]
 [ext_resource type="Script" uid="uid://t7tjigistc7i" path="res://scenes/unit/modifier_manager.gd" id="39_8emt4"]
-[ext_resource type="Resource" path="res://scenes/upgrades/building_upgrades/tower_upgrade_data.tres" id="0_upgradedata"]
+[ext_resource type="Resource" path="res://scenes/upgrades/building_upgrades/beamer_upgrade_data.tres" id="0_upgradedata"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nli7h"]
 size = Vector2(16, 16)

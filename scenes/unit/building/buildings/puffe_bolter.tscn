@@ -40,7 +40,7 @@
 [ext_resource type="Texture2D" uid="uid://4vr2yacqou07" path="res://assets/art/ui/frost_element_icon.png" id="31_t8h32"]
 [ext_resource type="Texture2D" uid="uid://b6lo5eq5siv2u" path="res://assets/art/ui/poison_element_icon.png" id="36_5eit6"]
 [ext_resource type="Script" path="res://scenes/unit/modifier_manager.gd" id="40_o7aqn"]
-[ext_resource type="Resource" path="res://scenes/upgrades/building_upgrades/tower_upgrade_data.tres" id="0_upgradedata"]
+[ext_resource type="Resource" path="res://scenes/upgrades/building_upgrades/bolter_upgrade_data.tres" id="0_upgradedata"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jxaqe"]
 size = Vector2(16, 16)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://b78nv1og0jf3p"]
+[gd_scene load_steps=47 format=3 uid="uid://b78nv1og0jf3p"]
 
 [ext_resource type="Script" path="res://scenes/unit/building/wall.gd" id="1_kgbnu"]
 [ext_resource type="Texture2D" uid="uid://c5m2tdopql7kr" path="res://assets/art/units/building/wall/wall_icon.png" id="2_0awu8"]
@@ -18,6 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://bp7hd4rdex5do" path="res://scenes/unit/skills/skill_state_timers.tscn" id="16_waran"]
 [ext_resource type="Script" path="res://scenes/unit/skills/damage_data.gd" id="17_35ks3"]
 [ext_resource type="Script" path="res://scenes/unit/modifier_manager.gd" id="18_l28n7"]
+[ext_resource type="Resource" path="res://scenes/upgrades/building_upgrades/wall_upgrade_data.tres" id="0_upgradedata"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_4ih23"]
 
@@ -412,6 +413,7 @@ type = 9
 
 [node name="EvolveTree" type="Node" parent="."]
 script = ExtResource("11_0j38t")
+upgrade_data = ExtResource("0_upgradedata")
 
 [node name="EvolveBranch" type="Node" parent="EvolveTree"]
 script = ExtResource("12_ipd6y")

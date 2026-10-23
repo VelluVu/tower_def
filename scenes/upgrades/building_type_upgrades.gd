@@ -145,8 +145,15 @@ func _build_options() -> Array[GoldUpgradeOption]:
 
 
 func _apply_upgrade(building : Building) -> void:
+	#Health is not modified with MaxHealth, so keep the damage taken and add the new max on top
+	var missing_health : float = building.stats.get_stat_value(Utils.StatType.MaxHealth) - building.stats.get_stat_value(Utils.StatType.Health)
+
 	for resource in building.evolve_tree.upgrade_data.upgrade_resources:
 		building.modifier_manager.add_modifier(resource.get_modifier_data())
+
+	var health : Stat = building.stats.get_stat(Utils.StatType.Health)
+	if health != null:
+		health.value = building.stats.get_stat_value(Utils.StatType.MaxHealth) - missing_health
 
 
 func _apply_evolve(building : Building, leaf_path : NodePath) -> void:
