@@ -5,9 +5,30 @@
 [ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_003_wave_1.tres" id="2_w1"]
 [ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_003_wave_2.tres" id="3_w2"]
 [ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_003_wave_3.tres" id="4_w3"]
+[ext_resource type="Script" path="res://scenes/level/level_data/puffe_line.gd" id="9_line"]
+
+[sub_resource type="Resource" id="PuffeLine_1"]
+script = ExtResource("9_line")
+trigger = 0
+text = "Beeflings! Slow and stubborn. A Nova burst hurts many at once."
+
+[sub_resource type="Resource" id="PuffeLine_2"]
+script = ExtResource("9_line")
+trigger = 4
+wave_number = 1
+text = "One element per drakeling kind: the first one to evolve chooses it for all of them."
+
+[sub_resource type="Resource" id="PuffeLine_3"]
+script = ExtResource("9_line")
+trigger = 3
+wave_number = 3
+text = "The deepest caves are behind us after this. Then, the forest roads."
 
 [resource]
 script = ExtResource("1_level")
+level_name = "Stonebrook Castle"
+story_text = "Big beeflings march out of the deep caves. They hit hard and take a lot of fire to fall."
 starting_gold = 12.0
 starting_life = 10.0
 waves = Array[ExtResource("0_wave")]([ExtResource("2_w1"), ExtResource("3_w2"), ExtResource("4_w3")])
+puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3")])

@@ -14,6 +14,7 @@ const LEVEL_COMPLETED_MENU_NAME : String = "level_completed_menu"
 const SPEED_CONTROL_PANEL_NAME : String = "speed_control_panel"
 const LEVEL_UP_MENU_NAME : String = "level_up_menu"
 const WAVE_PANEL_NAME : String = "wave_panel"
+const PUFFE_DIALOGUE_NAME : String = "puffe_dialogue"
 
 var scene_manager : SceneManager
 var level_up_menu : LevelUpMenu = null
@@ -148,6 +149,7 @@ func _load_game_play_interface() -> void:
 	scene_manager.load_scene_by_name(SPEED_CONTROL_PANEL_NAME, scene_manager.SceneType.UI, self)
 	scene_manager.load_scene_by_name(WAVE_PANEL_NAME, scene_manager.SceneType.UI, self)
 	scene_manager.load_scene_by_name(BOTTOM_PANEL_NAME, scene_manager.SceneType.UI, self)
+	scene_manager.load_scene_by_name(PUFFE_DIALOGUE_NAME, scene_manager.SceneType.UI, self)
 	UISignals.game_play_interface_loaded.emit()
 
 
@@ -156,3 +158,4 @@ func _unload_game_play_interface() -> void:
 	scene_manager.unload_scene_by_name(SPEED_CONTROL_PANEL_NAME, scene_manager.SceneType.UI)
 	scene_manager.unload_scene_by_name(WAVE_PANEL_NAME, scene_manager.SceneType.UI)
 	scene_manager.unload_scene_by_name(BOTTOM_PANEL_NAME, scene_manager.SceneType.UI)
+	scene_manager.unload_scene_by_name(PUFFE_DIALOGUE_NAME, scene_manager.SceneType.UI)

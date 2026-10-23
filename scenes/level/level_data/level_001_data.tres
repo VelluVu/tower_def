@@ -5,8 +5,60 @@
 [ext_resource type="Resource" uid="uid://ct3isjmvnmoat" path="res://scenes/level/level_data/waves/level_001_wave_1.tres" id="2_w1"]
 [ext_resource type="Resource" uid="uid://c3aafxjqfdwtp" path="res://scenes/level/level_data/waves/level_001_wave_2.tres" id="3_w2"]
 [ext_resource type="Resource" uid="uid://jry20obs0ene" path="res://scenes/level/level_data/waves/level_001_wave_3.tres" id="4_w3"]
+[ext_resource type="Script" path="res://scenes/level/level_data/puffe_line.gd" id="9_line"]
+
+[sub_resource type="Resource" id="PuffeLine_1"]
+script = ExtResource("9_line")
+trigger = 0
+text = "Yawn... Puffe here, master commander of the drakelings. Something is crawling toward our castle!"
+
+[sub_resource type="Resource" id="PuffeLine_2"]
+script = ExtResource("9_line")
+trigger = 1
+text = "Pick a drakeling from the bar below and place it beside the road. A Bolter is a fine start."
+
+[sub_resource type="Resource" id="PuffeLine_3"]
+script = ExtResource("9_line")
+trigger = 2
+text = "Good! It will guard the castle eggs. Press Start wave when you are ready."
+
+[sub_resource type="Resource" id="PuffeLine_4"]
+script = ExtResource("9_line")
+trigger = 3
+wave_number = 1
+text = "Here they come. Every creature that reaches the castle costs us life."
+
+[sub_resource type="Resource" id="PuffeLine_5"]
+script = ExtResource("9_line")
+trigger = 7
+text = "Ouch! Do not let them through. More drakelings, or smarter spots!"
+
+[sub_resource type="Resource" id="PuffeLine_6"]
+script = ExtResource("9_line")
+trigger = 4
+wave_number = 1
+text = "Well fought. Click a drakeling to spend gold on upgrades. Later you choose its element."
+
+[sub_resource type="Resource" id="PuffeLine_7"]
+script = ExtResource("9_line")
+trigger = 5
+text = "Stronger already! An upgrade helps only the drakeling you bought it for."
+
+[sub_resource type="Resource" id="PuffeLine_8"]
+script = ExtResource("9_line")
+trigger = 6
+text = "We learned something! Pick a card. It helps every drakeling it fits until this castle is safe."
+
+[sub_resource type="Resource" id="PuffeLine_9"]
+script = ExtResource("9_line")
+trigger = 3
+wave_number = 3
+text = "The last wave. Hold them, and I can finally get back to my nap."
 
 [resource]
 script = ExtResource("1_level")
+level_name = "Puffe's Hollow"
+story_text = "Puffe's sleepy south-west corner. Cave creatures crawl out of the hills toward the first castle and its eggs."
 starting_gold = 12.0
 waves = Array[ExtResource("0_wave")]([ExtResource("2_w1"), ExtResource("3_w2"), ExtResource("4_w3")])
+puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_4"), SubResource("PuffeLine_5"), SubResource("PuffeLine_6"), SubResource("PuffeLine_7"), SubResource("PuffeLine_8"), SubResource("PuffeLine_9")])

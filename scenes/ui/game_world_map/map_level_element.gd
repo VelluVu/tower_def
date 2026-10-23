@@ -8,6 +8,9 @@ const LEVEL_DATA_PATH_FORMAT : String = "res://scenes/level/level_data/level_%03
 const DEFAULT_NAME_FORMAT : String = "Level %d"
 const INFO_FORMAT : String = "%d waves
 Start: %d gold, %d life"
+const STORY_FORMAT : String = "%s
+
+%s"
 const MISSING_LEVEL_DATA_WARNING : String = "No level data for map level %d at %s"
 
 @onready var tooltip : Panel = $Tooltip
@@ -49,6 +52,8 @@ func _show_level_info() -> void:
 	if not data.level_name.is_empty():
 		name_label.text = data.level_name
 	info_label.text = INFO_FORMAT % [data.waves.size(), data.starting_gold, data.starting_life]
+	if not data.story_text.is_empty():
+		info_label.text = STORY_FORMAT % [data.story_text, info_label.text]
 
 
 func _on_select_button_pressed() -> void:

@@ -6,9 +6,18 @@ Status: planning, nothing built yet (except the XP cards). Started 2026-10-22.
 - **Backstory:** the humans ruined the land by consuming everything. They angered its peaceful original inhabitants (the cave monsters, the swamp creatures), and their actions even made the volcano start to rumble. After the big war between dragons and humans, the mature dragons left and only the drakelings stayed to watch over the lands.
 - **Why the drakelings slept:** the lands were safe and everything was peaceful, so the drakelings went into a deep sleep, until now.
 - **Now:** the humans are back with lots of reinforcements to take the lands back. Their tree cutting, mining and burning of wide areas have angered the original inhabitants again, and those are now aggressive towards every castle as well. The drakelings will prevail.
-- **The castles** hold all the treasures the humans want, and the mature dragon eggs.
+- **The castles** were built by the humans a long time ago. They hold all the treasures the humans want, and the mature dragon eggs.
 - **The player** is Puffe the master commander (he), the wisest of the drakelings. He saves the castles one by one by building more and more defensive constructions (towers, traps, walls); each level is one castle to save.
-- Goal: defend the castles and drive the monsters and the humans out of these lands for good.
+- **Where Puffe starts:** the journey begins in the far south-west corner of the map (level 1 sits there). Puffe slept there because he doesn't like the swamp, the desert or the volcano: he can't sleep in any of them. This is a running joke for his lines as the route takes him through each of them.
+- **Goal:** protect the eggs and fortify every castle. The main goal is to fortify all castles and drive the humans away, which brings peace back to the lands. The angered inhabitants are fought because they attack the castles, not because they are the real enemy.
+
+### Telling the story (decided 2026-10-23)
+- **Level descriptions:** the panel that opens when a level is clicked on the world map carries a short story text for that castle, next to the waves, gold and life.
+- **Puffe's lines in levels:** a rectangle in the top-left corner of the screen, Puffe's portrait on the left and his line on the right, typed fast character by character. Short lines only.
+- **Tutorial:** the first level uses the same box to teach the basics (placing towers, starting a wave, upgrades).
+- **Puffe's look:** like the drakelings in the towers, but with golden horns and small golden armour pieces such as shoulder pieces. Portrait art is hand-made (ask before generating any).
+- **Built (2026-10-23):** `PuffeLine` resources in each level's `LevelData.puffe_lines`, `LevelData.story_text` for the map panel, the `PuffeDialogue` UI scene, and the portrait `assets/art/ui/puffe_portrait.png`. Triggers: level start, after the previous line, building placed, wave started / cleared (a wave number or any), gold upgrade bought, card level-up, enemy reaching the castle. Each line plays once when its trigger happens (queued while another shows), so a line waiting on something that never happens blocks nothing. Lines never pause the game; they keep typing while the card menu pauses it. A click shows the whole line, a second click closes it; otherwise it closes after max(2.5 s, 0.05 s per character).
+- Levels 1-3 got names (Puffe's Hollow, Mossy Keep, Stonebrook Castle) and every level a story text and 3-9 lines; all are placeholders for the user to rewrite.
 - The world map is split into areas. Each area is one enemy faction with its own enemies, tileset and boss level.
 
 | Area | Faction | Enemy ideas |
