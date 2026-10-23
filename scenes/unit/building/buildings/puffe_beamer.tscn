@@ -345,6 +345,7 @@ type = 9
 [node name="BeamTowerBt" parent="." instance=ExtResource("5_3fi0f")]
 
 [node name="SelectableUnit" parent="." instance=ExtResource("9_gmkxw")]
+display_name = "Beamer"
 
 [node name="PlacementValidator" parent="." instance=ExtResource("10_3twny")]
 

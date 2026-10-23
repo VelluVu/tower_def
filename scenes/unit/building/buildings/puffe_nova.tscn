@@ -281,6 +281,7 @@ shape = SubResource("CircleShape2D_nklau")
 [node name="BasicTowerBt" parent="." instance=ExtResource("7_68ipj")]
 
 [node name="SelectableUnit" parent="." instance=ExtResource("9_tgbdh")]
+display_name = "Nova"
 
 [node name="LaunchProjectile" parent="." instance=ExtResource("10_v02ro")]
 projectile_scene = ExtResource("11_77qvb")

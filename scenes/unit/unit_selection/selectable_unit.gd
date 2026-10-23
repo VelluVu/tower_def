@@ -21,6 +21,9 @@ var is_selected : bool = false :
 					sprite = sibling
 		return sprite
 
+## The name shown when selected; empty falls back to the scene file name.
+@export var display_name : String = ""
+
 
 #the outline is a toggle on the unit's own sprite material (unit_sprite.gdshader), so the hit flash keeps working while selected
 func show_outline(is_shown : bool) -> void:
@@ -117,6 +120,8 @@ func _signal_data_for_selection_panel(_is_selected : bool) -> void:
 
 #the node name carries a placement counter (PuffeBolter00, 01, ...); the scene file is stable
 func _get_display_name() -> String:
+	if not display_name.is_empty():
+		return display_name
 	if actor.scene_file_path.is_empty():
 		return actor.name
 	return actor.scene_file_path.get_file().get_basename().capitalize()
