@@ -20,6 +20,10 @@ enum CameraMode {Static, Free}
 @export var zoom_min = Vector2(1, 1)
 @export var zoom_max = Vector2(5,5)
 @export var pan_speed_scale : float = 20.0
+## Space kept around the spawners and end points when a level starts, in world pixels.
+@export var level_frame_margin : float = 48.0
+## The start view zooms out to fit the path, but never closer than this.
+@export var level_frame_max_zoom : float = 2.0
 
 var zoom_in : float = 1.1
 var zoom_out : float = 0.9
@@ -159,4 +163,23 @@ func _on_level_loaded(level : Level) -> void:
 	limit_top = -bg_size_y_rounded
 	limit_right = bg_size_x_rounded
 	limit_bottom = bg_size_y_rounded
+	_frame_level(level.get_path_bounds())
 	current_mode = CameraMode.Free
+
+
+## Starts the level with the spawners and the end points in view.
+func _frame_level(bounds : Rect2) -> void:
+	var framed : Rect2 = bounds.grow(level_frame_margin)
+	var viewport_size : Vector2 = get_viewport_rect().size
+	var fit : float = minf(viewport_size.x / framed.size.x, viewport_size.y / framed.size.y)
+	#whole zoom steps keep the 16 px pixel art even
+	var start_zoom : float = clampf(floorf(fit), zoom_min.x, level_frame_max_zoom)
+	zoom = Vector2.ONE * start_zoom
+	zoom_target_position = zoom
+
+	var viewport_half : Vector2 = viewport_size * 0.5 / zoom
+	var limit_min : Vector2 = Vector2(limit_left + viewport_half.x, limit_top + viewport_half.y)
+	var limit_max : Vector2 = Vector2(limit_right - viewport_half.x, limit_bottom - viewport_half.y)
+	global_position = framed.get_center().clamp(limit_min, limit_max)
+	move_target_position = global_position
+	pan_lerp_target_pos = global_position

@@ -128,25 +128,16 @@ func _on_level_loaded(_level : Level) -> void:
 
 
 func _on_game_interface_loaded() -> void:
-	_update_building_options_by_progress()
+	_update_building_options()
 	is_ready_to_build = true
 
 
-func _update_building_options_by_progress() -> void:
-	#the wall (id 0) is always available, every level progress unlocks one tower
-	var buildings_available : int = PlayerProgress.level_progress + 1
-	
-	#there can be more levels than buildings
-	if buildings_available > buildings.size():
-		buildings_available = buildings.size()
-	
+func _update_building_options() -> void:
+	#every building is available in every level; progress comes from upgrades, cards and talents
 	for element in buildings:
-		if element.id >= buildings_available:
-			break
-		
 		UISignals.building_option_updated.emit(element.id, element.icon)
 	
-	UISignals.buildings_updated.emit(buildings_available)
+	UISignals.buildings_updated.emit(buildings.size())
 
 
 func _on_game_stop() -> void:

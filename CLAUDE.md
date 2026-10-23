@@ -5,8 +5,8 @@ Project name `puffetd` (`config/name`, so saves are in `%APPDATA%/Godot/app_user
 ## Game Description
 - **Genre:** 2D tower defense roguelike, top-down pixel art (16 px tiles).
 - **Theme:** You play the dragons ("Puffe"). Dragon towers defend old castles from waves of invading creatures; the usual TD roles reversed.
-- **Loop:** Pick a level on the world map, place towers and walls on a grid, start the waves; enemies walk from spawners to the end point. Each enemy reaching the end costs life; killing one gives gold and XP. XP fills one bar per level (not per tower); each level-up pauses the game and offers 4 global stat cards (the roguelike layer) that apply to every matching tower, placed or placed later. Gold also buys upgrades per building type in the selection panel: two upgrades, then an element choice (Physical/Fire/Frost/Poison) that changes every building of that type, then more upgrades. Upgrades reset when the level ends. Clearing a level unlocks the next level and one more building.
-- **Player resources (per level, `PlayerStats`):** gold (starts 6) and life (starts 10).
+- **Loop:** Pick a level on the world map, place towers and walls on a grid, start the waves; enemies walk from spawners to the end point. Each enemy reaching the end costs life; killing one gives gold and XP. XP fills one bar per level (not per tower); each level-up pauses the game and offers 4 global stat cards (the roguelike layer) that apply to every matching tower, placed or placed later. Gold also buys upgrades per building type in the selection panel: two upgrades, then an element choice (Physical/Fire/Frost/Poison) that changes every building of that type, then more upgrades. Upgrades reset when the level ends. Clearing a level unlocks the next level; every building is available from the start.
+- **Player resources (per level, `PlayerStats`):** gold and life, set per level in its `LevelData` (start gold 8, 8, 12; life 10).
 - **Language:** Code, comments and in-game text are English.
 - **Engine:** Godot 4.7 (the editor upgraded `project.godot` from 4.6; the README still says 4.3), Mobile renderer, `default_texture_filter=0` (nearest), viewport stretch.
 

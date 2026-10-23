@@ -37,11 +37,17 @@ text = "Game Lost"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="RetryButton" type="Button" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(128, 32)
+layout_mode = 2
+text = "Retry"
+
 [node name="QuitButton" type="Button" parent="MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(128, 32)
 layout_mode = 2
-text = "Quit"
+text = "World Map"
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/RetryButton" to="." method="_on_retry_button_pressed"]

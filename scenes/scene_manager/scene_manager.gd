@@ -64,6 +64,16 @@ func load_scene_by_name(scene_name : String, scene_type : SceneType, parent_scen
 	return null
 
 
+func get_last_level_number() -> int:
+	var last : int = 0
+
+	for level in level_scenes:
+		var level_name : String = _remove_ending_after_marking_from_file_name(level.get_path(), SLASH, ENDING_CHAR_COUNT)
+		last = maxi(last, _get_level_number_from_level_name(level_name))
+
+	return last
+
+
 func is_in_level() -> bool:
 	return current_level != null
 

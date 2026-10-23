@@ -55,4 +55,4 @@ description: Use when designing or changing gameplay systems and algorithms in P
 ## Balance maths to keep in mind
 - XP curve: `UpgradeRules.xp_required(level) = FIRST_LEVEL_XP + 100 · level · (level − 1) / 2` (300, 400, 600, 900, ...; the first level-up after 10 Weakling kills); kill XP = enemy max health × 2.
 - Roll odds: 20% ×3, 30% ×2, 50% ×1 (expected ×1.9 on randomized cards).
-- Gold: start 6, kill gives enemy Price, selling refunds full Price (cheap to reposition; consider a refund ratio).
+- Gold: start per `LevelData` (8, 8, 12), kill gives enemy Price, selling refunds full Price (cheap to reposition; consider a refund ratio).

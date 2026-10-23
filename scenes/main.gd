@@ -33,6 +33,7 @@ func _ready() -> void:
 	GameSignals.level_completed.connect(_on_level_completed)
 	GameSignals.lose_game.connect(_on_lose_level)
 	UISignals.continue_next_level_pressed.connect(_on_continue_next_level_pressed)
+	UISignals.retry_level_pressed.connect(_on_retry_level_pressed)
 	UISignals.start_level_button_pressed.connect(_on_start_level_pressed)
 	UISignals.start_game.connect(_on_start_new_game)
 	UISignals.continue_last_save.connect(_on_continue_game)
@@ -56,10 +57,19 @@ func _on_start_new_game() -> void:
 
 
 func _on_continue_next_level_pressed() -> void:
-	#unlocks the level after the cleared one; replaying an earlier level never lowers or skips progress
-	PlayerProgress.level_progress = scene_manager.current_level_number + 1
-	PlayerProgress.save_progress()
 	ui.load_game_world_map(false)
+
+
+func _on_retry_level_pressed() -> void:
+	var level_number : int = scene_manager.current_level_number
+	var old_level : Node = scene_manager.current_level
+	ui.unload_level()
+
+	#the old level emits game_stop when it leaves the tree, which would unhook the new level's builder
+	if is_instance_valid(old_level) and old_level.is_inside_tree():
+		await old_level.tree_exited
+
+	scene_manager.load_level_by_number(level_number, self)
 
 
 func _on_level_loaded(_level : Level) -> void:
@@ -68,6 +78,9 @@ func _on_level_loaded(_level : Level) -> void:
 
 func _on_level_completed(_level : Level) -> void:
 	reset_time_scale()
+	#unlocks the level after the cleared one; replaying an earlier level never lowers or skips progress
+	PlayerProgress.level_progress = scene_manager.current_level_number + 1
+	PlayerProgress.save_progress()
 
 
 func _on_lose_level() -> void:

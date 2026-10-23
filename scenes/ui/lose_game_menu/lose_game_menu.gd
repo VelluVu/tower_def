@@ -6,6 +6,10 @@ func _on_quit_button_pressed() -> void:
 	UISignals.resign_level.emit()
 
 
+func _on_retry_button_pressed() -> void:
+	UISignals.retry_level_pressed.emit()
+
+
 func _on_mouse_entered() -> void:
 	UISignals.mouse_on_gui.emit(true)
 
