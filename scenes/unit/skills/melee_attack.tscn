@@ -1,5 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://cuv1fhpdbb5su"]
+[gd_scene load_steps=5 format=3 uid="uid://cuv1fhpdbb5su"]
 
+[ext_resource type="AudioStream" uid="uid://5h85hr6ut5q2" path="res://assets/audio/sfx/retro/enemy_attack.ogg" id="snd_activate"]
 [ext_resource type="Script" uid="uid://3l6dyrgd3fua" path="res://scenes/unit/skills/melee_attack.gd" id="1_fy7tn"]
 [ext_resource type="PackedScene" uid="uid://bp7hd4rdex5do" path="res://scenes/unit/skills/skill_state_timers.tscn" id="2_kim70"]
 
@@ -13,6 +14,7 @@ skill_type = 1
 skill_name = "MeleeAttack"
 base_cast_time = 1.0
 base_active_time = 0.2
+activate_sound = ExtResource("snd_activate")
 
 [node name="SkillStateTimers" parent="." instance=ExtResource("2_kim70")]
 

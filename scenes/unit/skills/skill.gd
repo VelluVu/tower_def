@@ -23,6 +23,8 @@ extends Node2D
 @export var base_cast_time : float = 0.0
 @export var base_active_time : float = 0.0
 @export var base_cooldown : float = 2.0
+## Plays at the skill when it activates; a continuous skill plays it once per target.
+@export var activate_sound : AudioStream
 
 @export var actor : Node :
 	get:
@@ -100,7 +102,9 @@ func start_skill_cast() -> void:
 
 func activate() -> void:
 	#print(name, " is active ")
-	
+	if activate_sound != null:
+		GameSignals.skill_activated.emit(self)
+
 	#is ready is enabled elsewhere for continuous skill and it is active until is ready change
 	if is_continuous:
 		return

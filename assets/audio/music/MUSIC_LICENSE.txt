@@ -1,0 +1,24 @@
+The music in this folder is CC0 (public domain), from OpenGameArt.org:
+https://creativecommons.org/publicdomain/zero/1.0/
+
+Human-composed and published 2017-2020, before generative music tools. No AI-generated audio.
+Converted from the WAV downloads to OGG Vorbis and levelled to about -17.5 dB RMS (peaks under -1 dB).
+
+randommind_market_day_loop.ogg        RandomMind, "Medieval: Market Day" (Loop_Market_Day.wav)
+    https://opengameart.org/content/medieval-market-day
+randommind_exploration.ogg            RandomMind, "Medieval: Exploration" (Exploration.wav)
+    https://opengameart.org/content/medieval-exploration
+randommind_minstrel_dance_loop.ogg    RandomMind, "Medieval: Minstrel Dance" (Loop_Minstrel_Dance_0.wav)
+    https://opengameart.org/content/medieval-minstrel-dance
+randommind_rejoicing_loop.ogg         RandomMind, "Medieval: Rejoicing" (Loop_Rejoicing.wav)
+    https://opengameart.org/content/medieval-rejoicing
+randommind_harvest_season.ogg         RandomMind, "Medieval: Harvest Season" (harvestseason.wav)
+    https://opengameart.org/content/medieval-harvest-season
+randommind_battle.ogg                 RandomMind, "Medieval: Battle" (battle_1.wav)
+    https://opengameart.org/content/medieval-battle
+randommind_victory.ogg                RandomMind, "Medieval: Victory Theme" (victory.wav)
+    https://opengameart.org/content/medieval-victory-theme
+randommind_defeat.ogg                 RandomMind, "Medieval: Defeat Theme" (defeat.wav)
+    https://opengameart.org/content/medieval-defeat-theme
+emma_ma_determined_pursuit_loop.ogg   Emma_MA, "Determined Pursuit (Epic Orchestra Loop)", 2017 (determined_pursuit_loop.wav)
+    https://opengameart.org/content/determined-pursuit-epic-orchestra-loop

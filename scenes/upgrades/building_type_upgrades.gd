@@ -122,6 +122,7 @@ func _on_gold_upgrade_pressed(index : int) -> void:
 		_update_pips(building, state)
 		building.stats_changed.emit()
 
+	GameSignals.gold_upgrade_bought.emit(selected_unit, option.is_evolve)
 	_emit_options()
 
 
