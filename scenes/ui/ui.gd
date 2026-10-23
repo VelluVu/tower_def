@@ -65,6 +65,18 @@ func _input(event: InputEvent) -> void:
 				UISignals.to_menu.emit(false, "")
 
 
+#alt-tab during a level opens the pause menu, unless something already paused the game
+func _notification(what : int) -> void:
+	if what != NOTIFICATION_APPLICATION_FOCUS_OUT or scene_manager == null:
+		return
+	if not SettingsManager.get_option(SettingsManager.OPTION_PAUSE_ON_FOCUS_LOSS):
+		return
+	if get_tree().paused or not scene_manager.is_in_level() or is_other_menus_open():
+		return
+
+	UISignals.to_menu.emit(false, "")
+
+
 func _on_level_loaded(_level : Level) -> void:
 	_load_game_play_interface()
 

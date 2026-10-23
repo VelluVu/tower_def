@@ -1,0 +1,10 @@
+Sound effects by Kenney Vleugels (Kenney.nl), CC0 (public domain):
+https://creativecommons.org/publicdomain/zero/1.0/
+
+Human-made. Copied unchanged (already OGG), renamed.
+
+building_placed.ogg   Impact Sounds, impactWood_heavy_000.ogg      https://kenney.nl/assets/impact-sounds
+castle_bell.ogg       Impact Sounds, impactBell_heavy_002.ogg      https://kenney.nl/assets/impact-sounds
+building_sold.ogg     RPG Audio, handleCoins2.ogg                  https://kenney.nl/assets/rpg-audio
+trap_snap.ogg         RPG Audio, chop.ogg                          https://kenney.nl/assets/rpg-audio
+wave_cleared.ogg      Music Jingles, Pizzicato jingles/jingles_PIZZI00.ogg   https://kenney.nl/assets/music-jingles

@@ -5,3 +5,10 @@
 # Cheat command sets stay local (see systems/console/console_wiring.gd)
 scenes/console/dev_mode_commands.gd*
 scenes/console/level_cheat_commands.gd*
+
+# Downloaded sound packs: the picked sounds are copied into assets/audio (see tools/audio_sources/README.md)
+tools/audio_sources/*
+!tools/audio_sources/README.md
+
+# Present only while Claude test-runs the game; mutes it (see systems/audio/audio_wiring.gd)
+tools/mute_audio.flag

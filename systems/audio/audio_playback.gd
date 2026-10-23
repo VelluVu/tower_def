@@ -1,0 +1,171 @@
+class_name AudioPlayback
+extends Node
+
+## Sound effects, music and UI clicks. Effects share a pool so overlaps don't cut off; music
+## loops one track or shuffles a playlist. Both play on while menus pause the tree.
+
+var sfx_bus: StringName = &"SFX"
+var music_bus: StringName = &"Music"
+var sfx_pool_size: int = 6
+## Positional sounds (play_sfx_at()) have their own pool, heard from the current
+## AudioListener2D, or the screen centre without one.
+var world_pool_size: int = 8
+## Past this distance in pixels a world sound is silent.
+var world_max_distance: float = 900.0
+var world_attenuation: float = 1.0
+var world_panning_strength: float = 0.6
+var click_stream: AudioStream
+## Every button that enters the tree plays the click when pressed, so none is left silent.
+var click_all_buttons: bool = true
+
+var _sfx_pool: Array[AudioStreamPlayer] = []
+var _next_sfx_player_index: int = 0
+var _world_pool: Array[AudioStreamPlayer2D] = []
+var _next_world_player_index: int = 0
+
+var _music_player: AudioStreamPlayer
+var _playlist: Array[AudioStream] = []
+var _playlist_index: int = 0
+var _looping: bool = false
+
+var _click_pending: bool = false
+## The frame a sound other than the click last played, so the click can give way to it.
+var _specific_sfx_frame: int = -1
+
+
+func _ready() -> void:
+	for i in range(sfx_pool_size):
+		# A sound that is playing when a window pauses the tree would freeze until it
+		# closes, which silences the click of every button that opens one.
+		_sfx_pool.append(_add_player(sfx_bus))
+	for i in range(world_pool_size):
+		_world_pool.append(_add_world_player())
+	_music_player = _add_player(music_bus)
+	# The web's default sample playback lost track of a looping song, so the menu music
+	# kept playing under the run's. Streamed, the engine's own mixer plays it as on desktop.
+	_music_player.playback_type = AudioServer.PLAYBACK_TYPE_STREAM
+	_music_player.finished.connect(_on_music_finished)
+	if click_all_buttons:
+		get_tree().node_added.connect(_on_node_added)
+
+
+## One-shot sound. A click requested in the same frame gives way to it.
+func play_sfx(stream: AudioStream, volume_db: float = 0.0, pitch_scale: float = 1.0) -> void:
+	_specific_sfx_frame = Engine.get_process_frames()
+	_play_stream(stream, volume_db, pitch_scale)
+
+
+## One-shot sound at a place in the world, panned and faded by its distance to the listener.
+## An empty `bus` plays on the effects bus.
+func play_sfx_at(stream: AudioStream, world_position: Vector2, volume_db: float = 0.0, pitch_scale: float = 1.0, bus: StringName = &"") -> void:
+	if stream == null:
+		return
+	var player := _world_pool[_next_world_player_index]
+	_next_world_player_index = (_next_world_player_index + 1) % _world_pool.size()
+	player.global_position = world_position
+	player.bus = bus if bus != &"" else sfx_bus
+	player.stream = stream
+	player.volume_db = volume_db
+	player.pitch_scale = pitch_scale
+	player.play()
+
+
+## Deferred to the end of the frame: one press can ask twice (the button and the signal
+## it sends), and a more specific sound in the same frame replaces the click.
+func play_click() -> void:
+	if _click_pending:
+		return
+	_click_pending = true
+	_flush_click.call_deferred()
+
+
+## Loops one track. Keeps going, without restarting, if it is already the looping track.
+func play_music_loop(stream: AudioStream) -> void:
+	if _looping and _music_player.stream == stream and _music_player.playing:
+		return
+	_looping = true
+	_switch_music(stream)
+
+
+## Plays one track once (a victory or defeat theme), then stays silent.
+func play_music_once(stream: AudioStream) -> void:
+	_looping = false
+	_playlist.clear()
+	_switch_music(stream)
+
+
+## Plays the tracks in a shuffled order, over and over.
+func play_playlist(tracks: Array[AudioStream]) -> void:
+	_looping = false
+	_playlist = tracks.duplicate()
+	_playlist.shuffle()
+	_playlist_index = 0
+	_play_playlist_track()
+
+
+func is_playlist_playing() -> bool:
+	return not _looping and _music_player.playing
+
+
+func _add_player(bus: StringName) -> AudioStreamPlayer:
+	var player := AudioStreamPlayer.new()
+	player.bus = bus
+	player.process_mode = Node.PROCESS_MODE_ALWAYS
+	add_child(player)
+	return player
+
+
+func _add_world_player() -> AudioStreamPlayer2D:
+	var player := AudioStreamPlayer2D.new()
+	player.bus = sfx_bus
+	player.max_distance = world_max_distance
+	player.attenuation = world_attenuation
+	player.panning_strength = world_panning_strength
+	add_child(player)
+	return player
+
+
+func _play_stream(stream: AudioStream, volume_db: float = 0.0, pitch_scale: float = 1.0) -> void:
+	if stream == null:
+		return
+	var player := _sfx_pool[_next_sfx_player_index]
+	_next_sfx_player_index = (_next_sfx_player_index + 1) % _sfx_pool.size()
+	player.stream = stream
+	player.volume_db = volume_db
+	player.pitch_scale = pitch_scale
+	player.play()
+
+
+func _flush_click() -> void:
+	_click_pending = false
+	if _specific_sfx_frame != Engine.get_process_frames():
+		_play_stream(click_stream)
+
+
+## A button moved to a new parent enters the tree again; connect it only once.
+func _on_node_added(node: Node) -> void:
+	if node is BaseButton and not (node as BaseButton).pressed.is_connected(play_click):
+		(node as BaseButton).pressed.connect(play_click)
+
+
+func _play_playlist_track() -> void:
+	if _playlist.is_empty():
+		return
+	_switch_music(_playlist[_playlist_index])
+
+
+## Stops the old track first, so the switch never overlaps two songs.
+func _switch_music(stream: AudioStream) -> void:
+	_music_player.stop()
+	_music_player.stream = stream
+	_music_player.play()
+
+
+func _on_music_finished() -> void:
+	if _looping:
+		_music_player.play()
+		return
+	if _playlist.is_empty():
+		return
+	_playlist_index = (_playlist_index + 1) % _playlist.size()
+	_play_playlist_track()

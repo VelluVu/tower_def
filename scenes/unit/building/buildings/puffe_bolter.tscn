@@ -1,5 +1,6 @@
-[gd_scene load_steps=64 format=3 uid="uid://bhmw5jig6ecq1"]
+[gd_scene load_steps=65 format=3 uid="uid://bhmw5jig6ecq1"]
 
+[ext_resource type="AudioStream" uid="uid://dnuudubfbs4yj" path="res://assets/audio/sfx/retro/bolter_shot.ogg" id="snd_activate"]
 [ext_resource type="Script" path="res://scenes/unit/building/tower.gd" id="1_wwpqv"]
 [ext_resource type="PackedScene" uid="uid://crbx1w230gw8" path="res://scenes/unit/skills/launch_projectile.tscn" id="3_8jepy"]
 [ext_resource type="Material" uid="uid://c3sja1ms0jrnf" path="res://assets/shaders/shader_materials/building_hit_shader_material.tres" id="3_ev5ok"]
@@ -319,6 +320,7 @@ shape = SubResource("CircleShape2D_nklau")
 position = Vector2(2, -10)
 projectile_scene = ExtResource("9_elqq4")
 skill_name = "Bolt"
+activate_sound = ExtResource("snd_activate")
 
 [node name="DamageData" type="Node" parent="LaunchProjectile"]
 script = ExtResource("10_mch2d")

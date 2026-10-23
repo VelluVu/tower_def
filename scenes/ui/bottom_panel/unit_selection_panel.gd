@@ -1,20 +1,26 @@
 class_name UnitSelectionPanel
-extends Panel
+extends PanelContainer
 
+## A small card fixed to the bottom-left corner: icon, name, the stats in two short lines,
+## then the gold upgrades and Sell. Fixed width and a fixed corner, so it never moves.
 
 const UPGRADE_BUTTON_TEXT : String = "%s
 %dg"
 const EVOLVE_BUTTON_TEXT : String = "%dg"
-const UPGRADE_BUTTON_MIN_SIZE : Vector2 = Vector2(36, 0)
-const UPGRADE_BUTTON_ICON_SIZE : int = 16
+#fixed width, long titles end in "..." and the tooltip has the full one
+const UPGRADE_BUTTON_MIN_SIZE : Vector2 = Vector2(50, 0)
+const EVOLVE_BUTTON_MIN_SIZE : Vector2 = Vector2(24, 0)
+const UPGRADE_BUTTON_ICON_SIZE : int = 12
 const UPGRADE_BUTTON_FONT_SIZE : int = 8
+## Space between the card and the window's bottom-left corner.
+const CORNER_MARGIN : float = 4.0
 
-@onready var unit_info_grid_container : GridContainer = $BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer
-@onready var unit_icon : TextureRect = $BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitIcon
-@onready var name_value : Label = $BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/Name/Value
-@onready var sell_button : Button = $BackgroundImage/HBoxContainer/ButtonPanel/MarginContainer/SellButton
-@onready var upgrade_panel : Panel = $BackgroundImage/HBoxContainer/UpgradePanel
-@onready var upgrade_option_container : HBoxContainer = $BackgroundImage/HBoxContainer/UpgradePanel/MarginContainer/UpgradeOptionContainer
+@onready var unit_info_grid_container : GridContainer = $HBoxContainer/InfoBox/UnitInfoGridContainer
+@onready var unit_icon : TextureRect = $HBoxContainer/UnitIcon
+@onready var name_value : Label = $HBoxContainer/InfoBox/NameLabel
+@onready var sell_button : Button = $HBoxContainer/InfoBox/ButtonRow/SellButton
+@onready var upgrade_option_container : HBoxContainer = $HBoxContainer/InfoBox/ButtonRow/UpgradeOptionContainer
+@onready var button_row : HBoxContainer = $HBoxContainer/InfoBox/ButtonRow
 
 var horizontal_stat_fields : Array[HorizontalStatField] :
 	get:
@@ -29,9 +35,9 @@ var listed_stat_enums : Array[Utils.StatType] = [
 	Utils.StatType.Health, 
 	Utils.StatType.Damage, 
 	Utils.StatType.AttackSpeed, 
-	Utils.StatType.CriticalChance, 
-	Utils.StatType.CriticalMultiplier, 
-	Utils.StatType.AttackRange, 
+	#also shows the critical multiplier
+	Utils.StatType.CriticalChance,
+	Utils.StatType.AttackRange,
 	Utils.StatType.Price]
 
 
@@ -40,7 +46,7 @@ func _ready():
 	unit_info_grid_container.hide()
 	unit_icon.hide()
 	sell_button.hide()
-	upgrade_panel.hide()
+	button_row.hide()
 	UISignals.selected_unit.connect(_on_unit_selected)
 	UISignals.deselected_unit.connect(_on_unit_deselected)
 	UISignals.gold_upgrades_changed.connect(_on_gold_upgrades_changed)
@@ -59,6 +65,7 @@ func _on_unit_selected(unit_name : String, actor_stats : Stats, main_skill : Ski
 		index += 1
 		
 	sell_button.visible = _is_building
+	_update_button_row()
 
 
 func _on_unit_deselected():
@@ -82,16 +89,31 @@ func _on_gold_upgrades_changed(options : Array[GoldUpgradeOption]) -> void:
 		upgrade_option_container.remove_child(child)
 		child.queue_free()
 	
-	upgrade_panel.visible = not options.is_empty()
-	
 	for index in options.size():
 		upgrade_option_container.add_child(_create_upgrade_button(options[index], index))
+
+	_update_button_row()
+
+
+func _update_button_row() -> void:
+	button_row.visible = sell_button.visible or upgrade_option_container.get_child_count() > 0
+	_fit_to_corner.call_deferred()
+
+
+## Shrinks to the content and keeps the bottom-left corner in place; resizing alone keeps
+## the top edge, so a shorter card would float up. Deferred so new buttons have their size.
+func _fit_to_corner() -> void:
+	reset_size()
+	position.y = get_parent_area_size().y - size.y - CORNER_MARGIN
 
 
 func _create_upgrade_button(option : GoldUpgradeOption, index : int) -> Button:
 	var button : Button = Button.new()
 	button.theme = sell_button.theme
-	button.custom_minimum_size = UPGRADE_BUTTON_MIN_SIZE
+	button.custom_minimum_size = EVOLVE_BUTTON_MIN_SIZE if option.icon != null else UPGRADE_BUTTON_MIN_SIZE
+	button.clip_text = true
+	button.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	button.focus_mode = Control.FOCUS_NONE
 	button.add_theme_font_size_override("font_size", UPGRADE_BUTTON_FONT_SIZE)
 	button.add_theme_constant_override("icon_max_width", UPGRADE_BUTTON_ICON_SIZE)
 	button.icon = option.icon

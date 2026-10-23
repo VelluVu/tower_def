@@ -1,0 +1,21 @@
+Sound effects from "The Essential Retro Video Game Sound Effects Collection [512 sounds]"
+by Juhani Junkala (SubspaceAudio), CC0 (public domain), published 2016:
+https://opengameart.org/content/512-sound-effects-8-bit-style
+https://creativecommons.org/publicdomain/zero/1.0/
+
+Human-made. Converted from WAV to OGG Vorbis, otherwise unchanged.
+
+ui_click.ogg             General Sounds/Menu Sounds/sfx_menu_move4.wav
+wave_start.ogg           General Sounds/Fanfares/sfx_sounds_fanfare2.wav
+level_up.ogg             General Sounds/Positive Sounds/sfx_sounds_powerup2.wav
+upgrade_bought.ogg       General Sounds/Coins/sfx_coin_double1.wav
+element_chosen.ogg       General Sounds/Positive Sounds/sfx_sounds_powerup10.wav
+building_destroyed.ogg   Explosions/Short/sfx_exp_short_soft1.wav
+enemy_death_1.ogg        Death Screams/Human/sfx_deathscream_human8.wav
+enemy_death_2.ogg        Death Screams/Human/sfx_deathscream_human9.wav
+enemy_death_3.ogg        Death Screams/Human/sfx_deathscream_human12.wav
+enemy_death_4.ogg        Death Screams/Human/sfx_deathscream_human14.wav
+bolter_shot.ogg          Weapons/Lasers/sfx_wpn_laser10.wav
+beamer_start.ogg         Weapons/Lasers/sfx_wpn_laser1.wav
+nova_burst.ogg           Explosions/Shortest/sfx_exp_shortest_soft7.wav
+enemy_attack.ogg         Weapons/Melee/sfx_wpn_sword1.wav

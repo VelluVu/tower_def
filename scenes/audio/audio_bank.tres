@@ -1,0 +1,46 @@
+[gd_resource type="Resource" script_class="AudioBank" format=3]
+
+[ext_resource type="Script" uid="uid://bfrxqvwttfdpg" path="res://scenes/audio/audio_bank.gd" id="1_bank"]
+[ext_resource type="AudioStream" uid="uid://b7am7i5skfygn" path="res://assets/audio/music/randommind_market_day_loop.ogg" id="m_menu"]
+[ext_resource type="AudioStream" uid="uid://df23u1my7bsad" path="res://assets/audio/music/randommind_exploration.ogg" id="m_map"]
+[ext_resource type="AudioStream" uid="uid://cddkk1a4fwqxf" path="res://assets/audio/music/randommind_minstrel_dance_loop.ogg" id="m_build_1"]
+[ext_resource type="AudioStream" uid="uid://ch1mnoa02tutw" path="res://assets/audio/music/randommind_rejoicing_loop.ogg" id="m_build_2"]
+[ext_resource type="AudioStream" uid="uid://bpitwb18m3kph" path="res://assets/audio/music/randommind_harvest_season.ogg" id="m_build_3"]
+[ext_resource type="AudioStream" uid="uid://s8q7m1vl8x1k" path="res://assets/audio/music/randommind_battle.ogg" id="m_battle_1"]
+[ext_resource type="AudioStream" uid="uid://c0xcsmfi4357n" path="res://assets/audio/music/emma_ma_determined_pursuit_loop.ogg" id="m_battle_2"]
+[ext_resource type="AudioStream" uid="uid://38dnlhffttof" path="res://assets/audio/music/randommind_victory.ogg" id="m_victory"]
+[ext_resource type="AudioStream" uid="uid://c20qnnv63prgt" path="res://assets/audio/music/randommind_defeat.ogg" id="m_defeat"]
+[ext_resource type="AudioStream" uid="uid://dks8b2mmf500e" path="res://assets/audio/sfx/retro/ui_click.ogg" id="s_click"]
+[ext_resource type="AudioStream" uid="uid://c5j4gn0ntdnpw" path="res://assets/audio/sfx/retro/level_up.ogg" id="s_level_up"]
+[ext_resource type="AudioStream" uid="uid://5pcbwijw2fh4" path="res://assets/audio/sfx/retro/upgrade_bought.ogg" id="s_upgrade"]
+[ext_resource type="AudioStream" uid="uid://bedcpqbl0c0qy" path="res://assets/audio/sfx/retro/element_chosen.ogg" id="s_element"]
+[ext_resource type="AudioStream" uid="uid://dtroiws7ubcbg" path="res://assets/audio/sfx/retro/wave_start.ogg" id="s_wave_start"]
+[ext_resource type="AudioStream" uid="uid://be678emcltkic" path="res://assets/audio/sfx/kenney/wave_cleared.ogg" id="s_wave_cleared"]
+[ext_resource type="AudioStream" uid="uid://xqkjgonnlvqk" path="res://assets/audio/sfx/kenney/castle_bell.ogg" id="s_castle"]
+[ext_resource type="AudioStream" uid="uid://cfdkhgy3l5dgf" path="res://assets/audio/sfx/kenney/building_placed.ogg" id="s_placed"]
+[ext_resource type="AudioStream" uid="uid://bxo03gpmwa7m1" path="res://assets/audio/sfx/kenney/building_sold.ogg" id="s_sold"]
+[ext_resource type="AudioStream" uid="uid://1bpjq3d84r5m" path="res://assets/audio/sfx/retro/building_destroyed.ogg" id="s_destroyed"]
+[ext_resource type="AudioStream" uid="uid://bmd8m6af6wrso" path="res://assets/audio/sfx/retro/enemy_death_1.ogg" id="s_death_1"]
+[ext_resource type="AudioStream" uid="uid://djcbd8tcot4hc" path="res://assets/audio/sfx/retro/enemy_death_2.ogg" id="s_death_2"]
+[ext_resource type="AudioStream" uid="uid://1tvqq1aedgbf" path="res://assets/audio/sfx/retro/enemy_death_3.ogg" id="s_death_3"]
+[ext_resource type="AudioStream" uid="uid://bdhyuavi7ifvn" path="res://assets/audio/sfx/retro/enemy_death_4.ogg" id="s_death_4"]
+
+[resource]
+script = ExtResource("1_bank")
+menu_music = ExtResource("m_menu")
+world_map_music = ExtResource("m_map")
+build_music = Array[AudioStream]([ExtResource("m_build_1"), ExtResource("m_build_2"), ExtResource("m_build_3")])
+battle_music = Array[AudioStream]([ExtResource("m_battle_1"), ExtResource("m_battle_2")])
+victory_music = ExtResource("m_victory")
+defeat_music = ExtResource("m_defeat")
+ui_click = ExtResource("s_click")
+level_up = ExtResource("s_level_up")
+upgrade_bought = ExtResource("s_upgrade")
+element_chosen = ExtResource("s_element")
+wave_start = ExtResource("s_wave_start")
+wave_cleared = ExtResource("s_wave_cleared")
+castle_hit = ExtResource("s_castle")
+building_placed = ExtResource("s_placed")
+building_sold = ExtResource("s_sold")
+building_destroyed = ExtResource("s_destroyed")
+enemy_deaths = Array[AudioStream]([ExtResource("s_death_1"), ExtResource("s_death_2"), ExtResource("s_death_3"), ExtResource("s_death_4")])

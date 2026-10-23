@@ -19,7 +19,7 @@ func _ready() -> void:
 
 
 func _on_damage_taken(_position : Vector2, _damage_data : DamageData) -> void:
-	if _damage_data.rounded_damage == 0.0:
+	if _damage_data.rounded_damage == 0.0 or not SettingsManager.get_option(SettingsManager.OPTION_DAMAGE_NUMBERS):
 		return
 	var damage_number : DamageNumber = _get_damage_number()
 	damage_number.activate(_position, _damage_data)

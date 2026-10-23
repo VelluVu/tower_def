@@ -11,6 +11,8 @@ signal enemy_reached_end_point(enemy : Enemy)
 signal enemy_destroyed(enemy : Enemy)
 signal enemy_spawned(enemy : Enemy)
 signal damage_taken(position : Vector2, damage_data : DamageData)
+#every attack of a tower, trap or enemy; the audio plays skill.activate_sound
+signal skill_activated(skill : Skill)
 
 signal selected_unit(unit : Node2D)
 signal deselected_unit(unit : Node2D)
@@ -37,6 +39,7 @@ signal wave_cleared(wave_number : int)
 signal upgrade_xp_changed(xp : float, xp_needed : float, upgrade_level : int)
 signal upgrade_level_gained(new_level : int, cards : Array[UpgradeCard])
 signal upgrade_cards_closed()
+signal gold_upgrade_bought(building : Building, is_evolve : bool)
 
 signal developer_mode_changed(is_enabled : bool)
 

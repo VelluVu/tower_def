@@ -9,6 +9,8 @@ const MOVE_DOWN_ACTION_NAME : String = "MoveCameraDown"
 const ZOOM_OUT_ACTION_NAME : String = "ZoomCameraOut"
 const ZOOM_IN_ACTION_NAME : String = "ZoomCameraIn"
 const PAN_ACTION_NAME : String = "PanCamera"
+## How close to the window edge the mouse scrolls the camera, in viewport pixels.
+const EDGE_SCROLL_MARGIN : float = 4.0
 
 enum CameraMode {Static, Free}
 
@@ -45,6 +47,11 @@ var move_direction : Vector2 = Vector2.ZERO
 
 #the widest zoom in the current level: the level always fills the view's width
 var level_min_zoom : float = 1.0
+#from the settings: a multiplier on move_step, and whether the window edge scrolls
+var speed_multiplier : float = 1.0
+var is_edge_scroll_on : bool = false
+#the last mouse position stays inside the edge margin after the mouse leaves the window
+var is_mouse_in_window : bool = true
 
 var is_panning : bool = false :
 	set = _set_is_panning
@@ -54,6 +61,9 @@ var current_mode : CameraMode = CameraMode.Static
 
 func _ready():
 	GameSignals.level_loaded.connect(_on_level_loaded)
+	SettingsManager.option_changed.connect(_on_option_changed)
+	speed_multiplier = SettingsManager.get_option(SettingsManager.OPTION_CAMERA_SPEED)
+	is_edge_scroll_on = SettingsManager.get_option(SettingsManager.OPTION_EDGE_SCROLL)
 	zoom_target_position = zoom
 	move_target_position = global_position
 	pan_initial_position = global_position
@@ -101,7 +111,41 @@ func _movement():
 	elif Input.is_action_pressed(MOVE_DOWN_ACTION_NAME):
 		move_direction = Vector2.DOWN
 	else:
-		move_direction = Vector2.ZERO
+		move_direction = _get_edge_scroll_direction()
+
+
+func _get_edge_scroll_direction() -> Vector2:
+	if not is_edge_scroll_on or not is_mouse_in_window or not get_window().has_focus():
+		return Vector2.ZERO
+
+	var mouse_position : Vector2 = get_viewport().get_mouse_position()
+	var viewport_size : Vector2 = get_viewport_rect().size
+	var direction : Vector2 = Vector2.ZERO
+
+	if mouse_position.x <= EDGE_SCROLL_MARGIN:
+		direction.x = -1.0
+	elif mouse_position.x >= viewport_size.x - EDGE_SCROLL_MARGIN:
+		direction.x = 1.0
+	if mouse_position.y <= EDGE_SCROLL_MARGIN:
+		direction.y = -1.0
+	elif mouse_position.y >= viewport_size.y - EDGE_SCROLL_MARGIN:
+		direction.y = 1.0
+
+	return direction
+
+
+func _notification(what : int) -> void:
+	if what == NOTIFICATION_WM_MOUSE_ENTER:
+		is_mouse_in_window = true
+	elif what == NOTIFICATION_WM_MOUSE_EXIT:
+		is_mouse_in_window = false
+
+
+func _on_option_changed(key : String, value : Variant) -> void:
+	if key == SettingsManager.OPTION_CAMERA_SPEED:
+		speed_multiplier = value
+	elif key == SettingsManager.OPTION_EDGE_SCROLL:
+		is_edge_scroll_on = value
 
 func _zoom_camera_smoothly(delta : float):
 	var min_zoom : Vector2 = Vector2.ONE * maxf(zoom_min.x, level_min_zoom)
@@ -118,7 +162,7 @@ func _move_camera_smoothly(delta : float):
 	var limit_min = Vector2(limit_left + viewport_half.x, limit_top + viewport_half.y)
 	var limit_max = Vector2(limit_right - viewport_half.x, limit_bottom - viewport_half.y)
 	
-	move_target_position = global_position + move_direction * move_step
+	move_target_position = global_position + move_direction * move_step * speed_multiplier
 	move_target_position = move_target_position.clamp(limit_min, limit_max)
 	global_position = global_position.lerp(move_target_position, move_speed * delta)
 	global_position = global_position.clamp(limit_min, limit_max)

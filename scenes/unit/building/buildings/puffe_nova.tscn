@@ -1,5 +1,6 @@
-[gd_scene load_steps=65 format=3 uid="uid://bddvvyp8cnh6u"]
+[gd_scene load_steps=66 format=3 uid="uid://bddvvyp8cnh6u"]
 
+[ext_resource type="AudioStream" uid="uid://bww255vgkt43n" path="res://assets/audio/sfx/retro/nova_burst.ogg" id="snd_activate"]
 [ext_resource type="Script" path="res://scenes/unit/building/tower.gd" id="1_t60dc"]
 [ext_resource type="Texture2D" uid="uid://crquejaub2fde" path="res://assets/art/units/building/puffe/puffe_nova/puffe_nova_icon.png" id="2_amlqn"]
 [ext_resource type="Material" uid="uid://c3sja1ms0jrnf" path="res://assets/shaders/shader_materials/building_hit_shader_material.tres" id="3_ahivo"]
@@ -328,6 +329,7 @@ projectile_scene = ExtResource("11_77qvb")
 skill_type = 4
 skill_name = "Nova"
 base_cast_time = 0.5
+activate_sound = ExtResource("snd_activate")
 
 [node name="DamageData" type="Node" parent="LaunchProjectile"]
 script = ExtResource("9_k17ms")

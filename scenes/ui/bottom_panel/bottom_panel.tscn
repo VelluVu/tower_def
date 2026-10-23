@@ -470,264 +470,140 @@ icon = ExtResource("4_y8rhs")
 icon_alignment = 1
 expand_icon = true
 
-[node name="UnitSelectionPanel" type="Panel" parent="."]
+[node name="UnitSelectionPanel" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(240, 0)
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
+anchors_preset = 2
 anchor_top = 1.0
-anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -280.0
-offset_top = -100.0
-offset_right = 280.0
-offset_bottom = -40.0
-grow_horizontal = 2
+offset_left = 4.0
+offset_top = -4.0
+offset_right = 244.0
+offset_bottom = -4.0
 grow_vertical = 0
 script = ExtResource("5_l2uok")
 
-[node name="BackgroundImage" type="Panel" parent="UnitSelectionPanel"]
-layout_mode = 1
-theme_type_variation = &"EmptyPanel"
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 5.0
-offset_top = 5.0
-offset_right = -5.0
-offset_bottom = -5.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="UnitSelectionPanel/BackgroundImage"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="InfoPanel" type="Panel" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UnitSelectionPanel"]
 layout_mode = 2
-theme_type_variation = &"InsetPanel"
-size_flags_horizontal = 3
+theme_override_constants/separation = 4
 
-[node name="MarginContainer" type="MarginContainer" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 3
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 3
-
-[node name="HBoxContainer" type="HBoxContainer" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/separation = 8
-
-[node name="UnitIcon" type="TextureRect" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(32, 32)
+[node name="UnitIcon" type="TextureRect" parent="UnitSelectionPanel/HBoxContainer"]
+custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 size_flags_vertical = 4
 texture = ExtResource("4_y8rhs")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="UnitInfoGridContainer" type="GridContainer" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer"]
+[node name="InfoBox" type="VBoxContainer" parent="UnitSelectionPanel/HBoxContainer"]
 layout_mode = 2
-theme_override_constants/h_separation = 8
-theme_override_constants/v_separation = 0
-columns = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_constants/separation = 2
 
-[node name="Name" type="HBoxContainer" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer"]
+[node name="NameLabel" type="Label" parent="UnitSelectionPanel/HBoxContainer/InfoBox"]
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/separation = 8
+text = "Name"
 
-[node name="StatName" type="Label" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/Name"]
+[node name="UnitInfoGridContainer" type="GridContainer" parent="UnitSelectionPanel/HBoxContainer/InfoBox"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 8
-text = "Name:"
+theme_override_constants/h_separation = 6
+theme_override_constants/v_separation = 1
+columns = 3
 
-[node name="Value" type="Label" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/Name"]
+[node name="HealthHorizontalStatField" type="HBoxContainer" parent="UnitSelectionPanel/HBoxContainer/InfoBox/UnitInfoGridContainer"]
+custom_minimum_size = Vector2(52, 0)
 layout_mode = 2
-theme_override_font_sizes/font_size = 8
-text = "..."
-
-[node name="HealthHorizontalStatField" type="HBoxContainer" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/separation = 8
+theme_override_constants/separation = 3
 script = ExtResource("6_or30t")
 
-[node name="StatName" type="Label" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/HealthHorizontalStatField"]
+[node name="StatName" type="Label" parent="UnitSelectionPanel/HBoxContainer/InfoBox/UnitInfoGridContainer/HealthHorizontalStatField"]
+modulate = Color(0.75, 0.9, 0.85, 1)
 layout_mode = 2
-theme_override_font_sizes/font_size = 8
-text = "Health"
 
-[node name="Value" type="Label" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/HealthHorizontalStatField"]
+[node name="Value" type="Label" parent="UnitSelectionPanel/HBoxContainer/InfoBox/UnitInfoGridContainer/HealthHorizontalStatField"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 8
-text = "0
-"
 
-[node name="DamageHorizontalStatField" type="HBoxContainer" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer"]
+[node name="DamageHorizontalStatField" type="HBoxContainer" parent="UnitSelectionPanel/HBoxContainer/InfoBox/UnitInfoGridContainer"]
+custom_minimum_size = Vector2(52, 0)
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/separation = 8
+theme_override_constants/separation = 3
 script = ExtResource("6_or30t")
 
-[node name="StatName" type="Label" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/DamageHorizontalStatField"]
+[node name="StatName" type="Label" parent="UnitSelectionPanel/HBoxContainer/InfoBox/UnitInfoGridContainer/DamageHorizontalStatField"]
+modulate = Color(0.75, 0.9, 0.85, 1)
 layout_mode = 2
-theme_override_font_sizes/font_size = 8
-text = "Damage"
 
-[node name="Value" type="Label" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/DamageHorizontalStatField"]
+[node name="Value" type="Label" parent="UnitSelectionPanel/HBoxContainer/InfoBox/UnitInfoGridContainer/DamageHorizontalStatField"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 8
-text = "0
-"
 
-[node name="AttackSpeedHorizontalStatField" type="HBoxContainer" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer"]
+[node name="AttackSpeedHorizontalStatField" type="HBoxContainer" parent="UnitSelectionPanel/HBoxContainer/InfoBox/UnitInfoGridContainer"]
+custom_minimum_size = Vector2(52, 0)
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/separation = 8
+theme_override_constants/separation = 3
 script = ExtResource("6_or30t")
 
-[node name="StatName" type="Label" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/AttackSpeedHorizontalStatField"]
+[node name="StatName" type="Label" parent="UnitSelectionPanel/HBoxContainer/InfoBox/UnitInfoGridContainer/AttackSpeedHorizontalStatField"]
+modulate = Color(0.75, 0.9, 0.85, 1)
 layout_mode = 2
-theme_override_font_sizes/font_size = 8
-text = "Attack Speed"
 
-[node name="Value" type="Label" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/AttackSpeedHorizontalStatField"]
+[node name="Value" type="Label" parent="UnitSelectionPanel/HBoxContainer/InfoBox/UnitInfoGridContainer/AttackSpeedHorizontalStatField"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 8
-text = "0
-"
 
-[node name="CriticalChanceHorizontalStatField" type="HBoxContainer" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer"]
+[node name="CriticalHorizontalStatField" type="HBoxContainer" parent="UnitSelectionPanel/HBoxContainer/InfoBox/UnitInfoGridContainer"]
+custom_minimum_size = Vector2(52, 0)
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/separation = 8
+theme_override_constants/separation = 3
 script = ExtResource("6_or30t")
 
-[node name="StatName" type="Label" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/CriticalChanceHorizontalStatField"]
+[node name="StatName" type="Label" parent="UnitSelectionPanel/HBoxContainer/InfoBox/UnitInfoGridContainer/CriticalHorizontalStatField"]
+modulate = Color(0.75, 0.9, 0.85, 1)
 layout_mode = 2
-theme_override_font_sizes/font_size = 8
-text = "Critical Chance"
 
-[node name="Value" type="Label" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/CriticalChanceHorizontalStatField"]
+[node name="Value" type="Label" parent="UnitSelectionPanel/HBoxContainer/InfoBox/UnitInfoGridContainer/CriticalHorizontalStatField"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 8
-text = "0
-"
 
-[node name="CriticalMultiplierHorizontalStatField" type="HBoxContainer" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer"]
+[node name="AttackRangeHorizontalStatField" type="HBoxContainer" parent="UnitSelectionPanel/HBoxContainer/InfoBox/UnitInfoGridContainer"]
+custom_minimum_size = Vector2(52, 0)
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/separation = 8
+theme_override_constants/separation = 3
 script = ExtResource("6_or30t")
 
-[node name="StatName" type="Label" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/CriticalMultiplierHorizontalStatField"]
+[node name="StatName" type="Label" parent="UnitSelectionPanel/HBoxContainer/InfoBox/UnitInfoGridContainer/AttackRangeHorizontalStatField"]
+modulate = Color(0.75, 0.9, 0.85, 1)
 layout_mode = 2
-theme_override_font_sizes/font_size = 8
-text = "Critical Multiplier"
 
-[node name="Value" type="Label" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/CriticalMultiplierHorizontalStatField"]
+[node name="Value" type="Label" parent="UnitSelectionPanel/HBoxContainer/InfoBox/UnitInfoGridContainer/AttackRangeHorizontalStatField"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 8
-text = "0
-"
 
-[node name="AttackRangeHorizontalStatField" type="HBoxContainer" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer"]
+[node name="PriceHorizontalStatField" type="HBoxContainer" parent="UnitSelectionPanel/HBoxContainer/InfoBox/UnitInfoGridContainer"]
+custom_minimum_size = Vector2(52, 0)
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/separation = 8
+theme_override_constants/separation = 3
 script = ExtResource("6_or30t")
 
-[node name="StatName" type="Label" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/AttackRangeHorizontalStatField"]
+[node name="StatName" type="Label" parent="UnitSelectionPanel/HBoxContainer/InfoBox/UnitInfoGridContainer/PriceHorizontalStatField"]
+modulate = Color(0.75, 0.9, 0.85, 1)
 layout_mode = 2
-theme_override_font_sizes/font_size = 8
-text = "Attack Range"
 
-[node name="Value" type="Label" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/AttackRangeHorizontalStatField"]
+[node name="Value" type="Label" parent="UnitSelectionPanel/HBoxContainer/InfoBox/UnitInfoGridContainer/PriceHorizontalStatField"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 8
-text = "0
-"
 
-[node name="PriceHorizontalStatField" type="HBoxContainer" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/separation = 8
-script = ExtResource("6_or30t")
-
-[node name="StatName" type="Label" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/PriceHorizontalStatField"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 8
-text = "Price"
-
-[node name="Value" type="Label" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/InfoPanel/MarginContainer/HBoxContainer/UnitInfoGridContainer/PriceHorizontalStatField"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 8
-text = "0
-"
-
-[node name="Spacer" type="Control" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer"]
-custom_minimum_size = Vector2(4, 0)
-layout_mode = 2
-mouse_filter = 2
-
-[node name="UpgradePanel" type="Panel" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer"]
-custom_minimum_size = Vector2(156, 0)
-layout_mode = 2
-theme_type_variation = &"InsetPanel"
-
-[node name="MarginContainer" type="MarginContainer" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/UpgradePanel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 4
-
-[node name="UpgradeOptionContainer" type="HBoxContainer" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/UpgradePanel/MarginContainer"]
+[node name="ButtonRow" type="HBoxContainer" parent="UnitSelectionPanel/HBoxContainer/InfoBox"]
 layout_mode = 2
 theme_override_constants/separation = 2
-alignment = 1
 
-[node name="ButtonPanel" type="Panel" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer"]
-custom_minimum_size = Vector2(36, 0)
+[node name="UpgradeOptionContainer" type="HBoxContainer" parent="UnitSelectionPanel/HBoxContainer/InfoBox/ButtonRow"]
 layout_mode = 2
-theme_type_variation = &"EmptyPanel"
+size_flags_horizontal = 3
+theme_override_constants/separation = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/ButtonPanel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 2
-theme_override_constants/margin_top = 2
-theme_override_constants/margin_right = 2
-theme_override_constants/margin_bottom = 2
-
-[node name="SellButton" type="Button" parent="UnitSelectionPanel/BackgroundImage/HBoxContainer/ButtonPanel/MarginContainer"]
+[node name="SellButton" type="Button" parent="UnitSelectionPanel/HBoxContainer/InfoBox/ButtonRow"]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 4
-theme_override_font_sizes/font_size = 8
+focus_mode = 0
 text = "Sell"
-icon_alignment = 1
 
 [connection signal="mouse_entered" from="MarginContainer" to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="MarginContainer" to="." method="_on_mouse_exited"]
@@ -773,4 +649,4 @@ icon_alignment = 1
 [connection signal="toggled" from="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption19/SelectBuildingButton" to="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption19" method="_on_select_building_button_toggled"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption20/SelectBuildingButton" to="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption20" method="_on_select_building_button_pressed"]
 [connection signal="toggled" from="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption20/SelectBuildingButton" to="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption20" method="_on_select_building_button_toggled"]
-[connection signal="pressed" from="UnitSelectionPanel/BackgroundImage/HBoxContainer/ButtonPanel/MarginContainer/SellButton" to="UnitSelectionPanel" method="_on_sell_button_pressed"]
+[connection signal="pressed" from="UnitSelectionPanel/HBoxContainer/InfoBox/ButtonRow/SellButton" to="UnitSelectionPanel" method="_on_sell_button_pressed"]

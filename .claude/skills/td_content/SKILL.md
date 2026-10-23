@@ -10,14 +10,15 @@ Always copy the closest existing piece and change it; the scenes depend on exact
 ## Tower
 1. Copy `scenes/unit/building/buildings/puffe_bolter.tscn` (projectile), `puffe_nova.tscn` (area) or `puffe_beamer.tscn` (beam).
 2. Set the `Stats` children (Health, MaxHealth, Price, AttackRange in tiles, ...) and the skill's own `Stats`/`DamageData` (damage type, overtime effects).
-3. Point `icon` and the `AnimatedSprite2D` frames at the new art.
+3. Point `icon` and the `AnimatedSprite2D` frames at the new art. Set the skill's `activate_sound` (an element swap keeps it when the new skill scene has none).
 4. Make a `BuildingListElement` `.tres` next to it; `Builder._get_buildings` loads every `.tres` in that folder. Its `id` is the order in the build bar; every building is available in every level.
 5. Upgrades and element choices: set the `EvolveTree`'s `upgrade_data` (a `BuildingUpgradeData` `.tres` in `scenes/upgrades/building_upgrades/`; one per building type, e.g. `bolter_upgrade_data.tres`), and add `ElementEvolveLeaf` nodes (under `EvolveBranch`es) to the `EvolveTree` (see `puffe_bolter.tscn` and `scenes/unit/evolve_tree/puffe_bolter_evolve/`). `BuildingTypeUpgrades` offers one button per leaf at the evolve step and applies the bought leaf to the selected building by its node path; the first leaf bought becomes the type's element and the only one offered to the other buildings of that scene, so keep the names identical across edits. Set `is_per_type` on the data for types where one purchase should upgrade every building (walls). Set `icon` (button) and `info` (tooltip). Leaves can swap the projectile, beam texture, damage data or sprite, and add `Modifier` children.
 
 ## Enemy
 1. Copy `scenes/unit/enemy/enemies/weakling.tscn`; keep the Beehave tree, `Hitbox`, `GoreEmitter`, `PopUpSpot`.
-2. Stats: Health/MaxHealth, Speed, Damage (life taken at the end point, added to the skill's Damage), Price (gold on kill).
-3. Use it in a wave: a `SpawnGroupData` in a `WaveData` `.tres` (`scenes/level/level_data/waves/`) with `enemy_scene`, `count`, `interval`, `delay`, `spawner_id`.
+2. The `MeleeAttack` skill scene carries the attack sound (`activate_sound`); override it on the node for a different one.
+3. Stats: Health/MaxHealth, Speed, Damage (life taken at the end point, added to the skill's Damage), Price (gold on kill).
+4. Use it in a wave: a `SpawnGroupData` in a `WaveData` `.tres` (`scenes/level/level_data/waves/`) with `enemy_scene`, `count`, `interval`, `delay`, `spawner_id`.
 
 ## Stat upgrade card
 - Add an `EvolveResource` `.tres` to `scenes/unit/evolve_tree/evolve_resources/`; it is picked up from the folder automatically and offered when it fits at least one placed tower (`UpgradeRules.fits_tower`).

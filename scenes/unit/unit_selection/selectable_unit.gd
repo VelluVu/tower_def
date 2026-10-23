@@ -73,7 +73,7 @@ func _set_is_selected(value : bool) -> void:
 		
 		if is_building:
 			if not actor.is_placed:
-				UISignals.selected_unit.emit(actor.name, actor.stats, actor.skill, actor.icon)
+				UISignals.selected_unit.emit(_get_display_name(), actor.stats, actor.skill, actor.icon)
 				return
 		
 		if not actor.stats.stats_changed.is_connected(_on_selected_data_change):
@@ -105,11 +105,18 @@ func _signal_data_for_selection_panel(_is_selected : bool) -> void:
 	
 	if is_building: 
 		if _is_selected:
-			UISignals.selected_unit.emit(actor.name, actor.stats, actor.skill, actor.icon, is_building)
+			UISignals.selected_unit.emit(_get_display_name(), actor.stats, actor.skill, actor.icon, is_building)
 		else:
 			UISignals.deselected_unit.emit()
 	else:
 		if _is_selected:
-			UISignals.selected_unit.emit(actor.name, actor.stats, actor.skill, actor.icon)
+			UISignals.selected_unit.emit(_get_display_name(), actor.stats, actor.skill, actor.icon)
 		else:
 			UISignals.deselected_unit.emit()
+
+
+#the node name carries a placement counter (PuffeBolter00, 01, ...); the scene file is stable
+func _get_display_name() -> String:
+	if actor.scene_file_path.is_empty():
+		return actor.name
+	return actor.scene_file_path.get_file().get_basename().capitalize()

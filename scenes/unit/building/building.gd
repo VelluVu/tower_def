@@ -145,6 +145,9 @@ func replace_skill(new_skill_scene : PackedScene) -> void:
 		_move_child_node(old_skill, new_skill, SKILL_DAMAGE_DATA_NODE_NAME)
 	
 	new_skill.position = old_skill.position
+	#the element skill scenes are shared, the sound belongs to the tower
+	if new_skill.activate_sound == null:
+		new_skill.activate_sound = old_skill.activate_sound
 	skill = new_skill
 	add_child(skill)
 	

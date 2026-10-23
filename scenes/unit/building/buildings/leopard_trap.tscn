@@ -1,5 +1,6 @@
-[gd_scene load_steps=41 format=3 uid="uid://6t4e2c8di3ko"]
+[gd_scene load_steps=42 format=3 uid="uid://6t4e2c8di3ko"]
 
+[ext_resource type="AudioStream" uid="uid://bsxfgems0e4g4" path="res://assets/audio/sfx/kenney/trap_snap.ogg" id="snd_activate"]
 [ext_resource type="Script" path="res://scenes/unit/building/trap.gd" id="1_oqrf3"]
 [ext_resource type="Texture2D" uid="uid://dshkxaaj6nj66" path="res://assets/art/units/building/leopard_trap/lebu_trap_icon.png" id="2_g6rll"]
 [ext_resource type="Texture2D" uid="uid://cw3b3xwravgoe" path="res://assets/art/units/evolve_glow.png" id="3_2qty6"]
@@ -339,6 +340,7 @@ shape = SubResource("CircleShape2D_wlrxm")
 [node name="LeopardClaws" parent="." node_paths=PackedStringArray("actor") instance=ExtResource("15_bukoe")]
 attack_size = 32.0
 actor = NodePath("..")
+activate_sound = ExtResource("snd_activate")
 
 [node name="Stats" type="Node" parent="LeopardClaws"]
 script = ExtResource("11_5kva3")

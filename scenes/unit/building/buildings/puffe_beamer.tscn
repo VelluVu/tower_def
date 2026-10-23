@@ -1,5 +1,6 @@
-[gd_scene load_steps=67 format=3 uid="uid://ck38qjjtmawki"]
+[gd_scene load_steps=68 format=3 uid="uid://ck38qjjtmawki"]
 
+[ext_resource type="AudioStream" uid="uid://bsfswpxgxm1d8" path="res://assets/audio/sfx/retro/beamer_start.ogg" id="snd_activate"]
 [ext_resource type="Script" uid="uid://cetgr835mpr6c" path="res://scenes/unit/building/tower.gd" id="1_cyr4l"]
 [ext_resource type="Texture2D" uid="uid://d3x1xfq7cnf40" path="res://assets/art/units/building/puffe/puffe_beamer/puffe_beamer_icon.png" id="2_1w6ba"]
 [ext_resource type="Material" uid="uid://c3sja1ms0jrnf" path="res://assets/shaders/shader_materials/building_hit_shader_material.tres" id="3_5wcu4"]
@@ -347,6 +348,7 @@ shape = SubResource("CircleShape2D_yksuc")
 [node name="Beam" parent="." instance=ExtResource("4_2p66l")]
 position = Vector2(5, -11)
 tick_speed = 1.5
+activate_sound = ExtResource("snd_activate")
 
 [node name="DamageData" type="Node" parent="Beam"]
 script = ExtResource("9_y18tw")
