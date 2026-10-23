@@ -319,6 +319,7 @@ type = 9
 [node name="BasicTowerBt" parent="." instance=ExtResource("5_6ycpu")]
 
 [node name="SelectableUnit" parent="." instance=ExtResource("10_0ilh6")]
+display_name = "Bolter"
 
 [node name="PlacementValidator" parent="." instance=ExtResource("11_4t8in")]
 
