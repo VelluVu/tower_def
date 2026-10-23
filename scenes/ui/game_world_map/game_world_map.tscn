@@ -56,11 +56,11 @@ grow_vertical = 2
 [node name="Tooltip" type="Panel" parent="MarginContainer/Map/Level_001" unique_id=1054369293]
 visible = false
 z_index = 1
-custom_minimum_size = Vector2(112, 112)
+custom_minimum_size = Vector2(180, 150)
 layout_mode = 0
 offset_left = 26.0
-offset_top = -92.0
-offset_right = 138.0
+offset_top = -130.0
+offset_right = 206.0
 offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
@@ -120,7 +120,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="LevelInfo" type="Label" parent="MarginContainer/Map/Level_001/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=112559023]
-custom_minimum_size = Vector2(96, 0)
+custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
@@ -161,11 +161,11 @@ grow_vertical = 2
 [node name="Tooltip" type="Panel" parent="MarginContainer/Map/Level_002" unique_id=1802542405]
 visible = false
 z_index = 1
-custom_minimum_size = Vector2(112, 112)
+custom_minimum_size = Vector2(180, 150)
 layout_mode = 0
 offset_left = 26.0
-offset_top = -92.0
-offset_right = 138.0
+offset_top = -130.0
+offset_right = 206.0
 offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
@@ -225,7 +225,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="LevelInfo" type="Label" parent="MarginContainer/Map/Level_002/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=523308209]
-custom_minimum_size = Vector2(96, 0)
+custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
@@ -266,11 +266,11 @@ grow_vertical = 2
 [node name="Tooltip" type="Panel" parent="MarginContainer/Map/Level_003" unique_id=149628473]
 visible = false
 z_index = 1
-custom_minimum_size = Vector2(112, 112)
+custom_minimum_size = Vector2(180, 150)
 layout_mode = 0
 offset_left = 26.0
-offset_top = -92.0
-offset_right = 138.0
+offset_top = -130.0
+offset_right = 206.0
 offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
@@ -330,7 +330,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="LevelInfo" type="Label" parent="MarginContainer/Map/Level_003/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=595859238]
-custom_minimum_size = Vector2(96, 0)
+custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
@@ -371,11 +371,11 @@ grow_vertical = 2
 [node name="Tooltip" type="Panel" parent="MarginContainer/Map/Level_004" unique_id=576857067]
 visible = false
 z_index = 1
-custom_minimum_size = Vector2(112, 112)
+custom_minimum_size = Vector2(180, 150)
 layout_mode = 0
 offset_left = 26.0
-offset_top = -92.0
-offset_right = 138.0
+offset_top = -130.0
+offset_right = 206.0
 offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
@@ -435,7 +435,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="LevelInfo" type="Label" parent="MarginContainer/Map/Level_004/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1753110034]
-custom_minimum_size = Vector2(96, 0)
+custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
@@ -476,11 +476,11 @@ grow_vertical = 2
 [node name="Tooltip" type="Panel" parent="MarginContainer/Map/Level_005" unique_id=270677819]
 visible = false
 z_index = 1
-custom_minimum_size = Vector2(112, 112)
+custom_minimum_size = Vector2(180, 150)
 layout_mode = 0
 offset_left = 26.0
-offset_top = -92.0
-offset_right = 138.0
+offset_top = -130.0
+offset_right = 206.0
 offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
@@ -540,7 +540,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="LevelInfo" type="Label" parent="MarginContainer/Map/Level_005/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1055621581]
-custom_minimum_size = Vector2(96, 0)
+custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
@@ -581,11 +581,11 @@ grow_vertical = 2
 [node name="Tooltip" type="Panel" parent="MarginContainer/Map/Level_006" unique_id=371752430]
 visible = false
 z_index = 1
-custom_minimum_size = Vector2(112, 112)
+custom_minimum_size = Vector2(180, 150)
 layout_mode = 0
 offset_left = 26.0
-offset_top = -92.0
-offset_right = 138.0
+offset_top = -130.0
+offset_right = 206.0
 offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
@@ -645,7 +645,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="LevelInfo" type="Label" parent="MarginContainer/Map/Level_006/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=620491251]
-custom_minimum_size = Vector2(96, 0)
+custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3

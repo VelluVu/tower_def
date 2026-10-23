@@ -7,10 +7,30 @@
 [ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_006_wave_3.tres" id="4_w3"]
 [ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_006_wave_4.tres" id="5_w4"]
 [ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_006_wave_5.tres" id="6_w5"]
+[ext_resource type="Script" path="res://scenes/level/level_data/puffe_line.gd" id="9_line"]
+
+[sub_resource type="Resource" id="PuffeLine_1"]
+script = ExtResource("9_line")
+trigger = 0
+text = "Smell that? The swamp. Damp, smelly and far too noisy for a nap."
+
+[sub_resource type="Resource" id="PuffeLine_2"]
+script = ExtResource("9_line")
+trigger = 3
+wave_number = 3
+text = "Big, wet and grumpy. Just like me before breakfast."
+
+[sub_resource type="Resource" id="PuffeLine_3"]
+script = ExtResource("9_line")
+trigger = 3
+wave_number = 5
+text = "The last wave of the forest. Then... the swamp. Sigh."
 
 [resource]
 script = ExtResource("1_level")
 level_name = "Serpent Road"
+story_text = "A long winding road at the edge of the swamp. Past it lies the bog, where Puffe can never sleep."
 starting_gold = 20.0
 starting_life = 10.0
 waves = Array[ExtResource("0_wave")]([ExtResource("2_w1"), ExtResource("3_w2"), ExtResource("4_w3"), ExtResource("5_w4"), ExtResource("6_w5")])
+puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3")])
