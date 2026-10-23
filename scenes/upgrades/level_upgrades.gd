@@ -14,6 +14,8 @@ var pending_level_ups : int = 0
 var is_finished : bool = false
 var offered_cards : Array[UpgradeCard]
 var chosen_cards : Array[UpgradeCard]
+#building -> {UpgradeCard: ModifierData}, kept so a card can be taken off when the element changes
+var applied_cards : Dictionary[Building, Dictionary] = {}
 
 var level : Level :
 	get:
@@ -29,6 +31,8 @@ var xp_needed : float :
 func _ready() -> void:
 	GameSignals.enemy_destroyed.connect(_on_enemy_destroyed)
 	GameSignals.building_placed.connect(_on_building_placed)
+	GameSignals.sell_building.connect(_on_building_removed)
+	GameSignals.building_destroyed.connect(_on_building_removed)
 	GameSignals.level_completed.connect(_on_level_finished)
 	GameSignals.lose_game.connect(_on_level_finished)
 	UISignals.upgrade_card_selected.connect(_on_upgrade_card_selected)
@@ -63,8 +67,31 @@ func _on_building_placed(building : Building) -> void:
 	if not _is_upgradable(building):
 		return
 
+	#BuildingTypeUpgrades has already set the type's element, later element changes refit the cards
+	building.evolve_tree.element_changed.connect(_on_element_changed.bind(building))
+
 	for card in chosen_cards:
 		_apply_stat_card(building, card)
+
+
+func _on_building_removed(building : Building) -> void:
+	applied_cards.erase(building)
+
+
+#a card that fit the old element comes off, a chosen card that fits the new one goes on
+func _on_element_changed(_element : Utils.Element, building : Building) -> void:
+	var cards : Dictionary = applied_cards.get(building, {})
+
+	for card in chosen_cards:
+		var fits : bool = UpgradeRules.fits_tower(card.resource, building.skill, building.evolve_tree.evolve_element, upgrade_level)
+
+		if fits and not cards.has(card):
+			_apply_stat_card(building, card)
+		elif not fits and cards.has(card):
+			building.modifier_manager.remove_modifier(cards[card])
+			cards.erase(card)
+
+	building.stats_changed.emit()
 
 
 func _on_upgrade_card_selected(index : int) -> void:
@@ -127,7 +154,13 @@ func _apply_stat_card(building : Building, card : UpgradeCard) -> void:
 	if not UpgradeRules.fits_tower(card.resource, building.skill, building.evolve_tree.evolve_element, upgrade_level):
 		return
 
-	building.modifier_manager.add_modifier(card.get_modifier_data())
+	var modifier_data : ModifierData = card.get_modifier_data()
+	building.modifier_manager.add_modifier(modifier_data)
+
+	if not applied_cards.has(building):
+		applied_cards[building] = {}
+
+	applied_cards[building][card] = modifier_data
 	building.stats_changed.emit()
 
 

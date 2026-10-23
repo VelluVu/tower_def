@@ -2,6 +2,8 @@ class_name HorizontalStatField
 extends HBoxContainer
 
 
+const PER_SECOND_TEXT : String = "/s"
+
 @onready var stat_name : Label = $StatName
 @onready var value : Label = $Value
 
@@ -18,10 +20,10 @@ func set_field(_stat_type : Utils.StatType = Utils.StatType.Health, actor_stats 
 			value.text = str(actor_stats.get_stat_value(Utils.StatType.Health)) + "/" + str(actor_stats.get_stat_value(Utils.StatType.MaxHealth))
 		Utils.StatType.Damage:
 			stat_name.text = "Damage:"
-			value.text = str(round(main_skill.stats.get_stat_value(Utils.StatType.Damage)))
+			value.text = str(snapped(main_skill.stats.get_stat_value(Utils.StatType.Damage), 0.01))
 		Utils.StatType.AttackSpeed:
 			stat_name.text = "Attack Speed:"
-			value.text = str(snapped(main_skill.attack_speed, 0.01))
+			value.text = str(snapped(main_skill.attack_speed, 0.01)) + PER_SECOND_TEXT
 		Utils.StatType.CriticalChance:
 			stat_name.text = "Critical Chance:"
 			value.text = str(snapped((main_skill.stats.get_stat_value(Utils.StatType.CriticalChance)), 0.01) * 100.0) + "%"

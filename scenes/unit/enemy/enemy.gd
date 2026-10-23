@@ -8,6 +8,9 @@ const NUMBERS : String = "0123456789"
 const GRID_UPDATE_ERROR : String = ", level is still initializing, unable to react to grid update"
 const END_POINT_PATHING_ERROR : String = " can't path to the end point distance: "
 const PATH_TO_STAT_RESOURCE : String = "res://scenes/unit/stats/stat_resources/enemy_stats/"
+const MODULATE_ALPHA_PROPERTY : String = "modulate:a"
+const CORPSE_FADE_TIME : float = 1.0
+const NO_FREE_POSITION_WARNING : String = " unable to find free position, destroying building in the way."
 
 @onready var collider : CollisionShape2D = $CollisionShape2D
 @onready var animation_control : AnimationControl = $AnimatedSprite2D
@@ -199,6 +202,22 @@ func die() -> void:
 	animation_control.play_animation(GlobalAnimationNames.DEATH_ANIMATION)
 	GameSignals.enemy_destroyed.emit(self)
 	deactivate()
+	_free_after_death()
+
+
+#the corpse stays until the death animation and the gore (which leaves the blood splats) have finished
+func _free_after_death() -> void:
+	if animation_control.is_playing():
+		await animation_control.animation_finished
+
+	while gore_emitter.is_emitting():
+		await get_tree().process_frame
+
+	var fade : Tween = create_tween()
+	fade.set_speed_scale(current_time_scale)
+	fade.tween_property(self, MODULATE_ALPHA_PROPERTY, 0.0, CORPSE_FADE_TIME)
+	await fade.finished
+	queue_free()
 
 
 func get_building_in_next_waypoint() -> Building:
@@ -215,8 +234,12 @@ func get_first_nearby_free_position() -> Vector2:
 	if not cells.is_empty():
 		return level.grid_position_to_world(cells.pick_random())
 	
-	level.get_building_from_cell_position(grid_position).destroy_building()
-	push_warning(name, " unable to find free position, destroying building in the way.")
+	var building_in_cell : Building = level.get_building_from_cell_position(grid_position)
+
+	if building_in_cell != null:
+		building_in_cell.destroy_building()
+		push_warning(name, NO_FREE_POSITION_WARNING)
+
 	return global_position
 
 
@@ -354,3 +377,4 @@ func _set_is_the_end_point_reached(value : bool) -> void:
 		GameSignals.enemy_reached_end_point.emit(self)
 		deactivate()
 		hide()
+		queue_free()

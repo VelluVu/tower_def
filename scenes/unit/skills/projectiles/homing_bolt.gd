@@ -43,7 +43,7 @@ func _ready() -> void:
 	if not animation_control.animation_finished.is_connected(_on_animation_finished):
 		animation_control.animation_finished.connect(_on_animation_finished)
 	if not GameSignals.time_scale_change.is_connected(_on_time_scale_change):
-		GameSignals.time_scale_change.is_connected(_on_time_scale_change)
+		GameSignals.time_scale_change.connect(_on_time_scale_change)
 
 
 func _physics_process(delta: float) -> void:

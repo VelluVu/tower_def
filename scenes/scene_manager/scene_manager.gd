@@ -19,6 +19,7 @@ const ENDING_CHAR_COUNT : int = 5
 @export var level_scenes : Array[PackedScene]
 
 var current_level : Node = null
+var current_level_number : int = 0
 var loaded_ui_scenes : Array[Node]
 var loaded_level_scenes : Array[Node]
 
@@ -28,9 +29,10 @@ enum SceneType {Level, UI}
 func load_level_by_number(level_number : int, parent_scene : Node) -> void:
 	for level in level_scenes:
 		var current_level_name_formatted : String = _remove_ending_after_marking_from_file_name(level.get_path(), SLASH, ENDING_CHAR_COUNT)
-		var current_level_number = _get_level_number_from_level_name(current_level_name_formatted)
-		
-		if current_level_number == level_number:
+		var file_level_number : int = _get_level_number_from_level_name(current_level_name_formatted)
+
+		if file_level_number == level_number:
+			current_level_number = level_number
 			current_level = level.instantiate()
 			parent_scene.add_child(current_level)
 			return
@@ -94,7 +96,9 @@ func unload_all_ui_scenes() -> void:
 
 
 func unload_current_level():
-	current_level.queue_free()
+	if is_instance_valid(current_level):
+		current_level.queue_free()
+	current_level = null
 
 
 func unload_scene_by_name(scene_name : String, scene_type : SceneType):
@@ -148,7 +152,8 @@ func _recursively_search_directory_for_ui_files(directory_path : String):
 	
 	if not dir:
 		push_warning(name, FOLDER_PATH_WARNING, directory_path)
-		
+		return
+
 	var file_names : PackedStringArray = dir.get_files()
 	_find_and_append_all_ui_scenes_from_file_names_in_directory_path(file_names, directory_path)
 	

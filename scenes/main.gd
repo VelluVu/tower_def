@@ -56,7 +56,8 @@ func _on_start_new_game() -> void:
 
 
 func _on_continue_next_level_pressed() -> void:
-	PlayerProgress.level_progress += 1
+	#unlocks the level after the cleared one; replaying an earlier level never lowers or skips progress
+	PlayerProgress.level_progress = scene_manager.current_level_number + 1
 	PlayerProgress.save_progress()
 	ui.load_game_world_map(false)
 

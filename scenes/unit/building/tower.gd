@@ -27,7 +27,9 @@ func _ready() -> void:
 	super()
 	_connect_range_stats()
 	GameSignals.enemy_destroyed.connect(_on_enemy_destroyed)
-	
+	#an enemy at the end point is freed, so it leaves the targets the same way
+	GameSignals.enemy_reached_end_point.connect(_on_enemy_destroyed)
+
 	if range_area == null:
 		push_warning(RANGE_AREA_OBJECT_NULL_ERROR_MESSAGE)
 	

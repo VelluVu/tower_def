@@ -22,7 +22,11 @@ func _ready() -> void:
 	
 	if not GameSignals.enemy_destroyed.is_connected(_on_enemy_destroyed):
 		GameSignals.enemy_destroyed.connect(_on_enemy_destroyed)
-	
+
+	#an enemy at the end point is freed, so it leaves the targets the same way
+	if not GameSignals.enemy_reached_end_point.is_connected(_on_enemy_destroyed):
+		GameSignals.enemy_reached_end_point.connect(_on_enemy_destroyed)
+
 	if range_area == null:
 		push_warning(RANGE_AREA_OBJECT_NULL_ERROR_MESSAGE)
 	

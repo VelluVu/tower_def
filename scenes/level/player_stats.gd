@@ -21,7 +21,8 @@ func _ready() -> void:
 
 
 func _on_enemy_reach_base(enemy : Enemy) -> void:
-	life -= round(enemy.stats.get_stat_value(Utils.StatType.Damage) + enemy.skill.stats.get_stat_value(Utils.StatType.Damage))
+	#the enemy's own damage is its leak cost, the melee skill's damage is only for hitting buildings
+	life -= round(enemy.stats.get_stat_value(Utils.StatType.Damage))
 	GameSignals.resource_change.emit(life, 1)
 	if life <= 0:
 		lose()

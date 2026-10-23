@@ -55,6 +55,7 @@ func _ready() -> void:
 	GameSignals.sell_building.connect(_on_building_sell)
 	GameSignals.building_destroyed.connect(_on_building_destroyed)
 	GameSignals.lose_game.connect(_on_lose_game)
+	GameSignals.level_completed.connect(_on_level_completed)
 	UISignals.game_play_interface_loaded.connect(_on_game_interface_loaded)
 	_get_buildings()
 
@@ -93,6 +94,12 @@ func _on_lose_game() -> void:
 	_stop_building_placement()
 
 
+#the level stays running behind the completed menu, so building has to stop by hand
+func _on_level_completed(_level : Level) -> void:
+	_stop_building_placement()
+	is_ready_to_build = false
+
+
 func _on_building_sell(_building : Building):
 	remove_building(_building)
 
@@ -108,6 +115,8 @@ func _on_game_pause(is_paused : bool) -> void:
 func _on_level_loaded(_level : Level) -> void:
 	placed_buildings.clear()
 	placed_building_id = 0
+	#a menu freed under the cursor may never send mouse_on_gui(false)
+	is_cursor_on_gui = false
 	level = _level
 	UISignals.building_option_selected.connect(_on_building_placement_selected)
 	UISignals.building_option_deselected.connect(_on_building_placement_deselected)
@@ -120,8 +129,9 @@ func _on_game_interface_loaded() -> void:
 
 
 func _update_building_options_by_progress() -> void:
-	var buildings_available : int = PlayerProgress.level_progress
-	
+	#the wall (id 0) is always available, every level progress unlocks one tower
+	var buildings_available : int = PlayerProgress.level_progress + 1
+
 	if GameSignals.testing:
 		buildings_available = buildings.size()
 	
@@ -290,11 +300,10 @@ func _get_buildings() -> void:
 			push_error(UNABLE_TO_FIND_LEVEL_RESOURCE_ERROR, full_path)
 			continue
 		
-		if not buildings.is_empty():
-			for element in buildings:
-				if element.scene.get_path() == full_path:
-					continue
-		
+		#skip elements already set in the inspector
+		if buildings.any(func(element : BuildingListElement) -> bool: return element.resource_path == full_path):
+			continue
+
 		buildings.append(ResourceLoader.load(full_path))
 	buildings.sort_custom(sort_by_id)
 
