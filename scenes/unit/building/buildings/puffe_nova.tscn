@@ -329,6 +329,7 @@ projectile_scene = ExtResource("11_77qvb")
 skill_type = 4
 skill_name = "Nova"
 base_cast_time = 0.5
+base_cooldown = 1.5
 activate_sound = ExtResource("snd_activate")
 
 [node name="DamageData" type="Node" parent="LaunchProjectile"]
@@ -400,7 +401,7 @@ type = 2
 
 [node name="Price" type="Node" parent="Stats"]
 script = ExtResource("16_ho6cm")
-base_value = 5.0
+base_value = 4.0
 value = 5.0
 type = 3
 

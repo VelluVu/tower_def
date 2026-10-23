@@ -1,9 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://b3u3u3ubuydtt"]
+[gd_scene load_steps=10 format=3 uid="uid://b3u3u3ubuydtt"]
 
 [ext_resource type="Script" path="res://scenes/unit/skills/projectiles/custom_area_effect.gd" id="1_hheiu"]
 [ext_resource type="Script" path="res://scenes/unit/skills/emitter.gd" id="2_pdnrw"]
 [ext_resource type="PackedScene" uid="uid://bvlc61yfulysg" path="res://scenes/unit/skills/projectiles/poison_nova_particle.tscn" id="3_aeecu"]
 [ext_resource type="Script" path="res://scenes/custom_timer.gd" id="4_t1ogc"]
+
+[ext_resource type="Script" uid="uid://c40py8icjstu3" path="res://scenes/unit/skills/projectiles/nova_ring.gd" id="nova_ring"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vgh1l"]
 resource_local_to_scene = true
@@ -49,6 +51,11 @@ y_sort_enabled = true
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("1_hheiu")
+
+[node name="NovaRing" type="Node2D" parent="."]
+script = ExtResource("nova_ring")
+light_color = Color(0.5294, 0.8784, 0.502, 1)
+dark_color = Color(0.3216, 0.8353, 0.4039, 1)
 
 [node name="Emitter" type="Node2D" parent="."]
 script = ExtResource("2_pdnrw")
