@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://djl7a6i8t4tv4"]
+[gd_scene load_steps=2 format=3 uid="uid://djl7a6i8t4tv4"]
 
 [ext_resource type="Script" path="res://scenes/ui/menu/options/options.gd" id="1_6trgy"]
-[ext_resource type="Theme" uid="uid://tqqtfp7oe2qf" path="res://assets/ui_themes/menu_ui_button_theme.tres" id="1_wo10x"]
 
 [node name="Options" type="Control"]
 layout_mode = 3
@@ -10,7 +9,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_wo10x")
 script = ExtResource("1_6trgy")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
@@ -19,6 +17,9 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 32.0
 grow_horizontal = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
@@ -26,21 +27,21 @@ theme_override_constants/separation = 8
 alignment = 1
 
 [node name="Graphics" type="Button" parent="MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(128, 32)
+custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 toggle_mode = true
 text = "Graphics"
 
 [node name="Audio" type="Button" parent="MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(128, 32)
+custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 toggle_mode = true
 text = "Audio"
 
 [node name="Back" type="Button" parent="MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(128, 32)
+custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Back"

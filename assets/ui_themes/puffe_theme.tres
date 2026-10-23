@@ -1,0 +1,343 @@
+[gd_resource type="Theme" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/art/ui/theme/ui_theme.png" id="1_atlas"]
+[ext_resource type="FontFile" path="res://assets/fonts/pixel_operator/PixelOperator8.ttf" id="2_text"]
+[ext_resource type="FontFile" path="res://assets/fonts/pixel_operator/PixelOperator-Bold.ttf" id="3_title"]
+
+[sub_resource type="StyleBoxTexture" id="Panel_stone"]
+texture = ExtResource("1_atlas")
+texture_margin_left = 5.0
+texture_margin_top = 5.0
+texture_margin_right = 5.0
+texture_margin_bottom = 5.0
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+region_rect = Rect2(0, 0, 16, 16)
+
+[sub_resource type="StyleBoxTexture" id="Panel_horns"]
+texture = ExtResource("1_atlas")
+texture_margin_left = 10.0
+texture_margin_top = 12.0
+texture_margin_right = 10.0
+texture_margin_bottom = 5.0
+expand_margin_top = 7.0
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+region_rect = Rect2(18, 0, 24, 23)
+
+[sub_resource type="StyleBoxTexture" id="Panel_accent"]
+texture = ExtResource("1_atlas")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+content_margin_left = 5.0
+content_margin_top = 4.0
+content_margin_right = 5.0
+content_margin_bottom = 4.0
+region_rect = Rect2(44, 0, 16, 16)
+
+[sub_resource type="StyleBoxTexture" id="Inset"]
+texture = ExtResource("1_atlas")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+region_rect = Rect2(0, 25, 16, 16)
+
+[sub_resource type="StyleBoxTexture" id="Parchment"]
+texture = ExtResource("1_atlas")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+content_margin_left = 5.0
+content_margin_top = 4.0
+content_margin_right = 5.0
+content_margin_bottom = 4.0
+region_rect = Rect2(18, 25, 16, 16)
+
+[sub_resource type="StyleBoxTexture" id="Button_normal"]
+texture = ExtResource("1_atlas")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 6.0
+content_margin_left = 6.0
+content_margin_top = 3.0
+content_margin_right = 6.0
+content_margin_bottom = 5.0
+region_rect = Rect2(36, 25, 16, 16)
+
+[sub_resource type="StyleBoxTexture" id="Button_hover"]
+texture = ExtResource("1_atlas")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 6.0
+content_margin_left = 6.0
+content_margin_top = 3.0
+content_margin_right = 6.0
+content_margin_bottom = 5.0
+region_rect = Rect2(54, 25, 16, 16)
+
+[sub_resource type="StyleBoxTexture" id="Button_pressed"]
+texture = ExtResource("1_atlas")
+texture_margin_left = 4.0
+texture_margin_top = 6.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+content_margin_left = 6.0
+content_margin_top = 5.0
+content_margin_right = 6.0
+content_margin_bottom = 3.0
+region_rect = Rect2(0, 43, 16, 16)
+
+[sub_resource type="StyleBoxTexture" id="Button_disabled"]
+texture = ExtResource("1_atlas")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 6.0
+content_margin_left = 6.0
+content_margin_top = 3.0
+content_margin_right = 6.0
+content_margin_bottom = 5.0
+region_rect = Rect2(18, 43, 16, 16)
+
+[sub_resource type="StyleBoxTexture" id="Focus"]
+texture = ExtResource("1_atlas")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+region_rect = Rect2(36, 43, 16, 16)
+draw_center = false
+
+[sub_resource type="StyleBoxTexture" id="Slot_normal"]
+texture = ExtResource("1_atlas")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+region_rect = Rect2(0, 25, 16, 16)
+
+[sub_resource type="StyleBoxTexture" id="Slot_hover"]
+texture = ExtResource("1_atlas")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+region_rect = Rect2(54, 43, 16, 16)
+
+[sub_resource type="StyleBoxTexture" id="Slot_pressed"]
+texture = ExtResource("1_atlas")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+region_rect = Rect2(0, 61, 16, 16)
+
+[sub_resource type="StyleBoxTexture" id="Slot_disabled"]
+texture = ExtResource("1_atlas")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+region_rect = Rect2(18, 61, 16, 16)
+
+[sub_resource type="StyleBoxTexture" id="Bar_bg"]
+texture = ExtResource("1_atlas")
+texture_margin_left = 3.0
+texture_margin_top = 3.0
+texture_margin_right = 3.0
+texture_margin_bottom = 3.0
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+region_rect = Rect2(36, 61, 8, 8)
+
+[sub_resource type="StyleBoxTexture" id="Bar_fill"]
+texture = ExtResource("1_atlas")
+texture_margin_left = 3.0
+texture_margin_top = 3.0
+texture_margin_right = 3.0
+texture_margin_bottom = 3.0
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+region_rect = Rect2(46, 61, 8, 8)
+
+[sub_resource type="StyleBoxTexture" id="Scroll"]
+texture = ExtResource("1_atlas")
+texture_margin_left = 3.0
+texture_margin_top = 3.0
+texture_margin_right = 3.0
+texture_margin_bottom = 3.0
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+region_rect = Rect2(36, 61, 8, 8)
+
+[sub_resource type="StyleBoxTexture" id="Grabber"]
+texture = ExtResource("1_atlas")
+texture_margin_left = 3.0
+texture_margin_top = 3.0
+texture_margin_right = 3.0
+texture_margin_bottom = 3.0
+region_rect = Rect2(56, 61, 8, 8)
+
+[sub_resource type="StyleBoxTexture" id="Grabber_hover"]
+texture = ExtResource("1_atlas")
+texture_margin_left = 3.0
+texture_margin_top = 3.0
+texture_margin_right = 3.0
+texture_margin_bottom = 3.0
+region_rect = Rect2(0, 79, 8, 8)
+
+[sub_resource type="StyleBoxTexture" id="Grabber_pressed"]
+texture = ExtResource("1_atlas")
+texture_margin_left = 3.0
+texture_margin_top = 3.0
+texture_margin_right = 3.0
+texture_margin_bottom = 3.0
+region_rect = Rect2(10, 79, 8, 8)
+
+[sub_resource type="StyleBoxTexture" id="Edit_normal"]
+texture = ExtResource("1_atlas")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+content_margin_left = 4.0
+content_margin_top = 3.0
+content_margin_right = 4.0
+content_margin_bottom = 3.0
+region_rect = Rect2(0, 25, 16, 16)
+
+[sub_resource type="StyleBoxTexture" id="Edit_focus"]
+texture = ExtResource("1_atlas")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+content_margin_left = 4.0
+content_margin_top = 3.0
+content_margin_right = 4.0
+content_margin_bottom = 3.0
+region_rect = Rect2(20, 79, 16, 16)
+
+[sub_resource type="StyleBoxEmpty" id="Empty"]
+
+[resource]
+default_font = ExtResource("2_text")
+default_font_size = 8
+Button/styles/normal = SubResource("Button_normal")
+Button/styles/hover = SubResource("Button_hover")
+Button/styles/pressed = SubResource("Button_pressed")
+Button/styles/disabled = SubResource("Button_disabled")
+Button/styles/hover_pressed = SubResource("Button_pressed")
+Button/styles/focus = SubResource("Focus")
+Button/colors/font_color = Color(0.902, 1, 0.9647, 1)
+Button/colors/font_hover_color = Color(1, 1, 1, 1)
+Button/colors/font_pressed_color = Color(0.902, 1, 0.9647, 1)
+Button/colors/font_hover_pressed_color = Color(0.902, 1, 0.9647, 1)
+Button/colors/font_focus_color = Color(0.902, 1, 0.9647, 1)
+Button/colors/font_disabled_color = Color(0.3529, 0.5412, 0.4627, 1)
+Button/colors/font_outline_color = Color(0.03922, 0.0902, 0.07059, 1)
+Button/colors/icon_disabled_color = Color(1, 1, 1, 0.4)
+Button/constants/h_separation = 3
+BigButton/base_type = &"Button"
+BigButton/fonts/font = ExtResource("3_title")
+BigButton/font_sizes/font_size = 16
+SlotButton/base_type = &"Button"
+SlotButton/styles/normal = SubResource("Slot_normal")
+SlotButton/styles/hover = SubResource("Slot_hover")
+SlotButton/styles/pressed = SubResource("Slot_pressed")
+SlotButton/styles/hover_pressed = SubResource("Slot_pressed")
+SlotButton/styles/disabled = SubResource("Slot_disabled")
+Label/colors/font_color = Color(0.902, 1, 0.9647, 1)
+Label/colors/font_shadow_color = Color(0.03922, 0.0902, 0.07059, 1)
+Label/constants/shadow_offset_x = 1
+Label/constants/shadow_offset_y = 1
+Label/constants/shadow_outline_size = 0
+TitleLabel/base_type = &"Label"
+TitleLabel/fonts/font = ExtResource("3_title")
+TitleLabel/font_sizes/font_size = 16
+TitleLabel/colors/font_color = Color(0.9961, 0.9059, 0.3804, 1)
+DarkLabel/base_type = &"Label"
+DarkLabel/colors/font_color = Color(0.03922, 0.0902, 0.07059, 1)
+DarkLabel/colors/font_shadow_color = Color(0, 0, 0, 0)
+RichTextLabel/colors/default_color = Color(0.902, 1, 0.9647, 1)
+RichTextLabel/colors/font_shadow_color = Color(0.03922, 0.0902, 0.07059, 1)
+RichTextLabel/constants/shadow_offset_x = 1
+RichTextLabel/constants/shadow_offset_y = 1
+Panel/styles/panel = SubResource("Panel_stone")
+PanelContainer/styles/panel = SubResource("Panel_stone")
+HornPanel/base_type = &"Panel"
+HornPanel/styles/panel = SubResource("Panel_horns")
+HornPanelContainer/base_type = &"PanelContainer"
+HornPanelContainer/styles/panel = SubResource("Panel_horns")
+AccentPanel/base_type = &"Panel"
+AccentPanel/styles/panel = SubResource("Panel_accent")
+AccentPanelContainer/base_type = &"PanelContainer"
+AccentPanelContainer/styles/panel = SubResource("Panel_accent")
+InsetPanel/base_type = &"Panel"
+InsetPanel/styles/panel = SubResource("Inset")
+InsetPanelContainer/base_type = &"PanelContainer"
+InsetPanelContainer/styles/panel = SubResource("Inset")
+EmptyPanel/base_type = &"Panel"
+EmptyPanel/styles/panel = SubResource("Empty")
+TooltipPanel/styles/panel = SubResource("Parchment")
+TooltipLabel/colors/font_color = Color(0.03922, 0.0902, 0.07059, 1)
+TooltipLabel/colors/font_shadow_color = Color(0, 0, 0, 0)
+ProgressBar/styles/background = SubResource("Bar_bg")
+ProgressBar/styles/fill = SubResource("Bar_fill")
+ProgressBar/colors/font_color = Color(0.902, 1, 0.9647, 1)
+ProgressBar/colors/font_outline_color = Color(0.03922, 0.0902, 0.07059, 1)
+HScrollBar/styles/scroll = SubResource("Scroll")
+HScrollBar/styles/scroll_focus = SubResource("Scroll")
+HScrollBar/styles/grabber = SubResource("Grabber")
+HScrollBar/styles/grabber_highlight = SubResource("Grabber_hover")
+HScrollBar/styles/grabber_pressed = SubResource("Grabber_pressed")
+VScrollBar/styles/scroll = SubResource("Scroll")
+VScrollBar/styles/scroll_focus = SubResource("Scroll")
+VScrollBar/styles/grabber = SubResource("Grabber")
+VScrollBar/styles/grabber_highlight = SubResource("Grabber_hover")
+VScrollBar/styles/grabber_pressed = SubResource("Grabber_pressed")
+LineEdit/styles/normal = SubResource("Edit_normal")
+LineEdit/styles/focus = SubResource("Edit_focus")
+LineEdit/styles/read_only = SubResource("Edit_normal")
+LineEdit/colors/font_color = Color(0.902, 1, 0.9647, 1)
+LineEdit/colors/caret_color = Color(0.9961, 0.9059, 0.3804, 1)
+LineEdit/colors/selection_color = Color(0.03922, 0.451, 0.3412, 0.8)
+LineEdit/colors/font_placeholder_color = Color(0.3529, 0.5412, 0.4627, 1)
+HSeparator/styles/separator = SubResource("Empty")
+VSeparator/styles/separator = SubResource("Empty")

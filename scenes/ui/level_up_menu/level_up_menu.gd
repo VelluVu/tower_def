@@ -4,9 +4,9 @@ extends Control
 ## Shows the cards of one level-up; the UI opens and closes it, LevelUpgrades applies the pick.
 
 const TITLE_TEXT : String = "Level %d: choose an upgrade for all towers"
-const CARD_MIN_SIZE : Vector2 = Vector2(128, 128)
-const CARD_ICON_SIZE : Vector2 = Vector2(48, 48)
-const CARD_MARGIN : int = 8
+const CARD_MIN_SIZE : Vector2 = Vector2(96, 112)
+const CARD_ICON_SIZE : Vector2 = Vector2(32, 32)
+const CARD_MARGIN : int = 6
 
 @onready var title_label : Label = %TitleLabel
 @onready var card_container : HBoxContainer = %CardContainer

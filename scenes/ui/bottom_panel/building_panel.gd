@@ -10,6 +10,7 @@ var building_options : Array[BuildingOption]
 func _ready() -> void:
 	_get_building_options()
 	UISignals.buildings_updated.connect(_on_buildings_updated)
+	_fit_to_options()
 
 
 func _get_building_options() -> void:
@@ -35,6 +36,12 @@ func _on_button_activated(_activated : bool, building_option : BuildingOption) -
 func _on_buildings_updated(available_buildings : int) -> void:
 	for i in range(building_options.size() - 1, -1, -1):
 		if i < available_buildings:
-			return
+			break
 			
 		building_options[i].visible = false
+	_fit_to_options()
+
+
+#the scroll container hides the grid's size from the tray, so the tray width follows the visible slots by hand
+func _fit_to_options() -> void:
+	custom_minimum_size = grid_container.get_combined_minimum_size()

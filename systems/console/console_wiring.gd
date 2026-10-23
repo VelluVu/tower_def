@@ -13,6 +13,7 @@ const CHEAT_SET_PATHS: Array[String] = [
 ]
 
 const TITLE_TEXT: String = "Console"
+const CLOSE_ICON: String = "x"
 const PLACEHOLDER_TEXT: String = "Type a command... (help)"
 const READY_MESSAGE: String = "Console ready. Type 'help' to see the commands."
 const DEV_MODE_OFF_MESSAGE: String = "[color=orange]Developer commands are off.[/color]"
@@ -46,6 +47,10 @@ func _ready() -> void:
 	_console.input_line_edit.placeholder_text = PLACEHOLDER_TEXT
 	_console.open_action = InputManager.ACTION_OPEN_CONSOLE
 	_console.cancel_action = InputManager.ACTION_CANCEL
+	# Out of the way until C; the pixel font has no arrow glyphs, so the toggle just closes it.
+	_console.hide_when_collapsed = true
+	_console.collapse_icon = CLOSE_ICON
+	_console.expand_icon = CLOSE_ICON
 	# The builder and unit selection ignore clicks while the cursor is over a GUI panel.
 	_console.mouse_entered.connect(func() -> void: UISignals.mouse_on_gui.emit(true))
 	_console.mouse_exited.connect(func() -> void: UISignals.mouse_on_gui.emit(false))
