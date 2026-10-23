@@ -3,8 +3,11 @@
 Status: planning, nothing built yet (except the XP cards). Started 2026-10-22.
 
 ## Story and World
-- The legendary drakelings (Puffe), protectors of the world, wake from a deep sleep and return to these lands. They drive the humans out of their castles.
-- The dangers the humans created (mutations, monsters) have been hiding and gathering strength. Now they attack the castles, and the humans return with even greater forces.
+- **Backstory:** the humans ruined the land by consuming everything. They angered its peaceful original inhabitants (the cave monsters, the swamp creatures), and their actions even made the volcano start to rumble. After the big war between dragons and humans, the mature dragons left and only the drakelings stayed to watch over the lands.
+- **Why the drakelings slept:** the lands were safe and everything was peaceful, so the drakelings went into a deep sleep, until now.
+- **Now:** the humans are back with lots of reinforcements to take the lands back. Their tree cutting, mining and burning of wide areas have angered the original inhabitants again, and those are now aggressive towards every castle as well. The drakelings will prevail.
+- **The castles** hold all the treasures the humans want, and the mature dragon eggs.
+- **The player** is Puffe the master commander (he), the wisest of the drakelings. He saves the castles one by one by building more and more defensive constructions (towers, traps, walls); each level is one castle to save.
 - Goal: defend the castles and drive the monsters and the humans out of these lands for good.
 - The world map is split into areas. Each area is one enemy faction with its own enemies, tileset and boss level.
 
@@ -17,6 +20,7 @@ Status: planning, nothing built yet (except the XP cards). Started 2026-10-22.
 
 - Each faction has its own resistance profile, so the area shapes which trees you lean on (see Enemies).
 - Each area ends in a boss level.
+- World map route (decided 2026-10-23): the forest in the south-west comes first, then the swamp in the north, then over the northern bridge into the next area. The humans have blocked the middle bridge (a barricade with a banner on the map) and the southern bridge is broken, so the swamp is the only way on. The level buttons are placed by hand in `game_world_map.tscn`.
 
 ## Layers
 | Layer | When | Currency | What it does |
