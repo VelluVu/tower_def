@@ -41,10 +41,15 @@ func load_game_world_map(from_menu : bool) -> void:
 		scene_manager.load_scene_by_name(GAME_WORLD_MAP_SCENE_NAME, scene_manager.SceneType.UI, self)
 		return
 	
+	unload_level()
+	scene_manager.load_scene_by_name(GAME_WORLD_MAP_SCENE_NAME, scene_manager.SceneType.UI, self)
+
+
+func unload_level() -> void:
 	scene_manager.unload_all_ui_scenes()
 	scene_manager.unload_current_level()
+	level_up_menu = null
 	GameSignals.game_pause.emit(false)
-	scene_manager.load_scene_by_name(GAME_WORLD_MAP_SCENE_NAME, scene_manager.SceneType.UI, self)
 
 
 func is_other_menus_open() -> bool:
@@ -77,7 +82,8 @@ func _on_lose_game() -> void:
 
 
 func _on_level_completed(_level : Level) -> void:
-	scene_manager.load_scene_by_name(LEVEL_COMPLETED_MENU_NAME, scene_manager.SceneType.UI, self)
+	var menu : LevelCompletedMenu = scene_manager.load_scene_by_name(LEVEL_COMPLETED_MENU_NAME, scene_manager.SceneType.UI, self)
+	menu.show_result(scene_manager.current_level_number >= scene_manager.get_last_level_number())
 
 
 func _on_upgrade_level_gained(new_level : int, cards : Array[UpgradeCard]) -> void:

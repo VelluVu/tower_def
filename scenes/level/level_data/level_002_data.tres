@@ -8,6 +8,6 @@
 
 [resource]
 script = ExtResource("1_level")
-starting_gold = 6.0
+starting_gold = 8.0
 starting_life = 10.0
 waves = Array[ExtResource("0_wave")]([ExtResource("2_w1"), ExtResource("3_w2"), ExtResource("4_w3")])

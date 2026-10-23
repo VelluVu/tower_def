@@ -17,6 +17,7 @@ signal deselected_unit()
 
 signal game_play_interface_loaded()
 signal continue_next_level_pressed()
+signal retry_level_pressed()
 signal start_level_button_pressed(level_number : int)
 signal start_game()
 signal options()

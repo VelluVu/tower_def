@@ -301,13 +301,29 @@ func _setup_waves() -> void:
 	
 	player_stats.gold = level_data.starting_gold
 	player_stats.life = level_data.starting_life
+	wave_runner.setup(level_data.waves, _get_spawners())
+
+
+## The area the enemies cross: every spawner and end point, for framing the camera.
+func get_path_bounds() -> Rect2:
+	var bounds : Rect2 = Rect2(end_point.global_position, Vector2.ZERO)
+
+	for spawner in _get_spawners():
+		bounds = bounds.expand(spawner.global_position)
+		if spawner.end_point != null:
+			bounds = bounds.expand(spawner.end_point.global_position)
+
+	return bounds
+
+
+func _get_spawners() -> Array[Spawner]:
 	var spawners : Array[Spawner] = []
-	
+
 	for node in get_tree().get_nodes_in_group(GroupNames.SPAWNER):
 		if node is Spawner and is_ancestor_of(node):
 			spawners.append(node)
-	
-	wave_runner.setup(level_data.waves, spawners)
+
+	return spawners
 
 
 func _on_start_wave_pressed() -> void:

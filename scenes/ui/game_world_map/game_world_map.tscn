@@ -110,7 +110,7 @@ vertical_alignment = 1
 custom_minimum_size = Vector2(112, 152)
 layout_mode = 2
 size_flags_vertical = 1
-text = "asdasdasdasdasdsadasdsadasdasdasdasdasdasdasdsdasdasdadsasd"
+text = ""
 autowrap_mode = 3
 
 [node name="LockTexture" type="TextureRect" parent="MarginContainer/Map/Level_001"]
@@ -208,7 +208,7 @@ vertical_alignment = 1
 custom_minimum_size = Vector2(112, 152)
 layout_mode = 2
 size_flags_vertical = 1
-text = "asdasdasdasdasdsadasdsadasdasdasdasdasdasdasdsdasdasdadsasd"
+text = ""
 autowrap_mode = 3
 
 [node name="LockTexture" type="TextureRect" parent="MarginContainer/Map/Level_002"]
@@ -306,7 +306,7 @@ vertical_alignment = 1
 custom_minimum_size = Vector2(112, 152)
 layout_mode = 2
 size_flags_vertical = 1
-text = "asdasdasdasdasdsadasdsadasdasdasdasdasdasdasdsdasdasdadsasd"
+text = ""
 autowrap_mode = 3
 
 [node name="LockTexture" type="TextureRect" parent="MarginContainer/Map/Level_003"]
