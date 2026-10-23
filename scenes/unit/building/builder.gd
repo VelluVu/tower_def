@@ -56,6 +56,7 @@ func _ready() -> void:
 	GameSignals.building_destroyed.connect(_on_building_destroyed)
 	GameSignals.lose_game.connect(_on_lose_game)
 	GameSignals.level_completed.connect(_on_level_completed)
+	GameSignals.resource_change.connect(_on_resource_change)
 	UISignals.game_play_interface_loaded.connect(_on_game_interface_loaded)
 	_get_buildings()
 
@@ -85,6 +86,10 @@ func _input(event):
 
 
 func _validate_placement_position(_pos : Vector2):
+	#shown red too, so a click that cannot pay does not look like a bug
+	if not has_enough_gold(current_building.stats.get_stat_value(Utils.StatType.Price)):
+		return false
+
 	if not _is_position_buildable(_pos):
 		return false
 	
@@ -110,6 +115,12 @@ func _on_building_sell(_building : Building):
 
 func _on_building_destroyed(_building : Building):
 	remove_building(_building)
+
+
+#gold from a kill can make the building affordable while the cursor stands still
+func _on_resource_change(_value : int, resource_index : int) -> void:
+	if resource_index == 0:
+		_move_building_with_cursor()
 
 
 func _on_game_pause(is_paused : bool) -> void:

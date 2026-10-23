@@ -22,30 +22,34 @@ Status: planning, nothing built yet (except the XP cards). Started 2026-10-22.
 | Layer | When | Currency | What it does |
 |---|---|---|---|
 | Talent trees (menu) | Between levels, permanent | Talent points | Unlock evolve tiers, capstones, deeper effects |
-| Upgrades and evolves | During a level | Gold | Improve one building type (all its buildings) |
+| Upgrades and evolves | During a level | Gold | Improve one building (walls: all walls); the element is chosen per type |
 | XP cards | During a level, pauses | XP | One stat for all towers, roguelike, reset per level |
 
 - All tower types are available from the start. Progress comes from the trees, the upgrades and the cards. This replaces "clearing a level unlocks a building".
 - Cards and upgrades overlap on purpose. Stacking (decided 2026-10-23, Path of Exile style): `(unit base + skill base + flats) × (1 + Σ Additive) × Π(1 + Multiply)`. Additive ("increased") percent bonuses add up with each other; Multiply ("more") ones compound on top. Cards and gold upgrades are Additive; slows stay Multiply (50 stacks of -10% compound to 0.5% speed instead of going negative); element bonuses are Multiply as rarer, bigger effects. Cards show "+20%" for Additive and "×20%" for Multiply.
 
 ## In-Level Upgrades and Evolves (gold)
-- Bought for a whole building type (all Bolters, all walls, ...). Buildings placed later get them too.
-- Bought from buttons in the selection panel (decided 2026-10-23): select any building of the type and the panel shows the next step and its gold price. At an evolve step the buttons are the element choices.
+- Bought per building (decided 2026-10-23, replaces per type): each tower and trap has its own upgrades and tiers, and a newly placed one starts at the base. Why: a per-type upgrade costs the same but grows with every building of the type owned, which made "mass one type, then upgrade" the best play; local upgrades also make placement matter (upgrade the one at the chokepoint) and selling an upgraded building loses its upgrades (only the building price is refunded).
+- The element stays per type: the first building of a type to evolve picks the element, and every other building of that type can then only evolve into it (one button at its own evolve step).
+- Walls stay per type (`BuildingUpgradeData.is_per_type`): one purchase upgrades every wall, placed or placed later. Per-wall upgrades at 3-10 gold would make no sense.
+- Candidate, not built: an "upgrade all of this type" button (or shift-click) that buys the same step for every building of the type you can afford, to save clicks.
+- Bought from buttons in the selection panel (decided 2026-10-23): select a building and the panel shows its next step and the gold price. At an evolve step the buttons are the element choices.
 - The element choice leaves the XP cards (decided 2026-10-23). The XP cards stay as the roguelike layer: global upgrades offered on each player level-up.
-- Built (2026-10-23): `BuildingTypeUpgrades` + `BuildingUpgradeData` (`scenes/upgrades/`), one data `.tres` per building type. Prices are ratios of the building's own price (see Gold Economy). Only T1 exists, T2/T3 stay locked and the upgrades continue past them; no talent locks, no step visuals (pips, outline) yet. The Leopard Trap and walls have no element leaves, so they only get upgrades.
+- Built (2026-10-23): `BuildingTypeUpgrades` + `BuildingUpgradeData` (`scenes/upgrades/`), one data `.tres` per building type; per-building states, the per-type element and per-type wall state (2026-10-23). Prices are ratios of the building's own price (see Gold Economy). Only T1 exists, T2/T3 stay locked and the upgrades continue past them; no talent locks; step visuals are placeholder pips only (see Visuals per step). The Leopard Trap and walls have no element leaves, so they only get upgrades.
 - Upgrade effects (decided 2026-10-23, first numbers, tune after playtests). Every step gives the same bonus, before and after the element:
 
 | Type | Each upgrade (Up 1-6) |
 |---|---|
-| Bolter | +15% damage, +10% attack speed |
-| Nova | +15% damage, +0.25 tiles radius |
-| Beamer | +15% damage, +0.25 tiles range |
-| Leopard Trap | +15% damage, +10% re-arm speed |
+| Bolter | +30% damage, +10% attack speed |
+| Nova | +30% damage, +0.25 tiles radius |
+| Beamer | +30% damage, +0.25 tiles range |
+| Leopard Trap | +30% damage, +10% re-arm speed |
 | Wall | +25% max health (the wall keeps the damage it has taken) |
 
+  - Damage went from +15% to +30% with the move to per-building upgrades: a step improves one tower for half a tower's price or more, so +15% lost to just buying another tower. Up 1 (+30% damage, +10% speed, about +43% DPS) at 0.5 of a tower is close to a new tower per gold, without using space; later steps are worth less per gold (Additive plus the rising price), so they are for space-limited maps.
   - Damage and max health are Additive; attack speed and range are Flat (attack speed is a bonus stat: +0.1 = 10% faster, like the cards).
   - Up 3-6 do not strengthen the element effect yet: burn, slow and poison strength wait for an "effect potency" stat that comes with the talent trees.
-- Each type picks one path (element) per level and keeps it until the level ends. A different level can use a different path.
+- Each type picks one path (element) per level (the first building of the type to evolve picks it) and keeps it until the level ends. A different level can use a different path.
 - Rhythm, two upgrades before each evolve:
   `Base -> Up 1 -> Up 2 -> [T1] -> Up 3 -> Up 4 -> [T2] -> Up 5 -> Up 6 -> [T3]`
 - Upgrades improve all stats of the type. Evolves change the ability.
@@ -98,6 +102,7 @@ Every upgrade should make the type look a bit stronger.
 - Later art: small overlay sprites per step (crest, crown).
 - Walls: palisade -> stone -> battlements -> castle wall, with element details (embers, ice crust, dripping moss).
 - Each step's visual settings (pips, outline strength, particles) live in the upgrade data.
+- Built (2026-10-23, placeholder): `UpgradePips` (`scenes/upgrades/`), code-drawn 2 px pips on the bottom edge of the building, added on the first purchase. One pip per tier in the element color with a white ring (so a red Fire pip reads on the red Fire tower), then one gold pip per upgrade since the last tier; rows of 5 stack upwards (walls at Up 6 show two rows). No outline strength, glow or particles yet.
 - Art comes later and is hand-made. Placeholders until then.
 
 ## Talent Trees (menu)
@@ -322,7 +327,7 @@ Some enemies have their own abilities; bosses have several.
 - Walls are cheap (about 1 gold), mainly for mazing and blocking.
 - Building prices (2026-10-23): Wall 1, Bolter 4, Beamer 4, Nova 5, Leopard Trap 5. Bolter and Wall had no price before (they were free).
 - Gold upgrade prices (decided 2026-10-23): ratio x the building's price, rounded up. Upgrades 0.5, 0.75, 1.0, 1.25, 1.5, 1.75 (a quarter tower more per step); evolves T1 1.5, T2 2.5, T3 4.0. A 4-gold tower: Up 2, 3, T1 6, Up 4, 5, (T2 10), Up 6, 7, (T3 16). A 5-gold tower: 3, 4, T1 8, 5, 7, (T2 13), 8, 9, (T3 20).
-  - Why: Up 1 + Up 2 + T1 is about 2.5 towers, reachable in level 1 (about 29 gold in total) when the player commits to one type; maxing a type costs more than level 1 pays, so it is for later levels. No extra cost per tower owned: specialising in one type is a valid strategy, and the rising ramp plus the added (not multiplied) +15% steps already give diminishing returns.
+  - Why: Up 1 + Up 2 + T1 is about 2.5 towers, reachable in level 1 (about 29 gold in total) when the player commits to one type; maxing a type costs more than level 1 pays, so it is for later levels. (Written for per-type upgrades; with per-building upgrades the same ratios buy one tower's steps, see the upgrade effects for the bigger bonuses.)
 - Start gold (first pass 2026-10-23, from playing each level with a simple Bolter-only build): level 1: 8 (two Bolters; won with no life lost), level 2: 8 (won with 5 of 10 life), level 3: 12 with wave 1 cut from 15 weaklings every 3 s to 10 every 4 s (won with 5 of 10 life; the first beefling wave costs the life). The old 6 gold bought one Bolter, which cannot kill a 15 HP weakling before it leaves range, so level 1 was lost with 0 kills.
 - Wall upgrade prices (decided 2026-10-23): 3, 4, 5, 6, 8, 10 gold (ratios of the 1-gold wall price). The tower ratios would make them 1-2 gold, too cheap for a purchase that improves every wall.
 - Towers cost about 3-5x a wall. Upgrades about half a tower. Evolves about 1-2 towers, rising per tier.
