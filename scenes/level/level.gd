@@ -9,6 +9,7 @@ const TILE_TYPE_CUSTOM_DATA_NAME : String = "TileType"
 const WAVE_RUNNER_NAME : String = "WaveRunner"
 const BUILDING_TYPE_UPGRADES_NAME : String = "BuildingTypeUpgrades"
 const PATH_PREVIEW_NAME : String = "PathPreview"
+const BACKDROP_NAME : String = "LevelBackdrop"
 const NO_LEVEL_DATA_WARNING : String = " Level has no LevelData, no waves will spawn!"
 
 @onready var tiles : Tiles = $Tiles
@@ -239,6 +240,9 @@ func _ready() -> void:
 	upgrades.name = "LevelUpgrades"
 	add_child(upgrades)
 	_setup_waves()
+	var backdrop : LevelBackdrop = LevelBackdrop.new()
+	backdrop.name = BACKDROP_NAME
+	add_child(backdrop)
 	var path_preview : PathPreview = PathPreview.new()
 	path_preview.name = PATH_PREVIEW_NAME
 	add_child(path_preview)

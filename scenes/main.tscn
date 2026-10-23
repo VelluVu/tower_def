@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://04rsqgt1kqsc"]
+[gd_scene format=3 uid="uid://04rsqgt1kqsc"]
 
 [ext_resource type="Script" uid="uid://dambs0yaslimv" path="res://scenes/main.gd" id="1_0mimr"]
 [ext_resource type="Script" uid="uid://bv2u4pphmc7vb" path="res://scenes/scene_manager/scene_manager.gd" id="1_2xphi"]
@@ -23,15 +23,15 @@ corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 
-[node name="Main" type="Node"]
+[node name="Main" type="Node" unique_id=1286313756]
 script = ExtResource("1_0mimr")
 
-[node name="SceneManager" type="Node" parent="."]
+[node name="SceneManager" type="Node" parent="." unique_id=1721423982]
 script = ExtResource("1_2xphi")
 ui_scenes = Array[PackedScene]([ExtResource("2_7wrsp"), ExtResource("6_3umoq")])
 level_scenes = Array[PackedScene]([ExtResource("3_o16fr")])
 
-[node name="GameCamera" type="Camera2D" parent="."]
+[node name="GameCamera" type="Camera2D" parent="." unique_id=1226790724]
 zoom = Vector2(2, 2)
 limit_left = -704
 limit_top = -448
@@ -39,15 +39,14 @@ limit_right = 704
 limit_bottom = 448
 script = ExtResource("5_nmsmd")
 pan_speed = 16.0
-zoom_min = Vector2(2, 2)
 
-[node name="DamageNumberManager" parent="." instance=ExtResource("8_1x856")]
+[node name="DamageNumberManager" parent="." unique_id=1265623864 instance=ExtResource("8_1x856")]
 
-[node name="UI" type="CanvasLayer" parent="."]
+[node name="UI" type="CanvasLayer" parent="." unique_id=425963178]
 process_mode = 3
 script = ExtResource("7_2wt15")
 
-[node name="DeveloperModeNotification" type="Label" parent="UI"]
+[node name="DeveloperModeNotification" type="Label" parent="UI" unique_id=1716264200]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -60,13 +59,14 @@ text = "DEVELOPER MODE ON"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Builder" parent="." instance=ExtResource("8_ots7q")]
+[node name="Builder" parent="." unique_id=118052685 instance=ExtResource("8_ots7q")]
 
-[node name="ConsoleLayer" type="CanvasLayer" parent="."]
+[node name="ConsoleLayer" type="CanvasLayer" parent="." unique_id=311713398]
 process_mode = 3
 layer = 10
 
-[node name="DevConsole" parent="ConsoleLayer" instance=ExtResource("9_console")]
+[node name="DevConsole" parent="ConsoleLayer" unique_id=1106219978 instance=ExtResource("9_console")]
+layout_mode = 3
 offset_left = -364.0
 offset_top = -260.0
 offset_bottom = -80.0
