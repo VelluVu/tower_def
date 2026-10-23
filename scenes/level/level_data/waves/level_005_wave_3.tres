@@ -1,9 +1,9 @@
-[gd_resource type="Resource" script_class="WaveData" format=3]
+[gd_resource type="Resource" script_class="WaveData" format=3 uid="uid://chjdi3k66kf04"]
 
-[ext_resource type="Script" path="res://scenes/level/level_data/wave_data.gd" id="1_wave"]
-[ext_resource type="Script" path="res://scenes/level/level_data/spawn_group_data.gd" id="2_group"]
-[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/beefling.tscn" id="3_beefling"]
-[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/fastling.tscn" id="4_fastling"]
+[ext_resource type="Script" uid="uid://cpw7ia3ek2yvs" path="res://scenes/level/level_data/wave_data.gd" id="1_wave"]
+[ext_resource type="Script" uid="uid://bbhd3iyjav4h2" path="res://scenes/level/level_data/spawn_group_data.gd" id="2_group"]
+[ext_resource type="PackedScene" uid="uid://bj8fmaeegual3" path="res://scenes/unit/enemy/enemies/beefling.tscn" id="3_beefling"]
+[ext_resource type="PackedScene" uid="uid://dla7not0kpg61" path="res://scenes/unit/enemy/enemies/fastling.tscn" id="4_fastling"]
 
 [sub_resource type="Resource" id="Resource_group1"]
 script = ExtResource("2_group")
