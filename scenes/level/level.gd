@@ -8,6 +8,7 @@ const BUILDABLE_CUSTOM_DATA_NAME : String = "Buildable"
 const TILE_TYPE_CUSTOM_DATA_NAME : String = "TileType"
 const WAVE_RUNNER_NAME : String = "WaveRunner"
 const BUILDING_TYPE_UPGRADES_NAME : String = "BuildingTypeUpgrades"
+const PATH_PREVIEW_NAME : String = "PathPreview"
 const NO_LEVEL_DATA_WARNING : String = " Level has no LevelData, no waves will spawn!"
 
 @onready var tiles : Tiles = $Tiles
@@ -238,6 +239,9 @@ func _ready() -> void:
 	upgrades.name = "LevelUpgrades"
 	add_child(upgrades)
 	_setup_waves()
+	var path_preview : PathPreview = PathPreview.new()
+	path_preview.name = PATH_PREVIEW_NAME
+	add_child(path_preview)
 	UISignals.start_wave_pressed.connect(_on_start_wave_pressed)
 	UISignals.game_play_interface_loaded.connect(_emit_wave_state)
 	GameSignals.level_loaded.emit(self)
@@ -301,14 +305,14 @@ func _setup_waves() -> void:
 	
 	player_stats.gold = level_data.starting_gold
 	player_stats.life = level_data.starting_life
-	wave_runner.setup(level_data.waves, _get_spawners())
+	wave_runner.setup(level_data.waves, get_spawners())
 
 
 ## The area the enemies cross: every spawner and end point, for framing the camera.
 func get_path_bounds() -> Rect2:
 	var bounds : Rect2 = Rect2(end_point.global_position, Vector2.ZERO)
 
-	for spawner in _get_spawners():
+	for spawner in get_spawners():
 		bounds = bounds.expand(spawner.global_position)
 		if spawner.end_point != null:
 			bounds = bounds.expand(spawner.end_point.global_position)
@@ -316,7 +320,7 @@ func get_path_bounds() -> Rect2:
 	return bounds
 
 
-func _get_spawners() -> Array[Spawner]:
+func get_spawners() -> Array[Spawner]:
 	var spawners : Array[Spawner] = []
 
 	for node in get_tree().get_nodes_in_group(GroupNames.SPAWNER):

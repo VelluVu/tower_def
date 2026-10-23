@@ -21,7 +21,7 @@ Project name `puffetd` (`config/name`, so saves are in `%APPDATA%/Godot/app_user
 ## Project Structure
 The game is under `scenes/` (scripts sit next to their scenes); there is no `src/` split. Reusable systems copied from Pimeä Panimo are in `systems/`, dev tools in `tools/`.
 - `scenes/` root: `main.tscn`/`main.gd` (time scale, pause, level flow) and the autoload scripts.
-- `scenes/level/`: `Level` (tile layers, `AStarGrid2D` pathing, building and enemy bookkeeping, wave cleared / win check), `WaveRunner` (created by `Level`, starts waves), `PlayerStats`, `Tiles`, the level scenes, `level_data/` (`LevelData`, `WaveData`, `SpawnGroupData`).
+- `scenes/level/`: `Level` (tile layers, `AStarGrid2D` pathing, building and enemy bookkeeping, wave cleared / win check), `WaveRunner` (created by `Level`, starts waves), `PathPreview` (created by `Level`, dotted enemy routes while building), `PlayerStats`, `Tiles`, the level scenes, `level_data/` (`LevelData`, `WaveData`, `SpawnGroupData`).
 - `scenes/unit/`: shared unit parts (`AnimationControl`, `ModifierManager`, gore), plus
   - `building/`: `Building` (StaticBody2D base), `Tower`, `Wall`, `Trap`, `Builder` (placement input), `PlacementValidator`, `RangeArea`
   - `enemy/`: `Enemy` (RigidBody2D)
