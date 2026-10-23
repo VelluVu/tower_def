@@ -43,6 +43,9 @@ var pan_end_position : Vector2 = Vector2.ZERO
 var pan_lerp_target_pos : Vector2 = Vector2.ZERO
 var move_direction : Vector2 = Vector2.ZERO
 
+#the widest zoom in the current level: the level always fills the view's width
+var level_min_zoom : float = 1.0
+
 var is_panning : bool = false :
 	set = _set_is_panning
 
@@ -101,9 +104,10 @@ func _movement():
 		move_direction = Vector2.ZERO
 
 func _zoom_camera_smoothly(delta : float):
-	zoom_target_position = clamp(zoom_target_position, zoom_min, zoom_max)
+	var min_zoom : Vector2 = Vector2.ONE * maxf(zoom_min.x, level_min_zoom)
+	zoom_target_position = clamp(zoom_target_position, min_zoom, zoom_max)
 	zoom = zoom.lerp(zoom_target_position, zoom_speed * delta)
-	zoom = zoom.clamp(zoom_min, zoom_max)
+	zoom = zoom.clamp(min_zoom, zoom_max)
 
 
 func _move_camera_smoothly(delta : float):
@@ -156,13 +160,15 @@ func _pan_camera_smoothly(delta : float):
 
 
 func _on_level_loaded(level : Level) -> void:
-	var bg_size : Vector2 = level.tiles.background_pixel_size
-	var bg_size_x_rounded = round(bg_size.x)
-	var bg_size_y_rounded = round(bg_size.y)
-	limit_left = -bg_size_x_rounded
-	limit_top = -bg_size_y_rounded
-	limit_right = bg_size_x_rounded
-	limit_bottom = bg_size_y_rounded
+	var half_size : Vector2 = level.tiles.background_pixel_size.round()
+	var viewport_size : Vector2 = get_viewport_rect().size
+	level_min_zoom = maxf(zoom_min.x, viewport_size.x / (half_size.x * 2.0))
+	#a level lower than the view at the widest zoom gets the backdrop above and below it
+	half_size.y = maxf(half_size.y, ceilf(viewport_size.y / level_min_zoom * 0.5))
+	limit_left = -half_size.x
+	limit_top = -half_size.y
+	limit_right = half_size.x
+	limit_bottom = half_size.y
 	_frame_level(level.get_path_bounds())
 	current_mode = CameraMode.Free
 
@@ -172,8 +178,7 @@ func _frame_level(bounds : Rect2) -> void:
 	var framed : Rect2 = bounds.grow(level_frame_margin)
 	var viewport_size : Vector2 = get_viewport_rect().size
 	var fit : float = minf(viewport_size.x / framed.size.x, viewport_size.y / framed.size.y)
-	#whole zoom steps keep the 16 px pixel art even
-	var start_zoom : float = clampf(floorf(fit), zoom_min.x, level_frame_max_zoom)
+	var start_zoom : float = clampf(fit, level_min_zoom, maxf(level_min_zoom, level_frame_max_zoom))
 	zoom = Vector2.ONE * start_zoom
 	zoom_target_position = zoom
 

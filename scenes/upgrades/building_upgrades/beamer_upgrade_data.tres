@@ -1,22 +1,18 @@
-[gd_resource type="Resource" script_class="BuildingUpgradeData" format=3]
+[gd_resource type="Resource" script_class="BuildingUpgradeData" format=3 uid="uid://bowst2h4hl4lc"]
 
-[ext_resource type="Script" path="res://scenes/upgrades/building_upgrade_data.gd" id="1_data"]
-[ext_resource type="Script" path="res://scenes/unit/evolve_tree/evolve_resource.gd" id="2_evolve"]
+[ext_resource type="Script" uid="uid://cdkvcem034rct" path="res://scenes/upgrades/building_upgrade_data.gd" id="1_data"]
+[ext_resource type="Script" uid="uid://myr7yifukj43" path="res://scenes/unit/evolve_tree/evolve_resource.gd" id="2_evolve"]
 
 [sub_resource type="Resource" id="Resource_damage"]
 script = ExtResource("2_evolve")
-modifier_type = 0
 elements = 15
-modify_stat_type = 2
 modify_type = 2
 is_randomized_modify_value = false
-is_percent = true
 modify_value = 0.15
 evolve_name = "Damage"
 
 [sub_resource type="Resource" id="Resource_attack_range"]
 script = ExtResource("2_evolve")
-modifier_type = 0
 elements = 15
 modify_stat_type = 5
 modify_type = 0
@@ -28,6 +24,3 @@ evolve_name = "Attack Range"
 [resource]
 script = ExtResource("1_data")
 upgrade_resources = Array[ExtResource("2_evolve")]([SubResource("Resource_damage"), SubResource("Resource_attack_range")])
-upgrade_cost_ratios = Array[float]([0.5, 0.75, 1.0, 1.25, 1.5, 1.75])
-evolve_cost_ratios = Array[float]([1.5, 2.5, 4.0])
-upgrades_per_tier = 2
