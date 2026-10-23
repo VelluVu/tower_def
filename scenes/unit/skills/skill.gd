@@ -174,7 +174,12 @@ func _on_actor_stat_changed(stat : Stat) -> void:
 
 
 func _on_cast_finished() -> void:
-	#print(name, " cast finished ")
+	#the target can be freed during the cast (killed by another tower or reached the castle): skip the shot
+	if not is_instance_valid(target):
+		is_ready = true
+		is_ready_signal.emit(is_ready)
+		return
+
 	activate()
 
 
@@ -199,7 +204,7 @@ func _on_time_scale_change(time_scale : float) -> void:
 
 
 func _is_target_valid(_target : Node2D) -> bool:
-	if _target == null:
+	if not is_instance_valid(_target):
 		return false
 	
 	if actor is Building:
@@ -213,7 +218,7 @@ func _is_target_valid(_target : Node2D) -> bool:
 
 
 func _get_is_valid_target() -> bool:
-	if target == null:
+	if not is_instance_valid(target):
 		return false
 	
 	if actor is Building:
