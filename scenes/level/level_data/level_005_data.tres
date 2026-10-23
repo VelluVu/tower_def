@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="LevelData" format=3]
+
+[ext_resource type="Script" path="res://scenes/level/level_data/level_data.gd" id="1_level"]
+[ext_resource type="Script" path="res://scenes/level/level_data/wave_data.gd" id="0_wave"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_005_wave_1.tres" id="2_w1"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_005_wave_2.tres" id="3_w2"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_005_wave_3.tres" id="4_w3"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_005_wave_4.tres" id="5_w4"]
+
+[resource]
+script = ExtResource("1_level")
+level_name = "Crossroads"
+starting_gold = 20.0
+starting_life = 10.0
+waves = Array[ExtResource("0_wave")]([ExtResource("2_w1"), ExtResource("3_w2"), ExtResource("4_w3"), ExtResource("5_w4")])

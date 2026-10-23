@@ -315,6 +315,8 @@ value = 70.0
 
 [node name="Damage" type="Node" parent="Stats"]
 script = ExtResource("15_rofak")
+base_value = 3.0
+value = 3.0
 type = 2
 
 [node name="Price" type="Node" parent="Stats"]
