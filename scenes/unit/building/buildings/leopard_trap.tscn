@@ -286,7 +286,7 @@ type = 2
 
 [node name="Price" type="Node" parent="Stats"]
 script = ExtResource("12_l0gwn")
-base_value = 5.0
+base_value = 4.0
 value = 5.0
 type = 3
 
