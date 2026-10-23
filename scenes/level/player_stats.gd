@@ -29,7 +29,7 @@ func _on_enemy_reach_base(enemy : Enemy) -> void:
 
 
 func has_enough_gold(amount : float) -> bool:
-	if GameSignals.testing:
+	if GameSignals.free_build:
 		return true
 	return gold >= amount
 

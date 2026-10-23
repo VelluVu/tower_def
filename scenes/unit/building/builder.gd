@@ -35,7 +35,7 @@ var is_placing_building : bool :
 
 
 func has_enough_gold(gold_needed : float) -> bool:
-	if GameSignals.testing:
+	if GameSignals.free_build:
 		return true
 	return gold_needed <= level.player_stats.gold
 
@@ -63,7 +63,11 @@ func _ready() -> void:
 func _input(event):
 	if is_cursor_on_gui or not is_ready_to_build:
 		return
-	
+
+	#keys typed into a text field (the console) are not build shortcuts
+	if event is InputEventKey and get_viewport().gui_get_focus_owner() is LineEdit:
+		return
+
 	if event.is_action_pressed(SELECT_BUILDING_ONE_ACTION_NAME):
 		_start_building_placement(0)
 	
@@ -131,9 +135,6 @@ func _on_game_interface_loaded() -> void:
 func _update_building_options_by_progress() -> void:
 	#the wall (id 0) is always available, every level progress unlocks one tower
 	var buildings_available : int = PlayerProgress.level_progress + 1
-
-	if GameSignals.testing:
-		buildings_available = buildings.size()
 	
 	#there can be more levels than buildings
 	if buildings_available > buildings.size():

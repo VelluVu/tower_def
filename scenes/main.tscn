@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://04rsqgt1kqsc"]
+[gd_scene load_steps=12 format=3 uid="uid://04rsqgt1kqsc"]
 
 [ext_resource type="Script" uid="uid://dambs0yaslimv" path="res://scenes/main.gd" id="1_0mimr"]
 [ext_resource type="Script" uid="uid://bv2u4pphmc7vb" path="res://scenes/scene_manager/scene_manager.gd" id="1_2xphi"]
@@ -9,6 +9,19 @@
 [ext_resource type="Script" uid="uid://cx3o2f6plobq7" path="res://scenes/ui/ui.gd" id="7_2wt15"]
 [ext_resource type="PackedScene" uid="uid://7o6fhkh04igj" path="res://scenes/ui/damage_number/damage_number_manager.tscn" id="8_1x856"]
 [ext_resource type="PackedScene" uid="uid://cmhdhb733fmmy" path="res://scenes/unit/building/builder.tscn" id="8_ots7q"]
+[ext_resource type="PackedScene" path="res://systems/console/console_panel.tscn" id="9_console"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_console"]
+bg_color = Color(0.05, 0.05, 0.07, 0.85)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.3, 0.3, 0.3, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
 
 [node name="Main" type="Node"]
 script = ExtResource("1_0mimr")
@@ -35,14 +48,26 @@ process_mode = 3
 script = ExtResource("7_2wt15")
 
 [node name="DeveloperModeNotification" type="Label" parent="UI"]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -40.0
-offset_bottom = 23.0
-grow_horizontal = 0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -90.0
+offset_top = 24.0
+offset_right = 90.0
+offset_bottom = 47.0
+grow_horizontal = 2
 text = "DEVELOPER MODE ON"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Builder" parent="." instance=ExtResource("8_ots7q")]
+
+[node name="ConsoleLayer" type="CanvasLayer" parent="."]
+process_mode = 3
+layer = 10
+
+[node name="DevConsole" parent="ConsoleLayer" instance=ExtResource("9_console")]
+offset_left = -364.0
+offset_top = -260.0
+offset_bottom = -80.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_console")

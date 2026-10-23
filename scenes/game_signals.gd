@@ -38,4 +38,22 @@ signal upgrade_xp_changed(xp : float, xp_needed : float, upgrade_level : int)
 signal upgrade_level_gained(new_level : int, cards : Array[UpgradeCard])
 signal upgrade_cards_closed()
 
-var testing : bool = false
+signal developer_mode_changed(is_enabled : bool)
+
+#turned on from the console (gitignored cheat set), never saved
+var developer_mode : bool = false :
+	set = _set_developer_mode
+#buildings and upgrades cost nothing; only while developer mode is on
+var free_build : bool = false
+
+
+func _set_developer_mode(value : bool) -> void:
+	if value == developer_mode:
+		return
+
+	developer_mode = value
+
+	if not developer_mode:
+		free_build = false
+
+	developer_mode_changed.emit(developer_mode)

@@ -19,7 +19,7 @@ Project name `puffetd` (`config/name`, so saves are in `%APPDATA%/Godot/app_user
 - **Elements / damage types:** Physical, Fire, Frost, Poison (bit flags in `Utils`; Physical was called Normal before 2026-10-23, and some art files still use `normal_` names). Overtime effects (burn, slow, poison) are `OvertimeEffectData` children of a skill's `DamageData`.
 
 ## Project Structure
-Everything is under `scenes/` (scripts sit next to their scenes); there is no `src/` split.
+The game is under `scenes/` (scripts sit next to their scenes); there is no `src/` split. Reusable systems copied from Pimeä Panimo are in `systems/`, dev tools in `tools/`.
 - `scenes/` root: `main.tscn`/`main.gd` (time scale, pause, level flow) and the autoload scripts.
 - `scenes/level/`: `Level` (tile layers, `AStarGrid2D` pathing, building and enemy bookkeeping, wave cleared / win check), `WaveRunner` (created by `Level`, starts waves), `PlayerStats`, `Tiles`, the level scenes, `level_data/` (`LevelData`, `WaveData`, `SpawnGroupData`).
 - `scenes/unit/`: shared unit parts (`AnimationControl`, `ModifierManager`, gore), plus
@@ -34,6 +34,8 @@ Everything is under `scenes/` (scripts sit next to their scenes); there is no `s
 - `scenes/ui/`: bottom panel (build and selection panels), `level_up_menu/` (the card choice), `wave_panel/` (wave counter, start / early-start button), menus, world map, damage numbers, speed control, resource display (gold, life, upgrade XP).
 - `scenes/camera/`: `GameCamera` (WASD/arrows pan, wheel zoom, middle mouse drag).
 - `assets/`: `art/` (`.aseprite` sources next to their exported `.png`), `shaders/` (outline, hit flash, fade, beam, cutout, paint), `ui_themes/`.
+- `scenes/console/`: the game's console command sets. `dev_mode_commands.gd` and `level_cheat_commands.gd` are gitignored and left out of the export (`export_presets.cfg` exclude filter).
+- `systems/`: self-contained systems from Pimeä Panimo, one folder each: `input/` (`InputBindings`, actions registered in `InputMap` at runtime) and `console/` (`DevConsole`, command registry, command sets). A system references only its own folder; its `*_wiring.gd` is the only file that knows the game. They keep Pimeä Panimo's `name: Type` colon style so they can be synced back. Run `python tools/check_systems.py` after changing one. Planned next: `save` (to replace `PlayerProgress`' JSON), later `tooltip`, `settings`, `audio`.
 - `addons/`: `beehave` 2.8.0 (behaviour trees), `AsepriteWizard` 8.0.1 (imports `.aseprite` into SpriteFrames), `godot_ai` 4.2.3 (live editor MCP plugin, copied from Pimeä Panimo; it adds its `_mcp_game_helper` autoload to `project.godot` on the first editor start).
 - No tests yet. The plugin's `McpTestSuite` (`addons/godot_ai/testing/`) is available when they are added.
 
@@ -44,7 +46,8 @@ Everything is under `scenes/` (scripts sit next to their scenes); there is no `s
 
 ## Architecture
 - **Two signal buses (autoloads):** `GameSignals` for gameplay events (building placed/destroyed/sold, enemy spawned/destroyed/reached end, damage taken, resource change, level loaded/completed, lose, time scale, pause) and `UISignals` for UI requests (building option selected, upgrade chosen, menu buttons, speed buttons). UI only talks to gameplay through these.
-- **Other autoloads:** `GroupNames` and `GlobalAnimationNames` (string constants), `Utils` (enums `StatType`, `TileType`, `DamageType`, `Element`, `SkillType`, `ModifyType`, `ModifierType`, plus `game_control` = the `Main` node), `PlayerProgress` (JSON save of `level_progress` at `user://player_progress.save`), `BuildingPlacementDrawer`, `RandomEvolveResourceCollection`, and Beehave's two debug autoloads.
+- **Console and developer mode:** `DevConsole` sits in `Main/ConsoleLayer` (process always, so it works while paused); C opens it, Esc closes it. `ConsoleWiring` registers the commands and logs gameplay events. `iddqd` toggles `GameSignals.developer_mode` (never saved, shows the DEVELOPER MODE ON label); dev-only cheats then work: `gold`, `life`, `xp`, `levelup`, `free` (`GameSignals.free_build`: buildings and upgrades cost nothing), `wave`, `kill`, `spawn`, `win`, `lose`, `speed`, `unlock`, `reset confirm`. New game input that reads keys should skip them while a `LineEdit` has focus (see `GameCamera`, `Builder._input`).
+- **Other autoloads:** `GroupNames` and `GlobalAnimationNames` (string constants), `Utils` (enums `StatType`, `TileType`, `DamageType`, `Element`, `SkillType`, `ModifyType`, `ModifierType`, plus `game_control` = the `Main` node), `InputManager` (extends `InputWiring`: the console and cancel actions; the camera, build and click actions are still in `project.godot`), `PlayerProgress` (JSON save of `level_progress` at `user://player_progress.save`), `BuildingPlacementDrawer`, `RandomEvolveResourceCollection`, and Beehave's two debug autoloads.
 - **Composition by child nodes:** a unit is a body with children found by type: `Stats` (with `Stat` children), one `Skill` (with its own `Stats`, `DamageData` and `SkillStateTimers`), `ModifierManager`, `OvertimeEffectHandler`, `EvolveTree`, a `BeehaveTree`, `SelectableUnit`, `AnimationControl` (the AnimatedSprite2D). Getters fall back to scanning `get_children()` when an export is empty.
 - **Stats:** a skill's effective stat = `(unit base + skill base + flats) × (1 + Σ Additive) × Π(1 + Multiply)` (`ModifierManager.combine`, called from `calculate_modifier`; the result goes to the skill stat when the skill has the stat). `Utils.ModifyType`: Flat, Multiply (compounds, "more"), Additive (summed, "increased"). Cards and gold upgrades use Additive, slows and element leaves Multiply. `Stat.changed` drives reactions such as the range area radius and timer scaling.
 - **Skills:** cast timer → `activate()` → active timer and cooldown timer. Continuous skills (beam) restart when the target changes. Attack speed scales the timers (`CustomTimer.scale_wait_time`). An element can swap the whole skill (`ElementEvolveLeaf.new_skill_scene` → `Building.replace_skill`): the skill scenes have no `Stats`/`DamageData`, so the new skill takes the old skill's nodes over, modifiers included; a skill scene with its own `Stats` gets the modifiers copied instead. Swap the sprite too (`new_animated_sprite_scene`) so the animations match.
@@ -71,7 +74,6 @@ The full plan is in `docs/design/progression.md`; read it before working on upgr
 
 ## Known Issues (found 2026-10-20)
 - The stat upgrade resources have no `evolve_icon`; their cards show Godot's default icon.
-- `GameSignals.testing = true` gives free buildings (`Builder.has_enough_gold`) and unlocks all of them. Turn it off before a build.
 
 ## Commands
 - Run: `godot --path .` (from the project folder)
