@@ -12,4 +12,6 @@ extends Resource
 #one ratio per evolve tier
 @export var evolve_cost_ratios : Array[float] = [1.5, 2.5, 4.0]
 @export var upgrades_per_tier : int = 2
+#true: one purchase upgrades every building of the type (walls); false: only the selected building
+@export var is_per_type : bool = false
 @export var upgrade_icon : Texture2D = null

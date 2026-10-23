@@ -8,7 +8,7 @@ script = ExtResource("2_evolve")
 elements = 15
 modify_type = 2
 is_randomized_modify_value = false
-modify_value = 0.15
+modify_value = 0.3
 evolve_name = "Damage"
 
 [sub_resource type="Resource" id="Resource_attack_speed"]

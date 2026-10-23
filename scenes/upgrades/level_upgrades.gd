@@ -67,7 +67,7 @@ func _on_building_placed(building : Building) -> void:
 	if not _is_upgradable(building):
 		return
 
-	#BuildingTypeUpgrades has already set the type's element, later element changes refit the cards
+	#BuildingTypeUpgrades has already set a per-type element, later element changes refit the cards
 	building.evolve_tree.element_changed.connect(_on_element_changed.bind(building))
 
 	for card in chosen_cards:

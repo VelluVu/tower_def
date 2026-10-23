@@ -2,7 +2,7 @@ class_name EvolveTree
 extends Node
 
 ## Holds a building type's gold upgrade data and its ElementEvolveLeaf options; BuildingTypeUpgrades
-## offers them in the selection panel and applies them to every building of the type at once.
+## offers them in the selection panel and applies them to the selected building (or the whole type, see is_per_type).
 
 signal element_changed(element : Utils.Element)
 

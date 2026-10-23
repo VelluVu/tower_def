@@ -11,7 +11,7 @@ modify_stat_type = 2
 modify_type = 2
 is_randomized_modify_value = false
 is_percent = true
-modify_value = 0.15
+modify_value = 0.3
 evolve_name = "Damage"
 
 [sub_resource type="Resource" id="Resource_attack_range"]

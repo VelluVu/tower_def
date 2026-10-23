@@ -1,21 +1,27 @@
 class_name BuildingTypeUpgrades
 extends Node
 
-## Gold upgrades and element evolves for whole building types, bought from the selection panel.
+## Gold upgrades and element evolves, bought from the selection panel.
+## Upgrades and tiers are bought per building, so a new building starts at the base; data with
+## is_per_type (walls) upgrades the whole type instead. The element is per type: the first building
+## of a type to evolve picks it, the others of the type can then only evolve into it.
 ## Lives under the Level, so everything resets when the level is unloaded.
-## The Level creates it before LevelUpgrades, so a new building gets its element before the XP cards check it.
+## The Level creates it before LevelUpgrades, so a new per-type building gets its element before the XP cards check it.
 
 const UPGRADE_TITLE_TEXT : String = "Up %d"
 const MISSING_ELEMENT_LEAF_WARNING : String = " cannot find element leaf "
+const UPGRADE_PIPS_NAME : String = "UpgradePips"
 
 
-class TypeState:
+class UpgradeState:
 	var upgrades_bought : int = 0
 	var tiers_evolved : int = 0
-	var element_leaf_path : NodePath = NodePath()
 
 
-var states : Dictionary[String, TypeState] = {}
+var type_states : Dictionary[String, UpgradeState] = {}
+var building_states : Dictionary[Building, UpgradeState] = {}
+#scene path -> the element leaf the type evolved into first
+var type_elements : Dictionary[String, NodePath] = {}
 var selected_unit : Node2D = null
 var options : Array[GoldUpgradeOption] = []
 
@@ -50,21 +56,24 @@ func _on_building_placed(building : Building) -> void:
 	if building == selected_unit:
 		_emit_options()
 
-	if not _is_upgradable(building) or not states.has(building.scene_file_path):
+	if not _is_upgradable(building) or not _is_per_type(building) or not type_states.has(building.scene_file_path):
 		return
 
-	var state : TypeState = states[building.scene_file_path]
+	var state : UpgradeState = type_states[building.scene_file_path]
 
-	if not state.element_leaf_path.is_empty():
-		_apply_evolve(building, state.element_leaf_path)
+	if type_elements.has(building.scene_file_path):
+		_apply_evolve(building, type_elements[building.scene_file_path])
 
 	for i in state.upgrades_bought:
 		_apply_upgrade(building)
 
+	_update_pips(building, state)
 	building.stats_changed.emit()
 
 
 func _on_building_removed(building : Building) -> void:
+	building_states.erase(building)
+
 	if building != selected_unit:
 		return
 
@@ -88,23 +97,29 @@ func _on_gold_upgrade_pressed(index : int) -> void:
 		return
 
 	var type_key : String = selected_unit.scene_file_path
-	var state : TypeState = _get_state(type_key)
+	var state : UpgradeState = _get_state(selected_unit)
 
 	if option.is_evolve:
 		state.tiers_evolved += 1
-		state.element_leaf_path = option.element_leaf_path
+		if not type_elements.has(type_key):
+			type_elements[type_key] = option.element_leaf_path
 	else:
 		state.upgrades_bought += 1
 
-	for building in level.all_buildings:
-		if not _is_upgradable(building) or building.scene_file_path != type_key:
-			continue
+	var targets : Array[Building] = [selected_unit]
+	if _is_per_type(selected_unit):
+		targets.clear()
+		for building in level.all_buildings:
+			if _is_upgradable(building) and building.scene_file_path == type_key:
+				targets.append(building)
 
+	for building in targets:
 		if option.is_evolve:
 			_apply_evolve(building, option.element_leaf_path)
 		else:
 			_apply_upgrade(building)
 
+		_update_pips(building, state)
 		building.stats_changed.emit()
 
 	_emit_options()
@@ -122,7 +137,7 @@ func _emit_options() -> void:
 func _build_options() -> Array[GoldUpgradeOption]:
 	var building : Building = selected_unit
 	var data : BuildingUpgradeData = building.evolve_tree.upgrade_data
-	var state : TypeState = _get_state(building.scene_file_path)
+	var state : UpgradeState = _get_state(building)
 	var element_leafs : Array[ElementEvolveLeaf] = _get_element_leafs(building)
 	#only the T1 element leaves exist so far, later tiers stay locked
 	var tier_count : int = mini(data.evolve_cost_ratios.size(), 0 if element_leafs.is_empty() else 1)
@@ -136,6 +151,8 @@ func _build_options() -> Array[GoldUpgradeOption]:
 		UpgradeRules.GoldStep.Evolve:
 			var evolve_price : float = UpgradeRules.gold_price(building_price, data.evolve_cost_ratios[state.tiers_evolved])
 			for leaf in element_leafs:
+				if type_elements.has(building.scene_file_path) and building.get_path_to(leaf) != type_elements[building.scene_file_path]:
+					continue
 				new_options.append(GoldUpgradeOption.evolve(leaf, building, evolve_price))
 
 	for option in new_options:
@@ -167,10 +184,37 @@ func _apply_evolve(building : Building, leaf_path : NodePath) -> void:
 	building.evolve_level_up_particle_effect.emitting = true
 
 
-func _get_state(type_key : String) -> TypeState:
-	if not states.has(type_key):
-		states[type_key] = TypeState.new()
-	return states[type_key]
+func _update_pips(building : Building, state : UpgradeState) -> void:
+	var pips : UpgradePips = building.get_node_or_null(UPGRADE_PIPS_NAME) as UpgradePips
+
+	if pips == null:
+		pips = UpgradePips.new()
+		pips.name = UPGRADE_PIPS_NAME
+		building.add_child(pips)
+
+	var tier_color : Color = Color.WHITE
+	var leaf : ElementEvolveLeaf = building.get_node_or_null(type_elements.get(building.scene_file_path, NodePath())) as ElementEvolveLeaf
+	if leaf != null:
+		tier_color = leaf.evolve_glow_color
+
+	#the upgrades bought before a tier are shown by its tier pip
+	var upgrades_since_tier : int = maxi(0, state.upgrades_bought - state.tiers_evolved * building.evolve_tree.upgrade_data.upgrades_per_tier)
+	pips.set_steps(upgrades_since_tier, state.tiers_evolved, tier_color)
+
+
+func _get_state(building : Building) -> UpgradeState:
+	if _is_per_type(building):
+		if not type_states.has(building.scene_file_path):
+			type_states[building.scene_file_path] = UpgradeState.new()
+		return type_states[building.scene_file_path]
+
+	if not building_states.has(building):
+		building_states[building] = UpgradeState.new()
+	return building_states[building]
+
+
+func _is_per_type(building : Building) -> bool:
+	return building.evolve_tree.upgrade_data.is_per_type
 
 
 func _is_selected_upgradable() -> bool:
