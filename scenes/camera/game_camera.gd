@@ -11,6 +11,8 @@ const ZOOM_IN_ACTION_NAME : String = "ZoomCameraIn"
 const PAN_ACTION_NAME : String = "PanCamera"
 ## How close to the window edge the mouse scrolls the camera, in viewport pixels.
 const EDGE_SCROLL_MARGIN : float = 4.0
+## Below this distance the zoom tween snaps to its whole-number target.
+const ZOOM_SNAP_DISTANCE : float = 0.01
 
 enum CameraMode {Static, Free}
 
@@ -27,8 +29,8 @@ enum CameraMode {Static, Free}
 ## The start view zooms out to fit the path, but never closer than this.
 @export var level_frame_max_zoom : float = 2.0
 
-var zoom_in : float = 1.1
-var zoom_out : float = 0.9
+#whole zoom steps keep every art pixel the same number of screen pixels
+var zoom_step : float = 1.0
 var original_delta : float = 0
 var scaled_delta : float = 0
 var current_delta : float = 0
@@ -88,9 +90,9 @@ func _process(delta: float) -> void:
 
 func _zoom() -> void:
 	if Input.is_action_just_pressed(ZOOM_IN_ACTION_NAME):
-		zoom_target_position *= zoom_in 
+		zoom_target_position = (zoom_target_position + Vector2.ONE * zoom_step).round()
 	if Input.is_action_just_pressed(ZOOM_OUT_ACTION_NAME):
-		zoom_target_position *= zoom_out
+		zoom_target_position = (zoom_target_position - Vector2.ONE * zoom_step).round()
 
 
 func _movement() -> void:
@@ -151,6 +153,8 @@ func _zoom_camera_smoothly(delta : float) -> void:
 	var min_zoom : Vector2 = Vector2.ONE * maxf(zoom_min.x, level_min_zoom)
 	zoom_target_position = clamp(zoom_target_position, min_zoom, zoom_max)
 	zoom = zoom.lerp(zoom_target_position, zoom_speed * delta)
+	if zoom.distance_to(zoom_target_position) < ZOOM_SNAP_DISTANCE:
+		zoom = zoom_target_position
 	zoom = zoom.clamp(min_zoom, zoom_max)
 
 
@@ -206,7 +210,8 @@ func _pan_camera_smoothly(delta : float) -> void:
 func _on_level_loaded(level : Level) -> void:
 	var half_size : Vector2 = level.tiles.background_pixel_size.round()
 	var viewport_size : Vector2 = get_viewport_rect().size
-	level_min_zoom = maxf(zoom_min.x, viewport_size.x / (half_size.x * 2.0))
+	#rounded up to a whole zoom so the level still fills the view's width
+	level_min_zoom = ceilf(maxf(zoom_min.x, viewport_size.x / (half_size.x * 2.0)))
 	#a level lower than the view at the widest zoom gets the backdrop above and below it
 	half_size.y = maxf(half_size.y, ceilf(viewport_size.y / level_min_zoom * 0.5))
 	limit_left = -half_size.x
@@ -222,7 +227,8 @@ func _frame_level(bounds : Rect2) -> void:
 	var framed : Rect2 = bounds.grow(level_frame_margin)
 	var viewport_size : Vector2 = get_viewport_rect().size
 	var fit : float = minf(viewport_size.x / framed.size.x, viewport_size.y / framed.size.y)
-	var start_zoom : float = clampf(fit, level_min_zoom, maxf(level_min_zoom, level_frame_max_zoom))
+	#rounded down to a whole zoom so the framed path stays in view
+	var start_zoom : float = clampf(floorf(fit), level_min_zoom, maxf(level_min_zoom, level_frame_max_zoom))
 	zoom = Vector2.ONE * start_zoom
 	zoom_target_position = zoom
 

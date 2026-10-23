@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="EvolveResource" load_steps=3 format=3 uid="uid://dg30yiyp2h4gc"]
 
-[ext_resource type="Texture2D" uid="uid://d1s2xw53fx6au" path="res://icon.svg" id="1_gcvx1"]
+[ext_resource type="Texture2D" uid="uid://ten56pck4van" path="res://assets/art/ui/card_icons/melee_damage_icon.png" id="1_gcvx1"]
 [ext_resource type="Script" path="res://scenes/unit/evolve_tree/evolve_resource.gd" id="2_oqwbh"]
 
 [resource]

@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="EvolveResource" load_steps=3 format=3 uid="uid://prhqo1iwe64u"]
 
-[ext_resource type="Texture2D" uid="uid://d1s2xw53fx6au" path="res://icon.svg" id="1_fcaai"]
+[ext_resource type="Texture2D" uid="uid://dcnet3ioa268q" path="res://assets/art/ui/card_icons/critical_multiplier_icon.png" id="1_fcaai"]
 [ext_resource type="Script" path="res://scenes/unit/evolve_tree/evolve_resource.gd" id="2_tw21r"]
 
 [resource]

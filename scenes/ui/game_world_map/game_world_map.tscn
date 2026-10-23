@@ -26,10 +26,10 @@ mouse_filter = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 13
+theme_override_constants/margin_bottom = 12
 
 [node name="Map" type="TextureRect" parent="MarginContainer"]
-custom_minimum_size = Vector2(600, 335)
+custom_minimum_size = Vector2(600, 336)
 layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("2_velws")
@@ -355,10 +355,10 @@ stretch_mode = 5
 [node name="Level_004" type="Panel" parent="MarginContainer/Map"]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 255.0
-offset_top = 106.0
-offset_right = 275.0
-offset_bottom = 126.0
+offset_left = 10.0
+offset_top = 295.0
+offset_right = 30.0
+offset_bottom = 315.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 4
@@ -461,10 +461,10 @@ stretch_mode = 5
 [node name="Level_005" type="Panel" parent="MarginContainer/Map"]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 262.0
-offset_top = 164.0
-offset_right = 282.0
-offset_bottom = 184.0
+offset_left = 45.0
+offset_top = 240.0
+offset_right = 65.0
+offset_bottom = 260.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 5
@@ -567,10 +567,10 @@ stretch_mode = 5
 [node name="Level_006" type="Panel" parent="MarginContainer/Map"]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 319.0
-offset_top = 161.0
-offset_right = 339.0
-offset_bottom = 181.0
+offset_left = 70.0
+offset_top = 195.0
+offset_right = 90.0
+offset_bottom = 215.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 6
