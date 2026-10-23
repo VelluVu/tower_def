@@ -1,16 +1,15 @@
-[gd_resource type="Resource" script_class="WaveData" format=3]
+[gd_resource type="Resource" script_class="WaveData" format=3 uid="uid://b4x3oxo8ehnyl"]
 
-[ext_resource type="Script" path="res://scenes/level/level_data/wave_data.gd" id="1_wave"]
-[ext_resource type="Script" path="res://scenes/level/level_data/spawn_group_data.gd" id="2_group"]
-[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/fastling.tscn" id="3_fastling"]
-[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/swampling.tscn" id="4_swampling"]
+[ext_resource type="Script" uid="uid://cpw7ia3ek2yvs" path="res://scenes/level/level_data/wave_data.gd" id="1_wave"]
+[ext_resource type="Script" uid="uid://bbhd3iyjav4h2" path="res://scenes/level/level_data/spawn_group_data.gd" id="2_group"]
+[ext_resource type="PackedScene" uid="uid://dla7not0kpg61" path="res://scenes/unit/enemy/enemies/fastling.tscn" id="3_fastling"]
+[ext_resource type="PackedScene" uid="uid://ddq4tsy8ik5n5" path="res://scenes/unit/enemy/enemies/swampling.tscn" id="4_swampling"]
 
 [sub_resource type="Resource" id="Resource_group1"]
 script = ExtResource("2_group")
 enemy_scene = ExtResource("3_fastling")
 count = 12
 interval = 2.0
-spawner_id = 0
 
 [sub_resource type="Resource" id="Resource_group2"]
 script = ExtResource("2_group")

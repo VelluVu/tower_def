@@ -1,13 +1,12 @@
-[gd_resource type="Resource" script_class="LevelData" format=3]
+[gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://y2v2hluybdb7"]
 
-[ext_resource type="Script" path="res://scenes/level/level_data/level_data.gd" id="1_level"]
-[ext_resource type="Script" path="res://scenes/level/level_data/wave_data.gd" id="0_wave"]
-[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_001_wave_1.tres" id="2_w1"]
-[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_001_wave_2.tres" id="3_w2"]
-[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_001_wave_3.tres" id="4_w3"]
+[ext_resource type="Script" uid="uid://cpw7ia3ek2yvs" path="res://scenes/level/level_data/wave_data.gd" id="0_wave"]
+[ext_resource type="Script" uid="uid://c0cehaxum4b45" path="res://scenes/level/level_data/level_data.gd" id="1_level"]
+[ext_resource type="Resource" uid="uid://ct3isjmvnmoat" path="res://scenes/level/level_data/waves/level_001_wave_1.tres" id="2_w1"]
+[ext_resource type="Resource" uid="uid://c3aafxjqfdwtp" path="res://scenes/level/level_data/waves/level_001_wave_2.tres" id="3_w2"]
+[ext_resource type="Resource" uid="uid://jry20obs0ene" path="res://scenes/level/level_data/waves/level_001_wave_3.tres" id="4_w3"]
 
 [resource]
 script = ExtResource("1_level")
 starting_gold = 12.0
-starting_life = 10.0
 waves = Array[ExtResource("0_wave")]([ExtResource("2_w1"), ExtResource("3_w2"), ExtResource("4_w3")])
