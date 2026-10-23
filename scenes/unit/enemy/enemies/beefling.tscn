@@ -317,7 +317,7 @@ type = 6
 [node name="CriticalChance" type="Node" parent="MeleeAttack/Stats"]
 script = ExtResource("15_blw40")
 base_value = 0.15
-value = 0.1
+value = 0.15
 type = 7
 
 [node name="CriticalMultiplier" type="Node" parent="MeleeAttack/Stats"]

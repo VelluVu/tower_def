@@ -37,13 +37,15 @@ func _set_is_placed(value : bool) -> void:
 		
 		_update_sprite()
 		
-		if not GameSignals.building_destroyed.is_connected(_on_building_destroyed):
-			GameSignals.building_destroyed.connect(_on_building_destroyed)
+		if not GameSignals.building_destroyed.is_connected(_on_building_removed):
+			GameSignals.building_destroyed.connect(_on_building_removed)
+		if not GameSignals.sell_building.is_connected(_on_building_removed):
+			GameSignals.sell_building.connect(_on_building_removed)
 		if not GameSignals.building_placed.is_connected(_on_building_placed):
 			GameSignals.building_placed.connect(_on_building_placed)
 
 
-func _on_building_destroyed(building : Building) -> void:
+func _on_building_removed(building : Building) -> void:
 	if building is Trap:
 		return
 		

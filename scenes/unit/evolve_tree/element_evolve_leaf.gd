@@ -45,20 +45,19 @@ func evolve(actor : Node) -> void:
 		if new_animated_sprite_scene != null:
 			actor.replace_animation_control(new_animated_sprite_scene)
 		
-		#if new skill the damage data of skill will be included to the scene
+		#the rest applies to the swapped skill too: the element, glow and modifiers must not be skipped
 		if new_skill_scene != null:
 			actor.replace_skill(new_skill_scene)
-			return
-		
+
 		if new_projectile_scene != null:
 			actor.skill.new_projectile(new_projectile_scene)
-		
+
 		if new_beam_texture != null:
 			actor.skill.beam_texture = new_beam_texture
-		
+
 		if new_damage_data_scene != null:
 			actor.skill.replace_damage_data(new_damage_data_scene)
-		
+
 		actor.evolve_glow.modulate = evolve_glow_color
 		actor.evolve_tree.evolve_element = evolve_element
 		

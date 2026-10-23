@@ -74,8 +74,8 @@ func flip(flip_direction : Vector2) -> void:
 func _ready() -> void:
 	#event from game control, when the time scale is changed
 	if not GameSignals.time_scale_change.is_connected(_on_time_scale_change):
-		GameSignals.time_scale_change.is_connected(_on_time_scale_change)
-	
+		GameSignals.time_scale_change.connect(_on_time_scale_change)
+
 	#check the current time scale when this object is ready
 	_on_time_scale_change(Utils.game_control.time_scale)
 

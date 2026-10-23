@@ -2,6 +2,8 @@ class_name LaunchProjectile
 extends Skill
 
 
+const STOP_ATTACK_DELAY : float = 1.0
+
 @export var projectile_scene : PackedScene
 
 var launched_projectiles : Array[Node2D]
@@ -34,10 +36,17 @@ func activate() -> void:
 	skill_data.active_time = active_timer.wait_time
 	skill_data.max_range = stats.get_range_in_tiles()
 	projectile.launch(skill_data)
-	
+
+	#without a cast the attack animation gets a moment before stopping; the timer pauses with the game,
+	#follows the game speed, and its connection is dropped if the tower is sold meanwhile
 	if cast_timer.wait_time == 0:
-		await get_tree().create_timer(1.0).timeout
-		
+		get_tree().create_timer(STOP_ATTACK_DELAY / current_time_scale, false).timeout.connect(_play_stop_attack_animation)
+		return
+
+	_play_stop_attack_animation()
+
+
+func _play_stop_attack_animation() -> void:
 	actor.animation_control.play_animation(GlobalAnimationNames.STOP_ATTACK_ANIMATION, cooldown_timer.time_left, true)
 
 

@@ -254,5 +254,7 @@ func _get_damage_data() -> DamageData:
 	return _damage_data
 
 
+#attacks per second, independent of game speed
 func _get_attack_speed() -> float:
-	return (cast_timer.wait_time + cooldown_timer.wait_time)
+	var attack_time : float = cast_timer.base_wait_time + cooldown_timer.base_wait_time
+	return 1.0 / attack_time if attack_time > 0.0 else 0.0

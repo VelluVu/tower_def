@@ -277,8 +277,10 @@ func _check_level_end_conditions() -> void:
 		return
 	
 	if not player_stats.is_alive:
+		#otherwise the wave panel keeps the early start bonus of the lost wave
+		_emit_wave_state()
 		return
-	
+
 	if wave_runner.is_last_wave_started:
 		GameSignals.level_completed.emit(self)
 		return

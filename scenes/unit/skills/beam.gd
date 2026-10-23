@@ -49,6 +49,12 @@ func _process(delta: float) -> void:
 
 func activate() -> void:
 	super()
+
+	#the target can die or leave during the cast
+	if not is_valid_target:
+		stop()
+		return
+
 	is_active = true
 
 
@@ -110,5 +116,6 @@ func _set_beam_texture(new_texture : CompressedTexture2D) -> void:
 	line.texture = beam_texture
 
 
+#damage ticks per second, independent of game speed
 func _get_attack_speed() -> float:
-	return damage_timer.wait_time
+	return 1.0 / damage_timer.base_wait_time if damage_timer.base_wait_time > 0.0 else 0.0

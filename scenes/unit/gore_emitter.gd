@@ -17,6 +17,10 @@ func emit_gore(damage_data : DamageData) -> void:
 	gore.emitting = true
 
 
+func is_emitting() -> bool:
+	return pool.any(func(gore : GoreEffect) -> bool: return gore.emitting)
+
+
 func get_gore() -> GoreEffect:
 	#create new gore if pool is empty
 	if pool.is_empty():
