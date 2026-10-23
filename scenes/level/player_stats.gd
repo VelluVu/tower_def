@@ -23,9 +23,28 @@ func _ready() -> void:
 func _on_enemy_reach_base(enemy : Enemy) -> void:
 	life -= round(enemy.stats.get_stat_value(Utils.StatType.Damage) + enemy.skill.stats.get_stat_value(Utils.StatType.Damage))
 	GameSignals.resource_change.emit(life, 1)
-	print("player taking damage, life left: " , life)
 	if life <= 0:
 		lose()
+
+
+func has_enough_gold(amount : float) -> bool:
+	if GameSignals.testing:
+		return true
+	return gold >= amount
+
+
+func spend_gold(amount : float) -> bool:
+	if not has_enough_gold(amount):
+		return false
+	
+	gold -= amount
+	GameSignals.resource_change.emit(gold, 0)
+	return true
+
+
+func add_gold(amount : float) -> void:
+	gold += amount
+	GameSignals.resource_change.emit(gold, 0)
 
 
 func lose() -> void:

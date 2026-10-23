@@ -12,8 +12,11 @@ const BOTTOM_PANEL_NAME : String = "bottom_panel"
 const LOSE_GAME_MENU_NAME : String = "lose_game_menu"
 const LEVEL_COMPLETED_MENU_NAME : String = "level_completed_menu"
 const SPEED_CONTROL_PANEL_NAME : String = "speed_control_panel"
+const LEVEL_UP_MENU_NAME : String = "level_up_menu"
+const WAVE_PANEL_NAME : String = "wave_panel"
 
 var scene_manager : SceneManager
+var level_up_menu : LevelUpMenu = null
 
 
 func initialize(_scene_manager : SceneManager):
@@ -26,6 +29,8 @@ func initialize(_scene_manager : SceneManager):
 	GameSignals.level_loaded.connect(_on_level_loaded)
 	GameSignals.lose_game.connect(_on_lose_game)
 	GameSignals.level_completed.connect(_on_level_completed)
+	GameSignals.upgrade_level_gained.connect(_on_upgrade_level_gained)
+	GameSignals.upgrade_cards_closed.connect(_on_upgrade_cards_closed)
 	$DeveloperModeNotification.visible = GameSignals.testing
 
 
@@ -42,7 +47,7 @@ func load_game_world_map(from_menu : bool) -> void:
 
 
 func is_other_menus_open() -> bool:
-	return scene_manager.is_scene_loaded(LOSE_GAME_MENU_NAME, scene_manager.SceneType.UI) or scene_manager.is_scene_loaded(LEVEL_COMPLETED_MENU_NAME, scene_manager.SceneType.UI)
+	return scene_manager.is_scene_loaded(LOSE_GAME_MENU_NAME, scene_manager.SceneType.UI) or scene_manager.is_scene_loaded(LEVEL_COMPLETED_MENU_NAME, scene_manager.SceneType.UI) or is_instance_valid(level_up_menu)
 
 
 func _input(event: InputEvent) -> void:
@@ -70,9 +75,23 @@ func _on_level_completed(_level : Level) -> void:
 	scene_manager.load_scene_by_name(LEVEL_COMPLETED_MENU_NAME, scene_manager.SceneType.UI, self)
 
 
+func _on_upgrade_level_gained(new_level : int, cards : Array[UpgradeCard]) -> void:
+	if not is_instance_valid(level_up_menu):
+		level_up_menu = scene_manager.load_scene_by_name(LEVEL_UP_MENU_NAME, scene_manager.SceneType.UI, self)
+
+	level_up_menu.show_cards(new_level, cards)
+
+
+func _on_upgrade_cards_closed() -> void:
+	if not is_instance_valid(level_up_menu):
+		return
+
+	scene_manager.unload_scene_by_name(LEVEL_UP_MENU_NAME, scene_manager.SceneType.UI)
+	level_up_menu = null
+
+
 func _menu(_to_main_menu : bool, from_scene_name : String) -> void:
 	if from_scene_name != "":
-		print(name, " trying to unload " , from_scene_name)
 		scene_manager.unload_scene_by_name(from_scene_name, scene_manager.SceneType.UI)
 		GameSignals.game_pause.emit(false)
 		
@@ -104,6 +123,7 @@ func _continue_from_pause_menu() -> void:
 func _load_game_play_interface() -> void:
 	scene_manager.load_scene_by_name(RESOURCE_DISPLAY_NAME, scene_manager.SceneType.UI, self)
 	scene_manager.load_scene_by_name(SPEED_CONTROL_PANEL_NAME, scene_manager.SceneType.UI, self)
+	scene_manager.load_scene_by_name(WAVE_PANEL_NAME, scene_manager.SceneType.UI, self)
 	scene_manager.load_scene_by_name(BOTTOM_PANEL_NAME, scene_manager.SceneType.UI, self)
 	UISignals.game_play_interface_loaded.emit()
 
@@ -111,4 +131,5 @@ func _load_game_play_interface() -> void:
 func _unload_game_play_interface() -> void:
 	scene_manager.unload_scene_by_name(RESOURCE_DISPLAY_NAME, scene_manager.SceneType.UI)
 	scene_manager.unload_scene_by_name(SPEED_CONTROL_PANEL_NAME, scene_manager.SceneType.UI)
+	scene_manager.unload_scene_by_name(WAVE_PANEL_NAME, scene_manager.SceneType.UI)
 	scene_manager.unload_scene_by_name(BOTTOM_PANEL_NAME, scene_manager.SceneType.UI)

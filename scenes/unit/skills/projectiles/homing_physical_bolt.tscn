@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://b1bd66gyf4ln5"]
+[gd_scene format=3 uid="uid://b1bd66gyf4ln5"]
 
 [ext_resource type="Script" path="res://scenes/unit/skills/projectiles/homing_bolt.gd" id="1_wlfoj"]
 [ext_resource type="Texture2D" uid="uid://bhwqaybqb087" path="res://assets/art/projectile/normal_bolt.png" id="2_24dti"]
@@ -211,13 +211,13 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_rkk6h"]
 radius = 6.0
 
-[node name="HomingNormalBolt" type="Area2D"]
+[node name="HomingPhysicalBolt" type="Area2D"]
 top_level = true
 y_sort_enabled = true
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("1_wlfoj")
-projectile_name = "HomingNormalBolt"
+projectile_name = "HomingPhysicalBolt"
 projectile_speed = 112.0
 pierce = 0
 

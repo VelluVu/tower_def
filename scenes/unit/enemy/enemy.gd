@@ -7,7 +7,6 @@ const RESOURCE_NAME_END_PART : String = "_stats.tres"
 const NUMBERS : String = "0123456789"
 const GRID_UPDATE_ERROR : String = ", level is still initializing, unable to react to grid update"
 const END_POINT_PATHING_ERROR : String = " can't path to the end point distance: "
-const REACHED_END_PATH_MESSAGE : String = " have reached the end of the current path"
 const PATH_TO_STAT_RESOURCE : String = "res://scenes/unit/stats/stat_resources/enemy_stats/"
 
 @onready var collider : CollisionShape2D = $CollisionShape2D
@@ -69,6 +68,7 @@ var velocity : Vector2 = Vector2.ZERO
 var last_position : Vector2 = Vector2.ZERO
 var previous_waypoint : Vector2 = Vector2.ZERO
 var next_waypoint : Vector2 = Vector2.ZERO
+var lane_offset : Vector2 = Vector2.ZERO
 var collision_body : Node = null
 var end_point : Marker2D = null
 var closest_building : Building = null
@@ -135,7 +135,7 @@ func dealt_damage(_target : Node2D, _damage_data : DamageData) -> void:
 
 func iterate_next_waypoint() -> void:
 	if (current_waypoint_index + 1) >= point_path.size():
-		next_waypoint = point_path[current_waypoint_index]
+		next_waypoint = point_path[current_waypoint_index] + lane_offset
 		
 		if previous_waypoint == next_waypoint:
 			previous_waypoint = level.world_position_to_grid(global_position)
@@ -143,7 +143,7 @@ func iterate_next_waypoint() -> void:
 	
 	previous_waypoint = point_path[current_waypoint_index]
 	current_waypoint_index += 1
-	next_waypoint = point_path[current_waypoint_index]
+	next_waypoint = point_path[current_waypoint_index] + lane_offset
 
 
 func path_to(from : Vector2, to : Vector2) -> void:
@@ -164,7 +164,7 @@ func path_to(from : Vector2, to : Vector2) -> void:
 		return
 	
 	previous_waypoint = level.world_position_to_grid(global_position)
-	next_waypoint = point_path[current_waypoint_index]
+	next_waypoint = point_path[current_waypoint_index] + lane_offset
 
 
 func clear_path() -> void:
@@ -202,7 +202,7 @@ func die() -> void:
 
 
 func get_building_in_next_waypoint() -> Building:
-	closest_building = level.get_building_from_world_position(next_waypoint)
+	closest_building = level.get_building_from_world_position(level.snap_position_to_grid(next_waypoint))
 	if closest_building is Trap:
 		closest_building = null
 	return closest_building
@@ -218,6 +218,14 @@ func get_first_nearby_free_position() -> Vector2:
 	level.get_building_from_cell_position(grid_position).destroy_building()
 	push_warning(name, " unable to find free position, destroying building in the way.")
 	return global_position
+
+
+func get_spacing_speed_factor(move_direction : Vector2) -> float:
+	var neighbour_positions : Array[Vector2] = []
+	for enemy in level.existing_enemies:
+		if enemy != self and not enemy.is_deactivated:
+			neighbour_positions.append(enemy.global_position)
+	return EnemySpacing.get_speed_factor(global_position, move_direction, neighbour_positions)
 
 
 func get_remaining_path_waypoint_count() -> int:
@@ -266,6 +274,7 @@ func _ready() -> void:
 	name = new_name
 	last_position = global_position
 	grid_position = level.world_position_to_grid(global_position)
+	_roll_lane_offset()
 	body_entered.connect(_on_body_enter)
 	body_exited.connect(_on_body_exit)
 	GameSignals.astar_grid_updated.connect(_on_astar_grid_updated)
@@ -273,6 +282,14 @@ func _ready() -> void:
 	GameSignals.time_scale_change.connect(_on_time_scale_change)
 	_on_time_scale_change(Utils.game_control.time_scale)
 	overtime_effect_handler.handle_start_overtime_effects(stats.get_stat_value(Utils.StatType.MaxHealth))
+
+
+func _roll_lane_offset() -> void:
+	var body_radius : float = Utils.TILE_SIZE * 0.5
+	if collider.shape is CircleShape2D:
+		body_radius = collider.shape.radius
+	var max_offset : float = EnemySpacing.get_max_lane_offset(body_radius, minimum_distance_to_next_waypoint)
+	lane_offset = EnemySpacing.roll_lane_offset(max_offset, randf(), randf())
 
 
 func _process(delta: float) -> void:
@@ -319,8 +336,6 @@ func _set_is_path_end_reached(value : bool) -> void:
 	if value == is_path_end_reached:
 		return
 	is_path_end_reached = value
-	if is_path_end_reached:
-		print(name, REACHED_END_PATH_MESSAGE)
 
 
 func _get_is_the_end_point_reached() -> bool:
@@ -336,7 +351,6 @@ func _set_is_the_end_point_reached(value : bool) -> void:
 		var distance_to_end = global_position.distance_to(end_point.global_position)
 		push_warning(name, END_POINT_PATHING_ERROR, distance_to_end)
 	else:
-		print(name, " enemy has reached the end point")
 		GameSignals.enemy_reached_end_point.emit(self)
 		deactivate()
 		hide()

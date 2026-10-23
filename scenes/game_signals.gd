@@ -30,4 +30,12 @@ signal game_pause(is_paused : bool)
 signal level_loaded(level : Level)
 signal level_completed(level : Level)
 
-var testing : bool = true
+#early_start_bonus is what starting the next wave now would pay, 0 during a break
+signal wave_state_changed(wave_number : int, wave_count : int, can_start_next : bool, early_start_bonus : float)
+signal wave_cleared(wave_number : int)
+
+signal upgrade_xp_changed(xp : float, xp_needed : float, upgrade_level : int)
+signal upgrade_level_gained(new_level : int, cards : Array[UpgradeCard])
+signal upgrade_cards_closed()
+
+var testing : bool = false

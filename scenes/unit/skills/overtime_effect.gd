@@ -13,7 +13,7 @@ var max_count : int = 0
 var tick_damage : float = 0.0
 var actor : Node = null
 var source : Node = null
-var damage_type : Utils.DamageType = Utils.DamageType.Normal
+var damage_type : Utils.DamageType = Utils.DamageType.Physical
 var effect_type : Utils.OvertimeEffectType = Utils.OvertimeEffectType.Tick
 var effect_data : OvertimeEffectData = null
 var added_modifier_datas : Array[ModifierData]

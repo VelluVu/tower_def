@@ -6,7 +6,7 @@ const overtime_effect_scene : PackedScene = preload("res://scenes/unit/skills/ov
 
 class OvertimeEffectStack:
 	var stack : Array[OvertimeEffect]
-	var damage_type : Utils.DamageType = Utils.DamageType.Normal : 
+	var damage_type : Utils.DamageType = Utils.DamageType.Physical : 
 		get:
 			if stack.is_empty():
 				return damage_type

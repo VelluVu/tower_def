@@ -9,64 +9,6 @@ func _ready() -> void:
 	_get_all_evolve_resources()
 
 
-func get_possible_evolve_resources(evolve_level : int, evolve_element : Utils.Element, skill : Skill) -> Array[EvolveResource]:
-	var possible_resources : Array[EvolveResource]
-	
-	for resource in all_evolve_resources:
-		if evolve_level < resource.evolve_level_reguirement:
-			continue
-		
-		#only accept resources with flagged elements
-		#print("Testing elements match in resource ", resource.evolve_name, " , element type: ", evolve_element, " against element type flags value: ", resource.elements)
-		if not has_flags(resource.elements, evolve_element):
-			continue
-		
-		if skill != null:
-			#restrict on some skills, like all range on melee skill
-			if skill.skill_type == Utils.SkillType.Melee:
-				if resource.modify_stat_type == Utils.StatType.AttackRange:
-					continue
-				
-			if skill.base_active_time <= 0.0 and resource.modify_stat_type == Utils.StatType.ActiveDuration:
-				continue
-		
-		if resource.modifier_type == Utils.ModifierType.SkillModifier:
-			if not has_flags(resource.skill_type, skill.skill_type):
-				continue
-		
-		possible_resources.append(resource)
-	
-	return possible_resources
-
-
-func get_random_evolve_resources(evolve_level : int, evolve_element : Utils.Element, skill : Skill, max_evolve_resources : int = 4) -> Array[EvolveResource]:
-	var possible_resources : Array[EvolveResource] = get_possible_evolve_resources(evolve_level, evolve_element, skill)
-	
-	if possible_resources.is_empty():
-		push_warning(name, " NO POSSIBLE RESOURCES!")
-		return possible_resources
-	
-	var resources_to_return : Array[EvolveResource]
-	
-	for n in max_evolve_resources:
-		var random_resource : EvolveResource = possible_resources.pick_random()
-		if random_resource == null:
-			continue
-		resources_to_return.append(random_resource)
-		possible_resources.erase(random_resource)
-	
-	return resources_to_return
-
-
-func has_flag(a : int, b : int) -> bool:
-	#print("test if in flags " , a , " is ", b, " result: ", (a & b), " is: ", ((a&b) == b))
-	return (a & b) == b
-
-
-func has_flags(a : int, b : int) -> bool:
-	return (a & b) != 0
-
-
 func _get_all_evolve_resources() -> void:
 	var directory : DirAccess = DirAccess.open(PATH_TO_EVOLVE_RESOURCES)
 	

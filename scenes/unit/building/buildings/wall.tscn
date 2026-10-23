@@ -382,6 +382,8 @@ type = 2
 
 [node name="Price" type="Node" parent="Stats"]
 script = ExtResource("10_7keqx")
+base_value = 1.0
+value = 1.0
 type = 3
 
 [node name="Speed" type="Node" parent="Stats"]

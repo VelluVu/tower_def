@@ -1,19 +1,19 @@
 [gd_scene load_steps=12 format=4 uid="uid://dq2di6j30tjkr"]
 
+[ext_resource type="Resource" path="res://scenes/level/level_data/level_002_data.tres" id="0_leveldata"]
 [ext_resource type="Script" path="res://scenes/level/level.gd" id="1_mfvac"]
 [ext_resource type="Script" path="res://scenes/level/tiles.gd" id="2_v1352"]
 [ext_resource type="TileSet" uid="uid://w2n0xsqqegbc" path="res://assets/tile_sets/object_tile_set_01.tres" id="3_g23gk"]
 [ext_resource type="TileSet" uid="uid://b4ke4d7vk1ycf" path="res://assets/tile_sets/basic_water_tile_set.tres" id="3_wyi0t"]
 [ext_resource type="TileSet" uid="uid://4xx1tx30t6cb" path="res://assets/tile_sets/green_land_tile_set.tres" id="4_wkddw"]
 [ext_resource type="PackedScene" uid="uid://dgjmgs3g8oeq6" path="res://scenes/unit/spawner/spawner.tscn" id="5_qt7vl"]
-[ext_resource type="PackedScene" uid="uid://bljkhytt20h3f" path="res://scenes/unit/enemy/enemies/weakling.tscn" id="6_23d43"]
 [ext_resource type="TileSet" uid="uid://cbq3heog26w0o" path="res://assets/tile_sets/background_tile_set.tres" id="6_qw66t"]
 [ext_resource type="Script" path="res://scenes/level/player_stats.gd" id="7_hg2ug"]
-[ext_resource type="PackedScene" uid="uid://dla7not0kpg61" path="res://scenes/unit/enemy/enemies/fastling.tscn" id="8_hev7r"]
 [ext_resource type="PackedScene" uid="uid://bgh0sxv8x8o2f" path="res://scenes/unit/unit_selection/unit_selection.tscn" id="8_uuxev"]
 
 [node name="Level002" type="Node2D"]
 script = ExtResource("1_mfvac")
+level_data = ExtResource("0_leveldata")
 
 [node name="Tiles" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -48,30 +48,18 @@ position = Vector2(-328, -87)
 [node name="Spawner" parent="." node_paths=PackedStringArray("end_point") groups=["Spawner"] instance=ExtResource("5_qt7vl")]
 y_sort_enabled = true
 position = Vector2(377, 51)
-max_spawns = 10
-spawn_interval = 2.0
-start_spawn_delay_time = 15.0
-spawnable_packed_scene = ExtResource("8_hev7r")
 end_point = NodePath("../EndPoint")
 
 [node name="Spawner2" parent="." node_paths=PackedStringArray("end_point") groups=["Spawner"] instance=ExtResource("5_qt7vl")]
 y_sort_enabled = true
 position = Vector2(377, 2)
 id = 1
-max_spawns = 5
-spawn_interval = 5.0
-start_spawn_delay_time = 10.0
-spawnable_packed_scene = ExtResource("6_23d43")
 end_point = NodePath("../EndPoint")
 
 [node name="Spawner3" parent="." node_paths=PackedStringArray("end_point") groups=["Spawner"] instance=ExtResource("5_qt7vl")]
 y_sort_enabled = true
 position = Vector2(378, -46)
 id = 2
-max_spawns = 5
-spawn_interval = 4.0
-start_spawn_delay_time = 12.0
-spawnable_packed_scene = ExtResource("6_23d43")
 end_point = NodePath("../EndPoint")
 
 [node name="PlayerStats" type="Node" parent="."]

@@ -42,7 +42,7 @@ enum TileEffect
 enum DamageType
 {
 	None = 0,
-	Normal = 1 << 0,
+	Physical = 1 << 0,
 	Fire = 1 << 1,
 	Frost = 1 << 2,
 	Poison = 1 << 3,
@@ -58,6 +58,8 @@ enum ModifyType
 {
 	Flat,
 	Multiply,
+	#percent bonuses of this type are summed before they multiply ("increased"), Multiply ones compound ("more")
+	Additive,
 }
 
 enum ModifierType
@@ -70,7 +72,7 @@ enum ModifierType
 enum Element
 {
 	None = 0,
-	Normal = 1 << 0,
+	Physical = 1 << 0,
 	Fire = 1 << 1,
 	Frost = 1 << 2,
 	Poison = 1 << 3,
@@ -87,7 +89,7 @@ enum SkillType
 
 func get_damage_type_color(damage_type : DamageType) -> Color:
 	match(damage_type):
-		DamageType.Normal:
+		DamageType.Physical:
 			return Color.WHITE
 		DamageType.Fire:
 			return Color.FIREBRICK

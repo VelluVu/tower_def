@@ -2,6 +2,9 @@ class_name Building
 extends StaticBody2D
 
 
+const SKILL_STATS_NODE_NAME : String = "Stats"
+const SKILL_DAMAGE_DATA_NODE_NAME : String = "DamageData"
+
 @onready var evolve_level_up_particle_effect : GPUParticles2D = $EvolveLevelUpParticleEffect
 @onready var animation_control : AnimationControl = $AnimatedSprite2D
 @onready var collision_shape : CollisionShape2D = $CollisionShape2D
@@ -122,20 +125,66 @@ func destroy_building() -> void:
 	GameSignals.building_destroyed.emit(self)
 
 
+#kill XP goes to LevelUpgrades through GameSignals.enemy_destroyed
 func dealt_damage(_target : Node2D, _damage_data : DamageData) -> void:
-	#print(name, " dealt ", _damage_data.damage ," damage to ", _target.name)
-	#gain evolve meter! "xp"
-	if _target.is_dead:
-		evolve_tree.evolve_xp += _target.stats.get_stat_value(Utils.StatType.MaxHealth) * 2
+	pass
 
 
 func replace_skill(new_skill_scene : PackedScene) -> void:
-	var _position : Vector2 = skill.position
-	skill.clear()
-	skill.queue_free()
-	skill = new_skill_scene.instantiate()
+	var old_skill : Skill = skill
+	var new_skill : Skill = new_skill_scene.instantiate()
+	old_skill.stop()
+	#the skill scenes leave Stats and DamageData to the building scene, so a new skill without
+	#them takes the old ones over, with the cards and upgrades already on the stats
+	var has_own_stats : bool = new_skill.has_node(SKILL_STATS_NODE_NAME)
+	
+	if not has_own_stats:
+		_move_child_node(old_skill, new_skill, SKILL_STATS_NODE_NAME)
+	
+	if not new_skill.has_node(SKILL_DAMAGE_DATA_NODE_NAME):
+		_move_child_node(old_skill, new_skill, SKILL_DAMAGE_DATA_NODE_NAME)
+	
+	new_skill.position = old_skill.position
+	skill = new_skill
 	add_child(skill)
-	skill.position = _position
+	
+	if has_own_stats:
+		_move_skill_modifiers(old_skill.stats, skill.stats)
+	
+	old_skill.queue_free()
+	modifier_manager.calculate_all_modifiers()
+	_on_skill_replaced()
+
+
+#subclasses reconnect what listens to the skill's stats
+func _on_skill_replaced() -> void:
+	pass
+
+
+func _move_child_node(from : Node, to : Node, node_name : String) -> void:
+	var node : Node = from.get_node_or_null(node_name)
+	
+	if node == null:
+		return
+	
+	from.remove_child(node)
+	to.add_child(node)
+
+
+#the new skill starts without the cards and upgrades the old one had
+func _move_skill_modifiers(from_stats : Stats, to_stats : Stats) -> void:
+	for old_stat in from_stats.stats:
+		var new_stat : Stat = to_stats.get_stat(old_stat.type)
+		
+		if new_stat == null:
+			continue
+		
+		new_stat.flat_modifiers.append_array(old_stat.flat_modifiers)
+		new_stat.additive_modifiers.append_array(old_stat.additive_modifiers)
+		new_stat.multiply_modifiers.append_array(old_stat.multiply_modifiers)
+		new_stat.global_flat_modifiers.append_array(old_stat.global_flat_modifiers)
+		new_stat.global_additive_modifiers.append_array(old_stat.global_additive_modifiers)
+		new_stat.global_multiply_modifiers.append_array(old_stat.global_multiply_modifiers)
 
 
 func replace_animation_control(new_animation_control_scene : PackedScene) -> void:
@@ -179,22 +228,6 @@ func _on_time_scale_change(_time_scale : float) -> void:
 	pass
 
 
-func _on_evolve_level_gained() -> void:
-	evolve_level_up_particle_effect.emitting = true
-	evolve_glow.visible = evolve_tree.has_evolve_choices
-	animation_control.play_hit_animation()
-
-
-func _on_evolve_level_changed() -> void:
-	stats_changed.emit()
-	evolve_glow.visible = evolve_tree.has_evolve_choices
-
-
-func _on_evolved() -> void:
-	stats_changed.emit()
-	evolve_glow.visible = evolve_tree.has_evolve_choices
-
-
 func _enable_tower() -> void:
 	collision_shape.disabled = false
 	placement_validator.activate(false)
@@ -202,11 +235,6 @@ func _enable_tower() -> void:
 	GameSignals.time_scale_change.connect(_on_time_scale_change)
 	_on_time_scale_change(Utils.game_control.time_scale)
 	overtime_effect_handler.handle_start_overtime_effects(stats.get_stat_value(Utils.StatType.MaxHealth))
-	
-	if evolve_tree != null:
-		evolve_tree.evolve_level_changed.connect(_on_evolve_level_changed)
-		evolve_tree.evolved.connect(_on_evolved)
-		evolve_tree.evolve_level_gained.connect(_on_evolve_level_gained)
 
 
 func _get_is_placed() -> bool:
@@ -268,26 +296,6 @@ func _get_corners() -> Array[Vector2]:
 	vector_array.append(Vector2(position.x - half_extends.x, position.y + half_extends.y))
 	vector_array.append(position + half_extends)
 	return vector_array
-
-
-func _get_building_data() -> BuildingData:
-	var building_data : BuildingData = BuildingData.new()
-	
-	if evolve_tree == null:
-		return building_data
-	
-	if evolve_tree.current_leafs.is_empty():
-		for option in evolve_tree.current_random_evolve_choices:
-			building_data.upgrade_option_icons.append(option.evolve_icon)
-			building_data.upgrade_option_infos.append(option.evolve_name)
-			building_data.random_upgrade_resource.append(option)
-		building_data.id = id
-		return building_data
-	
-	building_data.upgrade_option_icons = evolve_tree.get_available_evolve_icons()
-	building_data.upgrade_option_infos = evolve_tree.get_available_evolve_infos()
-	building_data.id = id
-	return building_data
 
 
 func _get_radius() -> float:

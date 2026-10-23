@@ -13,7 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://dd11cco5cukhw" path="res://scenes/unit/unit_selection/selectable_unit.tscn" id="9_tgbdh"]
 [ext_resource type="PackedScene" uid="uid://ccc725wgsiq36" path="res://scenes/unit/building/placement_validator.tscn" id="10_mthul"]
 [ext_resource type="PackedScene" uid="uid://crbx1w230gw8" path="res://scenes/unit/skills/launch_projectile.tscn" id="10_v02ro"]
-[ext_resource type="PackedScene" uid="uid://dqcs123jiyqlj" path="res://scenes/unit/skills/projectiles/normal_nova_area_effect.tscn" id="11_77qvb"]
+[ext_resource type="PackedScene" uid="uid://dqcs123jiyqlj" path="res://scenes/unit/skills/projectiles/physical_nova_area_effect.tscn" id="11_77qvb"]
 [ext_resource type="PackedScene" uid="uid://42b6l31iaaki" path="res://scenes/unit/skills/projectiles/frost_nova_area_effect.tscn" id="11_mm4fc"]
 [ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_handler.gd" id="12_pje5b"]
 [ext_resource type="PackedScene" uid="uid://c5o05ed0n7tdq" path="res://scenes/unit/evolve_level_up_particle_effect.tscn" id="14_1jyj5"]
@@ -22,7 +22,7 @@
 [ext_resource type="Script" path="res://scenes/unit/evolve_tree/evolve_tree.gd" id="17_x1ya5"]
 [ext_resource type="Script" path="res://scenes/unit/evolve_tree/evolve_branch.gd" id="18_1q0mh"]
 [ext_resource type="Script" path="res://scenes/unit/evolve_tree/element_evolve_leaf.gd" id="19_qeikc"]
-[ext_resource type="PackedScene" uid="uid://oieqtkcxo2sp" path="res://scenes/unit/evolve_tree/puffe_nova_evolve/normal_puffe_nova_evolve_damage_data.tscn" id="20_58cmo"]
+[ext_resource type="PackedScene" uid="uid://oieqtkcxo2sp" path="res://scenes/unit/evolve_tree/puffe_nova_evolve/physical_puffe_nova_evolve_damage_data.tscn" id="20_58cmo"]
 [ext_resource type="Texture2D" uid="uid://yeifd50gnqjq" path="res://assets/art/ui/normal_element_icon.png" id="22_4cpb3"]
 [ext_resource type="PackedScene" uid="uid://dkyb5m1hngnkt" path="res://scenes/unit/skills/projectiles/fire_nova_area_effect.tscn" id="22_eyqrv"]
 [ext_resource type="Texture2D" uid="uid://c807qi0g23lj3" path="res://assets/art/units/building/puffe/puffe_nova/red_puffe_nova_icon.png" id="22_u5e7f"]
@@ -40,6 +40,7 @@
 [ext_resource type="Texture2D" uid="uid://4vr2yacqou07" path="res://assets/art/ui/frost_element_icon.png" id="32_u1lqf"]
 [ext_resource type="Texture2D" uid="uid://b6lo5eq5siv2u" path="res://assets/art/ui/poison_element_icon.png" id="37_ywbce"]
 [ext_resource type="Script" path="res://scenes/unit/modifier_manager.gd" id="40_wh8uf"]
+[ext_resource type="Resource" path="res://scenes/upgrades/building_upgrades/tower_upgrade_data.tres" id="0_upgradedata"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jxaqe"]
 size = Vector2(16, 16)
@@ -431,19 +432,20 @@ type = 9
 
 [node name="EvolveTree" type="Node" parent="."]
 script = ExtResource("17_x1ya5")
+upgrade_data = ExtResource("0_upgradedata")
 
 [node name="EvolveBranch" type="Node" parent="EvolveTree"]
 script = ExtResource("18_1q0mh")
 evolve_level = 2
 
-[node name="NormalElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch"]
+[node name="PhysicalElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch"]
 script = ExtResource("19_qeikc")
 selected_icon = ExtResource("2_amlqn")
 new_damage_data_scene = ExtResource("20_58cmo")
 icon = ExtResource("22_4cpb3")
-info = "Normal"
+info = "Physical"
 
-[node name="CriticalChance" type="Node" parent="EvolveTree/EvolveBranch/NormalElementEvolveLeaf"]
+[node name="CriticalChance" type="Node" parent="EvolveTree/EvolveBranch/PhysicalElementEvolveLeaf"]
 script = ExtResource("24_2wu8h")
 skill_name = "Nova"
 calculate_type = 0

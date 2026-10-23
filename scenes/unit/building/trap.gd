@@ -66,7 +66,6 @@ func _on_range_area_body_exited(body: Node2D) -> void:
 
 
 func _on_attack_range_stat_changed(_stat : Stat) -> void:
-	print(_stat.name, " changed to ", str(_stat.value))
 	area_shape.shape.radius = radius
 
 

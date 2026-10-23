@@ -25,12 +25,7 @@ var behaviour_tree : BeehaveTree :
 
 func _ready() -> void:
 	super()
-	var stat : Stat = stats.get_stat(Utils.StatType.AttackRange)
-	
-	if not stat.changed.is_connected(_on_attack_range_stat_changed):
-		stat.changed.connect(_on_attack_range_stat_changed)
-		
-	_on_attack_range_stat_changed(stat)
+	_connect_range_stats()
 	GameSignals.enemy_destroyed.connect(_on_enemy_destroyed)
 	
 	if range_area == null:
@@ -41,6 +36,21 @@ func _ready() -> void:
 		
 	if not range_area.body_exited.is_connected(_on_range_area_body_exited):
 		range_area.body_exited.connect(_on_range_area_body_exited)
+
+
+#range modifiers land on the skill's stat when it has one, so listen to both
+func _connect_range_stats() -> void:
+	var stat : Stat = stats.get_stat(Utils.StatType.AttackRange)
+	
+	for range_stat : Stat in [stat, skill.stats.get_stat(Utils.StatType.AttackRange)]:
+		if range_stat != null and not range_stat.changed.is_connected(_on_attack_range_stat_changed):
+			range_stat.changed.connect(_on_attack_range_stat_changed)
+	
+	_on_attack_range_stat_changed(stat)
+
+
+func _on_skill_replaced() -> void:
+	_connect_range_stats()
 
 
 func _on_enemy_destroyed(enemy : Enemy) -> void:
@@ -63,7 +73,6 @@ func _on_range_area_body_exited(body: Node2D) -> void:
 
 
 func _on_attack_range_stat_changed(_stat : Stat) -> void:
-	print(_stat.name, " changed to ", str(_stat.value))
 	area_shape.shape.radius = radius
 
 

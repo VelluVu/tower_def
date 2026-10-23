@@ -6,7 +6,7 @@ const FIRE_COLOR_HEX : int = 0xff8472
 const FROST_COLOR_HEX : int = 0x7effff
 const POISON_COLOR_HEX : int = 0x92ff7e
 
-@export var evolve_element : Utils.Element = Utils.Element.Normal
+@export var evolve_element : Utils.Element = Utils.Element.Physical
 @export var selected_icon : Texture2D = null
 @export var new_skill_scene : PackedScene = null
 @export var new_projectile_scene : PackedScene = null
@@ -16,7 +16,7 @@ const POISON_COLOR_HEX : int = 0x92ff7e
 @export var evolve_glow_color : Color = Color.WHITE :
 	get:
 		match(evolve_element):
-			Utils.Element.Normal:
+			Utils.Element.Physical:
 				return Color.WHITE
 			Utils.Element.Fire:
 				return Color.RED
