@@ -56,7 +56,7 @@ var attack_speed : float :
 signal is_ready_signal(value : bool)
 
 
-func use(_target) -> void:
+func use(_target : Node2D) -> void:
 	if not is_continuous and not is_ready:
 		return
 	

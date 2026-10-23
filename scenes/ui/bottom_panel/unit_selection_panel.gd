@@ -41,7 +41,7 @@ var listed_stat_enums : Array[Utils.StatType] = [
 	Utils.StatType.Price]
 
 
-func _ready():
+func _ready() -> void:
 	hide()
 	unit_info_grid_container.hide()
 	unit_icon.hide()
@@ -52,7 +52,7 @@ func _ready():
 	UISignals.gold_upgrades_changed.connect(_on_gold_upgrades_changed)
 
 
-func _on_unit_selected(unit_name : String, actor_stats : Stats, main_skill : Skill, icon : Texture2D, _is_building : bool = false):
+func _on_unit_selected(unit_name : String, actor_stats : Stats, main_skill : Skill, icon : Texture2D, _is_building : bool = false) -> void:
 	show()
 	unit_info_grid_container.show()
 	unit_icon.show()
@@ -68,7 +68,7 @@ func _on_unit_selected(unit_name : String, actor_stats : Stats, main_skill : Ski
 	_update_button_row()
 
 
-func _on_unit_deselected():
+func _on_unit_deselected() -> void:
 	unit_icon.texture = null
 	name_value.text = "jesus?"
 	#nulls the stat fields

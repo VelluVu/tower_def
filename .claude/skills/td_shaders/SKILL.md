@@ -8,8 +8,7 @@ description: Use when writing or reviewing Godot shaders (.gdshader or VisualSha
 ## What exists (`assets/shaders/`, materials in `shader_materials/`)
 | Shader | Used for | Notes |
 | --- | --- | --- |
-| `outline.gdshader` | selection outline (`outline_shader_material.tres`) | Loops over a (2·width+1)² neighbourhood per pixel; fine at width 1-2, expensive above. Grows the quad with `add_margins`. |
-| `hit_flash.tres` (VisualShader) | `building_/enemy_hit_shader_material.tres` | `hit_color` + `enabled` bool, keyed by the unit's "hit" `AnimationPlayer` animation (`AnimationControl.play_hit_animation`). |
+| `unit_sprite.gdshader` | every unit sprite, through `building_/enemy_hit_shader_material.tres` (`resource_local_to_scene`, one per unit) | Hit flash: `flash` 0-1 mixes in `hit_color`, stepped 1 -> 0.5 -> 0 by a tween in `AnimationControl.play_hit_animation`. Selection outline: `SelectableUnit` toggles `outline_enabled` (never swap the sprite's material, that hides the flash). The outline loops over a (2·width+1)² neighbourhood per pixel and grows the quad only while enabled. |
 | `fade.gdshader` | dithered fade-out (`fade` 0-4 steps) | Ordered-dither look that suits pixel art better than alpha. |
 | `beam_animation.gdshader` | Beamer beam scroll | Scrolls UV by `TIME * speed`. |
 | `cutout_shader.gdshader`, `paint_texture.gdshader` | masking / texture swap tests | `paint_texture` has empty stubs; `test_paint_shader.tscn` is a test scene. |
@@ -32,7 +31,7 @@ Check a material's users with a grep for its path in `.tscn` files before changi
 ## Style
 - Explicit types and hints on every uniform: `uniform vec4 hit_color : source_color = vec4(0.83, 0.13, 0.0, 1.0);`, `uniform float strength : hint_range(0.0, 1.0) = 1.0;`, `uniform sampler2D noise : filter_nearest, repeat_enable;`.
 - snake_case uniform names; colour/texture uniforms first, then numbers, then toggles.
-- Per-pixel branches on data become `mix`/`step`/`smoothstep`; a bool toggle multiplies (`COLOR.rgb = mix(COLOR.rgb, hit_color.rgb, float(enabled) * strength);`). Loops with constant bounds are fine.
+- Per-pixel branches on data become `mix`/`step`/`smoothstep`; an amount mixes (`color.rgb = mix(color.rgb, hit_color.rgb, flash);`). Loops with constant bounds are fine.
 - Sample each texture once per UV. Avoid `discard` unless it is a true cutout.
 - Set parameters from GDScript with `material.set_shader_parameter(&"hit_color", color)`; if one unit needs its own value, make the material `resource_local_to_scene` or use per-instance uniforms (`instance uniform`), otherwise every unit sharing the material changes.
 

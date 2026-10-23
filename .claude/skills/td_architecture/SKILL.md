@@ -38,7 +38,7 @@ New behaviour goes into a new child component or a Beehave leaf, not into `build
 - Game speed is manual: use `CustomTimer` (never a plain `Timer` or `create_timer`) for anything gameplay-timed, and scale per-frame movement by `current_time_scale` like `Enemy._process`. Set durations through `unscaled_base_value`/`base_wait_time`, not `wait_time`.
 
 ## Level and pathing
-- Grid conversions only through `Level` (`world_position_to_grid`, `grid_position_to_world`, `snap_position_to_grid`). Tiles are 16 px (`Utils.TILE_SIZE`).
+- Grid conversions only through `level.grid` (`LevelGrid`: `world_position_to_grid`, `grid_position_to_world`, `snap_position_to_grid`). Tiles are 16 px (`Utils.TILE_SIZE`).
 - Walkability and buildability come from the `TileType` custom data flags on every tile map layer; add new tile behaviour as a flag, not as tile-ID checks.
 - Buildings change cell weight, not solidity. Emit `GameSignals.astar_grid_updated` after any grid change; every enemy repaths on it, so do not emit it per frame.
 - Get the level from the building's parent chain or `Utils.game_control.scene_manager.current_level`; do not add new `get_node("../..")` paths.

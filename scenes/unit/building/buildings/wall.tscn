@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://b78nv1og0jf3p"]
+[gd_scene load_steps=44 format=3 uid="uid://b78nv1og0jf3p"]
 
 [ext_resource type="Script" path="res://scenes/unit/building/wall.gd" id="1_kgbnu"]
 [ext_resource type="Texture2D" uid="uid://c5m2tdopql7kr" path="res://assets/art/units/building/wall/wall_icon.png" id="2_0awu8"]
@@ -256,43 +256,6 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="Animation" id="Animation_4gyud"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:material:shader_parameter/enabled")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-
-[sub_resource type="Animation" id="Animation_ljeel"]
-resource_name = "hit"
-length = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:material:shader_parameter/enabled")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_yhdvm"]
-_data = {
-"RESET": SubResource("Animation_4gyud"),
-"hit": SubResource("Animation_ljeel")
-}
-
 [node name="Wall" type="StaticBody2D" node_paths=PackedStringArray("skill")]
 collision_layer = 4
 collision_mask = 2
@@ -344,11 +307,6 @@ metadata/_aseprite_wizard_interface_config_ = {
 "output_section": true
 }
 metadata/_aseprite_wizard_source_file_hash_ = "977dac06589e336ff09895fb969dfd75"
-
-[node name="HitAnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite2D"]
-libraries = {
-"": SubResource("AnimationLibrary_yhdvm")
-}
 
 [node name="SelectableUnit" parent="." instance=ExtResource("6_8lkbl")]
 

@@ -11,7 +11,7 @@ var projectile_pool : Array[Node2D]
 var count : int = 0
 
 
-func use(_target) -> void:
+func use(_target : Node2D) -> void:
 	super(_target)
 
 

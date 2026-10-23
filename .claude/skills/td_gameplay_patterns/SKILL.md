@@ -6,7 +6,7 @@ description: Use when designing or changing gameplay systems and algorithms in P
 # Gameplay Patterns and Algorithms (Puffe TD)
 
 ## Behaviour: Beehave trees, not hand-written state machines
-- Enemy and tower behaviour lives in Beehave trees (`scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/`, `basic_tower_behaviour_tree/`). One script per leaf: conditions (`is_dead`, `has_path`, `is_colliding_building`) extend `ConditionLeaf`, actions (`move_towards_next_waypoint`, `attack_closest_building`) extend `ActionLeaf`, and return SUCCESS/FAILURE/RUNNING from `tick(actor, blackboard)`.
+- Enemy and tower behaviour lives in Beehave trees (`scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/`, `basic_tower_behaviour_tree/`). One script per leaf: conditions (`is_dead`, `is_colliding_building`) extend `ConditionLeaf`, actions (`follow_path`, `attack_closest_building`) extend `ActionLeaf`, and return SUCCESS/FAILURE/RUNNING from `tick(actor, blackboard)`.
 - New behaviour = a new leaf plus a composite (selector/sequence) change in the tree scene. Leaves read and call the actor's methods (`actor.path_to`, `actor.skill.use`); keep the logic on the actor or a component, the leaf only decides.
 - A Building's tree is disabled while placing (`Tower._set_is_placing`) and enabled in `_enable_tower`.
 - Use a plain enum state only for tiny UI flows; anything an actor does over time belongs in its tree.
@@ -16,10 +16,10 @@ description: Use when designing or changing gameplay systems and algorithms in P
 - Cross-system events go through `GameSignals` (gameplay) and `UISignals` (UI requests). Local parent-child events stay local signals.
 
 ## Pathing (AStarGrid2D)
-- `Level._create_astar_grid` builds the grid from the ground layer's used rect; tile `TileType` flags decide solid cells. No diagonals.
+- `LevelGrid._create_astar_grid` builds the grid from the ground layer's used rect; tile `TileType` flags decide solid cells. No diagonals.
 - Buildings raise the cell weight (`Building.astar_weight` = 100) instead of making it solid, so a full wall-off still has a path: enemies route around towers when they can and walk into (and attack) a building when that is cheaper. Traps keep weight 1 and are walkable.
 - Every `GameSignals.astar_grid_updated` makes every living enemy call `path_to` again: emit it once per placement/removal, never per frame. For many enemies, consider sharing one path per spawner and only repathing enemies whose remaining path crosses the changed cell.
-- Grid maths only via `Level` helpers (`world_position_to_grid`, `grid_position_to_world`, `snap_position_to_grid`); cells are 16 px.
+- Grid maths only via `level.grid` (`LevelGrid`: `world_position_to_grid`, `grid_position_to_world`, `snap_position_to_grid`); cells are 16 px.
 
 ## Targeting
 - Towers collect bodies in `RangeArea` (`targets`) and remove them on exit or `enemy_destroyed`.

@@ -59,7 +59,7 @@ var is_panning : bool = false :
 var current_mode : CameraMode = CameraMode.Static
 
 
-func _ready():
+func _ready() -> void:
 	GameSignals.level_loaded.connect(_on_level_loaded)
 	SettingsManager.option_changed.connect(_on_option_changed)
 	speed_multiplier = SettingsManager.get_option(SettingsManager.OPTION_CAMERA_SPEED)
@@ -86,14 +86,14 @@ func _process(delta: float) -> void:
 	_pan_camera_smoothly(delta)
 
 
-func _zoom():
+func _zoom() -> void:
 	if Input.is_action_just_pressed(ZOOM_IN_ACTION_NAME):
 		zoom_target_position *= zoom_in 
 	if Input.is_action_just_pressed(ZOOM_OUT_ACTION_NAME):
 		zoom_target_position *= zoom_out
 
 
-func _movement():
+func _movement() -> void:
 	if Input.is_action_pressed(MOVE_LEFT_ACTION_NAME) and Input.is_action_pressed(MOVE_UP_ACTION_NAME):
 		move_direction = Vector2.LEFT + Vector2.UP
 	elif Input.is_action_pressed(MOVE_LEFT_ACTION_NAME) and Input.is_action_pressed(MOVE_DOWN_ACTION_NAME):
@@ -147,14 +147,14 @@ func _on_option_changed(key : String, value : Variant) -> void:
 	elif key == SettingsManager.OPTION_EDGE_SCROLL:
 		is_edge_scroll_on = value
 
-func _zoom_camera_smoothly(delta : float):
+func _zoom_camera_smoothly(delta : float) -> void:
 	var min_zoom : Vector2 = Vector2.ONE * maxf(zoom_min.x, level_min_zoom)
 	zoom_target_position = clamp(zoom_target_position, min_zoom, zoom_max)
 	zoom = zoom.lerp(zoom_target_position, zoom_speed * delta)
 	zoom = zoom.clamp(min_zoom, zoom_max)
 
 
-func _move_camera_smoothly(delta : float):
+func _move_camera_smoothly(delta : float) -> void:
 	if is_panning:
 		return
 		
@@ -168,7 +168,7 @@ func _move_camera_smoothly(delta : float):
 	global_position = global_position.clamp(limit_min, limit_max)
 
 
-func _pan():
+func _pan() -> void:
 	if Input.is_action_pressed(PAN_ACTION_NAME):
 		is_panning = true
 		pan_current_position = get_viewport().get_mouse_position()
@@ -191,7 +191,7 @@ func _set_is_panning(value : bool) -> void:
 		pan_end_position = get_viewport().get_mouse_position()
 
 
-func _pan_camera_smoothly(delta : float):
+func _pan_camera_smoothly(delta : float) -> void:
 	if not is_panning:
 		return
 		

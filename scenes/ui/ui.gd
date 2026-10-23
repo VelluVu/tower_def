@@ -19,7 +19,7 @@ var scene_manager : SceneManager
 var level_up_menu : LevelUpMenu = null
 
 
-func initialize(_scene_manager : SceneManager):
+func initialize(_scene_manager : SceneManager) -> void:
 	scene_manager = _scene_manager
 	scene_manager.load_scene_by_name(MAIN_MENU_NAME, scene_manager.SceneType.UI, self)
 	UISignals.options.connect(_options)

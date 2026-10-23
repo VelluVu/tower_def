@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://6t4e2c8di3ko"]
+[gd_scene load_steps=39 format=3 uid="uid://6t4e2c8di3ko"]
 
 [ext_resource type="AudioStream" uid="uid://bsxfgems0e4g4" path="res://assets/audio/sfx/kenney/trap_snap.ogg" id="snd_activate"]
 [ext_resource type="Script" path="res://scenes/unit/building/trap.gd" id="1_oqrf3"]
@@ -151,43 +151,6 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="Animation" id="Animation_4gyud"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:material:shader_parameter/enabled")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-
-[sub_resource type="Animation" id="Animation_ljeel"]
-resource_name = "hit"
-length = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:material:shader_parameter/enabled")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_yhdvm"]
-_data = {
-"RESET": SubResource("Animation_4gyud"),
-"hit": SubResource("Animation_ljeel")
-}
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_wlrxm"]
 
 [node name="LeopardTrap" type="StaticBody2D" node_paths=PackedStringArray("skill") groups=["Buildings"]]
@@ -244,11 +207,6 @@ metadata/_aseprite_wizard_interface_config_ = {
 "output_section": true
 }
 metadata/_aseprite_wizard_source_file_hash_ = "57c2507458784f6b19664948d7c85923"
-
-[node name="HitAnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite2D"]
-libraries = {
-"": SubResource("AnimationLibrary_yhdvm")
-}
 
 [node name="SelectableUnit" parent="." instance=ExtResource("7_ft1wp")]
 

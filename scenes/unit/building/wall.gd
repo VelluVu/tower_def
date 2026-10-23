@@ -27,11 +27,11 @@ var neighbour_buildings : Array[Vector2i]
 func _set_is_placed(value : bool) -> void:
 	super(value)
 	if value:
-		var surrounding_cells : Array[Vector2i] = level.tiles.ground_layer.get_surrounding_cells(grid_position)
+		var surrounding_cells : Array[Vector2i] = level.grid.get_surrounding_cells(grid_position)
 				
 		for cell in surrounding_cells:
-			if level.has_building_in_cell_position(cell):
-				if level.get_building_from_cell_position(cell) is Trap:
+			if level.grid.has_building_in_cell_position(cell):
+				if level.grid.get_building_from_cell_position(cell) is Trap:
 					continue
 				neighbour_buildings.append(cell)
 		

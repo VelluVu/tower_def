@@ -2,12 +2,10 @@ class_name SelectableUnit
 extends Node
 
 
-@onready var outline_shader_material : ShaderMaterial = ResourceLoader.load("res://assets/shaders/shader_materials/outline_shader_material.tres")
+const OUTLINE_PARAMETER : StringName = &"outline_enabled"
 
 var is_selected : bool = false :
 	set = _set_is_selected
-var previous_material : Material = null
-var original_material : Material = null
 
 @export var actor : Node2D :
 	get:
@@ -24,13 +22,17 @@ var original_material : Material = null
 		return sprite
 
 
-func change_material(_material : Material) -> void:
-	if _material == null:
-		sprite.material = original_material
-		return
-	
-	previous_material = sprite.material
-	sprite.material = _material
+#the outline is a toggle on the unit's own sprite material (unit_sprite.gdshader), so the hit flash keeps working while selected
+func show_outline(is_shown : bool) -> void:
+	var shader_material : ShaderMaterial = sprite.material as ShaderMaterial
+	if shader_material != null:
+		shader_material.set_shader_parameter(OUTLINE_PARAMETER, is_shown)
+
+
+## Call after the actor swaps its sprite (an element evolve), so the outline follows the new one.
+func set_sprite(new_sprite : AnimatedSprite2D) -> void:
+	sprite = new_sprite
+	show_outline(is_selected)
 
 
 func _data_change() -> void:
@@ -41,8 +43,6 @@ func _ready() -> void:
 	if not actor.is_in_group(GroupNames.SELECTABLE):
 		actor.add_to_group(GroupNames.SELECTABLE)
 		
-	previous_material = sprite.material
-	original_material = sprite.material
 	GameSignals.selected_unit.connect(_on_selected_unit)
 	GameSignals.deselected_unit.connect(_on_deselected_unit)
 
@@ -89,7 +89,7 @@ func _set_is_selected(value : bool) -> void:
 		if actor.stats_changed.is_connected(_data_change):
 			actor.stats_changed.disconnect(_data_change)
 	
-	change_material(null if not is_selected else outline_shader_material)
+	show_outline(is_selected)
 	#get the upgrade data if there is any for starter element choices!
 	_signal_data_for_selection_panel(is_selected)
 	actor.selected.emit(is_selected)

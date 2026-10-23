@@ -2,13 +2,15 @@ class_name AnimationControl
 extends AnimatedSprite2D
 
 
-@export var hit_animation_player : AnimationPlayer :
-	get:
-		if hit_animation_player == null:
-			for child in get_children():
-				if child is AnimationPlayer:
-					hit_animation_player = child
-		return hit_animation_player
+const FLASH_PARAMETER : StringName = &"flash"
+const NO_FLASH_MATERIAL_WARNING : String = " has no unit sprite material, unable to play the hit flash"
+#full flash, then half, then off: a hit during the half step shows as a new flash
+const FLASH_STEPS : Array[float] = [1.0, 0.5, 0.0]
+
+## Seconds the hit flash lasts, split evenly between its steps.
+@export var flash_duration : float = 0.1
+
+var flash_tween : Tween = null
 
 var actor : Node2D :
 	get:
@@ -46,14 +48,23 @@ func play_animation(animation_name : String, wanted_play_time : float = 0.0, is_
 
 
 func play_hit_animation() -> void:
-	if hit_animation_player == null:
-		push_warning(actor.name, " Is unable to play hit animation, no hit animation player as child")
+	var shader_material : ShaderMaterial = material as ShaderMaterial
+
+	if shader_material == null:
+		push_warning(actor.name, NO_FLASH_MATERIAL_WARNING)
 		return
-	
-	if hit_animation_player.is_playing():
-		hit_animation_player.stop()
-	
-	hit_animation_player.play("hit")
+
+	#every hit restarts the flash at full, also one landing while the last flash is still on
+	if flash_tween != null:
+		flash_tween.kill()
+
+	shader_material.set_shader_parameter(FLASH_PARAMETER, FLASH_STEPS[0])
+	flash_tween = create_tween()
+	var step_time : float = flash_duration / (FLASH_STEPS.size() - 1)
+
+	for step in FLASH_STEPS.slice(1):
+		flash_tween.tween_interval(step_time)
+		flash_tween.tween_callback(shader_material.set_shader_parameter.bind(FLASH_PARAMETER, step))
 
 
 func is_current_animation_finished() -> bool:

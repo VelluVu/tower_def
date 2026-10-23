@@ -309,7 +309,7 @@ Some enemies have their own abilities; bosses have several.
 ### Behaviour trees (decided: keep Beehave)
 - Beehave stays: abilities, bosses and per-enemy behaviour are what it is good at.
 - Today the basic enemy tree is about 45 nodes, mostly small waypoint checks. Plan:
-  - Fold the waypoint bookkeeping (reached, next, last, end reached) into one `FollowPath` action, so the trees show decisions, not steps.
+  - Fold the waypoint bookkeeping (reached, next, last, end reached) into one `FollowPath` action, so the trees show decisions, not steps. Built (2026-10-23): the basic tree is now dead -> `FollowPath` -> blocked (attack or warp) -> idle, 22 nodes; `FollowPath` fails when a building blocks the next waypoint, which hands over to the blocked branch. Same behaviour as before (checked side by side in a headless run, open route and walled-off route).
   - One shared base tree (dead, move, blocked -> attack). Each ability is its own subtree scene inserted above movement (`UseAbility` sequences: condition + skill ready + use).
   - Bosses: a selector over their abilities, by priority.
   - Set `tick_rate` above 1 on common enemies if many enemies cost too much.

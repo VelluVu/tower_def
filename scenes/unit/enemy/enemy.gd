@@ -2,12 +2,8 @@ class_name Enemy
 extends RigidBody2D
 
 
-const STATS_MANAGER_NAME : String = "StatsManager"
-const RESOURCE_NAME_END_PART : String = "_stats.tres"
-const NUMBERS : String = "0123456789"
 const GRID_UPDATE_ERROR : String = ", level is still initializing, unable to react to grid update"
 const END_POINT_PATHING_ERROR : String = " can't path to the end point distance: "
-const PATH_TO_STAT_RESOURCE : String = "res://scenes/unit/stats/stat_resources/enemy_stats/"
 const MODULATE_ALPHA_PROPERTY : String = "modulate:a"
 const CORPSE_FADE_TIME : float = 1.0
 const NO_FREE_POSITION_WARNING : String = " unable to find free position, destroying building in the way."
@@ -60,29 +56,27 @@ var is_colliding_building : bool = false :
 		return collision_body != null
 
 var is_deactivated : bool = false
-var time_is_altered : bool = false
 var current_waypoint_index : int = 0
-var time : float = 0
 var minimum_distance_to_end : float = 9.0
 var minimum_distance_to_next_waypoint : float = 2.0
 var current_time_scale : float = 1.0
-var grid_position : Vector2i = Vector2i.ZERO
 var velocity : Vector2 = Vector2.ZERO
 var last_position : Vector2 = Vector2.ZERO
-var previous_waypoint : Vector2 = Vector2.ZERO
 var next_waypoint : Vector2 = Vector2.ZERO
 var lane_offset : Vector2 = Vector2.ZERO
 var collision_body : Node = null
 var end_point : Marker2D = null
-var closest_building : Building = null
 var point_path : PackedVector2Array
-var target : Node = null
 
 var level : Level = null :
 	get:
 		if level == null:
 			level = Utils.game_control.scene_manager.current_level
 		return level
+
+var grid_position : Vector2i :
+	get:
+		return level.grid.world_position_to_grid(global_position)
 
 var body_center : Vector2 :
 	get:
@@ -91,10 +85,6 @@ var body_center : Vector2 :
 var is_dead : bool :
 	get:
 		return stats.get_stat_value(Utils.StatType.Health) <= 0.0
-
-var is_path_end_reached : bool :
-	get = _get_is_path_end_reached,
-	set = _set_is_path_end_reached
 
 var is_the_end_point_reached : bool :
 	get = _get_is_the_end_point_reached,
@@ -139,24 +129,42 @@ func dealt_damage(_target : Node2D, _damage_data : DamageData) -> void:
 func iterate_next_waypoint() -> void:
 	if (current_waypoint_index + 1) >= point_path.size():
 		next_waypoint = point_path[current_waypoint_index] + lane_offset
-		
-		if previous_waypoint == next_waypoint:
-			previous_waypoint = level.world_position_to_grid(global_position)
 		return
-	
-	previous_waypoint = point_path[current_waypoint_index]
+
 	current_waypoint_index += 1
 	next_waypoint = point_path[current_waypoint_index] + lane_offset
 
 
+func is_waypoint_reached() -> bool:
+	return global_position.distance_to(next_waypoint) < minimum_distance_to_next_waypoint
+
+
+func is_last_waypoint() -> bool:
+	return (current_waypoint_index + 1) >= point_path.size()
+
+
+func is_end_point_in_reach() -> bool:
+	return global_position.distance_to(end_point.global_position) < minimum_distance_to_end
+
+
+func move_towards_next_waypoint() -> void:
+	animation_control.play_animation(GlobalAnimationNames.WALK_ANIMATION)
+	var move_direction : Vector2 = global_position.direction_to(next_waypoint)
+	var speed : float = stats.get_stat_value(Utils.StatType.Speed) * get_spacing_speed_factor(move_direction)
+	velocity = speed * move_direction * current_time_scale
+	linear_velocity = velocity
+	last_position = global_position
+	animation_control.flip_h = linear_velocity.x <= 0
+
+
 func path_to(from : Vector2, to : Vector2) -> void:
-	#to = level.snap_position_to_grid(to)
+	#to = level.grid.snap_position_to_grid(to)
 	
-	point_path = level.find_path(from, to)
+	point_path = level.grid.find_path(from, to)
 	current_waypoint_index = 0
 	
 	if point_path.is_empty():
-		point_path.append(level.snap_position_to_grid(global_position))
+		point_path.append(level.grid.snap_position_to_grid(global_position))
 		return
 		
 	var direction_to_first_waypoint : Vector2 = global_position.direction_to(point_path[0])
@@ -165,8 +173,7 @@ func path_to(from : Vector2, to : Vector2) -> void:
 	if dot < 0:
 		iterate_next_waypoint()
 		return
-	
-	previous_waypoint = level.world_position_to_grid(global_position)
+
 	next_waypoint = point_path[current_waypoint_index] + lane_offset
 
 
@@ -221,20 +228,20 @@ func _free_after_death() -> void:
 
 
 func get_building_in_next_waypoint() -> Building:
-	closest_building = level.get_building_from_world_position(level.snap_position_to_grid(next_waypoint))
-	if closest_building is Trap:
-		closest_building = null
-	return closest_building
+	var building : Building = level.grid.get_building_from_world_position(level.grid.snap_position_to_grid(next_waypoint))
+	if building is Trap:
+		return null
+	return building
 
 
 func get_first_nearby_free_position() -> Vector2:
 	#find free position, a walkable position without tower or wall in it
-	var cells : Array[Vector2i] = level.get_walkable_surrounding_cells(grid_position)
+	var cells : Array[Vector2i] = level.grid.get_walkable_surrounding_cells(grid_position)
 	
 	if not cells.is_empty():
-		return level.grid_position_to_world(cells.pick_random())
+		return level.grid.grid_position_to_world(cells.pick_random())
 	
-	var building_in_cell : Building = level.get_building_from_cell_position(grid_position)
+	var building_in_cell : Building = level.grid.get_building_from_cell_position(grid_position)
 
 	if building_in_cell != null:
 		building_in_cell.destroy_building()
@@ -255,35 +262,18 @@ func get_remaining_path_waypoint_count() -> int:
 	return range(current_waypoint_index, point_path.size()).size()
 
 
-func is_path_blocked(path : PackedVector2Array) -> bool:
-	if path.is_empty():
-		return true
-	
-	var end_point_position : Vector2 = level.snap_position_to_grid(end_point.global_position)
-	var is_last_path_position_end : bool = path[-1] == end_point_position
-	return not is_last_path_position_end
-
-
+#the building in this enemy's cell first, then one in a neighbour cell; traps are walked over, never attacked
 func get_closest_building() -> Building:
-	var closest = level.get_building_from_world_position(global_position)
-	
-	if closest != null:
-		if closest is Trap:
-			closest = null
-		else:
-			return closest
-	
-	#save found buildings to variable?
-	var neighbour_buildings : Array[Building] = level.get_neighbour_buildings_from_world_position(global_position)
-	
-	if not neighbour_buildings.is_empty():
-		for building in neighbour_buildings:
-			if building is Trap:
-				continue
-				
+	var building_in_cell : Building = level.grid.get_building_from_cell_position(grid_position)
+
+	if building_in_cell != null and building_in_cell is not Trap:
+		return building_in_cell
+
+	for building in level.grid.get_neighbour_buildings_from_world_position(global_position):
+		if building is not Trap:
 			return building
-	
-	return closest
+
+	return null
 
 
 func _ready() -> void:
@@ -292,11 +282,9 @@ func _ready() -> void:
 	if not is_in_group(GroupNames.ENEMIES):
 		add_to_group(GroupNames.ENEMIES)
 	
-	time = 0
 	var new_name : String = name + str(level.all_enemies.size())
 	name = new_name
 	last_position = global_position
-	grid_position = level.world_position_to_grid(global_position)
 	_roll_lane_offset()
 	body_entered.connect(_on_body_enter)
 	body_exited.connect(_on_body_exit)
@@ -315,24 +303,16 @@ func _roll_lane_offset() -> void:
 	lane_offset = EnemySpacing.roll_lane_offset(max_offset, randf(), randf())
 
 
-func _process(delta: float) -> void:
-	if time_is_altered:
-		delta *= current_time_scale
-	time += delta
-
-
 func _on_body_enter(body : Node) -> void:
 	if body.is_in_group(GroupNames.BUILDINGS):
 		if body is Trap:
 			return
 		collision_body = body
-		closest_building = collision_body
 
 
-func _on_body_exit(body : Node):
+func _on_body_exit(body : Node) -> void:
 	if body.is_in_group(GroupNames.BUILDINGS):
 		collision_body = null
-		closest_building = null
 
 
 func _on_astar_grid_updated() -> void:
@@ -348,17 +328,6 @@ func _on_astar_grid_updated() -> void:
 
 func _on_time_scale_change(time_scale : float) -> void:
 	current_time_scale = time_scale
-	time_is_altered = current_time_scale != 1.0
-
-
-func _get_is_path_end_reached() -> bool:
-	return is_path_end_reached
-
-
-func _set_is_path_end_reached(value : bool) -> void:
-	if value == is_path_end_reached:
-		return
-	is_path_end_reached = value
 
 
 func _get_is_the_end_point_reached() -> bool:

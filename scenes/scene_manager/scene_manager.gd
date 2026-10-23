@@ -38,7 +38,7 @@ func load_level_by_number(level_number : int, parent_scene : Node) -> void:
 			return
 
 
-func load_scene_by_name(scene_name : String, scene_type : SceneType, parent_scene : Node):
+func load_scene_by_name(scene_name : String, scene_type : SceneType, parent_scene : Node) -> Node:
 	scene_name = scene_name.to_lower()
 	
 	if scene_type == SceneType.Level:
@@ -105,13 +105,13 @@ func unload_all_ui_scenes() -> void:
 	loaded_ui_scenes.clear()
 
 
-func unload_current_level():
+func unload_current_level() -> void:
 	if is_instance_valid(current_level):
 		current_level.queue_free()
 	current_level = null
 
 
-func unload_scene_by_name(scene_name : String, scene_type : SceneType):
+func unload_scene_by_name(scene_name : String, scene_type : SceneType) -> void:
 	scene_name = scene_name.to_snake_case()
 	
 	if scene_type == SceneType.Level:
@@ -138,7 +138,7 @@ func _ready() -> void:
 	_get_level_packed_scenes_from_project_folder()
 
 
-func _get_ui_packed_scenes_from_project_folder():
+func _get_ui_packed_scenes_from_project_folder() -> void:
 	var dir := DirAccess.open(PATH_TO_UI_FOLDER)
 	if not dir:
 		push_warning(name, UI_FOLDER_PATH_NONEXISTENT_WARNING, PATH_TO_UI_FOLDER)
@@ -157,7 +157,7 @@ func _get_ui_packed_scenes_from_project_folder():
 		_recursively_search_directory_for_ui_files(directory_path)
 
 
-func _recursively_search_directory_for_ui_files(directory_path : String):
+func _recursively_search_directory_for_ui_files(directory_path : String) -> void:
 	var dir := DirAccess.open(directory_path)
 	
 	if not dir:
@@ -210,7 +210,7 @@ func _find_and_append_all_ui_scenes_from_file_names_in_directory_path(file_names
 	
 
 
-func _get_level_packed_scenes_from_project_folder():
+func _get_level_packed_scenes_from_project_folder() -> void:
 	var dir := DirAccess.open(PATH_TO_LEVEL_FOLDER)	
 	if not dir:
 		push_warning(name, LEVEL_FOLDER_PATH_NONEXISTENT_WARNING, PATH_TO_LEVEL_FOLDER)
