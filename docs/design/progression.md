@@ -32,7 +32,19 @@ Status: planning, nothing built yet (except the XP cards). Started 2026-10-22.
 - Bought for a whole building type (all Bolters, all walls, ...). Buildings placed later get them too.
 - Bought from buttons in the selection panel (decided 2026-10-23): select any building of the type and the panel shows the next step and its gold price. At an evolve step the buttons are the element choices.
 - The element choice leaves the XP cards (decided 2026-10-23). The XP cards stay as the roguelike layer: global upgrades offered on each player level-up.
-- Built (2026-10-23): `BuildingTypeUpgrades` + `BuildingUpgradeData` (`scenes/upgrades/`). Placeholder data for the three towers and the Leopard Trap: each upgrade +15% damage and +0.1 attack speed. Prices are ratios of the building's own price (see Gold Economy). Only T1 exists, T2/T3 stay locked and the upgrades continue past them; no talent locks, no step visuals (pips, outline) yet; walls have no upgrade data. The Leopard Trap has no element leaves, so it only gets upgrades.
+- Built (2026-10-23): `BuildingTypeUpgrades` + `BuildingUpgradeData` (`scenes/upgrades/`), one data `.tres` per building type. Prices are ratios of the building's own price (see Gold Economy). Only T1 exists, T2/T3 stay locked and the upgrades continue past them; no talent locks, no step visuals (pips, outline) yet. The Leopard Trap and walls have no element leaves, so they only get upgrades.
+- Upgrade effects (decided 2026-10-23, first numbers, tune after playtests). Every step gives the same bonus, before and after the element:
+
+| Type | Each upgrade (Up 1-6) |
+|---|---|
+| Bolter | +15% damage, +10% attack speed |
+| Nova | +15% damage, +0.25 tiles radius |
+| Beamer | +15% damage, +0.25 tiles range |
+| Leopard Trap | +15% damage, +10% re-arm speed |
+| Wall | +25% max health (the wall keeps the damage it has taken) |
+
+  - Damage and max health are Additive; attack speed and range are Flat (attack speed is a bonus stat: +0.1 = 10% faster, like the cards).
+  - Up 3-6 do not strengthen the element effect yet: burn, slow and poison strength wait for an "effect potency" stat that comes with the talent trees.
 - Each type picks one path (element) per level and keeps it until the level ends. A different level can use a different path.
 - Rhythm, two upgrades before each evolve:
   `Base -> Up 1 -> Up 2 -> [T1] -> Up 3 -> Up 4 -> [T2] -> Up 5 -> Up 6 -> [T3]`
@@ -311,6 +323,7 @@ Some enemies have their own abilities; bosses have several.
 - Building prices (2026-10-23): Wall 1, Bolter 4, Beamer 4, Nova 5, Leopard Trap 5. Bolter and Wall had no price before (they were free).
 - Gold upgrade prices (decided 2026-10-23): ratio x the building's price, rounded up. Upgrades 0.5, 0.75, 1.0, 1.25, 1.5, 1.75 (a quarter tower more per step); evolves T1 1.5, T2 2.5, T3 4.0. A 4-gold tower: Up 2, 3, T1 6, Up 4, 5, (T2 10), Up 6, 7, (T3 16). A 5-gold tower: 3, 4, T1 8, 5, 7, (T2 13), 8, 9, (T3 20).
   - Why: Up 1 + Up 2 + T1 is about 2.5 towers, reachable in level 1 (about 29 gold in total) when the player commits to one type; maxing a type costs more than level 1 pays, so it is for later levels. No extra cost per tower owned: specialising in one type is a valid strategy, and the rising ramp plus the added (not multiplied) +15% steps already give diminishing returns.
+- Wall upgrade prices (decided 2026-10-23): 3, 4, 5, 6, 8, 10 gold (ratios of the 1-gold wall price). The tower ratios would make them 1-2 gold, too cheap for a purchase that improves every wall.
 - Towers cost about 3-5x a wall. Upgrades about half a tower. Evolves about 1-2 towers, rising per tier.
 - Selling currently refunds the full price (`PlayerStats`). A partial refund (e.g. 75%) would make placement matter; the Building tree could improve it.
 
