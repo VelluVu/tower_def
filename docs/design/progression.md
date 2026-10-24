@@ -41,6 +41,23 @@ Status: planning, nothing built yet (except the XP cards). Started 2026-10-22.
 - All tower types are available from the start. Progress comes from the trees, the upgrades and the cards. This replaces "clearing a level unlocks a building".
 - Cards and upgrades overlap on purpose. Stacking (decided 2026-10-23, Path of Exile style): `(unit base + skill base + flats) × (1 + Σ Additive) × Π(1 + Multiply)`. Additive ("increased") percent bonuses add up with each other; Multiply ("more") ones compound on top. Cards and gold upgrades are Additive; slows stay Multiply (50 stacks of -10% compound to 0.5% speed instead of going negative); element bonuses are Multiply as rarer, bigger effects. Cards show "+20%" for Additive and "×20%" for Multiply.
 
+### XP cards: values and caps (decided 2026-10-24, after the user's first card playtest)
+- Cards should not be too strong: a level gives only a few, but later levels and longer runs must not stack them without limit.
+- Every card rolls ×1 / ×2 / ×3 (50% / 30% / 20%), Attack Range included. Base values: Damage +8% (all towers), Projectile / Area / Beaming / Melee Damage +12%, Attack Speed +0.08 (8% faster), Critical Chance +3 points, Critical Multiplier +0.15, Active Duration +15%, Attack Range +0.25 tiles, Max Health +15% (towers, traps and walls), Gold +4 (once, max 2 picks per level), XP Gain +15% XP from kills for the rest of the level (max 2 picks; soft cap +30%, hard cap +50%, `CardCaps.xp_soft_cap`/`xp_hard_cap`). Gold and XP Gain are the "greed" picks against the stat cards; XP Gain pays off more in longer levels. Its icon is `card_icons/xp_gain_icon.png` (green star and up arrow, PNG only like the other card icons); Max Health and Gold reuse `heart.png` and `puffe_coin.png`.
+- Caps per building and stat on the summed card bonus (gold upgrades and elements are not counted): full value up to the soft cap, half past it (`UpgradeRules.SOFT_CAP_EFFICIENCY`), never above the hard cap. A card is not offered when every building it fits is at the hard cap, and shows "(soft cap: half)" when one is past the soft cap. Data in `scenes/upgrades/card_caps.tres`:
+
+| Stat | Soft cap | Hard cap |
+|---|---|---|
+| Damage (all damage cards together) | +50% | +100% |
+| Attack Speed | +0.4 | +0.75 |
+| Critical Chance | +15 points | +30 points |
+| Critical Multiplier | +0.5 | +1.0 |
+| Active Duration | +50% | +100% |
+| Attack Range | +0.75 tiles | +1.5 tiles |
+| Max Health | +75% | +150% |
+
+- `EvolveResource.max_picks` is a hard cap by count (used by Gold). Still open: cards with a trade-off ("+40% damage, −20% range") and element cards from the talent trees.
+
 ## In-Level Upgrades and Evolves (gold)
 - Bought per building (decided 2026-10-23, replaces per type): each tower and trap has its own upgrades and tiers, and a newly placed one starts at the base. Why: a per-type upgrade costs the same but grows with every building of the type owned, which made "mass one type, then upgrade" the best play; local upgrades also make placement matter (upgrade the one at the chokepoint) and selling an upgraded building loses its upgrades (only the building price is refunded).
 - The element stays per type: the first building of a type to evolve picks the element, and every other building of that type can then only evolve into it (one button at its own evolve step).
@@ -346,6 +363,16 @@ Some enemies have their own abilities; bosses have several.
 - Second pass (2026-10-23, after the user's playtest asked for more building and bigger waves): start gold 12 in levels 1-2 and more enemies, so the level pays enough for towers and the first upgrades and gives 2 cards. Level 1: 8 weaklings / 4 s, 10 weaklings / 3.5 s, 8 fastlings / 3 s (about 46 gold over the level). Level 2: 8 weaklings / 4 s, 12 / 3.5 s, 14 fastlings / 2 s. Both won with 10 of 10 life by a Bolter-only build near the castle, so they now leave room for mistakes.
 - Rule of thumb for waves: a base Bolter deals about 1.35 damage per second, so a wave's incoming HP per second (HP / interval, summed over its groups) has to stay well below what the towers bought by then deal. Short routes (castle in the middle) need gentler waves; a long serpentine route lets every tower hit each enemy many times.
 - Levels 4-6 (first pass 2026-10-23, Bolter-only test build, no upgrades): 4 Forest Fork (14 gold; won with 4 of 10 life, wave 2's swamplings are the spike), 5 Crossroads (20 gold; won with 6 of 10), 6 Serpent Road (20 gold; won with 10 of 10, 160 gold unspent). Open: level 6 is only hard in waves 1-2; once about 25 towers stand on the long route, kill gold (beefling 5, swbeefling 8) snowballs. Candidates: lower kill gold on long-route levels, or gold per kill that does not rise with enemy toughness.
+- Third pass (2026-10-24, not playtested yet): one more wave in levels 2-6 (2-3: 4 waves, 4-5: 5, 6: 6) so the XP cards, and the Gold and XP Gain "greed" cards, have time to matter. Level 1 keeps 3 waves (tutorial). Each new last wave mixes the level's enemies at about +20-30% total enemy health over the wave before: level 2 8 fastlings + 6 weaklings; level 3 4 beeflings + 6 weaklings; level 4 5 beeflings + 10 swamplings + 6 fastlings; level 5 6 beeflings + 12 fastswamplings + 12 swamplings; level 6 7 swbeeflings + 18 swamplings + 8 fastswamplings. The "last wave" Puffe lines moved to the new last wave. Cards per level without XP Gain: 2, 2, 3, 4, 5, 6.
+- Fourth pass (2026-10-24, same day, the user asked for "more enemies, more XP, more roguelike cards, more mazing"; not playtested): every spawn group has 1.5× the enemies (rounded up) and 20% shorter intervals; the XP curve went from 300 + 100·l(l−1)/2 to 200 + 50·l(l−1)/2 (200, 250, 350, 500, 700, ...). Enemies per level 39, 72, 46, 112, 139, 181; cards per level without XP Gain 3, 4, 5, 7, 8, 10. More kills also means more gold for walls; watch the level 6 gold snowball.
+
+### Mazing and ground (decided and built 2026-10-24, not playtested)
+- Measured: on levels 3-6, 95-100% of the walkable cells can take a wall, and walls cost 1 gold, so the maps already allow mazing; the missing parts were enemy count (a maze pays off per enemy) and a reason to maze beyond path length.
+- **Maze slow:** an enemy on a cell next to a player building (4 neighbours; traps don't count) moves at 85% speed (`LevelGrid.MAZE_SPEED_FACTOR`). A long maze of walls slows the whole route, not just lengthens it.
+- **Slow ground:** tiles with the `Slowing` flag in the new `TileEffect` custom data layer (`Utils.TileEffect`) give 85% speed (`SLOWING_GROUND_SPEED_FACTOR`). Marked in `green_land_tile_set.tres` by terrain: both sands (SandyGreen, SandyLessGreen) and the red ground (RedGrass, not used in any level yet). Grass and the scattered stumps/heather tiles stay normal. Sand patches on levels 1, 3 and 5 (and the pale sand road in level 2) become places to lure enemies through.
+- Both multiply (sand next to a wall: 72%) with the slows from Frost (Multiply modifiers on Speed). The enemy looks the factor up when it enters a new cell and after every `astar_grid_updated` (`Enemy._get_cell_speed_factor`).
+- **Turn pause:** an enemy stops for 0.1 s (`Enemy.TURN_PAUSE_TIME`, a `CustomTimer`, so game speed applies) after every turn of more than about 60° (its last movement against the direction to the next waypoint). On level 1's natural route that is 19 turns, 1.7 s of 61 s (about 3%); a twisting maze turns much more often. Enemies behind it slow down through the normal spacing, so a turn makes a small queue.
+- Paths ignore slow ground for now (A* weights stay 1), so enemies don't avoid sand by themselves. Later: flyers should ignore both effects.
 - Wall upgrade prices (decided 2026-10-23): 3, 4, 5, 6, 8, 10 gold (ratios of the 1-gold wall price). The tower ratios would make them 1-2 gold, too cheap for a purchase that improves every wall.
 - Towers cost about 3-5x a wall. Upgrades about half a tower. Evolves about 1-2 towers, rising per tier.
 - Selling currently refunds the full price (`PlayerStats`). A partial refund (e.g. 75%) would make placement matter; the Building tree could improve it.

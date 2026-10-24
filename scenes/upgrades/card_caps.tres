@@ -1,0 +1,43 @@
+[gd_resource type="Resource" script_class="CardCaps" format=3 uid="uid://boa3wlvec28f5"]
+
+[ext_resource type="Script" uid="uid://be4cdgfxw1wyq" path="res://scenes/upgrades/card_caps.gd" id="1_caps"]
+[ext_resource type="Script" uid="uid://d2u3ko38ck5j8" path="res://scenes/upgrades/stat_cap.gd" id="2_cap"]
+
+[sub_resource type="Resource" id="Resource_damage"]
+script = ExtResource("2_cap")
+
+[sub_resource type="Resource" id="Resource_attack_speed"]
+script = ExtResource("2_cap")
+stat_type = 6
+soft_cap = 0.4
+hard_cap = 0.75
+
+[sub_resource type="Resource" id="Resource_critical_chance"]
+script = ExtResource("2_cap")
+stat_type = 7
+soft_cap = 0.15
+hard_cap = 0.3
+
+[sub_resource type="Resource" id="Resource_critical_multiplier"]
+script = ExtResource("2_cap")
+stat_type = 8
+
+[sub_resource type="Resource" id="Resource_active_duration"]
+script = ExtResource("2_cap")
+stat_type = 9
+
+[sub_resource type="Resource" id="Resource_attack_range"]
+script = ExtResource("2_cap")
+stat_type = 5
+soft_cap = 0.75
+hard_cap = 1.5
+
+[sub_resource type="Resource" id="Resource_max_health"]
+script = ExtResource("2_cap")
+stat_type = 1
+soft_cap = 0.75
+hard_cap = 1.5
+
+[resource]
+script = ExtResource("1_caps")
+stat_caps = Array[ExtResource("2_cap")]([SubResource("Resource_damage"), SubResource("Resource_attack_speed"), SubResource("Resource_critical_chance"), SubResource("Resource_critical_multiplier"), SubResource("Resource_active_duration"), SubResource("Resource_attack_range"), SubResource("Resource_max_health")])

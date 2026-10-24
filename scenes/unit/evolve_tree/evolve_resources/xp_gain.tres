@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="EvolveResource" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scenes/unit/evolve_tree/evolve_resource.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://dpkmrgh7yf135" path="res://assets/art/ui/card_icons/xp_gain_icon.png" id="2_icon"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_script")
+evolve_icon = ExtResource("2_icon")
+evolve_level_reguirement = 0
+card_target = 2
+max_picks = 2
+modifier_type = 0
+skill_type = 0
+skill_name = "Skill"
+elements = 15
+is_percent = true
+modify_value = 0.15
+evolve_name = "XP Gain"

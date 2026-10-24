@@ -1,12 +1,13 @@
-[gd_resource type="Resource" script_class="LevelData" format=3]
+[gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://cls7rlqpj1eav"]
 
-[ext_resource type="Script" path="res://scenes/level/level_data/level_data.gd" id="1_level"]
-[ext_resource type="Script" path="res://scenes/level/level_data/wave_data.gd" id="0_wave"]
-[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_005_wave_1.tres" id="2_w1"]
-[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_005_wave_2.tres" id="3_w2"]
-[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_005_wave_3.tres" id="4_w3"]
-[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_005_wave_4.tres" id="5_w4"]
-[ext_resource type="Script" path="res://scenes/level/level_data/puffe_line.gd" id="9_line"]
+[ext_resource type="Script" uid="uid://cpw7ia3ek2yvs" path="res://scenes/level/level_data/wave_data.gd" id="0_wave"]
+[ext_resource type="Script" uid="uid://c0cehaxum4b45" path="res://scenes/level/level_data/level_data.gd" id="1_level"]
+[ext_resource type="Resource" uid="uid://co083p1ihg0a5" path="res://scenes/level/level_data/waves/level_005_wave_1.tres" id="2_w1"]
+[ext_resource type="Resource" uid="uid://da0l05pdihbna" path="res://scenes/level/level_data/waves/level_005_wave_2.tres" id="3_w2"]
+[ext_resource type="Resource" uid="uid://chjdi3k66kf04" path="res://scenes/level/level_data/waves/level_005_wave_3.tres" id="4_w3"]
+[ext_resource type="Resource" uid="uid://cjhni4qq7hka" path="res://scenes/level/level_data/waves/level_005_wave_4.tres" id="5_w4"]
+[ext_resource type="Script" uid="uid://bu8xwv71c6bbj" path="res://scenes/level/level_data/puffe_line.gd" id="9_line"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_005_wave_5.tres" id="9_w5"]
 
 [sub_resource type="Resource" id="PuffeLine_1"]
 script = ExtResource("9_line")
@@ -21,7 +22,7 @@ text = "They are slipping through! Find the weakest road."
 [sub_resource type="Resource" id="PuffeLine_3"]
 script = ExtResource("9_line")
 trigger = 3
-wave_number = 4
+wave_number = 5
 text = "Hold the crossroads, and the way north is ours."
 
 [resource]
@@ -29,6 +30,5 @@ script = ExtResource("1_level")
 level_name = "Crossroads"
 story_text = "Every road meets here, and every angry creature takes one. Hold the crossroads castle."
 starting_gold = 20.0
-starting_life = 10.0
-waves = Array[ExtResource("0_wave")]([ExtResource("2_w1"), ExtResource("3_w2"), ExtResource("4_w3"), ExtResource("5_w4")])
+waves = Array[ExtResource("0_wave")]([ExtResource("2_w1"), ExtResource("3_w2"), ExtResource("4_w3"), ExtResource("5_w4"), ExtResource("9_w5")])
 puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3")])

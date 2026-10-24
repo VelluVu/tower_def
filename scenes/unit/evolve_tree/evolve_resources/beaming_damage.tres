@@ -16,5 +16,5 @@ modify_stat_type = 2
 modify_type = 2
 is_randomized_modify_value = true
 is_percent = true
-modify_value = 0.15
+modify_value = 0.12
 evolve_name = "Beaming Damage"

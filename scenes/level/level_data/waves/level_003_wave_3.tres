@@ -7,8 +7,9 @@
 [sub_resource type="Resource" id="Resource_group1"]
 script = ExtResource("2_group")
 enemy_scene = ExtResource("3_enemy")
-interval = 5.0
+interval = 4.0
 spawner_id = 2
+count = 8
 
 [resource]
 script = ExtResource("1_wave")

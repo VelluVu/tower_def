@@ -7,6 +7,10 @@ const END_POINT_PATHING_ERROR : String = " can't path to the end point distance:
 const MODULATE_ALPHA_PROPERTY : String = "modulate:a"
 const CORPSE_FADE_TIME : float = 1.0
 const NO_FREE_POSITION_WARNING : String = " unable to find free position, destroying building in the way."
+#a short stop after every turn, so twisting mazes cost time
+const TURN_PAUSE_TIME : float = 0.1
+#directions closer than this (cosine) count as straight on: about 60 degrees
+const TURN_DOT_LIMIT : float = 0.5
 
 @onready var collider : CollisionShape2D = $CollisionShape2D
 @onready var animation_control : AnimationControl = $AnimatedSprite2D
@@ -67,6 +71,10 @@ var lane_offset : Vector2 = Vector2.ZERO
 var collision_body : Node = null
 var end_point : Marker2D = null
 var point_path : PackedVector2Array
+#LevelGrid.get_move_speed_factor of the cell the enemy last stood in
+var cell_speed_factor : float = 1.0
+var cell_speed_factor_cell : Vector2i = Vector2i.MAX
+var turn_pause_timer : CustomTimer = null
 
 var level : Level = null :
 	get:
@@ -133,6 +141,15 @@ func iterate_next_waypoint() -> void:
 
 	current_waypoint_index += 1
 	next_waypoint = point_path[current_waypoint_index] + lane_offset
+	_pause_if_turning()
+
+
+func _pause_if_turning() -> void:
+	if turn_pause_timer == null or velocity.is_zero_approx() or not turn_pause_timer.is_stopped():
+		return
+
+	if velocity.normalized().dot(global_position.direction_to(next_waypoint)) < TURN_DOT_LIMIT:
+		turn_pause_timer.start()
 
 
 func is_waypoint_reached() -> bool:
@@ -149,12 +166,27 @@ func is_end_point_in_reach() -> bool:
 
 func move_towards_next_waypoint() -> void:
 	animation_control.play_animation(GlobalAnimationNames.WALK_ANIMATION)
+
+	#velocity keeps the old direction, so the turn is not counted twice
+	if not turn_pause_timer.is_stopped():
+		linear_velocity = Vector2.ZERO
+		return
+
 	var move_direction : Vector2 = global_position.direction_to(next_waypoint)
-	var speed : float = stats.get_stat_value(Utils.StatType.Speed) * get_spacing_speed_factor(move_direction)
+	var speed : float = stats.get_stat_value(Utils.StatType.Speed) * get_spacing_speed_factor(move_direction) * _get_cell_speed_factor()
 	velocity = speed * move_direction * current_time_scale
 	linear_velocity = velocity
 	last_position = global_position
 	animation_control.flip_h = linear_velocity.x <= 0
+
+
+#slow ground and the maze; looked up again only in a new cell or after the buildings change
+func _get_cell_speed_factor() -> float:
+	if grid_position != cell_speed_factor_cell:
+		cell_speed_factor_cell = grid_position
+		cell_speed_factor = level.grid.get_move_speed_factor(cell_speed_factor_cell)
+
+	return cell_speed_factor
 
 
 func path_to(from : Vector2, to : Vector2) -> void:
@@ -286,6 +318,10 @@ func _ready() -> void:
 	name = new_name
 	last_position = global_position
 	_roll_lane_offset()
+	turn_pause_timer = CustomTimer.new()
+	turn_pause_timer.one_shot = true
+	add_child(turn_pause_timer)
+	turn_pause_timer.unscaled_base_value = TURN_PAUSE_TIME
 	body_entered.connect(_on_body_enter)
 	body_exited.connect(_on_body_exit)
 	GameSignals.astar_grid_updated.connect(_on_astar_grid_updated)
@@ -323,6 +359,8 @@ func _on_astar_grid_updated() -> void:
 		push_warning(name, GRID_UPDATE_ERROR)
 		return
 
+	#a building placed or removed next to the enemy changes its speed
+	cell_speed_factor_cell = Vector2i.MAX
 	path_to(global_position, end_point.global_position)
 
 

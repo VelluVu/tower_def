@@ -15,5 +15,5 @@ elements = 15
 modify_stat_type = 7
 modify_type = 0
 is_percent = true
-modify_value = 0.01
+modify_value = 0.03
 evolve_name = "Critical Chance"

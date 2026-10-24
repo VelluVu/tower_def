@@ -6,6 +6,11 @@ extends RefCounted
 
 
 const TILE_TYPE_CUSTOM_DATA_NAME : String = "TileType"
+const TILE_EFFECT_CUSTOM_DATA_NAME : String = "TileEffect"
+#enemy speed on ground with the Slowing tile effect (sand, mud)
+const SLOWING_GROUND_SPEED_FACTOR : float = 0.85
+#enemy speed on a cell next to a player building: squeezing through the maze
+const MAZE_SPEED_FACTOR : float = 0.85
 
 var tiles : Tiles = null
 var astar_grid : AStarGrid2D = null
@@ -55,6 +60,22 @@ func is_cell_walkable(cell : Vector2i) -> bool:
 
 func has_flag(a : int, b : int) -> bool:
 	return a & b != 0
+
+
+## How fast a walker moves on this cell: slower on slowing ground and next to a building (traps don't count).
+func get_move_speed_factor(cell : Vector2i) -> float:
+	var factor : float = 1.0
+
+	if has_flag(_get_cell_flags(cell, TILE_EFFECT_CUSTOM_DATA_NAME), Utils.TileEffect.Slowing):
+		factor *= SLOWING_GROUND_SPEED_FACTOR
+
+	for neighbour in get_surrounding_cells(cell):
+		var building : Building = get_building_from_cell_position(neighbour)
+		if building != null and building is not Trap:
+			factor *= MAZE_SPEED_FACTOR
+			break
+
+	return factor
 
 
 func get_surrounding_cells(cell : Vector2i) -> Array[Vector2i]:
@@ -108,17 +129,18 @@ func snap_position_to_grid(_pos : Vector2) -> Vector2:
 	return grid_position_to_world(world_position_to_grid(_pos))
 
 
-#the TileType flags of every tile map layer on this cell, combined
-func _get_cell_flags(cell : Vector2i) -> int:
+#the flags of one custom data layer (TileType or TileEffect) of every tile map layer on this cell, combined
+func _get_cell_flags(cell : Vector2i, data_name : String = TILE_TYPE_CUSTOM_DATA_NAME) -> int:
 	var flags : int = 0
 
 	for tile_map_layer in tiles.tile_map_layers:
 		var tile_data : TileData = tile_map_layer.get_cell_tile_data(cell)
 
-		if tile_data == null:
+		#a tile set without the layer would print an error for every lookup
+		if tile_data == null or tile_map_layer.tile_set.get_custom_data_layer_by_name(data_name) < 0:
 			continue
 
-		var tile_type_data = tile_data.get_custom_data(TILE_TYPE_CUSTOM_DATA_NAME)
+		var tile_type_data = tile_data.get_custom_data(data_name)
 
 		if tile_type_data:
 			flags |= tile_type_data
