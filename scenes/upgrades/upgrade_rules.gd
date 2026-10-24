@@ -9,18 +9,22 @@ const EPIC_ROLL_CHANCE : float = 0.2
 const RARE_ROLL_CHANCE : float = 0.5
 const EPIC_MULTIPLIER : float = 3.0
 const RARE_MULTIPLIER : float = 2.0
-#10 Weakling kills (max health 15, 2 XP per max health)
-const FIRST_LEVEL_XP : float = 300.0
+#about 7 Weakling kills (max health 15, 2 XP per max health)
+const FIRST_LEVEL_XP : float = 200.0
+#each level-up needs this much more XP than the one before, times the level: 200, 250, 350, 500, ...
+const XP_STEP : float = 50.0
+#the share of a card's value that still counts past the stat's soft cap
+const SOFT_CAP_EFFICIENCY : float = 0.5
 
 
-## XP needed to go from this level to the next: 300, 400, 600, 900, ...
+## XP needed to go from this level to the next: 200, 250, 350, 500, 700, ...
 static func xp_required(level : int) -> float:
-	return FIRST_LEVEL_XP + 100.0 * level * (level - 1) / 2.0
+	return FIRST_LEVEL_XP + XP_STEP * level * (level - 1) / 2.0
 
 
 ## roll is a random number in [0, 1); passed in so the rule can be tested.
 static func roll_value(resource : EvolveResource, roll : float) -> float:
-	if not resource.is_randomized_modify_value or resource.modify_stat_type == Utils.StatType.AttackRange:
+	if not resource.is_randomized_modify_value:
 		return resource.modify_value
 
 	if roll < EPIC_ROLL_CHANCE:
@@ -30,6 +34,14 @@ static func roll_value(resource : EvolveResource, roll : float) -> float:
 		return resource.modify_value * RARE_MULTIPLIER
 
 	return resource.modify_value
+
+
+## The card total that counts: all of it up to soft_cap, SOFT_CAP_EFFICIENCY of the rest, never above hard_cap.
+static func capped_bonus(card_total : float, soft_cap : float, hard_cap : float) -> float:
+	if card_total <= soft_cap:
+		return minf(card_total, hard_cap)
+
+	return minf(soft_cap + (card_total - soft_cap) * SOFT_CAP_EFFICIENCY, hard_cap)
 
 
 static func fits_tower(resource : EvolveResource, skill : Skill, element : Utils.Element, level : int) -> bool:

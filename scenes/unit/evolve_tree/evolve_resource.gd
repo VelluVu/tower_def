@@ -1,9 +1,17 @@
 class_name EvolveResource
 extends Resource
 
+## Buildings: a stat modifier on every building the card fits. Gold: gold once, when picked.
+## Xp: more XP from every kill for the rest of the level.
+enum CardTarget { Buildings, Gold, Xp }
 
 @export var evolve_icon : CompressedTexture2D = null
 @export var evolve_level_reguirement : int = 0
+@export var card_target : CardTarget = CardTarget.Buildings
+#walls take only the cards marked for them (towers and traps still go by fits_tower)
+@export var fits_walls : bool = false
+#how many times the card can be picked in one level, 0 = no limit
+@export var max_picks : int = 0
 
 @export var modifier_type : Utils.ModifierType
 @export_flags("Melee", "Projectile", "Area", "Beaming") var skill_type : int = 0

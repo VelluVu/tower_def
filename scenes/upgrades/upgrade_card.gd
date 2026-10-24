@@ -3,8 +3,12 @@ extends RefCounted
 
 ## One level-up offer: an EvolveResource with its own rolled value.
 
+const SOFT_CAP_TEXT : String = "\n(soft cap: half)"
+
 var resource : EvolveResource = null
 var value : float = 0.0
+#a building the card fits is already past the stat's soft cap, so the card counts at half there
+var is_past_soft_cap : bool = false
 
 var icon : Texture2D = null
 var title : String = ""
@@ -20,11 +24,13 @@ static func from_resource(_resource : EvolveResource, rolled_value : float) -> U
 
 #"+" adds to the other percent bonuses, "×" multiplies on top of them
 func get_text() -> String:
+	var cap_text : String = SOFT_CAP_TEXT if is_past_soft_cap else ""
+
 	if resource.is_percent:
 		var sign : String = "×" if resource.modify_type == Utils.ModifyType.Multiply else "+"
-		return "%s %s%s%%" % [title, sign, _format_number(value * 100.0)]
+		return "%s %s%s%%%s" % [title, sign, _format_number(value * 100.0), cap_text]
 
-	return "%s +%s" % [title, _format_number(value)]
+	return "%s +%s%s" % [title, _format_number(value), cap_text]
 
 
 #"30" instead of "30.0", "0.25" stays

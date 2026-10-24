@@ -15,5 +15,5 @@ elements = 15
 modify_stat_type = 9
 modify_type = 0
 is_percent = true
-modify_value = 0.1
+modify_value = 0.15
 evolve_name = "Active Duration"

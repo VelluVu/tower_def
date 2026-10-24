@@ -1,11 +1,12 @@
-[gd_resource type="Resource" script_class="LevelData" format=3]
+[gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://e8t0pwyn5cay"]
 
-[ext_resource type="Script" path="res://scenes/level/level_data/level_data.gd" id="1_level"]
-[ext_resource type="Script" path="res://scenes/level/level_data/wave_data.gd" id="0_wave"]
-[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_003_wave_1.tres" id="2_w1"]
-[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_003_wave_2.tres" id="3_w2"]
-[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_003_wave_3.tres" id="4_w3"]
-[ext_resource type="Script" path="res://scenes/level/level_data/puffe_line.gd" id="9_line"]
+[ext_resource type="Script" uid="uid://cpw7ia3ek2yvs" path="res://scenes/level/level_data/wave_data.gd" id="0_wave"]
+[ext_resource type="Script" uid="uid://c0cehaxum4b45" path="res://scenes/level/level_data/level_data.gd" id="1_level"]
+[ext_resource type="Resource" uid="uid://cd2sc3hw0y5jc" path="res://scenes/level/level_data/waves/level_003_wave_1.tres" id="2_w1"]
+[ext_resource type="Resource" uid="uid://bdoojofr2o82p" path="res://scenes/level/level_data/waves/level_003_wave_2.tres" id="3_w2"]
+[ext_resource type="Resource" uid="uid://byej0puujaikv" path="res://scenes/level/level_data/waves/level_003_wave_3.tres" id="4_w3"]
+[ext_resource type="Script" uid="uid://bu8xwv71c6bbj" path="res://scenes/level/level_data/puffe_line.gd" id="9_line"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_003_wave_4.tres" id="9_w4"]
 
 [sub_resource type="Resource" id="PuffeLine_1"]
 script = ExtResource("9_line")
@@ -21,7 +22,7 @@ text = "One element per drakeling kind: the first one to evolve chooses it for a
 [sub_resource type="Resource" id="PuffeLine_3"]
 script = ExtResource("9_line")
 trigger = 3
-wave_number = 3
+wave_number = 4
 text = "The deepest caves are behind us after this. Then, the forest roads."
 
 [resource]
@@ -29,6 +30,5 @@ script = ExtResource("1_level")
 level_name = "Stonebrook Castle"
 story_text = "Big beeflings march out of the deep caves. They hit hard and take a lot of fire to fall."
 starting_gold = 12.0
-starting_life = 10.0
-waves = Array[ExtResource("0_wave")]([ExtResource("2_w1"), ExtResource("3_w2"), ExtResource("4_w3")])
+waves = Array[ExtResource("0_wave")]([ExtResource("2_w1"), ExtResource("3_w2"), ExtResource("4_w3"), ExtResource("9_w4")])
 puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3")])
