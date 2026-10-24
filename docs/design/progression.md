@@ -101,7 +101,7 @@ Status: planning, nothing built yet (except the XP cards). Started 2026-10-22.
 | Fire | Burning ground patch, bigger and longer patch, explodes on trigger | Burning enemies set off nearby traps |
 | Frost | Short root, slows nearby, freezes | Frozen enemies shatter for extra damage |
 | Poison | Poison cloud, cloud stacks poison, spreads on death | Cloud follows the path for a while |
-| Leopard (Physical) | Faster re-arm, bleed, double snap | Snaps several enemies at once |
+| Leopard (Physical) | Faster re-arm, leopard cub (each snap spawns a cub that chases enemies and bites a few times, causing bleed; decided 2026-10-24), double snap | Snaps several enemies at once |
 
 ### Wall evolves
 Walls are the mazing tool, so they grow in holding and shaping the maze, not damage.
@@ -111,7 +111,7 @@ Walls are the mazing tool, so they grow in holding and shaping the maze, not dam
 | Fire | Deals fire damage back to attackers, burns them, explodes when destroyed |
 | Frost | Lowers attackers' attack speed, freezing ground around the wall (slows more than the maze slow), freezes attackers briefly |
 | Poison | Poisons attackers, poisoned attackers deal less damage, poison spreads |
-| Fortress (Physical) | Self-heal every few seconds, armor, enemies prefer longer detours (raise A* cell weight) |
+| Fortress (Physical) | Thorns (attackers take Physical damage based on the damage the wall takes; decided 2026-10-24, replaces self-heal, which became the Mending Stones talent), less damage taken plus a chance to stun attackers (decided 2026-10-24), enemies prefer longer detours (raise A* cell weight) |
 
 - Two wall play styles (decided 2026-10-24): **mazing** (long, twisting routes past the towers) and **blocking** (walls that hold enemies in place). The player can specialise in either later through the talent trees; for now the game is built and balanced around mazing.
 - Frost walls: freezing ground (decided 2026-10-24, needs talents, not built): a Frost wall turns the cells around it into freezing ground that slows enemies more than the plain maze slow (85%), so a Frost maze is the strongest slow maze. Unlocked by Frost talent nodes, not by the gold evolve alone. Fits the code as it is: `LevelGrid.get_move_speed_factor` already looks at the neighbouring buildings, so a frost wall can give its own factor there, and `Utils.TileEffect.Freezing` already exists for a visible frozen-ground overlay.
@@ -138,6 +138,13 @@ Every upgrade should make the type look a bit stronger.
 - Each step's visual settings (pips, outline strength, particles) live in the upgrade data.
 - Built (2026-10-23, placeholder): `UpgradePips` (`scenes/upgrades/`), code-drawn 2 px pips on the bottom edge of the building, added on the first purchase. One pip per tier in the element color with a white ring (so a red Fire pip reads on the red Fire tower), then one gold pip per upgrade since the last tier; rows of 5 stack upwards (walls at Up 6 show two rows). No outline strength, glow or particles yet.
 - Art comes later and is hand-made. Placeholders until then.
+
+## Tower Targeting (the user's request 2026-10-24, not built)
+- Each tower gets a targeting tactic, set per building in the selection panel (a button that cycles the options, like the per-building upgrades). A new tower starts on the default.
+- Options: **First** (closest to the castle along its path; today's only behaviour, `Tower.get_closest_target_to_end`, the default), **Strongest** (most health), **Closest** (to the tower), **Farthest** (from the tower, still in range; confirmed by the user), **Fastest**.
+- Applies to towers that pick a target: Bolter and Beamer. The Nova bursts around itself and traps trigger when stepped on, so they get no setting.
+- Fits Dragon's Keep: its Physical ramp rewards staying on one target, so Strongest plus a Beamer is the boss killer.
+- Code direction: one `SelectTarget` behaviour-tree leaf that asks the tower for its target by tactic (replacing `select_target_closest_target_to_end.gd`), the tactic as an enum in `Utils`, the button sending a `UISignals` request like the gold upgrades.
 
 ## Talent Trees (menu)
 - Four trees, each its own tab and page, drawn in the element's shape:
@@ -176,6 +183,92 @@ Every upgrade should make the type look a bit stronger.
 | Frost | Enough slow stacks freeze an enemy solid |
 | Poison | Poison jumps to nearby enemies when its target dies |
 
+### Building tree (proposal 2026-10-24, not decided)
+The first tree to build, since all its effects use systems that exist (gold, walls, traps, Physical damage). 34 nodes, about 64 ranks. Values are Additive like the cards; first numbers, tune after playtests. "New" marks effects that need code beyond applying a modifier. Clickable view: https://claude.ai/artifact/QqgtBrxhRTau8i2jX8tVur (private to the user).
+- T1 stays free of talent locks (the review point): any building can take its first element in a level without talents. The nodes unlock T2 and T3.
+- Physical node effects apply to towers dealing Physical damage (not evolved yet, or evolved to Physical).
+
+**Shape: one big tower with a pointy roof (the user's sketch, 2026-10-24):** a flared base, straight walls, an overhang at the top, battlements, and a pointy roof. The categories are blended, with no category headers. The start sits in the middle of the base; every path is reachable from it.
+- It is a graph, not a tree: a node opens when any node linked to it has a rank. Evolve unlocks also need the tier before them. A rank can only be removed if every learned node stays linked to the start.
+- **Tier depth (decided 2026-10-24, the user's call):** every route that upgrades a building has its T2 unlock halfway and its T3 unlock at the end, equally far from the start: T2 at 4 steps, T3 at 8 steps, for Physical towers, Fortress walls and the Leopard Trap alike. T3 is the ultimate node of each route; the route's capstone splits off right after it.
+- **Left outline, Physical towers** (from the start along the base, then up the left wall): Hardened Shots, Keen Eye (corner), Heavy Hits, **Physical T2** (step 4), Long Sight, Piercing, Swift Wings (new: attack speed +0.04 per rank, 3 ranks), **Physical T3** (step 8, top corner); Shatter grows inside from it.
+- **Right outline, wall fortifying** (from the start along the base, then up the right wall): Thick Walls, Stone Blocks (corner), Fortress T1, **Fortress T2** (step 4), Masonry, Reinforced Core, Iron Bands, **Fortress T3** (step 8, top corner). Splits inside the wall: Mending Stones from Masonry, Warded Stones from Iron Bands, Rebuild from Fortress T3.
+- **Roof tip: Dragon's Keep, the overall capstone** (the user's call 2026-10-24), reached from both top corners along the battlements (step 9): a very strong capstone with one effect per route (decided 2026-10-24, the user's call; numbers placeholder):
+  - Physical towers: each hit on the same target as the last hit gives ×10% more damage (Multiply) and +0.05 attack speed, up to 10 hits; switching target resets it (new).
+  - Walls: +50 base health (Flat; a base wall has 25).
+  - Traps: bleed ticks twice as fast (multiplies with Open Wounds).
+  - Economy: towers cost 1 gold less to build (4 -> 3; open: traps too?).
+  - The rejected "The Keep Awakens" idea (an elder dragon in each castle breathes fire near it, the first enemies to reach it each wave cost no life) moves to the Fire tree as a capstone candidate.
+- **Left plant inside, traps** (grows from the start): Sharp Teeth (side: Cheap Snares), Leopard T1, Quick Springs, **Leopard T2** (step 4; the bleed stem grows from it: Deep Wounds, Lingering Wounds, Open Wounds), Big Game, Titan Claws (side: Rend), Hidden Jaws, **Leopard T3** (step 8), Pack Hunt.
+- **Right plant inside, maze and economy** (grows from the start; the user likes the maze merged with the economy, keep it that way, 2026-10-24): Spoils (branch: Haggling, Salvage), Narrow Ways, Sharp Corners, Labyrinth, then **Dragon's Maze as the maze capstone** (moved from the roof tip, the user's call); and Scholar (side: Bold Start), Second Thoughts, Dragon's Hoard.
+
+**Economy nodes**
+| Node | Ranks | Per rank |
+|---|---|---|
+| War Chest | 3 | +1 start gold |
+| Spoils | 3 | +1 gold when a wave is cleared (new) |
+| Haggling | 2 | Upgrades and evolves cost 10% less (applied before rounding up) |
+| Salvage | 2 | Selling also refunds 25% of the gold spent on the building's upgrades (new) |
+| Side: Bold Start | 2 | Early-start bonus +50% |
+| Side: Scholar | 1 | Level-ups offer 5 cards instead of 4 (new) |
+| Side: Second Thoughts | 2 | One card reroll per level (new) |
+| Capstone: Dragon's Hoard | 1 | The first upgrade on each tower and trap costs half (new) |
+
+**Wall nodes** (the two wall play styles: maze and block)
+| Node | Ranks | Per rank |
+|---|---|---|
+| Thick Walls | 3 | Wall max health +15% |
+| Maze: Narrow Ways | 3 | Maze slow 3 points stronger (85% -> 76% at 3 ranks; new, `MAZE_SPEED_FACTOR` becomes a value talents change) |
+| Maze: Sharp Corners | 2 | Turn pause +0.05 s (new) |
+| Maze capstone: Labyrinth | 1 | Every second wall you build is free (new; the user's idea 2026-10-24) |
+| Maze capstone (end of the maze plant): Dragon's Maze | 1 | Maze slow 10 points stronger, and diagonal neighbours count for it too (new; the user's idea 2026-10-24, numbers placeholder) |
+| Block: Fortress T1 | 1 | Unlocks the Fortress wall evolve: thorns, attackers take Physical damage based on the damage the wall takes (new) |
+| Block: Masonry | 3 | Wall max health +20% |
+| Block: Stone Blocks | 3 | Wall max health +5 (Flat, before the percent bonuses; base walls have 25) (root from Fortress T1; the user's idea 2026-10-24) |
+| Block: Reinforced Core | 2 | Wall max health ×1.1 (Multiply, "more") (root after Stone Blocks) |
+| Block: Iron Bands | 3 | Walls +10% armor (Physical resistance) (new: walls have no resistances yet; root from Fortress T2) |
+| Block: Warded Stones | 3 | Walls +10% Fire, Frost and Poison resistance (new; matters once enemies deal elemental damage, e.g. wizards; root after Iron Bands) |
+| Capstone: Mending Stones | 1 | Walls heal 2% of their max health per second, towers and traps 0.5% (new; the user's idea 2026-10-24, the self-heal moved out of the Fortress evolve) |
+| Block: Fortress T2 | 1 | Unlocks Fortress T2: 20% less damage taken, and each hit on the wall has a 10% chance to stun the attacker for 1 s (new; the user's idea 2026-10-24, numbers placeholder) |
+| Block: Fortress T3 | 1 | Unlocks Fortress T3 (enemies prefer longer detours) |
+| Block capstone: Rebuild | 1 | A destroyed wall rebuilds itself for free after 10 s if its cell is empty (new) |
+
+**Trap nodes (Leopard)**
+| Node | Ranks | Per rank |
+|---|---|---|
+| Sharp Teeth | 3 | Trap damage +10% |
+| Leopard T1 | 1 | Unlocks the Leopard evolve (faster re-arm) |
+| Quick Springs | 3 | Re-arm speed +10% |
+| Leopard T2 | 1 | Unlocks Leopard T2: each snap spawns a leopard cub that chases enemies and bites a few times (3, placeholder), each bite causing bleed, then leaves (new; the user's idea 2026-10-24) |
+| Side: Cheap Snares | 1 | Trap price -1 |
+| Hidden Jaws | 2 | Trap critical chance +5 points |
+| Leopard T3 | 1 | Unlocks Leopard T3 (double snap) |
+| Capstone: Pack Hunt | 1 | The trap snaps one more enemy before it re-arms (three with Leopard T3's double snap) (new; the user's idea 2026-10-24) |
+| Big Game | 3 | Trap damage +3% for every 10 max health the enemy has (a Beefling, 40 HP, takes +12% per rank) (new; the user's idea 2026-10-24) |
+| Capstone: Rend | 1 | Snapped enemies lose 20% of every resistance for 4 s (new, needs resistances; the user's idea 2026-10-24, numbers placeholder). Also needs Leopard T2 |
+| Titan Claws | 3 | Trap snaps ignore 15% of the enemy's armor (Physical resistance) (new, needs resistances; the user's idea 2026-10-24). Between Big Game and Rend |
+| Deep Wounds | 3 | Cub bleed damage +20% (new, needs Leopard T2; the user's idea 2026-10-24) |
+| Lingering Wounds | 3 | Cub bleed lasts 1 s longer (new) |
+| Open Wounds | 3 | Cub bleed ticks 15% faster (new) |
+
+- Faster trap cooldown is Quick Springs (re-arm speed). Traps now have the most nodes of the four kinds; trim if the tree feels trap-heavy.
+
+**Physical tower nodes**
+| Node | Ranks | Per rank |
+|---|---|---|
+| Hardened Shots | 3 | Physical damage +8% |
+| Keen Eye | 3 | Critical chance +2 points |
+| Physical T2 | 1 | Unlocks Physical T2 for Bolter, Nova and Beamer |
+| Heavy Hits | 3 | Critical multiplier +0.1 |
+| Side: Long Sight | 2 | Attack range +0.1 tiles |
+| Piercing | 3 | Ignore 10% of the target's resistance (new, needs resistances) |
+| Physical T3 | 1 | Unlocks Physical T3 |
+| Capstone: Shatter | 1 | Physical critical hits ignore all resistance (new) |
+
+- Decided 2026-10-24: T1 stays free of talent locks, except Leopard T1 and Fortress T1, which stay locked behind their branch nodes (the user's call). Leopard and Fortress need more tiers than T1-T3 (the user's call; how many and what they do is open).
+- Decided 2026-10-24: Dragon's Hoard makes the first upgrade cost half, not free (free was too strong: Up 1 is about +43% DPS for half a tower).
+- Answers the open question "is Physical raw damage only in the Building tree": yes, through the Physical branch.
+
 ### UI
 - Tabs for each tree, Reset and Back buttons.
 - Clicking a node opens an info window: description, rank / max rank, next-rank effect, buy button.
@@ -189,17 +282,18 @@ Every upgrade should make the type look a bit stronger.
 
 ## Talent Points
 - Earned by completing a level. Max 5 per level and mode.
-- Score = lives left + gold left over.
+- Capped, not grindable (decided 2026-10-24): talent points stay the only source of permanent power, so a player's strength at each level is known and Hard modes and bosses can be tuned for it, and skipping nodes stays a real choice. No second grind currency for now.
+- No points for gold left over (decided 2026-10-24): it rewarded hoarding gold instead of building. The last two points are earned by starting waves early instead (the early-start button gives bonus gold too, so it rewards a confident defence that spends its gold).
 
 | Point | Requirement |
 |---|---|
 | 1 | Clear the level |
 | +1 | At least half the lives left |
 | +1 | No lives lost |
-| +1 | Gold left over >= the level's target |
-| +1 | Gold left over >= the level's high target |
+| +1 | Started at least half the waves early (placeholder threshold) |
+| +1 | Started every wave early (placeholder threshold) |
 
-- Gold targets are set per level (exports on `Level` or a level data `.tres`).
+- Open: the early-start thresholds (maybe per level in `LevelData`), and whether a wave counts as early from any skipped break time or only from skipping most of it.
 - Points come from the best result; replays only earn the difference.
 - 5 points should be easy to reach on the first levels.
 - Budget: many levels x 4 modes x 5 points. About 20 levels gives about 400 points.
@@ -388,3 +482,4 @@ Some enemies have their own abilities; bosses have several.
 - New tilesets per area. Ask before generating any art; placeholders to redraw in Aseprite, or the user draws all of it.
 - Is Physical-element raw damage only in the Building tree, or does it need more?
 - Gold costs and talent node lists per tree.
+- Building tree (layout approved by the user "for now", 2026-10-24): whether the maze plant grows longer (Dragon's Maze is at step 5, the other capstones at 9); the blocking suggestions not yet answered (Hold the Line as Fortress T3 with the detour effect moved to the maze as Winding Paths, Sharp Stones, Concussion, Ringing Blow, Bulwark, Shield Wall, Crumbling Debris).
