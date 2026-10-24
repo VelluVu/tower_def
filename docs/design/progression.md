@@ -109,10 +109,13 @@ Walls are the mazing tool, so they grow in holding and shaping the maze, not dam
 | Path | T1 -> T3 |
 |---|---|
 | Fire | Deals fire damage back to attackers, burns them, explodes when destroyed |
-| Frost | Lowers attackers' attack speed, slows movement nearby, freezes attackers briefly |
+| Frost | Lowers attackers' attack speed, freezing ground around the wall (slows more than the maze slow), freezes attackers briefly |
 | Poison | Poisons attackers, poisoned attackers deal less damage, poison spreads |
 | Fortress (Physical) | Self-heal every few seconds, armor, enemies prefer longer detours (raise A* cell weight) |
 
+- Two wall play styles (decided 2026-10-24): **mazing** (long, twisting routes past the towers) and **blocking** (walls that hold enemies in place). The player can specialise in either later through the talent trees; for now the game is built and balanced around mazing.
+- Frost walls: freezing ground (decided 2026-10-24, needs talents, not built): a Frost wall turns the cells around it into freezing ground that slows enemies more than the plain maze slow (85%), so a Frost maze is the strongest slow maze. Unlocked by Frost talent nodes, not by the gold evolve alone. Fits the code as it is: `LevelGrid.get_move_speed_factor` already looks at the neighbouring buildings, so a frost wall can give its own factor there, and `Utils.TileEffect.Freezing` already exists for a visible frozen-ground overlay.
+- Blocking (decided 2026-10-24): base walls hold very little (25 health), so a full block is only a short emergency stop. Holding a block for real comes from the Building talent tree's wall nodes (and the Fortress path above), added later. Until then the gold upgrades and the Max Health card are the only ways to toughen walls.
 - Upgrades never change a wall's footprint; the player's maze always stays valid.
 - Wall upgrades cost a bit more than tower upgrades, since one purchase affects many walls.
 
@@ -372,6 +375,7 @@ Some enemies have their own abilities; bosses have several.
 - **Slow ground:** tiles with the `Slowing` flag in the new `TileEffect` custom data layer (`Utils.TileEffect`) give 85% speed (`SLOWING_GROUND_SPEED_FACTOR`). Marked in `green_land_tile_set.tres` by terrain: both sands (SandyGreen, SandyLessGreen) and the red ground (RedGrass, not used in any level yet). Grass and the scattered stumps/heather tiles stay normal. Sand patches on levels 1, 3 and 5 (and the pale sand road in level 2) become places to lure enemies through.
 - Both multiply (sand next to a wall: 72%) with the slows from Frost (Multiply modifiers on Speed). The enemy looks the factor up when it enters a new cell and after every `astar_grid_updated` (`Enemy._get_cell_speed_factor`).
 - **Turn pause:** an enemy stops for 0.1 s (`Enemy.TURN_PAUSE_TIME`, a `CustomTimer`, so game speed applies) after every turn of more than about 60° (its last movement against the direction to the next waypoint). On level 1's natural route that is 19 turns, 1.7 s of 61 s (about 3%); a twisting maze turns much more often. Enemies behind it slow down through the normal spacing, so a turn makes a small queue.
+- **Blocking (2026-10-24):** walls 100 -> 25 health, Bolter and Beamer 5 -> 10 (Nova already 10, the Leopard Trap keeps 100: enemies walk over it). With the maze slows, a full block was too strong: a Weakling (2 damage every ~2.5 s) needed ~100 s per wall, now ~30 s, a group of 5 about 6 s. Blocking stays a tool for bad maze spots, and walls are meant to draw the focus of the later tower-attacking enemies when placed in front of towers. Wall upgrades (+25% each) and the Max Health card still raise it.
 - Paths ignore slow ground for now (A* weights stay 1), so enemies don't avoid sand by themselves. Later: flyers should ignore both effects.
 - Wall upgrade prices (decided 2026-10-23): 3, 4, 5, 6, 8, 10 gold (ratios of the 1-gold wall price). The tower ratios would make them 1-2 gold, too cheap for a purchase that improves every wall.
 - Towers cost about 3-5x a wall. Upgrades about half a tower. Evolves about 1-2 towers, rising per tier.
