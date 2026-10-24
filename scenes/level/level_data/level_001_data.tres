@@ -5,7 +5,7 @@
 [ext_resource type="Resource" uid="uid://ct3isjmvnmoat" path="res://scenes/level/level_data/waves/level_001_wave_1.tres" id="2_w1"]
 [ext_resource type="Resource" uid="uid://c3aafxjqfdwtp" path="res://scenes/level/level_data/waves/level_001_wave_2.tres" id="3_w2"]
 [ext_resource type="Resource" uid="uid://jry20obs0ene" path="res://scenes/level/level_data/waves/level_001_wave_3.tres" id="4_w3"]
-[ext_resource type="Script" path="res://scenes/level/level_data/puffe_line.gd" id="9_line"]
+[ext_resource type="Script" uid="uid://bu8xwv71c6bbj" path="res://scenes/level/level_data/puffe_line.gd" id="9_line"]
 
 [sub_resource type="Resource" id="PuffeLine_1"]
 script = ExtResource("9_line")
@@ -14,7 +14,6 @@ text = "Yawn... Puffe here, master commander of the drakelings. Something is cra
 
 [sub_resource type="Resource" id="PuffeLine_2"]
 script = ExtResource("9_line")
-trigger = 1
 text = "Pick a drakeling from the bar below and place it beside the road. A Bolter is a fine start."
 
 [sub_resource type="Resource" id="PuffeLine_3"]
