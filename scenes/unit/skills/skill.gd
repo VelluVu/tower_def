@@ -245,6 +245,8 @@ func _set_target(new_target : Node2D) -> void:
 		start_skill_cast()
 
 
+## A new copy per call, crit rolled. The caller frees it after the hit (queue_free), or hands it to a
+## SkillData, which frees it.
 func _get_damage_data() -> DamageData:
 	if damage_data == null:
 		damage_data = $DamageData
@@ -259,7 +261,9 @@ func _get_damage_data() -> DamageData:
 	
 	for effect_data in _damage_data.overtime_effect_datas:
 		effect_data.is_critical = _damage_data.is_critical
-		
+		#the effect stats are unit stats, skills do not have them
+		effect_data.read_source_stats(actor.stats)
+
 	return _damage_data
 
 

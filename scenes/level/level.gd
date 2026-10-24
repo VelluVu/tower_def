@@ -6,6 +6,7 @@ const PATH_TO_UNIT_SELECTION_SCENE : String = "res://scenes/unit/unit_selection/
 const WAVE_RUNNER_NAME : String = "WaveRunner"
 const BUILDING_TYPE_UPGRADES_NAME : String = "BuildingTypeUpgrades"
 const LEVEL_TALENTS_NAME : String = "LevelTalents"
+const ELEMENT_REACTIONS_NAME : String = "ElementReactions"
 const PATH_PREVIEW_NAME : String = "PathPreview"
 const BACKDROP_NAME : String = "LevelBackdrop"
 const NO_LEVEL_DATA_WARNING : String = " Level has no LevelData, no waves will spawn!"
@@ -22,6 +23,7 @@ var unit_selection : UnitSelection
 var upgrades : LevelUpgrades
 var building_type_upgrades : BuildingTypeUpgrades
 var talents : LevelTalents
+var reactions : ElementReactions
 var wave_runner : WaveRunner
 #waves started while enemies of earlier waves were still alive, for the talent points
 var early_starts : int = 0
@@ -56,6 +58,9 @@ func _ready() -> void:
 	talents = LevelTalents.new()
 	talents.name = LEVEL_TALENTS_NAME
 	add_child(talents)
+	reactions = ElementReactions.new()
+	reactions.name = ELEMENT_REACTIONS_NAME
+	add_child(reactions)
 	var backdrop : LevelBackdrop = LevelBackdrop.new()
 	backdrop.name = BACKDROP_NAME
 	add_child(backdrop)

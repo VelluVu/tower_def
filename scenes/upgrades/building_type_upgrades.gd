@@ -64,8 +64,9 @@ func _on_building_placed(building : Building) -> void:
 	if type_elements.has(building.scene_file_path):
 		_apply_evolve(building, type_elements[building.scene_file_path])
 
+	#per-type buildings (walls) have no element tiers, so no evolved upgrades either
 	for i in state.upgrades_bought:
-		_apply_upgrade(building)
+		_apply_upgrade(building, false)
 
 	_update_pips(building, state)
 	building.stats_changed.emit()
@@ -117,7 +118,7 @@ func _on_gold_upgrade_pressed(index : int) -> void:
 		if option.is_evolve:
 			_apply_evolve(building, option.element_leaf_path)
 		else:
-			_apply_upgrade(building)
+			_apply_upgrade(building, state.tiers_evolved > 0)
 
 		_update_pips(building, state)
 		building.stats_changed.emit()
@@ -162,12 +163,17 @@ func _build_options() -> Array[GoldUpgradeOption]:
 	return new_options
 
 
-func _apply_upgrade(building : Building) -> void:
+func _apply_upgrade(building : Building, is_evolved : bool) -> void:
 	#Health is not modified with MaxHealth, so keep the damage taken and add the new max on top
 	var missing_health : float = building.stats.get_stat_value(Utils.StatType.MaxHealth) - building.stats.get_stat_value(Utils.StatType.Health)
+	var data : BuildingUpgradeData = building.evolve_tree.upgrade_data
 
-	for resource in building.evolve_tree.upgrade_data.upgrade_resources:
+	for resource in data.upgrade_resources:
 		building.modifier_manager.add_modifier(resource.get_modifier_data())
+
+	if is_evolved:
+		for resource in data.evolved_upgrade_resources:
+			building.modifier_manager.add_modifier(resource.get_modifier_data())
 
 	var health : Stat = building.stats.get_stat(Utils.StatType.Health)
 	if health != null:

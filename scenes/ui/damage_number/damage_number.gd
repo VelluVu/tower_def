@@ -39,6 +39,22 @@ func activate(_position : Vector2, _damage_data : DamageData) -> void:
 	current_font_size = font_size if not _damage_data.is_overtime else overtime_font_size
 	current_font_size = current_font_size if not _damage_data.is_critical else current_font_size * critical_font_size_multiplier
 	number_label.add_theme_font_size_override(FONT_SIZE_PROPERTY_NAME, round(current_font_size))
+	_show()
+
+
+## A word instead of a number, such as an element reaction's name.
+func activate_text(_position : Vector2, text : String, color : Color) -> void:
+	world_position = _position
+	lift = 0.0
+	_update_screen_position()
+	number_label.text = text
+	number_label.add_theme_color_override(FONT_COLOR_PROPERTY_NAME, color)
+	current_font_size = font_size
+	number_label.add_theme_font_size_override(FONT_SIZE_PROPERTY_NAME, round(current_font_size))
+	_show()
+
+
+func _show() -> void:
 	live_timer.start()
 	visible = true
 	_animate_damage_text()

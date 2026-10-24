@@ -16,7 +16,15 @@ enum StatType
 	AttackSpeed,
 	CriticalChance,
 	CriticalMultiplier,
-	ActiveDuration
+	ActiveDuration,
+	#bonus fraction like AttackSpeed: +0.15 = burn, poison, bleed and slow 15% stronger
+	EffectPotency,
+	#the element stats, all Flat with base 0: points of apply chance, extra ticks, extra max stacks,
+	#and a tick speed bonus fraction like AttackSpeed
+	EffectChance,
+	EffectDuration,
+	EffectStacks,
+	EffectTickRate,
 }
 
 enum TileType

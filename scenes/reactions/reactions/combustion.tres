@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ElementReaction" format=3]
+
+[ext_resource type="Script" path="res://scenes/reactions/element_reaction.gd" id="1_reaction"]
+
+[resource]
+script = ExtResource("1_reaction")
+kind = 0
+display_name = "Combustion"
+color = Color(1, 0.541, 0.239, 1)
+first_element = 2
+second_element = 8
+first_tree = &"fire"
+second_tree = &"poison"
+base_value = 1.0
+value_per_point = 0.04
+radius = 1.0

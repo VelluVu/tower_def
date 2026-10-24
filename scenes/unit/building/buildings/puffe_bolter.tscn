@@ -386,6 +386,26 @@ type = 8
 script = ExtResource("17_m7bv2")
 type = 9
 
+[node name="EffectPotency" type="Node" parent="Stats"]
+script = ExtResource("17_m7bv2")
+type = 10
+
+[node name="EffectChance" type="Node" parent="Stats"]
+script = ExtResource("17_m7bv2")
+type = 11
+
+[node name="EffectDuration" type="Node" parent="Stats"]
+script = ExtResource("17_m7bv2")
+type = 12
+
+[node name="EffectStacks" type="Node" parent="Stats"]
+script = ExtResource("17_m7bv2")
+type = 13
+
+[node name="EffectTickRate" type="Node" parent="Stats"]
+script = ExtResource("17_m7bv2")
+type = 14
+
 [node name="EvolveTree" type="Node" parent="."]
 script = ExtResource("16_l8ube")
 upgrade_data = ExtResource("0_upgradedata")

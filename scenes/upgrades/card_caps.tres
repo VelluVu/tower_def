@@ -38,6 +38,12 @@ stat_type = 1
 soft_cap = 0.75
 hard_cap = 1.5
 
+[sub_resource type="Resource" id="Resource_effect_potency"]
+script = ExtResource("2_cap")
+stat_type = 10
+soft_cap = 0.5
+hard_cap = 1.0
+
 [resource]
 script = ExtResource("1_caps")
-stat_caps = Array[ExtResource("2_cap")]([SubResource("Resource_damage"), SubResource("Resource_attack_speed"), SubResource("Resource_critical_chance"), SubResource("Resource_critical_multiplier"), SubResource("Resource_active_duration"), SubResource("Resource_attack_range"), SubResource("Resource_max_health")])
+stat_caps = Array[ExtResource("2_cap")]([SubResource("Resource_damage"), SubResource("Resource_attack_speed"), SubResource("Resource_critical_chance"), SubResource("Resource_critical_multiplier"), SubResource("Resource_active_duration"), SubResource("Resource_attack_range"), SubResource("Resource_max_health"), SubResource("Resource_effect_potency")])

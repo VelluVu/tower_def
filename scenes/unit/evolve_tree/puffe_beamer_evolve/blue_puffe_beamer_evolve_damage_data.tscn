@@ -10,11 +10,13 @@ damage_type = 4
 
 [node name="OvertimeEffectData" type="Node" parent="."]
 script = ExtResource("2_8kkdy")
-max_count = 50
-tick_damage = 0.1
-tick_interval = 3.0
+max_count = 3
+tick_damage = 0.0
+tick_interval = 1.0
 damage_type = 4
 effectType = 1
+hit_share = 0.0
+max_stacks = 10
 
 [node name="SlowSpeedModifier" type="Node" parent="OvertimeEffectData"]
 script = ExtResource("3_ajvxk")

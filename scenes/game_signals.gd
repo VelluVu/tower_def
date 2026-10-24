@@ -11,6 +11,9 @@ signal enemy_reached_end_point(enemy : Enemy)
 signal enemy_destroyed(enemy : Enemy)
 signal enemy_spawned(enemy : Enemy)
 signal damage_taken(position : Vector2, damage_data : DamageData)
+#an enemy took a hit (after its effects were added); element reactions listen to it
+signal enemy_hit(enemy : Enemy, damage_data : DamageData)
+signal element_reaction(position : Vector2, reaction : ElementReaction)
 #every attack of a tower, trap or enemy; the audio plays skill.activate_sound
 signal skill_activated(skill : Skill)
 

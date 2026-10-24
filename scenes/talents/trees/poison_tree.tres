@@ -4,6 +4,70 @@
 [ext_resource type="Script" path="res://scenes/talents/talent_node.gd" id="2_node"]
 [ext_resource type="Script" path="res://scenes/talents/talent_effect.gd" id="3_effect"]
 
+[sub_resource type="Resource" id="Effect_lingering_toxins_0"]
+script = ExtResource("3_effect")
+buildings = 15
+elements = 8
+stat_type = 12
+modify_type = 0
+value_per_rank = 1.0
+
+[sub_resource type="Resource" id="Effect_thick_venom_0"]
+script = ExtResource("3_effect")
+buildings = 15
+elements = 8
+stat_type = 13
+modify_type = 0
+value_per_rank = 1.0
+
+[sub_resource type="Resource" id="Effect_seeping_0"]
+script = ExtResource("3_effect")
+buildings = 15
+elements = 8
+stat_type = 14
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Effect_virulence_0"]
+script = ExtResource("3_effect")
+buildings = 15
+elements = 8
+stat_type = 10
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Effect_potent_brew_0"]
+script = ExtResource("3_effect")
+buildings = 15
+elements = 8
+stat_type = 10
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Effect_noxious_burst_0"]
+script = ExtResource("3_effect")
+buildings = 2
+elements = 8
+stat_type = 10
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Effect_envenomed_tips_0"]
+script = ExtResource("3_effect")
+buildings = 1
+elements = 8
+stat_type = 10
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Effect_toxic_stream_0"]
+script = ExtResource("3_effect")
+buildings = 4
+elements = 8
+stat_type = 10
+modify_type = 0
+value_per_rank = 0.1
+
 [sub_resource type="Resource" id="Effect_toxic_ooze_0"]
 script = ExtResource("3_effect")
 buildings = 15
@@ -188,6 +252,7 @@ max_rank = 3
 position = Vector2(8.923, 1.538)
 color = Color(0.651, 0.89, 0.29, 1)
 links = Array[StringName]([&"lingering_toxins", &"thick_venom"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_virulence_0")])
 
 [sub_resource type="Resource" id="Node_lingering_toxins"]
 script = ExtResource("2_node")
@@ -199,6 +264,7 @@ max_rank = 2
 position = Vector2(7.897, 3.897)
 color = Color(0.651, 0.89, 0.29, 1)
 links = Array[StringName]([&"seeping"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_lingering_toxins_0")])
 
 [sub_resource type="Resource" id="Node_thick_venom"]
 script = ExtResource("2_node")
@@ -210,6 +276,7 @@ max_rank = 2
 position = Vector2(9.949, 3.897)
 color = Color(0.651, 0.89, 0.29, 1)
 links = Array[StringName]([&"seeping"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_thick_venom_0")])
 
 [sub_resource type="Resource" id="Node_seeping"]
 script = ExtResource("2_node")
@@ -221,6 +288,7 @@ max_rank = 3
 position = Vector2(8.923, 6.256)
 color = Color(0.651, 0.89, 0.29, 1)
 links = Array[StringName]([&"weakening", &"corrosion"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_seeping_0")])
 
 [sub_resource type="Resource" id="Node_weakening"]
 script = ExtResource("2_node")
@@ -254,6 +322,7 @@ max_rank = 3
 position = Vector2(8.923, 10.974)
 color = Color(0.651, 0.89, 0.29, 1)
 links = Array[StringName]([&"contagion", &"necrosis"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_potent_brew_0")])
 
 [sub_resource type="Resource" id="Node_contagion"]
 script = ExtResource("2_node")
@@ -344,6 +413,7 @@ max_rank = 3
 position = Vector2(1.641, 8.103)
 color = Color(0.784, 0.42, 0.847, 1)
 links = Array[StringName]([&"lingering_cloud"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_noxious_burst_0")])
 
 [sub_resource type="Resource" id="Node_caustic_pulse"]
 script = ExtResource("2_node")
@@ -471,6 +541,7 @@ max_rank = 3
 position = Vector2(4.923, 8.923)
 color = Color(0.902, 0.949, 0.627, 1)
 links = Array[StringName]([&"barbed_bolts"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_envenomed_tips_0")])
 
 [sub_resource type="Resource" id="Node_piercing_fangs"]
 script = ExtResource("2_node")
@@ -597,6 +668,7 @@ max_rank = 3
 position = Vector2(11.077, 9.744)
 color = Color(0.345, 0.784, 0.541, 1)
 links = Array[StringName]([&"saturation"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_toxic_stream_0")])
 
 [sub_resource type="Resource" id="Node_searing_acid"]
 script = ExtResource("2_node")

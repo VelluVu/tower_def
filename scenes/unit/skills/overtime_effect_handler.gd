@@ -4,14 +4,6 @@ extends Node
 
 const overtime_effect_scene : PackedScene = preload("res://scenes/unit/skills/overtime_effect.tscn")
 
-class OvertimeEffectStack:
-	var stack : Array[OvertimeEffect]
-	var damage_type : Utils.DamageType = Utils.DamageType.Physical : 
-		get:
-			if stack.is_empty():
-				return damage_type
-			return stack[0].damage_type
-
 @export var actor : Node = null :
 	get:
 		if actor == null:
@@ -19,10 +11,15 @@ class OvertimeEffectStack:
 		return actor
 
 var pool : Array[OvertimeEffect]
+#Thermal Shock: every effect on this unit ticks this much faster
+var tick_rate_bonus : float = 0.0 :
+	set = _set_tick_rate_bonus
 var start_overtime_effect_datas : Array[OvertimeEffectData]
 
 
 func handle_start_overtime_effects(value : float) -> void:
+	#rebuilt on every call: a reactivated enemy must not get its regeneration twice
+	start_overtime_effect_datas.clear()
 	for child in get_children():
 		if child is OvertimeEffectData:
 			start_overtime_effect_datas.append(child)
@@ -35,39 +32,57 @@ func handle_overtime_effects(overtime_effect_datas : Array[OvertimeEffectData], 
 		return
 		
 	for overtime_effect_data in overtime_effect_datas:
-		if overtime_effect_data.chance_to_apply >= 1.0:
-			add_overtime_effect(overtime_effect_data, value)
-			continue
-		if randf() < overtime_effect_data.chance_to_apply:
+		var chance : float = overtime_effect_data.get_chance()
+		if chance >= 1.0 or randf() < chance:
 			add_overtime_effect(overtime_effect_data, value)
 
 
 func add_overtime_effect(overtime_effect_data : OvertimeEffectData, value : float) -> void:
-	#this 0.1 == 10% of original damage, if no fixed damage is set
-	if overtime_effect_data.tick_damage == 0.0:
-		overtime_effect_data.tick_damage = value * (-0.1 if overtime_effect_data.is_healing else 0.1)
+	#worked out per application, the data can be shared (start effects), so it is never written to
+	var tick_damage : float = overtime_effect_data.get_tick_damage(value)
 	
-	# see if stack,
 	if overtime_effect_data.effectType == Utils.OvertimeEffectType.Stack:
-		# then find the previous overtime from source
-		for child in get_children():
-			if child is not OvertimeEffect:
-				continue
-			
-			#if child is not active
-			if child.is_finished or child.is_reached_max_stack:
-				continue
-				
-			# if there is previous overtime stack, 
-			if child.source == overtime_effect_data.source and child.damage_type == overtime_effect_data.damage_type:
-				# reset timer instead creating new and add damage to overtime
-				child.add_stack(overtime_effect_data)
-				#leave function since we added the stack into existing timer
+		var stacks : Array[OvertimeEffect] = get_active_stacks(overtime_effect_data.damage_type)
+		
+		#at the cap the new stack replaces the weakest one, if it is at least as strong
+		if stacks.size() >= overtime_effect_data.get_max_stacks():
+			var weakest : OvertimeEffect = get_weakest_stack(stacks)
+			if weakest == null or weakest.compare_strength(tick_damage, overtime_effect_data.potency) > 0:
 				return
+			weakest.stop()
 	
-	#create new overtime effect
 	var overtime_effect : OvertimeEffect = _get_overtime_effect()
-	overtime_effect.start(overtime_effect_data, actor)
+	overtime_effect.start(overtime_effect_data, actor, tick_damage)
+	
+	if tick_rate_bonus > 0.0:
+		overtime_effect.set_tick_speed(1.0 + tick_rate_bonus)
+
+
+## The running element stacks of one damage type on this unit, whichever tower put them there.
+func get_active_stacks(damage_type : Utils.DamageType) -> Array[OvertimeEffect]:
+	var stacks : Array[OvertimeEffect] = []
+	
+	for child in get_children():
+		if child is OvertimeEffect and not child.is_finished and child.effect_type == Utils.OvertimeEffectType.Stack and child.damage_type == damage_type:
+			stacks.append(child)
+	
+	return stacks
+
+
+## The weakest stack; of equally strong ones, the one closest to ending.
+static func get_weakest_stack(stacks : Array[OvertimeEffect]) -> OvertimeEffect:
+	var weakest : OvertimeEffect = null
+	
+	for stack in stacks:
+		if weakest == null:
+			weakest = stack
+			continue
+		
+		var strength : int = stack.compare_strength(weakest.tick_damage, weakest.potency)
+		if strength < 0 or (strength == 0 and stack.tick_count > weakest.tick_count):
+			weakest = stack
+	
+	return weakest
 
 
 func _get_overtime_effect() -> OvertimeEffect:
@@ -88,6 +103,19 @@ func clear_overtime_effects() -> void:
 		if child is OvertimeEffect:
 			child.stop()
 			child.queue_free()
+	
+	pool.clear()
+
+
+func _set_tick_rate_bonus(value : float) -> void:
+	if is_equal_approx(tick_rate_bonus, value):
+		return
+	
+	tick_rate_bonus = value
+	
+	for child in get_children():
+		if child is OvertimeEffect and not child.is_finished:
+			child.set_tick_speed(1.0 + tick_rate_bonus)
 
 
 func _on_overtime_effect_finished(overtime_effect : OvertimeEffect) -> void:

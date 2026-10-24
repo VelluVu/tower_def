@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ElementReaction" format=3]
+
+[ext_resource type="Script" path="res://scenes/reactions/element_reaction.gd" id="1_reaction"]
+
+[resource]
+script = ExtResource("1_reaction")
+kind = 2
+display_name = "Frostplague"
+color = Color(0.6, 0.898, 0.314, 1)
+first_element = 4
+second_element = 8
+first_tree = &"frost"
+second_tree = &"poison"
+base_value = 2.0
+value_per_point = 0.1

@@ -10,3 +10,7 @@ damage_type = 8
 [node name="OvertimeEffectData" type="Node" parent="."]
 script = ExtResource("2_mj0il")
 damage_type = 8
+hit_share = 0.2
+effectType = 1
+max_count = 4
+max_stacks = 5

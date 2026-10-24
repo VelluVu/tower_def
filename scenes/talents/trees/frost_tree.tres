@@ -4,6 +4,62 @@
 [ext_resource type="Script" path="res://scenes/talents/talent_node.gd" id="2_node"]
 [ext_resource type="Script" path="res://scenes/talents/talent_effect.gd" id="3_effect"]
 
+[sub_resource type="Resource" id="Effect_lingering_chill_0"]
+script = ExtResource("3_effect")
+buildings = 15
+elements = 4
+stat_type = 12
+modify_type = 0
+value_per_rank = 1.0
+
+[sub_resource type="Resource" id="Effect_deep_chill_0"]
+script = ExtResource("3_effect")
+buildings = 15
+elements = 4
+stat_type = 13
+modify_type = 0
+value_per_rank = 1.0
+
+[sub_resource type="Resource" id="Effect_cold_snap_0"]
+script = ExtResource("3_effect")
+buildings = 15
+elements = 4
+stat_type = 10
+modify_type = 0
+value_per_rank = 0.05
+
+[sub_resource type="Resource" id="Effect_bitter_cold_0"]
+script = ExtResource("3_effect")
+buildings = 15
+elements = 4
+stat_type = 10
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Effect_chilling_tips_0"]
+script = ExtResource("3_effect")
+buildings = 1
+elements = 4
+stat_type = 10
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Effect_freezing_ray_0"]
+script = ExtResource("3_effect")
+buildings = 4
+elements = 4
+stat_type = 10
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Effect_biting_wind_0"]
+script = ExtResource("3_effect")
+buildings = 2
+elements = 4
+stat_type = 10
+modify_type = 0
+value_per_rank = 0.1
+
 [sub_resource type="Resource" id="Effect_hard_frost_0"]
 script = ExtResource("3_effect")
 buildings = 15
@@ -142,6 +198,7 @@ max_rank = 3
 position = Vector2(7.459, 11.321)
 color = Color(0.561, 0.827, 1, 1)
 links = Array[StringName]([&"bitter_cold", &"winter_ground", &"hard_frost", &"hold_fast"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_cold_snap_0")])
 
 [sub_resource type="Resource" id="Node_absolute_zero"]
 script = ExtResource("2_node")
@@ -163,6 +220,7 @@ max_rank = 3
 position = Vector2(6.386, 10.248)
 color = Color(0.561, 0.827, 1, 1)
 links = Array[StringName]([&"ice_bolts", &"lingering_chill"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_bitter_cold_0")])
 
 [sub_resource type="Resource" id="Node_winter_ground"]
 script = ExtResource("2_node")
@@ -243,6 +301,7 @@ max_rank = 3
 position = Vector2(3.917, 6.738)
 color = Color(0.847, 0.953, 1, 1)
 links = Array[StringName]([&"pinning_shot"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_chilling_tips_0")])
 
 [sub_resource type="Resource" id="Node_frozen_bolts"]
 script = ExtResource("2_node")
@@ -358,6 +417,7 @@ max_rank = 3
 position = Vector2(5.833, 16.881)
 color = Color(0.639, 0.612, 0.941, 1)
 links = Array[StringName]([&"creeping_frost"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_freezing_ray_0")])
 
 [sub_resource type="Resource" id="Node_glacial_beam"]
 script = ExtResource("2_node")
@@ -473,6 +533,7 @@ max_rank = 3
 position = Vector2(9.085, 5.761)
 color = Color(0.31, 0.608, 0.878, 1)
 links = Array[StringName]([&"frost_field"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_biting_wind_0")])
 
 [sub_resource type="Resource" id="Node_polar_pulse"]
 script = ExtResource("2_node")
@@ -667,6 +728,7 @@ max_rank = 2
 position = Vector2(4.331, 10.305)
 color = Color(0.561, 0.827, 1, 1)
 links = Array[StringName]([&"deep_chill", &"numbing_cold"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_lingering_chill_0")])
 
 [sub_resource type="Resource" id="Node_deep_chill"]
 script = ExtResource("2_node")
@@ -678,6 +740,7 @@ max_rank = 2
 position = Vector2(1.833, 10.624)
 color = Color(0.561, 0.827, 1, 1)
 links = Array[StringName]([&"creeping_winter"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_deep_chill_0")])
 
 [sub_resource type="Resource" id="Node_numbing_cold"]
 script = ExtResource("2_node")

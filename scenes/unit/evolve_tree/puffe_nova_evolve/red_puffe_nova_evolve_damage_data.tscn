@@ -9,8 +9,10 @@ damage_type = 2
 
 [node name="OvertimeEffectData" type="Node" parent="."]
 script = ExtResource("2_je7hq")
-max_count = 4
-tick_interval = 10.0
+max_count = 3
+tick_interval = 1.0
 chance_to_apply = 0.1
 damage_type = 2
 effectType = 1
+hit_share = 0.25
+max_stacks = 3

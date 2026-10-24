@@ -278,6 +278,26 @@ type = 8
 script = ExtResource("12_l0gwn")
 type = 9
 
+[node name="EffectPotency" type="Node" parent="Stats"]
+script = ExtResource("12_l0gwn")
+type = 10
+
+[node name="EffectChance" type="Node" parent="Stats"]
+script = ExtResource("12_l0gwn")
+type = 11
+
+[node name="EffectDuration" type="Node" parent="Stats"]
+script = ExtResource("12_l0gwn")
+type = 12
+
+[node name="EffectStacks" type="Node" parent="Stats"]
+script = ExtResource("12_l0gwn")
+type = 13
+
+[node name="EffectTickRate" type="Node" parent="Stats"]
+script = ExtResource("12_l0gwn")
+type = 14
+
 [node name="EvolveTree" type="Node" parent="."]
 script = ExtResource("13_3jr76")
 upgrade_data = ExtResource("0_upgradedata")
@@ -335,6 +355,9 @@ script = ExtResource("17_ykudp")
 [node name="OvertimeEffectData" type="Node" parent="LeopardClaws/DamageData"]
 script = ExtResource("18_gagl5")
 tick_damage = 0.0
+hit_share = 0.1
+effectType = 1
+max_stacks = 3
 
 [node name="ModifierManager" type="Node" parent="."]
 script = ExtResource("19_3ukhc")

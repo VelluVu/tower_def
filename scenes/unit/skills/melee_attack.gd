@@ -48,7 +48,9 @@ func _on_attack_area_body_entered(body: Node2D) -> void:
 		return
 
 	activate_collision_detection(false)
-	body.take_damage(damage_data)
+	var hit : DamageData = damage_data
+	body.take_damage(hit)
+	hit.queue_free()
 
 
 func _on_active_end() -> void:

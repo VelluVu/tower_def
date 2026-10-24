@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="EvolveResource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scenes/unit/evolve_tree/evolve_resource.gd" id="1_evolve"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_evolve")
+modifier_type = 0
+elements = 14
+modify_stat_type = 10
+modify_type = 0
+is_percent = true
+modify_value = 0.1
+evolve_name = "Element Potency"

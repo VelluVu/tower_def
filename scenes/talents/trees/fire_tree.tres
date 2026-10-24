@@ -4,6 +4,102 @@
 [ext_resource type="Script" path="res://scenes/talents/talent_node.gd" id="2_node"]
 [ext_resource type="Script" path="res://scenes/talents/talent_effect.gd" id="3_effect"]
 
+[sub_resource type="Resource" id="Effect_catching_flame_0"]
+script = ExtResource("3_effect")
+buildings = 15
+elements = 2
+stat_type = 11
+modify_type = 0
+value_per_rank = 0.05
+
+[sub_resource type="Resource" id="Effect_scorching_ring_0"]
+script = ExtResource("3_effect")
+buildings = 2
+elements = 2
+stat_type = 11
+modify_type = 0
+value_per_rank = 0.05
+
+[sub_resource type="Resource" id="Effect_kindled_tips_0"]
+script = ExtResource("3_effect")
+buildings = 1
+elements = 2
+stat_type = 11
+modify_type = 0
+value_per_rank = 0.05
+
+[sub_resource type="Resource" id="Effect_kindled_beam_0"]
+script = ExtResource("3_effect")
+buildings = 4
+elements = 2
+stat_type = 11
+modify_type = 0
+value_per_rank = 0.05
+
+[sub_resource type="Resource" id="Effect_slow_burn_0"]
+script = ExtResource("3_effect")
+buildings = 15
+elements = 2
+stat_type = 12
+modify_type = 0
+value_per_rank = 1.0
+
+[sub_resource type="Resource" id="Effect_fan_flames_0"]
+script = ExtResource("3_effect")
+buildings = 15
+elements = 2
+stat_type = 13
+modify_type = 0
+value_per_rank = 1.0
+
+[sub_resource type="Resource" id="Effect_white_heat_0"]
+script = ExtResource("3_effect")
+buildings = 4
+elements = 2
+stat_type = 13
+modify_type = 0
+value_per_rank = 1.0
+
+[sub_resource type="Resource" id="Effect_searing_heat_0"]
+script = ExtResource("3_effect")
+buildings = 15
+elements = 2
+stat_type = 10
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Effect_everburn_0"]
+script = ExtResource("3_effect")
+buildings = 15
+elements = 2
+stat_type = 10
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Effect_heat_wave_0"]
+script = ExtResource("3_effect")
+buildings = 2
+elements = 2
+stat_type = 10
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Effect_searing_bolts_0"]
+script = ExtResource("3_effect")
+buildings = 1
+elements = 2
+stat_type = 10
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Effect_scald_0"]
+script = ExtResource("3_effect")
+buildings = 4
+elements = 2
+stat_type = 10
+modify_type = 0
+value_per_rank = 0.1
+
 [sub_resource type="Resource" id="Effect_kindling_0"]
 script = ExtResource("3_effect")
 buildings = 15
@@ -188,6 +284,7 @@ max_rank = 3
 position = Vector2(9.391, 18.105)
 color = Color(1, 0.541, 0.239, 1)
 links = Array[StringName]([&"catching_flame", &"slow_burn"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_searing_heat_0")])
 
 [sub_resource type="Resource" id="Node_catching_flame"]
 script = ExtResource("2_node")
@@ -199,6 +296,7 @@ max_rank = 3
 position = Vector2(8.403, 16.421)
 color = Color(1, 0.541, 0.239, 1)
 links = Array[StringName]([&"fan_flames"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_catching_flame_0")])
 
 [sub_resource type="Resource" id="Node_slow_burn"]
 script = ExtResource("2_node")
@@ -210,6 +308,7 @@ max_rank = 2
 position = Vector2(10.38, 16.421)
 color = Color(1, 0.541, 0.239, 1)
 links = Array[StringName]([&"fan_flames"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_slow_burn_0")])
 
 [sub_resource type="Resource" id="Node_fan_flames"]
 script = ExtResource("2_node")
@@ -221,6 +320,7 @@ max_rank = 2
 position = Vector2(9.391, 14.737)
 color = Color(1, 0.541, 0.239, 1)
 links = Array[StringName]([&"wildfire", &"heat_haze"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_fan_flames_0")])
 
 [sub_resource type="Resource" id="Node_wildfire"]
 script = ExtResource("2_node")
@@ -254,6 +354,7 @@ max_rank = 3
 position = Vector2(9.391, 9.684)
 color = Color(1, 0.541, 0.239, 1)
 links = Array[StringName]([&"choking_smoke", &"flash_fire"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_everburn_0")])
 
 [sub_resource type="Resource" id="Node_choking_smoke"]
 script = ExtResource("2_node")
@@ -344,6 +445,7 @@ max_rank = 3
 position = Vector2(0.741, 12)
 color = Color(0.91, 0.314, 0.29, 1)
 links = Array[StringName]([&"heat_wave"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_scorching_ring_0")])
 
 [sub_resource type="Resource" id="Node_searing_core"]
 script = ExtResource("2_node")
@@ -367,6 +469,7 @@ max_rank = 3
 position = Vector2(0.371, 9.684)
 color = Color(0.91, 0.314, 0.29, 1)
 links = Array[StringName]([&"cinders"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_heat_wave_0")])
 
 [sub_resource type="Resource" id="Node_overheat"]
 script = ExtResource("2_node")
@@ -482,6 +585,7 @@ max_rank = 3
 position = Vector2(4.819, 10.842)
 color = Color(0.949, 0.757, 0.306, 1)
 links = Array[StringName]([&"searing_bolts"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_kindled_tips_0")])
 
 [sub_resource type="Resource" id="Node_blazing_bolts"]
 script = ExtResource("2_node")
@@ -505,6 +609,7 @@ max_rank = 3
 position = Vector2(4.201, 7.579)
 color = Color(0.949, 0.757, 0.306, 1)
 links = Array[StringName]([&"seeking_flame"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_searing_bolts_0")])
 
 [sub_resource type="Resource" id="Node_twin_sparks"]
 script = ExtResource("2_node")
@@ -620,6 +725,7 @@ max_rank = 3
 position = Vector2(12.357, 10.842)
 color = Color(1, 0.906, 0.69, 1)
 links = Array[StringName]([&"scald"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_kindled_beam_0")])
 
 [sub_resource type="Resource" id="Node_bright_core"]
 script = ExtResource("2_node")
@@ -643,6 +749,7 @@ max_rank = 3
 position = Vector2(12.357, 7.789)
 color = Color(1, 0.906, 0.69, 1)
 links = Array[StringName]([&"white_heat"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_scald_0")])
 
 [sub_resource type="Resource" id="Node_melting_point"]
 script = ExtResource("2_node")
@@ -665,6 +772,7 @@ max_rank = 2
 position = Vector2(13.222, 4.842)
 color = Color(1, 0.906, 0.69, 1)
 links = Array[StringName]([&"beamer_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_white_heat_0")])
 
 [sub_resource type="Resource" id="Node_wide_beam"]
 script = ExtResource("2_node")

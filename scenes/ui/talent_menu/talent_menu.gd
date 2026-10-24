@@ -23,6 +23,8 @@ const NEEDS_TEXT : String = "Needs %s first."
 const CLOSED_TEXT : String = "Learn a linked talent first."
 const NO_POINTS_TEXT : String = "No points left. Clear levels to earn more."
 const HELD_TEXT : String = "Other talents depend on this one."
+#reaction, shared points / unlock points, both trees' points
+const REACTION_TEXT : String = "%s %d/%d (%s %d, %s %d)"
 
 @onready var tabs : HBoxContainer = %Tabs
 @onready var points_label : Label = %PointsLabel
@@ -34,6 +36,7 @@ const HELD_TEXT : String = "Other talents depend on this one."
 @onready var rank_label : Label = %RankLabel
 @onready var description_label : Label = %DescriptionLabel
 @onready var status_label : Label = %StatusLabel
+@onready var reactions_label : Label = %ReactionsLabel
 @onready var add_button : Button = %AddButton
 @onready var info_panel : PanelContainer = %Info
 @onready var remove_button : Button = %RemoveButton
@@ -93,7 +96,26 @@ func _refresh() -> void:
 
 	points_label.text = POINTS_TEXT % [PlayerProgress.get_talent_points_unspent(), PlayerProgress.get_talent_points_earned()]
 	tree_view.refresh(PlayerProgress.get_talent_ranks(tree.id), PlayerProgress.get_talent_points_unspent())
+	_show_reactions()
 	_show_info()
+
+
+## The reactions of this tree's element with their shared points (the lower tree counts).
+func _show_reactions() -> void:
+	var lines : PackedStringArray = []
+
+	for reaction in ElementReactions.REACTIONS:
+		if reaction.first_tree != tree.id and reaction.second_tree != tree.id:
+			continue
+
+		var first : TalentTree = TALENT_BOOK.get_tree_by_id(reaction.first_tree)
+		var second : TalentTree = TALENT_BOOK.get_tree_by_id(reaction.second_tree)
+		var first_spent : int = TalentRules.get_spent(PlayerProgress.get_talent_ranks(reaction.first_tree))
+		var second_spent : int = TalentRules.get_spent(PlayerProgress.get_talent_ranks(reaction.second_tree))
+		lines.append(REACTION_TEXT % [reaction.display_name, ElementReaction.shared_points_of(first_spent, second_spent), reaction.unlock_points, first.display_name, first_spent, second.display_name, second_spent])
+
+	reactions_label.text = "\n".join(lines)
+	reactions_label.visible = not lines.is_empty()
 
 
 func _show_info() -> void:

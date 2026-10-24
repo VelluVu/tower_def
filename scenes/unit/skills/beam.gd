@@ -83,7 +83,14 @@ func _on_timer_tick() -> void:
 		return
 	
 	line.set_point_position(end_line_index, (target.body_center - global_position))
-	target.take_damage(damage_data)
+	_hit_target()
+
+
+#damage_data is a new copy per call, nothing keeps it after the hit
+func _hit_target() -> void:
+	var hit : DamageData = damage_data
+	target.take_damage(hit)
+	hit.queue_free()
 
 
 func _set_is_active(value : bool) -> void:
@@ -95,7 +102,7 @@ func _set_is_active(value : bool) -> void:
 	if is_active:
 		actor.animation_control.play_animation(GlobalAnimationNames.ATTACK_ANIMATION)
 		line.set_point_position(end_line_index, (target.body_center - global_position))
-		target.take_damage(damage_data)
+		_hit_target()
 		damage_timer.start()
 	else:
 		line.set_point_position(1, Vector2.ZERO)

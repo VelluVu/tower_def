@@ -60,6 +60,8 @@ var is_colliding_building : bool = false :
 		return collision_body != null
 
 var is_deactivated : bool = false
+#Frostplague: cannot attack buildings while true
+var is_numb : bool = false
 var current_waypoint_index : int = 0
 var minimum_distance_to_end : float = 9.0
 var minimum_distance_to_next_waypoint : float = 2.0
@@ -121,6 +123,7 @@ func take_damage(damage_data : DamageData) -> void:
 		
 	GameSignals.damage_taken.emit(pop_up_spot.global_position, damage_data)
 	overtime_effect_handler.handle_overtime_effects(damage_data.overtime_effect_datas, damage_data.damage)
+	GameSignals.enemy_hit.emit(self, damage_data)
 	
 	if damage_data.damage > 0.0:
 		if damage_data.source != null:

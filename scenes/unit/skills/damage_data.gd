@@ -5,6 +5,8 @@ extends Node
 @export var damage_type : Utils.DamageType = Utils.DamageType.Physical
 
 var is_overtime : bool = false
+#damage from an element reaction, which sets off no reaction itself
+var is_reaction : bool = false
 var is_shielding : bool = false
 var is_critical : bool = false
 

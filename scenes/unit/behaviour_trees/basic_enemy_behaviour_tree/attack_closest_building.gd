@@ -4,7 +4,8 @@ extends ActionLeaf
 
 
 func tick(actor : Node, _blackboard : Blackboard) -> int:
-	if not actor.skill.is_ready:
+	#Frostplague
+	if not actor.skill.is_ready or actor.is_numb:
 		return FAILURE
 	
 	var building : Building = actor.get_building_in_next_waypoint()

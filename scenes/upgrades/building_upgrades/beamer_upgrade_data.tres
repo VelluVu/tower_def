@@ -21,6 +21,17 @@ is_percent = false
 modify_value = 0.25
 evolve_name = "Attack Range"
 
+[sub_resource type="Resource" id="Resource_potency"]
+script = ExtResource("2_evolve")
+modifier_type = 0
+elements = 15
+modify_stat_type = 10
+modify_type = 0
+is_randomized_modify_value = false
+is_percent = true
+modify_value = 0.15
+evolve_name = "Effect Potency"
+
 [resource]
 script = ExtResource("1_data")
 upgrade_resources = Array[ExtResource("2_evolve")]([SubResource("Resource_damage"), SubResource("Resource_attack_range")])

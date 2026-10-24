@@ -2,7 +2,13 @@ class_name ModifierManager
 extends Node
 
 
+## Slows (negative Multiply on Speed) never take a unit below this share of its unslowed speed.
+const SLOW_FLOOR : float = 0.4
+
 @onready var actor : Node = get_parent()
+
+#Thermal Shock lowers it for a while
+var slow_floor : float = SLOW_FLOOR
 
 
 func add_modifier(modifier : ModifierData) -> void:
@@ -74,7 +80,10 @@ func calculate_modifier(stat_type : Utils.StatType) -> void:
 		multiply.append_array(stat.global_multiply_modifiers)
 	
 	var modified_value : float = combine(base, flat, additive, multiply)
-	
+
+	if stat_type == Utils.StatType.Speed:
+		modified_value = floor_slows(modified_value, base, flat, additive, multiply, slow_floor)
+
 	if skill_stat != null:
 		skill_stat.value = modified_value
 	elif main_stat != null:
@@ -97,5 +106,16 @@ static func combine(base : float, flat : Array[ModifierData], additive : Array[M
 	
 	for modifier in multiply:
 		value *= 1.0 + modifier.value
-	
+
 	return value
+
+
+## The slowed value, but at least floor_share of the value without the slows. Static so it can be tested.
+static func floor_slows(slowed_value : float, base : float, flat : Array[ModifierData], additive : Array[ModifierData], multiply : Array[ModifierData], floor_share : float = SLOW_FLOOR) -> float:
+	var boosts : Array[ModifierData] = []
+
+	for modifier in multiply:
+		if modifier.value >= 0.0:
+			boosts.append(modifier)
+
+	return maxf(slowed_value, combine(base, flat, additive, boosts) * floor_share)

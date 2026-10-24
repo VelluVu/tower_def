@@ -6,6 +6,8 @@ extends Resource
 
 #every resource is applied once per upgrade step, with its modify_value as is (no roll)
 @export var upgrade_resources : Array[EvolveResource] = []
+#applied on top of upgrade_resources on the steps bought after the first evolve (effect potency)
+@export var evolved_upgrade_resources : Array[EvolveResource] = []
 #prices are ratios of the building's own Price (UpgradeRules.gold_price), so one data fits cheap and dear towers
 #one ratio per upgrade step, the size is the number of upgrade steps
 @export var upgrade_cost_ratios : Array[float] = [0.5, 0.75, 1.0, 1.25, 1.5, 1.75]
