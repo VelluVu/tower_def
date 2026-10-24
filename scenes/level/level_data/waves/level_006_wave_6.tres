@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="WaveData" format=3]
+[gd_resource type="Resource" script_class="WaveData" format=3 uid="uid://byenbppoms4ah"]
 
 [ext_resource type="Script" uid="uid://cpw7ia3ek2yvs" path="res://scenes/level/level_data/wave_data.gd" id="1_wave"]
 [ext_resource type="Script" uid="uid://bbhd3iyjav4h2" path="res://scenes/level/level_data/spawn_group_data.gd" id="2_group"]
