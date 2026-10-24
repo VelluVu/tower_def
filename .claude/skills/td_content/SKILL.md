@@ -37,6 +37,6 @@ Always copy the closest existing piece and change it; the scenes depend on exact
 - Ask before generating or replacing art. When editing, work on the user's current file.
 
 ## Checks after a content change
-- Run `godot --headless --quit` from the project folder: missing `ext_resource`s and script errors show up there.
+- Run `python tools/gd.py check` and `python tools/gd.py test`: missing `ext_resource`s, script errors and broken mechanics show up there. For waves and new enemies, `python tools/gd.py levels` shows the health, XP, cards and gold per level; `python tools/gd.py stats` the unit numbers (see the `td_testing` skill).
 - Play the level: place the tower, let one wave through, watch the Output panel for null `get_stat` errors and pathing warnings.
 - Remember `GameSignals.testing` is on (free buildings, all unlocked); test once with it off for balance.

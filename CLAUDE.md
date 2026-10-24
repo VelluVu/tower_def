@@ -40,7 +40,7 @@ The game is under `scenes/` (scripts sit next to their scenes); there is no `src
 - `scenes/console/`: the game's console command sets. `dev_mode_commands.gd` and `level_cheat_commands.gd` are gitignored and left out of the export (`export_presets.cfg` exclude filter).
 - `systems/`: self-contained systems from Pimeä Panimo, one folder each: `input/` (`InputBindings`, actions registered in `InputMap` at runtime), `console/` (`DevConsole`, command registry, command sets) `save/` (`SaveFile` crash-safe writes with a `.bak.tres` fallback, `SaveSlot` versioned save with `_migrate`) `settings/` (`SettingsStore`: per-bus volume and mute, fullscreen, pixel-perfect, named options, saved to `user://settings.cfg`; `settings_wiring.gd` adds VSync, FPS cap and the game's options) and `audio/` (`AudioPlayback`: sound pool, world sounds at a position, music loop/once/playlist, a click on every button; `audio_wiring.gd` maps the game's signals, `play_music_once` was added here and isn't in Pimeä Panimo yet). A system references only its own folder; its `*_wiring.gd` is the only file that knows the game. They keep Pimeä Panimo's `name: Type` colon style so they can be synced back. Run `python tools/check_systems.py` after changing one. Planned next: `tooltip`.
 - `addons/`: `beehave` 2.8.0 (behaviour trees), `AsepriteWizard` 8.0.1 (imports `.aseprite` into SpriteFrames), `godot_ai` 4.2.3 (live editor MCP plugin, copied from Pimeä Panimo; it adds its `_mcp_game_helper` autoload to `project.godot` on the first editor start).
-- No tests yet. The plugin's `McpTestSuite` (`addons/godot_ai/testing/`) is available when they are added.
+- Tests and tools: `tools/tests/` (headless tests on `TestKit`, `tools/test/`), `tools/reports/` (level report, stat sheet), `tools/tres_edit.py` (safe .tres/.tscn edits), `tools/icon/` (icons from text grids), all run through `python tools/gd.py`. See the `td_testing` skill.
 
 ## Godot AI MCP (live editor)
 - With the editor open on this project, use the `godot-ai` tools: `scene_get_hierarchy`/`node_find` before relying on a node path, `project_run` + `logs_read` (`source="game"`) after a change, `editor_screenshot` for UI changes.
@@ -81,6 +81,7 @@ The full plan is in `docs/design/progression.md`; read it before working on upgr
 
 ## Commands
 - Run: `godot --path .` (from the project folder)
+- Tests: `python tools/gd.py test`; load check: `python tools/gd.py check`; balance numbers: `python tools/gd.py levels [--map]` and `python tools/gd.py stats`. Use these instead of throwaway scripts.
 - Headless load check: `godot --headless --quit`; to compile the unit scripts too, run a level: `godot --headless --quit-after 900 res://scenes/level/levels/level_001.tscn`. `godot` is not on PATH: the exe is `C:/Program Files (x86)/Steam/steamapps/common/Godot Engine/godot.windows.opt.tools.64.exe`. `Capture not registered: 'beehave'` in headless is harmless.
 - The user's Godot is the Steam 4.7.2 build; the desktop shortcut is `Godot_v4.6.3-stable_win64`.
 
@@ -90,4 +91,4 @@ The full plan is in `docs/design/progression.md`; read it before working on upgr
 - Art is hand-made in Aseprite and imported with AsepriteWizard. Edit the `.aseprite` source, not only the `.png`. Ask before generating or replacing any art.
 - Do not change `project.godot` settings without asking.
 - Commit or push only when the user asks. The branch is `master`.
-- Skills for this project: `td_architecture` (code and structure rules), `td_gameplay_patterns` (behaviour trees, pathing, targeting, damage, pooling, rolls and balance maths), `td_content` (how to add towers, enemies, upgrades, levels) and `td_shaders` (pixel-art shaders). Load the matching one before editing.
+- Skills for this project: `td_architecture` (code and structure rules), `td_gameplay_patterns` (behaviour trees, pathing, targeting, damage, pooling, rolls and balance maths), `td_content` (how to add towers, enemies, upgrades, levels), `td_shaders` (pixel-art shaders) and `td_testing` (tests, reports, safe resource edits, icons). Load the matching one before editing.

@@ -12,3 +12,6 @@ tools/audio_sources/*
 
 # Present only while Claude test-runs the game; mutes it (see systems/audio/audio_wiring.gd)
 tools/mute_audio.flag
+
+# Python bytecode of the tools
+__pycache__/
