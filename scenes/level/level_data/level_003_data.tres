@@ -6,7 +6,7 @@
 [ext_resource type="Resource" uid="uid://bdoojofr2o82p" path="res://scenes/level/level_data/waves/level_003_wave_2.tres" id="3_w2"]
 [ext_resource type="Resource" uid="uid://byej0puujaikv" path="res://scenes/level/level_data/waves/level_003_wave_3.tres" id="4_w3"]
 [ext_resource type="Script" uid="uid://bu8xwv71c6bbj" path="res://scenes/level/level_data/puffe_line.gd" id="9_line"]
-[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_003_wave_4.tres" id="9_w4"]
+[ext_resource type="Resource" uid="uid://cho57i6ur2f8f" path="res://scenes/level/level_data/waves/level_003_wave_4.tres" id="9_w4"]
 
 [sub_resource type="Resource" id="PuffeLine_1"]
 script = ExtResource("9_line")

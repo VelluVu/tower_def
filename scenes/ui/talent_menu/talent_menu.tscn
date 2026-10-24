@@ -1,0 +1,145 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scenes/ui/talent_menu/talent_menu.gd" id="1_menu"]
+[ext_resource type="Script" path="res://scenes/ui/talent_menu/talent_tree_view.gd" id="2_view"]
+
+[node name="TalentMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_menu")
+
+[node name="Background" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="Rows" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="TopBar" type="HBoxContainer" parent="Margin/Rows"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Title" type="Label" parent="Margin/Rows/TopBar"]
+layout_mode = 2
+theme_type_variation = &"TitleLabel"
+text = "Talents"
+
+[node name="Tabs" type="HBoxContainer" parent="Margin/Rows/TopBar"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_constants/separation = 4
+
+[node name="PointsLabel" type="Label" parent="Margin/Rows/TopBar"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Points 0 / 0"
+
+[node name="ResetButton" type="Button" parent="Margin/Rows/TopBar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+size_flags_vertical = 4
+text = "Reset"
+
+[node name="BackButton" type="Button" parent="Margin/Rows/TopBar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(56, 0)
+layout_mode = 2
+theme_type_variation = &"BigButton"
+text = "Back"
+
+[node name="Body" type="HBoxContainer" parent="Margin/Rows"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 6
+
+[node name="TreeFrame" type="PanelContainer" parent="Margin/Rows/Body"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"InsetPanelContainer"
+
+[node name="TreeView" type="Control" parent="Margin/Rows/Body/TreeFrame"]
+unique_name_in_owner = true
+clip_contents = true
+layout_mode = 2
+mouse_filter = 0
+script = ExtResource("2_view")
+
+[node name="Info" type="PanelContainer" parent="Margin/Rows/Body"]
+custom_minimum_size = Vector2(176, 0)
+layout_mode = 2
+theme_type_variation = &"HornPanelContainer"
+
+[node name="InfoRows" type="VBoxContainer" parent="Margin/Rows/Body/Info"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="NameLabel" type="Label" parent="Margin/Rows/Body/Info/InfoRows"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"TitleLabel"
+text = "Talent"
+autowrap_mode = 2
+
+[node name="KindLabel" type="Label" parent="Margin/Rows/Body/Info/InfoRows"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Talent"
+
+[node name="RankLabel" type="Label" parent="Margin/Rows/Body/Info/InfoRows"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Rank 0 / 1"
+
+[node name="DescriptionLabel" type="Label" parent="Margin/Rows/Body/Info/InfoRows"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "What one rank does."
+autowrap_mode = 2
+
+[node name="StatusLabel" type="Label" parent="Margin/Rows/Body/Info/InfoRows"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+size_flags_vertical = 3
+autowrap_mode = 2
+
+[node name="Buttons" type="HBoxContainer" parent="Margin/Rows/Body/Info/InfoRows"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="AddButton" type="Button" parent="Margin/Rows/Body/Info/InfoRows/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Learn"
+
+[node name="RemoveButton" type="Button" parent="Margin/Rows/Body/Info/InfoRows/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Unlearn"

@@ -5,6 +5,7 @@ extends Node2D
 const PATH_TO_UNIT_SELECTION_SCENE : String = "res://scenes/unit/unit_selection/unit_selection.tscn"
 const WAVE_RUNNER_NAME : String = "WaveRunner"
 const BUILDING_TYPE_UPGRADES_NAME : String = "BuildingTypeUpgrades"
+const LEVEL_TALENTS_NAME : String = "LevelTalents"
 const PATH_PREVIEW_NAME : String = "PathPreview"
 const BACKDROP_NAME : String = "LevelBackdrop"
 const NO_LEVEL_DATA_WARNING : String = " Level has no LevelData, no waves will spawn!"
@@ -20,7 +21,10 @@ var grid : LevelGrid = null
 var unit_selection : UnitSelection
 var upgrades : LevelUpgrades
 var building_type_upgrades : BuildingTypeUpgrades
+var talents : LevelTalents
 var wave_runner : WaveRunner
+#waves started while enemies of earlier waves were still alive, for the talent points
+var early_starts : int = 0
 var all_buildings : Array[Building]
 var all_enemies : Array[Enemy]
 var existing_enemies : Array[Enemy]
@@ -48,6 +52,10 @@ func _ready() -> void:
 	upgrades.name = "LevelUpgrades"
 	add_child(upgrades)
 	_setup_waves()
+	#after the waves: the level data sets the start gold, the talents add to it
+	talents = LevelTalents.new()
+	talents.name = LEVEL_TALENTS_NAME
+	add_child(talents)
 	var backdrop : LevelBackdrop = LevelBackdrop.new()
 	backdrop.name = BACKDROP_NAME
 	add_child(backdrop)
@@ -148,10 +156,14 @@ func _on_start_wave_pressed() -> void:
 	
 	#read before starting, the bonus depends on the wave that comes next
 	var bonus : float = early_start_bonus
+	var is_early : bool = not existing_enemies.is_empty()
 	wave_runner.start_next_wave()
 	
 	if bonus > 0.0:
 		player_stats.add_gold(bonus)
+
+	if is_early:
+		early_starts += 1
 	
 	_emit_wave_state()
 

@@ -76,10 +76,11 @@ func _on_level_loaded(_level : Level) -> void:
 	reset_time_scale()
 
 
-func _on_level_completed(_level : Level) -> void:
+func _on_level_completed(level : Level) -> void:
 	reset_time_scale()
 	#unlocks the level after the cleared one; replaying an earlier level never lowers or skips progress
 	PlayerProgress.level_progress = scene_manager.current_level_number + 1
+	PlayerProgress.record_level_talent_points(scene_manager.current_level_number, TalentRules.points_for_level(level))
 	PlayerProgress.save_progress()
 
 

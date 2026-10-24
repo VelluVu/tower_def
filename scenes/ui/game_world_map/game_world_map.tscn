@@ -664,6 +664,20 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
+[node name="TalentsButton" type="Button" parent="." unique_id=1997391466]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -72.0
+offset_top = 8.0
+offset_right = -72.0
+offset_bottom = 8.0
+grow_horizontal = 0
+theme_type_variation = &"BigButton"
+text = "Talents"
+
 [node name="ToMenuButton" type="Button" parent="." unique_id=1746386287]
 custom_minimum_size = Vector2(56, 0)
 layout_mode = 1

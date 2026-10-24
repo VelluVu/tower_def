@@ -2,7 +2,11 @@ class_name GameWorldMap
 extends Control
 
 
+const TALENTS_TEXT : String = "Talents"
+const TALENTS_WITH_POINTS_TEXT : String = "Talents (%d)"
+
 @onready var to_menu_button : Button = $ToMenuButton
+@onready var talents_button : Button = $TalentsButton
 @onready var map : Node = $MarginContainer/Map
 var map_level_elements : Array[MapLevelElement]
 
@@ -10,6 +14,19 @@ var map_level_elements : Array[MapLevelElement]
 func _ready() -> void:
 	_get_map_level_elements()
 	to_menu_button.pressed.connect(_on_to_menu_pressed)
+	talents_button.pressed.connect(_on_talents_pressed)
+	PlayerProgress.talents_changed.connect(_update_talents_button)
+	_update_talents_button()
+
+
+#unspent points show on the button, so the player knows to spend them
+func _update_talents_button() -> void:
+	var unspent : int = PlayerProgress.get_talent_points_unspent()
+	talents_button.text = TALENTS_WITH_POINTS_TEXT % unspent if unspent > 0 else TALENTS_TEXT
+
+
+func _on_talents_pressed() -> void:
+	UISignals.talents.emit(true)
 
 
 func _input(event: InputEvent) -> void:

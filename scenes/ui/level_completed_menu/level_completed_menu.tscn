@@ -41,6 +41,11 @@ text = "Level Completed"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="TalentPoints" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Talent points"
+horizontal_alignment = 1
+
 [node name="ContinueButton" type="Button" parent="MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2

@@ -15,6 +15,7 @@ const SPEED_CONTROL_PANEL_NAME : String = "speed_control_panel"
 const LEVEL_UP_MENU_NAME : String = "level_up_menu"
 const WAVE_PANEL_NAME : String = "wave_panel"
 const PUFFE_DIALOGUE_NAME : String = "puffe_dialogue"
+const TALENT_MENU_NAME : String = "talent_menu"
 
 var scene_manager : SceneManager
 var level_up_menu : LevelUpMenu = null
@@ -25,6 +26,7 @@ func initialize(_scene_manager : SceneManager) -> void:
 	scene_manager.load_scene_by_name(MAIN_MENU_NAME, scene_manager.SceneType.UI, self)
 	UISignals.options.connect(_options)
 	UISignals.to_menu.connect(_menu)
+	UISignals.talents.connect(_on_talents)
 	UISignals.resign_level.connect(_on_resign_level)
 	UISignals.continue_from_pause_menu.connect(_continue_from_pause_menu)
 	GameSignals.level_loaded.connect(_on_level_loaded)
@@ -94,9 +96,20 @@ func _on_lose_game() -> void:
 	scene_manager.load_scene_by_name(LOSE_GAME_MENU_NAME, scene_manager.SceneType.UI, self)
 
 
-func _on_level_completed(_level : Level) -> void:
+#the talent screen opens over the world map and closes back to it
+func _on_talents(is_open : bool) -> void:
+	if is_open:
+		if not scene_manager.is_scene_loaded(TALENT_MENU_NAME, scene_manager.SceneType.UI):
+			scene_manager.load_scene_by_name(TALENT_MENU_NAME, scene_manager.SceneType.UI, self)
+		return
+
+	scene_manager.unload_scene_by_name(TALENT_MENU_NAME, scene_manager.SceneType.UI)
+
+
+func _on_level_completed(level : Level) -> void:
 	var menu : LevelCompletedMenu = scene_manager.load_scene_by_name(LEVEL_COMPLETED_MENU_NAME, scene_manager.SceneType.UI, self)
 	menu.show_result(scene_manager.current_level_number >= scene_manager.get_last_level_number())
+	menu.show_talent_points(TalentRules.points_for_level(level), PlayerProgress.get_level_talent_points(scene_manager.current_level_number))
 
 
 func _on_upgrade_level_gained(new_level : int, cards : Array[UpgradeCard]) -> void:
