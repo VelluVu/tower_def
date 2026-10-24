@@ -1,0 +1,851 @@
+[gd_resource type="Resource" script_class="TalentTree" format=3]
+
+[ext_resource type="Script" path="res://scenes/talents/talent_tree.gd" id="1_tree"]
+[ext_resource type="Script" path="res://scenes/talents/talent_node.gd" id="2_node"]
+[ext_resource type="Script" path="res://scenes/talents/talent_effect.gd" id="3_effect"]
+
+[sub_resource type="Resource" id="Effect_toxic_ooze_0"]
+script = ExtResource("3_effect")
+buildings = 15
+elements = 8
+stat_type = 2
+modify_type = 2
+value_per_rank = 0.05
+
+[sub_resource type="Resource" id="Effect_toxic_burst_0"]
+script = ExtResource("3_effect")
+buildings = 2
+elements = 8
+stat_type = 2
+modify_type = 2
+value_per_rank = 0.08
+
+[sub_resource type="Resource" id="Effect_wide_cloud_0"]
+script = ExtResource("3_effect")
+buildings = 2
+elements = 8
+stat_type = 5
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Effect_quick_pulse_p_0"]
+script = ExtResource("3_effect")
+buildings = 2
+elements = 8
+stat_type = 6
+modify_type = 0
+value_per_rank = 0.04
+
+[sub_resource type="Resource" id="Effect_caustic_pulse_0"]
+script = ExtResource("3_effect")
+buildings = 2
+elements = 8
+stat_type = 2
+modify_type = 2
+value_per_rank = 0.08
+
+[sub_resource type="Resource" id="Effect_spreading_fumes_0"]
+script = ExtResource("3_effect")
+buildings = 2
+elements = 8
+stat_type = 5
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Effect_venom_bolts_0"]
+script = ExtResource("3_effect")
+buildings = 1
+elements = 8
+stat_type = 2
+modify_type = 2
+value_per_rank = 0.08
+
+[sub_resource type="Resource" id="Effect_quick_draw_p_0"]
+script = ExtResource("3_effect")
+buildings = 1
+elements = 8
+stat_type = 6
+modify_type = 0
+value_per_rank = 0.04
+
+[sub_resource type="Resource" id="Effect_long_flight_p_0"]
+script = ExtResource("3_effect")
+buildings = 1
+elements = 8
+stat_type = 5
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Effect_piercing_fangs_0"]
+script = ExtResource("3_effect")
+buildings = 1
+elements = 8
+stat_type = 2
+modify_type = 2
+value_per_rank = 0.08
+
+[sub_resource type="Resource" id="Effect_acid_beam_0"]
+script = ExtResource("3_effect")
+buildings = 4
+elements = 8
+stat_type = 2
+modify_type = 2
+value_per_rank = 0.08
+
+[sub_resource type="Resource" id="Effect_clear_lens_p_0"]
+script = ExtResource("3_effect")
+buildings = 4
+elements = 8
+stat_type = 5
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Effect_steady_beam_p_0"]
+script = ExtResource("3_effect")
+buildings = 4
+elements = 8
+stat_type = 6
+modify_type = 0
+value_per_rank = 0.04
+
+[sub_resource type="Resource" id="Effect_searing_acid_0"]
+script = ExtResource("3_effect")
+buildings = 4
+elements = 8
+stat_type = 2
+modify_type = 2
+value_per_rank = 0.08
+
+[sub_resource type="Resource" id="Effect_concentrated_0"]
+script = ExtResource("3_effect")
+buildings = 4
+elements = 8
+stat_type = 2
+modify_type = 2
+value_per_rank = 0.08
+
+[sub_resource type="Resource" id="Effect_venom_snare_0"]
+script = ExtResource("3_effect")
+buildings = 8
+elements = 8
+stat_type = 2
+modify_type = 2
+value_per_rank = 0.08
+
+[sub_resource type="Resource" id="Effect_quick_reset_0"]
+script = ExtResource("3_effect")
+buildings = 8
+elements = 8
+stat_type = 6
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Effect_barbed_jaws_0"]
+script = ExtResource("3_effect")
+buildings = 8
+elements = 8
+stat_type = 2
+modify_type = 2
+value_per_rank = 0.08
+
+[sub_resource type="Resource" id="Effect_venom_sacs_0"]
+script = ExtResource("3_effect")
+buildings = 8
+elements = 8
+stat_type = 6
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Node_toxic_ooze"]
+script = ExtResource("2_node")
+id = &"toxic_ooze"
+display_name = "Toxic Ooze"
+description = "Poison damage +5% (every Poison building)"
+kind = 0
+max_rank = 3
+position = Vector2(8.923, 0)
+color = Color(0.651, 0.89, 0.29, 1)
+links = Array[StringName]([&"virulence", &"toxic_burst", &"venom_bolts", &"acid_beam", &"venom_snare", &"toxic_mortar", &"spiked_moss"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_toxic_ooze_0")])
+
+[sub_resource type="Resource" id="Node_black_venom"]
+script = ExtResource("2_node")
+id = &"black_venom"
+display_name = "Black Venom"
+description = "Poison has no stack cap, and every 5 stacks on an enemy slow it by 10% (down to the 40% floor)"
+kind = 3
+max_rank = 1
+position = Vector2(8.923, 20)
+color = Color(0.949, 0.757, 0.306, 1)
+
+[sub_resource type="Resource" id="Node_virulence"]
+script = ExtResource("2_node")
+id = &"virulence"
+display_name = "Virulence"
+description = "Poison potency +10%"
+kind = 0
+max_rank = 3
+position = Vector2(8.923, 1.538)
+color = Color(0.651, 0.89, 0.29, 1)
+links = Array[StringName]([&"lingering_toxins", &"thick_venom"])
+
+[sub_resource type="Resource" id="Node_lingering_toxins"]
+script = ExtResource("2_node")
+id = &"lingering_toxins"
+display_name = "Lingering Toxins"
+description = "Poison lasts 1 tick longer"
+kind = 0
+max_rank = 2
+position = Vector2(7.897, 3.897)
+color = Color(0.651, 0.89, 0.29, 1)
+links = Array[StringName]([&"seeping"])
+
+[sub_resource type="Resource" id="Node_thick_venom"]
+script = ExtResource("2_node")
+id = &"thick_venom"
+display_name = "Thick Venom"
+description = "Poison stacks +1 (max stacks on one enemy)"
+kind = 0
+max_rank = 2
+position = Vector2(9.949, 3.897)
+color = Color(0.651, 0.89, 0.29, 1)
+links = Array[StringName]([&"seeping"])
+
+[sub_resource type="Resource" id="Node_seeping"]
+script = ExtResource("2_node")
+id = &"seeping"
+display_name = "Seeping"
+description = "Poison ticks 10% faster"
+kind = 0
+max_rank = 3
+position = Vector2(8.923, 6.256)
+color = Color(0.651, 0.89, 0.29, 1)
+links = Array[StringName]([&"weakening", &"corrosion"])
+
+[sub_resource type="Resource" id="Node_weakening"]
+script = ExtResource("2_node")
+id = &"weakening"
+display_name = "Weakening"
+description = "Poisoned enemies deal 10% less damage"
+kind = 0
+max_rank = 2
+position = Vector2(7.897, 8.615)
+color = Color(0.651, 0.89, 0.29, 1)
+links = Array[StringName]([&"potent_brew"])
+
+[sub_resource type="Resource" id="Node_corrosion"]
+script = ExtResource("2_node")
+id = &"corrosion"
+display_name = "Corrosion"
+description = "Poisoned enemies take +4% damage from every source"
+kind = 0
+max_rank = 3
+position = Vector2(9.949, 8.615)
+color = Color(0.651, 0.89, 0.29, 1)
+links = Array[StringName]([&"potent_brew"])
+
+[sub_resource type="Resource" id="Node_potent_brew"]
+script = ExtResource("2_node")
+id = &"potent_brew"
+display_name = "Potent Brew"
+description = "Poison potency +10%"
+kind = 0
+max_rank = 3
+position = Vector2(8.923, 10.974)
+color = Color(0.651, 0.89, 0.29, 1)
+links = Array[StringName]([&"contagion", &"necrosis"])
+
+[sub_resource type="Resource" id="Node_contagion"]
+script = ExtResource("2_node")
+id = &"contagion"
+display_name = "Contagion"
+description = "Each poison tick has a 5% chance to pass a stack to an enemy within 1 tile"
+kind = 0
+max_rank = 3
+position = Vector2(7.897, 13.333)
+color = Color(0.651, 0.89, 0.29, 1)
+links = Array[StringName]([&"plague"])
+
+[sub_resource type="Resource" id="Node_necrosis"]
+script = ExtResource("2_node")
+id = &"necrosis"
+display_name = "Necrosis"
+description = "Poison deals +5% damage for every stack on the enemy"
+kind = 0
+max_rank = 2
+position = Vector2(9.949, 13.333)
+color = Color(0.651, 0.89, 0.29, 1)
+links = Array[StringName]([&"plague"])
+
+[sub_resource type="Resource" id="Node_plague"]
+script = ExtResource("2_node")
+id = &"plague"
+display_name = "Plague"
+description = "When a poisoned enemy dies, its poison jumps with all its stacks to the 2 nearest enemies"
+kind = 3
+max_rank = 1
+position = Vector2(8.923, 15.692)
+color = Color(0.651, 0.89, 0.29, 1)
+
+[sub_resource type="Resource" id="Node_toxic_burst"]
+script = ExtResource("2_node")
+id = &"toxic_burst"
+display_name = "Toxic Burst"
+description = "Poison Nova damage +8%"
+kind = 0
+max_rank = 3
+position = Vector2(2.564, 1.538)
+color = Color(0.784, 0.42, 0.847, 1)
+links = Array[StringName]([&"wide_cloud"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_toxic_burst_0")])
+
+[sub_resource type="Resource" id="Node_wide_cloud"]
+script = ExtResource("2_node")
+id = &"wide_cloud"
+display_name = "Wide Cloud"
+description = "Poison Nova radius +0.1 tiles"
+kind = 0
+max_rank = 2
+position = Vector2(2.564, 3.179)
+color = Color(0.784, 0.42, 0.847, 1)
+links = Array[StringName]([&"quick_pulse_p"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_wide_cloud_0")])
+
+[sub_resource type="Resource" id="Node_quick_pulse_p"]
+script = ExtResource("2_node")
+id = &"quick_pulse_p"
+display_name = "Quick Pulse"
+description = "Poison Nova attack speed +0.04"
+kind = 0
+max_rank = 3
+position = Vector2(2.564, 4.821)
+color = Color(0.784, 0.42, 0.847, 1)
+links = Array[StringName]([&"nova_t2"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_quick_pulse_p_0")])
+
+[sub_resource type="Resource" id="Node_nova_t2"]
+script = ExtResource("2_node")
+id = &"nova_t2"
+display_name = "Nova T2"
+description = "Unlocks Poison Nova T2"
+kind = 2
+max_rank = 1
+position = Vector2(2.564, 6.462)
+color = Color(0.784, 0.42, 0.847, 1)
+links = Array[StringName]([&"noxious_burst", &"caustic_pulse"])
+
+[sub_resource type="Resource" id="Node_noxious_burst"]
+script = ExtResource("2_node")
+id = &"noxious_burst"
+display_name = "Noxious Burst"
+description = "Poison Nova potency +10%"
+kind = 0
+max_rank = 3
+position = Vector2(1.641, 8.103)
+color = Color(0.784, 0.42, 0.847, 1)
+links = Array[StringName]([&"lingering_cloud"])
+
+[sub_resource type="Resource" id="Node_caustic_pulse"]
+script = ExtResource("2_node")
+id = &"caustic_pulse"
+display_name = "Caustic Pulse"
+description = "Poison Nova damage +8%"
+kind = 0
+max_rank = 3
+position = Vector2(3.487, 8.103)
+color = Color(0.784, 0.42, 0.847, 1)
+links = Array[StringName]([&"overdose"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_caustic_pulse_0")])
+
+[sub_resource type="Resource" id="Node_lingering_cloud"]
+script = ExtResource("2_node")
+id = &"lingering_cloud"
+display_name = "Lingering Cloud"
+description = "Each burst leaves a poison cloud for 1 s"
+kind = 0
+max_rank = 2
+position = Vector2(1.641, 9.744)
+color = Color(0.784, 0.42, 0.847, 1)
+links = Array[StringName]([&"spreading_fumes"])
+
+[sub_resource type="Resource" id="Node_overdose"]
+script = ExtResource("2_node")
+id = &"overdose"
+display_name = "Overdose"
+description = "Bursts deal +3% damage for every poison stack on the enemy"
+kind = 0
+max_rank = 2
+position = Vector2(3.487, 9.744)
+color = Color(0.784, 0.42, 0.847, 1)
+links = Array[StringName]([&"spreading_fumes"])
+
+[sub_resource type="Resource" id="Node_spreading_fumes"]
+script = ExtResource("2_node")
+id = &"spreading_fumes"
+display_name = "Spreading Fumes"
+description = "Poison Nova radius +0.1 tiles"
+kind = 0
+max_rank = 2
+position = Vector2(2.564, 11.385)
+color = Color(0.784, 0.42, 0.847, 1)
+links = Array[StringName]([&"nova_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_spreading_fumes_0")])
+
+[sub_resource type="Resource" id="Node_nova_t3"]
+script = ExtResource("2_node")
+id = &"nova_t3"
+display_name = "Nova T3"
+description = "Unlocks Poison Nova T3"
+kind = 2
+max_rank = 1
+position = Vector2(2.564, 13.026)
+color = Color(0.784, 0.42, 0.847, 1)
+links = Array[StringName]([&"toxic_bloom"])
+one_way_links = Array[StringName]([&"black_venom"])
+needs = &"nova_t2"
+
+[sub_resource type="Resource" id="Node_toxic_bloom"]
+script = ExtResource("2_node")
+id = &"toxic_bloom"
+display_name = "Toxic Bloom"
+description = "Every 4th burst adds 2 poison stacks to every enemy it hits"
+kind = 3
+max_rank = 1
+position = Vector2(2.564, 15.179)
+color = Color(0.784, 0.42, 0.847, 1)
+
+[sub_resource type="Resource" id="Node_venom_bolts"]
+script = ExtResource("2_node")
+id = &"venom_bolts"
+display_name = "Venom Bolts"
+description = "Poison Bolter damage +8%"
+kind = 0
+max_rank = 3
+position = Vector2(5.846, 2.359)
+color = Color(0.902, 0.949, 0.627, 1)
+links = Array[StringName]([&"quick_draw_p"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_venom_bolts_0")])
+
+[sub_resource type="Resource" id="Node_quick_draw_p"]
+script = ExtResource("2_node")
+id = &"quick_draw_p"
+display_name = "Quick Draw"
+description = "Poison Bolter attack speed +0.04"
+kind = 0
+max_rank = 3
+position = Vector2(5.846, 4)
+color = Color(0.902, 0.949, 0.627, 1)
+links = Array[StringName]([&"long_flight_p"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_quick_draw_p_0")])
+
+[sub_resource type="Resource" id="Node_long_flight_p"]
+script = ExtResource("2_node")
+id = &"long_flight_p"
+display_name = "Long Flight"
+description = "Poison Bolter range +0.1 tiles"
+kind = 0
+max_rank = 2
+position = Vector2(5.846, 5.641)
+color = Color(0.902, 0.949, 0.627, 1)
+links = Array[StringName]([&"bolter_t2"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_long_flight_p_0")])
+
+[sub_resource type="Resource" id="Node_bolter_t2"]
+script = ExtResource("2_node")
+id = &"bolter_t2"
+display_name = "Bolter T2"
+description = "Unlocks Poison Bolter T2"
+kind = 2
+max_rank = 1
+position = Vector2(5.846, 7.282)
+color = Color(0.902, 0.949, 0.627, 1)
+links = Array[StringName]([&"envenomed_tips", &"piercing_fangs"])
+
+[sub_resource type="Resource" id="Node_envenomed_tips"]
+script = ExtResource("2_node")
+id = &"envenomed_tips"
+display_name = "Envenomed Tips"
+description = "Poison Bolter potency +10%"
+kind = 0
+max_rank = 3
+position = Vector2(4.923, 8.923)
+color = Color(0.902, 0.949, 0.627, 1)
+links = Array[StringName]([&"barbed_bolts"])
+
+[sub_resource type="Resource" id="Node_piercing_fangs"]
+script = ExtResource("2_node")
+id = &"piercing_fangs"
+display_name = "Piercing Fangs"
+description = "Poison Bolter damage +8%"
+kind = 0
+max_rank = 3
+position = Vector2(6.769, 8.923)
+color = Color(0.902, 0.949, 0.627, 1)
+links = Array[StringName]([&"opportunist"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_piercing_fangs_0")])
+
+[sub_resource type="Resource" id="Node_barbed_bolts"]
+script = ExtResource("2_node")
+id = &"barbed_bolts"
+display_name = "Barbed Bolts"
+description = "Each hit has a 20% chance to add 1 extra poison stack"
+kind = 0
+max_rank = 2
+position = Vector2(4.923, 10.564)
+color = Color(0.902, 0.949, 0.627, 1)
+links = Array[StringName]([&"viper_strike"])
+
+[sub_resource type="Resource" id="Node_opportunist"]
+script = ExtResource("2_node")
+id = &"opportunist"
+display_name = "Opportunist"
+description = "Bolts deal +10% damage to poisoned enemies"
+kind = 0
+max_rank = 2
+position = Vector2(6.769, 10.564)
+color = Color(0.902, 0.949, 0.627, 1)
+links = Array[StringName]([&"viper_strike"])
+
+[sub_resource type="Resource" id="Node_viper_strike"]
+script = ExtResource("2_node")
+id = &"viper_strike"
+display_name = "Viper Strike"
+description = "Poison Bolter critical chance +3 points against poisoned enemies"
+kind = 0
+max_rank = 2
+position = Vector2(5.846, 12.205)
+color = Color(0.902, 0.949, 0.627, 1)
+links = Array[StringName]([&"bolter_t3"])
+
+[sub_resource type="Resource" id="Node_bolter_t3"]
+script = ExtResource("2_node")
+id = &"bolter_t3"
+display_name = "Bolter T3"
+description = "Unlocks Poison Bolter T3"
+kind = 2
+max_rank = 1
+position = Vector2(5.846, 13.846)
+color = Color(0.902, 0.949, 0.627, 1)
+links = Array[StringName]([&"hydra_bolts"])
+one_way_links = Array[StringName]([&"black_venom"])
+needs = &"bolter_t2"
+
+[sub_resource type="Resource" id="Node_hydra_bolts"]
+script = ExtResource("2_node")
+id = &"hydra_bolts"
+display_name = "Hydra Bolts"
+description = "Every 5th bolt splits into 3 poison bolts that hit nearby enemies"
+kind = 3
+max_rank = 1
+position = Vector2(5.846, 16)
+color = Color(0.902, 0.949, 0.627, 1)
+
+[sub_resource type="Resource" id="Node_acid_beam"]
+script = ExtResource("2_node")
+id = &"acid_beam"
+display_name = "Acid Beam"
+description = "Poison Beamer damage +8%"
+kind = 0
+max_rank = 3
+position = Vector2(12, 3.179)
+color = Color(0.345, 0.784, 0.541, 1)
+links = Array[StringName]([&"clear_lens_p"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_acid_beam_0")])
+
+[sub_resource type="Resource" id="Node_clear_lens_p"]
+script = ExtResource("2_node")
+id = &"clear_lens_p"
+display_name = "Clear Lens"
+description = "Poison Beamer range +0.1 tiles"
+kind = 0
+max_rank = 2
+position = Vector2(12, 4.821)
+color = Color(0.345, 0.784, 0.541, 1)
+links = Array[StringName]([&"steady_beam_p"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_clear_lens_p_0")])
+
+[sub_resource type="Resource" id="Node_steady_beam_p"]
+script = ExtResource("2_node")
+id = &"steady_beam_p"
+display_name = "Steady Beam"
+description = "Poison Beamer attack speed +0.04"
+kind = 0
+max_rank = 3
+position = Vector2(12, 6.462)
+color = Color(0.345, 0.784, 0.541, 1)
+links = Array[StringName]([&"beamer_t2"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_steady_beam_p_0")])
+
+[sub_resource type="Resource" id="Node_beamer_t2"]
+script = ExtResource("2_node")
+id = &"beamer_t2"
+display_name = "Beamer T2"
+description = "Unlocks Poison Beamer T2"
+kind = 2
+max_rank = 1
+position = Vector2(12, 8.103)
+color = Color(0.345, 0.784, 0.541, 1)
+links = Array[StringName]([&"toxic_stream", &"searing_acid"])
+
+[sub_resource type="Resource" id="Node_toxic_stream"]
+script = ExtResource("2_node")
+id = &"toxic_stream"
+display_name = "Toxic Stream"
+description = "Poison Beamer potency +10%"
+kind = 0
+max_rank = 3
+position = Vector2(11.077, 9.744)
+color = Color(0.345, 0.784, 0.541, 1)
+links = Array[StringName]([&"saturation"])
+
+[sub_resource type="Resource" id="Node_searing_acid"]
+script = ExtResource("2_node")
+id = &"searing_acid"
+display_name = "Searing Acid"
+description = "Poison Beamer damage +8%"
+kind = 0
+max_rank = 3
+position = Vector2(12.923, 9.744)
+color = Color(0.345, 0.784, 0.541, 1)
+links = Array[StringName]([&"dissolve"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_searing_acid_0")])
+
+[sub_resource type="Resource" id="Node_saturation"]
+script = ExtResource("2_node")
+id = &"saturation"
+display_name = "Saturation"
+description = "The beam adds poison stacks 25% faster"
+kind = 0
+max_rank = 2
+position = Vector2(11.077, 11.385)
+color = Color(0.345, 0.784, 0.541, 1)
+links = Array[StringName]([&"concentrated"])
+
+[sub_resource type="Resource" id="Node_dissolve"]
+script = ExtResource("2_node")
+id = &"dissolve"
+display_name = "Dissolve"
+description = "The beam's target loses 5% armor for every second under it, up to 25% (needs resistances)"
+kind = 0
+max_rank = 2
+position = Vector2(12.923, 11.385)
+color = Color(0.345, 0.784, 0.541, 1)
+links = Array[StringName]([&"concentrated"])
+
+[sub_resource type="Resource" id="Node_concentrated"]
+script = ExtResource("2_node")
+id = &"concentrated"
+display_name = "Concentrated"
+description = "Poison Beamer damage +8%"
+kind = 0
+max_rank = 3
+position = Vector2(12, 13.026)
+color = Color(0.345, 0.784, 0.541, 1)
+links = Array[StringName]([&"beamer_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_concentrated_0")])
+
+[sub_resource type="Resource" id="Node_beamer_t3"]
+script = ExtResource("2_node")
+id = &"beamer_t3"
+display_name = "Beamer T3"
+description = "Unlocks Poison Beamer T3"
+kind = 2
+max_rank = 1
+position = Vector2(12, 14.667)
+color = Color(0.345, 0.784, 0.541, 1)
+links = Array[StringName]([&"acid_splash"])
+one_way_links = Array[StringName]([&"black_venom"])
+needs = &"beamer_t2"
+
+[sub_resource type="Resource" id="Node_acid_splash"]
+script = ExtResource("2_node")
+id = &"acid_splash"
+display_name = "Acid Splash"
+description = "When the beam's target dies, its poison splashes onto every enemy within 1 tile"
+kind = 3
+max_rank = 1
+position = Vector2(12, 16.821)
+color = Color(0.345, 0.784, 0.541, 1)
+
+[sub_resource type="Resource" id="Node_venom_snare"]
+script = ExtResource("2_node")
+id = &"venom_snare"
+display_name = "Venom Snare"
+description = "Poison trap damage +8%"
+kind = 0
+max_rank = 3
+position = Vector2(15.282, 2.154)
+color = Color(0.722, 0.604, 0.29, 1)
+links = Array[StringName]([&"quick_reset"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_venom_snare_0")])
+
+[sub_resource type="Resource" id="Node_quick_reset"]
+script = ExtResource("2_node")
+id = &"quick_reset"
+display_name = "Quick Reset"
+description = "Poison trap re-arm speed +10%"
+kind = 0
+max_rank = 3
+position = Vector2(15.282, 3.795)
+color = Color(0.722, 0.604, 0.29, 1)
+links = Array[StringName]([&"thick_cloud"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_quick_reset_0")])
+
+[sub_resource type="Resource" id="Node_thick_cloud"]
+script = ExtResource("2_node")
+id = &"thick_cloud"
+display_name = "Thick Cloud"
+description = "The poison cloud lasts 1 s longer"
+kind = 0
+max_rank = 2
+position = Vector2(15.282, 5.436)
+color = Color(0.722, 0.604, 0.29, 1)
+links = Array[StringName]([&"trap_t2"])
+
+[sub_resource type="Resource" id="Node_trap_t2"]
+script = ExtResource("2_node")
+id = &"trap_t2"
+display_name = "Trap T2"
+description = "Unlocks Poison Trap T2: the cloud stacks poison"
+kind = 2
+max_rank = 1
+position = Vector2(15.282, 7.077)
+color = Color(0.722, 0.604, 0.29, 1)
+links = Array[StringName]([&"choking_gas", &"barbed_jaws"])
+
+[sub_resource type="Resource" id="Node_choking_gas"]
+script = ExtResource("2_node")
+id = &"choking_gas"
+display_name = "Choking Gas"
+description = "Poison cloud potency +10%"
+kind = 0
+max_rank = 3
+position = Vector2(14.359, 8.718)
+color = Color(0.722, 0.604, 0.29, 1)
+links = Array[StringName]([&"wide_fog"])
+
+[sub_resource type="Resource" id="Node_barbed_jaws"]
+script = ExtResource("2_node")
+id = &"barbed_jaws"
+display_name = "Barbed Jaws"
+description = "Poison trap snap damage +8%"
+kind = 0
+max_rank = 3
+position = Vector2(16.205, 8.718)
+color = Color(0.722, 0.604, 0.29, 1)
+links = Array[StringName]([&"sickening_snap"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_barbed_jaws_0")])
+
+[sub_resource type="Resource" id="Node_wide_fog"]
+script = ExtResource("2_node")
+id = &"wide_fog"
+display_name = "Wide Fog"
+description = "The cloud is 0.25 tiles wider"
+kind = 0
+max_rank = 2
+position = Vector2(14.359, 10.359)
+color = Color(0.722, 0.604, 0.29, 1)
+links = Array[StringName]([&"venom_sacs"])
+
+[sub_resource type="Resource" id="Node_sickening_snap"]
+script = ExtResource("2_node")
+id = &"sickening_snap"
+display_name = "Sickening Snap"
+description = "The snap deals +20% damage to poisoned enemies"
+kind = 0
+max_rank = 2
+position = Vector2(16.205, 10.359)
+color = Color(0.722, 0.604, 0.29, 1)
+links = Array[StringName]([&"venom_sacs"])
+
+[sub_resource type="Resource" id="Node_venom_sacs"]
+script = ExtResource("2_node")
+id = &"venom_sacs"
+display_name = "Venom Sacs"
+description = "Poison trap re-arm speed +10%"
+kind = 0
+max_rank = 3
+position = Vector2(15.282, 12)
+color = Color(0.722, 0.604, 0.29, 1)
+links = Array[StringName]([&"trap_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_venom_sacs_0")])
+
+[sub_resource type="Resource" id="Node_trap_t3"]
+script = ExtResource("2_node")
+id = &"trap_t3"
+display_name = "Trap T3"
+description = "Unlocks Poison Trap T3: poison spreads when a poisoned enemy dies"
+kind = 2
+max_rank = 1
+position = Vector2(15.282, 13.641)
+color = Color(0.722, 0.604, 0.29, 1)
+links = Array[StringName]([&"creeping_fog"])
+one_way_links = Array[StringName]([&"black_venom"])
+needs = &"trap_t2"
+
+[sub_resource type="Resource" id="Node_creeping_fog"]
+script = ExtResource("2_node")
+id = &"creeping_fog"
+display_name = "Creeping Fog"
+description = "The cloud drifts along the enemy path for 3 s"
+kind = 3
+max_rank = 1
+position = Vector2(15.282, 15.795)
+color = Color(0.722, 0.604, 0.29, 1)
+
+[sub_resource type="Resource" id="Node_toxic_mortar"]
+script = ExtResource("2_node")
+id = &"toxic_mortar"
+display_name = "Toxic Mortar"
+description = "Poison walls poison their attackers 15% harder (potency)"
+kind = 0
+max_rank = 2
+position = Vector2(0, 1.538)
+color = Color(0.604, 0.651, 0.69, 1)
+links = Array[StringName]([&"wall_t2"])
+
+[sub_resource type="Resource" id="Node_wall_t2"]
+script = ExtResource("2_node")
+id = &"wall_t2"
+display_name = "Wall T2"
+description = "Unlocks Poison Wall T2: poisoned attackers deal less damage"
+kind = 2
+max_rank = 1
+position = Vector2(0, 3.385)
+color = Color(0.604, 0.651, 0.69, 1)
+
+[sub_resource type="Resource" id="Node_spiked_moss"]
+script = ExtResource("2_node")
+id = &"spiked_moss"
+display_name = "Spiked Moss"
+description = "Each hit on a Poison wall adds 1 more poison stack to the attacker (20% chance per rank)"
+kind = 0
+max_rank = 2
+position = Vector2(17.846, 1.538)
+color = Color(0.604, 0.651, 0.69, 1)
+links = Array[StringName]([&"wall_t3"])
+
+[sub_resource type="Resource" id="Node_wall_t3"]
+script = ExtResource("2_node")
+id = &"wall_t3"
+display_name = "Wall T3"
+description = "Unlocks Poison Wall T3: poison spreads from attacker to attacker"
+kind = 2
+max_rank = 1
+position = Vector2(17.846, 3.385)
+color = Color(0.604, 0.651, 0.69, 1)
+needs = &"wall_t2"
+
+[resource]
+script = ExtResource("1_tree")
+id = &"poison"
+display_name = "Poison"
+start_id = &"toxic_ooze"
+nodes = Array[ExtResource("2_node")]([SubResource("Node_toxic_ooze"), SubResource("Node_black_venom"), SubResource("Node_virulence"), SubResource("Node_lingering_toxins"), SubResource("Node_thick_venom"), SubResource("Node_seeping"), SubResource("Node_weakening"), SubResource("Node_corrosion"), SubResource("Node_potent_brew"), SubResource("Node_contagion"), SubResource("Node_necrosis"), SubResource("Node_plague"), SubResource("Node_toxic_burst"), SubResource("Node_wide_cloud"), SubResource("Node_quick_pulse_p"), SubResource("Node_nova_t2"), SubResource("Node_noxious_burst"), SubResource("Node_caustic_pulse"), SubResource("Node_lingering_cloud"), SubResource("Node_overdose"), SubResource("Node_spreading_fumes"), SubResource("Node_nova_t3"), SubResource("Node_toxic_bloom"), SubResource("Node_venom_bolts"), SubResource("Node_quick_draw_p"), SubResource("Node_long_flight_p"), SubResource("Node_bolter_t2"), SubResource("Node_envenomed_tips"), SubResource("Node_piercing_fangs"), SubResource("Node_barbed_bolts"), SubResource("Node_opportunist"), SubResource("Node_viper_strike"), SubResource("Node_bolter_t3"), SubResource("Node_hydra_bolts"), SubResource("Node_acid_beam"), SubResource("Node_clear_lens_p"), SubResource("Node_steady_beam_p"), SubResource("Node_beamer_t2"), SubResource("Node_toxic_stream"), SubResource("Node_searing_acid"), SubResource("Node_saturation"), SubResource("Node_dissolve"), SubResource("Node_concentrated"), SubResource("Node_beamer_t3"), SubResource("Node_acid_splash"), SubResource("Node_venom_snare"), SubResource("Node_quick_reset"), SubResource("Node_thick_cloud"), SubResource("Node_trap_t2"), SubResource("Node_choking_gas"), SubResource("Node_barbed_jaws"), SubResource("Node_wide_fog"), SubResource("Node_sickening_snap"), SubResource("Node_venom_sacs"), SubResource("Node_trap_t3"), SubResource("Node_creeping_fog"), SubResource("Node_toxic_mortar"), SubResource("Node_wall_t2"), SubResource("Node_spiked_moss"), SubResource("Node_wall_t3")])
+shapes = Array[PackedVector2Array]([PackedVector2Array(8.779, 0.103, 8.779, 15.692, 9.067, 15.692, 9.067, 0.103), PackedVector2Array(2.421, 0.103, 2.421, 15.179, 2.708, 15.179, 2.708, 0.103), PackedVector2Array(5.703, 0.103, 5.703, 16, 5.99, 16, 5.99, 0.103), PackedVector2Array(11.856, 0.103, 11.856, 16.821, 12.144, 16.821, 12.144, 0.103), PackedVector2Array(15.138, 0.103, 15.138, 15.795, 15.426, 15.795, 15.426, 0.103), PackedVector2Array(-0.144, 0.103, -0.144, 3.385, 0.144, 3.385, 0.144, 0.103), PackedVector2Array(17.703, 0.103, 17.703, 3.385, 17.99, 3.385, 17.99, 0.103), PackedVector2Array(-2.769, -1.333, -2.667, -1.333, -2.564, -1.333, -2.462, -1.333, -2.359, -1.333, -2.256, -1.333, -2.154, -1.333, -2.051, -1.333, -1.949, -1.333, -1.846, -1.333, -1.744, -1.333, -1.641, -1.333, -1.538, -1.333, -1.436, -1.333, -1.333, -1.333, -1.231, -1.333, -1.128, -1.333, -1.026, -1.333, -0.923, -1.333, -0.821, -1.333, -0.718, -1.333, -0.615, -1.333, -0.513, -1.333, -0.41, -1.333, -0.308, -1.333, -0.205, -1.333, -0.103, -1.333, -0, -1.333, 0.102, -1.333, 0.205, -1.333, 0.308, -1.333, 0.41, -1.333, 0.513, -1.333, 0.615, -1.333, 0.718, -1.333, 0.82, -1.333, 0.923, -1.333, 1.026, -1.333, 1.128, -1.333, 1.231, -1.333, 1.333, -1.333, 1.436, -1.333, 1.538, -1.333, 1.641, -1.333, 1.743, -1.333, 1.846, -1.333, 1.949, -1.333, 2.051, -1.333, 2.154, -1.333, 2.256, -1.333, 2.359, -1.333, 2.461, -1.333, 2.564, -1.333, 2.667, -1.333, 2.769, -1.333, 2.872, -1.333, 2.974, -1.333, 3.077, -1.333, 3.179, -1.333, 3.282, -1.333, 3.384, -1.333, 3.487, -1.333, 3.59, -1.333, 3.692, -1.333, 3.795, -1.333, 3.897, -1.333, 4, -1.333, 4.102, -1.333, 4.205, -1.333, 4.308, -1.333, 4.41, -1.333, 4.513, -1.333, 4.615, -1.333, 4.718, -1.333, 4.82, -1.333, 4.923, -1.333, 5.025, -1.333, 5.128, -1.333, 5.231, -1.333, 5.333, -1.333, 5.436, -1.333, 5.538, -1.333, 5.641, -1.333, 5.743, -1.333, 5.846, -1.333, 5.948, -1.333, 6.051, -1.333, 6.154, -1.333, 6.256, -1.333, 6.359, -1.333, 6.461, -1.333, 6.564, -1.333, 6.666, -1.333, 6.769, -1.333, 6.872, -1.333, 6.974, -1.333, 7.077, -1.333, 7.179, -1.333, 7.282, -1.333, 7.384, -1.333, 7.487, -1.333, 7.589, -1.333, 7.692, -1.333, 7.795, -1.333, 7.897, -1.333, 8, -1.333, 8.102, -1.333, 8.205, -1.333, 8.307, -1.333, 8.41, -1.333, 8.513, -1.333, 8.615, -1.333, 8.718, -1.333, 8.82, -1.333, 8.923, -1.333, 9.025, -1.333, 9.128, -1.333, 9.23, -1.333, 9.333, -1.333, 9.436, -1.333, 9.538, -1.333, 9.641, -1.333, 9.743, -1.333, 9.846, -1.333, 9.948, -1.333, 10.051, -1.333, 10.154, -1.333, 10.256, -1.333, 10.359, -1.333, 10.461, -1.333, 10.564, -1.333, 10.666, -1.333, 10.769, -1.333, 10.871, -1.333, 10.974, -1.333, 11.077, -1.333, 11.179, -1.333, 11.282, -1.333, 11.384, -1.333, 11.487, -1.333, 11.589, -1.333, 11.692, -1.333, 11.795, -1.333, 11.897, -1.333, 12, -1.333, 12.102, -1.333, 12.205, -1.333, 12.307, -1.333, 12.41, -1.333, 12.512, -1.333, 12.615, -1.333, 12.718, -1.333, 12.82, -1.333, 12.923, -1.333, 13.025, -1.333, 13.128, -1.333, 13.23, -1.333, 13.333, -1.333, 13.435, -1.333, 13.538, -1.333, 13.641, -1.333, 13.743, -1.333, 13.846, -1.333, 13.948, -1.333, 14.051, -1.333, 14.153, -1.333, 14.256, -1.333, 14.359, -1.333, 14.461, -1.333, 14.564, -1.333, 14.666, -1.333, 14.769, -1.333, 14.871, -1.333, 14.974, -1.333, 15.076, -1.333, 15.179, -1.333, 15.282, -1.333, 15.384, -1.333, 15.487, -1.333, 15.589, -1.333, 15.692, -1.333, 15.794, -1.333, 15.897, -1.333, 16, -1.333, 16.102, -1.333, 16.205, -1.333, 16.307, -1.333, 16.41, -1.333, 16.512, -1.333, 16.615, -1.333, 16.717, -1.333, 16.82, -1.333, 16.923, -1.333, 17.025, -1.333, 17.128, -1.333, 17.23, -1.333, 17.333, -1.333, 17.435, -1.333, 17.538, -1.333, 17.641, -1.333, 17.743, -1.333, 17.846, -1.333, 17.948, -1.333, 18.051, -1.333, 18.153, -1.333, 18.256, -1.333, 18.358, -1.333, 18.461, -1.333, 18.564, -1.333, 18.666, -1.333, 18.769, -1.333, 18.871, -1.333, 18.974, -1.333, 19.076, -1.333, 19.179, -1.333, 19.281, -1.333, 19.384, -1.333, 19.487, -1.333, 19.589, -1.333, 19.692, -1.333, 19.794, -1.333, 19.897, -1.333, 19.999, -1.333, 20.102, -1.333, 20.205, -1.333, 20.307, -1.333, 20.41, -1.333, 20.512, -1.333, 20.615, -1.333, 20.717, -1.333, 20.82, -1.333, 20.922, -1.333, 21.025, -1.333, 21.128, -1.333, 21.23, -1.333, 21.231, -1.231, 21.231, -1.129, 21.231, -1.026, 21.231, -0.924, 21.231, -0.821, 21.231, -0.719, 21.231, -0.616, 21.231, -0.513, 21.231, -0.411, 21.231, -0.308, 21.231, -0.206, 21.231, -0.103, 21.164, -0.026, 21.089, 0.044, 21.005, 0.102, 20.91, 0.142, 20.809, 0.154, 20.708, 0.135, 20.616, 0.09, 20.534, 0.029, 20.461, -0.043, 20.387, -0.097, 20.286, -0.076, 20.185, -0.062, 20.082, -0.053, 19.98, -0.051, 19.877, -0.056, 19.775, -0.067, 19.674, -0.084, 19.58, -0.09, 19.511, -0.014, 19.435, 0.054, 19.349, 0.11, 19.253, 0.146, 19.151, 0.153, 19.052, 0.129, 18.961, 0.081, 18.881, 0.018, 18.809, -0.055, 18.729, -0.093, 18.629, -0.073, 18.527, -0.06, 18.425, -0.053, 18.322, -0.052, 18.22, -0.057, 18.118, -0.069, 18.017, -0.087, 17.928, -0.077, 17.858, -0.002, 17.781, 0.064, 17.693, 0.117, 17.596, 0.149, 17.494, 0.151, 17.395, 0.123, 17.306, 0.072, 17.227, 0.006, 17.157, -0.068, 17.072, -0.09, 16.971, -0.071, 16.87, -0.058, 16.767, -0.052, 16.665, -0.052, 16.562, -0.059, 16.461, -0.071, 16.36, -0.09, 16.276, -0.065, 16.206, 0.009, 16.126, 0.074, 16.037, 0.124, 15.938, 0.151, 15.836, 0.148, 15.739, 0.116, 15.652, 0.062, 15.575, -0.005, 15.505, -0.081, 15.415, -0.086, 15.314, -0.068, 15.212, -0.057, 15.11, -0.052, 15.007, -0.053, 14.905, -0.06, 14.803, -0.074, 14.703, -0.094, 14.624, -0.052, 14.552, 0.02, 14.471, 0.083, 14.38, 0.13, 14.281, 0.153, 14.179, 0.145, 14.083, 0.108, 13.998, 0.052, 13.922, -0.017, 13.854, -0.093, 13.758, -0.083, 13.656, -0.066, 13.554, -0.056, 13.452, -0.051, 13.35, -0.054, 13.247, -0.062, 13.146, -0.077, 13.045, -0.098, 12.972, -0.04, 12.899, 0.031, 12.816, 0.092, 12.724, 0.136, 12.623, 0.154, 12.522, 0.141, 12.428, 0.1, 12.344, 0.042, 12.269, -0.029, 12.201, -0.101, 12.1, -0.08, 11.999, -0.064, 11.897, -0.054, 11.794, -0.051, 11.692, -0.055, 11.59, -0.064, 11.489, -0.08, 11.388, -0.102, 11.32, -0.028, 11.245, 0.042, 11.161, 0.101, 11.067, 0.141, 10.966, 0.154, 10.865, 0.136, 10.773, 0.092, 10.69, 0.031, 10.617, -0.041, 10.543, -0.098, 10.443, -0.077, 10.342, -0.062, 10.239, -0.054, 10.137, -0.051, 10.034, -0.056, 9.932, -0.066, 9.831, -0.083, 9.736, -0.093, 9.667, -0.016, 9.591, 0.053, 9.506, 0.109, 9.41, 0.145, 9.308, 0.153, 9.208, 0.13, 9.118, 0.083, 9.037, 0.02, 8.965, -0.053, 8.886, -0.094, 8.786, -0.074, 8.684, -0.06, 8.582, -0.053, 8.479, -0.052, 8.377, -0.057, 8.275, -0.069, 8.174, -0.086, 8.084, -0.08, 8.015, -0.004, 7.937, 0.063, 7.85, 0.116, 7.753, 0.148, 7.651, 0.151, 7.552, 0.124, 7.463, 0.074, 7.384, 0.009, 7.313, -0.066, 7.229, -0.09, 7.128, -0.071, 7.027, -0.059, 6.924, -0.052, 6.822, -0.052, 6.719, -0.058, 6.618, -0.071, 6.517, -0.09, 6.432, -0.067, 6.362, 0.007, 6.283, 0.072, 6.194, 0.123, 6.095, 0.151, 5.993, 0.149, 5.896, 0.117, 5.808, 0.064, 5.731, -0.003, 5.661, -0.078, 5.572, -0.087, 5.471, -0.069, 5.369, -0.057, 5.267, -0.052, 5.164, -0.053, 5.062, -0.06, 4.96, -0.074, 4.86, -0.093, 4.78, -0.055, 4.708, 0.018, 4.628, 0.082, 4.537, 0.129, 4.438, 0.153, 4.336, 0.145, 4.24, 0.11, 4.154, 0.054, 4.078, -0.014, 4.009, -0.091, 3.915, -0.083, 3.813, -0.067, 3.711, -0.056, 3.609, -0.051, 3.507, -0.053, 3.404, -0.062, 3.303, -0.076, 3.202, -0.097, 3.128, -0.042, 3.055, 0.029, 2.973, 0.091, 2.881, 0.135, 2.78, 0.154, 2.679, 0.141, 2.584, 0.102, 2.5, 0.044, 2.425, -0.026, 2.357, -0.102, 2.257, -0.08, 2.156, -0.064, 2.054, -0.055, 1.951, -0.051, 1.849, -0.054, 1.747, -0.064, 1.645, -0.079, 1.545, -0.101, 1.476, -0.03, 1.401, 0.04, 1.318, 0.099, 1.224, 0.14, 1.123, 0.154, 1.022, 0.137, 0.929, 0.093, 0.846, 0.033, 0.773, -0.038, 0.7, -0.098, 0.6, -0.077, 0.499, -0.062, 0.396, -0.054, 0.294, -0.051, 0.191, -0.055, 0.089, -0.066, -0.012, -0.082, -0.109, -0.095, -0.177, -0.018, -0.252, 0.051, -0.338, 0.107, -0.433, 0.144, -0.535, 0.153, -0.635, 0.131, -0.726, 0.085, -0.807, 0.022, -0.879, -0.051, -0.957, -0.094, -1.057, -0.074, -1.159, -0.061, -1.261, -0.053, -1.364, -0.052, -1.466, -0.057, -1.568, -0.068, -1.669, -0.086, -1.76, -0.082, -1.829, -0.007, -1.907, 0.061, -1.994, 0.115, -2.09, 0.148, -2.192, 0.152, -2.291, 0.125, -2.381, 0.075, -2.46, 0.011, -2.531, -0.063, -2.614, -0.091, -2.715, -0.072, -2.816, -0.059, -2.919, -0.052, -3.021, -0.052, -3.124, -0.058, -3.225, -0.07, -3.326, -0.089, -3.365, -0.141, -3.32, -0.233, -3.274, -0.324, -3.228, -0.416, -3.182, -0.508, -3.136, -0.599, -3.09, -0.691, -3.044, -0.783, -2.999, -0.875, -2.953, -0.966, -2.907, -1.058, -2.861, -1.15, -2.815, -1.242), PackedVector2Array(8.923, 11.918, 8.956, 12.015, 8.992, 12.111, 9.029, 12.206, 9.069, 12.3, 9.111, 12.394, 9.155, 12.486, 9.2, 12.578, 9.247, 12.669, 9.296, 12.759, 9.346, 12.848, 9.398, 12.937, 9.45, 13.025, 9.504, 13.112, 9.558, 13.199, 9.614, 13.285, 9.669, 13.371, 9.726, 13.456, 9.782, 13.541, 9.839, 13.626, 9.896, 13.712, 9.953, 13.797, 10.009, 13.883, 10.064, 13.969, 10.119, 14.055, 10.173, 14.142, 10.225, 14.231, 10.275, 14.32, 10.323, 14.41, 10.368, 14.502, 10.41, 14.596, 10.447, 14.691, 10.481, 14.788, 10.508, 14.886, 10.529, 14.986, 10.544, 15.088, 10.55, 15.19, 10.548, 15.292, 10.537, 15.394, 10.518, 15.495, 10.491, 15.593, 10.456, 15.69, 10.411, 15.781, 10.355, 15.867, 10.29, 15.946, 10.217, 16.017, 10.137, 16.081, 10.052, 16.139, 9.963, 16.189, 9.871, 16.234, 9.776, 16.273, 9.68, 16.307, 9.581, 16.336, 9.482, 16.36, 9.382, 16.38, 9.28, 16.395, 9.179, 16.407, 9.077, 16.415, 8.974, 16.418, 8.872, 16.418, 8.77, 16.415, 8.667, 16.407, 8.566, 16.395, 8.465, 16.38, 8.364, 16.36, 8.265, 16.336, 8.166, 16.307, 8.07, 16.273, 7.975, 16.234, 7.883, 16.189, 7.794, 16.139, 7.709, 16.081, 7.63, 16.017, 7.556, 15.946, 7.491, 15.867, 7.435, 15.781, 7.39, 15.69, 7.355, 15.593, 7.328, 15.495, 7.309, 15.394, 7.298, 15.292, 7.296, 15.19, 7.302, 15.088, 7.317, 14.986, 7.338, 14.886, 7.366, 14.788, 7.399, 14.691, 7.437, 14.596, 7.478, 14.502, 7.523, 14.41, 7.571, 14.32, 7.622, 14.231, 7.674, 14.142, 7.727, 14.055, 7.782, 13.969, 7.837, 13.883, 7.893, 13.797, 7.95, 13.712, 8.007, 13.626, 8.064, 13.541, 8.12, 13.456, 8.177, 13.371, 8.233, 13.285, 8.288, 13.199, 8.342, 13.112, 8.396, 13.025, 8.449, 12.937, 8.5, 12.848, 8.55, 12.759, 8.599, 12.669, 8.646, 12.578, 8.692, 12.486, 8.735, 12.394, 8.777, 12.3, 8.817, 12.206, 8.855, 12.111, 8.89, 12.015), PackedVector2Array(2.564, 6.154, 2.583, 6.255, 2.604, 6.355, 2.625, 6.456, 2.647, 6.556, 2.67, 6.656, 2.694, 6.756, 2.719, 6.855, 2.745, 6.954, 2.772, 7.054, 2.799, 7.152, 2.827, 7.251, 2.856, 7.349, 2.886, 7.448, 2.917, 7.546, 2.948, 7.643, 2.98, 7.741, 3.012, 7.838, 3.045, 7.935, 3.079, 8.032, 3.113, 8.129, 3.148, 8.226, 3.183, 8.322, 3.218, 8.418, 3.254, 8.515, 3.29, 8.611, 3.326, 8.707, 3.363, 8.803, 3.399, 8.899, 3.436, 8.994, 3.472, 9.09, 3.508, 9.186, 3.544, 9.282, 3.58, 9.379, 3.616, 9.475, 3.651, 9.571, 3.685, 9.668, 3.719, 9.765, 3.753, 9.862, 3.785, 9.959, 3.816, 10.057, 3.847, 10.155, 3.876, 10.253, 3.903, 10.352, 3.93, 10.451, 3.954, 10.551, 3.977, 10.651, 3.998, 10.751, 4.018, 10.852, 4.034, 10.953, 4.049, 11.055, 4.061, 11.157, 4.071, 11.259, 4.078, 11.361, 4.082, 11.464, 4.083, 11.567, 4.081, 11.669, 4.076, 11.772, 4.068, 11.874, 4.057, 11.976, 4.043, 12.078, 4.026, 12.179, 4.006, 12.279, 3.982, 12.379, 3.953, 12.478, 3.918, 12.574, 3.877, 12.668, 3.83, 12.759, 3.777, 12.847, 3.718, 12.931, 3.653, 13.011, 3.583, 13.086, 3.508, 13.155, 3.428, 13.219, 3.343, 13.277, 3.254, 13.329, 3.162, 13.374, 3.067, 13.412, 2.969, 13.444, 2.87, 13.468, 2.769, 13.486, 2.667, 13.496, 2.564, 13.5, 2.462, 13.496, 2.36, 13.486, 2.258, 13.468, 2.159, 13.444, 2.061, 13.412, 1.966, 13.374, 1.874, 13.329, 1.785, 13.277, 1.701, 13.219, 1.62, 13.155, 1.545, 13.086, 1.475, 13.011, 1.41, 12.931, 1.351, 12.847, 1.298, 12.759, 1.251, 12.668, 1.21, 12.574, 1.175, 12.478, 1.146, 12.379, 1.122, 12.279, 1.102, 12.179, 1.085, 12.078, 1.071, 11.976, 1.06, 11.874, 1.052, 11.772, 1.047, 11.669, 1.045, 11.567, 1.047, 11.464, 1.051, 11.361, 1.057, 11.259, 1.067, 11.157, 1.079, 11.055, 1.094, 10.953, 1.111, 10.852, 1.13, 10.751, 1.151, 10.651, 1.174, 10.551, 1.199, 10.451, 1.225, 10.352, 1.253, 10.253, 1.282, 10.155, 1.312, 10.057, 1.343, 9.959, 1.376, 9.862, 1.409, 9.765, 1.443, 9.668, 1.477, 9.571, 1.512, 9.475, 1.548, 9.379, 1.584, 9.282, 1.62, 9.186, 1.656, 9.09, 1.693, 8.994, 1.729, 8.899, 1.766, 8.803, 1.802, 8.707, 1.838, 8.611, 1.874, 8.515, 1.91, 8.418, 1.945, 8.322, 1.98, 8.226, 2.015, 8.129, 2.049, 8.032, 2.083, 7.935, 2.116, 7.838, 2.148, 7.741, 2.18, 7.643, 2.212, 7.546, 2.242, 7.448, 2.272, 7.349, 2.301, 7.251, 2.329, 7.152, 2.357, 7.054, 2.383, 6.954, 2.409, 6.855, 2.434, 6.756, 2.458, 6.656, 2.481, 6.556, 2.503, 6.456, 2.524, 6.355, 2.545, 6.255), PackedVector2Array(2.564, 14.051, 2.606, 14.144, 2.653, 14.234, 2.705, 14.322, 2.761, 14.407, 2.821, 14.489, 2.883, 14.57, 2.947, 14.65, 3.011, 14.728, 3.076, 14.807, 3.14, 14.886, 3.202, 14.967, 3.259, 15.051, 3.311, 15.139, 3.351, 15.232, 3.374, 15.331, 3.375, 15.433, 3.35, 15.531, 3.304, 15.622, 3.236, 15.697, 3.153, 15.757, 3.062, 15.802, 2.966, 15.837, 2.868, 15.862, 2.767, 15.879, 2.666, 15.889, 2.564, 15.892, 2.462, 15.889, 2.361, 15.879, 2.261, 15.862, 2.162, 15.837, 2.066, 15.802, 1.975, 15.757, 1.893, 15.697, 1.825, 15.622, 1.778, 15.531, 1.753, 15.433, 1.754, 15.331, 1.777, 15.232, 1.818, 15.139, 1.869, 15.051, 1.927, 14.967, 1.988, 14.886, 2.052, 14.807, 2.117, 14.728, 2.182, 14.65, 2.245, 14.57, 2.307, 14.489, 2.367, 14.407, 2.423, 14.322, 2.475, 14.234, 2.523, 14.144), PackedVector2Array(5.846, 6.974, 5.865, 7.075, 5.886, 7.176, 5.907, 7.276, 5.929, 7.376, 5.952, 7.476, 5.976, 7.576, 6.001, 7.676, 6.027, 7.775, 6.054, 7.874, 6.081, 7.973, 6.109, 8.072, 6.138, 8.17, 6.168, 8.268, 6.199, 8.366, 6.23, 8.464, 6.262, 8.561, 6.294, 8.659, 6.327, 8.756, 6.361, 8.853, 6.395, 8.95, 6.43, 9.046, 6.465, 9.143, 6.5, 9.239, 6.536, 9.335, 6.572, 9.431, 6.608, 9.527, 6.645, 9.623, 6.681, 9.719, 6.718, 9.815, 6.754, 9.911, 6.79, 10.007, 6.826, 10.103, 6.862, 10.199, 6.898, 10.295, 6.933, 10.392, 6.967, 10.488, 7.001, 10.585, 7.035, 10.682, 7.067, 10.78, 7.098, 10.877, 7.129, 10.975, 7.158, 11.074, 7.185, 11.173, 7.212, 11.272, 7.236, 11.371, 7.259, 11.471, 7.281, 11.572, 7.3, 11.673, 7.316, 11.774, 7.331, 11.875, 7.343, 11.977, 7.353, 12.08, 7.36, 12.182, 7.364, 12.284, 7.365, 12.387, 7.363, 12.49, 7.358, 12.592, 7.35, 12.694, 7.339, 12.796, 7.325, 12.898, 7.308, 12.999, 7.288, 13.1, 7.264, 13.2, 7.235, 13.298, 7.2, 13.394, 7.159, 13.488, 7.112, 13.58, 7.059, 13.668, 7, 13.752, 6.935, 13.831, 6.865, 13.906, 6.79, 13.976, 6.71, 14.04, 6.625, 14.097, 6.536, 14.149, 6.444, 14.194, 6.349, 14.233, 6.251, 14.264, 6.152, 14.289, 6.051, 14.306, 5.949, 14.317, 5.846, 14.321, 5.744, 14.317, 5.642, 14.306, 5.541, 14.289, 5.441, 14.264, 5.343, 14.233, 5.248, 14.194, 5.156, 14.149, 5.067, 14.097, 4.983, 14.04, 4.902, 13.976, 4.827, 13.906, 4.757, 13.831, 4.692, 13.752, 4.633, 13.668, 4.58, 13.58, 4.533, 13.488, 4.492, 13.394, 4.457, 13.298, 4.428, 13.2, 4.404, 13.1, 4.384, 12.999, 4.367, 12.898, 4.353, 12.796, 4.342, 12.694, 4.334, 12.592, 4.329, 12.49, 4.327, 12.387, 4.329, 12.284, 4.333, 12.182, 4.34, 12.08, 4.349, 11.977, 4.361, 11.875, 4.376, 11.774, 4.393, 11.673, 4.412, 11.572, 4.433, 11.471, 4.456, 11.371, 4.481, 11.272, 4.507, 11.173, 4.535, 11.074, 4.564, 10.975, 4.594, 10.877, 4.625, 10.78, 4.658, 10.682, 4.691, 10.585, 4.725, 10.488, 4.759, 10.392, 4.794, 10.295, 4.83, 10.199, 4.866, 10.103, 4.902, 10.007, 4.938, 9.911, 4.975, 9.815, 5.011, 9.719, 5.048, 9.623, 5.084, 9.527, 5.12, 9.431, 5.156, 9.335, 5.192, 9.239, 5.227, 9.143, 5.262, 9.046, 5.297, 8.95, 5.331, 8.853, 5.365, 8.756, 5.398, 8.659, 5.43, 8.561, 5.462, 8.464, 5.494, 8.366, 5.524, 8.268, 5.554, 8.17, 5.583, 8.072, 5.611, 7.973, 5.639, 7.874, 5.665, 7.775, 5.691, 7.676, 5.716, 7.576, 5.74, 7.476, 5.763, 7.376, 5.785, 7.276, 5.807, 7.176, 5.827, 7.075), PackedVector2Array(5.846, 14.872, 5.888, 14.965, 5.935, 15.055, 5.987, 15.142, 6.043, 15.227, 6.103, 15.31, 6.165, 15.391, 6.229, 15.47, 6.293, 15.549, 6.358, 15.627, 6.422, 15.707, 6.484, 15.788, 6.541, 15.872, 6.593, 15.96, 6.633, 16.053, 6.656, 16.152, 6.657, 16.253, 6.632, 16.352, 6.586, 16.442, 6.518, 16.518, 6.435, 16.577, 6.344, 16.623, 6.248, 16.657, 6.15, 16.682, 6.049, 16.699, 5.948, 16.71, 5.846, 16.713, 5.744, 16.71, 5.643, 16.699, 5.543, 16.682, 5.444, 16.657, 5.348, 16.623, 5.257, 16.577, 5.175, 16.518, 5.107, 16.442, 5.06, 16.352, 5.036, 16.253, 5.036, 16.152, 5.059, 16.053, 5.1, 15.96, 5.151, 15.872, 5.209, 15.788, 5.27, 15.707, 5.334, 15.627, 5.399, 15.549, 5.464, 15.47, 5.527, 15.391, 5.589, 15.31, 5.649, 15.227, 5.705, 15.142, 5.757, 15.055, 5.805, 14.965), PackedVector2Array(12, 7.795, 12.019, 7.896, 12.04, 7.996, 12.061, 8.097, 12.083, 8.197, 12.106, 8.297, 12.13, 8.397, 12.155, 8.496, 12.181, 8.595, 12.207, 8.695, 12.235, 8.793, 12.263, 8.892, 12.292, 8.99, 12.322, 9.089, 12.353, 9.187, 12.384, 9.284, 12.416, 9.382, 12.448, 9.479, 12.481, 9.576, 12.515, 9.673, 12.549, 9.77, 12.584, 9.867, 12.619, 9.963, 12.654, 10.059, 12.69, 10.156, 12.726, 10.252, 12.762, 10.348, 12.798, 10.444, 12.835, 10.54, 12.871, 10.636, 12.908, 10.731, 12.944, 10.827, 12.98, 10.923, 13.016, 11.02, 13.052, 11.116, 13.087, 11.212, 13.121, 11.309, 13.155, 11.406, 13.188, 11.503, 13.221, 11.6, 13.252, 11.698, 13.282, 11.796, 13.312, 11.894, 13.339, 11.993, 13.366, 12.092, 13.39, 12.192, 13.413, 12.292, 13.434, 12.392, 13.453, 12.493, 13.47, 12.594, 13.485, 12.696, 13.497, 12.798, 13.507, 12.9, 13.513, 13.002, 13.518, 13.105, 13.519, 13.208, 13.517, 13.31, 13.512, 13.413, 13.504, 13.515, 13.493, 13.617, 13.479, 13.719, 13.462, 13.82, 13.442, 13.92, 13.418, 14.02, 13.389, 14.119, 13.354, 14.215, 13.313, 14.309, 13.266, 14.4, 13.213, 14.488, 13.154, 14.572, 13.089, 14.652, 13.019, 14.727, 12.944, 14.796, 12.864, 14.86, 12.779, 14.918, 12.69, 14.97, 12.598, 15.015, 12.503, 15.053, 12.405, 15.085, 12.306, 15.109, 12.205, 15.127, 12.103, 15.137, 12, 15.141, 11.897, 15.137, 11.795, 15.127, 11.694, 15.109, 11.595, 15.085, 11.497, 15.053, 11.402, 15.015, 11.31, 14.97, 11.221, 14.918, 11.136, 14.86, 11.056, 14.796, 10.981, 14.727, 10.911, 14.652, 10.846, 14.572, 10.787, 14.488, 10.734, 14.4, 10.687, 14.309, 10.646, 14.215, 10.611, 14.119, 10.582, 14.02, 10.558, 13.92, 10.538, 13.82, 10.521, 13.719, 10.507, 13.617, 10.496, 13.515, 10.488, 13.413, 10.483, 13.31, 10.481, 13.208, 10.482, 13.105, 10.487, 13.002, 10.493, 12.9, 10.503, 12.798, 10.515, 12.696, 10.53, 12.594, 10.547, 12.493, 10.566, 12.392, 10.587, 12.292, 10.61, 12.192, 10.634, 12.092, 10.661, 11.993, 10.688, 11.894, 10.718, 11.796, 10.748, 11.698, 10.779, 11.6, 10.812, 11.503, 10.845, 11.406, 10.879, 11.309, 10.913, 11.212, 10.948, 11.116, 10.984, 11.02, 11.02, 10.923, 11.056, 10.827, 11.092, 10.731, 11.129, 10.636, 11.165, 10.54, 11.202, 10.444, 11.238, 10.348, 11.274, 10.252, 11.31, 10.156, 11.346, 10.059, 11.381, 9.963, 11.416, 9.867, 11.451, 9.77, 11.485, 9.673, 11.519, 9.576, 11.552, 9.479, 11.584, 9.382, 11.616, 9.284, 11.647, 9.187, 11.678, 9.089, 11.708, 8.99, 11.737, 8.892, 11.765, 8.793, 11.793, 8.695, 11.819, 8.595, 11.845, 8.496, 11.87, 8.397, 11.894, 8.297, 11.917, 8.197, 11.939, 8.097, 11.96, 7.996, 11.981, 7.896), PackedVector2Array(12, 15.692, 12.041, 15.785, 12.089, 15.875, 12.141, 15.963, 12.197, 16.048, 12.257, 16.13, 12.319, 16.211, 12.383, 16.291, 12.447, 16.369, 12.512, 16.448, 12.576, 16.527, 12.638, 16.608, 12.695, 16.692, 12.746, 16.78, 12.787, 16.873, 12.81, 16.972, 12.811, 17.074, 12.786, 17.172, 12.74, 17.263, 12.672, 17.338, 12.589, 17.398, 12.498, 17.443, 12.402, 17.478, 12.303, 17.503, 12.203, 17.52, 12.102, 17.53, 12, 17.533, 11.898, 17.53, 11.797, 17.52, 11.697, 17.503, 11.598, 17.478, 11.502, 17.443, 11.411, 17.398, 11.328, 17.338, 11.26, 17.263, 11.214, 17.172, 11.189, 17.074, 11.19, 16.972, 11.213, 16.873, 11.254, 16.78, 11.305, 16.692, 11.362, 16.608, 11.424, 16.527, 11.488, 16.448, 11.553, 16.369, 11.617, 16.291, 11.681, 16.211, 11.743, 16.13, 11.803, 16.048, 11.859, 15.963, 11.911, 15.875, 11.959, 15.785), PackedVector2Array(15.282, 6.769, 15.301, 6.87, 15.322, 6.971, 15.343, 7.071, 15.365, 7.171, 15.388, 7.271, 15.412, 7.371, 15.437, 7.47, 15.463, 7.57, 15.489, 7.669, 15.517, 7.768, 15.545, 7.866, 15.574, 7.965, 15.604, 8.063, 15.635, 8.161, 15.666, 8.259, 15.698, 8.356, 15.73, 8.454, 15.763, 8.551, 15.797, 8.648, 15.831, 8.744, 15.866, 8.841, 15.901, 8.937, 15.936, 9.034, 15.972, 9.13, 16.008, 9.226, 16.044, 9.322, 16.081, 9.418, 16.117, 9.514, 16.153, 9.61, 16.19, 9.706, 16.226, 9.802, 16.262, 9.898, 16.298, 9.994, 16.334, 10.09, 16.369, 10.187, 16.403, 10.283, 16.437, 10.38, 16.47, 10.477, 16.503, 10.575, 16.534, 10.672, 16.564, 10.77, 16.594, 10.869, 16.621, 10.968, 16.648, 11.067, 16.672, 11.166, 16.695, 11.266, 16.716, 11.367, 16.735, 11.468, 16.752, 11.569, 16.767, 11.67, 16.779, 11.772, 16.789, 11.874, 16.796, 11.977, 16.8, 12.079, 16.801, 12.182, 16.799, 12.285, 16.794, 12.387, 16.786, 12.489, 16.775, 12.591, 16.761, 12.693, 16.744, 12.794, 16.724, 12.895, 16.7, 12.995, 16.671, 13.093, 16.636, 13.189, 16.595, 13.283, 16.548, 13.375, 16.495, 13.462, 16.436, 13.546, 16.371, 13.626, 16.301, 13.701, 16.226, 13.771, 16.146, 13.834, 16.061, 13.892, 15.972, 13.944, 15.88, 13.989, 15.785, 14.027, 15.687, 14.059, 15.588, 14.084, 15.487, 14.101, 15.385, 14.112, 15.282, 14.115, 15.18, 14.112, 15.077, 14.101, 14.976, 14.084, 14.877, 14.059, 14.779, 14.027, 14.684, 13.989, 14.592, 13.944, 14.503, 13.892, 14.419, 13.834, 14.338, 13.771, 14.263, 13.701, 14.193, 13.626, 14.128, 13.546, 14.069, 13.462, 14.016, 13.375, 13.969, 13.283, 13.928, 13.189, 13.893, 13.093, 13.864, 12.995, 13.84, 12.895, 13.82, 12.794, 13.803, 12.693, 13.789, 12.591, 13.778, 12.489, 13.77, 12.387, 13.765, 12.285, 13.763, 12.182, 13.764, 12.079, 13.769, 11.977, 13.775, 11.874, 13.785, 11.772, 13.797, 11.67, 13.812, 11.569, 13.829, 11.468, 13.848, 11.367, 13.869, 11.266, 13.892, 11.166, 13.916, 11.067, 13.943, 10.968, 13.971, 10.869, 14, 10.77, 14.03, 10.672, 14.061, 10.575, 14.094, 10.477, 14.127, 10.38, 14.161, 10.283, 14.195, 10.187, 14.23, 10.09, 14.266, 9.994, 14.302, 9.898, 14.338, 9.802, 14.374, 9.706, 14.411, 9.61, 14.447, 9.514, 14.484, 9.418, 14.52, 9.322, 14.556, 9.226, 14.592, 9.13, 14.628, 9.034, 14.663, 8.937, 14.698, 8.841, 14.733, 8.744, 14.767, 8.648, 14.801, 8.551, 14.834, 8.454, 14.866, 8.356, 14.898, 8.259, 14.929, 8.161, 14.96, 8.063, 14.99, 7.965, 15.019, 7.866, 15.047, 7.768, 15.075, 7.669, 15.101, 7.57, 15.127, 7.47, 15.152, 7.371, 15.176, 7.271, 15.199, 7.171, 15.221, 7.071, 15.242, 6.971, 15.263, 6.87), PackedVector2Array(15.282, 14.667, 15.324, 14.76, 15.371, 14.85, 15.423, 14.937, 15.479, 15.022, 15.539, 15.105, 15.601, 15.185, 15.665, 15.265, 15.729, 15.344, 15.794, 15.422, 15.858, 15.502, 15.92, 15.583, 15.977, 15.666, 16.028, 15.754, 16.069, 15.848, 16.092, 15.947, 16.093, 16.048, 16.068, 16.147, 16.022, 16.237, 15.954, 16.313, 15.871, 16.372, 15.78, 16.418, 15.684, 16.452, 15.585, 16.477, 15.485, 16.494, 15.384, 16.504, 15.282, 16.508, 15.18, 16.504, 15.079, 16.494, 14.979, 16.477, 14.88, 16.452, 14.784, 16.418, 14.693, 16.372, 14.611, 16.313, 14.542, 16.237, 14.496, 16.147, 14.471, 16.048, 14.472, 15.947, 14.495, 15.848, 14.536, 15.754, 14.587, 15.666, 14.645, 15.583, 14.706, 15.502, 14.77, 15.422, 14.835, 15.344, 14.9, 15.265, 14.963, 15.185, 15.025, 15.105, 15.085, 15.022, 15.141, 14.937, 15.193, 14.85, 15.241, 14.76), PackedVector2Array(0, 2.256, 0.043, 2.349, 0.092, 2.439, 0.145, 2.527, 0.203, 2.611, 0.264, 2.693, 0.328, 2.774, 0.393, 2.853, 0.459, 2.931, 0.526, 3.009, 0.592, 3.087, 0.656, 3.166, 0.718, 3.248, 0.774, 3.334, 0.821, 3.425, 0.855, 3.521, 0.868, 3.623, 0.855, 3.724, 0.819, 3.819, 0.761, 3.904, 0.685, 3.971, 0.597, 4.024, 0.503, 4.065, 0.405, 4.096, 0.306, 4.118, 0.204, 4.134, 0.102, 4.143, -0, 4.146, -0.102, 4.143, -0.204, 4.134, -0.306, 4.118, -0.405, 4.096, -0.503, 4.065, -0.597, 4.024, -0.685, 3.971, -0.761, 3.904, -0.819, 3.819, -0.855, 3.724, -0.868, 3.623, -0.855, 3.521, -0.821, 3.425, -0.774, 3.334, -0.718, 3.248, -0.656, 3.166, -0.592, 3.087, -0.526, 3.009, -0.459, 2.931, -0.393, 2.853, -0.328, 2.774, -0.264, 2.693, -0.203, 2.611, -0.145, 2.527, -0.092, 2.439, -0.043, 2.349), PackedVector2Array(17.846, 2.256, 17.889, 2.349, 17.938, 2.439, 17.991, 2.527, 18.049, 2.611, 18.11, 2.693, 18.174, 2.774, 18.239, 2.853, 18.305, 2.931, 18.372, 3.009, 18.438, 3.087, 18.502, 3.166, 18.564, 3.248, 18.62, 3.334, 18.667, 3.425, 18.701, 3.521, 18.714, 3.623, 18.701, 3.724, 18.665, 3.819, 18.607, 3.904, 18.531, 3.971, 18.443, 4.024, 18.349, 4.065, 18.252, 4.096, 18.152, 4.118, 18.05, 4.134, 17.949, 4.143, 17.846, 4.146, 17.744, 4.143, 17.642, 4.134, 17.541, 4.118, 17.441, 4.096, 17.343, 4.065, 17.249, 4.024, 17.162, 3.971, 17.085, 3.904, 17.028, 3.819, 16.991, 3.724, 16.978, 3.623, 16.991, 3.521, 17.025, 3.425, 17.072, 3.334, 17.128, 3.248, 17.19, 3.166, 17.254, 3.087, 17.32, 3.009, 17.387, 2.931, 17.453, 2.853, 17.519, 2.774, 17.582, 2.693, 17.643, 2.611, 17.701, 2.527, 17.754, 2.439, 17.803, 2.349), PackedVector2Array(8.923, 17.538, 8.965, 17.632, 9.011, 17.723, 9.059, 17.814, 9.111, 17.902, 9.165, 17.989, 9.221, 18.074, 9.28, 18.158, 9.34, 18.241, 9.402, 18.323, 9.465, 18.403, 9.53, 18.482, 9.595, 18.561, 9.661, 18.639, 9.728, 18.717, 9.795, 18.794, 9.863, 18.871, 9.93, 18.948, 9.997, 19.026, 10.063, 19.104, 10.128, 19.183, 10.192, 19.263, 10.253, 19.345, 10.313, 19.428, 10.368, 19.514, 10.419, 19.603, 10.465, 19.694, 10.502, 19.789, 10.531, 19.888, 10.547, 19.989, 10.55, 20.091, 10.538, 20.193, 10.512, 20.292, 10.473, 20.386, 10.423, 20.475, 10.359, 20.555, 10.284, 20.625, 10.202, 20.685, 10.114, 20.738, 10.022, 20.783, 9.928, 20.823, 9.831, 20.857, 9.733, 20.886, 9.634, 20.911, 9.534, 20.932, 9.433, 20.949, 9.332, 20.963, 9.23, 20.974, 9.128, 20.981, 9.025, 20.986, 8.923, 20.987, 8.821, 20.986, 8.718, 20.981, 8.616, 20.974, 8.515, 20.963, 8.413, 20.949, 8.312, 20.932, 8.212, 20.911, 8.113, 20.886, 8.015, 20.857, 7.918, 20.823, 7.824, 20.783, 7.732, 20.738, 7.644, 20.685, 7.562, 20.625, 7.487, 20.555, 7.423, 20.475, 7.373, 20.386, 7.334, 20.292, 7.308, 20.193, 7.296, 20.091, 7.299, 19.989, 7.316, 19.888, 7.344, 19.789, 7.382, 19.694, 7.427, 19.603, 7.478, 19.514, 7.534, 19.428, 7.593, 19.345, 7.654, 19.263, 7.718, 19.183, 7.783, 19.104, 7.849, 19.026, 7.916, 18.948, 7.983, 18.871, 8.051, 18.794, 8.118, 18.717, 8.185, 18.639, 8.251, 18.561, 8.317, 18.482, 8.381, 18.403, 8.444, 18.323, 8.506, 18.241, 8.567, 18.158, 8.625, 18.074, 8.681, 17.989, 8.735, 17.902, 8.787, 17.814, 8.835, 17.723, 8.881, 17.632)])
+lines = Array[PackedVector2Array]([])
+background = Color(0.039, 0.055, 0.024, 1)
+shape_fill = Color(0.094, 0.133, 0.055, 1)
+shape_edge = Color(0.239, 0.353, 0.133, 1)
+link_lit = Color(0.776, 0.949, 0.42, 1)
+accent = Color(0.651, 0.89, 0.29, 1)

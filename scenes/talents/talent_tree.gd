@@ -11,6 +11,14 @@ extends Resource
 @export var shapes : Array[PackedVector2Array] = []
 ## Open lines of the shape, such as a roof.
 @export var lines : Array[PackedVector2Array] = []
+## The tree's theme, after its element. The shape stays dark so the learned path stands out.
+@export var background : Color = Color("0c1814")
+@export var shape_fill : Color = Color("102019")
+@export var shape_edge : Color = Color("3d4c46")
+## Links between learned nodes.
+@export var link_lit : Color = Color("c9f2dc")
+## The tree's title colour in the info window.
+@export var accent : Color = Color("f2c14e")
 
 var _nodes_by_id : Dictionary[StringName, TalentNode] = {}
 

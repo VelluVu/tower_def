@@ -8,6 +8,8 @@ const TALENT_BOOK : TalentBook = preload("res://scenes/talents/talent_book.tres"
 const CLOSE_ACTION : String = "Escape"
 const POINTS_TEXT : String = "Points %d / %d"
 const RANK_TEXT : String = "Rank %d / %d"
+const INFO_TINT : float = 0.35
+const TITLE_COLOR_NAME : StringName = &"font_color"
 const RESET_TEXT : String = "Reset"
 const RESET_CONFIRM_TEXT : String = "Sure?"
 const KIND_TEXTS : Dictionary[TalentNode.Kind, String] = {
@@ -33,6 +35,7 @@ const HELD_TEXT : String = "Other talents depend on this one."
 @onready var description_label : Label = %DescriptionLabel
 @onready var status_label : Label = %StatusLabel
 @onready var add_button : Button = %AddButton
+@onready var info_panel : PanelContainer = %Info
 @onready var remove_button : Button = %RemoveButton
 
 var tree : TalentTree = null
@@ -72,9 +75,16 @@ func _unhandled_input(event : InputEvent) -> void:
 func _show_tree(new_tree : TalentTree) -> void:
 	tree = new_tree
 	tree_view.show_tree(tree)
+	_apply_theme()
 	selected = tree.get_node_by_id(tree.start_id)
 	_disarm_reset()
 	_refresh()
+
+
+## The info window takes the tree's element colours: a tinted frame and an accent title.
+func _apply_theme() -> void:
+	info_panel.self_modulate = Color.WHITE.lerp(tree.accent, INFO_TINT)
+	name_label.add_theme_color_override(TITLE_COLOR_NAME, tree.accent)
 
 
 func _refresh() -> void:

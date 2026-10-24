@@ -6,23 +6,22 @@ extends Control
 
 signal node_selected(node : TalentNode)
 
-## Screen pixels per tree unit at each zoom step. Only learned nodes, the selected node and the one
-## under the mouse are named, so the names never pile up.
+## Screen pixels per tree unit at each zoom step. The selected node and the one under the mouse are
+## always named, learned nodes from the second step, so the names never pile up.
 const UNIT_SIZES : Array[int] = [13, 26, 40]
+const LEARNED_LABEL_ZOOM : int = 1
 const NODE_SIZES : Array[int] = [7, 11, 15]
 const FONT_SIZE : int = 8
 const DRAG_THRESHOLD : float = 3.0
 const PICK_RADIUS : float = 9.0
 const FIT_MARGIN : float = 1.5
 
-#what the player has not learned stays dark, so the learned path stands out
-const SHAPE_FILL : Color = Color("102019")
-const SHAPE_EDGE : Color = Color("3d4c46")
-const LINK_LOCKED : Color = Color("1f2e28")
-const LINK_HALF : Color = Color("2f5c47")
-const LINK_LIT : Color = Color("c9f2dc")
-const NODE_OPEN : Color = Color("24453a")
-const NODE_LOCKED : Color = Color("16241f")
+#what the player has not learned stays dark, so the learned path stands out; the shape's colours come from the tree
+#unlearned colours are the tree's own lit colour, darkened
+const LINK_HALF_DARKEN : float = 0.6
+const NODE_OPEN_DARKEN : float = 0.68
+const LINK_LOCKED_DARKEN : float = 0.35
+const NODE_LOCKED_DARKEN : float = 0.1
 #a learned node below its max rank is a little dimmer than its full colour
 const PARTIAL_DIM : float = 0.3
 const MAXED_GLOW : Color = Color("fff6c8")
@@ -156,14 +155,16 @@ func _draw() -> void:
 	if tree == null:
 		return
 
+	draw_rect(Rect2(Vector2.ZERO, size), tree.background)
+
 	for shape in tree.shapes:
 		var points : PackedVector2Array = _shape_to_screen(shape)
-		draw_colored_polygon(points, SHAPE_FILL)
+		draw_colored_polygon(points, tree.shape_fill)
 		points.append(points[0])
-		draw_polyline(points, SHAPE_EDGE, 1.0)
+		draw_polyline(points, tree.shape_edge, 1.0)
 
 	for line in tree.lines:
-		draw_polyline(_shape_to_screen(line), SHAPE_EDGE, 1.0)
+		draw_polyline(_shape_to_screen(line), tree.shape_edge, 1.0)
 
 	for node in tree.nodes:
 		for linked_id in node.links:
@@ -175,7 +176,8 @@ func _draw() -> void:
 		_draw_node(node)
 
 	for node in tree.nodes:
-		if TalentRules.get_rank(ranks, node.id) > 0 or node.id == selected_id or node.id == hovered_id:
+		var is_learned_label : bool = zoom_index >= LEARNED_LABEL_ZOOM and TalentRules.get_rank(ranks, node.id) > 0
+		if is_learned_label or node.id == selected_id or node.id == hovered_id:
 			_draw_label(node)
 
 
@@ -185,7 +187,7 @@ func _draw_link(from : TalentNode, to : TalentNode, is_one_way : bool) -> void:
 
 	var from_rank : int = TalentRules.get_rank(ranks, from.id)
 	var to_rank : int = TalentRules.get_rank(ranks, to.id)
-	var color : Color = LINK_LIT if from_rank > 0 and to_rank > 0 else LINK_HALF if from_rank > 0 or to_rank > 0 else LINK_LOCKED
+	var color : Color = tree.link_lit if from_rank > 0 and to_rank > 0 else tree.link_lit.darkened(LINK_HALF_DARKEN) if from_rank > 0 or to_rank > 0 else tree.shape_edge.darkened(LINK_LOCKED_DARKEN)
 	var width : float = 2.0 if zoom_index > 0 else 1.0
 
 	if is_one_way:
@@ -200,11 +202,11 @@ func _draw_node(node : TalentNode) -> void:
 	var half : float = floorf(node_size / 2.0)
 	var rank : int = TalentRules.get_rank(ranks, node.id)
 	var is_maxed : bool = rank >= node.max_rank
-	var fill : Color = NODE_LOCKED
+	var fill : Color = tree.shape_fill.darkened(NODE_LOCKED_DARKEN)
 	if rank > 0:
 		fill = node.color.lightened(0.15) if is_maxed else node.color.darkened(PARTIAL_DIM)
 	elif TalentRules.is_open(tree, ranks, node):
-		fill = NODE_OPEN
+		fill = tree.link_lit.darkened(NODE_OPEN_DARKEN)
 	var edge : Color = SELECTED_EDGE if node.id == selected_id else MAXED_GLOW if is_maxed else NODE_EDGE
 
 	#a maxed node shines: a light ring around it

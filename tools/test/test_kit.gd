@@ -11,6 +11,7 @@ const ENEMY_PATH : String = "res://scenes/unit/enemy/enemies/%s.tscn"
 const CARD_PATH : String = "res://scenes/unit/evolve_tree/evolve_resources/%s.tres"
 #Builder puts placed buildings in this container; Building.level is its parent
 const BUILDINGS_NODE_NAME : String = "Buildings"
+const TEST_SAVE_PATH : String = "user://test_progress.tres"
 
 var root : Node = null
 var level : Level = null
@@ -20,6 +21,8 @@ var checks : int = 0
 
 func _init(test_root : Node) -> void:
 	root = test_root
+	#a test that saves progress must never overwrite the player's own save
+	PlayerProgress._save.save_path = TEST_SAVE_PATH
 	var main : Main = Main.new()
 	main.scene_manager = SceneManager.new()
 	Utils.game_control = main

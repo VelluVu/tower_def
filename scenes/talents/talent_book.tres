@@ -1,9 +1,12 @@
 [gd_resource type="Resource" script_class="TalentBook" format=3]
 
 [ext_resource type="Script" path="res://scenes/talents/talent_book.gd" id="1_book"]
-[ext_resource type="Resource" path="res://scenes/talents/trees/building_tree.tres" id="2_building"]
-[ext_resource type="Script" path="res://scenes/talents/talent_tree.gd" id="3_tree"]
+[ext_resource type="Script" path="res://scenes/talents/talent_tree.gd" id="2_tree"]
+[ext_resource type="Resource" path="res://scenes/talents/trees/building_tree.tres" id="t_building"]
+[ext_resource type="Resource" path="res://scenes/talents/trees/fire_tree.tres" id="t_fire"]
+[ext_resource type="Resource" path="res://scenes/talents/trees/frost_tree.tres" id="t_frost"]
+[ext_resource type="Resource" path="res://scenes/talents/trees/poison_tree.tres" id="t_poison"]
 
 [resource]
 script = ExtResource("1_book")
-trees = Array[ExtResource("3_tree")]([ExtResource("2_building")])
+trees = Array[ExtResource("2_tree")]([ExtResource("t_building"), ExtResource("t_fire"), ExtResource("t_frost"), ExtResource("t_poison")])

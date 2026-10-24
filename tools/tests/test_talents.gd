@@ -57,6 +57,34 @@ func test_building_talents_in_a_level(kit : TestKit) -> void:
 	progress.talent_ranks = saved_ranks
 
 
+func test_every_tree_is_whole(kit : TestKit) -> void:
+	var book : TalentBook = load("res://scenes/talents/talent_book.tres")
+	kit.check(book.trees.size() == 4, "four trees")
+
+	for tree in book.trees:
+		kit.check(tree.get_node_by_id(tree.start_id) != null, tree.id + " has its start")
+		var opens : Dictionary[StringName, Array] = TalentRules.get_opens(tree)
+		var reached : Dictionary[StringName, bool] = {tree.start_id: true}
+		var queue : Array[StringName] = [tree.start_id]
+		while not queue.is_empty():
+			for next_id in opens.get(queue.pop_front(), []):
+				if not reached.has(next_id):
+					reached[next_id] = true
+					queue.append(next_id)
+
+		var broken : Array[String] = []
+		for node in tree.nodes:
+			for linked_id in node.links + node.one_way_links + ([node.needs] if node.needs != &"" else []):
+				if tree.get_node_by_id(linked_id) == null:
+					broken.append("%s -> %s" % [node.id, linked_id])
+			if not reached.has(node.id):
+				broken.append("%s unreachable" % node.id)
+			for target_id in node.one_way_links:
+				if not opens.get(target_id, []).is_empty():
+					broken.append("%s opens something" % target_id)
+		kit.check(broken.is_empty(), "%s links are whole: %s" % [tree.id, ", ".join(broken)])
+
+
 #s (start) - a, s - b - c, n - s (n needs a); a is one route's T3, c another's; both open k one way.
 func _small_tree() -> TalentTree:
 	var tree : TalentTree = TalentTree.new()
