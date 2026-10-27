@@ -46,6 +46,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 
 [node name="SelectButton" type="Button" parent="MarginContainer/Map/Level_001" unique_id=82178644]
+theme_type_variation = &"MapNodeButton"
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -151,6 +152,7 @@ script = ExtResource("2_uc0yk")
 level_number = 2
 
 [node name="SelectButton" type="Button" parent="MarginContainer/Map/Level_002" unique_id=1876439175]
+theme_type_variation = &"MapNodeButton"
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -256,6 +258,7 @@ script = ExtResource("2_uc0yk")
 level_number = 3
 
 [node name="SelectButton" type="Button" parent="MarginContainer/Map/Level_003" unique_id=598262680]
+theme_type_variation = &"MapNodeButton"
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -361,6 +364,7 @@ script = ExtResource("2_uc0yk")
 level_number = 4
 
 [node name="SelectButton" type="Button" parent="MarginContainer/Map/Level_004" unique_id=1041112693]
+theme_type_variation = &"MapNodeButton"
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -466,6 +470,7 @@ script = ExtResource("2_uc0yk")
 level_number = 5
 
 [node name="SelectButton" type="Button" parent="MarginContainer/Map/Level_005" unique_id=537641181]
+theme_type_variation = &"MapNodeButton"
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -571,6 +576,7 @@ script = ExtResource("2_uc0yk")
 level_number = 6
 
 [node name="SelectButton" type="Button" parent="MarginContainer/Map/Level_006" unique_id=1038156533]
+theme_type_variation = &"MapNodeButton"
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

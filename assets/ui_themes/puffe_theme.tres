@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://bosjat67bgkjx" path="res://assets/art/ui/theme/ui_theme.png" id="1_atlas"]
 [ext_resource type="FontFile" uid="uid://besds3dvgiq7k" path="res://assets/fonts/pixel_operator/PixelOperator8.ttf" id="2_text"]
 [ext_resource type="FontFile" uid="uid://b8g22qntipvlr" path="res://assets/fonts/pixel_operator/PixelOperator-Bold.ttf" id="3_title"]
+[ext_resource type="Texture2D" uid="uid://bmo1ug871qd3q" path="res://assets/art/ui/theme/map_node_button.png" id="4_map_node"]
 
 [sub_resource type="StyleBoxTexture" id="Panel_accent"]
 content_margin_left = 5.0
@@ -188,6 +189,22 @@ texture_margin_right = 4.0
 texture_margin_bottom = 4.0
 region_rect = Rect2(0, 25, 16, 16)
 
+[sub_resource type="StyleBoxTexture" id="MapNode_disabled"]
+texture = ExtResource("4_map_node")
+region_rect = Rect2(60, 0, 20, 20)
+
+[sub_resource type="StyleBoxTexture" id="MapNode_hover"]
+texture = ExtResource("4_map_node")
+region_rect = Rect2(20, 0, 20, 20)
+
+[sub_resource type="StyleBoxTexture" id="MapNode_pressed"]
+texture = ExtResource("4_map_node")
+region_rect = Rect2(40, 0, 20, 20)
+
+[sub_resource type="StyleBoxTexture" id="MapNode_normal"]
+texture = ExtResource("4_map_node")
+region_rect = Rect2(0, 0, 20, 20)
+
 [sub_resource type="StyleBoxTexture" id="Panel_stone"]
 content_margin_left = 5.0
 content_margin_top = 5.0
@@ -326,6 +343,13 @@ LineEdit/colors/selection_color = Color(0.03922, 0.451, 0.3412, 0.8)
 LineEdit/styles/focus = SubResource("Edit_focus")
 LineEdit/styles/normal = SubResource("Edit_normal")
 LineEdit/styles/read_only = SubResource("Edit_normal")
+MapNodeButton/base_type = &"Button"
+MapNodeButton/styles/disabled = SubResource("MapNode_disabled")
+MapNodeButton/styles/focus = SubResource("Empty")
+MapNodeButton/styles/hover = SubResource("MapNode_hover")
+MapNodeButton/styles/hover_pressed = SubResource("MapNode_pressed")
+MapNodeButton/styles/normal = SubResource("MapNode_normal")
+MapNodeButton/styles/pressed = SubResource("MapNode_pressed")
 Panel/styles/panel = SubResource("Panel_stone")
 PanelContainer/styles/panel = SubResource("Panel_stone")
 PopupMenu/colors/font_color = Color(0.902, 1, 0.9647, 1)

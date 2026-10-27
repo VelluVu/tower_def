@@ -23,16 +23,14 @@ func _ready() -> void:
 	tween.tween_property(self, "modulate:a", 1.0, PULSE_TIME).set_trans(Tween.TRANS_SINE)
 
 
-#whole-pixel rects: dark outline, gold frame, light inner edge, like the bold UI frames
+#a whole-pixel ring round the round level button: dark outline, gold, light inner edge, like the bold UI frames
 func _draw() -> void:
-	var rect : Rect2 = Rect2(Vector2.ZERO, size)
-	_draw_frame(rect, OUTLINE_COLOR)
-	_draw_frame(rect.grow(-1.0), OUTER_COLOR)
-	_draw_frame(rect.grow(-2.0), INNER_COLOR)
+	var centre : Vector2 = size * 0.5
+	var radius : float = minf(size.x, size.y) * 0.5
+	var ring_colors : Array[Color] = [OUTLINE_COLOR, OUTER_COLOR, INNER_COLOR]
 
-
-func _draw_frame(rect : Rect2, color : Color) -> void:
-	draw_rect(Rect2(rect.position, Vector2(rect.size.x, 1.0)), color)
-	draw_rect(Rect2(rect.position + Vector2(0.0, rect.size.y - 1.0), Vector2(rect.size.x, 1.0)), color)
-	draw_rect(Rect2(rect.position, Vector2(1.0, rect.size.y)), color)
-	draw_rect(Rect2(rect.position + Vector2(rect.size.x - 1.0, 0.0), Vector2(1.0, rect.size.y)), color)
+	for y in int(size.y):
+		for x in int(size.x):
+			var band : int = int(radius - Vector2(x + 0.5, y + 0.5).distance_to(centre))
+			if band >= 0 and band < ring_colors.size():
+				draw_rect(Rect2(x, y, 1.0, 1.0), ring_colors[band])
