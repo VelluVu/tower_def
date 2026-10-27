@@ -3,10 +3,10 @@ extends Node
 
 ## Gold upgrades and element evolves, bought from the selection panel.
 ## Upgrades and tiers are bought per building, so a new building starts at the base; data with
-## is_per_type (walls) upgrades the whole type instead. The element is per type: the first building
-## of a type to evolve picks it, the others of the type can then only evolve into it.
+## is_per_type (walls) upgrades the whole type instead. The element is per building too (the user's
+## call 2026-10-27): two Beamers can take different elements.
 ## Lives under the Level, so everything resets when the level is unloaded.
-## The Level creates it before LevelUpgrades, so a new per-type building gets its element before the XP cards check it.
+## The Level creates it before LevelUpgrades, so a new per-type building gets its upgrades before the XP cards check it.
 
 const UPGRADE_TITLE_TEXT : String = "Up %d"
 const MISSING_ELEMENT_LEAF_WARNING : String = " cannot find element leaf "
@@ -16,12 +16,12 @@ const UPGRADE_PIPS_NAME : String = "UpgradePips"
 class UpgradeState:
 	var upgrades_bought : int = 0
 	var tiers_evolved : int = 0
+	#path from the building to the element leaf it evolved into, empty before the first tier
+	var element_leaf_path : NodePath = NodePath()
 
 
 var type_states : Dictionary[String, UpgradeState] = {}
 var building_states : Dictionary[Building, UpgradeState] = {}
-#scene path -> the element leaf the type evolved into first
-var type_elements : Dictionary[String, NodePath] = {}
 var selected_unit : Node2D = null
 var options : Array[GoldUpgradeOption] = []
 
@@ -61,8 +61,8 @@ func _on_building_placed(building : Building) -> void:
 
 	var state : UpgradeState = type_states[building.scene_file_path]
 
-	if type_elements.has(building.scene_file_path):
-		_apply_evolve(building, type_elements[building.scene_file_path])
+	if not state.element_leaf_path.is_empty():
+		_apply_evolve(building, state.element_leaf_path)
 
 	#per-type buildings (walls) have no element tiers, so no evolved upgrades either
 	for i in state.upgrades_bought:
@@ -102,8 +102,8 @@ func _on_gold_upgrade_pressed(index : int) -> void:
 
 	if option.is_evolve:
 		state.tiers_evolved += 1
-		if not type_elements.has(type_key):
-			type_elements[type_key] = option.element_leaf_path
+		if state.element_leaf_path.is_empty():
+			state.element_leaf_path = option.element_leaf_path
 	else:
 		state.upgrades_bought += 1
 
@@ -153,8 +153,6 @@ func _build_options() -> Array[GoldUpgradeOption]:
 		UpgradeRules.GoldStep.Evolve:
 			var evolve_price : float = UpgradeRules.gold_price(building_price, data.evolve_cost_ratios[state.tiers_evolved])
 			for leaf in element_leafs:
-				if type_elements.has(building.scene_file_path) and building.get_path_to(leaf) != type_elements[building.scene_file_path]:
-					continue
 				new_options.append(GoldUpgradeOption.evolve(leaf, building, evolve_price))
 
 	for option in new_options:
@@ -200,7 +198,7 @@ func _update_pips(building : Building, state : UpgradeState) -> void:
 		building.add_child(pips)
 
 	var tier_color : Color = Color.WHITE
-	var leaf : ElementEvolveLeaf = building.get_node_or_null(type_elements.get(building.scene_file_path, NodePath())) as ElementEvolveLeaf
+	var leaf : ElementEvolveLeaf = building.get_node_or_null(state.element_leaf_path) as ElementEvolveLeaf if not state.element_leaf_path.is_empty() else null
 	if leaf != null:
 		tier_color = leaf.evolve_glow_color
 

@@ -167,6 +167,16 @@ func test_skill_data_frees_its_hit(kit : TestKit) -> void:
 	kit.check(not is_instance_valid(hit), "the projectile's hit is freed with its SkillData")
 
 
+func test_element_is_per_building(kit : TestKit) -> void:
+	await kit.load_level(1)
+	var frost_beamer : Building = await _evolve(kit, "puffe_beamer", Vector2i(12, 6), FROST_LEAF_NAME)
+	var grid : LevelGrid = kit.level.grid
+	var free_cell : Vector2i = kit.find_cell(func(cell : Vector2i) -> bool: return grid.is_position_buildable(grid.grid_position_to_world(cell)) and not grid.has_building_in_cell_position(cell))
+	var poison_beamer : Building = await _evolve(kit, "puffe_beamer", free_cell, POISON_LEAF_NAME)
+	kit.check(frost_beamer.evolve_tree.evolve_element == Utils.Element.Frost, "the first Beamer stays Frost")
+	kit.check(poison_beamer.evolve_tree.evolve_element == Utils.Element.Poison, "a second Beamer can take Poison")
+
+
 func _frost_bolter(kit : TestKit, cell : Vector2i = Vector2i(12, 6)) -> Building:
 	return await _evolve(kit, "puffe_bolter", cell, FROST_LEAF_NAME)
 
