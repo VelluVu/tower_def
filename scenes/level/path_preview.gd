@@ -43,6 +43,10 @@ func _ready() -> void:
 
 
 func _update_paths() -> void:
+	#a retried level leaves the tree before it is freed, and the new level's grid update still reaches it
+	if not is_inside_tree():
+		return
+
 	paths.clear()
 
 	for route in level.get_routes():

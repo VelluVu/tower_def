@@ -15,11 +15,14 @@ const LIFT_PROPERTY_NAME : String = "lift"
 @export var overtime_font_size : float = 8.0
 @export var critical_font_size_multiplier : float = 2.0
 @export var critical_color_lightener_value : float = 0.2
+#in screen pixels, so it is the same at every zoom: the double-size crit text starts this much higher, off the enemy
+@export var critical_screen_lift : float = 8.0
 
 var current_font_size : float = 8.0
 var tween : Tween = null
 var world_position : Vector2 = Vector2.ZERO
 var lift : float = 0.0
+var screen_lift : float = 0.0
 
 signal deactivated(damage_number : DamageNumber)
 
@@ -31,6 +34,7 @@ func _ready() -> void:
 func activate(_position : Vector2, _damage_data : DamageData) -> void:
 	world_position = _position
 	lift = 0.0
+	screen_lift = critical_screen_lift if _damage_data.is_critical else 0.0
 	_update_screen_position()
 	number_label.text = ("+" + str(int(_damage_data.rounded_damage * -1))) if _damage_data.is_healing else str(int(_damage_data.rounded_damage))
 	var font_color : Color = Color.GREEN if _damage_data.is_healing else Utils.get_damage_type_color(_damage_data.damage_type)
@@ -46,6 +50,7 @@ func activate(_position : Vector2, _damage_data : DamageData) -> void:
 func activate_text(_position : Vector2, text : String, color : Color) -> void:
 	world_position = _position
 	lift = 0.0
+	screen_lift = 0.0
 	_update_screen_position()
 	number_label.text = text
 	number_label.add_theme_color_override(FONT_COLOR_PROPERTY_NAME, color)
@@ -77,7 +82,7 @@ func _process(_delta : float) -> void:
 
 #the number lives on a CanvasLayer so the camera zoom never stretches the pixel font; it follows its world point by hand
 func _update_screen_position() -> void:
-	position = (get_viewport().get_canvas_transform() * (world_position + Vector2.UP * lift)).round()
+	position = (get_viewport().get_canvas_transform() * (world_position + Vector2.UP * lift) + Vector2.UP * screen_lift).round()
 
 
 func _on_live_timer_timeout() -> void:
