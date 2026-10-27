@@ -26,6 +26,8 @@ var current_time_scale : float = 1.0
 
 #the wanted animation duration in seconds, 0.0 == original animation length
 var current_wanted_playtime : float = 0.0
+#the sprite's position in its scene; the pixel snap moves it less than a pixel around this
+var pixel_snap_position : Vector2 = Vector2.ZERO
 
 
 func play_animation(animation_name : String, wanted_play_time : float = 0.0, is_no_slowing : bool = false) -> void:
@@ -89,6 +91,18 @@ func _ready() -> void:
 
 	#check the current time scale when this object is ready
 	_on_time_scale_change(Utils.game_control.time_scale)
+
+
+	#buildings stand on the grid; only moving units need the pixel snap
+	pixel_snap_position = position
+	set_process(actor is Enemy)
+
+
+#the body moves in fractions of a pixel; the sprite is drawn on whole world pixels,
+#so at 2x and 3x zoom a walking unit never sits half an art pixel off
+#(position, not offset: Godot's own snap rounds the offset away)
+func _process(_delta : float) -> void:
+	position = pixel_snap_position + actor.global_position.round() - actor.global_position
 
 
 func _alter_current_animation_speed(no_slowing : bool = false) -> void:

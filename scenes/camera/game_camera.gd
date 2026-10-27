@@ -86,6 +86,13 @@ func _process(delta: float) -> void:
 	_move_camera_smoothly(delta)
 	_zoom_camera_smoothly(delta)
 	_pan_camera_smoothly(delta)
+	_snap_view_to_art_pixels()
+
+
+#the lerps keep the exact position; only the view is shifted onto whole world pixels,
+#so at 2x and 3x the tiles and units never sit half an art pixel off
+func _snap_view_to_art_pixels() -> void:
+	offset = global_position.round() - global_position
 
 
 func _zoom() -> void:

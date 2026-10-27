@@ -7,6 +7,9 @@ const RANGE_AREA_OBJECT_NULL_ERROR_MESSAGE : String = "NO RANGE AREA ON TOWER, U
 @onready var range_area : Area2D = $RangeArea 
 @onready var area_shape : CollisionShape2D = $RangeArea/CollisionShape2D
 
+#traps sit on the ground and skip flyers; Bird Catcher (Leopard T2) will turn this on
+@export var can_hit_air : bool = false
+
 var targets : Array[Node2D]
 
 
@@ -57,6 +60,9 @@ func _on_enemy_destroyed(enemy : Enemy) -> void:
 
 
 func _on_range_area_body_entered(body: Node2D) -> void:
+	if body is Enemy and body.is_flying and not can_hit_air:
+		return
+
 	if not targets.has(body):
 		targets.append(body)
 		

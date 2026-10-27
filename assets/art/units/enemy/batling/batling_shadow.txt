@@ -1,0 +1,8 @@
+# Source of batling_shadow.aseprite and batling_shadow.png: the ground shadow under a flyer (drawn with modulate alpha in the scene).
+size = 10x3
+a = 181425
+---
+@IDLE 100
+..aaaaaa..
+aaaaaaaaaa
+..aaaaaa..

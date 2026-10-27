@@ -1,0 +1,28 @@
+# Source of assets/art/units/enemy/batling/batling_icon.png (python tools/gd.py icon <this> <out.png>)
+d = 3e2731
+p = 68386c
+q = b55088
+k = b59e85
+c = cab494
+m = d5bf9b
+e = e0caa3
+l = ecd8b1
+r = ff0044
+x = a22633
+---
+................
+................
+p..............p
+dp...k....k...pd
+dqp..km..mk..pqd
+ddqp.kmlllk.pqdd
+dddpkmlllllkpddd
+.ddpmrrlllrrpdd.
+.ddpmrrlllrrpdd.
+..dpmlllllllcpd.
+..d.cmlxxxlc.d..
+.....cmllmc.....
+......kmmk......
+................
+................
+................

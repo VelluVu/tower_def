@@ -40,6 +40,9 @@ const TURN_DOT_LIMIT : float = 0.5
 @export var icon : Texture2D = null
 #kill XP is 2 per max health times this; below 1 for enemies that come in big groups
 @export var xp_multiplier : float = 1.0
+#flies its own FlightPath to the castle: ignores the grid, the maze, slow ground and buildings,
+#and traps skip it; the scene freezes the body (kinematic) so walls never push it
+@export var is_flying : bool = false
 
 @export var skill : Skill :
 	get:
@@ -150,7 +153,7 @@ func iterate_next_waypoint() -> void:
 
 
 func _pause_if_turning() -> void:
-	if turn_pause_timer == null or velocity.is_zero_approx() or not turn_pause_timer.is_stopped():
+	if is_flying or turn_pause_timer == null or velocity.is_zero_approx() or not turn_pause_timer.is_stopped():
 		return
 
 	if velocity.normalized().dot(global_position.direction_to(next_waypoint)) < TURN_DOT_LIMIT:
@@ -178,11 +181,27 @@ func move_towards_next_waypoint() -> void:
 		return
 
 	var move_direction : Vector2 = global_position.direction_to(next_waypoint)
+
+	if is_flying:
+		_fly(move_direction)
+		return
+
 	var speed : float = stats.get_stat_value(Utils.StatType.Speed) * get_spacing_speed_factor(move_direction) * _get_cell_speed_factor()
 	velocity = speed * move_direction * current_time_scale
 	linear_velocity = velocity
 	last_position = global_position
 	animation_control.flip_h = linear_velocity.x <= 0
+
+
+#a frozen body ignores linear_velocity, so the flyer moves itself; spacing only counts other flyers
+func _fly(move_direction : Vector2) -> void:
+	var speed : float = stats.get_stat_value(Utils.StatType.Speed) * get_spacing_speed_factor(move_direction)
+	velocity = speed * move_direction * current_time_scale
+	var step : Vector2 = velocity * get_physics_process_delta_time()
+	#never overshoot the waypoint, so a fast flyer at 3x does not circle it
+	global_position += step.limit_length(global_position.distance_to(next_waypoint))
+	last_position = global_position
+	animation_control.flip_h = velocity.x <= 0
 
 
 #slow ground and the maze; looked up again only in a new cell or after the buildings change
@@ -196,7 +215,13 @@ func _get_cell_speed_factor() -> float:
 
 func path_to(from : Vector2, to : Vector2) -> void:
 	#to = level.grid.snap_position_to_grid(to)
-	
+
+	if is_flying:
+		point_path = FlightPath.get_points(from, to, randf())
+		current_waypoint_index = 0
+		next_waypoint = point_path[0] + lane_offset
+		return
+
 	point_path = level.grid.find_path(from, to)
 	current_waypoint_index = 0
 	
@@ -265,6 +290,9 @@ func _free_after_death() -> void:
 
 
 func get_building_in_next_waypoint() -> Building:
+	if is_flying:
+		return null
+
 	var building : Building = level.grid.get_building_from_world_position(level.grid.snap_position_to_grid(next_waypoint))
 	if building is Trap:
 		return null
@@ -290,7 +318,7 @@ func get_first_nearby_free_position() -> Vector2:
 func get_spacing_speed_factor(move_direction : Vector2) -> float:
 	var neighbour_positions : Array[Vector2] = []
 	for enemy in level.existing_enemies:
-		if enemy != self and not enemy.is_deactivated:
+		if enemy != self and not enemy.is_deactivated and enemy.is_flying == is_flying:
 			neighbour_positions.append(enemy.global_position)
 	return EnemySpacing.get_speed_factor(global_position, move_direction, neighbour_positions)
 
@@ -345,6 +373,9 @@ func _roll_lane_offset() -> void:
 
 
 func _on_body_enter(body : Node) -> void:
+	if is_flying:
+		return
+
 	if body.is_in_group(GroupNames.BUILDINGS):
 		if body is Trap:
 			return
@@ -357,9 +388,9 @@ func _on_body_exit(body : Node) -> void:
 
 
 func _on_astar_grid_updated() -> void:
-	if is_dead or is_deactivated:
+	if is_dead or is_deactivated or is_flying:
 		return
-		
+
 	if level == null:
 		push_warning(name, GRID_UPDATE_ERROR)
 		return

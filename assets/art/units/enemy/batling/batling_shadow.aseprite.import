@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://c7yah83r7axnt"
+path="res://.godot/imported/batling_shadow.aseprite-67b5b708d604b499e2cb53ae0c190c36.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/batling/batling_shadow.aseprite"
+dest_files=["res://.godot/imported/batling_shadow.aseprite-67b5b708d604b499e2cb53ae0c190c36.res"]
+
+[params]
+
