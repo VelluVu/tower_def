@@ -59,7 +59,9 @@ func test_frost_slow_scales_and_stops_at_the_floor(kit : TestKit) -> void:
 	var enemy : Enemy = kit.spawn_enemy("weakling")
 	await kit.frames()
 	var speed : float = enemy.stats.get_stat_value(Utils.StatType.Speed)
-	var slow_per_stack : float = bolter.skill.damage_data.overtime_effect_datas[0].modifier_datas[0].value
+	var hit : DamageData = bolter.skill.damage_data
+	var slow_per_stack : float = hit.overtime_effect_datas[0].modifier_datas[0].value
+	hit.free()
 
 	_slow(enemy, bolter, 1)
 	kit.check_near(enemy.stats.get_stat_value(Utils.StatType.Speed), speed * (1.0 + slow_per_stack), "one stack")
@@ -145,6 +147,17 @@ func test_hits_leave_no_orphan_nodes(kit : TestKit) -> void:
 	kit.check(new_orphans == 0, "%d hits left %d orphan nodes" % [hits[0], new_orphans])
 
 
+func test_evolving_swaps_the_damage_data_without_orphans(kit : TestKit) -> void:
+	await kit.load_level(1)
+	var orphans : float = Performance.get_monitor(Performance.OBJECT_ORPHAN_NODE_COUNT)
+	var bolter : Building = await _frost_bolter(kit)
+	await kit.frames(2)
+	var datas : Array[Node] = bolter.skill.get_children().filter(func(child : Node) -> bool: return child is DamageData)
+	kit.check(datas.size() == 1, "one DamageData under the skill (%d)" % datas.size())
+	kit.check(datas[0].damage_type == Utils.DamageType.Frost, "it is the Frost one")
+	kit.check(Performance.get_monitor(Performance.OBJECT_ORPHAN_NODE_COUNT) - orphans == 0, "the old and new damage data leave no orphan nodes")
+
+
 func test_skill_data_frees_its_hit(kit : TestKit) -> void:
 	var hit : DamageData = DamageData.new()
 	var skill_data : SkillData = SkillData.new()
@@ -207,10 +220,12 @@ func _buy(kit : TestKit, index : int) -> void:
 #the slow's effect data without the hit damage, so the weakling never dies of it; no crits (a crit adds two stacks)
 func _slow(enemy : Enemy, bolter : Building, hits : int) -> void:
 	for i in hits:
-		var datas : Array[OvertimeEffectData] = bolter.skill.damage_data.overtime_effect_datas
+		var hit : DamageData = bolter.skill.damage_data
+		var datas : Array[OvertimeEffectData] = hit.overtime_effect_datas
 		for data in datas:
 			data.is_critical = false
 		enemy.overtime_effect_handler.handle_overtime_effects(datas, 0.0)
+		hit.free()
 
 
 func _multiply(value : float) -> ModifierData:

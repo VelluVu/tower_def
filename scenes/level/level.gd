@@ -8,6 +8,7 @@ const BUILDING_TYPE_UPGRADES_NAME : String = "BuildingTypeUpgrades"
 const LEVEL_TALENTS_NAME : String = "LevelTalents"
 const ELEMENT_REACTIONS_NAME : String = "ElementReactions"
 const PATH_PREVIEW_NAME : String = "PathPreview"
+const PLAYTEST_LOG_NAME : String = "PlaytestLog"
 const BACKDROP_NAME : String = "LevelBackdrop"
 const NO_LEVEL_DATA_WARNING : String = " Level has no LevelData, no waves will spawn!"
 
@@ -67,6 +68,10 @@ func _ready() -> void:
 	var path_preview : PathPreview = PathPreview.new()
 	path_preview.name = PATH_PREVIEW_NAME
 	add_child(path_preview)
+	#last: it reads the start gold after the talents
+	var playtest_log : PlaytestLog = PlaytestLog.new()
+	playtest_log.name = PLAYTEST_LOG_NAME
+	add_child(playtest_log)
 	UISignals.start_wave_pressed.connect(_on_start_wave_pressed)
 	UISignals.game_play_interface_loaded.connect(_emit_wave_state)
 	GameSignals.level_loaded.emit(self)

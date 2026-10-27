@@ -75,10 +75,20 @@ func _set_flip_h(_is_flipped : bool) -> void:
 	position.x = position.x * -1
 
 
+#works on the node itself: reading damage_data returns a copy, so freeing or adding that would
+#leave the old node here and the new one outside the tree
 func replace_damage_data(new_damage_data_scene : PackedScene) -> void:
-	damage_data.queue_free()
-	damage_data = new_damage_data_scene.instantiate()
-	add_child(damage_data)
+	var old_damage_data : Node = get_node_or_null(Building.SKILL_DAMAGE_DATA_NODE_NAME)
+	var new_damage_data : DamageData = new_damage_data_scene.instantiate()
+
+	if old_damage_data != null:
+		remove_child(old_damage_data)
+		old_damage_data.queue_free()
+
+	#the standard name, so a later replace_skill moves it over and $DamageData finds it
+	new_damage_data.name = Building.SKILL_DAMAGE_DATA_NODE_NAME
+	add_child(new_damage_data)
+	damage_data = new_damage_data
 
 
 func start_skill_cast() -> void:

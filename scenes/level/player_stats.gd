@@ -37,7 +37,11 @@ func has_enough_gold(amount : float) -> bool:
 func spend_gold(amount : float) -> bool:
 	if not has_enough_gold(amount):
 		return false
-	
+
+	#the free build cheat: nothing costs gold, so nothing is taken either
+	if GameSignals.free_build:
+		return true
+
 	gold -= amount
 	GameSignals.resource_change.emit(gold, 0)
 	return true
@@ -63,6 +67,9 @@ func _on_enemy_destroyed(enemy : Enemy) -> void:
 
 
 func _on_building_placed(building : Building) -> void:
+	if GameSignals.free_build:
+		return
+
 	gold -= building.stats.get_stat_value(Utils.StatType.Price)
 	GameSignals.resource_change.emit(gold, 0)
 

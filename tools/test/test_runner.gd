@@ -10,6 +10,7 @@ const USAGE_ERROR : String = "usage: -- [--deadline <s>] --test <file or folder>
 const DEADLINE_ARG : String = "--deadline"
 const DEADLINE_MESSAGE : String = "TIMEOUT in %s: a script error after an await stops a coroutine for good"
 const DEFAULT_DEADLINE_SECONDS : float = 240.0
+const NO_CHECKS_FAILURE : String = "no checks ran: look for a SCRIPT ERROR above"
 
 #real time, not game time: --fixed-fps runs the game faster than the clock
 var deadline_msec : int = 0
@@ -66,6 +67,10 @@ func _run_tests(paths : PackedStringArray) -> int:
 			var kit : TestKit = TestKit.new(self)
 			await Callable(script.new(), method.name).call(kit)
 			kit.free_level()
+
+			#a script error ends the test early without a failure, so a test that checked nothing failed
+			if kit.checks == 0:
+				kit.failures.append(NO_CHECKS_FAILURE)
 
 			if kit.failures.is_empty():
 				passed += 1

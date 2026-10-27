@@ -12,6 +12,7 @@ const CARD_PATH : String = "res://scenes/unit/evolve_tree/evolve_resources/%s.tr
 #Builder puts placed buildings in this container; Building.level is its parent
 const BUILDINGS_NODE_NAME : String = "Buildings"
 const TEST_SAVE_PATH : String = "user://test_progress.tres"
+const TEST_PLAYTEST_LOG_PATH : String = "user://bot_playtests.jsonl"
 
 var root : Node = null
 var level : Level = null
@@ -23,6 +24,9 @@ func _init(test_root : Node) -> void:
 	root = test_root
 	#a test that saves progress must never overwrite the player's own save
 	PlayerProgress._save.save_path = TEST_SAVE_PATH
+	#tests leave no playtest lines; the soak bot turns its own log back on
+	PlaytestLog.is_enabled = false
+	PlaytestLog.log_path = TEST_PLAYTEST_LOG_PATH
 	var main : Main = Main.new()
 	main.scene_manager = SceneManager.new()
 	Utils.game_control = main
