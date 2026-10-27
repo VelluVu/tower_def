@@ -83,6 +83,14 @@ func get_level_talent_points(level_number : int) -> int:
 	return _save.progress.level_talent_points.get(level_number, 0)
 
 
+## Only Normal is played and saved so far; the other modes have no points yet.
+func get_level_mode_talent_points(level_number : int, mode : Utils.LevelMode) -> int:
+	if mode != Utils.LevelMode.Normal:
+		return 0
+
+	return get_level_talent_points(level_number)
+
+
 ## Keeps the best result of the level and returns how many points it added.
 func record_level_talent_points(level_number : int, points : int) -> int:
 	var best : int = get_level_talent_points(level_number)

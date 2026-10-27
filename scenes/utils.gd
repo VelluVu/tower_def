@@ -95,6 +95,14 @@ enum SkillType
 	Beaming = 1 << 3,
 }
 
+## Each mode of a level earns its own talent points (docs/design/progression.md, Level Modes).
+enum LevelMode
+{
+	Normal,
+	Hard,
+	Survival,
+}
+
 func get_damage_type_color(damage_type : DamageType) -> Color:
 	match(damage_type):
 		DamageType.Physical:
