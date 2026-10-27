@@ -28,6 +28,12 @@ var current_building : Building = null
 var level : Level = null
 var placed_buildings : Array[Building]
 var placed_building_id : int = 0
+#a held left click with a wall plans a line of ghost walls, built on release
+var is_dragging_line : bool = false
+var drag_start_cell : Vector2i = Vector2i.ZERO
+var drag_cell : Vector2i = Vector2i.ZERO
+var planned_cells : Array[Vector2i] = []
+var wall_line_preview : WallLinePreview = null
 
 var is_placing_building : bool : 
 	get = _get_is_placing_building,
@@ -49,6 +55,7 @@ func remove_building(_building : Building) -> void:
 
 
 func _ready() -> void:
+	set_physics_process(false)
 	GameSignals.game_stop.connect(_on_game_stop)
 	GameSignals.game_pause.connect(_on_game_pause)
 	GameSignals.level_loaded.connect(_on_level_loaded)
@@ -62,6 +69,11 @@ func _ready() -> void:
 
 
 func _input(event : InputEvent) -> void:
+	#before the gui check, a drag can end over the build tray
+	if event.is_action_released(LEFT_CLICK_ACTION_NAME) and is_dragging_line:
+		_finish_wall_line()
+		return
+
 	if is_cursor_on_gui or not is_ready_to_build:
 		return
 
@@ -72,8 +84,17 @@ func _input(event : InputEvent) -> void:
 	if event.is_action_pressed(SELECT_BUILDING_ONE_ACTION_NAME):
 		_start_building_placement(0)
 	
+	#cancels only the line, the wall stays selected
+	if is_dragging_line and (event.is_action_pressed(RIGHT_CLICK_ACTION_NAME) or event.is_action_pressed(ESCAPE_ACTION_NAME)):
+		_cancel_wall_line()
+		get_viewport().set_input_as_handled()
+		return
+
 	if event.is_action_pressed(LEFT_CLICK_ACTION_NAME):
-		_place_building(current_building_option_index)
+		if current_building is Wall:
+			_start_wall_line()
+		else:
+			_place_building(current_building_option_index)
 		
 	if event.is_action_pressed(ESCAPE_ACTION_NAME):
 		_stop_building_placement()
@@ -83,6 +104,7 @@ func _input(event : InputEvent) -> void:
 		
 	if event is InputEventMouseMotion:
 		_move_building_with_cursor()
+		_extend_wall_line()
 
 
 func _validate_placement_position(_pos : Vector2) -> bool:
@@ -133,6 +155,8 @@ func _on_level_loaded(_level : Level) -> void:
 	#a menu freed under the cursor may never send mouse_on_gui(false)
 	is_cursor_on_gui = false
 	level = _level
+	wall_line_preview = WallLinePreview.new()
+	level.add_child(wall_line_preview)
 	UISignals.building_option_selected.connect(_on_building_placement_selected)
 	UISignals.building_option_deselected.connect(_on_building_placement_deselected)
 	UISignals.mouse_on_gui.connect(_mouse_is_on_gui)
@@ -155,6 +179,8 @@ func _on_game_stop() -> void:
 	_stop_building_placement()
 	is_ready_to_build = false
 	level = null
+	#freed with the level
+	wall_line_preview = null
 	UISignals.building_option_selected.disconnect(_on_building_placement_selected)
 	UISignals.building_option_deselected.disconnect(_on_building_placement_deselected)
 	UISignals.mouse_on_gui.disconnect(_mouse_is_on_gui)
@@ -192,6 +218,7 @@ func _format_node_name_from_resource_path(path : String) -> String:
 
 
 func _stop_building_placement() -> void:
+	_cancel_wall_line()
 	is_placing_building = false
 
 
@@ -211,13 +238,152 @@ func _place_building(building_index : int) -> void:
 		return
 	
 	current_building.is_valid_placement = false
+	_instantiate_building(building_index, placement_position)
+
+
+func _instantiate_building(building_index : int, position_in_world : Vector2) -> void:
 	var buildings_node : Node2D = _get_buildings_container()
 	var placed_building : Building = buildings[building_index].scene.instantiate()
 	buildings_node.add_child(placed_building)
 	placed_building.id = placed_building_id
-	placed_building.place(placement_position)
+	placed_building.place(position_in_world)
 	placed_buildings.append(placed_building)
 	placed_building_id += 1
+
+
+func _start_wall_line() -> void:
+	if not is_placing_building:
+		return
+
+	is_dragging_line = true
+	drag_start_cell = level.grid.world_position_to_grid(get_global_mouse_position())
+	drag_cell = drag_start_cell
+	planned_cells.clear()
+	_plan_line_cells([drag_start_cell])
+	set_physics_process(true)
+
+
+#plans every cell between the last and the cursor's cell, so a fast mouse leaves no gaps
+func _extend_wall_line() -> void:
+	if not is_dragging_line or not is_placing_building:
+		return
+
+	var cursor_cell : Vector2i = level.grid.world_position_to_grid(get_global_mouse_position())
+
+	if cursor_cell == drag_cell:
+		return
+
+	var line : Array[Vector2i] = Geometry2D.bresenham_line(drag_cell, cursor_cell)
+	line.remove_at(0)
+	drag_cell = cursor_cell
+	_plan_line_cells(line)
+
+
+#dragging back over the line takes the last ghost away; a plan stops at what the gold pays for
+#and skips a cell that would close an open enemy route
+func _plan_line_cells(cells : Array[Vector2i]) -> void:
+	var price : float = current_building.stats.get_stat_value(Utils.StatType.Price)
+	var routes : Array[PackedVector2Array] = level.get_routes()
+
+	for cell in cells:
+		if planned_cells.size() >= 2 and cell == planned_cells[-2]:
+			planned_cells.pop_back()
+			continue
+
+		if planned_cells.has(cell) or not has_enough_gold(price * (planned_cells.size() + 1)):
+			continue
+
+		if _can_build_wall_in_cell(cell) and not level.grid.would_close_route(cell, current_building.astar_weight, routes, planned_cells):
+			planned_cells.append(cell)
+
+	_update_wall_line_preview()
+
+
+#a release without moving is a plain click: a single wall may close a route on purpose (blocking)
+func _finish_wall_line() -> void:
+	var is_click : bool = drag_cell == drag_start_cell
+	var cells : Array[Vector2i] = planned_cells.duplicate()
+	_cancel_wall_line()
+
+	if not is_placing_building or not is_ready_to_build:
+		return
+
+	if is_click:
+		_place_building(current_building_option_index)
+		return
+
+	var price : float = current_building.stats.get_stat_value(Utils.StatType.Price)
+
+	for cell in cells:
+		if not has_enough_gold(price):
+			break
+
+		var cell_position : Vector2 = level.grid.grid_position_to_world(cell)
+
+		#an enemy may have walked onto a ghost; the walls before it change the routes too
+		if not _can_build_wall_in_cell(cell) or not _is_cell_clear_of_bodies(cell_position):
+			continue
+
+		if level.grid.would_close_route(cell, current_building.astar_weight, level.get_routes()):
+			continue
+
+		_instantiate_building(current_building_option_index, cell_position)
+
+	_move_building_with_cursor()
+
+
+func _cancel_wall_line() -> void:
+	is_dragging_line = false
+	planned_cells.clear()
+	set_physics_process(false)
+
+	if wall_line_preview != null:
+		wall_line_preview.clear()
+
+
+#enemies move under the ghosts, so the red marks are refreshed while the line is held
+func _physics_process(_delta : float) -> void:
+	if is_dragging_line:
+		_update_wall_line_preview()
+
+
+func _update_wall_line_preview() -> void:
+	var sprite : AnimatedSprite2D = current_building.animation_control
+	var positions : PackedVector2Array = PackedVector2Array()
+	var textures : Array[Texture2D] = []
+	var blocked : Array[bool] = []
+
+	for cell in planned_cells:
+		var cell_position : Vector2 = level.grid.grid_position_to_world(cell)
+		var animation : String = Wall.connector_animation(_is_wall_neighbour(cell + Vector2i.LEFT), _is_wall_neighbour(cell + Vector2i.RIGHT), _is_wall_neighbour(cell + Vector2i.UP), _is_wall_neighbour(cell + Vector2i.DOWN))
+		positions.append(cell_position + sprite.position + sprite.offset)
+		textures.append(sprite.sprite_frames.get_frame_texture(animation, 0) if sprite.sprite_frames.has_animation(animation) else null)
+		blocked.append(not _is_cell_clear_of_bodies(cell_position))
+
+	wall_line_preview.set_ghosts(positions, textures, blocked)
+
+
+#walls join other walls and towers, like Wall._set_is_placed, but not traps
+func _is_wall_neighbour(cell : Vector2i) -> bool:
+	if planned_cells.has(cell):
+		return true
+
+	var building : Building = level.grid.get_building_from_cell_position(cell)
+	return building != null and building is not Trap
+
+
+func _can_build_wall_in_cell(cell : Vector2i) -> bool:
+	return _is_position_buildable(level.grid.grid_position_to_world(cell)) and not level.grid.has_building_in_cell_position(cell)
+
+
+#the preview's PlacementValidator only covers the cursor's cell, line cells ask the physics space
+func _is_cell_clear_of_bodies(cell_position : Vector2) -> bool:
+	var validator : PlacementValidator = current_building.placement_validator
+	var query : PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
+	query.shape = validator.collider.shape
+	query.transform = Transform2D(0.0, cell_position)
+	query.collision_mask = validator.collision_mask
+	return get_world_2d().direct_space_state.intersect_shape(query, 1).is_empty()
 
 
 func _move_building_with_cursor() -> void:

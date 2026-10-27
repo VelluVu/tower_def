@@ -160,6 +160,17 @@ func get_spawners() -> Array[Spawner]:
 	return spawners
 
 
+#each spawner's start and end point, the routes enemies walk
+func get_routes() -> Array[PackedVector2Array]:
+	var routes : Array[PackedVector2Array] = []
+
+	for spawner in get_spawners():
+		var end : Vector2 = spawner.end_point.global_position if spawner.end_point != null else end_point.global_position
+		routes.append(PackedVector2Array([spawner.global_position, end]))
+
+	return routes
+
+
 func _on_start_wave_pressed() -> void:
 	if not wave_runner.can_start_next_wave:
 		return

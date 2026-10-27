@@ -40,9 +40,8 @@ func _ready() -> void:
 func _update_paths() -> void:
 	paths.clear()
 
-	for spawner in level.get_spawners():
-		var end : Vector2 = spawner.end_point.global_position if spawner.end_point != null else level.end_point.global_position
-		paths.append(level.grid.find_path(spawner.global_position, end))
+	for route in level.get_routes():
+		paths.append(level.grid.find_path(route[0], route[1]))
 
 	queue_redraw()
 

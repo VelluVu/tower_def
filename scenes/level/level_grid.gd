@@ -32,6 +32,44 @@ func set_cell_weight(cell : Vector2i, weight : float) -> void:
 	astar_grid.set_point_weight_scale(cell, weight)
 
 
+#open = the cheapest path walks around every building; a closed route goes through one
+func is_route_open(from : Vector2, to : Vector2) -> bool:
+	var path : PackedVector2Array = find_path(from, to)
+
+	if path.is_empty() or world_position_to_grid(path[path.size() - 1]) != world_position_to_grid(to):
+		return false
+
+	for point in path:
+		if astar_grid.get_point_weight_scale(world_position_to_grid(point)) > 1.0:
+			return false
+
+	return true
+
+
+#whether a building of this weight in the cell would close a route that is open now, with the
+#planned cells (a dragged wall line not built yet) counted as built; the grid is left as it was
+func would_close_route(cell : Vector2i, weight : float, routes : Array[PackedVector2Array], planned_cells : Array[Vector2i] = []) -> bool:
+	var old_weights : Dictionary[Vector2i, float] = {}
+
+	for planned_cell in planned_cells + [cell]:
+		old_weights[planned_cell] = astar_grid.get_point_weight_scale(planned_cell)
+
+	for planned_cell in planned_cells:
+		astar_grid.set_point_weight_scale(planned_cell, weight)
+
+	var open_routes : Array[PackedVector2Array] = routes.filter(func(route : PackedVector2Array) -> bool: return is_route_open(route[0], route[1]))
+	var closes : bool = false
+
+	if not open_routes.is_empty():
+		astar_grid.set_point_weight_scale(cell, weight)
+		closes = open_routes.any(func(route : PackedVector2Array) -> bool: return not is_route_open(route[0], route[1]))
+
+	for changed_cell in old_weights:
+		astar_grid.set_point_weight_scale(changed_cell, old_weights[changed_cell])
+
+	return closes
+
+
 func is_position_in_bounds(_pos : Vector2) -> bool:
 	return astar_grid.is_in_boundsv(world_position_to_grid(_pos))
 

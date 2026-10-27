@@ -72,66 +72,57 @@ func _update_sprite() -> void:
 	var has_building_right : bool = neighbour_buildings.has(grid_position + Vector2i(1,0))
 	var has_building_up : bool = neighbour_buildings.has(grid_position - Vector2i(0,1))
 	var has_building_down : bool = neighbour_buildings.has(grid_position + Vector2i(0,1))
+	animation_control.play(connector_animation(has_building_left, has_building_right, has_building_up, has_building_down))
+
+
+#the wall piece that joins the neighbouring buildings; the line preview uses it for ghost walls too
+static func connector_animation(left : bool, right : bool, up : bool, down : bool) -> String:
+	if left and right and down and up:
+		return CONNECTOR_LRDU
 	
-	if has_building_left and has_building_right and has_building_down and has_building_up:
-		animation_control.play(CONNECTOR_LRDU)
-		return
+	if not left and not right and not up and not down:
+		return CONNECTOR_X
 	
-	if not has_building_left and not has_building_right and not has_building_up and not has_building_down:
-		animation_control.play(CONNECTOR_X)
-		return
+	if left and right and not down and not up:
+		return HORIZONTAL
 	
-	if has_building_left and has_building_right and not has_building_down and not has_building_up:
-		animation_control.play(HORIZONTAL)
-		return
+	if up and down and not left and not right:
+		return VERTICAL
 	
-	if has_building_up and has_building_down and not has_building_left and not has_building_right:
-		animation_control.play(VERTICAL)
-		return
+	if left and not right and not up and not down:
+		return HORIZONTAL_END_R
 	
-	if has_building_left and not has_building_right and not has_building_up and not has_building_down:
-		animation_control.play(HORIZONTAL_END_R)
-		return
+	if right and not left and not up and not down:
+		return HORIZONTAL_END_L
 	
-	if has_building_right and not has_building_left and not has_building_up and not has_building_down:
-		animation_control.play(HORIZONTAL_END_L)
-		return
+	if up and not right and not left and not down:
+		return VERTICAL_END_D
 	
-	if has_building_up and not has_building_right and not has_building_left and not has_building_down:
-		animation_control.play(VERTICAL_END_D)
-		return
+	if down and not right and not left and not up:
+		return VERTICAL_END_U
 	
-	if has_building_down and not has_building_right and not has_building_left and not has_building_up:
-		animation_control.play(VERTICAL_END_U)
-		return
+	if left and right and up and not down:
+		return CONNECTOR_LRU
 	
-	if has_building_left and has_building_right and has_building_up and not has_building_down:
-		animation_control.play(CONNECTOR_LRU)
-		return
+	if left and right and down and not up:
+		return CONNECTOR_LRD
 	
-	if has_building_left and has_building_right and has_building_down and not has_building_up:
-		animation_control.play(CONNECTOR_LRD)
-		return
+	if left and up and down and not right:
+		return CONNECTOR_LUD
 	
-	if has_building_left and has_building_up and has_building_down and not has_building_right:
-		animation_control.play(CONNECTOR_LUD)
-		return
+	if right and up and down and not left:
+		return CONNECTOR_RUD
 	
-	if has_building_right and has_building_up and has_building_down and not has_building_left:
-		animation_control.play(CONNECTOR_RUD)
-		return
+	if left and up and not right and not down:
+		return CONNECTOR_LU
 	
-	if has_building_left and has_building_up and not has_building_right and not has_building_down:
-		animation_control.play(CONNECTOR_LU)
-		return
+	if left and down and not right and not up:
+		return CONNECTOR_LD
 	
-	if has_building_left and has_building_down and not has_building_right and not has_building_up:
-		animation_control.play(CONNECTOR_LD)
-		return
+	if right and down and not left and not up:
+		return CONNECTOR_RD
 	
-	if has_building_right and has_building_down and not has_building_left and not has_building_up:
-		animation_control.play(CONNECTOR_RD)
-		return
-	
-	if has_building_right and has_building_up and not has_building_left and not has_building_down:
-		animation_control.play(CONNECTOR_UR)
+	if right and up and not left and not down:
+		return CONNECTOR_UR
+
+	return CONNECTOR_X
