@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dtlfjvjntikru"
+path="res://.godot/imported/swarmling.aseprite-5a8f8e4e62553d30b02c6d78d9cd3b24.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/swarmling/swarmling.aseprite"
+dest_files=["res://.godot/imported/swarmling.aseprite-5a8f8e4e62553d30b02c6d78d9cd3b24.res"]
+
+[params]
+

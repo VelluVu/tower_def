@@ -5,7 +5,6 @@ extends Node
 ## Lives under the Level, so everything resets when the level is unloaded.
 
 const CARD_COUNT : int = 4
-const XP_PER_MAX_HEALTH : float = 2.0
 const NO_CARDS_WARNING : String = " no upgrade cards fit the placed towers, skipping level "
 const MIXED_MODIFY_TYPE_WARNING : String = " cards of one stat should share a modify type, this one is added as the first card's: "
 const CARD_CAPS : CardCaps = preload("res://scenes/upgrades/card_caps.tres")
@@ -60,7 +59,7 @@ func add_xp(amount : float) -> void:
 
 
 func _on_enemy_destroyed(enemy : Enemy) -> void:
-	add_xp(enemy.stats.get_stat_value(Utils.StatType.MaxHealth) * XP_PER_MAX_HEALTH * (1.0 + xp_bonus))
+	add_xp(UpgradeRules.kill_xp(enemy.stats.get_stat_value(Utils.StatType.MaxHealth), enemy.xp_multiplier) * (1.0 + xp_bonus))
 
 
 func _on_level_finished(_level : Level = null) -> void:

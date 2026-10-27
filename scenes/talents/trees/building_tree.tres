@@ -419,7 +419,7 @@ color = Color(0.878, 0.541, 0.235, 1)
 script = ExtResource("2_node")
 id = &"leopard_t2"
 display_name = "Leopard T2"
-description = "Unlocks Leopard T2: each snap spawns a leopard cub that chases enemies and bites 3 times, each bite causing bleed"
+description = "Unlocks Leopard T2: each snap spawns a leopard cub that chases enemies and bites 3 times, each bite causing bleed. Bird Catcher: the leopard also leaps at flyers passing over the trap"
 kind = 2
 position = Vector2(6.2, 13)
 color = Color(0.878, 0.541, 0.235, 1)
@@ -699,7 +699,7 @@ description = "Trap damage +6%"
 max_rank = 3
 position = Vector2(7.6, 5.4)
 color = Color(0.878, 0.541, 0.235, 1)
-links = Array[StringName]([&"leopard_t4"])
+links = Array[StringName]([&"pride_leader"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_apex_hunter_0")])
 
 [sub_resource type="Resource" id="Effect_ambush_0"]
@@ -718,18 +718,17 @@ description = "Trap critical chance +4 points"
 max_rank = 2
 position = Vector2(6, 4.4)
 color = Color(0.878, 0.541, 0.235, 1)
-links = Array[StringName]([&"leopard_t4"])
+links = Array[StringName]([&"pride_leader"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_ambush_0")])
 
-[sub_resource type="Resource" id="Node_leopard_t4"]
+[sub_resource type="Resource" id="Node_pride_leader"]
 script = ExtResource("2_node")
-id = &"leopard_t4"
-display_name = "Leopard T4"
-description = "Unlocks Leopard T4 (effect not decided yet)"
-kind = 2
+id = &"pride_leader"
+display_name = "Pride Leader"
+description = "The leopard cubs grow up: each cub lives twice as long and its bites can critically hit"
+kind = 3
 position = Vector2(7.8, 3.2)
 color = Color(0.878, 0.541, 0.235, 1)
-needs = &"leopard_t3"
 
 [sub_resource type="Resource" id="Effect_buttress_0"]
 script = ExtResource("3_effect")
@@ -818,6 +817,6 @@ script = ExtResource("1_tree")
 id = &"building"
 display_name = "Building"
 start_id = &"war_chest"
-nodes = Array[ExtResource("2_node")]([SubResource("Node_war_chest"), SubResource("Node_hardened_shots"), SubResource("Node_keen_eye"), SubResource("Node_heavy_hits"), SubResource("Node_long_sight"), SubResource("Node_phys_t2"), SubResource("Node_piercing"), SubResource("Node_swift_wings"), SubResource("Node_phys_t3"), SubResource("Node_shatter"), SubResource("Node_thick_walls"), SubResource("Node_stone_blocks"), SubResource("Node_fortress_t1"), SubResource("Node_masonry"), SubResource("Node_reinforced_core"), SubResource("Node_fortress_t2"), SubResource("Node_fortress_t3"), SubResource("Node_mending"), SubResource("Node_iron_bands"), SubResource("Node_warded_stones"), SubResource("Node_rebuild"), SubResource("Node_dragons_keep"), SubResource("Node_dragons_maze"), SubResource("Node_sharp_teeth"), SubResource("Node_cheap_snares"), SubResource("Node_leopard_t1"), SubResource("Node_hidden_jaws"), SubResource("Node_quick_springs"), SubResource("Node_big_game"), SubResource("Node_titan_claws"), SubResource("Node_rend"), SubResource("Node_leopard_t2"), SubResource("Node_deep_wounds"), SubResource("Node_lingering_wounds"), SubResource("Node_open_wounds"), SubResource("Node_leopard_t3"), SubResource("Node_pack_hunt"), SubResource("Node_spoils"), SubResource("Node_haggling"), SubResource("Node_salvage"), SubResource("Node_narrow_ways"), SubResource("Node_sharp_corners"), SubResource("Node_labyrinth"), SubResource("Node_scholar"), SubResource("Node_bold_start"), SubResource("Node_second_thoughts"), SubResource("Node_hoard"), SubResource("Node_honed_claws"), SubResource("Node_quick_talons"), SubResource("Node_deadeye"), SubResource("Node_stalker"), SubResource("Node_spring_steel"), SubResource("Node_savage_bite"), SubResource("Node_apex_hunter"), SubResource("Node_ambush"), SubResource("Node_leopard_t4"), SubResource("Node_buttress"), SubResource("Node_spiked_stones"), SubResource("Node_stubborn_stone"), SubResource("Node_bastion"), SubResource("Node_deep_foundations"), SubResource("Node_fortress_t4")])
+nodes = Array[ExtResource("2_node")]([SubResource("Node_war_chest"), SubResource("Node_hardened_shots"), SubResource("Node_keen_eye"), SubResource("Node_heavy_hits"), SubResource("Node_long_sight"), SubResource("Node_phys_t2"), SubResource("Node_piercing"), SubResource("Node_swift_wings"), SubResource("Node_phys_t3"), SubResource("Node_shatter"), SubResource("Node_thick_walls"), SubResource("Node_stone_blocks"), SubResource("Node_fortress_t1"), SubResource("Node_masonry"), SubResource("Node_reinforced_core"), SubResource("Node_fortress_t2"), SubResource("Node_fortress_t3"), SubResource("Node_mending"), SubResource("Node_iron_bands"), SubResource("Node_warded_stones"), SubResource("Node_rebuild"), SubResource("Node_dragons_keep"), SubResource("Node_dragons_maze"), SubResource("Node_sharp_teeth"), SubResource("Node_cheap_snares"), SubResource("Node_leopard_t1"), SubResource("Node_hidden_jaws"), SubResource("Node_quick_springs"), SubResource("Node_big_game"), SubResource("Node_titan_claws"), SubResource("Node_rend"), SubResource("Node_leopard_t2"), SubResource("Node_deep_wounds"), SubResource("Node_lingering_wounds"), SubResource("Node_open_wounds"), SubResource("Node_leopard_t3"), SubResource("Node_pack_hunt"), SubResource("Node_spoils"), SubResource("Node_haggling"), SubResource("Node_salvage"), SubResource("Node_narrow_ways"), SubResource("Node_sharp_corners"), SubResource("Node_labyrinth"), SubResource("Node_scholar"), SubResource("Node_bold_start"), SubResource("Node_second_thoughts"), SubResource("Node_hoard"), SubResource("Node_honed_claws"), SubResource("Node_quick_talons"), SubResource("Node_deadeye"), SubResource("Node_stalker"), SubResource("Node_spring_steel"), SubResource("Node_savage_bite"), SubResource("Node_apex_hunter"), SubResource("Node_ambush"), SubResource("Node_pride_leader"), SubResource("Node_buttress"), SubResource("Node_spiked_stones"), SubResource("Node_stubborn_stone"), SubResource("Node_bastion"), SubResource("Node_deep_foundations"), SubResource("Node_fortress_t4")])
 shapes = Array[PackedVector2Array]([PackedVector2Array(0, 20, 20, 20, 19, 16, 19, 7, 20, 5.6, 20, 4.2, 18, 4.2, 18, 5, 15.4, 5, 15.4, 4.2, 12.4, 4.2, 12.4, 5, 7.6, 5, 7.6, 4.2, 4.6, 4.2, 4.6, 5, 2, 5, 2, 4.2, 0, 4.2, 0, 5.6, 1, 7, 1, 16)])
 lines = Array[PackedVector2Array]([PackedVector2Array(3.3, 4.2, 10, 0.6, 16.7, 4.2)])

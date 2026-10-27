@@ -6,7 +6,6 @@ extends RefCounted
 const BUILDINGS_FOLDER : String = "res://scenes/unit/building/buildings"
 const ENEMIES_FOLDER : String = "res://scenes/unit/enemy/enemies"
 const SCENE_EXTENSION : String = ".tscn"
-const XP_PER_MAX_HEALTH : float = 2.0
 
 
 func run(_kit : TestKit, _args : PackedStringArray) -> void:
@@ -32,7 +31,7 @@ func run(_kit : TestKit, _args : PackedStringArray) -> void:
 		var every : float = (skill.base_cast_time + skill.base_cooldown) if skill != null else 0.0
 		print("  %-14s %5s %6s %8s %5s %4s %9s %10ss" % [scene_name.get_basename(),
 			_value(unit_values, Utils.StatType.MaxHealth), _value(unit_values, Utils.StatType.Speed), _value(unit_values, Utils.StatType.Damage),
-			_value(unit_values, Utils.StatType.Price), unit_values.get(Utils.StatType.MaxHealth, 0.0) * XP_PER_MAX_HEALTH, melee, every])
+			_value(unit_values, Utils.StatType.Price), UpgradeRules.kill_xp(unit_values.get(Utils.StatType.MaxHealth, 0.0), (unit as Enemy).xp_multiplier), melee, every])
 		unit.free()
 
 

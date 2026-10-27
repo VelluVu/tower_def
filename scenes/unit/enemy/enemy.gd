@@ -38,6 +38,8 @@ const TURN_DOT_LIMIT : float = 0.5
 		return stats
 
 @export var icon : Texture2D = null
+#kill XP is 2 per max health times this; below 1 for enemies that come in big groups
+@export var xp_multiplier : float = 1.0
 
 @export var skill : Skill :
 	get:

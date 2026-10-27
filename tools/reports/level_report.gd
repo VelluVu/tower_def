@@ -4,7 +4,6 @@ extends RefCounted
 ## the XP, cards and kill gold over the level, and per spawner the route length, turns and slow cells.
 ## --map draws each level: # blocked, . walkable, s slow ground, * route, T tower-only.
 
-const XP_PER_MAX_HEALTH : float = 2.0
 const TURN_DOT_LIMIT : float = 0.5
 const MAP_ARG : String = "--map"
 
@@ -34,12 +33,14 @@ func _print_level(kit : TestKit, number : int, show_map : bool) -> void:
 		var health : float = 0.0
 		var parts : PackedStringArray = []
 		for group in data.waves[wave_index].spawn_groups:
-			var enemy_stats : Dictionary = _base_stats(group.enemy_scene.instantiate())
+			var enemy : Enemy = group.enemy_scene.instantiate()
+			var xp_multiplier : float = enemy.xp_multiplier
+			var enemy_stats : Dictionary = _base_stats(enemy)
 			health += enemy_stats.get(Utils.StatType.MaxHealth, 0.0) * group.count
+			total_xp += UpgradeRules.kill_xp(enemy_stats.get(Utils.StatType.MaxHealth, 0.0), xp_multiplier) * group.count
 			total_gold += enemy_stats.get(Utils.StatType.Price, 0.0) * group.count
 			total_enemies += group.count
 			parts.append("%d %s /%ss sp%d" % [group.count, group.enemy_scene.resource_path.get_file().get_basename(), group.interval, group.spawner_id])
-		total_xp += health * XP_PER_MAX_HEALTH
 		wave_lines.append("  w%d: %s  (health %d, early bonus %s)" % [wave_index + 1, ", ".join(parts), health, data.waves[wave_index].early_start_bonus])
 
 	print("LEVEL %d  start gold %s, life %s, %d waves, %d enemies, kill gold %d, xp %d -> %d cards" % [number, data.starting_gold, data.starting_life, data.waves.size(), total_enemies, total_gold, total_xp, _cards_for_xp(total_xp)])

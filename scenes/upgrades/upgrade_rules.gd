@@ -9,12 +9,19 @@ const EPIC_ROLL_CHANCE : float = 0.2
 const RARE_ROLL_CHANCE : float = 0.5
 const EPIC_MULTIPLIER : float = 3.0
 const RARE_MULTIPLIER : float = 2.0
+const XP_PER_MAX_HEALTH : float = 2.0
 #about 7 Weakling kills (max health 15, 2 XP per max health)
 const FIRST_LEVEL_XP : float = 200.0
 #each level-up needs this much more XP than the one before, times the level: 200, 250, 350, 500, ...
 const XP_STEP : float = 50.0
 #the share of a card's value that still counts past the stat's soft cap
 const SOFT_CAP_EFFICIENCY : float = 0.5
+
+
+## XP for one kill before the XP cards: 2 per max health, times the enemy's own multiplier
+## (swarm enemies come in big groups, so each one gives less).
+static func kill_xp(max_health : float, xp_multiplier : float) -> float:
+	return max_health * XP_PER_MAX_HEALTH * xp_multiplier
 
 
 ## XP needed to go from this level to the next: 200, 250, 350, 500, 700, ...

@@ -1,0 +1,27 @@
+# Source of assets/art/units/enemy/swarmling/swarmling_icon.png (python tools/gd.py icon <this> <out.png>)
+a = 3e2731
+b = 733e39
+c = b86f50
+k = b59e85
+m = d5bf9b
+l = ecd8b1
+r = ff0044
+x = a22633
+w = ffffff
+---
+...a..a.........
+..aba.aba.a.....
+.abcbaabcbaba...
+.abcbbbbbbbbba..
+abbbbbbbbbbbbba.
+abbbbbbmmlllllm.
+abbbbbmlllllllm.
+kbbbbmlrrlllrrlm
+kmbbbmlrrlllrrlm
+kmmmmmlllllllllm
+kmmmmklwxxxxxwlk
+kmmmmkllxwxwxllk
+kkmmmkkllllllkk.
+.kkkkk.kkkkkk...
+.b.b.....b..b...
+................
