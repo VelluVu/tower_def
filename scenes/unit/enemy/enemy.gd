@@ -18,6 +18,8 @@ const TURN_DOT_LIMIT : float = 0.5
 @onready var gore_emitter : GoreEmitter = $GoreEmitter
 @onready var selectable : SelectableUnit = $SelectableUnit
 @onready var pop_up_spot : Node2D = $PopUpSpot
+#only flyers carry one, see FlightMovement
+@onready var flight_movement : FlightMovement = _find_flight_movement()
 
 @onready var modifier_manager : ModifierManager = $ModifierManager :
 	get:
@@ -40,9 +42,6 @@ const TURN_DOT_LIMIT : float = 0.5
 @export var icon : Texture2D = null
 #kill XP is 2 per max health times this; below 1 for enemies that come in big groups
 @export var xp_multiplier : float = 1.0
-#flies its own FlightPath to the castle: ignores the grid, the maze, slow ground and buildings,
-#and traps skip it; the scene freezes the body (kinematic) so walls never push it
-@export var is_flying : bool = false
 
 @export var skill : Skill :
 	get:
@@ -63,6 +62,11 @@ var beehave_tree : BeehaveTree :
 var is_colliding_building : bool = false :
 	get:
 		return collision_body != null
+
+#ignores the grid, the maze, slow ground and buildings, and traps skip it
+var is_flying : bool :
+	get:
+		return flight_movement != null
 
 var is_deactivated : bool = false
 #Frostplague: cannot attack buildings while true
@@ -183,7 +187,7 @@ func move_towards_next_waypoint() -> void:
 	var move_direction : Vector2 = global_position.direction_to(next_waypoint)
 
 	if is_flying:
-		_fly(move_direction)
+		flight_movement.move(move_direction)
 		return
 
 	var speed : float = stats.get_stat_value(Utils.StatType.Speed) * get_spacing_speed_factor(move_direction) * _get_cell_speed_factor()
@@ -191,17 +195,6 @@ func move_towards_next_waypoint() -> void:
 	linear_velocity = velocity
 	last_position = global_position
 	animation_control.flip_h = linear_velocity.x <= 0
-
-
-#a frozen body ignores linear_velocity, so the flyer moves itself; spacing only counts other flyers
-func _fly(move_direction : Vector2) -> void:
-	var speed : float = stats.get_stat_value(Utils.StatType.Speed) * get_spacing_speed_factor(move_direction)
-	velocity = speed * move_direction * current_time_scale
-	var step : Vector2 = velocity * get_physics_process_delta_time()
-	#never overshoot the waypoint, so a fast flyer at 3x does not circle it
-	global_position += step.limit_length(global_position.distance_to(next_waypoint))
-	last_position = global_position
-	animation_control.flip_h = velocity.x <= 0
 
 
 #slow ground and the maze; looked up again only in a new cell or after the buildings change
@@ -217,7 +210,7 @@ func path_to(from : Vector2, to : Vector2) -> void:
 	#to = level.grid.snap_position_to_grid(to)
 
 	if is_flying:
-		point_path = FlightPath.get_points(from, to, randf())
+		point_path = flight_movement.get_route(from, to)
 		current_waypoint_index = 0
 		next_waypoint = point_path[0] + lane_offset
 		return
@@ -421,3 +414,10 @@ func _set_is_the_end_point_reached(value : bool) -> void:
 		deactivate()
 		hide()
 		queue_free()
+
+
+func _find_flight_movement() -> FlightMovement:
+	for child in get_children():
+		if child is FlightMovement:
+			return child
+	return null

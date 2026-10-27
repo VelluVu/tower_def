@@ -8,6 +8,9 @@ const SPAWN_GROUP_RUNNER_NAME : String = "SpawnGroupRunner"
 
 @export var id : int = 0
 @export var end_point : Marker2D
+#the flyers' route: they fly through its points in order, then to the end point; none = straight
+#to the end point. Lead it over the best maze spots, or around them on frustrating maps
+@export var flight_route : Path2D
 
 
 func _ready() -> void:
@@ -33,5 +36,26 @@ func spawn(spawnable_packed_scene : PackedScene) -> void:
 
 	if spawned is Enemy:
 		spawned.end_point = end_point
+		_give_flight_route(spawned)
 
 	add_child(spawned)
+
+
+#before the enemy enters the tree, so its first path already has the route
+func _give_flight_route(enemy : Enemy) -> void:
+	if flight_route == null or flight_route.curve == null:
+		return
+
+	for child in enemy.get_children():
+		if child is FlightMovement:
+			child.route_points = get_flight_route_points()
+
+
+func get_flight_route_points() -> PackedVector2Array:
+	var points : PackedVector2Array = []
+	if flight_route == null or flight_route.curve == null:
+		return points
+
+	for i in flight_route.curve.point_count:
+		points.append(flight_route.to_global(flight_route.curve.get_point_position(i)))
+	return points

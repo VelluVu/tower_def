@@ -17,6 +17,7 @@
 [ext_resource type="Script" path="res://scenes/unit/stats/stat.gd" id="15_lcy8c"]
 [ext_resource type="Script" path="res://scenes/unit/modifier_manager.gd" id="16_5rsvd"]
 [ext_resource type="Texture2D" path="res://assets/art/units/enemy/batling/batling_shadow.png" id="17_bshad"]
+[ext_resource type="Script" path="res://scenes/unit/enemy/flight_movement.gd" id="18_flight"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_43mte"]
 friction = 0.0
@@ -172,7 +173,6 @@ contact_monitor = true
 max_contacts_reported = 1
 script = ExtResource("1_pnuqq")
 icon = ExtResource("2_w8sqj")
-is_flying = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -10)
@@ -328,3 +328,6 @@ type = 9
 
 [node name="ModifierManager" type="Node" parent="."]
 script = ExtResource("16_5rsvd")
+
+[node name="FlightMovement" type="Node" parent="."]
+script = ExtResource("18_flight")

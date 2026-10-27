@@ -6,7 +6,7 @@ extends RefCounted
 func test_flight_path(kit : TestKit) -> void:
 	var from : Vector2 = Vector2(0.0, 0.0)
 	var to : Vector2 = Vector2(320.0, 0.0)
-	var points : PackedVector2Array = FlightPath.get_points(from, to, 0.25)
+	var points : PackedVector2Array = FlightPath.get_points([from, to], 0.25)
 	kit.check(points.size() == 20, "one waypoint per tile (%d)" % points.size())
 	kit.check(points[points.size() - 1].distance_to(to) < 0.01, "the last waypoint is the castle")
 	var widest : float = 0.0
@@ -14,6 +14,35 @@ func test_flight_path(kit : TestKit) -> void:
 		widest = maxf(widest, absf(point.y))
 	kit.check(widest > 1.0 and widest <= FlightPath.WAVE_AMPLITUDE, "the route waves across the line (%.1f px)" % widest)
 
+
+
+func test_flight_route_passes_its_points(kit : TestKit) -> void:
+	var corners : PackedVector2Array = [Vector2(0.0, 0.0), Vector2(160.0, 0.0), Vector2(160.0, 160.0)]
+	var points : PackedVector2Array = FlightPath.get_points(corners, 0.4)
+	kit.check(points.size() == 20, "one waypoint per tile on every leg (%d)" % points.size())
+	kit.check(points[9].distance_to(corners[1]) < 0.01, "the flyer passes the route point exactly")
+	kit.check(points[points.size() - 1].distance_to(corners[2]) < 0.01, "the last waypoint is the castle")
+	kit.check(FlightPath.get_points([Vector2.ZERO, Vector2.ZERO, Vector2(32.0, 0.0)], 0.0).size() == 2, "a point on the spawn adds no leg")
+
+
+func test_spawner_gives_its_route(kit : TestKit) -> void:
+	await kit.load_level(1)
+	var spawner : Spawner = kit.level.get_spawners()[0]
+	var route : Path2D = Path2D.new()
+	route.curve = Curve2D.new()
+	var via : Vector2 = kit.level.grid.grid_position_to_world(kit.find_cell(func(c : Vector2i) -> bool: return kit.level.grid.is_cell_walkable(c)))
+	route.curve.add_point(via)
+	kit.level.add_child(route)
+	spawner.flight_route = route
+	spawner.spawn(load(TestKit.ENEMY_PATH % "batling"))
+	var enemy : Enemy = spawner.get_child(spawner.get_child_count() - 1)
+	await kit.frames(2)
+	var passes : bool = false
+	for point in enemy.point_path:
+		passes = passes or point.distance_to(via) < 0.01
+	kit.check(passes, "the batling flies through the route point")
+	spawner.flight_route = null
+	route.free()
 
 func test_batling_flies_to_the_castle(kit : TestKit) -> void:
 	await kit.load_level(1)

@@ -3,8 +3,10 @@ extends Node2D
 
 ## Marks every spawn point and castle, and draws the dotted enemy routes between them while the
 ## player builds. The routes follow the maze as buildings change the grid and hide during a wave.
+## A spawner with a flight_route also shows the flyers' route, in its own colour with wider dots.
 
 const DOT_SPACING : float = 8.0
+const FLIGHT_DOT_SPACING : float = 12.0
 const DOT_SIZE : Vector2 = Vector2(2, 2)
 const SPAWN_RADIUS : float = 6.0
 const END_RADIUS : float = 9.0
@@ -17,8 +19,11 @@ const GROUND_Z_INDEX : int = -1
 @export var path_color : Color = Color(1.0, 0.85, 0.4, 0.7)
 @export var spawn_color : Color = Color(1.0, 0.35, 0.3, 0.9)
 @export var end_color : Color = Color(0.45, 0.8, 1.0, 0.9)
+@export var flight_color : Color = Color(0.95, 0.5, 1.0, 0.95)
 
 var paths : Array[PackedVector2Array] = []
+#spawn, route points, castle: the corners only, without the flyers' wave
+var flight_paths : Array[PackedVector2Array] = []
 var is_route_visible : bool = true :
 	set = _set_is_route_visible
 
@@ -43,6 +48,15 @@ func _update_paths() -> void:
 	for route in level.get_routes():
 		paths.append(level.grid.find_path(route[0], route[1]))
 
+	flight_paths.clear()
+	for spawner in level.get_spawners():
+		if spawner.flight_route == null or spawner.end_point == null:
+			continue
+		var corners : PackedVector2Array = [spawner.global_position]
+		corners.append_array(spawner.get_flight_route_points())
+		corners.append(spawner.end_point.global_position)
+		flight_paths.append(corners)
+
 	queue_redraw()
 
 
@@ -57,12 +71,20 @@ func _draw() -> void:
 		if not is_route_visible:
 			continue
 
-		for i in range(path.size() - 1):
-			var from : Vector2 = to_local(path[i])
-			var to : Vector2 = to_local(path[i + 1])
-			var steps : int = maxi(1, roundi(from.distance_to(to) / DOT_SPACING))
-			for step in steps:
-				draw_rect(Rect2(from.lerp(to, float(step) / steps) - DOT_SIZE * 0.5, DOT_SIZE), path_color)
+		_draw_dots(path, DOT_SPACING, path_color)
+
+	if is_route_visible:
+		for path in flight_paths:
+			_draw_dots(path, FLIGHT_DOT_SPACING, flight_color)
+
+
+func _draw_dots(path : PackedVector2Array, spacing : float, color : Color) -> void:
+	for i in range(path.size() - 1):
+		var from : Vector2 = to_local(path[i])
+		var to : Vector2 = to_local(path[i + 1])
+		var steps : int = maxi(1, roundi(from.distance_to(to) / spacing))
+		for step in steps:
+			draw_rect(Rect2(from.lerp(to, float(step) / steps) - DOT_SIZE * 0.5, DOT_SIZE), color)
 
 
 func _draw_marker(world_position : Vector2, radius : float, color : Color) -> void:

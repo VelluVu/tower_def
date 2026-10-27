@@ -13,6 +13,13 @@
 [ext_resource type="PackedScene" path="res://scenes/unit/unit_selection/unit_selection.tscn" id="11_7umj6"]
 [ext_resource type="Script" path="res://scenes/unit/unit_selection/unit_selection.gd" id="12_psrej"]
 
+[sub_resource type="Curve2D" id="Curve2D_flight"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 232, -72, 0, 0, 0, 0, 168, 24, 0, 0, 0, 0, 40, -40, 0, 0, 0, 0, -104, 24, 0, 0, 0, 0, -200, -56, 0, 0, 0, 0, -296, 56),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0)
+}
+point_count = 6
+
 [node name="Level006" type="Node2D" unique_id=483741352]
 y_sort_enabled = true
 script = ExtResource("1_ntch3")
@@ -48,10 +55,14 @@ tile_set = ExtResource("7_f2ox1")
 [node name="EndPoint" type="Marker2D" parent="." unique_id=164642939]
 position = Vector2(-344, 89)
 
-[node name="Spawner" type="Node2D" parent="." unique_id=1751927988 node_paths=PackedStringArray("end_point") groups=["Spawner"] instance=ExtResource("8_lqb6t")]
+[node name="Spawner" type="Node2D" parent="." unique_id=1751927988 node_paths=PackedStringArray("end_point", "flight_route") groups=["Spawner"] instance=ExtResource("8_lqb6t")]
 position = Vector2(360, -88)
 script = ExtResource("9_jew2n")
 end_point = NodePath("../EndPoint")
+flight_route = NodePath("../FlightRoute")
+
+[node name="FlightRoute" type="Path2D" parent="."]
+curve = SubResource("Curve2D_flight")
 
 [node name="PlayerStats" type="Node" parent="." unique_id=666958696]
 script = ExtResource("10_3ddmb")
