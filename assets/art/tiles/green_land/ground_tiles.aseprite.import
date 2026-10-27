@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://d0k0xqmckwoge"
+path="res://.godot/imported/ground_tiles.aseprite-0784b3b3ede86e347bef8cba0cb5b3ea.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/green_land/ground_tiles.aseprite"
+dest_files=["res://.godot/imported/ground_tiles.aseprite-0784b3b3ede86e347bef8cba0cb5b3ea.res"]
+
+[params]
+

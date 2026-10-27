@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://lbcunrt20idm"
+path="res://.godot/imported/rock_tiles_peak.aseprite-c1d19309eb952142799888d55f0f8e31.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/props/rock_tiles_peak.aseprite"
+dest_files=["res://.godot/imported/rock_tiles_peak.aseprite-c1d19309eb952142799888d55f0f8e31.res"]
+
+[params]
+

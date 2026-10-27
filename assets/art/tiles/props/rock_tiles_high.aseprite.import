@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bcp4xqv5piu1"
+path="res://.godot/imported/rock_tiles_high.aseprite-7557a7e6da0c6649085546b058023970.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/props/rock_tiles_high.aseprite"
+dest_files=["res://.godot/imported/rock_tiles_high.aseprite-7557a7e6da0c6649085546b058023970.res"]
+
+[params]
+

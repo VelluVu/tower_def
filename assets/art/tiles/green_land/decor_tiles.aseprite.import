@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://nqp5m7y1tp3x"
+path="res://.godot/imported/decor_tiles.aseprite-0f750db4e92c7c4552d6bce93c9add7d.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/green_land/decor_tiles.aseprite"
+dest_files=["res://.godot/imported/decor_tiles.aseprite-0f750db4e92c7c4552d6bce93c9add7d.res"]
+
+[params]
+

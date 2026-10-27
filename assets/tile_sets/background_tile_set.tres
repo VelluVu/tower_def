@@ -1,6 +1,7 @@
 [gd_resource type="TileSet" format=3 uid="uid://cbq3heog26w0o"]
 
 [ext_resource type="Texture2D" uid="uid://dmbsllogy2x0b" path="res://assets/art/tiles/green_land/background_tiles.png" id="1_4a8w5"]
+[ext_resource type="Texture2D" uid="uid://df1bfwn6r4ak1" path="res://assets/art/tiles/water/waterfall_tiles.png" id="2_falls"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_q860t"]
 texture = ExtResource("1_4a8w5")
@@ -142,5 +143,19 @@ texture = ExtResource("1_4a8w5")
 6:13/0 = 0
 7:13/0 = 0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_falls"]
+texture = ExtResource("2_falls")
+0:0/animation_frame_0/duration = 0.12
+0:0/animation_frame_1/duration = 0.12
+0:0/animation_frame_2/duration = 0.12
+0:0/animation_frame_3/duration = 0.12
+0:0/0 = 0
+0:1/animation_frame_0/duration = 0.12
+0:1/animation_frame_1/duration = 0.12
+0:1/animation_frame_2/duration = 0.12
+0:1/animation_frame_3/duration = 0.12
+0:1/0 = 0
+
 [resource]
 sources/0 = SubResource("TileSetAtlasSource_q860t")
+sources/1 = SubResource("TileSetAtlasSource_falls")

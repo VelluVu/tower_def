@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://c8s7agj31pk3e"
+path="res://.godot/imported/waterfall_tiles.aseprite-bb3d9c8e84c950ed1dca38b549016f12.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/water/waterfall_tiles.aseprite"
+dest_files=["res://.godot/imported/waterfall_tiles.aseprite-bb3d9c8e84c950ed1dca38b549016f12.res"]
+
+[params]
+
