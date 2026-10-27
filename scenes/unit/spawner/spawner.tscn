@@ -3,4 +3,8 @@
 [ext_resource type="Script" path="res://scenes/unit/spawner/spawner.gd" id="1_bfkig"]
 
 [node name="Spawner" type="Node2D"]
+y_sort_enabled = true
 script = ExtResource("1_bfkig")
+
+[node name="Art" type="AnimatedSprite2D" parent="."]
+offset = Vector2(0, -16)

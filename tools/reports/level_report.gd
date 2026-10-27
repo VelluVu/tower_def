@@ -2,7 +2,7 @@ extends RefCounted
 
 ## `python tools/gd.py levels [--map] [level numbers]`: per level the waves (enemies, total health),
 ## the XP, cards and kill gold over the level, and per spawner the route length, turns and slow cells.
-## --map draws each level: # blocked, . walkable, s slow ground, * route, T tower-only.
+## --map draws each level: # blocked, . walkable, s slow ground, * route, T tower-only, 0-9 spawner id.
 
 const TURN_DOT_LIMIT : float = 0.5
 const MAP_ARG : String = "--map"
@@ -69,12 +69,18 @@ func _print_level(kit : TestKit, number : int, show_map : bool) -> void:
 func _print_map(kit : TestKit, route_cells : Dictionary) -> void:
 	var grid : LevelGrid = kit.level.grid
 	var region : Rect2i = grid.astar_grid.region
+	var spawner_cells : Dictionary[Vector2i, int] = {}
+	for spawner in kit.level.get_spawners():
+		spawner_cells[grid.world_position_to_grid(spawner.global_position)] = spawner.id
+	print("  map cells x %d..%d, y %d..%d" % [region.position.x, region.end.x - 1, region.position.y, region.end.y - 1])
 	for y in range(region.position.y, region.end.y):
 		var row : String = "  "
 		for x in range(region.position.x, region.end.x):
 			var cell : Vector2i = Vector2i(x, y)
 			var walkable : bool = grid.is_cell_walkable(cell)
-			if route_cells.has(cell):
+			if spawner_cells.has(cell):
+				row += str(spawner_cells[cell])
+			elif route_cells.has(cell):
 				row += "*"
 			elif walkable:
 				row += "s" if grid.get_move_speed_factor(cell) < 1.0 else "."

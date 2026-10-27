@@ -16,6 +16,8 @@ var tiles : Tiles = null
 var astar_grid : AStarGrid2D = null
 #the level's own list, shared by reference: Level adds and removes buildings
 var buildings : Array[Building] = []
+#cells taken by level objects drawn over the ground (spawn point caves): no walking, no building
+var reserved_cells : Dictionary[Vector2i, bool] = {}
 
 
 func _init(level_tiles : Tiles, level_buildings : Array[Building]) -> void:
@@ -30,6 +32,14 @@ func find_path(from : Vector2, to : Vector2) -> PackedVector2Array:
 
 func set_cell_weight(cell : Vector2i, weight : float) -> void:
 	astar_grid.set_point_weight_scale(cell, weight)
+
+
+#emit GameSignals.astar_grid_updated afterwards when enemies are already walking
+func reserve_cells(cells : Array[Vector2i]) -> void:
+	for cell in cells:
+		reserved_cells[cell] = true
+		if astar_grid.is_in_boundsv(cell):
+			astar_grid.set_point_solid(cell, true)
 
 
 #open = the cheapest path walks around every building; a closed route goes through one
@@ -70,11 +80,22 @@ func would_close_route(cell : Vector2i, weight : float, routes : Array[PackedVec
 	return closes
 
 
+## The grid's area in world pixels.
+func get_playfield_rect() -> Rect2:
+	var region : Rect2 = Rect2(astar_grid.region)
+	var cell_size : Vector2 = Vector2(tiles.ground_layer.tile_set.tile_size)
+	var origin : Vector2 = tiles.ground_layer.to_global(Vector2.ZERO)
+	return Rect2(origin + region.position * cell_size, region.size * cell_size)
+
+
 func is_position_in_bounds(_pos : Vector2) -> bool:
 	return astar_grid.is_in_boundsv(world_position_to_grid(_pos))
 
 
 func is_position_buildable(_pos : Vector2) -> bool:
+	if reserved_cells.has(world_position_to_grid(_pos)):
+		return false
+
 	var flags : int = _get_cell_flags(world_position_to_grid(_pos))
 
 	if has_flag(flags, Utils.TileType.OnlyBuildable):
@@ -88,6 +109,9 @@ func is_position_walkable(_position : Vector2) -> bool:
 
 
 func is_cell_walkable(cell : Vector2i) -> bool:
+	if reserved_cells.has(cell):
+		return false
+
 	var flags : int = _get_cell_flags(cell)
 
 	if has_flag(flags, Utils.TileType.OnlyWalkable):

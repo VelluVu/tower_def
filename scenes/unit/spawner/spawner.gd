@@ -11,11 +11,43 @@ const SPAWN_GROUP_RUNNER_NAME : String = "SpawnGroupRunner"
 #the flyers' route: they fly through its points in order, then to the end point; none = straight
 #to the end point. Lead it over the best maze spots, or around them on frustrating maps
 @export var flight_route : Path2D
+#the spawn point's look is the Art sprite's frames, set in the spawn_points/ scenes (cave, den, hollow,
+#roost) so the editor shows it too; a plain Spawner has none and shows only the path preview marker
+@onready var art_sprite : AnimatedSprite2D = $Art
 
 
 func _ready() -> void:
 	if not is_in_group(GroupNames.SPAWNER):
 		add_to_group(GroupNames.SPAWNER)
+	_play_art()
+
+
+#the cells the art covers, without the mouth (this spawner's own cell, the art's bottom middle);
+#Level reserves them so nothing walks or builds under the cave
+func get_footprint_cells(grid : LevelGrid) -> Array[Vector2i]:
+	var cells : Array[Vector2i] = []
+	var frames : SpriteFrames = art_sprite.sprite_frames
+	if frames == null or not frames.has_animation(GlobalAnimationNames.IDLE_ANIMATION):
+		return cells
+
+	var size : Vector2i = Vector2i((frames.get_frame_texture(GlobalAnimationNames.IDLE_ANIMATION, 0).get_size() / Utils.TILE_SIZE).round())
+	var mouth : Vector2i = grid.world_position_to_grid(global_position)
+	var left : int = mouth.x - (size.x >> 1)
+	for y in range(mouth.y - size.y + 1, mouth.y + 1):
+		for x in range(left, left + size.x):
+			if Vector2i(x, y) != mouth:
+				cells.append(Vector2i(x, y))
+	return cells
+
+
+#each spawner starts on a random frame, so neighbouring caves do not blink together
+func _play_art() -> void:
+	var frames : SpriteFrames = art_sprite.sprite_frames
+	if frames == null or not frames.has_animation(GlobalAnimationNames.IDLE_ANIMATION):
+		return
+
+	art_sprite.play(GlobalAnimationNames.IDLE_ANIMATION)
+	art_sprite.frame = randi() % frames.get_frame_count(GlobalAnimationNames.IDLE_ANIMATION)
 
 
 #on_finished is connected before the first spawn, so a group without delay still reports back

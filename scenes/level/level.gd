@@ -10,6 +10,7 @@ const ELEMENT_REACTIONS_NAME : String = "ElementReactions"
 const PATH_PREVIEW_NAME : String = "PathPreview"
 const PLAYTEST_LOG_NAME : String = "PlaytestLog"
 const BACKDROP_NAME : String = "LevelBackdrop"
+const EDGE_FOG_NAME : String = "LevelEdgeFog"
 const NO_LEVEL_DATA_WARNING : String = " Level has no LevelData, no waves will spawn!"
 
 @onready var tiles : Tiles = $Tiles
@@ -39,6 +40,8 @@ var early_start_bonus : float :
 
 func _ready() -> void:
 	grid = LevelGrid.new(tiles, all_buildings)
+	for spawner in get_spawners():
+		grid.reserve_cells(spawner.get_footprint_cells(grid))
 	GameSignals.astar_grid_updated.emit()
 	GameSignals.building_placed.connect(_on_building_placed)
 	GameSignals.building_destroyed.connect(_on_building_erase)
@@ -65,6 +68,10 @@ func _ready() -> void:
 	var backdrop : LevelBackdrop = LevelBackdrop.new()
 	backdrop.name = BACKDROP_NAME
 	add_child(backdrop)
+	var edge_fog : LevelEdgeFog = LevelEdgeFog.new()
+	edge_fog.name = EDGE_FOG_NAME
+	edge_fog.playfield = grid.get_playfield_rect()
+	add_child(edge_fog)
 	var path_preview : PathPreview = PathPreview.new()
 	path_preview.name = PATH_PREVIEW_NAME
 	add_child(path_preview)

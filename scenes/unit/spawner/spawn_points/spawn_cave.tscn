@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" uid="uid://dgjmgs3g8oeq6" path="res://scenes/unit/spawner/spawner.tscn" id="1_base"]
+[ext_resource type="SpriteFrames" path="res://scenes/unit/spawner/spawn_art/spawn_cave_frames.tres" id="2_art"]
+
+[node name="Spawner" instance=ExtResource("1_base")]
+
+[node name="Art" parent="." index="0"]
+sprite_frames = ExtResource("2_art")
+animation = &"IDLE"

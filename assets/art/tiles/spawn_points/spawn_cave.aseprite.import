@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cgg81xekm5u3k"
+path="res://.godot/imported/spawn_cave.aseprite-3f1f3e59b3ce7df5739ff3782241b3b4.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/spawn_points/spawn_cave.aseprite"
+dest_files=["res://.godot/imported/spawn_cave.aseprite-3f1f3e59b3ce7df5739ff3782241b3b4.res"]
+
+[params]
+

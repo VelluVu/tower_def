@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://c7rmmarwvk4aj"
+path="res://.godot/imported/spawn_den.aseprite-6c5023a8331b57e740627b3bb4de80b0.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/spawn_points/spawn_den.aseprite"
+dest_files=["res://.godot/imported/spawn_den.aseprite-6c5023a8331b57e740627b3bb4de80b0.res"]
+
+[params]
+
