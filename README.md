@@ -44,3 +44,11 @@ Place cheaper wall structures to slow enemies down or maze their path — a key 
 ## Screenshots
 
 *Coming soon*
+
+## License
+
+Copyright (c) 2026 VelluVu. All Rights Reserved.
+
+This repository contains proprietary software.
+While the source code is publicly visible for transparency, security auditing, and portfolio evaluation, no open-source rights are granted.
+Third-party addons, fonts and sounds keep their own licenses (see the license files in their folders).

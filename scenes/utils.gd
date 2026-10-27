@@ -95,7 +95,7 @@ enum SkillType
 	Beaming = 1 << 3,
 }
 
-## Each mode of a level earns its own talent points (docs/design/progression.md, Level Modes).
+## Each mode of a level earns its own talent points.
 enum LevelMode
 {
 	Normal,

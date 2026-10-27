@@ -15,3 +15,10 @@ tools/mute_audio.flag
 
 # Python bytecode of the tools
 __pycache__/
+
+# Plans, design docs and Claude's project instructions stay private: they are tracked in the
+# private plans repo (git plans ..., see .git-plans), never in this public one
+CLAUDE.md
+.claude/
+docs/design/
+.git-plans/
