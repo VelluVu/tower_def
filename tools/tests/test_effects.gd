@@ -8,6 +8,8 @@ const POISON_LEAF_NAME : String = "PoisonElementEvolveLeaf"
 const FIGHT_SECONDS : float = 6.0
 const TOUGH_HEALTH : float = 1000.0
 const BURN_SECONDS : float = 4.5
+const ELEMENT_TOWERS : Array[String] = ["bolter", "nova", "beamer"]
+const UPGRADE_DATA_PATH : String = "res://scenes/upgrades/building_upgrades/%s_upgrade_data.tres"
 
 
 func test_tick_damage_from_hit_and_potency(kit : TestKit) -> void:
@@ -33,6 +35,13 @@ func test_upgrades_after_the_element_add_potency(kit : TestKit) -> void:
 	_buy(kit, 0)
 	_buy(kit, 0)
 	kit.check_near(bolter.stats.get_stat_value(Utils.StatType.EffectPotency), 0.3, "Up 3-4 give 15% each")
+
+
+func test_every_element_tower_has_potency_upgrades(kit : TestKit) -> void:
+	for tower in ELEMENT_TOWERS:
+		var data : BuildingUpgradeData = load(UPGRADE_DATA_PATH % tower)
+		var has_potency : bool = data.evolved_upgrade_resources.any(func(resource : EvolveResource) -> bool: return resource.modify_stat_type == Utils.StatType.EffectPotency)
+		kit.check(has_potency, "%s Up 3-6 give potency" % tower)
 
 
 func test_potency_card_fits_element_towers(kit : TestKit) -> void:

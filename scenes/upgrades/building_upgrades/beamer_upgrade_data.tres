@@ -3,6 +3,15 @@
 [ext_resource type="Script" uid="uid://cdkvcem034rct" path="res://scenes/upgrades/building_upgrade_data.gd" id="1_data"]
 [ext_resource type="Script" uid="uid://myr7yifukj43" path="res://scenes/unit/evolve_tree/evolve_resource.gd" id="2_evolve"]
 
+[sub_resource type="Resource" id="Resource_potency"]
+script = ExtResource("2_evolve")
+elements = 15
+modify_stat_type = 10
+modify_type = 0
+is_randomized_modify_value = false
+modify_value = 0.15
+evolve_name = "Effect Potency"
+
 [sub_resource type="Resource" id="Resource_damage"]
 script = ExtResource("2_evolve")
 elements = 15
@@ -24,3 +33,4 @@ evolve_name = "Attack Range"
 [resource]
 script = ExtResource("1_data")
 upgrade_resources = Array[ExtResource("2_evolve")]([SubResource("Resource_damage"), SubResource("Resource_attack_range")])
+evolved_upgrade_resources = Array[ExtResource("2_evolve")]([SubResource("Resource_potency")])
