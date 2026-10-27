@@ -41,8 +41,6 @@ hard_cap = 1.5
 [sub_resource type="Resource" id="Resource_effect_potency"]
 script = ExtResource("2_cap")
 stat_type = 10
-soft_cap = 0.5
-hard_cap = 1.0
 
 [resource]
 script = ExtResource("1_caps")

@@ -20,6 +20,8 @@ const FIT_MARGIN : float = 1.5
 #unlearned colours are the tree's own lit colour, darkened
 const LINK_HALF_DARKEN : float = 0.6
 const NODE_OPEN_DARKEN : float = 0.68
+#with points to spend, a node that can be learned now is brighter than the other open ones, so the next options stand out
+const NODE_PICKABLE_DARKEN : float = 0.35
 const LINK_LOCKED_DARKEN : float = 0.35
 const NODE_LOCKED_DARKEN : float = 0.1
 #a learned node below its max rank is a little dimmer than its full colour
@@ -205,6 +207,8 @@ func _draw_node(node : TalentNode) -> void:
 	var fill : Color = tree.shape_fill.darkened(NODE_LOCKED_DARKEN)
 	if rank > 0:
 		fill = node.color.lightened(0.15) if is_maxed else node.color.darkened(PARTIAL_DIM)
+	elif TalentRules.can_add(tree, ranks, node, unspent_points):
+		fill = tree.link_lit.darkened(NODE_PICKABLE_DARKEN)
 	elif TalentRules.is_open(tree, ranks, node):
 		fill = tree.link_lit.darkened(NODE_OPEN_DARKEN)
 	var edge : Color = SELECTED_EDGE if node.id == selected_id else MAXED_GLOW if is_maxed else NODE_EDGE
