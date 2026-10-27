@@ -34,11 +34,9 @@ func _on_button_activated(_activated : bool, building_option : BuildingOption) -
 
 
 func _on_buildings_updated(available_buildings : int) -> void:
-	for i in range(building_options.size() - 1, -1, -1):
-		if i < available_buildings:
-			break
-			
-		building_options[i].visible = false
+	#locked buildings are hidden, so the tray grows as the levels unlock them
+	for i in building_options.size():
+		building_options[i].visible = i < available_buildings
 	_fit_to_options()
 
 

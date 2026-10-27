@@ -14,12 +14,14 @@ extends RefCounted
 ##   depth=3             purchases every tower gets before the next tower (3 = Up 1, Up 2, element)
 ##   walls=0.3           share of the spent gold that may go to walls (maze), 0 = no walls
 ##   early=0|1           start waves early, or only once a wave is cleared
+##   unlocked=level|all  level: only the buildings unlocked by this level (BuildingListElement.unlock_level)
 ##   seed=1 speed_up=3.0
 
 const MAIN_SCENE : String = "res://scenes/main.tscn"
 const TOWERS : Array[String] = ["puffe_bolter", "puffe_nova", "puffe_beamer"]
 const TRAP : String = "leopard_trap"
 const WALL : String = "wall"
+const BUILDING_LIST_PATH : String = "res://scenes/unit/building/buildings/%s.tres"
 const LEAVES : Array[String] = ["FireElementEvolveLeaf", "FrostElementEvolveLeaf", "PoisonElementEvolveLeaf"]
 const TALENT_BOOK : TalentBook = preload("res://scenes/talents/talent_book.tres")
 const LEVEL_SECONDS : float = 1500.0
@@ -32,7 +34,7 @@ const LEAF_META : StringName = &"soak_leaf"
 var options : Dictionary[String, String] = {
 	"level": "1", "economy": "real", "talents": "none", "health": "1.0", "speed": "1.0", "life": "",
 	"rotation": "0", "order": "fixed", "towers": "12", "traps": "2", "min_towers": "3", "depth": "3",
-	"walls": "0.3", "early": "0", "seed": "1", "speed_up": "3.0",
+	"walls": "0.3", "early": "0", "unlocked": "level", "seed": "1", "speed_up": "3.0",
 }
 var towers : Array[Building] = []
 var traps : int = 0
@@ -228,7 +230,7 @@ func _spend(kit : TestKit, level : Level) -> void:
 		await _buy_next(level, behind)
 		return
 
-	if traps < int(options.traps) and traps * 4 < towers.size():
+	if traps < int(options.traps) and traps * 4 < towers.size() and _is_unlocked(TRAP):
 		if level.player_stats.has_enough_gold(_price_of(TRAP)):
 			var trap_cell : Vector2i = _best_trap_cell(level)
 			if trap_cell != Vector2i.MAX:
@@ -244,7 +246,9 @@ func _spend(kit : TestKit, level : Level) -> void:
 
 func _place_tower(kit : TestKit, level : Level) -> void:
 	if type_order.is_empty():
-		type_order = [0, 1, 2]
+		for type in TOWERS.size():
+			if _is_unlocked(TOWERS[type]):
+				type_order.append(type)
 		if options.order == "shuffle":
 			type_order.shuffle()
 	var type : int = type_order[0]
@@ -489,3 +493,10 @@ func _rounded(totals : Dictionary[String, float]) -> Dictionary[String, int]:
 	for key in totals:
 		out[key] = roundi(totals[key])
 	return out
+
+
+func _is_unlocked(building_name : String) -> bool:
+	if options.unlocked == "all":
+		return true
+	var element : BuildingListElement = load(BUILDING_LIST_PATH % building_name)
+	return element.is_unlocked(int(options.level))

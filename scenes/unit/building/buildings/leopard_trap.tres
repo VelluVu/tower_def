@@ -9,3 +9,4 @@ script = ExtResource("1_ie4jr")
 scene = ExtResource("2_4jj3c")
 id = 4
 icon = ExtResource("1_0ch3o")
+unlock_level = 4

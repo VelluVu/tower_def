@@ -11,15 +11,20 @@
 [sub_resource type="Resource" id="PuffeLine_1"]
 script = ExtResource("9_line")
 trigger = 0
-text = "Fastlings run quick. Put drakelings where the road is long."
+text = "Fastlings outrun the Bolter's bolts. The Beamer's beam never misses. Find it in the bar."
 
 [sub_resource type="Resource" id="PuffeLine_2"]
 script = ExtResource("9_line")
 trigger = 4
-wave_number = 2
-text = "Walls make the road longer, and long roads make tired creatures."
+wave_number = 1
+text = "Click a drakeling to spend gold on upgrades. An upgrade helps only that drakeling."
 
 [sub_resource type="Resource" id="PuffeLine_3"]
+script = ExtResource("9_line")
+trigger = 5
+text = "Stronger already! Keep some gold for new drakelings too."
+
+[sub_resource type="Resource" id="PuffeLine_4"]
 script = ExtResource("9_line")
 trigger = 3
 wave_number = 4
@@ -32,4 +37,4 @@ story_text = "The cave creatures grow bolder. This castle guards a treasury the 
 starting_gold = 12.0
 starting_life = 10.0
 waves = Array[ExtResource("0_wave")]([ExtResource("2_w1"), ExtResource("3_w2"), ExtResource("4_w3"), ExtResource("9_w4")])
-puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3")])
+puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_4")])

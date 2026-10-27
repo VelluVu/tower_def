@@ -17,6 +17,8 @@ const WALL_BUILDING_NAME : String = "wall"
 const SLASH : String = "/"
 
 @export var buildings : Array[BuildingListElement]
+#the unlocked buildings in tray order; the tray slots and the select shortcuts index this list
+var available_buildings : Array[BuildingListElement] = []
 
 var is_ready_to_build : bool = false
 var is_cursor_on_gui : bool = false
@@ -168,11 +170,14 @@ func _on_game_interface_loaded() -> void:
 
 
 func _update_building_options() -> void:
-	#every building is available in every level; progress comes from upgrades, cards and talents
-	for element in buildings:
-		UISignals.building_option_updated.emit(element.id, element.icon)
-	
-	UISignals.buildings_updated.emit(buildings.size())
+	#a tower unlocks in the level that introduces it and stays unlocked in replays
+	var furthest_level : int = maxi(PlayerProgress.level_progress, Utils.game_control.scene_manager.current_level_number)
+	available_buildings = buildings.filter(func(element : BuildingListElement) -> bool: return element.is_unlocked(furthest_level))
+
+	for i in available_buildings.size():
+		UISignals.building_option_updated.emit(i, available_buildings[i].icon)
+
+	UISignals.buildings_updated.emit(available_buildings.size())
 
 
 func _on_game_stop() -> void:
@@ -200,7 +205,7 @@ func _on_building_placement_deselected(_building_option_index : int) -> void:
 
 func _start_building_placement(building_option_index : int) -> void:
 	_stop_building_placement()
-	if building_option_index >= buildings.size():
+	if building_option_index >= available_buildings.size():
 		push_warning(name, BUILDING_INDEX_OUT_OF_BOUNDS_WARNING, building_option_index)
 		UISignals.focus_building_option.emit(-1)
 		_stop_building_placement()
@@ -243,7 +248,7 @@ func _place_building(building_index : int) -> void:
 
 func _instantiate_building(building_index : int, position_in_world : Vector2) -> void:
 	var buildings_node : Node2D = _get_buildings_container()
-	var placed_building : Building = buildings[building_index].scene.instantiate()
+	var placed_building : Building = available_buildings[building_index].scene.instantiate()
 	buildings_node.add_child(placed_building)
 	placed_building.id = placed_building_id
 	placed_building.place(position_in_world)
@@ -419,7 +424,7 @@ func _set_is_placing_building(value : bool) -> void:
 	
 	if is_placing_building:
 		if current_building == null:
-			current_building = buildings[current_building_option_index].scene.instantiate()
+			current_building = available_buildings[current_building_option_index].scene.instantiate()
 			level.add_child(current_building)
 			_move_building_with_cursor()
 	

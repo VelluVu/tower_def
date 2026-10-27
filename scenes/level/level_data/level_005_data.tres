@@ -16,10 +16,16 @@ text = "Crossroads. Plenty of gold to start, so spend it before they arrive."
 
 [sub_resource type="Resource" id="PuffeLine_2"]
 script = ExtResource("9_line")
+trigger = 3
+wave_number = 2
+text = "Swamplings! Angry at the humans' axes. They heal, so let fire and poison keep hurting them."
+
+[sub_resource type="Resource" id="PuffeLine_3"]
+script = ExtResource("9_line")
 trigger = 7
 text = "They are slipping through! Find the weakest road."
 
-[sub_resource type="Resource" id="PuffeLine_3"]
+[sub_resource type="Resource" id="PuffeLine_4"]
 script = ExtResource("9_line")
 trigger = 3
 wave_number = 5
@@ -28,7 +34,7 @@ text = "Hold the crossroads, and the way north is ours."
 [resource]
 script = ExtResource("1_level")
 level_name = "Crossroads"
-story_text = "Every road meets here, and every angry creature takes one. Hold the crossroads castle."
+story_text = "Every road meets here. Swamplings, angered by the humans' axes, creep up from the bog to join the caves."
 starting_gold = 20.0
 waves = Array[ExtResource("0_wave")]([ExtResource("2_w1"), ExtResource("3_w2"), ExtResource("4_w3"), ExtResource("5_w4"), ExtResource("9_w5")])
-puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3")])
+puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_4")])
