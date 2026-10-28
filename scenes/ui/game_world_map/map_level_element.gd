@@ -6,7 +6,7 @@ signal is_selected(MapLevelElement)
 
 const LEVEL_DATA_PATH_FORMAT : String = "res://scenes/level/level_data/level_%03d_data.tres"
 const DEFAULT_NAME_FORMAT : String = "Level %d"
-const INFO_FORMAT : String = "%d waves
+const INFO_FORMAT : String = "Level %d, %d waves
 Start: %d gold, %d life"
 const STORY_FORMAT : String = "%s
 
@@ -64,7 +64,7 @@ func _show_level_info() -> void:
 	var data : LevelData = load(path) as LevelData
 	if not data.level_name.is_empty():
 		name_label.text = data.level_name
-	info_label.text = INFO_FORMAT % [data.waves.size(), data.starting_gold, data.starting_life]
+	info_label.text = INFO_FORMAT % [level_number, data.waves.size(), data.starting_gold, data.starting_life]
 	if not data.story_text.is_empty():
 		info_label.text = STORY_FORMAT % [data.story_text, info_label.text]
 

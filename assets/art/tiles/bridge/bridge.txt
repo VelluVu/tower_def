@@ -1,0 +1,69 @@
+# Source of bridge.aseprite and bridge.png (python tools/sprite/sprite.py build <this> bridge.aseprite).
+# The wooden bridge over the river in level 9, with the humans' banner on its east post; a Sprite2D over the grass gap in the river.
+size = 80x56
+o = 3e2731
+m = 733e39
+l = b86f50
+g = e4a672
+D = 124e89
+R = e43b44
+r = a22633
+w = ffffff
+---
+@IDLE 100
+.gg..............gg..............gg..............gg..............gg.....RRRwRmg.
+.ml..............ml..............ml..............ml..............ml.....RRwRRml.
+.ml..............ml..............ml..............ml..............ml.....RwRRRml.
+lmlllllllllllllllmlllllllllllllllmlllllllllllllllmlllllllllllllllmllllllwRRRRmll
+mmlmmmmmmmmmmmmmmmlmmmmmmmmmmmmmmmlmmmmmmmmmmmmmmmlmmmmmmmmmmmmmmmlmmmmmRRRRwmlm
+omloooooooooooooomloooooooooooooomloooooooooooooomloooooooooooooomlooooorrrrrmlo
+..ollmollmollmollmoglmollmmllmollmollmollmollmollmollmollmollmmlmmollmoglmollm..
+..ollmollmollmollmollmollmollmmllmollmogmmollmollmollmollmollmollmmllmollmollm..
+..ollmoglmollmolmmollmollmollmollmmllmollmollmollmollmollmoglmollmollmmllmollm..
+..mllmollmollmollmollmollmoglmollmollmmllmollmollmollmollmolmmollmollmollmmllm..
+..ollmmllmollmollmollmollmollmollmolmmollmmllmoglmollmollmollmollmollmollmollm..
+..ollmollmmlmmoglmollmollmollmollmollmollmollmmllmollmollmollmollmoglmollmollm..
+..ollmollmollmmllmollmollmollmollmoglmollmollmollmmllmolmmollmollmollmollmollm..
+..oglmollmollmollmmllmollmollmolmmollmollmollmollmollmmglmollmollmollmollmollm..
+..ollmolmmollmollmollmmglmollmollmollmollmollmollmollmollmmllmollmollmollmogmm..
+..ollmollmollmollmollmollmmllmollmollmollmoglmollmolmmollmollmmllmollmollmollm..
+..ollmollmoglmollmollmollmolmmmllmollmollmollmollmollmollmollmoglmmllmollmollm..
+..olmmollmollmollmollmollmollmoglmmllmollmollmollmollmollmollmollmollmmlmmollm..
+..mllmollmollmollmollmollmollmollmollmmllmollmolmmoglmollmollmollmollmollmmllm..
+..ollmmllmollmollmoglmolmmollmollmollmollmmllmollmollmollmollmollmollmoglmollm..
+..ollmollmmllmollmollmollmollmollmollmoglmollmmllmollmollmollmollmolmmollmollm..
+..ollmoglmollmmllmollmollmollmollmollmollmolmmollmmllmollmoglmollmollmollmollm..
+..ollmollmollmollmmlmmollmoglmollmollmollmollmollmollmmllmollmollmollmollmollm..
+..ollmollmollmollmollmmllmollmollmollmollmollmoglmollmollmmllmolmmollmollmollm..
+..ollmollmollmoglmollmollmmllmollmollmolmmollmollmollmollmollmmllmoglmollmollm..
+..ollmollmollmolmmollmollmollmmllmoglmollmollmollmollmollmollmollmmllmollmollm..
+..oglmollmollmollmollmollmollmollmmllmollmollmollmollmoglmolmmollmollmmllmollm..
+..mllmollmollmollmollmoglmollmollmolmmmllmollmollmollmollmollmollmollmollmmglm..
+..ollmmllmolmmollmollmollmollmollmollmollmmglmollmollmollmollmollmollmollmollm..
+..ollmollmmglmollmollmollmollmollmollmollmollmmllmollmolmmollmoglmollmollmollm..
+..ollmollmollmmllmollmollmollmogmmollmollmollmollmmllmollmollmollmollmollmollm..
+..ollmolmmollmollmmllmollmollmollmollmollmollmollmoglmmllmollmollmollmollmolmm..
+..ollmollmollmollmoglmmllmollmollmollmollmollmollmolmmollmmllmollmollmoglmollm..
+..ollmollmollmollmollmollmmlmmollmollmoglmollmollmollmollmollmmllmollmollmollm..
+..olmmoglmollmollmollmollmollmmllmollmollmollmollmollmollmoglmollmmllmolmmollm..
+..ollmollmollmollmollmollmoglmollmmllmollmollmolmmollmollmollmollmollmmllmollm..
+..mllmollmollmollmollmolmmollmollmollmmllmollmoglmollmollmollmollmollmollmmllm..
+..ollmmllmollmoglmollmollmollmollmollmollmmllmollmollmollmollmollmogmmollmollm..
+..ollmollmmllmollmollmollmollmollmoglmollmolmmmllmollmollmollmollmollmollmollm..
+..oglmollmollmmllmolmmollmollmollmollmollmollmollmmllmoglmollmollmollmollmollm..
+..ollmollmollmollmmllmoglmollmollmollmollmollmollmollmmllmollmolmmollmollmoglm..
+..ollmollmollmollmollmmllmollmollmollmolmmoglmollmollmollmmllmollmollmollmollm..
+..ollmollmoglmolmmollmollmmllmollmollmollmollmollmollmollmollmmglmollmollmollm..
+..ollmollmollmollmollmollmollmmglmollmollmollmollmollmollmolmmollmmllmollmollm..
+..ollmollmollmollmollmollmollmollmmlmmollmollmollmoglmollmollmollmollmmllmollm..
+..mllmollmolmmollmoglmollmollmollmollmmllmollmollmollmollmollmollmollmoglmmllm..
+..ollmmllmollmollmollmollmollmollmollmoglmmllmollmollmolmmollmollmollmollmollm..
+..ollmoglmmllmollmollmollmollmolmmollmollmollmmllmollmollmoglmollmollmollmollm..
+..ollmolmmollmmllmollmollmoglmollmollmollmollmollmmllmollmollmollmollmollmolmm..
+.mlllmollmollmollmlllmollmollmollmlllmollmollmoglmllmmmllmollmollmlllmollmollml.
+.mloooooooooooooomloooooooooooooomloooooooooooooomloooooooooooooomlooooooooooml.
+.mlDDDDDDDDDDDDDDmlDDDDDDDDDDDDDDmlDDDDDDDDDDDDDDmlDDDDDDDDDDDDDDmlDDDDDDDDDDml.
+lmlllllllllllllllmlllllllllllllllmlllllllllllllllmlllllllllllllllmlllllllllllmll
+mmlmmmmmmmmmmmmmmmlmmmmmmmmmmmmmmmlmmmmmmmmmmmmmmmlmmmmmmmmmmmmmmmlmmmmmmmmmmmlm
+.ml..............ml..............ml..............ml..............ml..........ml.
+.ml..............ml..............ml..............ml..............ml..........ml.

@@ -1,0 +1,39 @@
+# Source of assets/art/units/enemy/broodmother/broodmother_icon.png (python tools/gd.py icon <this> <out.png>)
+# The Broodmother's head: crystal crown, dark hair, red eyes, her egg sac behind.
+P = 68386c
+p = b55088
+q = f6757a
+Q = ffc6c3
+e = ecd8b1
+E = c28569
+H = 181425
+h = 262b44
+j = 3a4466
+c = 0099db
+y = 2ce8f5
+s = b59e85
+t = cab494
+u = d5bf9b
+v = e0caa3
+w = ecd8b1
+R = ff0044
+r = a22633
+m = 5d1d2c
+b = c0cbdc
+---
+.....y..y..y....
+..qqqcqqcqqcpp..
+.qQeqcyccyccpEp.
+qqeeqhjhhhhhpeEp
+qqEqjhhhhhhhhpPp
+qqqhjvwwvvuthppP
+pqqhjwwwvvutthpP
+pphjvRrwvuRrthPP
+ppPjvRwwvuRtthPP
+.pPhvwvvuuttshP.
+..Phuvmmmmtssh..
+...huumRRmtsh...
+...hsuttRtssh...
+..hh.ssssss.hh..
+.hh..bbbbbb..hh.
+.h............h.

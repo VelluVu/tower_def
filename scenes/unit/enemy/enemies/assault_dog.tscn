@@ -1,0 +1,324 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/unit/enemy/enemy.gd" id="1_pnuqq"]
+[ext_resource type="Texture2D" path="res://assets/art/units/enemy/assault_dog/assault_dog_icon.png" id="2_w8sqj"]
+[ext_resource type="PackedScene" uid="uid://b07nrseyum0s4" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/basic_enemy_bt.tscn" id="3_5rsgu"]
+[ext_resource type="Material" uid="uid://cm7dgpn6dmws5" path="res://assets/shaders/shader_materials/enemy_hit_shader_material.tres" id="3_gs1d4"]
+[ext_resource type="Texture2D" path="res://assets/art/units/enemy/assault_dog/assault_dog.png" id="3_s3w73"]
+[ext_resource type="Script" path="res://scenes/unit/hitbox.gd" id="5_kx3h7"]
+[ext_resource type="Script" path="res://scenes/unit/animation_control.gd" id="5_ulvdv"]
+[ext_resource type="Script" path="res://scenes/unit/gore_emitter.gd" id="7_6ioyy"]
+[ext_resource type="PackedScene" uid="uid://brhay0uy0kf4" path="res://scenes/unit/blood_spill.tscn" id="8_st5r0"]
+[ext_resource type="PackedScene" uid="uid://dd11cco5cukhw" path="res://scenes/unit/unit_selection/selectable_unit.tscn" id="10_hy764"]
+[ext_resource type="PackedScene" uid="uid://cuv1fhpdbb5su" path="res://scenes/unit/skills/melee_attack.tscn" id="11_rdqhh"]
+[ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_handler.gd" id="12_fwlqx"]
+[ext_resource type="Script" path="res://scenes/unit/skills/damage_data.gd" id="12_iu2a5"]
+[ext_resource type="Script" path="res://scenes/unit/stats/stats.gd" id="14_b0f66"]
+[ext_resource type="Script" path="res://scenes/unit/stats/stat.gd" id="15_lcy8c"]
+[ext_resource type="Script" path="res://scenes/unit/modifier_manager.gd" id="16_5rsvd"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_43mte"]
+friction = 0.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lot5f"]
+radius = 3.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h00"]
+atlas = ExtResource("3_s3w73")
+region = Rect2(0, 0, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h01"]
+atlas = ExtResource("3_s3w73")
+region = Rect2(18, 0, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h02"]
+atlas = ExtResource("3_s3w73")
+region = Rect2(36, 0, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h03"]
+atlas = ExtResource("3_s3w73")
+region = Rect2(54, 0, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h04"]
+atlas = ExtResource("3_s3w73")
+region = Rect2(72, 0, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h05"]
+atlas = ExtResource("3_s3w73")
+region = Rect2(0, 18, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h06"]
+atlas = ExtResource("3_s3w73")
+region = Rect2(18, 18, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h07"]
+atlas = ExtResource("3_s3w73")
+region = Rect2(36, 18, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h08"]
+atlas = ExtResource("3_s3w73")
+region = Rect2(54, 18, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h09"]
+atlas = ExtResource("3_s3w73")
+region = Rect2(72, 18, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h10"]
+atlas = ExtResource("3_s3w73")
+region = Rect2(0, 36, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h11"]
+atlas = ExtResource("3_s3w73")
+region = Rect2(18, 36, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h12"]
+atlas = ExtResource("3_s3w73")
+region = Rect2(36, 36, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h13"]
+atlas = ExtResource("3_s3w73")
+region = Rect2(54, 36, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h14"]
+atlas = ExtResource("3_s3w73")
+region = Rect2(72, 36, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h15"]
+atlas = ExtResource("3_s3w73")
+region = Rect2(0, 54, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h16"]
+atlas = ExtResource("3_s3w73")
+region = Rect2(18, 54, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h17"]
+atlas = ExtResource("3_s3w73")
+region = Rect2(36, 54, 18, 18)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_human"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h00")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h01")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h02")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h03")
+}],
+"loop": true,
+"name": &"IDLE",
+"speed": 6.6667
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h04")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h05")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h06")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h07")
+}],
+"loop": true,
+"name": &"WALK",
+"speed": 14.2857
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h08")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h09")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h10")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h11")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h12")
+}],
+"loop": false,
+"name": &"ATTACK",
+"speed": 12.5
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h13")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h14")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h15")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h16")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h17")
+}],
+"loop": false,
+"name": &"DEATH",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_54wmh"]
+size = Vector2(10, 6)
+
+[node name="AssaultDog" type="RigidBody2D"]
+collision_layer = 2
+collision_mask = 0
+physics_material_override = SubResource("PhysicsMaterial_43mte")
+contact_monitor = true
+max_contacts_reported = 1
+script = ExtResource("1_pnuqq")
+icon = ExtResource("2_w8sqj")
+xp_multiplier = 0.4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_lot5f")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+material = ExtResource("3_gs1d4")
+position = Vector2(0, -5)
+sprite_frames = SubResource("SpriteFrames_human")
+animation = &"IDLE"
+autoplay = "IDLE"
+script = ExtResource("5_ulvdv")
+metadata/_aseprite_wizard_interface_config_ = {
+"layer_section": true,
+"output_section": true,
+"slice_section": true
+}
+
+[node name="BeehaveTree" parent="." instance=ExtResource("3_5rsgu")]
+
+[node name="Hitbox" type="Area2D" parent="."]
+position = Vector2(0, -1)
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("5_kx3h7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("RectangleShape2D_54wmh")
+
+[node name="GoreEmitter" type="Node2D" parent="."]
+position = Vector2(0, -2)
+script = ExtResource("7_6ioyy")
+gore_effect_scene = ExtResource("8_st5r0")
+
+[node name="SelectableUnit" parent="." instance=ExtResource("10_hy764")]
+
+[node name="MeleeAttack" parent="." instance=ExtResource("11_rdqhh")]
+attack_distance = 8.0
+skill_type = 16
+base_cast_time = 0.3
+base_cooldown = 0.7
+
+[node name="DamageData" type="Node" parent="MeleeAttack"]
+script = ExtResource("12_iu2a5")
+
+[node name="Stats" type="Node" parent="MeleeAttack"]
+script = ExtResource("14_b0f66")
+
+[node name="Damage" type="Node" parent="MeleeAttack/Stats"]
+script = ExtResource("15_lcy8c")
+base_value = 0.0
+value = 0.0
+type = 2
+
+[node name="AttackRange" type="Node" parent="MeleeAttack/Stats"]
+script = ExtResource("15_lcy8c")
+type = 5
+
+[node name="AttackSpeed" type="Node" parent="MeleeAttack/Stats"]
+script = ExtResource("15_lcy8c")
+type = 6
+
+[node name="CriticalChance" type="Node" parent="MeleeAttack/Stats"]
+script = ExtResource("15_lcy8c")
+base_value = 0.1
+value = 0.1
+type = 7
+
+[node name="CriticalMultiplier" type="Node" parent="MeleeAttack/Stats"]
+script = ExtResource("15_lcy8c")
+type = 8
+
+[node name="ActiveDuration" type="Node" parent="MeleeAttack/Stats"]
+script = ExtResource("15_lcy8c")
+type = 9
+
+[node name="PopUpSpot" type="Node2D" parent="."]
+position = Vector2(0, -8)
+
+[node name="OvertimeEffectHandler" type="Node" parent="."]
+script = ExtResource("12_fwlqx")
+
+[node name="Stats" type="Node" parent="."]
+script = ExtResource("14_b0f66")
+
+[node name="MaxHealth" type="Node" parent="Stats"]
+script = ExtResource("15_lcy8c")
+base_value = 6.0
+value = 6.0
+type = 1
+
+[node name="Health" type="Node" parent="Stats"]
+script = ExtResource("15_lcy8c")
+base_value = 6.0
+value = 6.0
+
+[node name="Damage" type="Node" parent="Stats"]
+script = ExtResource("15_lcy8c")
+base_value = 1.0
+value = 1.0
+type = 2
+
+[node name="Price" type="Node" parent="Stats"]
+script = ExtResource("15_lcy8c")
+base_value = 0.5
+value = 0.5
+type = 3
+
+[node name="Speed" type="Node" parent="Stats"]
+script = ExtResource("15_lcy8c")
+base_value = 30.0
+value = 30.0
+type = 4
+
+[node name="AttackRange" type="Node" parent="Stats"]
+script = ExtResource("15_lcy8c")
+type = 5
+
+[node name="AttackSpeed" type="Node" parent="Stats"]
+script = ExtResource("15_lcy8c")
+type = 6
+
+[node name="CriticalChance" type="Node" parent="Stats"]
+script = ExtResource("15_lcy8c")
+type = 7
+
+[node name="CriticalMultiplier" type="Node" parent="Stats"]
+script = ExtResource("15_lcy8c")
+base_value = 2.0
+value = 2.0
+type = 8
+
+[node name="ActiveDuration" type="Node" parent="Stats"]
+script = ExtResource("15_lcy8c")
+type = 9
+
+[node name="ModifierManager" type="Node" parent="."]
+script = ExtResource("16_5rsvd")

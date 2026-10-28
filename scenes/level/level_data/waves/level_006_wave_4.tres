@@ -2,29 +2,31 @@
 
 [ext_resource type="Script" uid="uid://cpw7ia3ek2yvs" path="res://scenes/level/level_data/wave_data.gd" id="1_wave"]
 [ext_resource type="Script" uid="uid://bbhd3iyjav4h2" path="res://scenes/level/level_data/spawn_group_data.gd" id="2_group"]
-[ext_resource type="PackedScene" uid="uid://bj8fmaeegual3" path="res://scenes/unit/enemy/enemies/beefling.tscn" id="3_beefling"]
-[ext_resource type="PackedScene" uid="uid://dla7not0kpg61" path="res://scenes/unit/enemy/enemies/fastling.tscn" id="4_fastling"]
-[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/batling.tscn" id="9_batling"]
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/batling.tscn" id="e_batling"]
+[ext_resource type="PackedScene" uid="uid://bj8fmaeegual3" path="res://scenes/unit/enemy/enemies/beefling.tscn" id="e_beefling"]
+[ext_resource type="PackedScene" uid="uid://bljkhytt20h3f" path="res://scenes/unit/enemy/enemies/weakling.tscn" id="e_weakling"]
 
 [sub_resource type="Resource" id="Resource_group1"]
 script = ExtResource("2_group")
-enemy_scene = ExtResource("3_beefling")
-count = 15
-interval = 2.0
+enemy_scene = ExtResource("e_beefling")
+count = 8
+interval = 3.2
+spawner_id = 1
 
 [sub_resource type="Resource" id="Resource_group2"]
 script = ExtResource("2_group")
-enemy_scene = ExtResource("4_fastling")
-count = 30
-interval = 0.8
-delay = 6.0
+enemy_scene = ExtResource("e_batling")
+count = 10
+interval = 1.6
+delay = 4.0
+spawner_id = 2
 
 [sub_resource type="Resource" id="Resource_group3"]
 script = ExtResource("2_group")
-enemy_scene = ExtResource("9_batling")
-count = 10
+enemy_scene = ExtResource("e_weakling")
+count = 18
 interval = 1.6
-delay = 12.0
+delay = 2.0
 
 [resource]
 script = ExtResource("1_wave")

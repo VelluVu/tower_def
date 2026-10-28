@@ -1,0 +1,46 @@
+[gd_resource type="Resource" script_class="LevelData" format=3]
+
+[ext_resource type="Script" uid="uid://cpw7ia3ek2yvs" path="res://scenes/level/level_data/wave_data.gd" id="0_wave"]
+[ext_resource type="Script" uid="uid://c0cehaxum4b45" path="res://scenes/level/level_data/level_data.gd" id="1_level"]
+[ext_resource type="Script" uid="uid://bu8xwv71c6bbj" path="res://scenes/level/level_data/puffe_line.gd" id="9_line"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_011_wave_1.tres" id="w1"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_011_wave_2.tres" id="w2"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_011_wave_3.tres" id="w3"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_011_wave_4.tres" id="w4"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_011_wave_5.tres" id="w5"]
+
+[sub_resource type="Resource" id="PuffeLine_1"]
+script = ExtResource("9_line")
+trigger = 0
+text = "Humans! They hold the bridge, our only way north. Fortify this castle and hold them back."
+
+[sub_resource type="Resource" id="PuffeLine_2"]
+script = ExtResource("9_line")
+trigger = 3
+wave_number = 2
+text = "Scouts. Fast and lightly armed, so the Beamer keeps up with them."
+
+[sub_resource type="Resource" id="PuffeLine_3"]
+script = ExtResource("9_line")
+trigger = 3
+wave_number = 3
+text = "War dogs, in packs! The Nova is made for this."
+
+[sub_resource type="Resource" id="PuffeLine_4"]
+script = ExtResource("9_line")
+trigger = 7
+text = "Humans at the castle! Not one egg leaves this place."
+
+[sub_resource type="Resource" id="PuffeLine_5"]
+script = ExtResource("9_line")
+trigger = 3
+wave_number = 5
+text = "One last push. Hold, and the road to the swamp is ours."
+
+[resource]
+script = ExtResource("1_level")
+level_name = "Barricade Bridge"
+story_text = "The humans have barricaded the middle bridge, the only way north to the swamp. The castle on this bank is all that stands between them and the eggs."
+starting_gold = 20.0
+waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtResource("w3"), ExtResource("w4"), ExtResource("w5")])
+puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_4"), SubResource("PuffeLine_5")])

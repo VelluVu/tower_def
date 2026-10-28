@@ -2,41 +2,45 @@
 
 [ext_resource type="Script" uid="uid://cpw7ia3ek2yvs" path="res://scenes/level/level_data/wave_data.gd" id="0_wave"]
 [ext_resource type="Script" uid="uid://c0cehaxum4b45" path="res://scenes/level/level_data/level_data.gd" id="1_level"]
-[ext_resource type="Resource" uid="uid://dpnl85c3orm1k" path="res://scenes/level/level_data/waves/level_006_wave_1.tres" id="2_w1"]
-[ext_resource type="Resource" uid="uid://d3l7bx5v06ogy" path="res://scenes/level/level_data/waves/level_006_wave_2.tres" id="3_w2"]
-[ext_resource type="Resource" uid="uid://bs0c04ecfqw76" path="res://scenes/level/level_data/waves/level_006_wave_3.tres" id="4_w3"]
-[ext_resource type="Resource" uid="uid://b6d8e7608838j" path="res://scenes/level/level_data/waves/level_006_wave_4.tres" id="5_w4"]
-[ext_resource type="Resource" uid="uid://77y08ocrvrod" path="res://scenes/level/level_data/waves/level_006_wave_5.tres" id="6_w5"]
 [ext_resource type="Script" uid="uid://bu8xwv71c6bbj" path="res://scenes/level/level_data/puffe_line.gd" id="9_line"]
-[ext_resource type="Resource" uid="uid://byenbppoms4ah" path="res://scenes/level/level_data/waves/level_006_wave_6.tres" id="9_w6"]
+[ext_resource type="Resource" uid="uid://dpnl85c3orm1k" path="res://scenes/level/level_data/waves/level_006_wave_1.tres" id="w1"]
+[ext_resource type="Resource" uid="uid://d3l7bx5v06ogy" path="res://scenes/level/level_data/waves/level_006_wave_2.tres" id="w2"]
+[ext_resource type="Resource" uid="uid://bs0c04ecfqw76" path="res://scenes/level/level_data/waves/level_006_wave_3.tres" id="w3"]
+[ext_resource type="Resource" uid="uid://b6d8e7608838j" path="res://scenes/level/level_data/waves/level_006_wave_4.tres" id="w4"]
+[ext_resource type="Resource" uid="uid://77y08ocrvrod" path="res://scenes/level/level_data/waves/level_006_wave_5.tres" id="w5"]
 
 [sub_resource type="Resource" id="PuffeLine_1"]
 script = ExtResource("9_line")
 trigger = 0
-text = "Smell that? The swamp. Damp, smelly and far too noisy for a nap."
+text = "Hear that squeaking? A batling roost. Something deep below has woken them."
 
 [sub_resource type="Resource" id="PuffeLine_2"]
 script = ExtResource("9_line")
-trigger = 4
-wave_number = 1
-text = "Batlings come next. They fly over the maze, so guard their flight route too."
+trigger = 3
+wave_number = 2
+text = "Batlings! They fly over the maze. The violet dots show their route, so put towers along it."
 
 [sub_resource type="Resource" id="PuffeLine_3"]
 script = ExtResource("9_line")
-trigger = 3
-wave_number = 3
-text = "Big, wet and grumpy. Just like me before breakfast."
+trigger = 7
+text = "Over the walls they come. Cover the flight route!"
 
 [sub_resource type="Resource" id="PuffeLine_4"]
 script = ExtResource("9_line")
 trigger = 3
-wave_number = 6
-text = "The last wave of the forest. Then... the swamp. Sigh."
+wave_number = 4
+text = "Beeflings on the ground, batlings in the air. Watch both."
+
+[sub_resource type="Resource" id="PuffeLine_5"]
+script = ExtResource("9_line")
+trigger = 3
+wave_number = 5
+text = "Last wave. Hold the gate!"
 
 [resource]
 script = ExtResource("1_level")
-level_name = "Serpent Road"
-story_text = "A long winding road at the edge of the swamp. Past it lies the bog, where Puffe can never sleep."
+level_name = "Bat Roost"
+story_text = "A castle under the cliffs where the batlings nest. Whatever is waking in the deep caves has stirred them up."
 starting_gold = 20.0
-waves = Array[ExtResource("0_wave")]([ExtResource("2_w1"), ExtResource("3_w2"), ExtResource("4_w3"), ExtResource("5_w4"), ExtResource("6_w5"), ExtResource("9_w6")])
-puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_4")])
+waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtResource("w3"), ExtResource("w4"), ExtResource("w5")])
+puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_4"), SubResource("PuffeLine_5")])

@@ -1,0 +1,34 @@
+# Source of assets/art/units/enemy/swbeefling/swbeefling_icon.png (python tools/gd.py icon <this> <out.png>)
+a = 122630
+b = 17323a
+c = 181425
+d = 1b3f45
+e = 275a56
+f = 2f6b3d
+g = 3a7a66
+h = 45254f
+i = 4a8a45
+j = 5a9a74
+k = 68386c
+l = 7cbf4a
+m = b55088
+n = c0cbdc
+o = ead4aa
+p = fee761
+---
+................
+k...............
+....mk..........
+.lii.n..........
+liiiiii.........
+iiffiiii........
+ffeefiiie.jjgg..
+eeeeeiffeagpece.
+eeeeefeedgeeeed.
+eeeeeedddeebdbdb
+eeeeeddddedddda.
+eeedmhdddddaao.o
+eddddddeea......
+ddddddddee......
+mhddddddee......
+dddddaad.ee.....

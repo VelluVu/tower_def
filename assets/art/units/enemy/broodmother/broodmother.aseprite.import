@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://ddy1wbu0dicxl"
+path="res://.godot/imported/broodmother.aseprite-50aea13716f021cc2aa6b965c46ff820.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/broodmother/broodmother.aseprite"
+dest_files=["res://.godot/imported/broodmother.aseprite-50aea13716f021cc2aa6b965c46ff820.res"]
+
+[params]
+

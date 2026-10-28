@@ -46,13 +46,13 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 
 [node name="SelectButton" type="Button" parent="MarginContainer/Map/Level_001" unique_id=82178644]
-theme_type_variation = &"MapNodeButton"
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_type_variation = &"MapNodeButton"
 
 [node name="Tooltip" type="Panel" parent="MarginContainer/Map/Level_001" unique_id=1054369293]
 visible = false
@@ -152,13 +152,13 @@ script = ExtResource("2_uc0yk")
 level_number = 2
 
 [node name="SelectButton" type="Button" parent="MarginContainer/Map/Level_002" unique_id=1876439175]
-theme_type_variation = &"MapNodeButton"
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_type_variation = &"MapNodeButton"
 
 [node name="Tooltip" type="Panel" parent="MarginContainer/Map/Level_002" unique_id=1802542405]
 visible = false
@@ -249,22 +249,22 @@ stretch_mode = 5
 [node name="Level_003" type="Panel" parent="MarginContainer/Map" unique_id=1569955737]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 41.0
-offset_top = 251.0
-offset_right = 61.0
-offset_bottom = 271.0
+offset_left = 42.0
+offset_top = 263.0
+offset_right = 62.0
+offset_bottom = 283.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 3
 
 [node name="SelectButton" type="Button" parent="MarginContainer/Map/Level_003" unique_id=598262680]
-theme_type_variation = &"MapNodeButton"
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_type_variation = &"MapNodeButton"
 
 [node name="Tooltip" type="Panel" parent="MarginContainer/Map/Level_003" unique_id=149628473]
 visible = false
@@ -355,22 +355,22 @@ stretch_mode = 5
 [node name="Level_004" type="Panel" parent="MarginContainer/Map" unique_id=1381533343]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 58.0
-offset_top = 276.0
-offset_right = 78.0
-offset_bottom = 296.0
+offset_left = 68.0
+offset_top = 282.0
+offset_right = 88.0
+offset_bottom = 302.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 4
 
 [node name="SelectButton" type="Button" parent="MarginContainer/Map/Level_004" unique_id=1041112693]
-theme_type_variation = &"MapNodeButton"
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_type_variation = &"MapNodeButton"
 
 [node name="Tooltip" type="Panel" parent="MarginContainer/Map/Level_004" unique_id=576857067]
 visible = false
@@ -461,22 +461,22 @@ stretch_mode = 5
 [node name="Level_005" type="Panel" parent="MarginContainer/Map" unique_id=75197890]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 96.0
-offset_top = 295.0
-offset_right = 116.0
-offset_bottom = 315.0
+offset_left = 94.0
+offset_top = 294.0
+offset_right = 114.0
+offset_bottom = 314.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 5
 
 [node name="SelectButton" type="Button" parent="MarginContainer/Map/Level_005" unique_id=537641181]
-theme_type_variation = &"MapNodeButton"
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_type_variation = &"MapNodeButton"
 
 [node name="Tooltip" type="Panel" parent="MarginContainer/Map/Level_005" unique_id=270677819]
 visible = false
@@ -564,27 +564,27 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_006" type="Panel" parent="MarginContainer/Map" unique_id=1711682819]
+[node name="Level_006" type="Panel" parent="MarginContainer/Map" unique_id=275971331]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 130.0
-offset_top = 305.0
-offset_right = 150.0
-offset_bottom = 325.0
+offset_left = 125.0
+offset_top = 285.0
+offset_right = 145.0
+offset_bottom = 305.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 6
 
-[node name="SelectButton" type="Button" parent="MarginContainer/Map/Level_006" unique_id=1038156533]
-theme_type_variation = &"MapNodeButton"
+[node name="SelectButton" type="Button" parent="MarginContainer/Map/Level_006" unique_id=1910181515]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MarginContainer/Map/Level_006" unique_id=371752430]
+[node name="Tooltip" type="Panel" parent="MarginContainer/Map/Level_006" unique_id=287757350]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -596,7 +596,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MarginContainer/Map/Level_006/Tooltip" unique_id=1193955572]
+[node name="StartButton" type="Button" parent="MarginContainer/Map/Level_006/Tooltip" unique_id=810683743]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -612,7 +612,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MarginContainer/Map/Level_006/Tooltip" unique_id=558783841]
+[node name="CloseButton" type="Button" parent="MarginContainer/Map/Level_006/Tooltip" unique_id=494663294]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -625,7 +625,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MarginContainer/Map/Level_006/Tooltip" unique_id=105610535]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MarginContainer/Map/Level_006/Tooltip" unique_id=1039539776]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -639,10 +639,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Map/Level_006/Tooltip/InfoMarginContainer" unique_id=508103646]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Map/Level_006/Tooltip/InfoMarginContainer" unique_id=258183021]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MarginContainer/Map/Level_006/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=623024718]
+[node name="LevelName" type="Label" parent="MarginContainer/Map/Level_006/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=2119447947]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -650,13 +650,649 @@ text = "Level 006"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MarginContainer/Map/Level_006/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=620491251]
+[node name="LevelInfo" type="Label" parent="MarginContainer/Map/Level_006/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1181587051]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MarginContainer/Map/Level_006" unique_id=169047809]
+[node name="LockTexture" type="TextureRect" parent="MarginContainer/Map/Level_006" unique_id=1164462454]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -12.0
+offset_top = -8.0
+offset_right = 4.0
+offset_bottom = 8.0
+grow_horizontal = 0
+texture = ExtResource("4_wvp4h")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Level_007" type="Panel" parent="MarginContainer/Map" unique_id=2029015237]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 0
+offset_left = 152.0
+offset_top = 270.0
+offset_right = 172.0
+offset_bottom = 290.0
+theme_type_variation = &"EmptyPanel"
+script = ExtResource("2_uc0yk")
+level_number = 7
+
+[node name="SelectButton" type="Button" parent="MarginContainer/Map/Level_007" unique_id=1207311766]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"MapNodeButton"
+
+[node name="Tooltip" type="Panel" parent="MarginContainer/Map/Level_007" unique_id=1965487276]
+visible = false
+z_index = 1
+custom_minimum_size = Vector2(180, 170)
+layout_mode = 0
+offset_left = 26.0
+offset_top = -150.0
+offset_right = 206.0
+offset_bottom = 20.0
+mouse_filter = 2
+theme_type_variation = &"HornPanel"
+
+[node name="StartButton" type="Button" parent="MarginContainer/Map/Level_007/Tooltip" unique_id=607913402]
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -6.0
+offset_top = -6.0
+offset_right = -6.0
+offset_bottom = -6.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "start"
+
+[node name="CloseButton" type="Button" parent="MarginContainer/Map/Level_007/Tooltip" unique_id=1000303655]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -5.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = 5.0
+grow_horizontal = 0
+text = "x"
+
+[node name="InfoMarginContainer" type="MarginContainer" parent="MarginContainer/Map/Level_007/Tooltip" unique_id=2037154777]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 22
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 26
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Map/Level_007/Tooltip/InfoMarginContainer" unique_id=1254411315]
+layout_mode = 2
+
+[node name="LevelName" type="Label" parent="MarginContainer/Map/Level_007/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1924467753]
+layout_mode = 2
+size_flags_vertical = 0
+theme_type_variation = &"TitleLabel"
+text = "Level 007"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LevelInfo" type="Label" parent="MarginContainer/Map/Level_007/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1504669412]
+custom_minimum_size = Vector2(168, 0)
+layout_mode = 2
+size_flags_vertical = 1
+autowrap_mode = 3
+
+[node name="LockTexture" type="TextureRect" parent="MarginContainer/Map/Level_007" unique_id=174683389]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -12.0
+offset_top = -8.0
+offset_right = 4.0
+offset_bottom = 8.0
+grow_horizontal = 0
+texture = ExtResource("4_wvp4h")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Level_008" type="Panel" parent="MarginContainer/Map" unique_id=1721640677]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 0
+offset_left = 146.0
+offset_top = 316.0
+offset_right = 166.0
+offset_bottom = 336.0
+theme_type_variation = &"EmptyPanel"
+script = ExtResource("2_uc0yk")
+level_number = 8
+
+[node name="SelectButton" type="Button" parent="MarginContainer/Map/Level_008" unique_id=1960848246]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"MapNodeButton"
+
+[node name="Tooltip" type="Panel" parent="MarginContainer/Map/Level_008" unique_id=1793258947]
+visible = false
+z_index = 1
+custom_minimum_size = Vector2(180, 170)
+layout_mode = 0
+offset_left = 26.0
+offset_top = -150.0
+offset_right = 206.0
+offset_bottom = 20.0
+mouse_filter = 2
+theme_type_variation = &"HornPanel"
+
+[node name="StartButton" type="Button" parent="MarginContainer/Map/Level_008/Tooltip" unique_id=486564456]
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -6.0
+offset_top = -6.0
+offset_right = -6.0
+offset_bottom = -6.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "start"
+
+[node name="CloseButton" type="Button" parent="MarginContainer/Map/Level_008/Tooltip" unique_id=1453848786]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -5.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = 5.0
+grow_horizontal = 0
+text = "x"
+
+[node name="InfoMarginContainer" type="MarginContainer" parent="MarginContainer/Map/Level_008/Tooltip" unique_id=1963502483]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 22
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 26
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Map/Level_008/Tooltip/InfoMarginContainer" unique_id=695437394]
+layout_mode = 2
+
+[node name="LevelName" type="Label" parent="MarginContainer/Map/Level_008/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=310578725]
+layout_mode = 2
+size_flags_vertical = 0
+theme_type_variation = &"TitleLabel"
+text = "Level 008"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LevelInfo" type="Label" parent="MarginContainer/Map/Level_008/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1397978246]
+custom_minimum_size = Vector2(168, 0)
+layout_mode = 2
+size_flags_vertical = 1
+autowrap_mode = 3
+
+[node name="LockTexture" type="TextureRect" parent="MarginContainer/Map/Level_008" unique_id=1196068515]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -12.0
+offset_top = -8.0
+offset_right = 4.0
+offset_bottom = 8.0
+grow_horizontal = 0
+texture = ExtResource("4_wvp4h")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Level_009" type="Panel" parent="MarginContainer/Map" unique_id=875573078]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 0
+offset_left = 66.0
+offset_top = 232.0
+offset_right = 86.0
+offset_bottom = 252.0
+theme_type_variation = &"EmptyPanel"
+script = ExtResource("2_uc0yk")
+level_number = 9
+
+[node name="SelectButton" type="Button" parent="MarginContainer/Map/Level_009" unique_id=2055917658]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"MapNodeButton"
+
+[node name="Tooltip" type="Panel" parent="MarginContainer/Map/Level_009" unique_id=1819353226]
+visible = false
+z_index = 1
+custom_minimum_size = Vector2(180, 170)
+layout_mode = 0
+offset_left = 26.0
+offset_top = -150.0
+offset_right = 206.0
+offset_bottom = 20.0
+mouse_filter = 2
+theme_type_variation = &"HornPanel"
+
+[node name="StartButton" type="Button" parent="MarginContainer/Map/Level_009/Tooltip" unique_id=380735744]
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -6.0
+offset_top = -6.0
+offset_right = -6.0
+offset_bottom = -6.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "start"
+
+[node name="CloseButton" type="Button" parent="MarginContainer/Map/Level_009/Tooltip" unique_id=1474191215]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -5.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = 5.0
+grow_horizontal = 0
+text = "x"
+
+[node name="InfoMarginContainer" type="MarginContainer" parent="MarginContainer/Map/Level_009/Tooltip" unique_id=1969998863]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 22
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 26
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Map/Level_009/Tooltip/InfoMarginContainer" unique_id=1382468142]
+layout_mode = 2
+
+[node name="LevelName" type="Label" parent="MarginContainer/Map/Level_009/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=530479462]
+layout_mode = 2
+size_flags_vertical = 0
+theme_type_variation = &"TitleLabel"
+text = "Level 009"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LevelInfo" type="Label" parent="MarginContainer/Map/Level_009/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1057775061]
+custom_minimum_size = Vector2(168, 0)
+layout_mode = 2
+size_flags_vertical = 1
+autowrap_mode = 3
+
+[node name="LockTexture" type="TextureRect" parent="MarginContainer/Map/Level_009" unique_id=401073855]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -12.0
+offset_top = -8.0
+offset_right = 4.0
+offset_bottom = 8.0
+grow_horizontal = 0
+texture = ExtResource("4_wvp4h")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Level_010" type="Panel" parent="MarginContainer/Map" unique_id=1697437668]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 0
+offset_left = 100.0
+offset_top = 200.0
+offset_right = 120.0
+offset_bottom = 220.0
+theme_type_variation = &"EmptyPanel"
+script = ExtResource("2_uc0yk")
+level_number = 10
+
+[node name="SelectButton" type="Button" parent="MarginContainer/Map/Level_010" unique_id=783534905]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"MapNodeButton"
+
+[node name="Tooltip" type="Panel" parent="MarginContainer/Map/Level_010" unique_id=271305956]
+visible = false
+z_index = 1
+custom_minimum_size = Vector2(180, 170)
+layout_mode = 0
+offset_left = 26.0
+offset_top = -150.0
+offset_right = 206.0
+offset_bottom = 20.0
+mouse_filter = 2
+theme_type_variation = &"HornPanel"
+
+[node name="StartButton" type="Button" parent="MarginContainer/Map/Level_010/Tooltip" unique_id=476174601]
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -6.0
+offset_top = -6.0
+offset_right = -6.0
+offset_bottom = -6.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "start"
+
+[node name="CloseButton" type="Button" parent="MarginContainer/Map/Level_010/Tooltip" unique_id=292278043]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -5.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = 5.0
+grow_horizontal = 0
+text = "x"
+
+[node name="InfoMarginContainer" type="MarginContainer" parent="MarginContainer/Map/Level_010/Tooltip" unique_id=536907897]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 22
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 26
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Map/Level_010/Tooltip/InfoMarginContainer" unique_id=1732070815]
+layout_mode = 2
+
+[node name="LevelName" type="Label" parent="MarginContainer/Map/Level_010/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1964005606]
+layout_mode = 2
+size_flags_vertical = 0
+theme_type_variation = &"TitleLabel"
+text = "Level 010"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LevelInfo" type="Label" parent="MarginContainer/Map/Level_010/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=732484127]
+custom_minimum_size = Vector2(168, 0)
+layout_mode = 2
+size_flags_vertical = 1
+autowrap_mode = 3
+
+[node name="LockTexture" type="TextureRect" parent="MarginContainer/Map/Level_010" unique_id=704992626]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -12.0
+offset_top = -8.0
+offset_right = 4.0
+offset_bottom = 8.0
+grow_horizontal = 0
+texture = ExtResource("4_wvp4h")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Level_011" type="Panel" parent="MarginContainer/Map" unique_id=363348100]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 0
+offset_left = 112.0
+offset_top = 172.0
+offset_right = 132.0
+offset_bottom = 192.0
+theme_type_variation = &"EmptyPanel"
+script = ExtResource("2_uc0yk")
+level_number = 11
+
+[node name="SelectButton" type="Button" parent="MarginContainer/Map/Level_011" unique_id=127567981]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"MapNodeButton"
+
+[node name="Tooltip" type="Panel" parent="MarginContainer/Map/Level_011" unique_id=857942358]
+visible = false
+z_index = 1
+custom_minimum_size = Vector2(180, 170)
+layout_mode = 0
+offset_left = 26.0
+offset_top = -150.0
+offset_right = 206.0
+offset_bottom = 20.0
+mouse_filter = 2
+theme_type_variation = &"HornPanel"
+
+[node name="StartButton" type="Button" parent="MarginContainer/Map/Level_011/Tooltip" unique_id=1949860022]
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -6.0
+offset_top = -6.0
+offset_right = -6.0
+offset_bottom = -6.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "start"
+
+[node name="CloseButton" type="Button" parent="MarginContainer/Map/Level_011/Tooltip" unique_id=1453763866]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -5.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = 5.0
+grow_horizontal = 0
+text = "x"
+
+[node name="InfoMarginContainer" type="MarginContainer" parent="MarginContainer/Map/Level_011/Tooltip" unique_id=187123626]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 22
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 26
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Map/Level_011/Tooltip/InfoMarginContainer" unique_id=1121014830]
+layout_mode = 2
+
+[node name="LevelName" type="Label" parent="MarginContainer/Map/Level_011/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=201105189]
+layout_mode = 2
+size_flags_vertical = 0
+theme_type_variation = &"TitleLabel"
+text = "Level 011"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LevelInfo" type="Label" parent="MarginContainer/Map/Level_011/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1883868549]
+custom_minimum_size = Vector2(168, 0)
+layout_mode = 2
+size_flags_vertical = 1
+autowrap_mode = 3
+
+[node name="LockTexture" type="TextureRect" parent="MarginContainer/Map/Level_011" unique_id=2065616857]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -12.0
+offset_top = -8.0
+offset_right = 4.0
+offset_bottom = 8.0
+grow_horizontal = 0
+texture = ExtResource("4_wvp4h")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Level_012" type="Panel" parent="MarginContainer/Map" unique_id=1711682819]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 0
+offset_left = 82.0
+offset_top = 166.0
+offset_right = 102.0
+offset_bottom = 186.0
+theme_type_variation = &"EmptyPanel"
+script = ExtResource("2_uc0yk")
+level_number = 12
+
+[node name="SelectButton" type="Button" parent="MarginContainer/Map/Level_012" unique_id=1038156533]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"MapNodeButton"
+
+[node name="Tooltip" type="Panel" parent="MarginContainer/Map/Level_012" unique_id=371752430]
+visible = false
+z_index = 1
+custom_minimum_size = Vector2(180, 170)
+layout_mode = 0
+offset_left = 26.0
+offset_top = -150.0
+offset_right = 206.0
+offset_bottom = 20.0
+mouse_filter = 2
+theme_type_variation = &"HornPanel"
+
+[node name="StartButton" type="Button" parent="MarginContainer/Map/Level_012/Tooltip" unique_id=1193955572]
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -6.0
+offset_top = -6.0
+offset_right = -6.0
+offset_bottom = -6.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "start"
+
+[node name="CloseButton" type="Button" parent="MarginContainer/Map/Level_012/Tooltip" unique_id=558783841]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -5.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = 5.0
+grow_horizontal = 0
+text = "x"
+
+[node name="InfoMarginContainer" type="MarginContainer" parent="MarginContainer/Map/Level_012/Tooltip" unique_id=105610535]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 22
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 26
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Map/Level_012/Tooltip/InfoMarginContainer" unique_id=508103646]
+layout_mode = 2
+
+[node name="LevelName" type="Label" parent="MarginContainer/Map/Level_012/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=623024718]
+layout_mode = 2
+size_flags_vertical = 0
+theme_type_variation = &"TitleLabel"
+text = "Level 012"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LevelInfo" type="Label" parent="MarginContainer/Map/Level_012/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=620491251]
+custom_minimum_size = Vector2(168, 0)
+layout_mode = 2
+size_flags_vertical = 1
+autowrap_mode = 3
+
+[node name="LockTexture" type="TextureRect" parent="MarginContainer/Map/Level_012" unique_id=169047809]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0

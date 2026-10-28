@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dgthnohmspq5s"
+path="res://.godot/imported/plaguepig.aseprite-111b46066b6ab973fffe661140288cdd.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/plaguepig/plaguepig.aseprite"
+dest_files=["res://.godot/imported/plaguepig.aseprite-111b46066b6ab973fffe661140288cdd.res"]
+
+[params]
+

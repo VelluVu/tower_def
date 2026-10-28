@@ -30,6 +30,8 @@ const FREE_GOLD : float = 9999.0
 const BLOCKED_WEIGHT : float = 100.0
 const DIGITS : String = "0123456789"
 const LEAF_META : StringName = &"soak_leaf"
+const RANGE_META : StringName = &"soak_range"
+const WALL_COVER_WEIGHT : int = 1000
 
 var options : Dictionary[String, String] = {
 	"level": "1", "economy": "real", "talents": "none", "health": "1.0", "speed": "1.0", "life": "",
@@ -260,6 +262,7 @@ func _place_tower(kit : TestKit, level : Level) -> void:
 	type_order.pop_front()
 	var tower : Building = await _place(kit, level, TOWERS[type], cell)
 	tower.set_meta(LEAF_META, LEAVES[(type + int(options.rotation)) % LEAVES.size()])
+	tower.set_meta(RANGE_META, _range_of(TOWERS[type]))
 	towers.append(tower)
 	purchases[tower] = 0
 
@@ -341,11 +344,11 @@ func _best_trap_cell(level : Level) -> Vector2i:
 	return best
 
 
-## The route cell that makes the routes longest as a wall, without closing any route.
+## The route cell that, as a wall, keeps the most route cells in the towers' reach, then makes the
+## routes longest, without closing any route. A wall never pulls the route away from the towers.
 func _best_wall_cell(level : Level) -> Vector2i:
-	var length : int = _route_length(level)
 	var best : Vector2i = Vector2i.MAX
-	var best_length : int = length
+	var best_score : int = _wall_score(_open_routes(level))
 	var ends : Dictionary[Vector2i, bool] = {}
 	for spawner in level.get_spawners():
 		ends[level.grid.world_position_to_grid(spawner.global_position)] = true
@@ -355,17 +358,34 @@ func _best_wall_cell(level : Level) -> Vector2i:
 		if ends.has(cell) or not _is_free_to_build(level, cell):
 			continue
 		level.grid.set_cell_weight(cell, BLOCKED_WEIGHT)
-		var new_length : int = _open_route_length(level)
+		var routes : Array[Array] = _open_routes(level)
 		level.grid.set_cell_weight(cell, 1.0)
-		if new_length > best_length:
-			best_length = new_length
+		if routes.is_empty():
+			continue
+		var score : int = _wall_score(routes)
+		if score > best_score:
+			best_score = score
 			best = cell
 	return best
 
 
-#every route's length in cells, or -1 when one has to go through a building
-func _open_route_length(level : Level) -> int:
-	var total : int = 0
+#route cells in each tower's reach (a cell two towers reach counts twice) count far more than the
+#route's length, so a wall never trades one tower's time on the enemies for another's
+func _wall_score(routes : Array[Array]) -> int:
+	var covered : int = 0
+	var length : int = 0
+	for route in routes:
+		length += route.size()
+		for cell in route:
+			for tower in towers:
+				if is_instance_valid(tower) and Vector2(tower.grid_position - cell).length_squared() <= tower.get_meta(RANGE_META, 0.0) ** 2:
+					covered += 1
+	return covered * WALL_COVER_WEIGHT + length
+
+
+#every route's cells, or none when one has to go through a building
+func _open_routes(level : Level) -> Array[Array]:
+	var routes : Array[Array] = []
 	var ids : Dictionary[int, bool] = _active_spawner_ids(level)
 	for spawner in level.get_spawners():
 		if not ids.is_empty() and not ids.has(spawner.id):
@@ -375,9 +395,9 @@ func _open_route_length(level : Level) -> int:
 		var path : Array[Vector2i] = level.grid.astar_grid.get_id_path(from, to)
 		for cell in path:
 			if level.grid.astar_grid.get_point_weight_scale(cell) >= BLOCKED_WEIGHT:
-				return -1
-		total += path.size()
-	return total
+				return []
+		routes.append(path)
+	return routes
 
 
 func _route_length(level : Level) -> int:

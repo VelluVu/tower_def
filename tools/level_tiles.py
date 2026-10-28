@@ -8,7 +8,8 @@
     python tools/level_tiles.py ground <level numbers...> [--dry]  rounded ground (GroundTileMapLayer): old
         terrain tiles become ground_tiles pieces by same-terrain neighbours (water and the map edge count as the
         same), their decor goes to DecorTileMapLayer (added after the ground layer when missing); rerunning
-        only re-picks the pieces. Paint new patches with the old terrain tiles, then run it
+        only re-picks the pieces. Paint new patches with the old terrain tiles (bog: any bog piece), then run it;
+        bog cells get swamp decor
     python tools/level_tiles.py surround <forest|crossroads|swamp> <level numbers...> [--dry]   what lies past
         the map's edge (forest; forest with bog below; bog pools and dark trees), over the dark fill and the rock band;
         run it after `edge` and before `rock`
@@ -105,8 +106,9 @@ ROCK_BAND_RIM = set([(x, 6) for x in range(4, 8)] + [(2, 7), (3, 7), (4, 10), (5
 
 # green_land_tile_set.tres: source 1 is the old terrain sheet (green_land.png, painted with Godot terrains),
 # source 2 the rounded pieces (ground_tiles.png): block = terrain (0 grass, 1 less green, 2 pale sand, 3 sand,
-# 4 red), 8x8 tiles, picked like the rock; the old tiles' decor moves to DecorTileMapLayer (decor_tile_set.tres,
-# decor_tiles.png: old tile (ox, oy) shuffled, variant v at (ox*4 + v, oy))
+# 4 red, 5 bog), 8x8 tiles, picked like the rock; the old tiles' decor moves to DecorTileMapLayer (decor_tile_set.tres,
+# decor_tiles.png: old tile (ox, oy) shuffled, variant v at (ox*4 + v, oy)). Bog has no old terrain tile: paint any
+# bog piece and rerun `ground`; bog cells lose their grass decor and get swamp decor (row 10 of decor_tiles.png)
 GROUND_TILE_SET = "assets/tile_sets/green_land_tile_set.tres"
 OLD_GROUND_SOURCE = 1
 GROUND_SOURCE = 2
@@ -114,6 +116,10 @@ TERRAIN_BLOCK = 8
 DECOR_LAYER = "DecorTileMapLayer"
 DECOR_TILE_SET = "res://assets/tile_sets/decor_tile_set.tres"
 DECOR_VARIANTS = 4
+BOG_TERRAIN = 5
+SWAMP_DECOR_ROW = 10
+# row 10 columns: 0-3 reeds, 4-5 lily puddles, 6 puddle, 7-8 mushrooms, 9 twig, 10-13 moss tufts; None = bare mud
+SWAMP_DECOR_PICK = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 10, 11, 12, 13] + [None] * 12
 
 
 def add(c, d):
@@ -556,6 +562,14 @@ def build_ground(level, log):
             tile = (t[0] * DECOR_VARIANTS + variant, t[1])
             if t in old_full and tile in decor_tiles and c not in water and c not in front:
                 decor[c] = (0, tile, 0)
+
+    for c in terrain:
+        if terrain[c] != BOG_TERRAIN or (c in decor and decor[c][1][1] == SWAMP_DECOR_ROW):
+            continue
+        decor.pop(c, None)
+        column = pick(SWAMP_DECOR_PICK, level.number, c, "swamp")
+        if column is not None and c not in water and c not in front:
+            decor[c] = (0, (column, SWAMP_DECOR_ROW), 0)
 
     def same(c, d):
         n = add(c, d)

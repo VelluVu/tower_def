@@ -1,38 +1,38 @@
-[gd_resource type="Resource" script_class="WaveData" format=3 uid="uid://byenbppoms4ah"]
+[gd_resource type="Resource" script_class="WaveData" format=3 uid="uid://d34k5cgujtj0p"]
 
 [ext_resource type="Script" uid="uid://cpw7ia3ek2yvs" path="res://scenes/level/level_data/wave_data.gd" id="1_wave"]
 [ext_resource type="Script" uid="uid://bbhd3iyjav4h2" path="res://scenes/level/level_data/spawn_group_data.gd" id="2_group"]
 [ext_resource type="PackedScene" uid="uid://5vvf4bpqplat" path="res://scenes/unit/enemy/enemies/swbeefling.tscn" id="3_swbeefling"]
 [ext_resource type="PackedScene" uid="uid://ddq4tsy8ik5n5" path="res://scenes/unit/enemy/enemies/swampling.tscn" id="4_swampling"]
-[ext_resource type="PackedScene" uid="uid://bsgwxemtlicy4" path="res://scenes/unit/enemy/enemies/fastswampling.tscn" id="5_fastswampling"]
-[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/batling.tscn" id="9_batling"]
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/leechling.tscn" id="5_leechling"]
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/giant_wasp.tscn" id="6_giant_wasp"]
 
 [sub_resource type="Resource" id="Resource_group1"]
 script = ExtResource("2_group")
 enemy_scene = ExtResource("3_swbeefling")
-count = 11
-interval = 2.8
+count = 9
+interval = 3.2
 
 [sub_resource type="Resource" id="Resource_group2"]
 script = ExtResource("2_group")
 enemy_scene = ExtResource("4_swampling")
 count = 27
-interval = 1.44
+interval = 1.6
 delay = 3.0
 
 [sub_resource type="Resource" id="Resource_group3"]
 script = ExtResource("2_group")
-enemy_scene = ExtResource("5_fastswampling")
+enemy_scene = ExtResource("5_leechling")
 count = 12
-interval = 1.2
-delay = 12.0
+interval = 0.4
+delay = 8.0
 
 [sub_resource type="Resource" id="Resource_group4"]
 script = ExtResource("2_group")
-enemy_scene = ExtResource("9_batling")
-count = 14
-interval = 1.2
-delay = 15.0
+enemy_scene = ExtResource("6_giant_wasp")
+count = 6
+interval = 2.0
+delay = 20.0
 
 [resource]
 script = ExtResource("1_wave")

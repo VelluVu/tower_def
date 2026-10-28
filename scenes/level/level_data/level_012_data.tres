@@ -1,0 +1,60 @@
+[gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://blay2on4a36e2"]
+
+[ext_resource type="Script" uid="uid://cpw7ia3ek2yvs" path="res://scenes/level/level_data/wave_data.gd" id="0_wave"]
+[ext_resource type="Script" uid="uid://c0cehaxum4b45" path="res://scenes/level/level_data/level_data.gd" id="1_level"]
+[ext_resource type="Resource" uid="uid://dpnl85c3orm1k" path="res://scenes/level/level_data/waves/level_012_wave_1.tres" id="2_w1"]
+[ext_resource type="Resource" uid="uid://d3l7bx5v06ogy" path="res://scenes/level/level_data/waves/level_012_wave_2.tres" id="3_w2"]
+[ext_resource type="Resource" uid="uid://bs0c04ecfqw76" path="res://scenes/level/level_data/waves/level_012_wave_3.tres" id="4_w3"]
+[ext_resource type="Resource" uid="uid://b6d8e7608838j" path="res://scenes/level/level_data/waves/level_012_wave_4.tres" id="5_w4"]
+[ext_resource type="Resource" uid="uid://77y08ocrvrod" path="res://scenes/level/level_data/waves/level_012_wave_5.tres" id="6_w5"]
+[ext_resource type="Script" uid="uid://bu8xwv71c6bbj" path="res://scenes/level/level_data/puffe_line.gd" id="9_line"]
+[ext_resource type="Resource" uid="uid://byenbppoms4ah" path="res://scenes/level/level_data/waves/level_012_wave_6.tres" id="9_w6"]
+
+[sub_resource type="Resource" id="PuffeLine_1"]
+script = ExtResource("9_line")
+trigger = 0
+text = "Smell that? The swamp. Damp, smelly and far too noisy for a nap."
+
+[sub_resource type="Resource" id="PuffeLine_2"]
+script = ExtResource("9_line")
+trigger = 4
+wave_number = 1
+text = "The batlings followed us all the way here. Keep their flight route covered."
+
+[sub_resource type="Resource" id="PuffeLine_3"]
+script = ExtResource("9_line")
+trigger = 3
+wave_number = 2
+text = "Swamp folk, with the batlings! They heal over time, so keep fire and poison on them."
+
+[sub_resource type="Resource" id="PuffeLine_4"]
+script = ExtResource("9_line")
+trigger = 3
+wave_number = 3
+text = "Geckos! Quick and venomous. Don't let them slip past."
+
+[sub_resource type="Resource" id="PuffeLine_5"]
+script = ExtResource("9_line")
+trigger = 3
+wave_number = 4
+text = "Big, wet and grumpy. Just like me before breakfast."
+
+[sub_resource type="Resource" id="PuffeLine_6"]
+script = ExtResource("9_line")
+trigger = 3
+wave_number = 5
+text = "Giant wasps! More flyers, so keep the flight route covered."
+
+[sub_resource type="Resource" id="PuffeLine_7"]
+script = ExtResource("9_line")
+trigger = 3
+wave_number = 6
+text = "The last wave on the road. Past it... the bog. Sigh."
+
+[resource]
+script = ExtResource("1_level")
+level_name = "Serpent Road"
+story_text = "A long winding road at the edge of the swamp. Past it lies the bog, where Puffe can never sleep."
+starting_gold = 20.0
+waves = Array[ExtResource("0_wave")]([ExtResource("2_w1"), ExtResource("3_w2"), ExtResource("4_w3"), ExtResource("5_w4"), ExtResource("6_w5"), ExtResource("9_w6")])
+puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_4"), SubResource("PuffeLine_5"), SubResource("PuffeLine_6"), SubResource("PuffeLine_7")])

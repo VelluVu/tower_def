@@ -31,10 +31,10 @@ BeehaveGlobalDebugger="*uid://bm7qww333rkys"
 PlayerProgress="*res://scenes/player_progress.gd"
 GlobalAnimationNames="*res://scenes/global_animation_names.gd"
 RandomEvolveResourceCollection="*res://scenes/unit/evolve_tree/random_evolve_resource_collection.gd"
-_mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 InputManager="*res://scenes/input_manager.gd"
 AudioManager="*res://scenes/audio_manager.gd"
 SettingsManager="*res://scenes/settings_manager.gd"
+_mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 
 [debug]
 

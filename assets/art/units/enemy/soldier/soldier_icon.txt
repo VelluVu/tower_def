@@ -1,0 +1,29 @@
+# Source of assets/art/units/enemy/soldier/soldier_icon.png (python tools/gd.py icon <this> <out.png>)
+A = c0cbdc
+B = 8b9bb4
+C = 5a6988
+D = 3a4466
+s = e8b796
+t = c28569
+K = 181425
+b = 0099db
+n = 124e89
+g = feae34
+l = b86f50
+---
+.............A..
+.....AABB....B..
+....AABBBBC..l..
+...AABBBBBCC.l..
+.BBAACCCCCCCDl..
+CCCCCCCCCCCCCDl.
+....sKssKst..l..
+....sssssst..l..
+.....sssst...l..
+...BBAnbbnBC.l..
+..BAAnnbgnnBCl..
+..s.nnbbgnn.ts..
+..s.nnbbgnn..l..
+....ggggggg..l..
+....nnnbbnn..l..
+....nnnbbnn..l..

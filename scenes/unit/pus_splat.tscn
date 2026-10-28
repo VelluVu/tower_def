@@ -1,0 +1,17 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/unit/blood_splat.gd" id="1_4t27h"]
+[ext_resource type="Script" path="res://scenes/custom_timer.gd" id="4_r6lhm"]
+[ext_resource type="Texture2D" path="res://assets/art/gore/pus_splat_01.png" id="splat_1"]
+[ext_resource type="Texture2D" path="res://assets/art/gore/pus_splat_02.png" id="splat_2"]
+[ext_resource type="Texture2D" path="res://assets/art/gore/pus_splat_03.png" id="splat_3"]
+
+[node name="PusSplat" type="Node2D"]
+z_index = -1
+position = Vector2(0, 2)
+script = ExtResource("1_4t27h")
+textures = Array[Texture2D]([ExtResource("splat_1"), ExtResource("splat_2"), ExtResource("splat_3")])
+
+[node name="LiveTimer" type="Timer" parent="."]
+one_shot = true
+script = ExtResource("4_r6lhm")

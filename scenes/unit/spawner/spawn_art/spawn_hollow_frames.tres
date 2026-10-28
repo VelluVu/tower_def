@@ -1,6 +1,6 @@
-[gd_resource type="SpriteFrames" load_steps=10 format=3]
+[gd_resource type="SpriteFrames" format=3 uid="uid://dd05wkqb3d6wp"]
 
-[ext_resource type="Texture2D" path="res://assets/art/tiles/spawn_points/spawn_hollow.png" id="1_sheet"]
+[ext_resource type="Texture2D" uid="uid://dym57v33q2aek" path="res://assets/art/tiles/spawn_points/spawn_hollow.png" id="1_sheet"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0"]
 atlas = ExtResource("1_sheet")
@@ -61,7 +61,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_7")
 }],
-"loop": true,
+"loop": 1,
 "name": &"IDLE",
 "speed": 6.6667
 }]

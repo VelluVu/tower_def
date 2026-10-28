@@ -1,0 +1,27 @@
+# Source of assets/art/units/enemy/scout/scout_icon.png (python tools/gd.py icon <this> <out.png>)
+A = c0cbdc
+B = 8b9bb4
+h = 3e8948
+j = 265c42
+s = e8b796
+t = c28569
+K = 181425
+l = b86f50
+m = 733e39
+---
+.....jjhhj......
+....jhhhhhhj....
+...jhhhhhhhhj...
+...jhhjjjjhhj...
+..jhhjsssstjhj..
+..jhjsKssKstjj..
+..jhjsssssstjj..
+..jjjjsssstjjj..
+...jjjjjjjjjj...
+....mlllllm...A.
+...mllmlmllm..A.
+..s.llmlmll.tB..
+..s.llmlmll..m..
+....mmmmmmm.....
+....lll.lll.....
+....mm...mm.....

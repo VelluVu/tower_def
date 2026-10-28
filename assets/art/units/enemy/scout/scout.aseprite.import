@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cmxgt5w2db403"
+path="res://.godot/imported/scout.aseprite-317539e80f6401abb1f27d5b6cc934a1.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/scout/scout.aseprite"
+dest_files=["res://.godot/imported/scout.aseprite-317539e80f6401abb1f27d5b6cc934a1.res"]
+
+[params]
+

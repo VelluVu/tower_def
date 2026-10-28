@@ -1,0 +1,47 @@
+[gd_resource type="Resource" script_class="LevelData" format=3]
+
+[ext_resource type="Script" uid="uid://cpw7ia3ek2yvs" path="res://scenes/level/level_data/wave_data.gd" id="0_wave"]
+[ext_resource type="Script" uid="uid://c0cehaxum4b45" path="res://scenes/level/level_data/level_data.gd" id="1_level"]
+[ext_resource type="Script" uid="uid://bu8xwv71c6bbj" path="res://scenes/level/level_data/puffe_line.gd" id="9_line"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_007_wave_1.tres" id="w1"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_007_wave_2.tres" id="w2"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_007_wave_3.tres" id="w3"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_007_wave_4.tres" id="w4"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_007_wave_5.tres" id="w5"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_007_wave_6.tres" id="w6"]
+
+[sub_resource type="Resource" id="PuffeLine_1"]
+script = ExtResource("9_line")
+trigger = 0
+text = "The southern bridge is gone, smashed into the river. So it is the cave road for us, past tunnels on every side."
+
+[sub_resource type="Resource" id="PuffeLine_2"]
+script = ExtResource("9_line")
+trigger = 3
+wave_number = 2
+text = "Batlings again, with a swarm behind them. Towers on the flight route, Nova for the swarm."
+
+[sub_resource type="Resource" id="PuffeLine_3"]
+script = ExtResource("9_line")
+trigger = 3
+wave_number = 5
+text = "A new tunnel in the north-east! They are digging their way closer."
+
+[sub_resource type="Resource" id="PuffeLine_4"]
+script = ExtResource("9_line")
+trigger = 7
+text = "They found a gap. Close it!"
+
+[sub_resource type="Resource" id="PuffeLine_5"]
+script = ExtResource("9_line")
+trigger = 3
+wave_number = 6
+text = "Hold the crossing, and we can face whatever is down there."
+
+[resource]
+script = ExtResource("1_level")
+level_name = "Echo Crossing"
+story_text = "The southern bridge lies smashed in the river, so the only way on runs past the great cave. Tunnels open on every side of this old crossing, and each of them echoes with something big moving below."
+starting_gold = 24.0
+waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtResource("w3"), ExtResource("w4"), ExtResource("w5"), ExtResource("w6")])
+puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_4"), SubResource("PuffeLine_5")])

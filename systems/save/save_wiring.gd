@@ -4,7 +4,16 @@ extends SaveSlot
 ## This game's progress save: the file to edit after copying the system. Saves a
 ## ProgressData; PlayerProgress owns this node and keeps the game's API to it.
 
-const SAVE_VERSION: int = 1
+const SAVE_VERSION: int = 4
+## Versions 2 and 3 put new levels in; the level at the number and every later
+## one moved up. 2: the Broodmother's Lair at 6. 3: two cave levels before it
+## (at 6) and the human bridge after it (at 9). 4: two levels between the lair
+## and the bridge (at 9).
+const INSERTED_LEVEL: int = 6
+const INSERTED_COUNT_V3: int = 2
+const BRIDGE_LEVEL_V3: int = 9
+const AFTER_LAIR_LEVEL_V4: int = 9
+const AFTER_LAIR_COUNT_V4: int = 2
 const SAVE_PATH: String = "user://player_progress.tres"
 
 ## The JSON save from before this system. Imported once, then renamed to
@@ -45,6 +54,31 @@ func load_game() -> bool:
 
 	progress = loaded
 	return true
+
+
+func _migrate(resource: Resource, from_version: int) -> void:
+	var data: ProgressData = resource as ProgressData
+	if data == null:
+		return
+	if from_version < 2:
+		_shift_levels(data, INSERTED_LEVEL, 1)
+	if from_version < 3:
+		_shift_levels(data, INSERTED_LEVEL, INSERTED_COUNT_V3)
+		_shift_levels(data, BRIDGE_LEVEL_V3, 1)
+	if from_version < 4:
+		_shift_levels(data, AFTER_LAIR_LEVEL_V4, AFTER_LAIR_COUNT_V4)
+
+
+## Moves the progress of level `inserted` and later up by `count`. A player who
+## had only unlocked `inserted` now has the first new level there unlocked instead.
+func _shift_levels(data: ProgressData, inserted: int, count: int) -> void:
+	if data.level_progress > inserted:
+		data.level_progress += count
+	var shifted: Dictionary[int, int] = {}
+	for level_number: int in data.level_talent_points:
+		var new_number: int = level_number + count if level_number >= inserted else level_number
+		shifted[new_number] = data.level_talent_points[level_number]
+	data.level_talent_points = shifted
 
 
 ## Turns the old JSON save into a versioned save. A newer save always wins over it.

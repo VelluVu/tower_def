@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://ccmfur6e1b5hn"
+path="res://.godot/imported/leechling.aseprite-c0d96fd2471b2b027da2232a6c7f845d.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/leechling/leechling.aseprite"
+dest_files=["res://.godot/imported/leechling.aseprite-c0d96fd2471b2b027da2232a6c7f845d.res"]
+
+[params]
+
