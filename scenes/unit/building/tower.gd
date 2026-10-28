@@ -3,16 +3,24 @@ extends Building
 
 
 const RANGE_AREA_OBJECT_NULL_ERROR_MESSAGE : String = "NO RANGE AREA ON TOWER, UNABLE FIND TARGETS!"
+#how a silenced tower looks
+const SILENCED_MODULATE : Color = Color(0.55, 0.55, 0.7)
 
 @onready var range_area : Area2D = $RangeArea 
 @onready var area_shape : CollisionShape2D = $RangeArea/CollisionShape2D
 
 var targets : Array[Node2D]
 var target : Node2D = null
+#a screech: the tower sees no targets until the timer ends
+var silence_timer : CustomTimer = null
+
+var is_silenced : bool :
+	get:
+		return silence_timer != null and not silence_timer.is_stopped()
 
 var has_target : bool :
 	get:
-		return not targets.is_empty()
+		return not targets.is_empty() and not is_silenced
 
 var behaviour_tree : BeehaveTree :
 	get:
@@ -49,6 +57,23 @@ func _connect_range_stats() -> void:
 			range_stat.changed.connect(_on_attack_range_stat_changed)
 	
 	_on_attack_range_stat_changed(stat)
+
+
+## Stops attacking for seconds (the tree idles, which drops the target); a new silence restarts it.
+func silence(seconds : float) -> void:
+	if silence_timer == null:
+		silence_timer = CustomTimer.new()
+		silence_timer.one_shot = true
+		add_child(silence_timer)
+		silence_timer.timeout.connect(_on_silence_end)
+
+	silence_timer.unscaled_base_value = seconds
+	silence_timer.start()
+	modulate = SILENCED_MODULATE
+
+
+func _on_silence_end() -> void:
+	modulate = Color.WHITE
 
 
 func _on_skill_replaced() -> void:

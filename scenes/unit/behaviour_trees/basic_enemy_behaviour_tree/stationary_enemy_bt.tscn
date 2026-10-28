@@ -1,0 +1,38 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" uid="uid://cj07gjsp64umb" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/basic_enemy_bt.gd" id="1_bt"]
+[ext_resource type="Script" uid="uid://dblhq2dattubf" path="res://addons/beehave/nodes/composites/selector.gd" id="2_sel"]
+[ext_resource type="Script" uid="uid://bbv1cpf5rfreh" path="res://addons/beehave/nodes/composites/sequence.gd" id="3_seq"]
+[ext_resource type="Script" uid="uid://lvja4nlkbcae" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/is_dead.gd" id="4_isdead"]
+[ext_resource type="Script" uid="uid://ltfo5147xdty" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/dead.gd" id="5_dead"]
+[ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/use_abilities.gd" id="6_abil"]
+[ext_resource type="Script" uid="uid://5h71a4jbqugx" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/stop_movement.gd" id="7_stop"]
+[ext_resource type="Script" uid="uid://crlbxefmsm60w" path="res://scenes/unit/behaviour_trees/basic_tower_behaviour_tree/idle.gd" id="8_idle"]
+
+[node name="StationaryEnemyBt" type="Node" node_paths=PackedStringArray("actor")]
+script = ExtResource("1_bt")
+actor = NodePath("..")
+
+[node name="MainSelector" type="Node" parent="."]
+script = ExtResource("2_sel")
+
+[node name="AmIDead" type="Node" parent="MainSelector"]
+script = ExtResource("3_seq")
+
+[node name="IsDead" type="Node" parent="MainSelector/AmIDead"]
+script = ExtResource("4_isdead")
+
+[node name="Dead" type="Node" parent="MainSelector/AmIDead"]
+script = ExtResource("5_dead")
+
+[node name="UseAbilities" type="Node" parent="MainSelector"]
+script = ExtResource("6_abil")
+
+[node name="Idle" type="Node" parent="MainSelector"]
+script = ExtResource("3_seq")
+
+[node name="StopMovement" type="Node" parent="MainSelector/Idle"]
+script = ExtResource("7_stop")
+
+[node name="Idle" type="Node" parent="MainSelector/Idle"]
+script = ExtResource("8_idle")

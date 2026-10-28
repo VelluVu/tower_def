@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://lvja4nlkbcae" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/is_dead.gd" id="4_ewyra"]
 [ext_resource type="Script" uid="uid://ltfo5147xdty" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/dead.gd" id="5_8mcvb"]
 [ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/follow_path.gd" id="6_fpath"]
+[ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/use_abilities.gd" id="7_abil"]
 [ext_resource type="Script" uid="uid://dprg6v1sv72oi" path="res://addons/beehave/nodes/decorators/inverter.gd" id="10_mrg7q"]
 [ext_resource type="Script" uid="uid://5h71a4jbqugx" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/stop_movement.gd" id="12_j2i8v"]
 [ext_resource type="Script" uid="uid://clmfq3y3rc5xf" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/is_colliding_building.gd" id="16_hco3q"]
@@ -32,6 +33,9 @@ script = ExtResource("4_ewyra")
 
 [node name="Dead" type="Node" parent="MainSelector/AmIDead"]
 script = ExtResource("5_8mcvb")
+
+[node name="UseAbilities" type="Node" parent="MainSelector"]
+script = ExtResource("7_abil")
 
 [node name="FollowPath" type="Node" parent="MainSelector"]
 script = ExtResource("6_fpath")

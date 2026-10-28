@@ -1,0 +1,603 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/unit/enemy/enemy.gd" id="1_rlxr3"]
+[ext_resource type="Texture2D" path="res://assets/art/units/enemy/broodmother/broodmother_icon.png" id="2_n88ha"]
+[ext_resource type="Material" uid="uid://cm7dgpn6dmws5" path="res://assets/shaders/shader_materials/enemy_hit_shader_material.tres" id="3_y1vyb"]
+[ext_resource type="Texture2D" path="res://assets/art/units/enemy/broodmother/broodmother.png" id="4_47bxs"]
+[ext_resource type="Script" path="res://scenes/unit/animation_control.gd" id="5_0ijn5"]
+[ext_resource type="PackedScene" uid="uid://b07nrseyum0s4" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/basic_enemy_bt.tscn" id="6_bnxa5"]
+[ext_resource type="Script" path="res://scenes/unit/hitbox.gd" id="7_hxfg3"]
+[ext_resource type="Script" path="res://scenes/unit/gore_emitter.gd" id="8_pnfec"]
+[ext_resource type="PackedScene" path="res://scenes/unit/blood_spill.tscn" id="9_p7pir"]
+[ext_resource type="PackedScene" uid="uid://dd11cco5cukhw" path="res://scenes/unit/unit_selection/selectable_unit.tscn" id="10_rjd41"]
+[ext_resource type="PackedScene" uid="uid://cuv1fhpdbb5su" path="res://scenes/unit/skills/melee_attack.tscn" id="11_73k7n"]
+[ext_resource type="Script" path="res://scenes/unit/skills/damage_data.gd" id="12_6mcyt"]
+[ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_data.gd" id="13_ntgc7"]
+[ext_resource type="Script" path="res://scenes/unit/stats/stats.gd" id="14_x7u3f"]
+[ext_resource type="Script" path="res://scenes/unit/stats/stat.gd" id="15_rofak"]
+[ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_handler.gd" id="16_nm5r2"]
+[ext_resource type="Script" path="res://scenes/unit/modifier_manager.gd" id="17_bmhjo"]
+[ext_resource type="Script" path="res://scenes/unit/enemy/abilities/enemy_abilities.gd" id="18_abil"]
+[ext_resource type="Script" path="res://scenes/unit/enemy/abilities/brood_frenzy_ability.gd" id="19_frenzy"]
+[ext_resource type="Script" path="res://scenes/unit/enemy/abilities/screech_ability.gd" id="20_screech"]
+[ext_resource type="Script" path="res://scenes/unit/enemy/abilities/burrow_ability.gd" id="21_burrow"]
+[ext_resource type="Script" path="res://scenes/unit/enemy/abilities/lay_egg_ability.gd" id="22_egg"]
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/egg_sac.tscn" id="23_eggsac"]
+[ext_resource type="PackedScene" uid="uid://bj8fmaeegual3" path="res://scenes/unit/enemy/enemies/beefling.tscn" id="24_beefling"]
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/batling.tscn" id="25_batling"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_43mte"]
+friction = 0.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lot5f"]
+radius = 3.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm00"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(0, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm01"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(40, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm02"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(80, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm03"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(120, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm04"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(160, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm05"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(200, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm06"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(240, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm07"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(0, 40, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm08"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(40, 40, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm09"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(80, 40, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm10"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(120, 40, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm11"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(160, 40, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm12"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(200, 40, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm13"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(240, 40, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm14"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(0, 80, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm15"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(40, 80, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm16"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(80, 80, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm17"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(120, 80, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm18"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(160, 80, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm19"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(200, 80, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm20"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(240, 80, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm21"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(0, 120, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm22"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(40, 120, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm23"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(80, 120, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm24"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(120, 120, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm25"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(160, 120, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm26"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(200, 120, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm27"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(240, 120, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm28"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(0, 160, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm29"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(40, 160, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm30"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(80, 160, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm31"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(120, 160, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm32"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(160, 160, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm33"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(200, 160, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm34"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(240, 160, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm35"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(0, 200, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm36"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(40, 200, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm37"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(80, 200, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm38"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(120, 200, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm39"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(160, 200, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm40"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(200, 200, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm41"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(240, 200, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm42"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(0, 240, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm43"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(40, 240, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm44"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(80, 240, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm45"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(120, 240, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm46"]
+atlas = ExtResource("4_47bxs")
+region = Rect2(160, 240, 40, 40)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_brood"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm00")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm01")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm02")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm03")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm04")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm05")
+}],
+"loop": true,
+"name": &"IDLE",
+"speed": 6.6667
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm06")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm07")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm08")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm09")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm10")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm11")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm12")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm13")
+}],
+"loop": true,
+"name": &"WALK",
+"speed": 8.3333
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm14")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm15")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm16")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm17")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm18")
+}],
+"loop": false,
+"name": &"ATTACK",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm19")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm20")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm21")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm22")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm23")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm24")
+}],
+"loop": false,
+"name": &"DEATH",
+"speed": 8.3333
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm25")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm26")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm27")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm28")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm29")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm30")
+}],
+"loop": false,
+"name": &"BURROW",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm31")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm32")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm33")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm34")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm35")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm36")
+}],
+"loop": false,
+"name": &"EMERGE",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm37")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm38")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm39")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm40")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm41")
+}],
+"loop": false,
+"name": &"LAY_EGG",
+"speed": 8.3333
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm42")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm43")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm44")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm45")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm46")
+}],
+"loop": false,
+"name": &"SCREECH",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_54wmh"]
+size = Vector2(22, 30)
+
+[node name="Broodmother" type="RigidBody2D" node_paths=PackedStringArray("skill")]
+collision_layer = 2
+collision_mask = 0
+physics_material_override = SubResource("PhysicsMaterial_43mte")
+contact_monitor = true
+max_contacts_reported = 1
+script = ExtResource("1_rlxr3")
+icon = ExtResource("2_n88ha")
+is_boss = true
+skill = NodePath("MeleeAttack")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_lot5f")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+material = ExtResource("3_y1vyb")
+position = Vector2(0, -14)
+sprite_frames = SubResource("SpriteFrames_brood")
+animation = &"DEATH"
+autoplay = "IDLE"
+script = ExtResource("5_0ijn5")
+metadata/_aseprite_wizard_config_ = {
+"layer": "",
+"o_ex_p": "",
+"o_folder": "res://assets/art/units/enemy/broodmother",
+"o_name": "broodmother",
+"only_visible": false,
+"slice": "",
+"source": "res://assets/art/units/enemy/broodmother/broodmother.aseprite"
+}
+metadata/_aseprite_wizard_interface_config_ = {
+"layer_section": true,
+"output_section": true,
+"slice_section": true
+}
+
+[node name="BeehaveTree" parent="." instance=ExtResource("6_bnxa5")]
+
+[node name="Hitbox" type="Area2D" parent="."]
+position = Vector2(0, -4)
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("7_hxfg3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_54wmh")
+
+[node name="GoreEmitter" type="Node2D" parent="."]
+position = Vector2(0, -12)
+script = ExtResource("8_pnfec")
+gore_effect_scene = ExtResource("9_p7pir")
+
+[node name="SelectableUnit" parent="." instance=ExtResource("10_rjd41")]
+display_name = "Broodmother"
+
+[node name="MeleeAttack" parent="." instance=ExtResource("11_73k7n")]
+attack_distance = 8.0
+skill_type = 16
+base_cast_time = 0.75
+base_cooldown = 1.5
+
+[node name="DamageData" type="Node" parent="MeleeAttack"]
+script = ExtResource("12_6mcyt")
+
+[node name="DamageOvertimeData" type="Node" parent="MeleeAttack/DamageData"]
+script = ExtResource("13_ntgc7")
+chance_to_apply = 0.2
+
+[node name="Stats" type="Node" parent="MeleeAttack"]
+script = ExtResource("14_x7u3f")
+
+[node name="Damage" type="Node" parent="MeleeAttack/Stats"]
+script = ExtResource("15_rofak")
+base_value = 6.0
+value = 6.0
+type = 2
+
+[node name="AttackRange" type="Node" parent="MeleeAttack/Stats"]
+script = ExtResource("15_rofak")
+type = 5
+
+[node name="AttackSpeed" type="Node" parent="MeleeAttack/Stats"]
+script = ExtResource("15_rofak")
+type = 6
+
+[node name="CriticalChance" type="Node" parent="MeleeAttack/Stats"]
+script = ExtResource("15_rofak")
+base_value = 0.3
+value = 0.3
+type = 7
+
+[node name="CriticalMultiplier" type="Node" parent="MeleeAttack/Stats"]
+script = ExtResource("15_rofak")
+type = 8
+
+[node name="ActiveDuration" type="Node" parent="MeleeAttack/Stats"]
+script = ExtResource("15_rofak")
+type = 9
+
+[node name="PopUpSpot" type="Node2D" parent="."]
+position = Vector2(0, -34)
+
+[node name="OvertimeEffectHandler" type="Node" parent="."]
+script = ExtResource("16_nm5r2")
+
+[node name="Stats" type="Node" parent="."]
+script = ExtResource("14_x7u3f")
+
+[node name="MaxHealth" type="Node" parent="Stats"]
+script = ExtResource("15_rofak")
+base_value = 3000.0
+value = 3000.0
+type = 1
+
+[node name="Health" type="Node" parent="Stats"]
+script = ExtResource("15_rofak")
+base_value = 3000.0
+value = 3000.0
+
+[node name="Damage" type="Node" parent="Stats"]
+script = ExtResource("15_rofak")
+base_value = 5.0
+value = 5.0
+type = 2
+
+[node name="Price" type="Node" parent="Stats"]
+script = ExtResource("15_rofak")
+base_value = 30.0
+value = 30.0
+type = 3
+
+[node name="Speed" type="Node" parent="Stats"]
+script = ExtResource("15_rofak")
+base_value = 8.0
+value = 8.0
+type = 4
+
+[node name="AttackRange" type="Node" parent="Stats"]
+script = ExtResource("15_rofak")
+type = 5
+
+[node name="AttackSpeed" type="Node" parent="Stats"]
+script = ExtResource("15_rofak")
+type = 6
+
+[node name="CriticalChance" type="Node" parent="Stats"]
+script = ExtResource("15_rofak")
+type = 7
+
+[node name="CriticalMultiplier" type="Node" parent="Stats"]
+script = ExtResource("15_rofak")
+base_value = 2.0
+value = 2.0
+type = 8
+
+[node name="ActiveDuration" type="Node" parent="Stats"]
+script = ExtResource("15_rofak")
+type = 9
+
+[node name="ModifierManager" type="Node" parent="."]
+script = ExtResource("17_bmhjo")
+
+[node name="EnemyAbilities" type="Node" parent="."]
+script = ExtResource("18_abil")
+
+[node name="BroodFrenzy" type="Node" parent="EnemyAbilities"]
+script = ExtResource("19_frenzy")
+max_health_ratio = 0.33
+cooldown = 0.0
+swarm_scene = ExtResource("25_batling")
+swarm_count = 6
+
+[node name="Screech" type="Node" parent="EnemyAbilities"]
+script = ExtResource("20_screech")
+max_health_ratio = 0.33
+cooldown = 8.0
+starts_on_cooldown = true
+
+[node name="DigUp" type="Node" parent="EnemyAbilities"]
+script = ExtResource("21_burrow")
+min_health_ratio = 0.33
+max_health_ratio = 0.66
+cooldown = 12.0
+tunnel_scene = ExtResource("24_beefling")
+
+[node name="LayEgg" type="Node" parent="EnemyAbilities"]
+script = ExtResource("22_egg")
+min_health_ratio = 0.66
+cooldown = 6.0
+starts_on_cooldown = true
+max_uses = 8
+egg_scene = ExtResource("23_eggsac")

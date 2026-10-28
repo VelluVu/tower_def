@@ -49,6 +49,9 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if skill_data.target == null:
 		target_is_destroyed = true
+	elif not target_is_destroyed and skill_data.target is Enemy and skill_data.target.is_burrowed:
+		#lost underground: fly on and fade like after a kill
+		_on_enemy_destroyed(skill_data.target)
 	
 	if is_hit:
 		return

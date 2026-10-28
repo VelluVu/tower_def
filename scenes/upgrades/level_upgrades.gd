@@ -59,6 +59,9 @@ func add_xp(amount : float) -> void:
 
 
 func _on_enemy_destroyed(enemy : Enemy) -> void:
+	if not enemy.gives_reward:
+		return
+
 	add_xp(UpgradeRules.kill_xp(enemy.stats.get_stat_value(Utils.StatType.MaxHealth), enemy.xp_multiplier) * (1.0 + xp_bonus))
 
 

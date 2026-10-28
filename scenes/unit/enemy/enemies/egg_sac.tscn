@@ -1,0 +1,302 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/unit/enemy/enemy.gd" id="1_enemy"]
+[ext_resource type="Material" uid="uid://cm7dgpn6dmws5" path="res://assets/shaders/shader_materials/enemy_hit_shader_material.tres" id="2_mat"]
+[ext_resource type="Texture2D" path="res://assets/art/units/enemy/egg_sac/egg_sac.png" id="3_tex"]
+[ext_resource type="Script" path="res://scenes/unit/animation_control.gd" id="4_anim"]
+[ext_resource type="PackedScene" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/stationary_enemy_bt.tscn" id="5_bt"]
+[ext_resource type="Script" path="res://scenes/unit/hitbox.gd" id="6_hitbox"]
+[ext_resource type="Script" path="res://scenes/unit/gore_emitter.gd" id="7_gore"]
+[ext_resource type="PackedScene" uid="uid://brhay0uy0kf4" path="res://scenes/unit/blood_spill.tscn" id="8_spill"]
+[ext_resource type="PackedScene" uid="uid://dd11cco5cukhw" path="res://scenes/unit/unit_selection/selectable_unit.tscn" id="9_select"]
+[ext_resource type="PackedScene" uid="uid://cuv1fhpdbb5su" path="res://scenes/unit/skills/melee_attack.tscn" id="10_melee"]
+[ext_resource type="Script" path="res://scenes/unit/skills/damage_data.gd" id="11_damage"]
+[ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_handler.gd" id="12_overtime"]
+[ext_resource type="Script" path="res://scenes/unit/stats/stats.gd" id="14_stats"]
+[ext_resource type="Script" path="res://scenes/unit/stats/stat.gd" id="15_stat"]
+[ext_resource type="Script" path="res://scenes/unit/modifier_manager.gd" id="16_mod"]
+[ext_resource type="Script" path="res://scenes/unit/enemy/abilities/enemy_abilities.gd" id="17_abilities"]
+[ext_resource type="Script" path="res://scenes/unit/enemy/abilities/hatch_ability.gd" id="18_hatch"]
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/swarmling.tscn" id="19_swarmling"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_egg00"]
+atlas = ExtResource("3_tex")
+region = Rect2(0, 0, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_egg01"]
+atlas = ExtResource("3_tex")
+region = Rect2(18, 0, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_egg02"]
+atlas = ExtResource("3_tex")
+region = Rect2(36, 0, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_egg03"]
+atlas = ExtResource("3_tex")
+region = Rect2(54, 0, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_egg04"]
+atlas = ExtResource("3_tex")
+region = Rect2(0, 18, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_egg05"]
+atlas = ExtResource("3_tex")
+region = Rect2(18, 18, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_egg06"]
+atlas = ExtResource("3_tex")
+region = Rect2(36, 18, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_egg07"]
+atlas = ExtResource("3_tex")
+region = Rect2(54, 18, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_egg08"]
+atlas = ExtResource("3_tex")
+region = Rect2(0, 36, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_egg09"]
+atlas = ExtResource("3_tex")
+region = Rect2(18, 36, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_egg10"]
+atlas = ExtResource("3_tex")
+region = Rect2(36, 36, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_egg11"]
+atlas = ExtResource("3_tex")
+region = Rect2(54, 36, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_egg12"]
+atlas = ExtResource("3_tex")
+region = Rect2(0, 54, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_icon"]
+atlas = ExtResource("3_tex")
+region = Rect2(0, 0, 18, 18)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_egg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_egg00")
+},
+{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_egg01")
+},
+{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_egg02")
+},
+{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_egg03")
+}],
+"loop": true,
+"name": &"IDLE",
+"speed": 6.6667
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_egg04")
+},
+{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_egg05")
+},
+{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_egg06")
+},
+{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_egg07")
+},
+{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_egg08")
+}],
+"loop": false,
+"name": &"HATCH",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_egg09")
+},
+{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_egg10")
+},
+{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_egg11")
+},
+{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_egg12")
+}],
+"loop": false,
+"name": &"DEATH",
+"speed": 10.0
+}]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_egg"]
+friction = 0.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_egg"]
+radius = 5.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_egg"]
+size = Vector2(14, 12)
+
+[node name="EggSac" type="RigidBody2D" node_paths=PackedStringArray("skill")]
+collision_layer = 2
+collision_mask = 0
+physics_material_override = SubResource("PhysicsMaterial_egg")
+freeze = true
+script = ExtResource("1_enemy")
+icon = SubResource("AtlasTexture_icon")
+xp_multiplier = 0.4
+skill = NodePath("MeleeAttack")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_egg")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+material = ExtResource("2_mat")
+position = Vector2(0, -5)
+sprite_frames = SubResource("SpriteFrames_egg")
+animation = &"IDLE"
+autoplay = "IDLE"
+script = ExtResource("4_anim")
+
+[node name="BeehaveTree" parent="." instance=ExtResource("5_bt")]
+
+[node name="Hitbox" type="Area2D" parent="."]
+position = Vector2(0, -4)
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("6_hitbox")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("RectangleShape2D_egg")
+
+[node name="GoreEmitter" type="Node2D" parent="."]
+position = Vector2(0, -4)
+script = ExtResource("7_gore")
+gore_effect_scene = ExtResource("8_spill")
+
+[node name="SelectableUnit" parent="." instance=ExtResource("9_select")]
+display_name = "Egg Sac"
+
+[node name="MeleeAttack" parent="." instance=ExtResource("10_melee")]
+
+[node name="DamageData" type="Node" parent="MeleeAttack"]
+script = ExtResource("11_damage")
+
+[node name="Stats" type="Node" parent="MeleeAttack"]
+script = ExtResource("14_stats")
+
+[node name="Damage" type="Node" parent="MeleeAttack/Stats"]
+script = ExtResource("15_stat")
+base_value = 0.0
+value = 0.0
+type = 2
+
+[node name="AttackRange" type="Node" parent="MeleeAttack/Stats"]
+script = ExtResource("15_stat")
+type = 5
+
+[node name="AttackSpeed" type="Node" parent="MeleeAttack/Stats"]
+script = ExtResource("15_stat")
+type = 6
+
+[node name="CriticalChance" type="Node" parent="MeleeAttack/Stats"]
+script = ExtResource("15_stat")
+type = 7
+
+[node name="CriticalMultiplier" type="Node" parent="MeleeAttack/Stats"]
+script = ExtResource("15_stat")
+base_value = 2.0
+value = 2.0
+type = 8
+
+[node name="ActiveDuration" type="Node" parent="MeleeAttack/Stats"]
+script = ExtResource("15_stat")
+type = 9
+
+[node name="PopUpSpot" type="Node2D" parent="."]
+position = Vector2(0, -10)
+
+[node name="OvertimeEffectHandler" type="Node" parent="."]
+script = ExtResource("12_overtime")
+
+[node name="Stats" type="Node" parent="."]
+script = ExtResource("14_stats")
+
+[node name="MaxHealth" type="Node" parent="Stats"]
+script = ExtResource("15_stat")
+base_value = 30.0
+value = 30.0
+type = 1
+
+[node name="Health" type="Node" parent="Stats"]
+script = ExtResource("15_stat")
+base_value = 30.0
+value = 30.0
+
+[node name="Damage" type="Node" parent="Stats"]
+script = ExtResource("15_stat")
+base_value = 0.0
+value = 0.0
+type = 2
+
+[node name="Price" type="Node" parent="Stats"]
+script = ExtResource("15_stat")
+base_value = 1.0
+value = 1.0
+type = 3
+
+[node name="Speed" type="Node" parent="Stats"]
+script = ExtResource("15_stat")
+base_value = 0.0
+value = 0.0
+type = 4
+
+[node name="AttackRange" type="Node" parent="Stats"]
+script = ExtResource("15_stat")
+type = 5
+
+[node name="AttackSpeed" type="Node" parent="Stats"]
+script = ExtResource("15_stat")
+type = 6
+
+[node name="CriticalChance" type="Node" parent="Stats"]
+script = ExtResource("15_stat")
+type = 7
+
+[node name="CriticalMultiplier" type="Node" parent="Stats"]
+script = ExtResource("15_stat")
+base_value = 2.0
+value = 2.0
+type = 8
+
+[node name="ActiveDuration" type="Node" parent="Stats"]
+script = ExtResource("15_stat")
+type = 9
+
+[node name="ModifierManager" type="Node" parent="."]
+script = ExtResource("16_mod")
+
+[node name="EnemyAbilities" type="Node" parent="."]
+script = ExtResource("17_abilities")
+
+[node name="Hatch" type="Node" parent="EnemyAbilities"]
+script = ExtResource("18_hatch")
+cooldown = 6.0
+starts_on_cooldown = true
+hatchling_scene = ExtResource("19_swarmling")
+hatchling_count = 6

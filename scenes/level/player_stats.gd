@@ -62,6 +62,9 @@ func _on_game_play_interface_loaded() -> void:
 
 
 func _on_enemy_destroyed(enemy : Enemy) -> void:
+	if not enemy.gives_reward:
+		return
+
 	gold += enemy.stats.get_stat_value(Utils.StatType.Price)
 	GameSignals.resource_change.emit(gold, 0)
 

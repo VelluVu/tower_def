@@ -42,6 +42,8 @@ const TURN_DOT_LIMIT : float = 0.5
 @export var icon : Texture2D = null
 #kill XP is 2 per max health times this; below 1 for enemies that come in big groups
 @export var xp_multiplier : float = 1.0
+#shows the boss health bar while alive
+@export var is_boss : bool = false
 
 @export var skill : Skill :
 	get:
@@ -59,6 +61,15 @@ var beehave_tree : BeehaveTree :
 					beehave_tree = child
 		return beehave_tree
 
+#only enemies with abilities (bosses, egg sacs) carry one
+var abilities : EnemyAbilities :
+	get:
+		if abilities == null:
+			for child in get_children():
+				if child is EnemyAbilities:
+					abilities = child
+		return abilities
+
 var is_colliding_building : bool = false :
 	get:
 		return collision_body != null
@@ -69,6 +80,10 @@ var is_flying : bool :
 		return flight_movement != null
 
 var is_deactivated : bool = false
+#underground (Broodmother's Dig Up): out of every tower's reach
+var is_burrowed : bool = false
+#false for an enemy gone without a kill (a hatched egg sac): no gold or XP
+var gives_reward : bool = true
 #Frostplague: cannot attack buildings while true
 var is_numb : bool = false
 var current_waypoint_index : int = 0
@@ -261,10 +276,37 @@ func die() -> void:
 	if is_deactivated:
 		return
 		
+	if abilities != null:
+		abilities.interrupt()
 	animation_control.play_animation(GlobalAnimationNames.DEATH_ANIMATION)
 	GameSignals.enemy_destroyed.emit(self)
 	deactivate()
 	_free_after_death()
+
+
+#gone without a kill or a leak, keeping the animation it ends on (a hatched egg sac)
+func remove_without_reward() -> void:
+	if is_deactivated:
+		return
+
+	gives_reward = false
+	if abilities != null:
+		abilities.interrupt()
+	GameSignals.enemy_destroyed.emit(self)
+	deactivate()
+	_free_after_death()
+
+
+#out of every tower's reach and hidden, or back; the body stops touching anything meanwhile
+func set_burrowed(value : bool) -> void:
+	if value == is_burrowed:
+		return
+
+	is_burrowed = value
+	visible = not value
+	collider.set_deferred(&"disabled", value)
+	hit_box.set_deferred(&"monitorable", not value)
+	linear_velocity = Vector2.ZERO
 
 
 #the corpse stays until the death animation and the gore (which leaves the blood splats) have finished
