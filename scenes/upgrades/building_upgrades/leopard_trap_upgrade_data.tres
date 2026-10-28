@@ -22,3 +22,4 @@ evolve_name = "Re-arm Speed"
 [resource]
 script = ExtResource("1_data")
 upgrade_resources = Array[ExtResource("2_evolve")]([SubResource("Resource_damage"), SubResource("Resource_attack_speed")])
+upgrade_cost_ratios = Array[float]([0.5, 0.75, 1.0])

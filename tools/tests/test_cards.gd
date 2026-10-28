@@ -10,14 +10,15 @@ func test_damage_cards_are_capped(kit : TestKit) -> void:
 	var bolter : Building = await kit.place("puffe_bolter", Vector2i(12, 6))
 	var base_damage : float = bolter.skill.stats.get_stat_value(Utils.StatType.Damage)
 
-	#0.36 each: 0.36 full, then half past the +50% soft cap
+	#0.36 each: two fully (0.72), the third half past the +75% soft cap (0.75 + 0.33 / 2)
 	kit.pick_card("projectile_damage", 0.36)
 	kit.check_near(bolter.skill.stats.get_stat_value(Utils.StatType.Damage), base_damage * 1.36, "one card counts fully")
 	kit.pick_card("projectile_damage", 0.36)
-	kit.check_near(bolter.skill.stats.get_stat_value(Utils.StatType.Damage), base_damage * 1.61, "second card is half past the soft cap")
-	for i in 4:
+	kit.pick_card("projectile_damage", 0.36)
+	kit.check_near(bolter.skill.stats.get_stat_value(Utils.StatType.Damage), base_damage * 1.915, "the third card is half past the soft cap")
+	for i in 6:
 		kit.pick_card("damage", 0.24)
-	kit.check_near(bolter.skill.stats.get_stat_value(Utils.StatType.Damage), base_damage * 2.0, "hard cap at +100%")
+	kit.check_near(bolter.skill.stats.get_stat_value(Utils.StatType.Damage), base_damage * 2.5, "hard cap at +150%")
 	kit.check(not kit.level.upgrades._can_offer(load(TestKit.CARD_PATH % "damage"), 9), "a capped card is not offered")
 
 

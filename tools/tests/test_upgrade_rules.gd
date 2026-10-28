@@ -17,7 +17,7 @@ func test_roll_value(kit : TestKit) -> void:
 
 
 func test_xp_curve(kit : TestKit) -> void:
-	var expected : Array[float] = [200.0, 250.0, 350.0, 500.0, 700.0]
+	var expected : Array[float] = [150.0, 170.0, 210.0, 270.0, 350.0]
 	for level in expected.size():
 		kit.check_near(UpgradeRules.xp_required(level + 1), expected[level], "xp for level %d" % (level + 1))
 
