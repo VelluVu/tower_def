@@ -10,8 +10,9 @@
         same), their decor goes to DecorTileMapLayer (added after the ground layer when missing); rerunning
         only re-picks the pieces. Paint new patches with the old terrain tiles (bog: any bog piece), then run it;
         bog cells get swamp decor
-    python tools/level_tiles.py surround <forest|crossroads|swamp> <level numbers...> [--dry]   what lies past
-        the map's edge (forest; forest with bog below; bog pools and dark trees), over the dark fill and the rock band;
+    python tools/level_tiles.py surround <forest|crossroads|swamp|barren> <level numbers...> [--dry]   what lies
+        past the map's edge (forest; forest with bog below; bog pools and dark trees; bare dark ground for the desert
+        and the volcano, which the `rock` pass then terraces), over the dark fill and the rock band;
         run it after `edge` and before `rock`
     python tools/level_tiles.py falls <level numbers...> [--dry]   the still waterfall pieces become the animated
         waterfall_tiles (BackgroundTileMapLayer source 1)
@@ -501,6 +502,8 @@ def build_surroundings(level, theme, log):
             if pick([True, False, False], level.number, c, "tree") and add(c, S) in trees and add(c, N) not in bog:
                 front[c] = (FOREST_SOURCE, (0, 3), 0)
                 front[add(c, S)] = (FOREST_SOURCE, (0, 4), 0)
+    elif theme == "barren":
+        forest = set()
     else:
         forest = free
     for c in forest:

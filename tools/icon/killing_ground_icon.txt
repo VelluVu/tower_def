@@ -1,0 +1,24 @@
+# Source of assets/art/ui/card_icons/killing_ground_icon.png (card Killing Ground: more damage inside the maze; python tools/gd.py icon tools/icon/killing_ground_icon.txt <out.png>)
+w = c0cbdc
+s = 8b9bb4
+e = a22633
+l = 8b9bb4
+m = 5a6988
+n = 3a4466
+---
+................
+................
+lll..........lll
+mmm..wwwwww..mmm
+mmm.wwwwwwws.mmm
+nnn.weewwees.nnn
+mmm.weewwees.mmm
+mmm.wwwwwwss.mmm
+nnn..wwewss..nnn
+mmm..wswsws..mmm
+mmm...ssss...mmm
+nnn..........nnn
+mmm..........mmm
+mmm..........mmm
+................
+................

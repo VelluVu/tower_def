@@ -22,3 +22,7 @@ CLAUDE.md
 .claude/
 docs/design/
 .git-plans/
+
+# The sprite and icon tools' look-at copies (tools/sprite/sprite.py, tools/gd.py icon): regenerated on every build
+*.preview.png
+*.preview.png.import

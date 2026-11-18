@@ -52,6 +52,23 @@ func test_potency_card_fits_element_towers(kit : TestKit) -> void:
 	kit.check(kit.level.upgrades._fits(card, bolter, 1), "a Frost bolter takes the card")
 
 
+func test_element_stat_cards(kit : TestKit) -> void:
+	await kit.load_level(1)
+	var bolter : Building = await _frost_bolter(kit)
+	var chance : float = bolter.stats.get_stat_value(Utils.StatType.EffectChance)
+	var duration : float = bolter.stats.get_stat_value(Utils.StatType.EffectDuration)
+	var stacks : float = bolter.stats.get_stat_value(Utils.StatType.EffectStacks)
+	kit.pick_card("effect_chance", 0.1)
+	kit.pick_card("effect_duration")
+	kit.pick_card("effect_stacks")
+	kit.check_near(bolter.stats.get_stat_value(Utils.StatType.EffectChance), chance + 0.1, "effect chance card")
+	kit.check_near(bolter.stats.get_stat_value(Utils.StatType.EffectDuration), duration + 1.0, "lingering effects card")
+	kit.check_near(bolter.stats.get_stat_value(Utils.StatType.EffectStacks), stacks + 1.0, "deeper stacks card")
+	for i in 5:
+		kit.pick_card("effect_stacks")
+	kit.check_near(bolter.stats.get_stat_value(Utils.StatType.EffectStacks), stacks + 4.0, "stacks hard cap at +4")
+
+
 func test_frost_slow_scales_and_stops_at_the_floor(kit : TestKit) -> void:
 	await kit.load_level(1)
 	var bolter : Building = await _frost_bolter(kit)

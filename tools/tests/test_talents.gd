@@ -57,6 +57,26 @@ func test_building_talents_in_a_level(kit : TestKit) -> void:
 	progress.talent_ranks = saved_ranks
 
 
+func test_towers_lean_to_the_favourite_element(kit : TestKit) -> void:
+	var progress : ProgressData = PlayerProgress._save.progress
+	var saved_ranks : Dictionary[StringName, Dictionary] = progress.talent_ranks
+
+	#Fire has the most ranks: a tower without an element gets Kindling's damage, not Frost's slow potency
+	progress.talent_ranks = {&"fire": {&"kindling": 3}, &"frost": {&"chilling_tips": 1}}
+	await kit.load_level(1)
+	kit.check(kit.level.talents.leaning_element == Utils.Element.Fire, "towers lean to the tree with the most ranks")
+	var bolter : Building = await kit.place("puffe_bolter", Vector2i(12, 6))
+	kit.check(kit.level.talents.applied_modifiers[bolter].size() == 1, "a tower without an element gets the leaning tree's damage")
+
+	#Frost leads, but its only node is slow potency, which needs the element itself
+	progress.talent_ranks = {&"fire": {&"kindling": 1}, &"frost": {&"chilling_tips": 3}}
+	await kit.load_level(1)
+	var other : Building = await kit.place("puffe_bolter", Vector2i(12, 6))
+	kit.check(kit.level.talents.applied_modifiers[other].is_empty(), "no basic stat in the leaning tree, nothing from the others")
+
+	progress.talent_ranks = saved_ranks
+
+
 func test_every_tree_is_whole(kit : TestKit) -> void:
 	var book : TalentBook = load("res://scenes/talents/talent_book.tres")
 	kit.check(book.trees.size() == 4, "four trees")

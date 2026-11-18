@@ -1,0 +1,22 @@
+# Source of assets/art/ui/card_icons/tangled_maze_icon.png (card Tangled Maze: the maze slows more; python tools/gd.py icon tools/icon/tangled_maze_icon.txt <out.png>)
+l = 8b9bb4
+m = 5a6988
+g = 63c74d
+v = 3e8948
+---
+................
+.lllllll.llllll.
+.m.....m......m.
+.m.lll.m.llll.m.
+.m.m...m....m.m.
+.m.m.vvgggm.m.m.
+.m.m.v....m.m.m.
+.m.mgvvlllm.m.m.
+.mg....m...gvvm.
+.mvvlll.lllvv.m.
+.m..g......g..m.
+.mllllllllll..m.
+................
+................
+................
+................

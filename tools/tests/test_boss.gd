@@ -1,6 +1,6 @@
 extends RefCounted
 
-## The Broodmother's phases and her egg sacs.
+## The Broodmother's phases and her egg sacs, the Bog Hydra's spit and dive.
 
 
 func _count(kit : TestKit, scene_name : String) -> int:
@@ -75,6 +75,45 @@ func test_broodmother_digs_up_further_along(kit : TestKit) -> void:
 	kit.check(_count(kit, "beefling") == 2, "her tunnel sends two beeflings (%d)" % _count(kit, "beefling"))
 
 
+func test_bog_hydra_submerges_and_sends_leeches(kit : TestKit) -> void:
+	await kit.load_level(24)
+	var boss : Enemy = kit.spawn_enemy("bog_hydra")
+	await kit.run_until(func() -> bool: return boss.has_path and boss.current_waypoint_index > 1, 20.0)
+	var remaining : int = boss.get_remaining_path_waypoint_count()
+	_set_health_ratio(boss, 0.5)
+	await kit.run_until(func() -> bool: return boss.is_burrowed, 3.0)
+	kit.check(boss.is_burrowed, "it sinks into the bog")
+	await kit.run_until(func() -> bool: return not boss.is_burrowed, 5.0)
+	kit.check(not boss.is_burrowed and boss.visible, "it comes up again")
+	kit.check(boss.get_remaining_path_waypoint_count() < remaining, "closer to the castle")
+	kit.check(_count(kit, "leechling") == 4, "four leeches come up with it (%d)" % _count(kit, "leechling"))
+
+
+func test_bog_hydra_spits_at_the_farthest_tower(kit : TestKit) -> void:
+	await kit.load_level(24)
+	var spawn : Vector2 = kit.level.get_spawners()[0].global_position
+	var far_cell : Vector2i = kit.find_cell(func(c : Vector2i) -> bool:
+		var world : Vector2 = kit.level.grid.grid_position_to_world(c)
+		var tiles : float = world.distance_to(spawn) / Utils.TILE_SIZE
+		return kit.level.grid.is_position_buildable(world) and tiles >= 3.5 and tiles <= 4.5)
+	kit.check(far_cell != Vector2i.MAX, "a cell 4 tiles from the spawn")
+	var tower : Building = await kit.place("puffe_beamer", far_cell)
+	var boss : Enemy = kit.spawn_enemy("bog_hydra")
+	var spit : EnemyAbility = _ability(boss, "BogSpit")
+	await kit.run_until(func() -> bool: return spit.use_count > 0 and not spit.is_active, 12.0)
+	await kit.run_until(func() -> bool: return not is_instance_valid(tower) or tower.stats.get_stat_value(Utils.StatType.Health) < 10.0, 4.0)
+	kit.check(spit.use_count > 0, "it spits")
+	kit.check(not is_instance_valid(tower) or tower.stats.get_stat_value(Utils.StatType.Health) < 10.0, "the acid hits a tower out of the heads' reach")
+
+
+func test_bog_hydra_heads_frenzy_when_low(kit : TestKit) -> void:
+	await kit.load_level(24)
+	var boss : Enemy = kit.spawn_enemy("bog_hydra")
+	_set_health_ratio(boss, 0.2)
+	kit.check(not _ability(boss, "HeadStrike").is_ready and not _ability(boss, "BogSpit").is_ready, "no calm strikes or spit under a third")
+	kit.check(_ability(boss, "FrenziedHeads").cooldown < _ability(boss, "HeadStrike").cooldown, "the frenzied heads strike faster")
+
+
 func test_broodmother_frenzy_and_screech(kit : TestKit) -> void:
 	await kit.load_level(8)
 	var boss : Enemy = kit.spawn_enemy("broodmother")
@@ -96,3 +135,29 @@ func test_broodmother_frenzy_and_screech(kit : TestKit) -> void:
 		await kit.run_until(func() -> bool: return not tower.is_silenced, 4.0)
 		kit.check(not tower.is_silenced, "the silence wears off")
 	kit.check(not _ability(boss, "BroodFrenzy").is_ready, "the frenzy comes only once")
+
+
+func _blood_splats(kit : TestKit) -> Array[BloodSplat]:
+	var splats : Array[BloodSplat] = []
+	for child in kit.level.get_children():
+		if child is BloodSplat and child.is_draw:
+			splats.append(child)
+	return splats
+
+
+func test_broodmother_dies_in_a_pool_of_blood(kit : TestKit) -> void:
+	await kit.load_level(8)
+	var boss : Enemy = kit.spawn_enemy("broodmother")
+	await kit.frames(2)
+	var bursts : int = boss.gore_emitter.death_bursts
+	boss.die()
+	await kit.run_until(func() -> bool: return _blood_splats(kit).size() >= bursts, 5.0)
+	var splats : Array[BloodSplat] = _blood_splats(kit)
+	kit.check(splats.size() >= bursts, "a splat per death burst: %d of %d" % [splats.size(), bursts])
+	var spread : float = 0.0
+	for splat in splats:
+		spread = maxf(spread, absf(splat.global_position.x - boss.global_position.x))
+	kit.check(spread > Utils.TILE_SIZE * 0.5, "the splats spread around her (%.0f px)" % spread)
+	var corpse : WeakRef = weakref(boss)
+	await kit.run_until(func() -> bool: return corpse.get_ref() == null, 10.0)
+	kit.check(corpse.get_ref() == null, "the corpse still goes once the gore is done")

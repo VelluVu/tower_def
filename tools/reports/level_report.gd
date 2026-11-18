@@ -1,6 +1,7 @@
 extends RefCounted
 
-## `python tools/gd.py levels [--map] [level numbers]`: per level the waves (enemies, total health),
+## `python tools/gd.py levels [--map] [level numbers]`: per level the waves (enemies, total health with
+## the level's wave health ramp, LevelData.get_wave_health, and the health per enemy),
 ## the XP, cards and kill gold over the level, and per spawner the route length, turns and slow cells.
 ## --map draws each level: # blocked, . walkable, s slow ground, * route, T tower-only, 0-9 spawner id.
 
@@ -31,17 +32,22 @@ func _print_level(kit : TestKit, number : int, show_map : bool) -> void:
 
 	for wave_index in data.waves.size():
 		var health : float = 0.0
+		var wave_health : float = data.get_wave_health(wave_index, data.waves.size())
 		var parts : PackedStringArray = []
 		for group in data.waves[wave_index].spawn_groups:
 			var enemy : Enemy = group.enemy_scene.instantiate()
 			var xp_multiplier : float = enemy.xp_multiplier
+			# read before _base_stats, which frees the enemy
+			var is_boss : bool = enemy.is_boss
 			var enemy_stats : Dictionary = _base_stats(enemy)
-			health += enemy_stats.get(Utils.StatType.MaxHealth, 0.0) * group.count
+			var enemy_health : float = enemy_stats.get(Utils.StatType.MaxHealth, 0.0) * (1.0 if is_boss else wave_health)
+			health += enemy_health * group.count
 			total_xp += UpgradeRules.kill_xp(enemy_stats.get(Utils.StatType.MaxHealth, 0.0), xp_multiplier) * group.count
 			total_gold += enemy_stats.get(Utils.StatType.Price, 0.0) * group.count
 			total_enemies += group.count
-			parts.append("%d %s /%ss sp%d" % [group.count, group.enemy_scene.resource_path.get_file().get_basename(), group.interval, group.spawner_id])
-		wave_lines.append("  w%d: %s  (health %d, early bonus %s)" % [wave_index + 1, ", ".join(parts), health, data.waves[wave_index].early_start_bonus])
+			parts.append("%d %s %dhp /%ss sp%d" % [group.count, group.enemy_scene.resource_path.get_file().get_basename(),
+				roundi(enemy_health), group.interval, group.spawner_id])
+		wave_lines.append("  w%d x%.2f: %s  (health %d, early bonus %s)" % [wave_index + 1, wave_health, ", ".join(parts), health, data.waves[wave_index].early_start_bonus])
 
 	print("LEVEL %d  start gold %s, life %s, %d waves, %d enemies, kill gold %d, xp %d -> %d cards" % [number, data.starting_gold, data.starting_life, data.waves.size(), total_enemies, total_gold, total_xp, _cards_for_xp(total_xp)])
 	for line in wave_lines:

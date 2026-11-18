@@ -39,6 +39,12 @@ def short_spend(spent_on):
     return ", ".join(parts)
 
 
+def mode_tag(run):
+    """H after the level number for a Hard run, nothing for Normal."""
+    mode = run.get("mode", "normal")
+    return "" if mode == "normal" else mode[0].upper()
+
+
 def main(args):
     path = BOT_LOG if "--bot" in args else PLAYER_LOG
     level = int(args[args.index("--level") + 1]) if "--level" in args else None
@@ -54,22 +60,22 @@ def main(args):
         talents = sum(r.get("talents", {}).values())
         cheats = " CHEATS" if r.get("cheats") else ""
         lives = "/".join(f"{x:.0f}" for x in r.get("life_by_wave", []))
-        print(f"{r.get('time', '')[:16]}  L{r.get('level')} {r.get('result'):8} wave {r.get('wave')}/{r.get('waves')}"
+        print(f"{r.get('time', '')[:16]}  L{r.get('level')}{mode_tag(r)} {r.get('result'):8} wave {r.get('wave')}/{r.get('waves')}"
               f"  life {r.get('life', 0):.0f}/{r.get('start_life', 0):.0f} [{lives}]"
               f"  gold +{r.get('gold_earned')} -{r.get('gold_spent')} ({short_spend(r.get('spent_on', {}))})"
               f"  talents {talents}  cards {len(r.get('cards', []))}  early {r.get('early_starts')}"
               f"  {r.get('game_seconds')}s x{r.get('max_speed')}{cheats}  {r.get('player', '')}")
 
     print("\nlevel  runs  won  avg life left  avg gold earned  avg leaks")
-    for number in sorted({r.get("level") for r in runs}):
-        level_runs = [r for r in runs if r.get("level") == number and not r.get("cheats")]
+    for number, mode in sorted({(r.get("level"), r.get("mode", "normal")) for r in runs}):
+        level_runs = [r for r in runs if r.get("level") == number and r.get("mode", "normal") == mode and not r.get("cheats")]
         if not level_runs:
             continue
         won = [r for r in level_runs if r.get("result") == "won"]
         avg_life = sum(r.get("life", 0) for r in won) / len(won) if won else 0
         avg_gold = sum(r.get("gold_earned", 0) for r in level_runs) / len(level_runs)
         avg_leaks = sum(sum(r.get("leaked", {}).values()) for r in level_runs) / len(level_runs)
-        print(f"{number:5}  {len(level_runs):4}  {len(won):3}  {avg_life:13.1f}  {avg_gold:15.0f}  {avg_leaks:9.1f}")
+        print(f"{str(number) + mode_tag(level_runs[0]):>5}  {len(level_runs):4}  {len(won):3}  {avg_life:13.1f}  {avg_gold:15.0f}  {avg_leaks:9.1f}")
     return 0
 
 

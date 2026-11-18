@@ -32,12 +32,14 @@ func _init(test_root : Node) -> void:
 	Utils.game_control = main
 
 
-func load_level(number : int) -> Level:
+func load_level(number : int, mode : Utils.LevelMode = Utils.LevelMode.Normal) -> Level:
 	free_level()
 	level = load(LEVEL_PATH % number).instantiate()
+	level.mode = mode
 	root.add_child(level)
 	Utils.game_control.scene_manager.current_level = level
 	Utils.game_control.scene_manager.current_level_number = number
+	Utils.game_control.scene_manager.current_level_mode = mode
 	await root.get_tree().process_frame
 	return level
 
@@ -58,6 +60,7 @@ func place(building_name : String, cell : Vector2i) -> Building:
 	var building : Building = load(BUILDING_PATH % building_name).instantiate()
 	_get_buildings_container().add_child(building)
 	await root.get_tree().process_frame
+	level.apply_price_step(building)
 	building.place(level.grid.grid_position_to_world(cell))
 	await root.get_tree().process_frame
 	return building

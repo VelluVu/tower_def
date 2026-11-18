@@ -78,6 +78,8 @@ func _tough_enemy(kit : TestKit) -> Enemy:
 	var enemy : Enemy = kit.spawn_enemy("swbeefling")
 	enemy.stats.get_stat(Utils.StatType.MaxHealth).value = TOUGH_HEALTH
 	enemy.stats.get_stat(Utils.StatType.Health).value = TOUGH_HEALTH
+	#the reactions' own numbers, without the swamp's resistances
+	enemy.resistances = null
 	return enemy
 
 
