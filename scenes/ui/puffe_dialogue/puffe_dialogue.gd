@@ -25,6 +25,8 @@ var hold_left : float = 0.0
 var delay_left : float = -1.0
 var last_wave_number : int = 0
 var is_mouse_on_box : bool = false
+#the pause menu (or its options) is open: the line waits instead of running out unread behind it
+var is_held_by_menu : bool = false
 
 
 func _ready() -> void:
@@ -38,6 +40,8 @@ func _ready() -> void:
 	GameSignals.gold_upgrade_bought.connect(_on_gold_upgrade_bought)
 	GameSignals.upgrade_level_gained.connect(_on_upgrade_level_gained)
 	GameSignals.enemy_reached_end_point.connect(_on_enemy_reached_end_point)
+	UISignals.to_menu.connect(_on_to_menu)
+	UISignals.continue_from_pause_menu.connect(_on_continue_from_pause_menu)
 
 	var level : Level = Utils.game_control.scene_manager.current_level as Level
 	if level != null and level.level_data != null:
@@ -47,6 +51,9 @@ func _ready() -> void:
 
 
 func _process(delta : float) -> void:
+	if is_held_by_menu:
+		return
+
 	if delay_left >= 0.0:
 		delay_left -= delta
 		if delay_left < 0.0:
@@ -162,3 +169,12 @@ func _on_upgrade_level_gained(_new_level : int, _cards : Array[UpgradeCard]) -> 
 
 func _on_enemy_reached_end_point(_enemy : Enemy) -> void:
 	_record(PuffeLine.Trigger.CastleHit)
+
+
+#to_menu(false, ...) opens the pause menu (also when coming back from its options)
+func _on_to_menu(to_main_menu : bool, _from_scene_name : String) -> void:
+	is_held_by_menu = not to_main_menu
+
+
+func _on_continue_from_pause_menu() -> void:
+	is_held_by_menu = false
