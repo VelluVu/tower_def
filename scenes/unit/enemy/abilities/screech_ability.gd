@@ -6,10 +6,12 @@ extends EnemyAbility
 ## In tiles from the enemy to the tower.
 @export var silence_radius : float = 4.0
 @export var silence_time : float = 2.0
+## The Bone Colossus has no SCREECH; the Ashen Wyrm ROARs.
+@export var screech_animation : String = GlobalAnimationNames.SCREECH_ANIMATION
 
 
 func _run() -> void:
-	if not await _play_and_wait(GlobalAnimationNames.SCREECH_ANIMATION):
+	if not await _play_and_wait(screech_animation):
 		return
 
 	_silence_towers()

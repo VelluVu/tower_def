@@ -17,6 +17,7 @@
 [ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_handler.gd" id="15_y6c5r"]
 [ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_data.gd" id="16_24umv"]
 [ext_resource type="Script" path="res://scenes/unit/modifier_manager.gd" id="17_rcgg7"]
+[ext_resource type="Resource" path="res://scenes/unit/enemy/resistances/swamp_fast.tres" id="res_profile"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_43mte"]
 friction = 0.0
@@ -190,6 +191,7 @@ physics_material_override = SubResource("PhysicsMaterial_43mte")
 contact_monitor = true
 max_contacts_reported = 1
 script = ExtResource("1_dxrxg")
+resistances = ExtResource("res_profile")
 icon = ExtResource("2_00wrf")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -296,14 +298,14 @@ script = ExtResource("13_husp7")
 
 [node name="MaxHealth" type="Node" parent="Stats"]
 script = ExtResource("14_g1xbv")
-base_value = 20.0
-value = 20.0
+base_value = 15.0
+value = 15.0
 type = 1
 
 [node name="Health" type="Node" parent="Stats"]
 script = ExtResource("14_g1xbv")
-base_value = 20.0
-value = 20.0
+base_value = 15.0
+value = 15.0
 
 [node name="Damage" type="Node" parent="Stats"]
 script = ExtResource("14_g1xbv")

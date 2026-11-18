@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="EnemyResistances" format=3]
+
+[ext_resource type="Script" path="res://scenes/unit/enemy/resistances/enemy_resistances.gd" id="1_res"]
+
+[resource]
+script = ExtResource("1_res")
+physical = 0.2
+fire = 0.1
+frost = 0.3
+poison = 0.6
+metadata/_note = "The Bone Colossus: like the raised dead, a little of everything; Fire bites best"

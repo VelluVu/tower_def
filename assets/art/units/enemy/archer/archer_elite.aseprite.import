@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://n1vfhwa27gsb"
+path="res://.godot/imported/archer_elite.aseprite-2f2f796e673ae09f66049429bca137ad.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/archer/archer_elite.aseprite"
+dest_files=["res://.godot/imported/archer_elite.aseprite-2f2f796e673ae09f66049429bca137ad.res"]
+
+[params]
+

@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bqvcwhphun073"
+path="res://.godot/imported/slime_particle.aseprite-8805e4a513cd33fa464c0bdde4000829.res"
+
+[deps]
+
+source_file="res://assets/art/gore/slime_particle.aseprite"
+dest_files=["res://.godot/imported/slime_particle.aseprite-8805e4a513cd33fa464c0bdde4000829.res"]
+
+[params]
+

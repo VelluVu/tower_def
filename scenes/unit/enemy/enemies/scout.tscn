@@ -16,6 +16,7 @@
 [ext_resource type="Script" uid="uid://bdwgkpxx8pfvi" path="res://scenes/unit/stats/stats.gd" id="13_4y7u7"]
 [ext_resource type="Script" uid="uid://cbedtr00kr6bu" path="res://scenes/unit/stats/stat.gd" id="14_axnq6"]
 [ext_resource type="Script" uid="uid://t7tjigistc7i" path="res://scenes/unit/modifier_manager.gd" id="16_71ls3"]
+[ext_resource type="Resource" path="res://scenes/unit/enemy/resistances/human_fast.tres" id="res_profile"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_43mte"]
 friction = 0.0
@@ -196,6 +197,7 @@ physics_material_override = SubResource("PhysicsMaterial_43mte")
 contact_monitor = true
 max_contacts_reported = 1
 script = ExtResource("1_lrdqx")
+resistances = ExtResource("res_profile")
 icon = ExtResource("2_45bl1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=532330211]

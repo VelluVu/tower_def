@@ -1,0 +1,27 @@
+# Source of assets/art/units/enemy/ash_drake/ash_drake_icon.png (python tools/gd.py icon <this> <out.png>); cropped from the sprite's first IDLE frame
+a = 3e2731
+b = 5e5458
+c = 3e3a3c
+d = ece6d8
+e = 9a8f80
+f = c8bfae
+g = f77622
+h = 4a2a22
+i = 7a6e70
+---
+................
+.............a..
+.............c..
+............ca..
+...d...e....ccca
+..df..fe...ccaa.
+b.dfdddfe.cacaa.
+b.fdgddge.caacca
+abfdddddecaaaaaa
+ab.fdhde.caaaa..
+aabfddfecaa.....
+aaafdfeeaa......
+..aiiiiha.......
+....ee.ee.......
+................
+................

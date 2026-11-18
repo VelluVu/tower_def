@@ -36,7 +36,7 @@ var is_ready : bool :
 		if max_uses > 0 and use_count >= max_uses:
 			return false
 		var ratio : float = health_ratio
-		return ratio > min_health_ratio and ratio <= max_health_ratio
+		return ratio > min_health_ratio and ratio <= max_health_ratio and _can_use()
 
 
 func setup(_enemy : Enemy) -> void:
@@ -59,6 +59,11 @@ func use() -> void:
 ## The enemy died or was removed in the middle: drop what is left.
 func interrupt() -> void:
 	is_active = false
+
+
+## Whether there is anything to use it on (a building in range, a hurt ally); checked last, so it can be costly.
+func _can_use() -> bool:
+	return true
 
 
 func _run() -> void:

@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://b3ks32k3m2883"
+path="res://.godot/imported/bloodsplat_01.aseprite-8bbfd5f6785cdcfeb8dfeb06cef9adf8.res"
+
+[deps]
+
+source_file="res://assets/art/gore/bloodsplat_01.aseprite"
+dest_files=["res://.godot/imported/bloodsplat_01.aseprite-8bbfd5f6785cdcfeb8dfeb06cef9adf8.res"]
+
+[params]
+

@@ -8,6 +8,8 @@ extends ScreechAbility
 @export var speed_bonus : float = 0.5
 @export var swarm_scene : PackedScene
 @export var swarm_count : int = 6
+## The Ashen Wyrm's Brood of Ash: after the roar it turns on the castle with the most eggs left (Level.get_fullest_castle).
+@export var heads_for_fullest_castle : bool = false
 
 
 func _on_screech() -> void:
@@ -19,3 +21,8 @@ func _on_screech() -> void:
 
 	if swarm_scene != null:
 		EnemySummon.summon_around(swarm_scene, enemy, swarm_count, enemy.grid_position)
+	if heads_for_fullest_castle and enemy.level != null:
+		var castle : Marker2D = enemy.level.get_fullest_castle()
+		if castle != null and castle != enemy.end_point:
+			enemy.end_point = castle
+			enemy.path_to(enemy.global_position, castle.global_position)

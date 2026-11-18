@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://de5pna70tslwd"
+path="res://.godot/imported/fastling_icon.aseprite-1af6820770c29ee6d8dc6d82050fc1ad.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/fastling/fastling_icon.aseprite"
+dest_files=["res://.godot/imported/fastling_icon.aseprite-1af6820770c29ee6d8dc6d82050fc1ad.res"]
+
+[params]
+

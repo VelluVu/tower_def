@@ -25,6 +25,7 @@
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/egg_sac.tscn" id="23_eggsac"]
 [ext_resource type="PackedScene" uid="uid://bj8fmaeegual3" path="res://scenes/unit/enemy/enemies/beefling.tscn" id="24_beefling"]
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/batling.tscn" id="25_batling"]
+[ext_resource type="Resource" path="res://scenes/unit/enemy/resistances/caves_big.tres" id="res_profile"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_43mte"]
 friction = 0.0
@@ -414,6 +415,7 @@ physics_material_override = SubResource("PhysicsMaterial_43mte")
 contact_monitor = true
 max_contacts_reported = 1
 script = ExtResource("1_rlxr3")
+resistances = ExtResource("res_profile")
 icon = ExtResource("2_n88ha")
 is_boss = true
 skill = NodePath("MeleeAttack")
@@ -460,6 +462,10 @@ shape = SubResource("RectangleShape2D_54wmh")
 position = Vector2(0, -12)
 script = ExtResource("8_pnfec")
 gore_effect_scene = ExtResource("9_p7pir")
+death_bursts = 14
+death_burst_amount = 20
+death_spread = 18.0
+death_burst_interval = 0.06
 
 [node name="SelectableUnit" parent="." instance=ExtResource("10_rjd41")]
 display_name = "Broodmother"
@@ -519,14 +525,14 @@ script = ExtResource("14_x7u3f")
 
 [node name="MaxHealth" type="Node" parent="Stats"]
 script = ExtResource("15_rofak")
-base_value = 3000.0
-value = 3000.0
+base_value = 4500.0
+value = 4500.0
 type = 1
 
 [node name="Health" type="Node" parent="Stats"]
 script = ExtResource("15_rofak")
-base_value = 3000.0
-value = 3000.0
+base_value = 4500.0
+value = 4500.0
 
 [node name="Damage" type="Node" parent="Stats"]
 script = ExtResource("15_rofak")

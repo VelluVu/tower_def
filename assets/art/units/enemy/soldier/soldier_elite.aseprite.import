@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://c87qqa67a6ev0"
+path="res://.godot/imported/soldier_elite.aseprite-927cc71176b073fe60c3b040cef27617.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/soldier/soldier_elite.aseprite"
+dest_files=["res://.godot/imported/soldier_elite.aseprite-927cc71176b073fe60c3b040cef27617.res"]
+
+[params]
+

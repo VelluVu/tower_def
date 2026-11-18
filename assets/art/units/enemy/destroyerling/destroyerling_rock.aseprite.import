@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bot165160ml32"
+path="res://.godot/imported/destroyerling_rock.aseprite-ed0c21c5269f8551c73b16b220e9be30.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/destroyerling/destroyerling_rock.aseprite"
+dest_files=["res://.godot/imported/destroyerling_rock.aseprite-ed0c21c5269f8551c73b16b220e9be30.res"]
+
+[params]
+

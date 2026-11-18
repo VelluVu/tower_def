@@ -25,6 +25,16 @@ func _ready() -> void:
 
 ## true while an ability holds the enemy (an active one, or one that just started)
 func tick() -> bool:
+	#gone (died, hatched, leaked): hold it still, so no walk or idle animation replaces the one it ends on
+	if enemy.is_deactivated:
+		interrupt()
+		return true
+	#dead but not gone yet: let go, so the tree reaches AmIDead. Its selector resumes a running UseAbilities
+	#without checking AmIDead first, and an ability cut off by the death never finishes
+	if enemy.is_dead:
+		interrupt()
+		return false
+
 	if active_ability != null:
 		return true
 

@@ -1,8 +1,9 @@
 class_name BurrowAbility
 extends EnemyAbility
 
-## Dig Up (the Broodmother at 66-33%): burrows out of reach, comes up further along her path
-## and leaves a short-lived tunnel that sends a few enemies from where she came up.
+## Dig Up (the Broodmother at 66-33%), Submerge (the Bog Hydra), the burrower's dig and the leaper
+## frog's leap: goes out of reach, comes up further along its path and may send a few enemies from
+## where it came up (a tunnel, leeches).
 
 @export var hidden_time : float = 2.5
 ## How many path cells further she comes up, rolled between these.
@@ -12,10 +13,13 @@ extends EnemyAbility
 @export var castle_margin : int = 4
 @export var tunnel_scene : PackedScene
 @export var tunnel_count : int = 2
+@export var burrow_animation : String = GlobalAnimationNames.BURROW_ANIMATION
+@export var emerge_animation : String = GlobalAnimationNames.EMERGE_ANIMATION
 
 
 func _run() -> void:
-	if not await _play_and_wait(GlobalAnimationNames.BURROW_ANIMATION):
+	#an empty name: no animation (a variant enemy without the tags), straight under
+	if not burrow_animation.is_empty() and not await _play_and_wait(burrow_animation):
 		return
 
 	enemy.set_burrowed(true)
@@ -30,7 +34,8 @@ func _run() -> void:
 	if tunnel_scene != null:
 		EnemySummon.summon_around(tunnel_scene, enemy, tunnel_count, enemy.level.grid.world_position_to_grid(emerge_position))
 
-	await _play_and_wait(GlobalAnimationNames.EMERGE_ANIMATION)
+	if not emerge_animation.is_empty():
+		await _play_and_wait(emerge_animation)
 	_finish()
 
 

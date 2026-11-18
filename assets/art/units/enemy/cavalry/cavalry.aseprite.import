@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bqjqhpjj1qsxw"
+path="res://.godot/imported/cavalry.aseprite-ef5f0b7267be9370b2db8cc28ab44028.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/cavalry/cavalry.aseprite"
+dest_files=["res://.godot/imported/cavalry.aseprite-ef5f0b7267be9370b2db8cc28ab44028.res"]
+
+[params]
+

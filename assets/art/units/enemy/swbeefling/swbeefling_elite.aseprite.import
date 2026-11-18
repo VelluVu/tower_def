@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://36iruj2t6hr6"
+path="res://.godot/imported/swbeefling_elite.aseprite-1a027d2baaf967039de5589566018cb3.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/swbeefling/swbeefling_elite.aseprite"
+dest_files=["res://.godot/imported/swbeefling_elite.aseprite-1a027d2baaf967039de5589566018cb3.res"]
+
+[params]
+

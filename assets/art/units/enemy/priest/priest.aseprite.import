@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cpfgkepim4vd"
+path="res://.godot/imported/priest.aseprite-a6c62f34e388660086f0424b60f893d7.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/priest/priest.aseprite"
+dest_files=["res://.godot/imported/priest.aseprite-a6c62f34e388660086f0424b60f893d7.res"]
+
+[params]
+

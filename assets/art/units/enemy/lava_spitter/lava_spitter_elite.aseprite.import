@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bwx0r12iigpt1"
+path="res://.godot/imported/lava_spitter_elite.aseprite-d48bc2ce17c9392217014364bd751f1b.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/lava_spitter/lava_spitter_elite.aseprite"
+dest_files=["res://.godot/imported/lava_spitter_elite.aseprite-d48bc2ce17c9392217014364bd751f1b.res"]
+
+[params]
+

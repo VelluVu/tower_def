@@ -17,6 +17,7 @@
 [ext_resource type="Script" path="res://scenes/unit/stats/stat.gd" id="15_lcy8c"]
 [ext_resource type="Script" path="res://scenes/unit/modifier_manager.gd" id="16_5rsvd"]
 [ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_data.gd" id="overtime_data"]
+[ext_resource type="Resource" path="res://scenes/unit/enemy/resistances/swamp.tres" id="res_profile"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_43mte"]
 friction = 0.0
@@ -176,8 +177,10 @@ physics_material_override = SubResource("PhysicsMaterial_43mte")
 contact_monitor = true
 max_contacts_reported = 1
 script = ExtResource("1_pnuqq")
+resistances = ExtResource("res_profile")
 icon = ExtResource("2_w8sqj")
 xp_multiplier = 0.4
+can_wade = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_lot5f")

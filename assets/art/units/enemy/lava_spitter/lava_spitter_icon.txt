@@ -1,0 +1,28 @@
+# Source of assets/art/units/enemy/lava_spitter/lava_spitter_icon.png (python tools/gd.py icon <this> <out.png>); cropped from the sprite's first IDLE frame
+a = 2a2028
+b = 6a5a64
+c = 54444e
+d = e43b44
+e = f77622
+f = fee761
+g = 3e3038
+h = a22633
+i = 7a6872
+j = 2c2432
+---
+def.....abfbbfca
+eefd.....cbfffcg
+hhhhccbbbcggggg.
+dhhcbiiibbcbg...
+hhcbiiibbbcbg...
+hhcbbbbbbccgbg..
+..eeeeeeeeeeeg..
+.gjgccccggjjbg..
+.gjefffffee..bg.
+.gjefffffe...bg.
+.gjggj..ccg..bg.
+.gjggj..ccg...bg
+.jjggj..ccg...bg
+..eee....eej..gj
+..jjj....jjj....
+..jjjj...jjjj...

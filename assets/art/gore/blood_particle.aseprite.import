@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dqv5itjqd2y70"
+path="res://.godot/imported/blood_particle.aseprite-d8b73d72dbfebbaeaf497208b3a6bf29.res"
+
+[deps]
+
+source_file="res://assets/art/gore/blood_particle.aseprite"
+dest_files=["res://.godot/imported/blood_particle.aseprite-d8b73d72dbfebbaeaf497208b3a6bf29.res"]
+
+[params]
+

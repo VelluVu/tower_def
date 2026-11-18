@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dlmqpnx6kmr05"
+path="res://.godot/imported/revenant_knight.aseprite-a26397ce7ba55774a083a7383e80c720.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/revenant_knight/revenant_knight.aseprite"
+dest_files=["res://.godot/imported/revenant_knight.aseprite-a26397ce7ba55774a083a7383e80c720.res"]
+
+[params]
+

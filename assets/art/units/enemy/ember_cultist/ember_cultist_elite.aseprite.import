@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://332gblqcayuh"
+path="res://.godot/imported/ember_cultist_elite.aseprite-f2e050e02b17e2acce0c8935569ca796.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/ember_cultist/ember_cultist_elite.aseprite"
+dest_files=["res://.godot/imported/ember_cultist_elite.aseprite-f2e050e02b17e2acce0c8935569ca796.res"]
+
+[params]
+

@@ -17,6 +17,7 @@
 [ext_resource type="Script" path="res://scenes/unit/stats/stats.gd" id="14_3odyu"]
 [ext_resource type="Script" path="res://scenes/unit/stats/stat.gd" id="15_blw40"]
 [ext_resource type="Script" path="res://scenes/unit/modifier_manager.gd" id="17_ylvba"]
+[ext_resource type="Resource" path="res://scenes/unit/enemy/resistances/caves_big.tres" id="res_profile"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_43mte"]
 friction = 0.0
@@ -192,6 +193,7 @@ physics_material_override = SubResource("PhysicsMaterial_43mte")
 contact_monitor = true
 max_contacts_reported = 1
 script = ExtResource("1_kifef")
+resistances = ExtResource("res_profile")
 icon = ExtResource("2_kr4lh")
 skill = NodePath("MeleeAttack")
 

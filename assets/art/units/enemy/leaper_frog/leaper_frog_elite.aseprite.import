@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://beeo8uacbggdx"
+path="res://.godot/imported/leaper_frog_elite.aseprite-6ccfd4db37572878fa759f9045fd4ccd.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/leaper_frog/leaper_frog_elite.aseprite"
+dest_files=["res://.godot/imported/leaper_frog_elite.aseprite-6ccfd4db37572878fa759f9045fd4ccd.res"]
+
+[params]
+

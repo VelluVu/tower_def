@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cyajipgq6iycd"
+path="res://.godot/imported/ash_drake.aseprite-b3c9a200580cd1bdb4ebab1370a1f276.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/ash_drake/ash_drake.aseprite"
+dest_files=["res://.godot/imported/ash_drake.aseprite-b3c9a200580cd1bdb4ebab1370a1f276.res"]
+
+[params]
+

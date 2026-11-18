@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dsbab742mbql0"
+path="res://.godot/imported/crystal_brute.aseprite-33f28968fb1653be698d875ec09b66f0.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/crystal_brute/crystal_brute.aseprite"
+dest_files=["res://.godot/imported/crystal_brute.aseprite-33f28968fb1653be698d875ec09b66f0.res"]
+
+[params]
+

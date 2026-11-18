@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://daf04l413kk4b"
+path="res://.godot/imported/beefling_icon.aseprite-ce0e15d34b49fd7b769e848644f40290.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/beefling/beefling_icon.aseprite"
+dest_files=["res://.godot/imported/beefling_icon.aseprite-ce0e15d34b49fd7b769e848644f40290.res"]
+
+[params]
+

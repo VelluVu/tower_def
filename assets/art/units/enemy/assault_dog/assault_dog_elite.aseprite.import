@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dlvr62agkb6cr"
+path="res://.godot/imported/assault_dog_elite.aseprite-52a706be755eca1271fed298d2d4cf77.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/assault_dog/assault_dog_elite.aseprite"
+dest_files=["res://.godot/imported/assault_dog_elite.aseprite-52a706be755eca1271fed298d2d4cf77.res"]
+
+[params]
+

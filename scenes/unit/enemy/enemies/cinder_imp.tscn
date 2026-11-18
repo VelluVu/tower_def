@@ -1,0 +1,370 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" uid="uid://dud21n4g2a51d" path="res://scenes/unit/enemy/enemy.gd" id="1_lrdqx"]
+[ext_resource type="Texture2D" path="res://assets/art/units/enemy/cinder_imp/cinder_imp_icon.png" id="2_45bl1"]
+[ext_resource type="Texture2D" path="res://assets/art/units/enemy/cinder_imp/cinder_imp.png" id="3_mh7rb"]
+[ext_resource type="Material" uid="uid://cm7dgpn6dmws5" path="res://assets/shaders/shader_materials/enemy_hit_shader_material.tres" id="3_x6nc8"]
+[ext_resource type="Script" uid="uid://cuqmbsxd2ghe8" path="res://scenes/unit/animation_control.gd" id="4_ytvip"]
+[ext_resource type="PackedScene" uid="uid://b07nrseyum0s4" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/basic_enemy_bt.tscn" id="5_nnof0"]
+[ext_resource type="Script" uid="uid://bs53dh0uesukn" path="res://scenes/unit/hitbox.gd" id="6_1aaoe"]
+[ext_resource type="Script" uid="uid://cwa5bj7xhh68c" path="res://scenes/unit/gore_emitter.gd" id="7_834u5"]
+[ext_resource type="PackedScene" uid="uid://brhay0uy0kf4" path="res://scenes/unit/blood_spill.tscn" id="8_seeal"]
+[ext_resource type="PackedScene" uid="uid://dd11cco5cukhw" path="res://scenes/unit/unit_selection/selectable_unit.tscn" id="9_njrru"]
+[ext_resource type="PackedScene" uid="uid://cuv1fhpdbb5su" path="res://scenes/unit/skills/melee_attack.tscn" id="10_jqtfa"]
+[ext_resource type="Script" uid="uid://dv2ip2k6pl466" path="res://scenes/unit/skills/damage_data.gd" id="11_0yfjs"]
+[ext_resource type="Script" uid="uid://nxw0bpow4mt4" path="res://scenes/unit/skills/overtime_effect_handler.gd" id="11_i2avb"]
+[ext_resource type="Script" uid="uid://bdwgkpxx8pfvi" path="res://scenes/unit/stats/stats.gd" id="13_4y7u7"]
+[ext_resource type="Script" uid="uid://cbedtr00kr6bu" path="res://scenes/unit/stats/stat.gd" id="14_axnq6"]
+[ext_resource type="Script" uid="uid://t7tjigistc7i" path="res://scenes/unit/modifier_manager.gd" id="16_71ls3"]
+[ext_resource type="Resource" path="res://scenes/unit/enemy/resistances/volcanic.tres" id="res_profile"]
+[ext_resource type="Script" path="res://scenes/unit/enemy/components/molten_body.gd" id="scorched_script_0"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_43mte"]
+friction = 0.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lot5f"]
+radius = 3.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f00"]
+atlas = ExtResource("3_mh7rb")
+region = Rect2(0, 0, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f01"]
+atlas = ExtResource("3_mh7rb")
+region = Rect2(18, 0, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f02"]
+atlas = ExtResource("3_mh7rb")
+region = Rect2(36, 0, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f03"]
+atlas = ExtResource("3_mh7rb")
+region = Rect2(54, 0, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f04"]
+atlas = ExtResource("3_mh7rb")
+region = Rect2(72, 0, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f05"]
+atlas = ExtResource("3_mh7rb")
+region = Rect2(0, 18, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f06"]
+atlas = ExtResource("3_mh7rb")
+region = Rect2(18, 18, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f07"]
+atlas = ExtResource("3_mh7rb")
+region = Rect2(36, 18, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f08"]
+atlas = ExtResource("3_mh7rb")
+region = Rect2(54, 18, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f09"]
+atlas = ExtResource("3_mh7rb")
+region = Rect2(72, 18, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f10"]
+atlas = ExtResource("3_mh7rb")
+region = Rect2(0, 36, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f11"]
+atlas = ExtResource("3_mh7rb")
+region = Rect2(18, 36, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f12"]
+atlas = ExtResource("3_mh7rb")
+region = Rect2(36, 36, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f13"]
+atlas = ExtResource("3_mh7rb")
+region = Rect2(54, 36, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f14"]
+atlas = ExtResource("3_mh7rb")
+region = Rect2(72, 36, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f15"]
+atlas = ExtResource("3_mh7rb")
+region = Rect2(0, 54, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f16"]
+atlas = ExtResource("3_mh7rb")
+region = Rect2(18, 54, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f17"]
+atlas = ExtResource("3_mh7rb")
+region = Rect2(36, 54, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f18"]
+atlas = ExtResource("3_mh7rb")
+region = Rect2(54, 54, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f19"]
+atlas = ExtResource("3_mh7rb")
+region = Rect2(72, 54, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f20"]
+atlas = ExtResource("3_mh7rb")
+region = Rect2(0, 72, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f21"]
+atlas = ExtResource("3_mh7rb")
+region = Rect2(18, 72, 18, 18)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cinder_imp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f00")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f01")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f02")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f03")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f04")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f05")
+}],
+"loop": true,
+"name": &"IDLE",
+"speed": 5.0000
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f06")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f07")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f08")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f09")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f10")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f11")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f12")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f13")
+}],
+"loop": true,
+"name": &"WALK",
+"speed": 5.0000
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f14")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f15")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f16")
+}],
+"loop": false,
+"name": &"ATTACK",
+"speed": 5.0000
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f17")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f18")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f19")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f20")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f21")
+}],
+"loop": false,
+"name": &"DEATH",
+"speed": 5.0000
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_54wmh"]
+size = Vector2(9, 5)
+
+[node name="CinderImp" type="RigidBody2D" unique_id=73180595]
+collision_layer = 2
+collision_mask = 0
+physics_material_override = SubResource("PhysicsMaterial_43mte")
+contact_monitor = true
+max_contacts_reported = 1
+script = ExtResource("1_lrdqx")
+resistances = ExtResource("res_profile")
+icon = ExtResource("2_45bl1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=532330211]
+shape = SubResource("CircleShape2D_lot5f")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=532001841]
+texture_filter = 1
+material = ExtResource("3_x6nc8")
+position = Vector2(0, -5)
+sprite_frames = SubResource("SpriteFrames_cinder_imp")
+animation = &"IDLE"
+autoplay = "IDLE"
+frame_progress = 0.45877
+script = ExtResource("4_ytvip")
+metadata/_aseprite_wizard_config_ = {
+"layer": "",
+"o_ex_p": "",
+"o_folder": "res://assets/2d_art",
+"o_name": "",
+"only_visible": false,
+"slice": "",
+"source": "res://assets/aseprite/fastling.aseprite"
+}
+metadata/_aseprite_wizard_interface_config_ = {
+"layer_section": true,
+"output_section": true,
+"slice_section": true
+}
+metadata/_aseprite_wizard_source_file_hash_ = "a9cb54de91f9bfa789113d06c277ba8f"
+
+[node name="BeehaveTree" parent="." unique_id=77771922 node_paths=PackedStringArray("blackboard") instance=ExtResource("5_nnof0")]
+blackboard = NodePath("@Node@21505")
+
+[node name="Hitbox" type="Area2D" parent="." unique_id=1680939005]
+position = Vector2(0, -4)
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("6_1aaoe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=154194452]
+position = Vector2(-0.5, 1.5)
+shape = SubResource("RectangleShape2D_54wmh")
+
+[node name="GoreEmitter" type="Node2D" parent="." unique_id=195031248]
+position = Vector2(0, -5)
+script = ExtResource("7_834u5")
+gore_effect_scene = ExtResource("8_seeal")
+
+[node name="SelectableUnit" parent="." unique_id=693317784 instance=ExtResource("9_njrru")]
+
+[node name="MeleeAttack" parent="." unique_id=493177369 instance=ExtResource("10_jqtfa")]
+attack_distance = 8.0
+skill_type = 16
+base_cast_time = 0.5
+base_cooldown = 1.5
+
+[node name="DamageData" type="Node" parent="MeleeAttack" unique_id=1848715348]
+script = ExtResource("11_0yfjs")
+
+[node name="Stats" type="Node" parent="MeleeAttack" unique_id=1870724610]
+script = ExtResource("13_4y7u7")
+
+[node name="Damage" type="Node" parent="MeleeAttack/Stats" unique_id=448803156]
+script = ExtResource("14_axnq6")
+base_value = 1.0
+value = 1.0
+type = 2
+
+[node name="AttackRange" type="Node" parent="MeleeAttack/Stats" unique_id=1534756714]
+script = ExtResource("14_axnq6")
+type = 5
+
+[node name="AttackSpeed" type="Node" parent="MeleeAttack/Stats" unique_id=1750416657]
+script = ExtResource("14_axnq6")
+type = 6
+
+[node name="CriticalChance" type="Node" parent="MeleeAttack/Stats" unique_id=1501286296]
+script = ExtResource("14_axnq6")
+base_value = 0.1
+value = 0.1
+type = 7
+
+[node name="CriticalMultiplier" type="Node" parent="MeleeAttack/Stats" unique_id=652215856]
+script = ExtResource("14_axnq6")
+type = 8
+
+[node name="ActiveDuration" type="Node" parent="MeleeAttack/Stats" unique_id=805204823]
+script = ExtResource("14_axnq6")
+type = 9
+
+[node name="PopUpSpot" type="Node2D" parent="." unique_id=1261764480]
+position = Vector2(0, -8)
+
+[node name="OvertimeEffectHandler" type="Node" parent="." unique_id=379292224]
+script = ExtResource("11_i2avb")
+
+[node name="Stats" type="Node" parent="." unique_id=1700845656]
+script = ExtResource("13_4y7u7")
+
+[node name="MaxHealth" type="Node" parent="Stats" unique_id=2128198019]
+script = ExtResource("14_axnq6")
+base_value = 24.0
+value = 24.0
+type = 1
+
+[node name="Health" type="Node" parent="Stats" unique_id=1397303862]
+script = ExtResource("14_axnq6")
+base_value = 24.0
+value = 24.0
+
+[node name="Damage" type="Node" parent="Stats" unique_id=548295594]
+script = ExtResource("14_axnq6")
+base_value = 1.0
+value = 1.0
+type = 2
+
+[node name="Price" type="Node" parent="Stats" unique_id=562549787]
+script = ExtResource("14_axnq6")
+base_value = 2.0
+value = 2.0
+type = 3
+
+[node name="Speed" type="Node" parent="Stats" unique_id=974551600]
+script = ExtResource("14_axnq6")
+base_value = 18.0
+value = 18.0
+type = 4
+
+[node name="AttackRange" type="Node" parent="Stats" unique_id=439446803]
+script = ExtResource("14_axnq6")
+type = 5
+
+[node name="AttackSpeed" type="Node" parent="Stats" unique_id=210987919]
+script = ExtResource("14_axnq6")
+type = 6
+
+[node name="CriticalChance" type="Node" parent="Stats" unique_id=440488483]
+script = ExtResource("14_axnq6")
+type = 7
+
+[node name="CriticalMultiplier" type="Node" parent="Stats" unique_id=137655470]
+script = ExtResource("14_axnq6")
+base_value = 2.0
+value = 2.0
+type = 8
+
+[node name="ActiveDuration" type="Node" parent="Stats" unique_id=1453404725]
+script = ExtResource("14_axnq6")
+type = 9
+
+[node name="ModifierManager" type="Node" parent="." unique_id=7649678]
+script = ExtResource("16_71ls3")
+
+[node name="MoltenBody" type="Node" parent="."]
+script = ExtResource("scorched_script_0")

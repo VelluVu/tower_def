@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://grluwgw4lbxm"
+path="res://.godot/imported/obsidian_golem_elite.aseprite-0e034de23621f2c4020776f9941634c1.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/obsidian_golem/obsidian_golem_elite.aseprite"
+dest_files=["res://.godot/imported/obsidian_golem_elite.aseprite-0e034de23621f2c4020776f9941634c1.res"]
+
+[params]
+

@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://b8u0kgy1hjwhm"
+path="res://.godot/imported/magma_blob_elite.aseprite-e286d9855a3f82f34ea8782c4383e7a6.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/magma_blob/magma_blob_elite.aseprite"
+dest_files=["res://.godot/imported/magma_blob_elite.aseprite-e286d9855a3f82f34ea8782c4383e7a6.res"]
+
+[params]
+

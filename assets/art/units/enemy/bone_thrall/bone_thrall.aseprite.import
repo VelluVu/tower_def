@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://sbhdt6b62pa7"
+path="res://.godot/imported/bone_thrall.aseprite-e54e29e411ca55e5b65385c5378a99ee.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/bone_thrall/bone_thrall.aseprite"
+dest_files=["res://.godot/imported/bone_thrall.aseprite-e54e29e411ca55e5b65385c5378a99ee.res"]
+
+[params]
+

@@ -1,0 +1,30 @@
+# Source of assets/art/units/enemy/dragonslayer/dragonslayer_icon.png (python tools/gd.py icon <this> <out.png>); cropped from the sprite's first IDLE frame
+A = c0cbdc
+B = 8b9bb4
+C = 5a6988
+D = 3a4466
+E = 262b44
+K = 181425
+g = feae34
+r = a22633
+R = e43b44
+e = ecd8b1
+f = d5bf9b
+y = fee761
+---
+................
+.e..........e...
+.ef........fe...
+..ef.DCCD.fe....
+...fDCBBCDf.....
+....CBAABCC.....
+....CKKKKKC.....
+....CBAyKBC.....
+....DCBBCCD.....
+.....DCCCD.....A
+..DCBAAABCDD...A
+.DCBAAAAABCCD.AB
+DCBAgggggABCDEAB
+DCBgrRRRrgBCDAB.
+rDCgrRggRgCDEAB.
+rDCgrRRRrgCDAB..

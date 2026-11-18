@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" path="res://assets/art/units/enemy/batling/batling_shadow.png" id="17_bshad"]
 [ext_resource type="Script" path="res://scenes/unit/enemy/flight_movement.gd" id="18_flight"]
 [ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_data.gd" id="overtime_data"]
+[ext_resource type="Resource" path="res://scenes/unit/enemy/resistances/swamp.tres" id="res_profile"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_43mte"]
 friction = 0.0
@@ -173,6 +174,7 @@ freeze_mode = 1
 contact_monitor = true
 max_contacts_reported = 1
 script = ExtResource("1_pnuqq")
+resistances = ExtResource("res_profile")
 icon = ExtResource("2_w8sqj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

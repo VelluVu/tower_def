@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://l3ts5onlvcje"
+path="res://.godot/imported/ember_wisp_elite.aseprite-4c95ef0bc4b67f88a2c4eaaee8a28060.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/ember_wisp/ember_wisp_elite.aseprite"
+dest_files=["res://.godot/imported/ember_wisp_elite.aseprite-4c95ef0bc4b67f88a2c4eaaee8a28060.res"]
+
+[params]
+

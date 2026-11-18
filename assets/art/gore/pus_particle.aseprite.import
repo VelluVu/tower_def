@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dgwl4064btuaw"
+path="res://.godot/imported/pus_particle.aseprite-f078b0fa41c4eccd4b4e295cea6d4efc.res"
+
+[deps]
+
+source_file="res://assets/art/gore/pus_particle.aseprite"
+dest_files=["res://.godot/imported/pus_particle.aseprite-f078b0fa41c4eccd4b4e295cea6d4efc.res"]
+
+[params]
+

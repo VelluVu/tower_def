@@ -7,6 +7,9 @@ extends GPUParticles2D
 var sub_gore_pool : Array[Node2D]
 var main_effect_offset : Vector2 = Vector2.ZERO
 var emitter_name : String = "some weakling"
+#from play() until the splat lands: emitting turns off a lifetime before finished, and restarting
+#in between would drop the splat, so the emitter reuses only effects that are not busy
+var is_busy : bool = false
 
 
 func _ready() -> void:
@@ -17,7 +20,14 @@ func _ready() -> void:
 	_on_time_scale_change(Utils.game_control.time_scale)
 
 
+func play(amount_to_emit : int) -> void:
+	amount = amount_to_emit
+	is_busy = true
+	emitting = true
+
+
 func _on_finish_emit() -> void:
+	is_busy = false
 	var gore_sub_effect : Node2D = _get_from_pool()
 	gore_sub_effect.splat(global_position - main_effect_offset)
 

@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cdlc3m0eilbcw"
+path="res://.godot/imported/fastswampling_elite.aseprite-0aab124c856c8ba8561da702c76c5f41.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/fastswampling/fastswampling_elite.aseprite"
+dest_files=["res://.godot/imported/fastswampling_elite.aseprite-0aab124c856c8ba8561da702c76c5f41.res"]
+
+[params]
+

@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://k73csr4coxlr"
+path="res://.godot/imported/bloater_elite.aseprite-a2802031a72ae0f5236226baed13ebc0.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/bloater/bloater_elite.aseprite"
+dest_files=["res://.godot/imported/bloater_elite.aseprite-a2802031a72ae0f5236226baed13ebc0.res"]
+
+[params]
+

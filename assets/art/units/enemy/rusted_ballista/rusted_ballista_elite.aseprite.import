@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bn2x5dbyighcl"
+path="res://.godot/imported/rusted_ballista_elite.aseprite-c2689a75eaa0a30e3317d12e243b3d74.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/rusted_ballista/rusted_ballista_elite.aseprite"
+dest_files=["res://.godot/imported/rusted_ballista_elite.aseprite-c2689a75eaa0a30e3317d12e243b3d74.res"]
+
+[params]
+

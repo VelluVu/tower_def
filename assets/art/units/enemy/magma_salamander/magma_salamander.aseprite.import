@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://ce4i14a0ptdeg"
+path="res://.godot/imported/magma_salamander.aseprite-19bd2f9466b6c4f798f4d97f8a130a17.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/magma_salamander/magma_salamander.aseprite"
+dest_files=["res://.godot/imported/magma_salamander.aseprite-19bd2f9466b6c4f798f4d97f8a130a17.res"]
+
+[params]
+

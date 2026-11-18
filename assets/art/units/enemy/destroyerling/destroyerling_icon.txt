@@ -1,0 +1,32 @@
+# Source of assets/art/units/enemy/destroyerling/destroyerling_icon.png (python tools/gd.py icon <this> <out.png>); cropped from the sprite's first IDLE frame
+a = b59e85
+b = cab494
+c = d5bf9b
+d = e0caa3
+e = ecd8b1
+R = ff0044
+r = a22633
+x = 87202b
+X = a22633
+o = 3e2731
+m = 733e39
+A = c0cbdc
+B = 8b9bb4
+C = 5a6988
+---
+.........oooo...
+........ooooooo.
+.......oodddcco.
+BA.....odRddRco.
+BAC.....cdrrrcb.
+mmmccdddcbbbbb..
+mmcdeeeddcdb....
+mcdeeedddcdb....
+mcddddddccbdb...
+.bcdddcccbbdb...
+babccccbbaadb...
+baxXXXXXxx..db..
+baxXXXXXx...db..
+babba..ccb..db..
+babba..ccb...db.
+aabba..ccb...db.

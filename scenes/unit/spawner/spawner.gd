@@ -59,10 +59,10 @@ func spawn_group(group : SpawnGroupData, on_finished : Callable) -> void:
 	runner.run(group, self)
 
 
-func spawn(spawnable_packed_scene : PackedScene) -> void:
+func spawn(spawnable_packed_scene : PackedScene) -> Node:
 	if spawnable_packed_scene == null:
 		push_warning(name, NO_SPAWNABLE_SCENE_WARNING)
-		return
+		return null
 
 	var spawned : Node = spawnable_packed_scene.instantiate()
 
@@ -71,6 +71,7 @@ func spawn(spawnable_packed_scene : PackedScene) -> void:
 		_give_flight_route(spawned)
 
 	add_child(spawned)
+	return spawned
 
 
 #before the enemy enters the tree, so its first path already has the route

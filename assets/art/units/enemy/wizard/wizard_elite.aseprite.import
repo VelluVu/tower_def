@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bf8j3y1am8als"
+path="res://.godot/imported/wizard_elite.aseprite-5729116cad141e6e2bef0fa719874a00.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/wizard/wizard_elite.aseprite"
+dest_files=["res://.godot/imported/wizard_elite.aseprite-5729116cad141e6e2bef0fa719874a00.res"]
+
+[params]
+

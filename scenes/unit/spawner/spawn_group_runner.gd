@@ -31,19 +31,24 @@ func run(_group : SpawnGroupData, _spawner : Spawner) -> void:
 
 
 func _spawn_next() -> void:
-	spawner.spawn(group.enemy_scene)
-	spawned_count += 1
+	_spawn_one()
 
 	if group.interval <= 0.0:
 		while spawned_count < group.count:
-			spawner.spawn(group.enemy_scene)
-			spawned_count += 1
+			_spawn_one()
 
 	if spawned_count >= group.count:
 		_finish()
 		return
 
 	_wait(group.interval)
+
+
+func _spawn_one() -> void:
+	var spawned : Node = spawner.spawn(group.enemy_scene)
+	if spawned is Enemy and Elite.is_elite_index(spawned_count, group.count, group.elites):
+		Elite.make(spawned, group.elite_affix)
+	spawned_count += 1
 
 
 func _wait(seconds : float) -> void:

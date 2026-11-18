@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dnoj7cp6v6ijb"
+path="res://.godot/imported/grave_caller_elite.aseprite-bd058003a2353e4a69e83c8aa8ccd144.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/grave_caller/grave_caller_elite.aseprite"
+dest_files=["res://.godot/imported/grave_caller_elite.aseprite-bd058003a2353e4a69e83c8aa8ccd144.res"]
+
+[params]
+

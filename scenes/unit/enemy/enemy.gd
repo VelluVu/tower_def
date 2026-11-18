@@ -5,6 +5,8 @@ extends RigidBody2D
 const GRID_UPDATE_ERROR : String = ", level is still initializing, unable to react to grid update"
 const END_POINT_PATHING_ERROR : String = " can't path to the end point distance: "
 const MODULATE_ALPHA_PROPERTY : String = "modulate:a"
+#a frozen enemy looks iced over
+const FROZEN_TINT : Color = Color(0.6, 0.85, 1.0)
 const CORPSE_FADE_TIME : float = 1.0
 const NO_FREE_POSITION_WARNING : String = " unable to find free position, destroying building in the way."
 #a short stop after every turn, so twisting mazes cost time
@@ -44,6 +46,10 @@ const TURN_DOT_LIMIT : float = 0.5
 @export var xp_multiplier : float = 1.0
 #shows the boss health bar while alive
 @export var is_boss : bool = false
+#takes a level's bog crossings when they are cheaper than the road (the toad, the leech)
+@export var can_wade : bool = false
+#the faction role's resistances (scenes/unit/enemy/resistances/); none = takes every hit in full
+@export var resistances : EnemyResistances = null
 
 @export var skill : Skill :
 	get:
@@ -79,13 +85,34 @@ var is_flying : bool :
 	get:
 		return flight_movement != null
 
+#on a bog crossing's stones, heading for its far shore
+var is_wading : bool :
+	get:
+		return wade_crossing != null and wade_exit_index >= 0 and current_waypoint_index == wade_exit_index
+
 var is_deactivated : bool = false
 #underground (Broodmother's Dig Up): out of every tower's reach
 var is_burrowed : bool = false
+#a flyer hidden in a sandstorm (Sandstorm): towers cannot pick it
+var is_concealed : bool = false
+#an ember cultist's ward: soaks the next hit (FireWard)
+var fire_ward : FireWard = null
+#played while it moves; the Ashen Wyrm walks differently once it has landed
+var walk_animation : String = GlobalAnimationNames.WALK_ANIMATION
 #false for an enemy gone without a kill (a hatched egg sac): no gold or XP
 var gives_reward : bool = true
 #Frostplague: cannot attack buildings while true
 var is_numb : bool = false
+#share of the damage it takes (the Dragonslayer's oath halves it)
+var damage_taken_factor : float = 1.0
+#a freeze from a frost tower: no moving until it runs out
+var freeze_timer : CustomTimer = null
+var is_frozen : bool :
+	get:
+		return freeze_timer != null and not freeze_timer.is_stopped()
+#the waypoint index of a bog crossing's far shore in point_path (-1: the path has no crossing)
+var wade_exit_index : int = -1
+var wade_crossing : BogCrossing = null
 var current_waypoint_index : int = 0
 var minimum_distance_to_end : float = 9.0
 var minimum_distance_to_next_waypoint : float = 2.0
@@ -137,7 +164,19 @@ func take_damage(damage_data : DamageData) -> void:
 	#print(name, " takes damage: ", damage_data.damage)
 	if is_dead:
 		return
-	
+	if damage_data.damage > 0.0 and fire_ward != null and fire_ward.absorb(damage_data):
+		return
+
+	var raw_damage : float = damage_data.damage
+	#the maze damage card: towers hit harder while the enemy squeezes past a building (flyers are above the maze)
+	if damage_data.damage > 0.0 and damage_data.source is Building and not is_flying and level != null and level.upgrades != null:
+		damage_data.damage *= 1.0 + level.upgrades.get_maze_damage_bonus(grid_position)
+	if damage_data.damage > 0.0:
+		damage_data.damage *= damage_taken_factor * get_resistance_factor(damage_data)
+		#talents: burning, poisoned, frozen or chilled enemies take more
+		if level != null and level.talents != null:
+			damage_data.damage *= 1.0 + level.talents.get_vulnerability(self, damage_data)
+
 	var health : Stat = stats.get_stat(Utils.StatType.Health)
 	var maxHealth : Stat = stats.get_stat(Utils.StatType.MaxHealth)
 	health.value -= damage_data.damage
@@ -154,6 +193,55 @@ func take_damage(damage_data : DamageData) -> void:
 			damage_data.source.dealt_damage(self, damage_data)
 		gore_emitter.emit_gore(damage_data)
 		animation_control.play_hit_animation()
+		TowerHitEffects.apply(self, damage_data, raw_damage)
+
+
+## Pushes it back along its own path by this many cells (a Physical Nova's burst); bosses, flyers and waders stay.
+func knock_back(cells : int) -> void:
+	if is_boss or is_flying or is_wading or is_dead or is_burrowed or point_path.is_empty():
+		return
+	current_waypoint_index = maxi(current_waypoint_index - cells, 0)
+	global_position = point_path[current_waypoint_index] + lane_offset
+	next_waypoint = global_position
+	linear_velocity = Vector2.ZERO
+
+
+## Stops it where it stands for a while (a frost tower's freeze); bosses never freeze. A new freeze restarts it.
+func freeze_for(seconds : float) -> void:
+	if is_boss or seconds <= 0.0 or is_dead:
+		return
+	#Absolute Zero and Snap Freeze (talents)
+	if level != null and level.talents != null:
+		seconds = seconds * (1.0 + level.talents.get_total(TalentEffect.Kind.FreezeLonger)) + level.talents.get_total(TalentEffect.Kind.FreezeExtra)
+	if freeze_timer == null:
+		freeze_timer = CustomTimer.new()
+		freeze_timer.one_shot = true
+		add_child(freeze_timer)
+		freeze_timer.timeout.connect(func() -> void: animation_control.self_modulate = Color.WHITE)
+	freeze_timer.unscaled_base_value = seconds
+	freeze_timer.start()
+	animation_control.self_modulate = FROZEN_TINT
+	linear_velocity = Vector2.ZERO
+
+
+## The share of a hit that gets through this enemy's resistances (its element, and the tower kind when a tower hits).
+func get_resistance_factor(damage_data : DamageData) -> float:
+	if resistances == null:
+		return 1.0
+
+	var element_resistance : float = resistances.get_element(damage_data.damage_type)
+	var tower_resistance : float = 0.0
+	if damage_data.source is Building:
+		var source : Building = damage_data.source
+		if source.skill != null:
+			tower_resistance = resistances.get_tower(source.skill.skill_type)
+		#penetration (cards, talents) takes points off both; a crit with critical penetration ignores them all
+		if damage_data.is_critical and source.stats.get_stat_value(Utils.StatType.CriticalPenetration) >= 1.0:
+			return 1.0
+		var penetration : float = source.stats.get_stat_value(Utils.StatType.ResistancePenetration)
+		element_resistance = maxf(element_resistance - penetration, 0.0)
+		tower_resistance = maxf(tower_resistance - penetration, 0.0)
+	return EnemyResistances.get_damage_factor(element_resistance, tower_resistance)
 
 
 func dealt_damage(_target : Node2D, _damage_data : DamageData) -> void:
@@ -192,10 +280,10 @@ func is_end_point_in_reach() -> bool:
 
 
 func move_towards_next_waypoint() -> void:
-	animation_control.play_animation(GlobalAnimationNames.WALK_ANIMATION)
+	animation_control.play_animation(walk_animation)
 
 	#velocity keeps the old direction, so the turn is not counted twice
-	if not turn_pause_timer.is_stopped():
+	if not turn_pause_timer.is_stopped() or is_frozen:
 		linear_velocity = Vector2.ZERO
 		return
 
@@ -205,7 +293,9 @@ func move_towards_next_waypoint() -> void:
 		flight_movement.move(move_direction)
 		return
 
-	var speed : float = stats.get_stat_value(Utils.StatType.Speed) * get_spacing_speed_factor(move_direction) * _get_cell_speed_factor()
+	#on the stones the bog cell's own factor means nothing, the crossing sets the pace
+	var ground_factor : float = wade_crossing.wade_speed_factor if is_wading else _get_cell_speed_factor()
+	var speed : float = stats.get_stat_value(Utils.StatType.Speed) * get_spacing_speed_factor(move_direction) * ground_factor
 	velocity = speed * move_direction * current_time_scale
 	linear_velocity = velocity
 	last_position = global_position
@@ -230,9 +320,25 @@ func path_to(from : Vector2, to : Vector2) -> void:
 		next_waypoint = point_path[0] + lane_offset
 		return
 
-	point_path = level.grid.find_path(from, to)
+	if is_wading:
+		#halfway over the stones: no road starts in the bog, so finish the crossing and go on from its far shore
+		point_path = PackedVector2Array([wade_crossing.exit_position]) + level.grid.find_path(wade_crossing.exit_position, to)
+		wade_exit_index = 0
+		current_waypoint_index = 0
+		next_waypoint = point_path[0] + lane_offset
+		return
+
+	wade_exit_index = -1
+	wade_crossing = null
+	if can_wade and not level.grid.bog_crossings.is_empty():
+		var route : WadingRoute = level.grid.find_wading_route(from, to)
+		point_path = route.path
+		wade_exit_index = route.exit_index
+		wade_crossing = route.crossing
+	else:
+		point_path = level.grid.find_path(from, to)
 	current_waypoint_index = 0
-	
+
 	if point_path.is_empty():
 		point_path.append(level.grid.snap_position_to_grid(global_position))
 		return
@@ -279,6 +385,7 @@ func die() -> void:
 	if abilities != null:
 		abilities.interrupt()
 	animation_control.play_animation(GlobalAnimationNames.DEATH_ANIMATION)
+	gore_emitter.emit_death_gore()
 	GameSignals.enemy_destroyed.emit(self)
 	deactivate()
 	_free_after_death()
@@ -314,8 +421,14 @@ func _free_after_death() -> void:
 	if animation_control.is_playing():
 		await animation_control.animation_finished
 
+	#an unloaded level takes the corpse out of the tree mid-wait; it is freed with the level
 	while gore_emitter.is_emitting():
+		if not is_inside_tree():
+			return
 		await get_tree().process_frame
+
+	if not is_inside_tree():
+		return
 
 	var fade : Tween = create_tween()
 	fade.set_speed_scale(current_time_scale)
@@ -389,7 +502,9 @@ func _ready() -> void:
 	turn_pause_timer = CustomTimer.new()
 	turn_pause_timer.one_shot = true
 	add_child(turn_pause_timer)
-	turn_pause_timer.unscaled_base_value = TURN_PAUSE_TIME
+	#Sharp Corners (talent) lengthens every turn pause
+	var extra_pause : float = level.talents.get_total(TalentEffect.Kind.TurnPause) if level != null and level.talents != null else 0.0
+	turn_pause_timer.unscaled_base_value = TURN_PAUSE_TIME + extra_pause
 	body_entered.connect(_on_body_enter)
 	body_exited.connect(_on_body_exit)
 	GameSignals.astar_grid_updated.connect(_on_astar_grid_updated)
@@ -417,8 +532,9 @@ func _on_body_enter(body : Node) -> void:
 		collision_body = body
 
 
+#only the building it pushes against: another one sliding off must not let it walk on into the first
 func _on_body_exit(body : Node) -> void:
-	if body.is_in_group(GroupNames.BUILDINGS):
+	if body == collision_body:
 		collision_body = null
 
 

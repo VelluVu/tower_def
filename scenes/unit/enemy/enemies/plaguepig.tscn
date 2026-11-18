@@ -17,6 +17,7 @@
 [ext_resource type="Script" path="res://scenes/unit/stats/stat.gd" id="15_rofak"]
 [ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_handler.gd" id="16_nm5r2"]
 [ext_resource type="Script" path="res://scenes/unit/modifier_manager.gd" id="17_bmhjo"]
+[ext_resource type="Resource" path="res://scenes/unit/enemy/resistances/plaguepig.tres" id="res_profile"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_43mte"]
 friction = 0.0
@@ -197,6 +198,7 @@ physics_material_override = SubResource("PhysicsMaterial_43mte")
 contact_monitor = true
 max_contacts_reported = 1
 script = ExtResource("1_rlxr3")
+resistances = ExtResource("res_profile")
 icon = ExtResource("2_n88ha")
 skill = NodePath("MeleeAttack")
 
