@@ -63,6 +63,7 @@ func _ready() -> void:
 	GameSignals.level_loaded.connect(_on_level_loaded)
 	GameSignals.sell_building.connect(_on_building_sell)
 	GameSignals.building_destroyed.connect(_on_building_destroyed)
+	GameSignals.building_placed.connect(_on_building_placed)
 	GameSignals.lose_game.connect(_on_lose_game)
 	GameSignals.level_completed.connect(_on_level_completed)
 	GameSignals.resource_change.connect(_on_resource_change)
@@ -99,8 +100,11 @@ func _input(event : InputEvent) -> void:
 			_place_building(current_building_option_index)
 		
 	if event.is_action_pressed(ESCAPE_ACTION_NAME):
+		#cancelling the placement is all this Esc does; the pause menu (UI) waits for the next one
+		if is_placing_building:
+			get_viewport().set_input_as_handled()
 		_stop_building_placement()
-		
+
 	if event.is_action_pressed(RIGHT_CLICK_ACTION_NAME):
 		_stop_building_placement()
 		
@@ -135,10 +139,26 @@ func _on_level_completed(_level : Level) -> void:
 
 func _on_building_sell(_building : Building) -> void:
 	remove_building(_building)
+	_refresh_ghost_price.call_deferred()
 
 
 func _on_building_destroyed(_building : Building) -> void:
 	remove_building(_building)
+	_refresh_ghost_price.call_deferred()
+
+
+#deferred: Level counts the placed towers in its own handler of the same signal
+func _on_building_placed(_building : Building) -> void:
+	_refresh_ghost_price.call_deferred()
+
+
+#the ghost shows and checks the price the next tower will cost
+func _refresh_ghost_price() -> void:
+	if not is_placing_building or not is_instance_valid(current_building) or level == null:
+		return
+
+	level.apply_price_step(current_building)
+	_move_building_with_cursor()
 
 
 #gold from a kill can make the building affordable while the cursor stands still
@@ -250,6 +270,7 @@ func _instantiate_building(building_index : int, position_in_world : Vector2) ->
 	var buildings_node : Node2D = _get_buildings_container()
 	var placed_building : Building = available_buildings[building_index].scene.instantiate()
 	buildings_node.add_child(placed_building)
+	level.apply_price_step(placed_building)
 	placed_building.id = placed_building_id
 	placed_building.place(position_in_world)
 	placed_buildings.append(placed_building)
@@ -426,6 +447,7 @@ func _set_is_placing_building(value : bool) -> void:
 		if current_building == null:
 			current_building = available_buildings[current_building_option_index].scene.instantiate()
 			level.add_child(current_building)
+			level.apply_price_step(current_building)
 			_move_building_with_cursor()
 	
 	current_building.is_placing = is_placing_building

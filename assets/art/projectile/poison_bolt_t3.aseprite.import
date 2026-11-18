@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://ccb62283ophhi"
+path="res://.godot/imported/poison_bolt_t3.aseprite-096af501612b356f50d6dcd34766976b.res"
+
+[deps]
+
+source_file="res://assets/art/projectile/poison_bolt_t3.aseprite"
+dest_files=["res://.godot/imported/poison_bolt_t3.aseprite-096af501612b356f50d6dcd34766976b.res"]
+
+[params]
+

@@ -17,8 +17,13 @@ var offered_cards : Array[UpgradeCard]
 var chosen_cards : Array[UpgradeCard]
 #the capped total of the chosen XP cards, added to the XP of every kill
 var xp_bonus : float = 0.0
-#building -> {Utils.StatType: ModifierData}: one capped modifier per stat sums the cards that fit the building
-var applied_modifiers : Dictionary[Building, Dictionary] = {}
+#the maze cards' totals: towers deal this much more damage to enemies in the maze (next to a building),
+#and the maze slows enemies this much more (LevelGrid.maze_speed_factor)
+var maze_damage_bonus : float = 0.0
+var maze_slow_bonus : float = 0.0
+#building -> ModifierData: one capped modifier per stat sums the cards that fit the building,
+#then one uncapped modifier per stat sums the trade-off cards' drawbacks
+var applied_modifiers : Dictionary[Building, Array] = {}
 
 var level : Level :
 	get:
@@ -62,7 +67,10 @@ func _on_enemy_destroyed(enemy : Enemy) -> void:
 	if not enemy.gives_reward:
 		return
 
-	add_xp(UpgradeRules.kill_xp(enemy.stats.get_stat_value(Utils.StatType.MaxHealth), enemy.xp_multiplier) * (1.0 + xp_bonus))
+	#the base health: the level's wave health ramp and the mode's scaling give no extra XP
+	var base_health : float = enemy.stats.get_stat(Utils.StatType.MaxHealth).base_value
+	var mode_xp : float = level.mode_data.xp_multiplier if level.mode_data != null else 1.0
+	add_xp(UpgradeRules.kill_xp(base_health, enemy.xp_multiplier) * mode_xp * (1.0 + xp_bonus))
 
 
 func _on_level_finished(_level : Level = null) -> void:
@@ -102,6 +110,11 @@ func _on_upgrade_card_selected(index : int) -> void:
 		level.player_stats.add_gold(card.value)
 	elif card.resource.card_target == EvolveResource.CardTarget.Xp:
 		xp_bonus = UpgradeRules.capped_bonus(_get_xp_card_total(), CARD_CAPS.xp_soft_cap, CARD_CAPS.xp_hard_cap)
+	elif card.resource.card_target == EvolveResource.CardTarget.MazeDamage:
+		maze_damage_bonus = _get_target_total(EvolveResource.CardTarget.MazeDamage)
+	elif card.resource.card_target == EvolveResource.CardTarget.MazeSlow:
+		maze_slow_bonus = _get_target_total(EvolveResource.CardTarget.MazeSlow)
+		level.grid.maze_speed_factor = LevelGrid.MAZE_SPEED_FACTOR * (1.0 - maze_slow_bonus)
 	else:
 		for building in _get_upgradable_buildings():
 			_refresh_cards(building)
@@ -136,10 +149,16 @@ func _get_stat_cards(new_level : int) -> Array[UpgradeCard]:
 		if _can_offer(resource, new_level):
 			pool.append(resource)
 
-	pool.shuffle()
+	#rare cards are drawn less often
+	var keys : Dictionary[EvolveResource, float] = {}
+	for resource in pool:
+		keys[resource] = UpgradeRules.offer_key(resource, randf_range(0.0001, 1.0))
+	pool.sort_custom(func(a : EvolveResource, b : EvolveResource) -> bool: return keys[a] > keys[b])
 	var cards : Array[UpgradeCard] = []
 
-	for resource in pool.slice(0, CARD_COUNT):
+	#Scholar (talent) offers more cards
+	var card_count : int = CARD_COUNT + (roundi(level.talents.get_total(TalentEffect.Kind.CardOffer)) if level.talents != null else 0)
+	for resource in pool.slice(0, card_count):
 		var card : UpgradeCard = UpgradeCard.from_resource(resource, UpgradeRules.roll_value(resource, randf()))
 		card.is_past_soft_cap = _is_past_soft_cap(resource, new_level)
 		cards.append(card)
@@ -157,6 +176,10 @@ func _can_offer(resource : EvolveResource, new_level : int) -> bool:
 
 	if resource.card_target == EvolveResource.CardTarget.Xp:
 		return xp_bonus < CARD_CAPS.xp_hard_cap
+
+	#the maze cards wait for a maze: at least one wall
+	if resource.card_target == EvolveResource.CardTarget.MazeDamage or resource.card_target == EvolveResource.CardTarget.MazeSlow:
+		return level.all_buildings.any(func(building : Building) -> bool: return is_instance_valid(building) and building is Wall)
 
 	var cap : StatCap = CARD_CAPS.get_cap(resource.modify_stat_type)
 
@@ -191,7 +214,7 @@ func _refresh_cards(building : Building) -> void:
 	#Health is not modified with MaxHealth, so keep the damage taken and add the new max on top
 	var missing_health : float = building.stats.get_stat_value(Utils.StatType.MaxHealth) - building.stats.get_stat_value(Utils.StatType.Health)
 
-	for modifier in applied_modifiers.get(building, {}).values():
+	for modifier in applied_modifiers.get(building, []):
 		building.modifier_manager.remove_modifier(modifier)
 
 	var modifiers : Dictionary[Utils.StatType, ModifierData] = _sum_cards(building)
@@ -204,7 +227,12 @@ func _refresh_cards(building : Building) -> void:
 
 		building.modifier_manager.add_modifier(modifiers[stat_type])
 
-	applied_modifiers[building] = modifiers
+	var drawbacks : Dictionary[Utils.StatType, ModifierData] = _sum_drawbacks(building)
+
+	for stat_type in drawbacks:
+		building.modifier_manager.add_modifier(drawbacks[stat_type])
+
+	applied_modifiers[building] = modifiers.values() + drawbacks.values()
 
 	var health : Stat = building.stats.get_stat(Utils.StatType.Health)
 	if health != null:
@@ -236,6 +264,36 @@ func _sum_cards(building : Building) -> Dictionary[Utils.StatType, ModifierData]
 	return modifiers
 
 
+#the trade-off cards' penalties, one uncapped modifier per stat
+func _sum_drawbacks(building : Building) -> Dictionary[Utils.StatType, ModifierData]:
+	var modifiers : Dictionary[Utils.StatType, ModifierData] = {}
+
+	for card in chosen_cards:
+		if not card.resource.has_drawback or not _fits(card.resource, building, upgrade_level):
+			continue
+
+		var stat_type : Utils.StatType = card.resource.drawback_stat_type
+
+		if not modifiers.has(stat_type):
+			modifiers[stat_type] = card.resource.get_drawback_modifier_data()
+			continue
+
+		if modifiers[stat_type].calculate_type != card.resource.drawback_modify_type:
+			push_warning(name, MIXED_MODIFY_TYPE_WARNING, card.title)
+
+		modifiers[stat_type].value += card.resource.drawback_value
+
+	return modifiers
+
+
+## The extra damage share a tower's hit does to an enemy standing in this cell (the maze damage card).
+func get_maze_damage_bonus(cell : Vector2i) -> float:
+	if maze_damage_bonus <= 0.0 or not level.grid.is_maze_cell(cell):
+		return 0.0
+
+	return maze_damage_bonus
+
+
 func _get_card_total(building : Building, stat_type : Utils.StatType) -> float:
 	var total : float = 0.0
 
@@ -247,10 +305,14 @@ func _get_card_total(building : Building, stat_type : Utils.StatType) -> float:
 
 
 func _get_xp_card_total() -> float:
+	return _get_target_total(EvolveResource.CardTarget.Xp)
+
+
+func _get_target_total(card_target : EvolveResource.CardTarget) -> float:
 	var total : float = 0.0
 
 	for card in chosen_cards:
-		if card.resource.card_target == EvolveResource.CardTarget.Xp:
+		if card.resource.card_target == card_target:
 			total += card.value
 
 	return total

@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://c72ktus3cffoa"
+path="res://.godot/imported/frenzy_icon.aseprite-69dbd224b5a54d28a3f6bd9e6cef5286.res"
+
+[deps]
+
+source_file="res://assets/art/ui/card_icons/frenzy_icon.aseprite"
+dest_files=["res://.godot/imported/frenzy_icon.aseprite-69dbd224b5a54d28a3f6bd9e6cef5286.res"]
+
+[params]
+

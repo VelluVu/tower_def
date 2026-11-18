@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bcdq3rwhhqo88"
+path="res://.godot/imported/leopard_cub.aseprite-2177a23ab49670fd392a269ba74ea07e.res"
+
+[deps]
+
+source_file="res://assets/art/units/building/leopard_trap/leopard_cub.aseprite"
+dest_files=["res://.godot/imported/leopard_cub.aseprite-2177a23ab49670fd392a269ba74ea07e.res"]
+
+[params]
+

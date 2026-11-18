@@ -21,6 +21,25 @@
 [ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_data.gd" id="18_gagl5"]
 [ext_resource type="Script" path="res://scenes/unit/modifier_manager.gd" id="19_3ukhc"]
 [ext_resource type="Resource" path="res://scenes/upgrades/building_upgrades/leopard_trap_upgrade_data.tres" id="0_upgradedata"]
+[ext_resource type="Script" path="res://scenes/unit/evolve_tree/element_evolve_leaf.gd" id="trap_leaf_script"]
+[ext_resource type="Script" path="res://scenes/unit/stats/modifier.gd" id="trap_modifier_script"]
+[ext_resource type="Texture2D" path="res://assets/art/units/building/leopard_trap/lebu_trap_icon.png" id="trap_selected_icon"]
+[ext_resource type="Texture2D" path="res://assets/art/ui/normal_element_icon.png" id="trap_icon_normal"]
+[ext_resource type="Texture2D" path="res://assets/art/ui/fire_element_icon.png" id="trap_icon_fire"]
+[ext_resource type="PackedScene" path="res://scenes/unit/evolve_tree/puffe_nova_evolve/red_puffe_nova_evolve_damage_data.tscn" id="trap_damage_red"]
+[ext_resource type="Texture2D" path="res://assets/art/ui/frost_element_icon.png" id="trap_icon_frost"]
+[ext_resource type="PackedScene" path="res://scenes/unit/evolve_tree/puffe_nova_evolve/blue_puffe_nova_evolve_damage_data.tscn" id="trap_damage_blue"]
+[ext_resource type="Texture2D" path="res://assets/art/ui/poison_element_icon.png" id="trap_icon_poison"]
+[ext_resource type="PackedScene" path="res://scenes/unit/evolve_tree/puffe_nova_evolve/green_puffe_nova_evolve_damage_data.tscn" id="trap_damage_green"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/leopard_trap_physical_t2.tres" id="tier_physical_t2"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/leopard_trap_physical_t3.tres" id="tier_physical_t3"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/leopard_trap_fire_t2.tres" id="tier_fire_t2"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/leopard_trap_fire_t3.tres" id="tier_fire_t3"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/leopard_trap_frost_t2.tres" id="tier_frost_t2"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/leopard_trap_frost_t3.tres" id="tier_frost_t3"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/leopard_trap_poison_t2.tres" id="tier_poison_t2"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/leopard_trap_poison_t3.tres" id="tier_poison_t3"]
+[ext_resource type="Script" path="res://scenes/unit/evolve_tree/evolve_tier_data.gd" id="tier_script"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_4ih23"]
 
@@ -282,6 +301,54 @@ type = 9
 script = ExtResource("12_l0gwn")
 type = 10
 
+[node name="ResistancePenetration" type="Node" parent="Stats"]
+script = ExtResource("12_l0gwn")
+type = 18
+
+[node name="CriticalPenetration" type="Node" parent="Stats"]
+script = ExtResource("12_l0gwn")
+type = 19
+
+[node name="SplashRadius" type="Node" parent="Stats"]
+script = ExtResource("12_l0gwn")
+type = 20
+
+[node name="FreezeChance" type="Node" parent="Stats"]
+script = ExtResource("12_l0gwn")
+type = 21
+
+[node name="FreezeDuration" type="Node" parent="Stats"]
+script = ExtResource("12_l0gwn")
+type = 22
+
+[node name="Knockback" type="Node" parent="Stats"]
+script = ExtResource("12_l0gwn")
+type = 24
+
+[node name="PatchDuration" type="Node" parent="Stats"]
+script = ExtResource("12_l0gwn")
+type = 25
+
+[node name="PatchShare" type="Node" parent="Stats"]
+script = ExtResource("12_l0gwn")
+type = 26
+
+[node name="LineHits" type="Node" parent="Stats"]
+script = ExtResource("12_l0gwn")
+type = 27
+
+[node name="SplitCount" type="Node" parent="Stats"]
+script = ExtResource("12_l0gwn")
+type = 28
+
+[node name="SplitShare" type="Node" parent="Stats"]
+script = ExtResource("12_l0gwn")
+type = 29
+
+[node name="PoisonSpread" type="Node" parent="Stats"]
+script = ExtResource("12_l0gwn")
+type = 30
+
 [node name="EffectChance" type="Node" parent="Stats"]
 script = ExtResource("12_l0gwn")
 type = 11
@@ -306,6 +373,109 @@ upgrade_data = ExtResource("0_upgradedata")
 script = ExtResource("14_p70yp")
 evolve_level = 2
 
+[node name="PhysicalElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch"]
+script = ExtResource("trap_leaf_script")
+selected_icon = ExtResource("trap_selected_icon")
+icon = ExtResource("trap_icon_normal")
+info = "Leopard: re-arms faster"
+tiers = Array[ExtResource("tier_script")]([ExtResource("tier_physical_t2"), ExtResource("tier_physical_t3")])
+
+[node name="Modifier0" type="Node" parent="EvolveTree/EvolveBranch/PhysicalElementEvolveLeaf"]
+script = ExtResource("trap_modifier_script")
+calculate_type = 0
+stat_type = 6
+value = 0.25
+
+[node name="Modifier1" type="Node" parent="EvolveTree/EvolveBranch/PhysicalElementEvolveLeaf"]
+script = ExtResource("trap_modifier_script")
+calculate_type = 1
+stat_type = 2
+value = 0.15
+
+[node name="EvolveBranch2" type="Node" parent="EvolveTree"]
+script = ExtResource("14_p70yp")
+evolve_level = 2
+
+[node name="FireElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch2"]
+script = ExtResource("trap_leaf_script")
+evolve_element = 2
+selected_icon = ExtResource("trap_selected_icon")
+new_damage_data_scene = ExtResource("trap_damage_red")
+evolve_glow_color = Color(1, 0.518903, 0.445677, 1)
+icon = ExtResource("trap_icon_fire")
+info = "Fire: the snap ignites and leaves burning ground for 2 s"
+tiers = Array[ExtResource("tier_script")]([ExtResource("tier_fire_t2"), ExtResource("tier_fire_t3")])
+
+[node name="Modifier0" type="Node" parent="EvolveTree/EvolveBranch2/FireElementEvolveLeaf"]
+script = ExtResource("trap_modifier_script")
+calculate_type = 0
+stat_type = 11
+value = 0.7
+
+[node name="Modifier1" type="Node" parent="EvolveTree/EvolveBranch2/FireElementEvolveLeaf"]
+script = ExtResource("trap_modifier_script")
+calculate_type = 0
+stat_type = 25
+value = 2.0
+
+[node name="Modifier2" type="Node" parent="EvolveTree/EvolveBranch2/FireElementEvolveLeaf"]
+script = ExtResource("trap_modifier_script")
+calculate_type = 0
+stat_type = 26
+value = 0.3
+
+[node name="EvolveBranch3" type="Node" parent="EvolveTree"]
+script = ExtResource("14_p70yp")
+evolve_level = 2
+
+[node name="FrostElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch3"]
+script = ExtResource("trap_leaf_script")
+evolve_element = 4
+selected_icon = ExtResource("trap_selected_icon")
+new_damage_data_scene = ExtResource("trap_damage_blue")
+evolve_glow_color = Color(0.494118, 1, 1, 1)
+icon = ExtResource("trap_icon_frost")
+info = "Frost: the snap roots for 0.5 s and slows"
+tiers = Array[ExtResource("tier_script")]([ExtResource("tier_frost_t2"), ExtResource("tier_frost_t3")])
+
+[node name="Modifier0" type="Node" parent="EvolveTree/EvolveBranch3/FrostElementEvolveLeaf"]
+script = ExtResource("trap_modifier_script")
+calculate_type = 0
+stat_type = 21
+value = 1.0
+
+[node name="Modifier1" type="Node" parent="EvolveTree/EvolveBranch3/FrostElementEvolveLeaf"]
+script = ExtResource("trap_modifier_script")
+calculate_type = 0
+stat_type = 22
+value = 0.5
+
+[node name="EvolveBranch4" type="Node" parent="EvolveTree"]
+script = ExtResource("14_p70yp")
+evolve_level = 2
+
+[node name="PoisonElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch4"]
+script = ExtResource("trap_leaf_script")
+evolve_element = 8
+selected_icon = ExtResource("trap_selected_icon")
+new_damage_data_scene = ExtResource("trap_damage_green")
+evolve_glow_color = Color(0.571428, 1, 0.494981, 1)
+icon = ExtResource("trap_icon_poison")
+info = "Poison: the snap poisons and leaves a poison cloud for 3 s"
+tiers = Array[ExtResource("tier_script")]([ExtResource("tier_poison_t2"), ExtResource("tier_poison_t3")])
+
+[node name="Modifier0" type="Node" parent="EvolveTree/EvolveBranch4/PoisonElementEvolveLeaf"]
+script = ExtResource("trap_modifier_script")
+calculate_type = 0
+stat_type = 25
+value = 3.0
+
+[node name="Modifier1" type="Node" parent="EvolveTree/EvolveBranch4/PoisonElementEvolveLeaf"]
+script = ExtResource("trap_modifier_script")
+calculate_type = 0
+stat_type = 26
+value = 0.2
+
 [node name="RangeArea" type="Area2D" parent="."]
 z_index = 10
 collision_layer = 0
@@ -325,8 +495,8 @@ script = ExtResource("11_5kva3")
 
 [node name="Damage" type="Node" parent="LeopardClaws/Stats"]
 script = ExtResource("12_l0gwn")
-base_value = 4.0
-value = 4.0
+base_value = 12.0
+value = 12.0
 type = 2
 
 [node name="AttackRange" type="Node" parent="LeopardClaws/Stats"]

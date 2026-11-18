@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bs0sli0ygi8ia"
+path="res://.godot/imported/puffe_beamer_icon.aseprite-5d92a33e5dcdc85dbe7f126b4c160eeb.res"
+
+[deps]
+
+source_file="res://assets/art/units/building/puffe/puffe_beamer/puffe_beamer_icon.aseprite"
+dest_files=["res://.godot/imported/puffe_beamer_icon.aseprite-5d92a33e5dcdc85dbe7f126b4c160eeb.res"]
+
+[params]
+

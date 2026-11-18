@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://b2q71c6w817yj"
+path="res://.godot/imported/frost_bolt_t3.aseprite-f064117fe7b9915ac18d2ac035773a34.res"
+
+[deps]
+
+source_file="res://assets/art/projectile/frost_bolt_t3.aseprite"
+dest_files=["res://.godot/imported/frost_bolt_t3.aseprite-f064117fe7b9915ac18d2ac035773a34.res"]
+
+[params]
+

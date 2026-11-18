@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://faehgln53l13"
+path="res://.godot/imported/xp_gain_icon.aseprite-a9922e2b60ed97af9b9f81740928d386.res"
+
+[deps]
+
+source_file="res://assets/art/ui/card_icons/xp_gain_icon.aseprite"
+dest_files=["res://.godot/imported/xp_gain_icon.aseprite-a9922e2b60ed97af9b9f81740928d386.res"]
+
+[params]
+

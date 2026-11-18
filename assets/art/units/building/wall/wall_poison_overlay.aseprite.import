@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bwooaxs7syfya"
+path="res://.godot/imported/wall_poison_overlay.aseprite-96610df4ea2a5a7dd63db80fa537c4f5.res"
+
+[deps]
+
+source_file="res://assets/art/units/building/wall/wall_poison_overlay.aseprite"
+dest_files=["res://.godot/imported/wall_poison_overlay.aseprite-96610df4ea2a5a7dd63db80fa537c4f5.res"]
+
+[params]
+

@@ -41,6 +41,15 @@
 [ext_resource type="Texture2D" uid="uid://cw3b3xwravgoe" path="res://assets/art/units/evolve_glow.png" id="37_wqnxk"]
 [ext_resource type="Script" uid="uid://t7tjigistc7i" path="res://scenes/unit/modifier_manager.gd" id="39_8emt4"]
 [ext_resource type="Resource" path="res://scenes/upgrades/building_upgrades/beamer_upgrade_data.tres" id="0_upgradedata"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/beamer_physical_t2.tres" id="tier_physical_t2"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/beamer_physical_t3.tres" id="tier_physical_t3"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/beamer_fire_t2.tres" id="tier_fire_t2"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/beamer_fire_t3.tres" id="tier_fire_t3"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/beamer_frost_t2.tres" id="tier_frost_t2"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/beamer_frost_t3.tres" id="tier_frost_t3"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/beamer_poison_t2.tres" id="tier_poison_t2"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/beamer_poison_t3.tres" id="tier_poison_t3"]
+[ext_resource type="Script" path="res://scenes/unit/evolve_tree/evolve_tier_data.gd" id="tier_script"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nli7h"]
 size = Vector2(16, 16)
@@ -225,6 +234,7 @@ collision_mask = 0
 script = ExtResource("1_cyr4l")
 skill = NodePath("Beam")
 icon = ExtResource("2_1w6ba")
+price_step = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_nli7h")
@@ -316,8 +326,8 @@ script = ExtResource("15_yqf0r")
 
 [node name="Damage" type="Node" parent="Beam/Stats"]
 script = ExtResource("16_mlf80")
-base_value = 1.0
-value = 1.0
+base_value = 4.0
+value = 4.0
 type = 2
 
 [node name="AttackRange" type="Node" parent="Beam/Stats"]
@@ -414,6 +424,54 @@ type = 9
 script = ExtResource("16_mlf80")
 type = 10
 
+[node name="ResistancePenetration" type="Node" parent="Stats"]
+script = ExtResource("16_mlf80")
+type = 18
+
+[node name="CriticalPenetration" type="Node" parent="Stats"]
+script = ExtResource("16_mlf80")
+type = 19
+
+[node name="SplashRadius" type="Node" parent="Stats"]
+script = ExtResource("16_mlf80")
+type = 20
+
+[node name="FreezeChance" type="Node" parent="Stats"]
+script = ExtResource("16_mlf80")
+type = 21
+
+[node name="FreezeDuration" type="Node" parent="Stats"]
+script = ExtResource("16_mlf80")
+type = 22
+
+[node name="Knockback" type="Node" parent="Stats"]
+script = ExtResource("16_mlf80")
+type = 24
+
+[node name="PatchDuration" type="Node" parent="Stats"]
+script = ExtResource("16_mlf80")
+type = 25
+
+[node name="PatchShare" type="Node" parent="Stats"]
+script = ExtResource("16_mlf80")
+type = 26
+
+[node name="LineHits" type="Node" parent="Stats"]
+script = ExtResource("16_mlf80")
+type = 27
+
+[node name="SplitCount" type="Node" parent="Stats"]
+script = ExtResource("16_mlf80")
+type = 28
+
+[node name="SplitShare" type="Node" parent="Stats"]
+script = ExtResource("16_mlf80")
+type = 29
+
+[node name="PoisonSpread" type="Node" parent="Stats"]
+script = ExtResource("16_mlf80")
+type = 30
+
 [node name="EffectChance" type="Node" parent="Stats"]
 script = ExtResource("16_mlf80")
 type = 11
@@ -430,6 +488,10 @@ type = 13
 script = ExtResource("16_mlf80")
 type = 14
 
+[node name="ChainTargets" type="Node" parent="Stats"]
+script = ExtResource("16_mlf80")
+type = 17
+
 [node name="EvolveTree" type="Node" parent="."]
 script = ExtResource("16_dryip")
 upgrade_data = ExtResource("0_upgradedata")
@@ -444,13 +506,20 @@ selected_icon = ExtResource("2_1w6ba")
 new_damage_data_scene = ExtResource("19_jj2s0")
 icon = ExtResource("21_xun3a")
 info = "Physical"
+tiers = Array[ExtResource("tier_script")]([ExtResource("tier_physical_t2"), ExtResource("tier_physical_t3")])
 
 [node name="CriticalModifier" type="Node" parent="EvolveTree/EvolveBranch/PhysicalElementEvolveLeaf"]
 script = ExtResource("23_umsju")
 skill_name = "Beam"
 calculate_type = 0
 stat_type = 7
-value = 0.05
+value = 0.1
+
+[node name="DamageModifier" type="Node" parent="EvolveTree/EvolveBranch/PhysicalElementEvolveLeaf"]
+script = ExtResource("23_umsju")
+calculate_type = 1
+stat_type = 2
+value = 0.25
 
 [node name="EvolveBranch2" type="Node" parent="EvolveTree"]
 script = ExtResource("17_wlcq3")
@@ -465,6 +534,13 @@ new_animated_sprite_scene = ExtResource("21_q5eu1")
 new_damage_data_scene = ExtResource("22_3bcl3")
 icon = ExtResource("26_ljtca")
 info = "Fire"
+tiers = Array[ExtResource("tier_script")]([ExtResource("tier_fire_t2"), ExtResource("tier_fire_t3")])
+
+[node name="DamageModifier" type="Node" parent="EvolveTree/EvolveBranch2/FireElementEvolveLeaf"]
+script = ExtResource("23_umsju")
+calculate_type = 1
+stat_type = 2
+value = 0.15
 
 [node name="EvolveBranch3" type="Node" parent="EvolveTree"]
 script = ExtResource("17_wlcq3")
@@ -479,6 +555,13 @@ new_animated_sprite_scene = ExtResource("24_2h2rt")
 new_damage_data_scene = ExtResource("25_gnxl0")
 icon = ExtResource("31_qbv05")
 info = "Frost"
+tiers = Array[ExtResource("tier_script")]([ExtResource("tier_frost_t2"), ExtResource("tier_frost_t3")])
+
+[node name="DamageModifier" type="Node" parent="EvolveTree/EvolveBranch3/FrostElementEvolveLeaf"]
+script = ExtResource("23_umsju")
+calculate_type = 1
+stat_type = 2
+value = 0.1
 
 [node name="EvolveBranch4" type="Node" parent="EvolveTree"]
 script = ExtResource("17_wlcq3")
@@ -493,6 +576,7 @@ new_animated_sprite_scene = ExtResource("27_wav4t")
 new_damage_data_scene = ExtResource("28_3xrpj")
 icon = ExtResource("36_kci3i")
 info = "Poison"
+tiers = Array[ExtResource("tier_script")]([ExtResource("tier_poison_t2"), ExtResource("tier_poison_t3")])
 
 [node name="ModifierManager" type="Node" parent="."]
 script = ExtResource("39_8emt4")

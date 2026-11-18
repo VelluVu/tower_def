@@ -11,6 +11,13 @@ const SILENCED_MODULATE : Color = Color(0.55, 0.55, 0.7)
 
 var targets : Array[Node2D]
 var target : Node2D = null
+#which enemy in range it shoots (the selection panel cycles it); only for towers that pick targets
+var target_tactic : Utils.TargetTactic = Utils.TargetTactic.First
+
+## Bolter- and Beamer-like towers pick one target; a Nova bursts around itself and traps wait to be stepped on.
+var can_choose_target : bool :
+	get:
+		return skill != null and skill.skill_type in [Utils.SkillType.Projectile, Utils.SkillType.Beaming]
 #a screech: the tower sees no targets until the timer ends
 var silence_timer : CustomTimer = null
 
@@ -33,6 +40,8 @@ var behaviour_tree : BeehaveTree :
 
 func _ready() -> void:
 	super()
+	#the scene's shape is shared by every instance: without a copy one tower's range resizes them all
+	area_shape.shape = area_shape.shape.duplicate()
 	_connect_range_stats()
 	GameSignals.enemy_destroyed.connect(_on_enemy_destroyed)
 	#an enemy at the end point is freed, so it leaves the targets the same way
@@ -107,6 +116,13 @@ func get_first_target() -> Node2D:
 	if has_target:
 		return targets[0]
 	return null
+
+
+## The target its tactic picks among the enemies in range (First when it cannot choose).
+func get_tactic_target() -> Node2D:
+	if not has_target:
+		return null
+	return TargetPicker.pick(target_tactic if can_choose_target else Utils.TargetTactic.First, targets, global_position)
 
 
 func get_closest_target_to_end() -> Node2D:

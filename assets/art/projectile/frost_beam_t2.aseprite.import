@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bpnod3br1otsl"
+path="res://.godot/imported/frost_beam_t2.aseprite-53d71fbdb0695cfa4488e3cd5b2a68d0.res"
+
+[deps]
+
+source_file="res://assets/art/projectile/frost_beam_t2.aseprite"
+dest_files=["res://.godot/imported/frost_beam_t2.aseprite-53d71fbdb0695cfa4488e3cd5b2a68d0.res"]
+
+[params]
+

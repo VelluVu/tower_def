@@ -1,0 +1,26 @@
+# Source of frost_beam_t3.aseprite and .png: the T3 frost beam tile (tiles along the Line2D), drawn by
+# tools/sprite/parts/upgrade_fx.py over frost_beam.png: dithered glow rows above and below (two rings), a bright solid core.
+size = 16x16
+a = 2adbe7
+b = 2ce8f5
+c = 53ecf6
+d = 88f2f9
+e = aff6fb
+---
+@IDLE 100
+................
+................
+................
+.a..a..a..a..a..
+.a.a.a.a.a.a.a.a
+ed.............e
+.edd.........ced
+eeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeee
+.....eed.edc....
+.......eed......
+.a.a.a.a.a.a.a.a
+.a..a..a..a..a..
+................
+................
+................

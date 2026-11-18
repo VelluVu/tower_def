@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dlv1r884urbsl"
+path="res://.godot/imported/xp_particle.aseprite-273ed9dfd8692b37a098bd50786a57e6.res"
+
+[deps]
+
+source_file="res://assets/art/xp_particle.aseprite"
+dest_files=["res://.godot/imported/xp_particle.aseprite-273ed9dfd8692b37a098bd50786a57e6.res"]
+
+[params]
+

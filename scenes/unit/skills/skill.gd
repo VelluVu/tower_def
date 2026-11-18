@@ -114,6 +114,8 @@ func activate() -> void:
 	#print(name, " is active ")
 	if activate_sound != null:
 		GameSignals.skill_activated.emit(self)
+	if not is_continuous and actor is Building:
+		GameSignals.tower_attacked.emit(self)
 
 	#is ready is enabled elsewhere for continuous skill and it is active until is ready change
 	if is_continuous:

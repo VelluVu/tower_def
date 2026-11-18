@@ -8,6 +8,8 @@ var is_overtime : bool = false
 #damage from an element reaction, which sets off no reaction itself
 var is_reaction : bool = false
 var is_shielding : bool = false
+#a splash from another hit, which splashes no further
+var is_splash : bool = false
 var is_critical : bool = false
 
 var is_healing : bool = false :

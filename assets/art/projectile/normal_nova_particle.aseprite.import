@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://jq8wtqeslqfd"
+path="res://.godot/imported/normal_nova_particle.aseprite-cf266ad797090be5b91ee4790a8274a5.res"
+
+[deps]
+
+source_file="res://assets/art/projectile/normal_nova_particle.aseprite"
+dest_files=["res://.godot/imported/normal_nova_particle.aseprite-cf266ad797090be5b91ee4790a8274a5.res"]
+
+[params]
+

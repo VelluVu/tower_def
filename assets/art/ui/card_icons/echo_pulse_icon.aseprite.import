@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cnbqvdc325wtt"
+path="res://.godot/imported/echo_pulse_icon.aseprite-771e000111109b8c38670cda4e6868e7.res"
+
+[deps]
+
+source_file="res://assets/art/ui/card_icons/echo_pulse_icon.aseprite"
+dest_files=["res://.godot/imported/echo_pulse_icon.aseprite-771e000111109b8c38670cda4e6868e7.res"]
+
+[params]
+

@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://b6e7ckgpdjsh2"
+path="res://.godot/imported/frost_spark_particle.aseprite-2d91227929938e4ff4d842406c80d63f.res"
+
+[deps]
+
+source_file="res://assets/art/projectile/frost_spark_particle.aseprite"
+dest_files=["res://.godot/imported/frost_spark_particle.aseprite-2d91227929938e4ff4d842406c80d63f.res"]
+
+[params]
+

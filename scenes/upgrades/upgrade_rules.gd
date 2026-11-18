@@ -16,6 +16,8 @@ const FIRST_LEVEL_XP : float = 150.0
 const XP_STEP : float = 20.0
 #the share of a card's value that still counts past the stat's soft cap
 const SOFT_CAP_EFFICIENCY : float = 0.5
+#a rare card's chance to be drawn into an offer, against 1.0 for a common one
+const RARE_OFFER_WEIGHT : float = 0.35
 
 
 ## XP for one kill before the XP cards: 2 per max health, times the enemy's own multiplier
@@ -59,30 +61,45 @@ static func fits_tower(resource : EvolveResource, skill : Skill, element : Utils
 		return false
 
 	if skill == null:
-		return resource.modifier_type != Utils.ModifierType.SkillModifier
+		return resource.modifier_type != Utils.ModifierType.SkillModifier and resource.skill_type == 0
 
-	if skill.skill_type == Utils.SkillType.Melee and resource.modify_stat_type == Utils.StatType.AttackRange:
+	#a trap's range is its trigger area, not a reach to grow or shrink
+	if skill.skill_type == Utils.SkillType.Melee and (resource.modify_stat_type == Utils.StatType.AttackRange
+			or (resource.has_drawback and resource.drawback_stat_type == Utils.StatType.AttackRange)):
 		return false
 
 	if skill.base_active_time <= 0.0 and resource.modify_stat_type == Utils.StatType.ActiveDuration:
 		return false
 
-	if resource.modifier_type == Utils.ModifierType.SkillModifier:
+	#skill_type flags limit any card to those skills, unit stat cards too (the mechanic cards)
+	if resource.modifier_type == Utils.ModifierType.SkillModifier or resource.skill_type != 0:
 		return has_any_flag(resource.skill_type, skill.skill_type)
 
 	return true
 
 
-## upgrades_per_tier upgrades come before each evolve tier. A tier without data stays locked
-## and the upgrades go on past it.
-static func next_gold_step(upgrades_bought : int, tiers_evolved : int, upgrade_count : int, tier_count : int, upgrades_per_tier : int) -> GoldStep:
-	if tiers_evolved < tier_count and upgrades_bought >= (tiers_evolved + 1) * upgrades_per_tier:
+## A weighted draw without replacement (Efraimidis-Spirakis): sort the pool by this key, highest first.
+## roll is a random number in (0, 1); passed in so the rule can be tested.
+static func offer_key(resource : EvolveResource, roll : float) -> float:
+	var weight : float = RARE_OFFER_WEIGHT if resource.rarity == EvolveResource.Rarity.Rare else 1.0
+	return pow(roll, 1.0 / weight)
+
+
+## upgrades_before_next_tier upgrades come before the next evolve tier (BuildingUpgradeData.upgrades_before_tier).
+## A tier without data stays out and the upgrades go on past it.
+static func next_gold_step(upgrades_bought : int, tiers_evolved : int, upgrade_count : int, tier_count : int, upgrades_before_next_tier : int) -> GoldStep:
+	if tiers_evolved < tier_count and upgrades_bought >= upgrades_before_next_tier:
 		return GoldStep.Evolve
 
 	if upgrades_bought < upgrade_count:
 		return GoldStep.Upgrade
 
 	return GoldStep.Max
+
+
+## The extra gold a building with a price step costs when buildings_on_map stepped buildings are placed.
+static func price_step_extra(step : float, buildings_on_map : int) -> float:
+	return step * buildings_on_map
 
 
 ## Whole gold, rounded up so a cheap building never gets a free step.

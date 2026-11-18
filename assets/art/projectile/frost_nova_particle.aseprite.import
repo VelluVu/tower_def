@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dgjhf3bridgm"
+path="res://.godot/imported/frost_nova_particle.aseprite-ba58fd9feafee7729d00572a91bf35e4.res"
+
+[deps]
+
+source_file="res://assets/art/projectile/frost_nova_particle.aseprite"
+dest_files=["res://.godot/imported/frost_nova_particle.aseprite-ba58fd9feafee7729d00572a91bf35e4.res"]
+
+[params]
+

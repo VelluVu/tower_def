@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://2brbp8s6m3fg"
+path="res://.godot/imported/physical_spark_particle.aseprite-a6b885a4872d3ce0364b1653fdd1e0d2.res"
+
+[deps]
+
+source_file="res://assets/art/projectile/physical_spark_particle.aseprite"
+dest_files=["res://.godot/imported/physical_spark_particle.aseprite-a6b885a4872d3ce0364b1653fdd1e0d2.res"]
+
+[params]
+

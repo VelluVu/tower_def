@@ -19,6 +19,10 @@
 [ext_resource type="Script" path="res://scenes/unit/skills/damage_data.gd" id="17_35ks3"]
 [ext_resource type="Script" path="res://scenes/unit/modifier_manager.gd" id="18_l28n7"]
 [ext_resource type="Resource" path="res://scenes/upgrades/building_upgrades/wall_upgrade_data.tres" id="0_upgradedata"]
+[ext_resource type="SpriteFrames" path="res://scenes/unit/building/wall_stages/wall_palisade_frames.tres" id="stage_palisade"]
+[ext_resource type="SpriteFrames" path="res://scenes/unit/building/wall_stages/wall_stone_frames.tres" id="stage_stone"]
+[ext_resource type="SpriteFrames" path="res://scenes/unit/building/wall_stages/wall_battlements_frames.tres" id="stage_battlements"]
+[ext_resource type="SpriteFrames" path="res://scenes/unit/building/wall_stages/wall_castle_frames.tres" id="stage_castle"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_4ih23"]
 
@@ -264,6 +268,7 @@ script = ExtResource("1_kgbnu")
 closest_point_distance_limit = 1.0
 skill = NodePath("Skill")
 icon = ExtResource("2_0awu8")
+stage_frames = Array[SpriteFrames]([ExtResource("stage_palisade"), ExtResource("stage_stone"), ExtResource("stage_battlements"), ExtResource("stage_castle")])
 
 [node name="EvolveGlow" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
@@ -291,7 +296,7 @@ shape = SubResource("RectangleShape2D_8pj8t")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 material = ExtResource("3_gn0ww")
-sprite_frames = SubResource("SpriteFrames_nxgwh")
+sprite_frames = ExtResource("stage_palisade")
 animation = &"CONNECTOR_LD"
 script = ExtResource("5_dl2w2")
 metadata/_aseprite_wizard_config_ = {

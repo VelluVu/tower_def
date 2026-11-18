@@ -1,0 +1,198 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/art/units/building/wall/wall_castle.png" id="1_sheet"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_connector_lrdu"]
+atlas = ExtResource("1_sheet")
+region = Rect2(0, 0, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_connector_lrd"]
+atlas = ExtResource("1_sheet")
+region = Rect2(18, 0, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_connector_lru"]
+atlas = ExtResource("1_sheet")
+region = Rect2(36, 0, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_connector_lu"]
+atlas = ExtResource("1_sheet")
+region = Rect2(54, 0, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_connector_lud"]
+atlas = ExtResource("1_sheet")
+region = Rect2(0, 18, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_connector_ld"]
+atlas = ExtResource("1_sheet")
+region = Rect2(18, 18, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_connector_rud"]
+atlas = ExtResource("1_sheet")
+region = Rect2(36, 18, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_connector_rd"]
+atlas = ExtResource("1_sheet")
+region = Rect2(54, 18, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_connector_ur"]
+atlas = ExtResource("1_sheet")
+region = Rect2(0, 36, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_connector_x"]
+atlas = ExtResource("1_sheet")
+region = Rect2(18, 36, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_horizontal"]
+atlas = ExtResource("1_sheet")
+region = Rect2(36, 36, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_horizontal_end_r"]
+atlas = ExtResource("1_sheet")
+region = Rect2(54, 36, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_horizontal_end_l"]
+atlas = ExtResource("1_sheet")
+region = Rect2(0, 54, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vertical"]
+atlas = ExtResource("1_sheet")
+region = Rect2(18, 54, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vertical_end_u"]
+atlas = ExtResource("1_sheet")
+region = Rect2(36, 54, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vertical_end_d"]
+atlas = ExtResource("1_sheet")
+region = Rect2(54, 54, 18, 18)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_connector_lrdu")
+}],
+"loop": false,
+"name": &"CONNECTOR_LRDU",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_connector_lrd")
+}],
+"loop": false,
+"name": &"CONNECTOR_LRD",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_connector_lru")
+}],
+"loop": false,
+"name": &"CONNECTOR_LRU",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_connector_lu")
+}],
+"loop": false,
+"name": &"CONNECTOR_LU",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_connector_lud")
+}],
+"loop": false,
+"name": &"CONNECTOR_LUD",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_connector_ld")
+}],
+"loop": false,
+"name": &"CONNECTOR_LD",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_connector_rud")
+}],
+"loop": false,
+"name": &"CONNECTOR_RUD",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_connector_rd")
+}],
+"loop": false,
+"name": &"CONNECTOR_RD",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_connector_ur")
+}],
+"loop": false,
+"name": &"CONNECTOR_UR",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_connector_x")
+}],
+"loop": false,
+"name": &"CONNECTOR_X",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_horizontal")
+}],
+"loop": false,
+"name": &"HORIZONTAL",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_horizontal_end_r")
+}],
+"loop": false,
+"name": &"HORIZONTAL_END_R",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_horizontal_end_l")
+}],
+"loop": false,
+"name": &"HORIZONTAL_END_L",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vertical")
+}],
+"loop": false,
+"name": &"VERTICAL",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vertical_end_u")
+}],
+"loop": false,
+"name": &"VERTICAL_END_U",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vertical_end_d")
+}],
+"loop": false,
+"name": &"VERTICAL_END_D",
+"speed": 10.0
+}]

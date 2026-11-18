@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cdp02j4i0yxfc"
+path="res://.godot/imported/area_damage_icon.aseprite-43202b0eb0569cfbbfb49e181d437e7a.res"
+
+[deps]
+
+source_file="res://assets/art/ui/card_icons/area_damage_icon.aseprite"
+dest_files=["res://.godot/imported/area_damage_icon.aseprite-43202b0eb0569cfbbfb49e181d437e7a.res"]
+
+[params]
+

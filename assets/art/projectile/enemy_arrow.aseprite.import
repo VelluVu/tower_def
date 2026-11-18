@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://70qj2ry7tuhw"
+path="res://.godot/imported/enemy_arrow.aseprite-7111d6634dced0a70691592e2e26f285.res"
+
+[deps]
+
+source_file="res://assets/art/projectile/enemy_arrow.aseprite"
+dest_files=["res://.godot/imported/enemy_arrow.aseprite-7111d6634dced0a70691592e2e26f285.res"]
+
+[params]
+

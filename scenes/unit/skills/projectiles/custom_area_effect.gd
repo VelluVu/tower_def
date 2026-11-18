@@ -62,6 +62,11 @@ func _set_is_old(new_value : bool) -> void:
 
 
 func _ready() -> void:
+	#launch() rewrites the burst animation to the tower's range and time; the scene's library is shared by every
+	#burst, so each gets its own copy or two Novas bursting at once take each other's radius
+	var library : AnimationLibrary = animation_player.get_animation_library(&"")
+	animation_player.remove_animation_library(&"")
+	animation_player.add_animation_library(&"", library.duplicate(true))
 	area_entered.connect(_on_enemy_hit)
 	emitter.finished.connect(_on_emitter_finished)
 	GameSignals.time_scale_change.connect(_on_time_scale_change)

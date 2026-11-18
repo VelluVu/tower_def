@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://crc0mwvmakq0a"
+path="res://.godot/imported/normal_beam.aseprite-b60e6833067b56f4ec0dbcafc61d43dd.res"
+
+[deps]
+
+source_file="res://assets/art/projectile/normal_beam.aseprite"
+dest_files=["res://.godot/imported/normal_beam.aseprite-b60e6833067b56f4ec0dbcafc61d43dd.res"]
+
+[params]
+

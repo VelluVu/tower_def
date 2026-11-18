@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cwmw4nqyijyfo"
+path="res://.godot/imported/melee_damage_icon.aseprite-83d19892d779ee46ff10d53349f873ac.res"
+
+[deps]
+
+source_file="res://assets/art/ui/card_icons/melee_damage_icon.aseprite"
+dest_files=["res://.godot/imported/melee_damage_icon.aseprite-83d19892d779ee46ff10d53349f873ac.res"]
+
+[params]
+

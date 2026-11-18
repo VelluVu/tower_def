@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bjxpao0qgc46u"
+path="res://.godot/imported/fire_spark_particle.aseprite-d53d35f95b207314d9bafbca1758bed3.res"
+
+[deps]
+
+source_file="res://assets/art/projectile/fire_spark_particle.aseprite"
+dest_files=["res://.godot/imported/fire_spark_particle.aseprite-d53d35f95b207314d9bafbca1758bed3.res"]
+
+[params]
+

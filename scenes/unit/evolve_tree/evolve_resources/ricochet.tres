@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="EvolveResource" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scenes/unit/evolve_tree/evolve_resource.gd" id="1_evolve"]
+[ext_resource type="Texture2D" path="res://assets/art/ui/card_icons/ricochet_icon.png" id="2_icon"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_evolve")
+evolve_icon = ExtResource("2_icon")
+max_picks = 2
+modifier_type = 0
+skill_type = 2
+elements = 15
+modify_stat_type = 15
+modify_type = 0
+is_randomized_modify_value = false
+is_percent = false
+modify_value = 1.0
+evolve_name = "Ricochet"
+rarity = 1
+description = "Bolts bounce on to one more enemy"

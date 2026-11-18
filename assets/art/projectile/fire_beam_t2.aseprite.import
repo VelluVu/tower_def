@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dtw28ef2xji26"
+path="res://.godot/imported/fire_beam_t2.aseprite-1402e49a03d3944746f9fbf3000ebd78.res"
+
+[deps]
+
+source_file="res://assets/art/projectile/fire_beam_t2.aseprite"
+dest_files=["res://.godot/imported/fire_beam_t2.aseprite-1402e49a03d3944746f9fbf3000ebd78.res"]
+
+[params]
+

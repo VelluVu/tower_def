@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cwclmsscyrl70"
+path="res://.godot/imported/attack_speed_icon.aseprite-1009f137b695fe5e6e186cfeb5ea894d.res"
+
+[deps]
+
+source_file="res://assets/art/ui/card_icons/attack_speed_icon.aseprite"
+dest_files=["res://.godot/imported/attack_speed_icon.aseprite-1009f137b695fe5e6e186cfeb5ea894d.res"]
+
+[params]
+

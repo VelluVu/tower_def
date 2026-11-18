@@ -1,0 +1,14 @@
+# Source of enemy_arrow.aseprite and .png: the archer's arrow, pointing right (EnemyShot rotates it along its
+# flight). White fletching, b86f50 shaft, steel head. Drawn by tools/sprite/parts/enemy_shots.py.
+size = 12x5
+w = ffffff
+l = b86f50
+A = c0cbdc
+B = 8b9bb4
+---
+@IDLE 100
+............
+.w.......A..
+wwlllllllBA.
+.w.......A..
+............

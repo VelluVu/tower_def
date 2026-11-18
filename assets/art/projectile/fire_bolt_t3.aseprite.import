@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://br3vwdh71ia1r"
+path="res://.godot/imported/fire_bolt_t3.aseprite-1ecac61699b8b2fccbb1f3de0620480f.res"
+
+[deps]
+
+source_file="res://assets/art/projectile/fire_bolt_t3.aseprite"
+dest_files=["res://.godot/imported/fire_bolt_t3.aseprite-1ecac61699b8b2fccbb1f3de0620480f.res"]
+
+[params]
+

@@ -14,6 +14,15 @@ extends Resource
 #one ratio per evolve tier
 @export var evolve_cost_ratios : Array[float] = [1.5, 2.5, 4.0]
 @export var upgrades_per_tier : int = 2
+#upgrades bought before each tier (T1, T2, T3); empty = upgrades_per_tier before each one
+@export var tier_upgrades : Array[int] = []
+
+
+## Upgrades bought before tier tier_index (0 = T1) can be evolved.
+func upgrades_before_tier(tier_index : int) -> int:
+	if tier_index < tier_upgrades.size():
+		return tier_upgrades[tier_index]
+	return (tier_index + 1) * upgrades_per_tier
 #true: one purchase upgrades every building of the type (walls); false: only the selected building
 @export var is_per_type : bool = false
 @export var upgrade_icon : Texture2D = null

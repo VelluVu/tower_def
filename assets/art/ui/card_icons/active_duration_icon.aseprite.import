@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://fwvbebckvwnx"
+path="res://.godot/imported/active_duration_icon.aseprite-f08a8409c86bf19614fa6d149f760800.res"
+
+[deps]
+
+source_file="res://assets/art/ui/card_icons/active_duration_icon.aseprite"
+dest_files=["res://.godot/imported/active_duration_icon.aseprite-f08a8409c86bf19614fa6d149f760800.res"]
+
+[params]
+

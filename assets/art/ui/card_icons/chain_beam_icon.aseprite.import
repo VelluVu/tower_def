@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bq7areaitgs1p"
+path="res://.godot/imported/chain_beam_icon.aseprite-0e719eaa9fa2a262890fa05859aac33a.res"
+
+[deps]
+
+source_file="res://assets/art/ui/card_icons/chain_beam_icon.aseprite"
+dest_files=["res://.godot/imported/chain_beam_icon.aseprite-0e719eaa9fa2a262890fa05859aac33a.res"]
+
+[params]
+

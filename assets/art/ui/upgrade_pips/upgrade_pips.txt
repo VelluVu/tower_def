@@ -1,0 +1,66 @@
+# Source of upgrade_pips.aseprite and .png: the pips under an upgraded building (UpgradePips), drawn by
+# tools/sprite/parts/upgrade_fx.py. GOLD = one upgrade since the last tier; PHYSICAL/FIRE/FROST/POISON = a tier,
+# the element's colours in a white ring so a Fire pip reads on the red Fire tower. 5x5 pips, 1 px margin.
+size = 7x7
+w = ffffff
+k = 181425
+y = fee761
+g = feae34
+G = f77622
+0 = 2effb8
+1 = 06c374
+2 = 107338
+3 = f6757a
+4 = e43b44
+5 = a22633
+6 = 2ce8f5
+7 = 0099db
+8 = 124e89
+9 = 63c74d
+A = 3e8948
+B = 265c42
+---
+@GOLD 100
+.......
+..ggg..
+.gyygg.
+.gyggG.
+.ggggG.
+..GGG..
+.......
+
+@PHYSICAL 100
+.......
+..www..
+.w011w.
+.w012w.
+.w122w.
+..www..
+.......
+
+@FIRE 100
+.......
+..www..
+.w344w.
+.w345w.
+.w455w.
+..www..
+.......
+
+@FROST 100
+.......
+..www..
+.w677w.
+.w678w.
+.w788w.
+..www..
+.......
+
+@POISON 100
+.......
+..www..
+.w9AAw.
+.w9ABw.
+.wABBw.
+..www..
+.......

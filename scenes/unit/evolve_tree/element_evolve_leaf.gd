@@ -13,6 +13,8 @@ const POISON_COLOR_HEX : int = 0x92ff7e
 @export var new_beam_texture : CompressedTexture2D = null
 @export var new_animated_sprite_scene : PackedScene = null
 @export var new_damage_data_scene : PackedScene = null
+## The tiers after this element, in order (T2, T3), bought one at a time.
+@export var tiers : Array[EvolveTierData] = []
 @export var evolve_glow_color : Color = Color.WHITE :
 	get:
 		match(evolve_element):
@@ -59,7 +61,22 @@ func evolve(actor : Node) -> void:
 			actor.skill.replace_damage_data(new_damage_data_scene)
 
 		actor.evolve_glow.modulate = evolve_glow_color
-		actor.evolve_tree.evolve_element = evolve_element
+		actor.evolve_tree.choose_element(evolve_element)
 		
 		for modifier in modifiers:
 			actor.modifier_manager.add_modifier(modifier.get_modifier_data())
+
+
+## Tier index 0 is T2. The element itself (T1) was applied by evolve.
+func evolve_tier(actor : Building, tier_index : int) -> void:
+	if tier_index < 0 or tier_index >= tiers.size():
+		return
+
+	var tier : EvolveTierData = tiers[tier_index]
+	for resource in tier.upgrade_resources:
+		actor.modifier_manager.add_modifier(resource.get_modifier_data())
+
+	if tier.sprite_frames != null:
+		var current_animation : StringName = actor.animation_control.animation
+		actor.animation_control.sprite_frames = tier.sprite_frames
+		actor.animation_control.play_animation(current_animation)

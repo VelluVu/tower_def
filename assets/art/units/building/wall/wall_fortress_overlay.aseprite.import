@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cx6cwcgu5iwe6"
+path="res://.godot/imported/wall_fortress_overlay.aseprite-30d4fe1154ad8768c1d080a528661eab.res"
+
+[deps]
+
+source_file="res://assets/art/units/building/wall/wall_fortress_overlay.aseprite"
+dest_files=["res://.godot/imported/wall_fortress_overlay.aseprite-30d4fe1154ad8768c1d080a528661eab.res"]
+
+[params]
+

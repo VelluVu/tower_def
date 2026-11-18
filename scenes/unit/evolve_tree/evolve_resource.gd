@@ -2,8 +2,11 @@ class_name EvolveResource
 extends Resource
 
 ## Buildings: a stat modifier on every building the card fits. Gold: gold once, when picked.
-## Xp: more XP from every kill for the rest of the level.
-enum CardTarget { Buildings, Gold, Xp }
+## Xp: more XP from every kill for the rest of the level. MazeDamage: enemies in the maze (next to a
+## building) take more damage from towers. MazeSlow: enemies in the maze walk slower.
+enum CardTarget { Buildings, Gold, Xp, MazeDamage, MazeSlow }
+## Rare cards come up less often in an offer (UpgradeRules.RARE_OFFER_WEIGHT) and are marked on the card.
+enum Rarity { Common, Rare }
 
 @export var evolve_icon : CompressedTexture2D = null
 @export var evolve_level_reguirement : int = 0
@@ -27,6 +30,19 @@ enum CardTarget { Buildings, Gold, Xp }
 #base value; each UpgradeCard rolls its own bonus from it (UpgradeRules.roll_value)
 @export var modify_value : float = 0.1
 @export var evolve_name : String = "All Damage"
+@export var rarity : Rarity = Rarity.Common
+## Shown under the name instead of the value (mechanic cards, whose number alone says little).
+## "{value}" in it shows the card's value.
+@export_multiline var description : String = ""
+
+@export_group("Drawback")
+## A trade-off card: the bonus comes with this penalty on another stat, never capped, never rolled.
+@export var has_drawback : bool = false
+@export var drawback_stat_type : Utils.StatType = Utils.StatType.AttackRange
+@export var drawback_modify_type : Utils.ModifyType = Utils.ModifyType.Additive
+#negative: -0.2 with Additive = 20% less
+@export var drawback_value : float = -0.2
+@export var drawback_is_percent : bool = true
 
 func get_modifier_data() -> ModifierData:
 	var modifier_data : ModifierData = ModifierData.new()
@@ -36,6 +52,15 @@ func get_modifier_data() -> ModifierData:
 	modifier_data.value = modify_value
 	modifier_data.skill_name = skill_name
 	modifier_data.skill_type = skill_type
+	return modifier_data
+
+
+func get_drawback_modifier_data() -> ModifierData:
+	var modifier_data : ModifierData = ModifierData.new()
+	modifier_data.modifier_type = Utils.ModifierType.StatModifier
+	modifier_data.stat_type = drawback_stat_type
+	modifier_data.calculate_type = drawback_modify_type
+	modifier_data.value = drawback_value
 	return modifier_data
 
 

@@ -51,6 +51,11 @@ const SKILL_DAMAGE_DATA_NODE_NAME : String = "DamageData"
 
 @export var icon : Texture2D = null
 @export var astar_weight : float = 100.0
+## Gold added to this building's price for every building with a price step already on the map
+## (the towers), so a big build costs more; upgrades keep using the base price.
+@export var price_step : float = 0.0
+
+var price_step_modifier : ModifierData = null
 
 var is_dead : bool :
 	get:
@@ -102,6 +107,12 @@ func take_damage(damage_data : DamageData) -> void:
 	if is_dead:
 		return
 		
+	#talents: weakened attackers hit softer, armoured walls take less
+	if damage_data.damage > 0.0 and level != null and level.talents != null:
+		if damage_data.source is Enemy:
+			damage_data.damage *= 1.0 - level.talents.get_weakness(damage_data.source)
+		if self is Wall:
+			damage_data.damage *= 1.0 - level.talents.get_wall_armor(damage_data)
 	var health : Stat = stats.get_stat(Utils.StatType.Health)
 	var maxHealth : Stat = stats.get_stat(Utils.StatType.MaxHealth)
 	health.value -= damage_data.damage

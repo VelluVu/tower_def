@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bss77g15f8brg"
+path="res://.godot/imported/frost_element_icon.aseprite-d2c7ca7e0decf43a3a6fd8b0946f0b15.res"
+
+[deps]
+
+source_file="res://assets/art/ui/frost_element_icon.aseprite"
+dest_files=["res://.godot/imported/frost_element_icon.aseprite-d2c7ca7e0decf43a3a6fd8b0946f0b15.res"]
+
+[params]
+

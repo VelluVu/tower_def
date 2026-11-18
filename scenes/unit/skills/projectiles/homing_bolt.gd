@@ -5,6 +5,9 @@ extends Area2D
 signal hits_enemy_body(body)
 signal finished(node : Node2D)
 
+#how far a ricochet looks for the next enemy, 3 tiles
+const RICOCHET_RANGE : float = 48.0
+
 @export var projectile_name : String = "HomingBolt"
 @export var projectile_speed : float = 100
 @export var live_time = 10.0
@@ -18,6 +21,8 @@ var is_old: bool = false
 var is_hit : bool = false
 var target_is_destroyed : bool = false
 var current_pierced : int = 0
+#bodies this launch already hit: a ricochet never goes back to them
+var hit_bodies : Array[Node2D] = []
 var skill_data : SkillData = null
 
 var current_time_scale : float = 1.0
@@ -74,18 +79,37 @@ func _on_area_entered(area: Area2D) -> void:
 
 
 func _hit(body : Node2D) -> void:
-	if is_hit:
+	if is_hit or hit_bodies.has(body):
 		return
-		
+
+	hit_bodies.append(body)
 	current_pierced += 1
-	
-	if current_pierced > pierce:
-		is_hit = true
-		_change_collision_state(false)
-		animation_control.play_animation(GlobalAnimationNames.DEATH_ANIMATION)
-		
+
+	if current_pierced > pierce + skill_data.pierces:
+		#picked before the damage: the hit can kill the body, and the bolt must not fade with it
+		var next_target : Enemy = _ricochet_target(body)
+
+		if next_target != null:
+			skill_data.ricochets -= 1
+			skill_data.target = next_target
+			current_pierced = 0
+		else:
+			is_hit = true
+			_change_collision_state(false)
+			animation_control.play_animation(GlobalAnimationNames.DEATH_ANIMATION)
+	elif body == skill_data.target:
+		#pierced: on through its target in a straight line, to the next enemy behind it
+		target_is_destroyed = true
+
 	body.take_damage(skill_data.damage_data)
 	hits_enemy_body.emit(body)
+
+
+func _ricochet_target(body : Node2D) -> Enemy:
+	if skill_data.ricochets <= 0:
+		return null
+
+	return EnemyQuery.closest_enemy(get_tree(), body.global_position, RICOCHET_RANGE, hit_bodies)
 
 
 func _on_animation_finished() -> void:
@@ -121,6 +145,8 @@ func _change_collision_state(state : bool) -> void:
 func _activate() -> void:
 	_on_time_scale_change(Utils.game_control.time_scale)
 	is_hit = false
+	current_pierced = 0
+	hit_bodies.clear()
 	show()
 	animation_control.play_animation(GlobalAnimationNames.WALK_ANIMATION)
 	target_is_destroyed = false

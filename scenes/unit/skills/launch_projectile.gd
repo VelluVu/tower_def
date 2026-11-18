@@ -3,12 +3,18 @@ extends Skill
 
 
 const STOP_ATTACK_DELAY : float = 1.0
+#seconds between an attack and each of its extra shots (the ExtraShots stat), at 1x speed
+const EXTRA_SHOT_DELAY : float = 0.4
+#an extra shot hits for this share of the attack's damage
+const EXTRA_SHOT_DAMAGE_SHARE : float = 0.5
 
 @export var projectile_scene : PackedScene
 
 var launched_projectiles : Array[Node2D]
 var projectile_pool : Array[Node2D]
 var count : int = 0
+var extra_shot_timer : CustomTimer = null
+var extra_shots_left : int = 0
 
 
 func use(_target : Node2D) -> void:
@@ -27,15 +33,22 @@ func new_projectile(new_scene : PackedScene) -> void:
 	projectile_scene = new_scene
 
 
+func _ready() -> void:
+	super()
+	extra_shot_timer = CustomTimer.new()
+	extra_shot_timer.one_shot = true
+	add_child(extra_shot_timer)
+	extra_shot_timer.unscaled_base_value = EXTRA_SHOT_DELAY
+	extra_shot_timer.timeout.connect(_on_extra_shot_timer_timeout)
+
+
 func activate() -> void:
 	super()
-	var projectile : Node2D = _get_projectile()
-	var skill_data = SkillData.new()
-	skill_data.damage_data = damage_data
-	skill_data.target = target
-	skill_data.active_time = active_timer.wait_time
-	skill_data.max_range = stats.get_range_in_tiles()
-	projectile.launch(skill_data)
+	_launch()
+	#the ExtraShots stat (mechanic card): the same attack again a moment later, no extra cooldown
+	extra_shots_left = roundi(actor.stats.get_stat_value(Utils.StatType.ExtraShots))
+	if extra_shots_left > 0:
+		extra_shot_timer.start()
 
 	#without a cast the attack animation gets a moment before stopping; the timer pauses with the game,
 	#follows the game speed, and its connection is dropped if the tower is sold meanwhile
@@ -44,6 +57,38 @@ func activate() -> void:
 		return
 
 	_play_stop_attack_animation()
+
+
+func _launch(damage_share : float = 1.0) -> void:
+	var projectile : Node2D = _get_projectile()
+	var skill_data = SkillData.new()
+	skill_data.damage_data = damage_data
+	skill_data.damage_data.damage *= damage_share
+	skill_data.target = target
+	skill_data.active_time = active_timer.wait_time
+	skill_data.max_range = stats.get_range_in_tiles()
+	skill_data.ricochets = roundi(actor.stats.get_stat_value(Utils.StatType.Ricochet))
+	skill_data.pierces = roundi(actor.stats.get_stat_value(Utils.StatType.Pierce))
+	projectile.launch(skill_data)
+
+
+func _on_extra_shot_timer_timeout() -> void:
+	if extra_shots_left <= 0 or not is_valid_target:
+		extra_shots_left = 0
+		return
+
+	extra_shots_left -= 1
+	_launch(EXTRA_SHOT_DAMAGE_SHARE)
+
+	if extra_shots_left > 0:
+		extra_shot_timer.start()
+
+
+func stop() -> void:
+	super()
+	extra_shots_left = 0
+	if extra_shot_timer != null:
+		extra_shot_timer.stop()
 
 
 func _play_stop_attack_animation() -> void:

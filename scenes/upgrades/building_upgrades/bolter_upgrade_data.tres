@@ -43,3 +43,4 @@ evolved_upgrade_resources = Array[ExtResource("2_evolve")]([SubResource("Resourc
 upgrade_cost_ratios = Array[float]([0.5, 0.75, 1.0])
 evolve_cost_ratios = Array[float]([1.5, 2.5, 4.0])
 upgrades_per_tier = 2
+tier_upgrades = Array[int]([2, 3, 3])

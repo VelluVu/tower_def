@@ -15,7 +15,9 @@ var targets : Array[Node2D]
 
 func _ready() -> void:
 	super()
-	
+	#the scene's shape is shared by every instance: without a copy one trap's range resizes them all
+	area_shape.shape = area_shape.shape.duplicate()
+
 	var stat : Stat = stats.get_stat(Utils.StatType.AttackRange)
 	
 	if not stat.changed.is_connected(_on_attack_range_stat_changed):

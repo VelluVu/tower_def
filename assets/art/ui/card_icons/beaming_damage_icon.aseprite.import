@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://blxmhxvjtfws0"
+path="res://.godot/imported/beaming_damage_icon.aseprite-1ab32cf78c69dcdf3a88b9b95463cb40.res"
+
+[deps]
+
+source_file="res://assets/art/ui/card_icons/beaming_damage_icon.aseprite"
+dest_files=["res://.godot/imported/beaming_damage_icon.aseprite-1ab32cf78c69dcdf3a88b9b95463cb40.res"]
+
+[params]
+

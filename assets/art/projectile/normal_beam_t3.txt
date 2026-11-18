@@ -1,0 +1,26 @@
+# Source of normal_beam_t3.aseprite and .png: the T3 normal beam tile (tiles along the Line2D), drawn by
+# tools/sprite/parts/upgrade_fx.py over normal_beam.png: dithered glow rows above and below (two rings), a bright solid core.
+size = 16x16
+a = 56eeb1
+b = 5efabb
+c = 8dfbce
+d = cdfdea
+e = fcfffe
+---
+@IDLE 100
+................
+................
+................
+.a..a..a..a..a..
+.a.a.a.a.a.a.a.a
+ed.............e
+.edd.........ced
+eeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeee
+.....eed.edc....
+.......eed......
+.a.a.a.a.a.a.a.a
+.a..a..a..a..a..
+................
+................
+................

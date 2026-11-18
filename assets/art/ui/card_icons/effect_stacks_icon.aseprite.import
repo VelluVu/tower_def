@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://b5ict2khkte1i"
+path="res://.godot/imported/effect_stacks_icon.aseprite-5708914354f52cbb674b90a9e7b0e894.res"
+
+[deps]
+
+source_file="res://assets/art/ui/card_icons/effect_stacks_icon.aseprite"
+dest_files=["res://.godot/imported/effect_stacks_icon.aseprite-5708914354f52cbb674b90a9e7b0e894.res"]
+
+[params]
+

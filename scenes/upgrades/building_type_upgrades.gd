@@ -9,6 +9,27 @@ extends Node
 ## The Level creates it before LevelUpgrades, so a new per-type building gets its upgrades before the XP cards check it.
 
 const UPGRADE_TITLE_TEXT : String = "Up %d"
+#a wall's element: bought per wall once the shared wall line is at Up 2 (the design doc's Wall evolves)
+const WALL_ELEMENT_MIN_UPGRADES : int = 2
+const WALL_ELEMENT_PRICE : float = 2.0
+const FORTRESS_TREE : StringName = &"building"
+#wall element tiers: T2 at shared Up 4, T3 at Up 6, each behind its tree's wall node, bought once for every wall of the element
+const WALL_TIER_UPGRADES : Array[int] = [0, 0, 4, 6]
+const WALL_TIER_PRICES : Array[float] = [0.0, 0.0, 8.0, 12.0]
+const WALL_TIER_TITLE : String = "%s T%d"
+const WALL_TIER_NODES : Dictionary[Utils.Element, Array] = {
+	Utils.Element.Physical: [&"building", &"fortress_t2", &"fortress_t3"],
+	Utils.Element.Fire: [&"fire", &"fire_wall_t2", &"fire_wall_t3"],
+	Utils.Element.Frost: [&"frost", &"wall_t2", &"wall_t3"],
+	Utils.Element.Poison: [&"poison", &"wall_t2", &"wall_t3"],
+}
+const FORTRESS_NODE : StringName = &"fortress_t1"
+const WALL_ELEMENTS : Dictionary[Utils.Element, Array] = {
+	Utils.Element.Physical: ["Fortress", "res://assets/art/ui/normal_element_icon.png"],
+	Utils.Element.Fire: ["Fire wall", "res://assets/art/ui/fire_element_icon.png"],
+	Utils.Element.Frost: ["Frost wall", "res://assets/art/ui/frost_element_icon.png"],
+	Utils.Element.Poison: ["Poison wall", "res://assets/art/ui/poison_element_icon.png"],
+}
 const MISSING_ELEMENT_LEAF_WARNING : String = " cannot find element leaf "
 const UPGRADE_PIPS_NAME : String = "UpgradePips"
 
@@ -21,7 +42,11 @@ class UpgradeState:
 
 
 var type_states : Dictionary[String, UpgradeState] = {}
+#element -> the tier every wall of it has (1 until T2 is bought)
+var wall_element_tiers : Dictionary[Utils.Element, int] = {}
 var building_states : Dictionary[Building, UpgradeState] = {}
+#gold spent on each tower's and trap's own upgrades and tiers (Salvage refunds a share of it)
+var upgrade_gold : Dictionary[Building, float] = {}
 var selected_unit : Node2D = null
 var options : Array[GoldUpgradeOption] = []
 
@@ -40,16 +65,32 @@ func _ready() -> void:
 	GameSignals.building_destroyed.connect(_on_building_removed)
 	GameSignals.resource_change.connect(_on_resource_change)
 	UISignals.gold_upgrade_pressed.connect(_on_gold_upgrade_pressed)
+	UISignals.target_tactic_selected.connect(_on_target_tactic_selected)
 
 
 func _on_unit_selected(unit : Node2D) -> void:
 	selected_unit = unit
 	_emit_options()
+	_emit_target_tactic()
 
 
 func _on_unit_deselected(_unit : Node2D) -> void:
 	selected_unit = null
 	_emit_options()
+	_emit_target_tactic()
+
+
+#the targeting tactic lives on the tower; this node only knows which tower is selected
+#the tower picks its target again every tick, so a change during a wave counts at once
+func _on_target_tactic_selected(tactic : Utils.TargetTactic) -> void:
+	if selected_unit is Tower and selected_unit.can_choose_target and selected_unit.is_placed:
+		selected_unit.target_tactic = tactic
+	_emit_target_tactic()
+
+
+func _emit_target_tactic() -> void:
+	var has_tactic : bool = is_instance_valid(selected_unit) and selected_unit is Tower and selected_unit.can_choose_target and selected_unit.is_placed
+	UISignals.target_tactic_changed.emit(selected_unit.target_tactic if has_tactic else -1)
 
 
 func _on_building_placed(building : Building) -> void:
@@ -94,7 +135,26 @@ func _on_gold_upgrade_pressed(index : int) -> void:
 
 	var option : GoldUpgradeOption = options[index]
 
-	if not level.player_stats.spend_gold(option.cost):
+	if option.is_locked or not level.player_stats.spend_gold(option.cost):
+		return
+	var bought_for : Building = selected_unit as Building
+	if not _is_per_type(bought_for):
+		upgrade_gold[bought_for] = upgrade_gold.get(bought_for, 0.0) + option.cost
+
+	#a wall element is bought for the selected wall alone and is not a step of the shared wall line
+	if option.wall_tier > 0:
+		wall_element_tiers[option.wall_element] = option.wall_tier
+		for building in level.all_buildings:
+			if building is Wall and building.element == option.wall_element:
+				building.on_element_tier_changed()
+		GameSignals.astar_grid_updated.emit()
+		GameSignals.gold_upgrade_bought.emit(selected_unit, true)
+		_emit_options()
+		return
+	if option.wall_element != Utils.Element.None and selected_unit is Wall:
+		selected_unit.set_element(option.wall_element)
+		GameSignals.gold_upgrade_bought.emit(selected_unit, true)
+		_emit_options()
 		return
 
 	var type_key : String = selected_unit.scene_file_path
@@ -115,7 +175,9 @@ func _on_gold_upgrade_pressed(index : int) -> void:
 				targets.append(building)
 
 	for building in targets:
-		if option.is_evolve:
+		if option.tier > 0:
+			_apply_tier(building, option.element_leaf_path, option.tier - 1)
+		elif option.is_evolve:
 			_apply_evolve(building, option.element_leaf_path)
 		else:
 			_apply_upgrade(building, state.tiers_evolved > 0)
@@ -141,24 +203,62 @@ func _build_options() -> Array[GoldUpgradeOption]:
 	var data : BuildingUpgradeData = building.evolve_tree.upgrade_data
 	var state : UpgradeState = _get_state(building)
 	var element_leafs : Array[ElementEvolveLeaf] = _get_element_leafs(building)
-	#only the T1 element leaves exist so far, later tiers stay locked
-	var tier_count : int = mini(data.evolve_cost_ratios.size(), 0 if element_leafs.is_empty() else 1)
-	var building_price : float = building.stats.get_stat_value(Utils.StatType.Price)
+	var chosen_leaf : ElementEvolveLeaf = _get_chosen_leaf(building, state)
+	#T1 is the element; T2 and T3 are the chosen element's tiers
+	var tier_count : int = 0
+	if not element_leafs.is_empty():
+		tier_count = 1 + (chosen_leaf.tiers.size() if chosen_leaf != null else 0)
+	tier_count = mini(data.evolve_cost_ratios.size(), tier_count)
+	#the base price: the tower price step makes a late tower dearer, not its upgrades
+	var building_price : float = building.stats.get_stat(Utils.StatType.Price).base_value
 	var new_options : Array[GoldUpgradeOption] = []
 
-	match UpgradeRules.next_gold_step(state.upgrades_bought, state.tiers_evolved, data.upgrade_cost_ratios.size(), tier_count, data.upgrades_per_tier):
+	match UpgradeRules.next_gold_step(state.upgrades_bought, state.tiers_evolved, data.upgrade_cost_ratios.size(), tier_count, data.upgrades_before_tier(state.tiers_evolved)):
 		UpgradeRules.GoldStep.Upgrade:
-			var upgrade_price : float = UpgradeRules.gold_price(building_price, data.upgrade_cost_ratios[state.upgrades_bought])
+			var upgrade_price : float = UpgradeRules.gold_price(building_price, data.upgrade_cost_ratios[state.upgrades_bought] * _price_share() * _first_upgrade_share(building, state))
 			new_options.append(GoldUpgradeOption.upgrade(UPGRADE_TITLE_TEXT % (state.upgrades_bought + 1), data.upgrade_icon, upgrade_price))
 		UpgradeRules.GoldStep.Evolve:
-			var evolve_price : float = UpgradeRules.gold_price(building_price, data.evolve_cost_ratios[state.tiers_evolved])
-			for leaf in element_leafs:
-				new_options.append(GoldUpgradeOption.evolve(leaf, building, evolve_price))
+			var evolve_price : float = UpgradeRules.gold_price(building_price, data.evolve_cost_ratios[state.tiers_evolved] * _price_share())
+			if state.tiers_evolved == 0:
+				for leaf in element_leafs:
+					new_options.append(GoldUpgradeOption.evolve(leaf, building, evolve_price))
+			else:
+				new_options.append(GoldUpgradeOption.evolve_tier(chosen_leaf, building, state.tiers_evolved - 1, evolve_price))
+
+	#a plain wall can take an element once the shared wall line is at Up 2
+	if building is Wall and building.element == Utils.Element.None and state.upgrades_bought >= WALL_ELEMENT_MIN_UPGRADES:
+		for element in WALL_ELEMENTS:
+			#Fortress waits for its Building tree node; the other elements have no talent lock at T1
+			if element == Utils.Element.Physical and PlayerProgress.get_talent_ranks(FORTRESS_TREE).get(FORTRESS_NODE, 0) <= 0:
+				continue
+			new_options.append(GoldUpgradeOption.wall_element_option(element, WALL_ELEMENTS[element][0], load(WALL_ELEMENTS[element][1]), WALL_ELEMENT_PRICE))
+
+	#an element wall: its element's next tier once the shared line is far enough (locked until its tree node)
+	if building is Wall and building.element != Utils.Element.None:
+		var next_tier : int = get_wall_tier(building.element) + 1
+		if next_tier <= 3 and state.upgrades_bought >= WALL_TIER_UPGRADES[next_tier]:
+			var tier_option : GoldUpgradeOption = GoldUpgradeOption.wall_element_option(building.element, WALL_TIER_TITLE % [WALL_ELEMENTS[building.element][0], next_tier], load(WALL_ELEMENTS[building.element][1]), WALL_TIER_PRICES[next_tier])
+			tier_option.wall_tier = next_tier
+			var nodes : Array = WALL_TIER_NODES[building.element]
+			tier_option.is_locked = PlayerProgress.get_talent_ranks(nodes[0]).get(nodes[next_tier - 1], 0) <= 0
+			new_options.append(tier_option)
 
 	for option in new_options:
-		option.is_affordable = level.player_stats.has_enough_gold(option.cost)
+		option.is_affordable = not option.is_locked and level.player_stats.has_enough_gold(option.cost)
 
 	return new_options
+
+
+#Hoard (talent): the first upgrade of each tower and trap is cheaper
+func _first_upgrade_share(building : Building, state : UpgradeState) -> float:
+	if level.talents == null or _is_per_type(building) or state.upgrades_bought > 0:
+		return 1.0
+	return 1.0 - level.talents.get_total(TalentEffect.Kind.FirstUpgradeDiscount)
+
+
+#Haggling (talent): the share of the price left
+func _price_share() -> float:
+	return 1.0 - (level.talents.get_total(TalentEffect.Kind.UpgradeDiscount) if level.talents != null else 0.0)
 
 
 func _apply_upgrade(building : Building, is_evolved : bool) -> void:
@@ -189,6 +289,23 @@ func _apply_evolve(building : Building, leaf_path : NodePath) -> void:
 	building.evolve_level_up_particle_effect.emitting = true
 
 
+func _apply_tier(building : Building, leaf_path : NodePath, tier_index : int) -> void:
+	var leaf : ElementEvolveLeaf = building.get_node_or_null(leaf_path) as ElementEvolveLeaf
+
+	if leaf == null:
+		push_warning(building.name, MISSING_ELEMENT_LEAF_WARNING, leaf_path)
+		return
+
+	leaf.evolve_tier(building, tier_index)
+	building.evolve_level_up_particle_effect.emitting = true
+
+
+func _get_chosen_leaf(building : Building, state : UpgradeState) -> ElementEvolveLeaf:
+	if state.element_leaf_path.is_empty():
+		return null
+	return building.get_node_or_null(state.element_leaf_path) as ElementEvolveLeaf
+
+
 func _update_pips(building : Building, state : UpgradeState) -> void:
 	var pips : UpgradePips = building.get_node_or_null(UPGRADE_PIPS_NAME) as UpgradePips
 
@@ -203,8 +320,27 @@ func _update_pips(building : Building, state : UpgradeState) -> void:
 		tier_color = leaf.evolve_glow_color
 
 	#the upgrades bought before a tier are shown by its tier pip
-	var upgrades_since_tier : int = maxi(0, state.upgrades_bought - state.tiers_evolved * building.evolve_tree.upgrade_data.upgrades_per_tier)
+	var data : BuildingUpgradeData = building.evolve_tree.upgrade_data
+	var upgrades_at_last_tier : int = data.upgrades_before_tier(state.tiers_evolved - 1) if state.tiers_evolved > 0 else 0
+	var upgrades_since_tier : int = maxi(0, state.upgrades_bought - upgrades_at_last_tier)
 	pips.set_steps(upgrades_since_tier, state.tiers_evolved, tier_color)
+
+	if building is Wall:
+		(building as Wall).set_upgrade_stage(state.upgrades_bought)
+
+
+## The tier every wall of an element has: 1, or 2 and 3 once bought.
+func get_wall_tier(element : Utils.Element) -> int:
+	return wall_element_tiers.get(element, 1)
+
+
+## Gold upgrades and tiers bought for the building (the Dragonslayer cleaves the most upgraded tower).
+func get_upgrade_steps(building : Building) -> int:
+	if not _is_upgradable(building):
+		return 0
+	#read only: never make a state for a building nothing was bought for
+	var state : UpgradeState = type_states.get(building.scene_file_path) if _is_per_type(building) else building_states.get(building)
+	return state.upgrades_bought + state.tiers_evolved if state != null else 0
 
 
 func _get_state(building : Building) -> UpgradeState:

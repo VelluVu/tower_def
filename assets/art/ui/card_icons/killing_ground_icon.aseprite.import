@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dqk7nn1copnys"
+path="res://.godot/imported/killing_ground_icon.aseprite-b1d22370cdee79156273cb1a92c0b7f5.res"
+
+[deps]
+
+source_file="res://assets/art/ui/card_icons/killing_ground_icon.aseprite"
+dest_files=["res://.godot/imported/killing_ground_icon.aseprite-b1d22370cdee79156273cb1a92c0b7f5.res"]
+
+[params]
+

@@ -1,0 +1,26 @@
+# Source of hydra_acid.aseprite and .png: the Bog Hydra's acid glob (Bog Spit), acid green b6d53c/7cbf4a with
+# a pale e6f07a shine and a dark 4a9a5c drip. 2 frames. Drawn by tools/sprite/parts/enemy_shots.py.
+size = 8x8
+a = e6f07a
+b = b6d53c
+c = 7cbf4a
+d = 4a9a5c
+---
+@IDLE 120
+........
+...aab..
+..abbcc.
+.abbccd.
+..bccd..
+...dd...
+........
+........
+
+........
+..aabb..
+.abbcc..
+.abccd..
+..bcdd..
+....d...
+........
+........

@@ -26,11 +26,31 @@ static func from_resource(_resource : EvolveResource, rolled_value : float) -> U
 func get_text() -> String:
 	var cap_text : String = SOFT_CAP_TEXT if is_past_soft_cap else ""
 
-	if resource.is_percent:
-		var sign : String = "×" if resource.modify_type == Utils.ModifyType.Multiply else "+"
-		return "%s %s%s%%%s" % [title, sign, _format_number(value * 100.0), cap_text]
+	if not resource.description.is_empty():
+		var shown_value : float = value * 100.0 if resource.is_percent else value
+		return "%s\n%s%s" % [title, resource.description.format({"value": _format_number(shown_value)}), cap_text]
 
-	return "%s +%s%s" % [title, _format_number(value), cap_text]
+	#a trade-off card names both stats: "Overcharge\n+30% Damage\n-20% Attack Range"
+	if resource.has_drawback:
+		return "%s\n%s %s\n%s %s%s" % [title, _format_value(value, resource.modify_type, resource.is_percent), _stat_name(resource.modify_stat_type),
+			_format_value(resource.drawback_value, resource.drawback_modify_type, resource.drawback_is_percent), _stat_name(resource.drawback_stat_type), cap_text]
+
+	return "%s %s%s" % [title, _format_value(value, resource.modify_type, resource.is_percent), cap_text]
+
+
+static func _format_value(shown_value : float, modify_type : Utils.ModifyType, is_percent : bool) -> String:
+	var sign_text : String = "-" if shown_value < 0.0 else "+"
+
+	if is_percent:
+		if modify_type == Utils.ModifyType.Multiply:
+			sign_text = "×"
+		return "%s%s%%" % [sign_text, _format_number(absf(shown_value) * 100.0)]
+
+	return "%s%s" % [sign_text, _format_number(absf(shown_value))]
+
+
+static func _stat_name(stat_type : Utils.StatType) -> String:
+	return String(Utils.StatType.keys()[stat_type]).capitalize()
 
 
 #"30" instead of "30.0", "0.25" stays

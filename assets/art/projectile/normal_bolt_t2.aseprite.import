@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://d8v0nxp2igs0"
+path="res://.godot/imported/normal_bolt_t2.aseprite-e679adc45c7c75e7c2a14b53eb67c236.res"
+
+[deps]
+
+source_file="res://assets/art/projectile/normal_bolt_t2.aseprite"
+dest_files=["res://.godot/imported/normal_bolt_t2.aseprite-e679adc45c7c75e7c2a14b53eb67c236.res"]
+
+[params]
+

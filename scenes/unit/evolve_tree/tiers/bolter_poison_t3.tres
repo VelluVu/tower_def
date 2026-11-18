@@ -1,0 +1,58 @@
+[gd_resource type="Resource" script_class="EvolveTierData" format=3]
+
+[ext_resource type="Script" path="res://scenes/unit/evolve_tree/evolve_tier_data.gd" id="1_tier"]
+[ext_resource type="Script" path="res://scenes/unit/evolve_tree/evolve_resource.gd" id="2_evolve"]
+[ext_resource type="SpriteFrames" path="res://scenes/unit/evolve_tree/tiers/bolter_poison_t3_frames.tres" id="3_frames"]
+
+[sub_resource type="Resource" id="Resource_step0"]
+script = ExtResource("2_evolve")
+modifier_type = 0
+elements = 15
+modify_stat_type = 2
+modify_type = 2
+is_randomized_modify_value = false
+is_percent = true
+modify_value = 0.4
+evolve_name = "Damage"
+
+[sub_resource type="Resource" id="Resource_step1"]
+script = ExtResource("2_evolve")
+modifier_type = 0
+elements = 15
+modify_stat_type = 6
+modify_type = 0
+is_randomized_modify_value = false
+is_percent = true
+modify_value = 0.15
+evolve_name = "Attack Speed"
+
+[sub_resource type="Resource" id="Resource_step2"]
+script = ExtResource("2_evolve")
+modifier_type = 0
+elements = 15
+modify_stat_type = 25
+modify_type = 0
+is_randomized_modify_value = false
+is_percent = false
+modify_value = 3.0
+evolve_name = "Poison Cloud"
+
+[sub_resource type="Resource" id="Resource_step3"]
+script = ExtResource("2_evolve")
+modifier_type = 0
+elements = 15
+modify_stat_type = 26
+modify_type = 0
+is_randomized_modify_value = false
+is_percent = false
+modify_value = 0.2
+evolve_name = "Cloud Venom"
+
+[resource]
+script = ExtResource("1_tier")
+title = "T3"
+info = "Impacts leave a poison cloud for 3 s. Damage +40%, attack speed +15%"
+talent_tree = &"poison"
+talent_node = &"bolter_t3"
+upgrade_resources = Array[ExtResource("2_evolve")]([SubResource("Resource_step0"), SubResource("Resource_step1"), SubResource("Resource_step2"), SubResource("Resource_step3")])
+sprite_frames = ExtResource("3_frames")
