@@ -1,3 +1,4 @@
+@tool
 class_name TalentEffect
 extends Resource
 
@@ -8,6 +9,72 @@ enum Kind
 {
 	BuildingStat,
 	StartGold,
+	#an evolve tier unlock: EvolveTierData reads the node's rank, nothing is applied here
+	UnlockTier,
+	#the rest are level-wide, summed by LevelTalents (2026-11-16):
+	#enemies in `condition` take value more damage (from `buildings`, of `elements` damage; 0 = any)
+	Vulnerability,
+	#enemies in `condition` deal value less damage to buildings
+	Weakness,
+	#maze slow points (0.03 = 3 points stronger)
+	MazeSlow,
+	#seconds added to every enemy turn pause
+	TurnPause,
+	#cards more per level-up offer
+	CardOffer,
+	#share more early-start bonus
+	EarlyStartBonus,
+	#gold when a wave is cleared
+	WaveGold,
+	#share off every upgrade and evolve price
+	UpgradeDiscount,
+	#share longer freezes
+	FreezeLonger,
+	#seconds added to every freeze
+	FreezeExtra,
+	#walls heal this share of their max health a second, towers and traps a quarter of it
+	Mending,
+	#share more Fortress thorns
+	WallThorns,
+	#walls take this share less damage (of `elements` damage; 0 = any)
+	WallArmor,
+	#mechanics (2026-11-16, TalentMechanics): every `every`th attack of a matching tower strikes (`strike`)
+	Strike,
+	#enemies dying in `condition` burst: value of their max health as `elements` damage to enemies within radius_tiles
+	DeathBurst,
+	#an elder dragon in each castle breathes fire every `interval` s: value of max health to enemies within radius_tiles;
+	#the first enemy to reach each castle every wave costs no life
+	CastleDragon,
+	#selling a tower or trap also refunds this share of the gold spent on its upgrades (Salvage)
+	SellRefund,
+	#the first upgrade of each tower and trap costs this share less (Hoard)
+	FirstUpgradeDiscount,
+}
+
+## What a Strike does, at its target (radius_tiles around it; 0 = the target only) or around the tower (at_tower:
+## the tower's range times range_factor): value is the share of the tower's hit (Blast), seconds (Freeze), extra
+## hits that bring the tower's stacks (Stacks), or bolts to the nearest enemies at half the hit (Split).
+enum StrikeKind
+{
+	Blast,
+	Freeze,
+	Stacks,
+	Split,
+}
+
+## The stats an element tree gives a tower that only leans to the element (no burn, slow or mechanic stats).
+const LEANING_STATS : Array[Utils.StatType] = [Utils.StatType.Damage, Utils.StatType.AttackSpeed, Utils.StatType.AttackRange,
+	Utils.StatType.CriticalChance, Utils.StatType.CriticalMultiplier]
+
+## For Vulnerability and Weakness: which enemies count.
+enum Condition
+{
+	Any,
+	Burning,
+	Poisoned,
+	Frozen,
+	#slowed by Frost stacks, or frozen
+	Chilled,
 }
 
 ## Building flags, matched by TalentEffect.get_building_flag.
@@ -24,14 +91,45 @@ const WALL : int = 1 << 4
 @export var stat_type : Utils.StatType = Utils.StatType.Damage
 @export var modify_type : Utils.ModifyType = Utils.ModifyType.Additive
 @export var value_per_rank : float = 0.0
+@export var condition : Condition = Condition.Any
+## Vulnerability: the value is per poison stack on the enemy (Necrosis, Overdose).
+@export var per_stack : bool = false
+@export_group("Mechanics")
+@export var strike : StrikeKind = StrikeKind.Blast
+## Strike: every how many attacks of the tower.
+@export var every : int = 0
+@export var at_tower : bool = false
+@export var range_factor : float = 1.0
+@export var radius_tiles : float = 0.0
+## CastleDragon: seconds between breaths.
+@export var interval : float = 0.0
 
 
-func fits(building : Building) -> bool:
+## Whether an enemy is in a condition (burning, poisoned, frozen, chilled).
+static func enemy_in(enemy : Enemy, wanted : Condition) -> bool:
+	match wanted:
+		Condition.Burning:
+			return not enemy.overtime_effect_handler.get_active_stacks(Utils.DamageType.Fire).is_empty()
+		Condition.Poisoned:
+			return not enemy.overtime_effect_handler.get_active_stacks(Utils.DamageType.Poison).is_empty()
+		Condition.Frozen:
+			return enemy.is_frozen
+		Condition.Chilled:
+			return enemy.is_frozen or not enemy.overtime_effect_handler.get_active_stacks(Utils.DamageType.Frost).is_empty()
+	return true
+
+
+## leaning: the element a tower without an element leans to (LevelTalents.get_leaning_element); such a tower gets
+## that tree's basic stat talents, so points in the favourite tree help from the first tower on (2026-11-16).
+func fits(building : Building, leaning : int = 0) -> bool:
 	if kind != Kind.BuildingStat:
 		return false
 
 	if buildings & get_building_flag(building) == 0:
 		return false
+
+	if elements != 0 and building.evolve_tree != null and not building.evolve_tree.is_element_chosen and elements & building.evolve_tree.evolve_element == 0:
+		return leaning != 0 and elements & leaning != 0 and stat_type in LEANING_STATS
 
 	if elements == 0 or building.evolve_tree == null:
 		return elements == 0

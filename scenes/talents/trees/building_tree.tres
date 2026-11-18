@@ -24,6 +24,7 @@ effects = Array[ExtResource("3_effect")]([SubResource("Effect_war_chest_0")])
 script = ExtResource("3_effect")
 buildings = 7
 elements = 1
+modify_type = 1
 value_per_rank = 0.08
 
 [sub_resource type="Resource" id="Node_hardened_shots"]
@@ -89,10 +90,16 @@ id = &"long_sight"
 display_name = "Long Sight"
 description = "Physical tower attack range +0.1 tiles"
 max_rank = 2
-position = Vector2(1, 11.2)
+position = Vector2(1, 11)
 color = Color(0.91, 0.933, 0.949, 1)
 links = Array[StringName]([&"piercing"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_long_sight_0")])
+
+[sub_resource type="Resource" id="TalentEffect_unlock_phys_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 7
+elements = 1
 
 [sub_resource type="Resource" id="Node_phys_t2"]
 script = ExtResource("2_node")
@@ -103,6 +110,15 @@ kind = 2
 position = Vector2(1, 13)
 color = Color(0.91, 0.933, 0.949, 1)
 links = Array[StringName]([&"long_sight", &"honed_claws"])
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_phys_t2")])
+
+[sub_resource type="Resource" id="Effect_piercing_level"]
+script = ExtResource("3_effect")
+buildings = 15
+elements = 1
+stat_type = 18
+modify_type = 0
+value_per_rank = 0.1
 
 [sub_resource type="Resource" id="Node_piercing"]
 script = ExtResource("2_node")
@@ -110,9 +126,10 @@ id = &"piercing"
 display_name = "Piercing"
 description = "Physical towers ignore 10% of the target's resistance"
 max_rank = 3
-position = Vector2(1, 9.4)
+position = Vector2(1, 8.6)
 color = Color(0.91, 0.933, 0.949, 1)
 links = Array[StringName]([&"swift_wings"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_piercing_level")])
 
 [sub_resource type="Resource" id="Effect_swift_wings_0"]
 script = ExtResource("3_effect")
@@ -128,10 +145,16 @@ id = &"swift_wings"
 display_name = "Swift Wings"
 description = "Physical tower attack speed +0.04 (4% faster)"
 max_rank = 3
-position = Vector2(1, 7.6)
+position = Vector2(1, 6.2)
 color = Color(0.91, 0.933, 0.949, 1)
 links = Array[StringName]([&"phys_t3"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_swift_wings_0")])
+
+[sub_resource type="Resource" id="TalentEffect_unlock_phys_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 7
+elements = 1
 
 [sub_resource type="Resource" id="Node_phys_t3"]
 script = ExtResource("2_node")
@@ -139,11 +162,20 @@ id = &"phys_t3"
 display_name = "Physical T3"
 description = "Unlocks Physical T3"
 kind = 2
-position = Vector2(0, 5)
+position = Vector2(1, 4.9)
 color = Color(0.91, 0.933, 0.949, 1)
 links = Array[StringName]([&"shatter"])
 one_way_links = Array[StringName]([&"dragons_keep"])
 needs = &"phys_t2"
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_phys_t3")])
+
+[sub_resource type="Resource" id="Effect_shatter_level"]
+script = ExtResource("3_effect")
+buildings = 7
+elements = 1
+stat_type = 19
+modify_type = 0
+value_per_rank = 1.0
 
 [sub_resource type="Resource" id="Node_shatter"]
 script = ExtResource("2_node")
@@ -151,8 +183,9 @@ id = &"shatter"
 display_name = "Shatter"
 description = "Physical critical hits ignore all resistance"
 kind = 3
-position = Vector2(0, 3.2)
+position = Vector2(1, 3.6)
 color = Color(0.91, 0.933, 0.949, 1)
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_shatter_level")])
 
 [sub_resource type="Resource" id="Effect_thick_walls_0"]
 script = ExtResource("3_effect")
@@ -189,6 +222,13 @@ color = Color(0.604, 0.651, 0.69, 1)
 links = Array[StringName]([&"fortress_t1"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_stone_blocks_0")])
 
+[sub_resource type="Resource" id="Effect_fortress_t1_level"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 16
+elements = 1
+value_per_rank = 1.0
+
 [sub_resource type="Resource" id="Node_fortress_t1"]
 script = ExtResource("2_node")
 id = &"fortress_t1"
@@ -198,6 +238,7 @@ kind = 2
 position = Vector2(19.5, 17.6)
 color = Color(0.604, 0.651, 0.69, 1)
 links = Array[StringName]([&"fortress_t2"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_fortress_t1_level")])
 
 [sub_resource type="Resource" id="Effect_masonry_0"]
 script = ExtResource("3_effect")
@@ -211,7 +252,7 @@ id = &"masonry"
 display_name = "Masonry"
 description = "Wall max health +20%"
 max_rank = 3
-position = Vector2(17.4, 11.2)
+position = Vector2(17.5, 10)
 color = Color(0.604, 0.651, 0.69, 1)
 links = Array[StringName]([&"reinforced_core", &"mending"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_masonry_0")])
@@ -229,10 +270,17 @@ id = &"reinforced_core"
 display_name = "Reinforced Core"
 description = "Wall max health x1.1 (more: multiplies with everything else)"
 max_rank = 2
-position = Vector2(17.4, 9.4)
+position = Vector2(17.5, 6.2)
 color = Color(0.604, 0.651, 0.69, 1)
 links = Array[StringName]([&"iron_bands"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_reinforced_core_0")])
+
+[sub_resource type="Resource" id="Effect_fortress_t2_level"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 16
+elements = 1
+value_per_rank = 1.0
 
 [sub_resource type="Resource" id="Node_fortress_t2"]
 script = ExtResource("2_node")
@@ -244,6 +292,14 @@ position = Vector2(19, 13)
 color = Color(0.604, 0.651, 0.69, 1)
 links = Array[StringName]([&"masonry", &"buttress"])
 needs = &"fortress_t1"
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_fortress_t2_level")])
+
+[sub_resource type="Resource" id="Effect_fortress_t3_level"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 16
+elements = 1
+value_per_rank = 1.0
 
 [sub_resource type="Resource" id="Node_fortress_t3"]
 script = ExtResource("2_node")
@@ -251,11 +307,17 @@ id = &"fortress_t3"
 display_name = "Fortress T3"
 description = "Unlocks Fortress T3: enemies prefer longer detours"
 kind = 2
-position = Vector2(20, 5)
+position = Vector2(19, 4.9)
 color = Color(0.604, 0.651, 0.69, 1)
 links = Array[StringName]([&"rebuild", &"bastion", &"deep_foundations"])
 one_way_links = Array[StringName]([&"dragons_keep"])
 needs = &"fortress_t2"
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_fortress_t3_level")])
+
+[sub_resource type="Resource" id="Effect_mending_level"]
+script = ExtResource("3_effect")
+kind = 13
+value_per_rank = 0.02
 
 [sub_resource type="Resource" id="Node_mending"]
 script = ExtResource("2_node")
@@ -263,8 +325,15 @@ id = &"mending"
 display_name = "Mending Stones"
 description = "Walls heal 2% of their max health per second, towers and traps 0.5%"
 kind = 3
-position = Vector2(15.9, 10.3)
+position = Vector2(16, 10.6)
 color = Color(0.604, 0.651, 0.69, 1)
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_mending_level")])
+
+[sub_resource type="Resource" id="Effect_iron_bands_level"]
+script = ExtResource("3_effect")
+kind = 15
+elements = 1
+value_per_rank = 0.1
 
 [sub_resource type="Resource" id="Node_iron_bands"]
 script = ExtResource("2_node")
@@ -272,9 +341,16 @@ id = &"iron_bands"
 display_name = "Iron Bands"
 description = "Walls +10% armor (Physical resistance)"
 max_rank = 3
-position = Vector2(17.4, 7.6)
+position = Vector2(17.5, 4.9)
 color = Color(0.604, 0.651, 0.69, 1)
 links = Array[StringName]([&"fortress_t3", &"warded_stones"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_iron_bands_level")])
+
+[sub_resource type="Resource" id="Effect_warded_stones_level"]
+script = ExtResource("3_effect")
+kind = 15
+elements = 14
+value_per_rank = 0.1
 
 [sub_resource type="Resource" id="Node_warded_stones"]
 script = ExtResource("2_node")
@@ -282,8 +358,9 @@ id = &"warded_stones"
 display_name = "Warded Stones"
 description = "Walls +10% Fire, Frost and Poison resistance"
 max_rank = 3
-position = Vector2(15.9, 6.9)
+position = Vector2(16.1, 3.8)
 color = Color(0.604, 0.651, 0.69, 1)
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_warded_stones_level")])
 
 [sub_resource type="Resource" id="Node_rebuild"]
 script = ExtResource("2_node")
@@ -291,7 +368,7 @@ id = &"rebuild"
 display_name = "Rebuild"
 description = "A destroyed wall rebuilds for free after 10 s if its cell is empty"
 kind = 3
-position = Vector2(20, 3.2)
+position = Vector2(20.6, 5.4)
 color = Color(0.604, 0.651, 0.69, 1)
 
 [sub_resource type="Resource" id="Node_dragons_keep"]
@@ -300,8 +377,13 @@ id = &"dragons_keep"
 display_name = "Dragon's Keep"
 description = "Physical towers hitting the same target again gain x10% more damage and +0.05 attack speed per hit (up to 10 hits, resets on a new target); walls +50 base health; bleed ticks twice as fast; towers cost 1 gold less to build"
 kind = 3
-position = Vector2(10, 0.6)
+position = Vector2(10, -0.6)
 color = Color(0.184, 0.647, 0.604, 1)
+
+[sub_resource type="Resource" id="Effect_dragons_maze_level"]
+script = ExtResource("3_effect")
+kind = 5
+value_per_rank = 0.1
 
 [sub_resource type="Resource" id="Node_dragons_maze"]
 script = ExtResource("2_node")
@@ -309,13 +391,15 @@ id = &"dragons_maze"
 display_name = "Dragon's Maze"
 description = "Maze slow 10 points stronger, and diagonal neighbours count for it too"
 kind = 3
-position = Vector2(10.2, 9.4)
+position = Vector2(9.6, 10.4)
 color = Color(0.604, 0.651, 0.69, 1)
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_dragons_maze_level")])
 
 [sub_resource type="Resource" id="Effect_sharp_teeth_0"]
 script = ExtResource("3_effect")
 buildings = 8
 elements = 1
+modify_type = 1
 value_per_rank = 0.1
 
 [sub_resource type="Resource" id="Node_sharp_teeth"]
@@ -338,15 +422,24 @@ kind = 1
 position = Vector2(4.8, 18)
 color = Color(0.878, 0.541, 0.235, 1)
 
+[sub_resource type="Resource" id="Effect_leopard_t1_level"]
+script = ExtResource("3_effect")
+buildings = 8
+elements = 1
+stat_type = 6
+modify_type = 0
+value_per_rank = 0.1
+
 [sub_resource type="Resource" id="Node_leopard_t1"]
 script = ExtResource("2_node")
 id = &"leopard_t1"
 display_name = "Leopard T1"
-description = "Unlocks the Leopard evolve: faster re-arm"
+description = "Leopard traps re-arm 10% faster"
 kind = 2
 position = Vector2(7.4, 15.2)
 color = Color(0.878, 0.541, 0.235, 1)
 links = Array[StringName]([&"leopard_t2"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_leopard_t1_level")])
 
 [sub_resource type="Resource" id="Effect_hidden_jaws_0"]
 script = ExtResource("3_effect")
@@ -396,6 +489,13 @@ position = Vector2(5, 11.2)
 color = Color(0.878, 0.541, 0.235, 1)
 links = Array[StringName]([&"titan_claws"])
 
+[sub_resource type="Resource" id="Effect_titan_claws_level"]
+script = ExtResource("3_effect")
+buildings = 8
+stat_type = 18
+modify_type = 0
+value_per_rank = 0.15
+
 [sub_resource type="Resource" id="Node_titan_claws"]
 script = ExtResource("2_node")
 id = &"titan_claws"
@@ -405,6 +505,7 @@ max_rank = 3
 position = Vector2(5, 9.4)
 color = Color(0.878, 0.541, 0.235, 1)
 links = Array[StringName]([&"hidden_jaws", &"rend"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_titan_claws_level")])
 
 [sub_resource type="Resource" id="Node_rend"]
 script = ExtResource("2_node")
@@ -414,6 +515,12 @@ description = "Snapped enemies lose 20% of every resistance for 4 s"
 kind = 3
 position = Vector2(6.2, 8.5)
 color = Color(0.878, 0.541, 0.235, 1)
+
+[sub_resource type="Resource" id="TalentEffect_unlock_leopard_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 8
+elements = 1
 
 [sub_resource type="Resource" id="Node_leopard_t2"]
 script = ExtResource("2_node")
@@ -425,6 +532,7 @@ position = Vector2(6.2, 13)
 color = Color(0.878, 0.541, 0.235, 1)
 links = Array[StringName]([&"big_game", &"deep_wounds", &"stalker"])
 needs = &"leopard_t1"
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_leopard_t2")])
 
 [sub_resource type="Resource" id="Node_deep_wounds"]
 script = ExtResource("2_node")
@@ -455,16 +563,23 @@ max_rank = 3
 position = Vector2(3.75, 8.7)
 color = Color(0.878, 0.541, 0.235, 1)
 
+[sub_resource type="Resource" id="TalentEffect_unlock_leopard_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 8
+elements = 1
+
 [sub_resource type="Resource" id="Node_leopard_t3"]
 script = ExtResource("2_node")
 id = &"leopard_t3"
 display_name = "Leopard T3"
 description = "Unlocks Leopard T3: double snap"
 kind = 2
-position = Vector2(6.2, 6.2)
+position = Vector2(5.8, 6.2)
 color = Color(0.878, 0.541, 0.235, 1)
 links = Array[StringName]([&"pack_hunt", &"apex_hunter", &"ambush"])
 needs = &"leopard_t2"
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_leopard_t3")])
 
 [sub_resource type="Resource" id="Node_pack_hunt"]
 script = ExtResource("2_node")
@@ -472,8 +587,13 @@ id = &"pack_hunt"
 display_name = "Pack Hunt"
 description = "The trap snaps one more enemy before it re-arms (three with Leopard T3's double snap)"
 kind = 3
-position = Vector2(4.6, 5.4)
+position = Vector2(4.1, 6.2)
 color = Color(0.878, 0.541, 0.235, 1)
+
+[sub_resource type="Resource" id="Effect_spoils_level"]
+script = ExtResource("3_effect")
+kind = 9
+value_per_rank = 1.0
 
 [sub_resource type="Resource" id="Node_spoils"]
 script = ExtResource("2_node")
@@ -484,6 +604,12 @@ max_rank = 3
 position = Vector2(11.6, 18.4)
 color = Color(0.949, 0.757, 0.306, 1)
 links = Array[StringName]([&"haggling", &"narrow_ways"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_spoils_level")])
+
+[sub_resource type="Resource" id="Effect_haggling_level"]
+script = ExtResource("3_effect")
+kind = 10
+value_per_rank = 0.1
 
 [sub_resource type="Resource" id="Node_haggling"]
 script = ExtResource("2_node")
@@ -494,6 +620,12 @@ max_rank = 2
 position = Vector2(13.6, 17.6)
 color = Color(0.949, 0.757, 0.306, 1)
 links = Array[StringName]([&"salvage"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_haggling_level")])
+
+[sub_resource type="Resource" id="Effect_salvage_level"]
+script = ExtResource("3_effect")
+kind = 19
+value_per_rank = 0.25
 
 [sub_resource type="Resource" id="Node_salvage"]
 script = ExtResource("2_node")
@@ -504,6 +636,12 @@ kind = 1
 max_rank = 2
 position = Vector2(14.4, 15.9)
 color = Color(0.949, 0.757, 0.306, 1)
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_salvage_level")])
+
+[sub_resource type="Resource" id="Effect_narrow_ways_level"]
+script = ExtResource("3_effect")
+kind = 5
+value_per_rank = 0.03
 
 [sub_resource type="Resource" id="Node_narrow_ways"]
 script = ExtResource("2_node")
@@ -514,6 +652,12 @@ max_rank = 3
 position = Vector2(11, 16.6)
 color = Color(0.604, 0.651, 0.69, 1)
 links = Array[StringName]([&"sharp_corners"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_narrow_ways_level")])
+
+[sub_resource type="Resource" id="Effect_sharp_corners_level"]
+script = ExtResource("3_effect")
+kind = 6
+value_per_rank = 0.05
 
 [sub_resource type="Resource" id="Node_sharp_corners"]
 script = ExtResource("2_node")
@@ -521,9 +665,10 @@ id = &"sharp_corners"
 display_name = "Sharp Corners"
 description = "Turn pause +0.05 s"
 max_rank = 2
-position = Vector2(12.4, 14.8)
+position = Vector2(11.6, 6.2)
 color = Color(0.604, 0.651, 0.69, 1)
 links = Array[StringName]([&"labyrinth", &"scholar"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_sharp_corners_level")])
 
 [sub_resource type="Resource" id="Node_labyrinth"]
 script = ExtResource("2_node")
@@ -531,9 +676,14 @@ id = &"labyrinth"
 display_name = "Labyrinth"
 description = "Every second wall you build is free"
 kind = 3
-position = Vector2(10.6, 13.2)
+position = Vector2(10.2, 8.4)
 color = Color(0.604, 0.651, 0.69, 1)
 links = Array[StringName]([&"dragons_maze"])
+
+[sub_resource type="Resource" id="Effect_scholar_level"]
+script = ExtResource("3_effect")
+kind = 7
+value_per_rank = 1.0
 
 [sub_resource type="Resource" id="Node_scholar"]
 script = ExtResource("2_node")
@@ -541,9 +691,15 @@ id = &"scholar"
 display_name = "Scholar"
 description = "Level-ups offer 5 cards instead of 4"
 kind = 1
-position = Vector2(13.6, 12.8)
+position = Vector2(11.6, 4.9)
 color = Color(0.949, 0.757, 0.306, 1)
 links = Array[StringName]([&"bold_start", &"second_thoughts"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_scholar_level")])
+
+[sub_resource type="Resource" id="Effect_bold_start_level"]
+script = ExtResource("3_effect")
+kind = 8
+value_per_rank = 0.5
 
 [sub_resource type="Resource" id="Node_bold_start"]
 script = ExtResource("2_node")
@@ -552,8 +708,9 @@ display_name = "Bold Start"
 description = "Early-start bonus +50%"
 kind = 1
 max_rank = 2
-position = Vector2(15, 11.4)
+position = Vector2(10.6, 3.9)
 color = Color(0.949, 0.757, 0.306, 1)
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_bold_start_level")])
 
 [sub_resource type="Resource" id="Node_second_thoughts"]
 script = ExtResource("2_node")
@@ -562,9 +719,14 @@ display_name = "Second Thoughts"
 description = "One card reroll per level"
 kind = 1
 max_rank = 2
-position = Vector2(12.2, 11)
+position = Vector2(14.2, 4.9)
 color = Color(0.949, 0.757, 0.306, 1)
 links = Array[StringName]([&"hoard"])
+
+[sub_resource type="Resource" id="Effect_hoard_level"]
+script = ExtResource("3_effect")
+kind = 20
+value_per_rank = 0.5
 
 [sub_resource type="Resource" id="Node_hoard"]
 script = ExtResource("2_node")
@@ -572,13 +734,15 @@ id = &"hoard"
 display_name = "Dragon's Hoard"
 description = "The first upgrade on each tower and trap costs half"
 kind = 3
-position = Vector2(13.2, 9.2)
+position = Vector2(14.2, 6.2)
 color = Color(0.949, 0.757, 0.306, 1)
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_hoard_level")])
 
 [sub_resource type="Resource" id="Effect_honed_claws_0"]
 script = ExtResource("3_effect")
 buildings = 7
 elements = 1
+modify_type = 1
 value_per_rank = 0.06
 
 [sub_resource type="Resource" id="Node_honed_claws"]
@@ -587,7 +751,7 @@ id = &"honed_claws"
 display_name = "Honed Claws"
 description = "Physical tower damage +6%"
 max_rank = 3
-position = Vector2(2.5, 11.2)
+position = Vector2(2.5, 10)
 color = Color(0.91, 0.933, 0.949, 1)
 links = Array[StringName]([&"quick_talons"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_honed_claws_0")])
@@ -606,7 +770,7 @@ id = &"quick_talons"
 display_name = "Quick Talons"
 description = "Physical tower attack speed +0.03 (3% faster)"
 max_rank = 3
-position = Vector2(2.5, 9.4)
+position = Vector2(2.5, 6.2)
 color = Color(0.91, 0.933, 0.949, 1)
 links = Array[StringName]([&"deadeye"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_quick_talons_0")])
@@ -625,7 +789,7 @@ id = &"deadeye"
 display_name = "Deadeye"
 description = "Physical tower critical chance +2 points"
 max_rank = 2
-position = Vector2(2.5, 7.6)
+position = Vector2(2.5, 4.9)
 color = Color(0.91, 0.933, 0.949, 1)
 links = Array[StringName]([&"phys_t3"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_deadeye_0")])
@@ -634,6 +798,7 @@ effects = Array[ExtResource("3_effect")]([SubResource("Effect_deadeye_0")])
 script = ExtResource("3_effect")
 buildings = 8
 elements = 1
+modify_type = 1
 value_per_rank = 0.08
 
 [sub_resource type="Resource" id="Node_stalker"]
@@ -689,6 +854,7 @@ effects = Array[ExtResource("3_effect")]([SubResource("Effect_savage_bite_0")])
 script = ExtResource("3_effect")
 buildings = 8
 elements = 1
+modify_type = 1
 value_per_rank = 0.06
 
 [sub_resource type="Resource" id="Node_apex_hunter"]
@@ -697,7 +863,7 @@ id = &"apex_hunter"
 display_name = "Apex Hunter"
 description = "Trap damage +6%"
 max_rank = 3
-position = Vector2(7.6, 5.4)
+position = Vector2(8.4, 6.2)
 color = Color(0.878, 0.541, 0.235, 1)
 links = Array[StringName]([&"pride_leader"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_apex_hunter_0")])
@@ -716,7 +882,7 @@ id = &"ambush"
 display_name = "Ambush"
 description = "Trap critical chance +4 points"
 max_rank = 2
-position = Vector2(6, 4.4)
+position = Vector2(5.8, 4.9)
 color = Color(0.878, 0.541, 0.235, 1)
 links = Array[StringName]([&"pride_leader"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_ambush_0")])
@@ -727,7 +893,7 @@ id = &"pride_leader"
 display_name = "Pride Leader"
 description = "The leopard cubs grow up: each cub lives twice as long and its bites can critically hit"
 kind = 3
-position = Vector2(7.8, 3.2)
+position = Vector2(8.4, 4.9)
 color = Color(0.878, 0.541, 0.235, 1)
 
 [sub_resource type="Resource" id="Effect_buttress_0"]
@@ -742,10 +908,15 @@ id = &"buttress"
 display_name = "Buttress"
 description = "Wall max health +10%"
 max_rank = 3
-position = Vector2(19, 11.2)
+position = Vector2(19, 11)
 color = Color(0.604, 0.651, 0.69, 1)
 links = Array[StringName]([&"spiked_stones"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_buttress_0")])
+
+[sub_resource type="Resource" id="Effect_spiked_stones_level"]
+script = ExtResource("3_effect")
+kind = 14
+value_per_rank = 0.25
 
 [sub_resource type="Resource" id="Node_spiked_stones"]
 script = ExtResource("2_node")
@@ -753,9 +924,15 @@ id = &"spiked_stones"
 display_name = "Spiked Stones"
 description = "Fortress thorns damage +25%"
 max_rank = 3
-position = Vector2(19, 9.4)
+position = Vector2(19, 8.6)
 color = Color(0.604, 0.651, 0.69, 1)
 links = Array[StringName]([&"stubborn_stone"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_spiked_stones_level")])
+
+[sub_resource type="Resource" id="Effect_stubborn_stone_level"]
+script = ExtResource("3_effect")
+kind = 15
+value_per_rank = 0.05
 
 [sub_resource type="Resource" id="Node_stubborn_stone"]
 script = ExtResource("2_node")
@@ -763,9 +940,10 @@ id = &"stubborn_stone"
 display_name = "Stubborn Stone"
 description = "Walls take 5% less damage"
 max_rank = 2
-position = Vector2(19, 7.6)
+position = Vector2(19, 6.2)
 color = Color(0.604, 0.651, 0.69, 1)
 links = Array[StringName]([&"fortress_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_stubborn_stone_level")])
 
 [sub_resource type="Resource" id="Effect_bastion_0"]
 script = ExtResource("3_effect")
@@ -779,7 +957,7 @@ id = &"bastion"
 display_name = "Bastion"
 description = "Wall max health +12%"
 max_rank = 3
-position = Vector2(18.4, 4)
+position = Vector2(18.1, 3.6)
 color = Color(0.604, 0.651, 0.69, 1)
 links = Array[StringName]([&"fortress_t4"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_bastion_0")])
@@ -797,7 +975,7 @@ id = &"deep_foundations"
 display_name = "Deep Foundations"
 description = "Wall max health x1.05 (more: multiplies with everything else)"
 max_rank = 2
-position = Vector2(17.6, 6)
+position = Vector2(19.9, 3.6)
 color = Color(0.604, 0.651, 0.69, 1)
 links = Array[StringName]([&"fortress_t4"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_deep_foundations_0")])
@@ -808,7 +986,7 @@ id = &"fortress_t4"
 display_name = "Fortress T4"
 description = "Unlocks Fortress T4 (effect not decided yet)"
 kind = 2
-position = Vector2(14.8, 3.6)
+position = Vector2(19, 2.3)
 color = Color(0.604, 0.651, 0.69, 1)
 needs = &"fortress_t3"
 
@@ -818,5 +996,3 @@ id = &"building"
 display_name = "Building"
 start_id = &"war_chest"
 nodes = Array[ExtResource("2_node")]([SubResource("Node_war_chest"), SubResource("Node_hardened_shots"), SubResource("Node_keen_eye"), SubResource("Node_heavy_hits"), SubResource("Node_long_sight"), SubResource("Node_phys_t2"), SubResource("Node_piercing"), SubResource("Node_swift_wings"), SubResource("Node_phys_t3"), SubResource("Node_shatter"), SubResource("Node_thick_walls"), SubResource("Node_stone_blocks"), SubResource("Node_fortress_t1"), SubResource("Node_masonry"), SubResource("Node_reinforced_core"), SubResource("Node_fortress_t2"), SubResource("Node_fortress_t3"), SubResource("Node_mending"), SubResource("Node_iron_bands"), SubResource("Node_warded_stones"), SubResource("Node_rebuild"), SubResource("Node_dragons_keep"), SubResource("Node_dragons_maze"), SubResource("Node_sharp_teeth"), SubResource("Node_cheap_snares"), SubResource("Node_leopard_t1"), SubResource("Node_hidden_jaws"), SubResource("Node_quick_springs"), SubResource("Node_big_game"), SubResource("Node_titan_claws"), SubResource("Node_rend"), SubResource("Node_leopard_t2"), SubResource("Node_deep_wounds"), SubResource("Node_lingering_wounds"), SubResource("Node_open_wounds"), SubResource("Node_leopard_t3"), SubResource("Node_pack_hunt"), SubResource("Node_spoils"), SubResource("Node_haggling"), SubResource("Node_salvage"), SubResource("Node_narrow_ways"), SubResource("Node_sharp_corners"), SubResource("Node_labyrinth"), SubResource("Node_scholar"), SubResource("Node_bold_start"), SubResource("Node_second_thoughts"), SubResource("Node_hoard"), SubResource("Node_honed_claws"), SubResource("Node_quick_talons"), SubResource("Node_deadeye"), SubResource("Node_stalker"), SubResource("Node_spring_steel"), SubResource("Node_savage_bite"), SubResource("Node_apex_hunter"), SubResource("Node_ambush"), SubResource("Node_pride_leader"), SubResource("Node_buttress"), SubResource("Node_spiked_stones"), SubResource("Node_stubborn_stone"), SubResource("Node_bastion"), SubResource("Node_deep_foundations"), SubResource("Node_fortress_t4")])
-shapes = Array[PackedVector2Array]([PackedVector2Array(0, 20, 20, 20, 19, 16, 19, 7, 20, 5.6, 20, 4.2, 18, 4.2, 18, 5, 15.4, 5, 15.4, 4.2, 12.4, 4.2, 12.4, 5, 7.6, 5, 7.6, 4.2, 4.6, 4.2, 4.6, 5, 2, 5, 2, 4.2, 0, 4.2, 0, 5.6, 1, 7, 1, 16)])
-lines = Array[PackedVector2Array]([PackedVector2Array(3.3, 4.2, 10, 0.6, 16.7, 4.2)])

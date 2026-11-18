@@ -25,6 +25,8 @@ const NO_POINTS_TEXT : String = "No points left. Clear levels to earn more."
 const HELD_TEXT : String = "Other talents depend on this one."
 #reaction, shared points / unlock points, both trees' points
 const REACTION_TEXT : String = "%s %d/%d (%s %d, %s %d)"
+const LEANING_TEXT : String = "Towers lean to %s: until they pick an element, they get its damage, speed, range and crit."
+const NOT_LEANING_TEXT : String = "Learn %s the most and towers lean to it before they pick an element."
 
 @onready var tabs : HBoxContainer = %Tabs
 @onready var points_label : Label = %PointsLabel
@@ -100,9 +102,12 @@ func _refresh() -> void:
 	_show_info()
 
 
-## The reactions of this tree's element with their shared points (the lower tree counts).
+## Whether towers lean to this tree, then the reactions of its element with their shared points (the lower tree counts).
 func _show_reactions() -> void:
 	var lines : PackedStringArray = []
+
+	if tree.element != Utils.Element.None:
+		lines.append((LEANING_TEXT if LevelTalents.get_leaning_element() == tree.element else NOT_LEANING_TEXT) % tree.display_name)
 
 	for reaction in ElementReactions.REACTIONS:
 		if reaction.first_tree != tree.id and reaction.second_tree != tree.id:

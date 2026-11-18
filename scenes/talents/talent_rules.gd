@@ -1,3 +1,4 @@
+@tool
 class_name TalentRules
 extends RefCounted
 
@@ -5,6 +6,18 @@ extends RefCounted
 ## talent points a level result earns. ranks maps a node id to its rank in one tree.
 
 const MAX_POINTS_PER_LEVEL : int = 5
+const TALENT_BOOK_PATH : String = "res://scenes/talents/talent_book.tres"
+
+
+## A node's display name by tree and node id (the id itself when it is not found).
+static func get_node_name(tree_id : StringName, node_id : StringName) -> String:
+	var book : TalentBook = load(TALENT_BOOK_PATH)
+	for tree in book.trees:
+		if tree.id == tree_id:
+			var node : TalentNode = tree.get_node_by_id(node_id)
+			if node != null:
+				return node.display_name
+	return String(node_id)
 
 
 ## node id -> the node ids a rank in it opens.
