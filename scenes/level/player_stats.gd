@@ -7,6 +7,8 @@ extends Node
 @export var life : float = 10.0 :
 	set = _set_life
 
+var has_lost : bool = false
+
 var is_alive : bool :
 	get:
 		return life > 0
@@ -21,6 +23,10 @@ func _ready() -> void:
 
 
 func _on_enemy_reach_base(enemy : Enemy) -> void:
+	#Keep Awakens (talent): the castle dragon stops the first enemy of each wave at each castle
+	var level : Level = get_parent() as Level
+	if level != null and level.talents != null and level.talents.mechanics != null and level.talents.mechanics.forgives_leak(enemy):
+		return
 	#the enemy's own damage is its leak cost, the melee skill's damage is only for hitting buildings
 	life -= round(enemy.stats.get_stat_value(Utils.StatType.Damage))
 	GameSignals.resource_change.emit(life, 1)
@@ -52,7 +58,11 @@ func add_gold(amount : float) -> void:
 	GameSignals.resource_change.emit(gold, 0)
 
 
+#once: enemies leaking in the same frame after the last life would stack lose menus and log the loss twice
 func lose() -> void:
+	if has_lost:
+		return
+	has_lost = true
 	GameSignals.lose_game.emit()
 
 

@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cl4vrfeujadu8"
+path="res://.godot/imported/swamp_landmarks.aseprite-ef1a875c3805563d6d3cc68737d3a74d.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/swamp/swamp_landmarks.aseprite"
+dest_files=["res://.godot/imported/swamp_landmarks.aseprite-ef1a875c3805563d6d3cc68737d3a74d.res"]
+
+[params]
+

@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="LevelModeData" format=3]
+
+[ext_resource type="Script" path="res://scenes/level/level_data/level_mode_data.gd" id="1_mode"]
+[ext_resource type="Script" uid="uid://cpw7ia3ek2yvs" path="res://scenes/level/level_data/wave_data.gd" id="0_wave"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/modes/level_037_hard_wave_1.tres" id="a1"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/modes/level_037_hard_wave_2.tres" id="a2"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/modes/level_037_hard_wave_3.tres" id="a3"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/modes/level_037_hard_wave_4.tres" id="a4"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/modes/level_037_hard_wave_5.tres" id="a5"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/modes/level_037_hard_wave_6.tres" id="a6"]
+
+[resource]
+script = ExtResource("1_mode")
+health_multiplier = 2.0
+speed_multiplier = 1.15
+count_multiplier = 1.4
+interval_multiplier = 0.85
+first_wave_share = 0.2
+last_wave_share = 1.0
+xp_multiplier = 1.5
+added_groups = Array[ExtResource("0_wave")]([ExtResource("a1"), ExtResource("a2"), ExtResource("a3"), ExtResource("a4"), ExtResource("a5"), ExtResource("a6")])

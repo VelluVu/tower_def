@@ -11,6 +11,14 @@ signal building_option_updated(building_index : int, new_icon : Texture2D)
 signal upgrade_card_selected(index : int)
 signal gold_upgrades_changed(options : Array[GoldUpgradeOption])
 signal gold_upgrade_pressed(index : int)
+## A tactic picked in the selected tower's Target menu (Utils.TargetTactic); works during a wave too.
+signal target_tactic_selected(tactic : Utils.TargetTactic)
+## The selected tower's tactic (Utils.TargetTactic); -1 when the selection has none (the menu hides).
+signal target_tactic_changed(tactic : int)
+## A rectangle-selected group of walls (WallGroupSelect): its title (empty = none) and the element options for its plain walls.
+signal wall_group_changed(title : String, options : Array[GoldUpgradeOption])
+## A button of the wall group: -1 sells them all, 0 and up buys that element option.
+signal wall_group_action(index : int)
 
 signal selected_unit(unit_name : String, stats : Stats, skill : Skill, icon : Texture2D, is_building : bool)
 signal deselected_unit()
@@ -18,7 +26,7 @@ signal deselected_unit()
 signal game_play_interface_loaded()
 signal continue_next_level_pressed()
 signal retry_level_pressed()
-signal start_level_button_pressed(level_number : int)
+signal start_level_button_pressed(level_number : int, mode : Utils.LevelMode)
 signal start_game()
 signal options()
 signal continue_from_pause_menu()

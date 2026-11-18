@@ -1,0 +1,45 @@
+[gd_resource type="Resource" script_class="WaveData" format=3]
+
+[ext_resource type="Script" uid="uid://cpw7ia3ek2yvs" path="res://scenes/level/level_data/wave_data.gd" id="1_wave"]
+[ext_resource type="Script" uid="uid://bbhd3iyjav4h2" path="res://scenes/level/level_data/spawn_group_data.gd" id="2_group"]
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/ember_cultist.tscn" id="e_ember_cultist"]
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/magma_salamander.tscn" id="e_magma_salamander"]
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/obsidian_golem.tscn" id="e_obsidian_golem"]
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/phoenix.tscn" id="e_phoenix"]
+
+[sub_resource type="Resource" id="Resource_group1"]
+script = ExtResource("2_group")
+enemy_scene = ExtResource("e_phoenix")
+count = 8
+interval = 1.8
+spawner_id = 2
+elites = 1
+
+[sub_resource type="Resource" id="Resource_group2"]
+script = ExtResource("2_group")
+enemy_scene = ExtResource("e_ember_cultist")
+count = 7
+interval = 2.8
+spawner_id = 1
+elites = 1
+
+[sub_resource type="Resource" id="Resource_group3"]
+script = ExtResource("2_group")
+enemy_scene = ExtResource("e_obsidian_golem")
+count = 8
+interval = 2.6
+delay = 4.0
+elites = 2
+
+[sub_resource type="Resource" id="Resource_group4"]
+script = ExtResource("2_group")
+enemy_scene = ExtResource("e_magma_salamander")
+count = 20
+interval = 0.8
+delay = 8.0
+spawner_id = 2
+
+[resource]
+script = ExtResource("1_wave")
+spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_group3"), SubResource("Resource_group4")])
+early_start_bonus = 2.0

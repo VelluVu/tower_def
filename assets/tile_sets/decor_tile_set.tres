@@ -1,6 +1,9 @@
 [gd_resource type="TileSet" format=3 uid="uid://dieyft18l8huw"]
 
 [ext_resource type="Texture2D" uid="uid://dgcvdhow57j75" path="res://assets/art/tiles/green_land/decor_tiles.png" id="1_decor"]
+[ext_resource type="Texture2D" uid="uid://74akfgpmlups" path="res://assets/art/tiles/desert/desert_decor.png" id="2_desert_decor"]
+[ext_resource type="Texture2D" uid="uid://rspy3ri227tr" path="res://assets/art/tiles/volcano/volcano_decor.png" id="3_volcano_decor"]
+[ext_resource type="Texture2D" path="res://assets/art/tiles/humans/wasted_decor.png" id="4_wasted_decor"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_decor"]
 texture = ExtResource("1_decor")
@@ -295,5 +298,53 @@ texture = ExtResource("1_decor")
 12:10/0 = 0
 13:10/0 = 0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_desert_decor"]
+texture = ExtResource("2_desert_decor")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_volcano_decor"]
+texture = ExtResource("3_volcano_decor")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wasted_decor"]
+texture = ExtResource("4_wasted_decor")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+
 [resource]
 sources/0 = SubResource("TileSetAtlasSource_decor")
+sources/1 = SubResource("TileSetAtlasSource_desert_decor")
+sources/2 = SubResource("TileSetAtlasSource_volcano_decor")
+sources/3 = SubResource("TileSetAtlasSource_wasted_decor")

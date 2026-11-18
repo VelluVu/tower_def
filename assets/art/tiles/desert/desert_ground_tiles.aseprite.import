@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dimjbwc1f6s84"
+path="res://.godot/imported/desert_ground_tiles.aseprite-b6d1be4d1a994c1d0fd228fa5f8d0720.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/desert/desert_ground_tiles.aseprite"
+dest_files=["res://.godot/imported/desert_ground_tiles.aseprite-b6d1be4d1a994c1d0fd228fa5f8d0720.res"]
+
+[params]
+

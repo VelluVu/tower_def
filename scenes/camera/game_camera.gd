@@ -54,6 +54,8 @@ var speed_multiplier : float = 1.0
 var is_edge_scroll_on : bool = false
 #the last mouse position stays inside the edge margin after the mouse leaves the window
 var is_mouse_in_window : bool = true
+#the wheel over a panel belongs to the panel, not the zoom
+var is_cursor_on_gui : bool = false
 
 var is_panning : bool = false :
 	set = _set_is_panning
@@ -63,6 +65,7 @@ var current_mode : CameraMode = CameraMode.Static
 
 func _ready() -> void:
 	GameSignals.level_loaded.connect(_on_level_loaded)
+	UISignals.mouse_on_gui.connect(_on_mouse_on_gui)
 	SettingsManager.option_changed.connect(_on_option_changed)
 	speed_multiplier = SettingsManager.get_option(SettingsManager.OPTION_CAMERA_SPEED)
 	is_edge_scroll_on = SettingsManager.get_option(SettingsManager.OPTION_EDGE_SCROLL)
@@ -96,6 +99,8 @@ func _snap_view_to_art_pixels() -> void:
 
 
 func _zoom() -> void:
+	if is_cursor_on_gui:
+		return
 	if Input.is_action_just_pressed(ZOOM_IN_ACTION_NAME):
 		zoom_target_position = (zoom_target_position + Vector2.ONE * zoom_step).round()
 	if Input.is_action_just_pressed(ZOOM_OUT_ACTION_NAME):
@@ -215,16 +220,19 @@ func _pan_camera_smoothly(delta : float) -> void:
 
 
 func _on_level_loaded(level : Level) -> void:
+	#a menu freed under the cursor may never send mouse_on_gui(false)
+	is_cursor_on_gui = false
 	var half_size : Vector2 = level.tiles.background_pixel_size.round()
 	var viewport_size : Vector2 = get_viewport_rect().size
 	#rounded up to a whole zoom so the level still fills the view's width
 	level_min_zoom = ceilf(maxf(zoom_min.x, viewport_size.x / (half_size.x * 2.0)))
 	#a level lower than the view at the widest zoom gets the backdrop above and below it
 	half_size.y = maxf(half_size.y, ceilf(viewport_size.y / level_min_zoom * 0.5))
-	limit_left = -half_size.x
-	limit_top = -half_size.y
-	limit_right = half_size.x
-	limit_bottom = half_size.y
+	#whole pixels already (rounded above), so the int limits lose nothing
+	limit_left = -roundi(half_size.x)
+	limit_top = -roundi(half_size.y)
+	limit_right = roundi(half_size.x)
+	limit_bottom = roundi(half_size.y)
 	_frame_level(level.get_path_bounds())
 	current_mode = CameraMode.Free
 
@@ -245,3 +253,7 @@ func _frame_level(bounds : Rect2) -> void:
 	global_position = framed.get_center().clamp(limit_min, limit_max)
 	move_target_position = global_position
 	pan_lerp_target_pos = global_position
+
+
+func _on_mouse_on_gui(value : bool) -> void:
+	is_cursor_on_gui = value

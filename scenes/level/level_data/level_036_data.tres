@@ -1,0 +1,46 @@
+[gd_resource type="Resource" script_class="LevelData" format=3]
+
+[ext_resource type="Script" uid="uid://cpw7ia3ek2yvs" path="res://scenes/level/level_data/wave_data.gd" id="0_wave"]
+[ext_resource type="Script" uid="uid://c0cehaxum4b45" path="res://scenes/level/level_data/level_data.gd" id="1_level"]
+[ext_resource type="Script" uid="uid://bu8xwv71c6bbj" path="res://scenes/level/level_data/puffe_line.gd" id="9_line"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_036_wave_1.tres" id="w1"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_036_wave_2.tres" id="w2"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_036_wave_3.tres" id="w3"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_036_wave_4.tres" id="w4"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_036_wave_5.tres" id="w5"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_036_wave_6.tres" id="w6"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_036_wave_7.tres" id="w7"]
+
+[sub_resource type="Resource" id="PuffeLine_1"]
+script = ExtResource("9_line")
+text = "Their war camp. Tents, banners, and a lot of shiny swords. I do not like shiny swords."
+
+[sub_resource type="Resource" id="PuffeLine_2"]
+script = ExtResource("9_line")
+trigger = 3
+wave_number = 2
+text = "Their camp cavalry knows these roads. Keep the road long and the towers close."
+
+[sub_resource type="Resource" id="PuffeLine_3"]
+script = ExtResource("9_line")
+trigger = 3
+wave_number = 7
+text = "The Dragonslayer. He has hunted dragons before. He has never met Puffe."
+
+[sub_resource type="Resource" id="PuffeLine_4"]
+script = ExtResource("9_line")
+trigger = 4
+wave_number = 7
+text = "His last words: my oath was sworn to the one in the mountain. The volcano rumbles. No haystack nap for me yet."
+
+[resource]
+script = ExtResource("1_level")
+level_name = "Dragonslayer's Camp"
+story_text = "The humans have made their war camp on the fields. Their cavalry rides out from the camp road, and their champion, the Dragonslayer, has come for the eggs himself."
+starting_gold = 28.0
+waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtResource("w3"), ExtResource("w4"), ExtResource("w5"), ExtResource("w6"), ExtResource("w7")])
+puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_4")])
+first_wave_health = 1.9
+last_wave_health = 5.2
+health_scale = 1.604
+hard_health_scale = 1.543

@@ -11,6 +11,11 @@ const TILE_EFFECT_CUSTOM_DATA_NAME : String = "TileEffect"
 const SLOWING_GROUND_SPEED_FACTOR : float = 0.85
 #enemy speed on a cell next to a player building: squeezing through the maze
 const MAZE_SPEED_FACTOR : float = 0.85
+#on top of the maze slow next to an element wall: Frost about 75% speed in all, Fortress about 80%
+const WALL_ELEMENT_SPEED_FACTORS : Dictionary[Utils.Element, float] = {Utils.Element.Frost: 0.88, Utils.Element.Physical: 0.94}
+const FROST_T2_SPEED_FACTOR : float = 0.78
+#how far (cells) find_path looks for open ground when the start cell is solid (lava poured over an enemy)
+const OFF_SOLID_SEARCH_CELLS : int = 4
 
 var tiles : Tiles = null
 var astar_grid : AStarGrid2D = null
@@ -18,6 +23,14 @@ var astar_grid : AStarGrid2D = null
 var buildings : Array[Building] = []
 #cells taken by level objects drawn over the ground (spawn point caves): no walking, no building
 var reserved_cells : Dictionary[Vector2i, bool] = {}
+#MAZE_SPEED_FACTOR, lowered by the maze slow card (LevelUpgrades)
+var maze_speed_factor : float = MAZE_SPEED_FACTOR
+#maze slow points from the talents (Narrow Ways, Dragon's Maze), on top of maze_speed_factor
+var talent_maze_slow : float = 0.0
+#the level's BogCrossings, for the enemies that can wade
+var bog_crossings : Array[BogCrossing] = []
+#cells whose tile flags something in the level replaced (lava cooled into rock, an eruption over a road)
+var cell_overrides : Dictionary[Vector2i, int] = {}
 
 
 func _init(level_tiles : Tiles, level_buildings : Array[Building]) -> void:
@@ -27,11 +40,90 @@ func _init(level_tiles : Tiles, level_buildings : Array[Building]) -> void:
 
 
 func find_path(from : Vector2, to : Vector2) -> PackedVector2Array:
-	return astar_grid.get_point_path(world_position_to_grid(from), world_position_to_grid(to), true)
+	var from_cell : Vector2i = world_position_to_grid(from)
+	var to_cell : Vector2i = world_position_to_grid(to)
+
+	#AStarGrid2D finds nothing from a solid cell: an enemy that an eruption caught on its road would never move again
+	if astar_grid.is_in_boundsv(from_cell) and astar_grid.is_point_solid(from_cell):
+		return _find_path_off_solid(from_cell, to_cell)
+
+	return astar_grid.get_point_path(from_cell, to_cell, true)
+
+
+#the shortest path from the nearest ring of open cells around a solid one that has a path reaching `to`
+func _find_path_off_solid(from_cell : Vector2i, to_cell : Vector2i) -> PackedVector2Array:
+	for radius in range(1, OFF_SOLID_SEARCH_CELLS + 1):
+		var best : PackedVector2Array = PackedVector2Array()
+		for dx in range(-radius, radius + 1):
+			for dy in range(-radius, radius + 1):
+				if maxi(absi(dx), absi(dy)) != radius:
+					continue
+				var cell : Vector2i = from_cell + Vector2i(dx, dy)
+				if not astar_grid.is_in_boundsv(cell) or astar_grid.is_point_solid(cell):
+					continue
+				var path : PackedVector2Array = astar_grid.get_point_path(cell, to_cell, true)
+				if path.is_empty() or world_position_to_grid(path[path.size() - 1]) != to_cell:
+					continue
+				if best.is_empty() or path.size() < best.size():
+					best = path
+		if not best.is_empty():
+			return best
+
+	return PackedVector2Array()
+
+
+## The cheapest way for a wading enemy: the road, or a bog crossing when the road to it, the
+## stones and the road from its far shore cost less (buildings count with their weight).
+func find_wading_route(from : Vector2, to : Vector2) -> WadingRoute:
+	var best : WadingRoute = WadingRoute.new()
+	best.path = find_path(from, to)
+	var best_cost : float = get_path_cost(best.path, to)
+
+	for crossing in bog_crossings:
+		var to_entry : PackedVector2Array = find_path(from, crossing.entry_position)
+		var from_exit : PackedVector2Array = find_path(crossing.exit_position, to)
+		var cost : float = get_path_cost(to_entry, crossing.entry_position) + crossing.get_cost() + get_path_cost(from_exit, to)
+		if cost < best_cost:
+			best_cost = cost
+			best = WadingRoute.new()
+			best.path = to_entry + from_exit
+			best.exit_index = to_entry.size()
+			best.crossing = crossing
+
+	return best
+
+
+## What AStarGrid2D counts for a path: each step costs the weight of the cell it enters. INF when the
+## path does not reach `to` (a partial path).
+func get_path_cost(path : PackedVector2Array, to : Vector2) -> float:
+	if path.is_empty() or world_position_to_grid(path[path.size() - 1]) != world_position_to_grid(to):
+		return INF
+
+	var cost : float = 0.0
+	for i in range(1, path.size()):
+		cost += astar_grid.get_point_weight_scale(world_position_to_grid(path[i]))
+	return cost
 
 
 func set_cell_weight(cell : Vector2i, weight : float) -> void:
 	astar_grid.set_point_weight_scale(cell, weight)
+
+
+## Replaces the cell's tile flags (Utils.TileType) until cleared, and keeps the A* grid in step.
+## Emit GameSignals.astar_grid_updated afterwards when enemies are already walking.
+func set_cell_override(cell : Vector2i, flags : int) -> void:
+	cell_overrides[cell] = flags
+	_update_solid(cell)
+
+
+func clear_cell_override(cell : Vector2i) -> void:
+	if cell_overrides.erase(cell):
+		_update_solid(cell)
+
+
+func _update_solid(cell : Vector2i) -> void:
+	if astar_grid.is_in_boundsv(cell):
+		astar_grid.set_point_solid(cell, not is_cell_walkable(cell))
 
 
 #emit GameSignals.astar_grid_updated afterwards when enemies are already walking
@@ -40,6 +132,13 @@ func reserve_cells(cells : Array[Vector2i]) -> void:
 		reserved_cells[cell] = true
 		if astar_grid.is_in_boundsv(cell):
 			astar_grid.set_point_solid(cell, true)
+
+
+#whether a walk from `from` gets to `to` at all, through buildings or not (find_path allows partial paths, so an
+#empty check is not enough: a cut-off route still returns the way to the nearest cell)
+func reaches(from : Vector2, to : Vector2) -> bool:
+	var path : PackedVector2Array = find_path(from, to)
+	return not path.is_empty() and world_position_to_grid(path[path.size() - 1]) == world_position_to_grid(to)
 
 
 #open = the cheapest path walks around every building; a closed route goes through one
@@ -131,13 +230,31 @@ func get_move_speed_factor(cell : Vector2i) -> float:
 	if has_flag(_get_cell_flags(cell, TILE_EFFECT_CUSTOM_DATA_NAME), Utils.TileEffect.Slowing):
 		factor *= SLOWING_GROUND_SPEED_FACTOR
 
+	if is_maze_cell(cell):
+		factor *= maxf(maze_speed_factor - talent_maze_slow, 0.4)
+		#element walls: freezing ground next to Frost, hard going next to Fortress (strongest wall nearby counts)
+		var wall_factor : float = 1.0
+		for neighbour in get_surrounding_cells(cell):
+			var wall : Wall = get_building_from_cell_position(neighbour) as Wall
+			if wall != null:
+				var wall_slow : float = WALL_ELEMENT_SPEED_FACTORS.get(wall.element, 1.0)
+				#Frost T2: freezing ground, colder still
+				if wall.element == Utils.Element.Frost and wall.get_element_tier() >= 2:
+					wall_slow = FROST_T2_SPEED_FACTOR
+				wall_factor = minf(wall_factor, wall_slow)
+		factor *= wall_factor
+
+	return factor
+
+
+## A cell next to a player building (traps don't count): the maze.
+func is_maze_cell(cell : Vector2i) -> bool:
 	for neighbour in get_surrounding_cells(cell):
 		var building : Building = get_building_from_cell_position(neighbour)
 		if building != null and building is not Trap:
-			factor *= MAZE_SPEED_FACTOR
-			break
+			return true
 
-	return factor
+	return false
 
 
 func get_surrounding_cells(cell : Vector2i) -> Array[Vector2i]:
@@ -193,6 +310,8 @@ func snap_position_to_grid(_pos : Vector2) -> Vector2:
 
 #the flags of one custom data layer (TileType or TileEffect) of every tile map layer on this cell, combined
 func _get_cell_flags(cell : Vector2i, data_name : String = TILE_TYPE_CUSTOM_DATA_NAME) -> int:
+	if data_name == TILE_TYPE_CUSTOM_DATA_NAME and cell_overrides.has(cell):
+		return cell_overrides[cell]
 	var flags : int = 0
 
 	for tile_map_layer in tiles.tile_map_layers:

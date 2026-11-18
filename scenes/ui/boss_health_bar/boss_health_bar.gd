@@ -31,7 +31,7 @@ func _on_enemy_spawned(enemy : Enemy) -> void:
 		return
 
 	boss = enemy
-	name_label.text = enemy.selectable.display_name if enemy.selectable.display_name != "" else enemy.name
+	name_label.text = enemy.selectable.display_name if enemy.selectable.display_name != "" else String(enemy.name)
 	show()
 	set_process(true)
 

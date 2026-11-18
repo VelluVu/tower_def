@@ -15,10 +15,11 @@ const TALENT_POINTS_FORMAT : String = "%s
 Talent points: %d/%d"
 const MODE_POINTS_FORMAT : String = "%s: %d/%d talent points"
 const MODE_LOCKED_FORMAT : String = "%s: coming later"
+const MODE_NEEDS_NORMAL_FORMAT : String = "%s: clear Normal first"
 const FONT_COLOR_NAME : StringName = &"font_color"
 const FONT_COLOR_NAMES : Array[StringName] = [&"font_color", &"font_hover_color", &"font_pressed_color", &"font_hover_pressed_color", &"font_focus_color", &"font_disabled_color"]
 ## Modes that can be played; the rest show a disabled tab until they are built.
-const PLAYABLE_MODES : Array[Utils.LevelMode] = [Utils.LevelMode.Normal]
+const PLAYABLE_MODES : Array[Utils.LevelMode] = [Utils.LevelMode.Normal, Utils.LevelMode.Hard, Utils.LevelMode.Survival]
 const MODE_TABS_SEPARATION : int = 2
 const SEPARATION_NAME : StringName = &"separation"
 const MISSING_LEVEL_DATA_WARNING : String = "No level data for map level %d at %s"
@@ -84,11 +85,14 @@ func _add_mode_tabs() -> void:
 		tab.button_group = group
 		tab.focus_mode = Control.FOCUS_NONE
 		tab.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		tab.disabled = not PLAYABLE_MODES.has(mode)
+		var needs_normal : bool = mode != Utils.LevelMode.Normal and not _is_normal_cleared()
+		tab.disabled = not PLAYABLE_MODES.has(mode) or needs_normal
 		tab.button_pressed = mode == selected_mode
 
-		if tab.disabled:
+		if not PLAYABLE_MODES.has(mode):
 			tab.tooltip_text = MODE_LOCKED_FORMAT % mode_name
+		elif needs_normal:
+			tab.tooltip_text = MODE_NEEDS_NORMAL_FORMAT % mode_name
 		else:
 			var points : int = PlayerProgress.get_level_mode_talent_points(level_number, mode)
 			tab.tooltip_text = MODE_POINTS_FORMAT % [mode_name, points, TalentRules.MAX_POINTS_PER_LEVEL]
@@ -120,7 +124,11 @@ func _show_talent_points() -> void:
 		name_label.add_theme_color_override(FONT_COLOR_NAME, MasteredFrame.OUTER_COLOR)
 
 
-#the start button does not pass the mode yet: only Normal can be picked
+#Hard and Survival open once Normal is cleared, which unlocks the next level
+func _is_normal_cleared() -> bool:
+	return PlayerProgress.level_progress > level_number
+
+
 func _on_mode_tab_pressed(mode : Utils.LevelMode) -> void:
 	selected_mode = mode
 
@@ -134,7 +142,7 @@ func _on_select_button_pressed() -> void:
 
 
 func _on_start_button_pressed() -> void:
-	UISignals.start_level_button_pressed.emit(level_number)
+	UISignals.start_level_button_pressed.emit(level_number, selected_mode)
 
 
 func _on_close_button_pressed() -> void:

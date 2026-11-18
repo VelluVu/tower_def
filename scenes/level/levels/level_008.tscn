@@ -16,6 +16,12 @@
 [ext_resource type="PackedScene" path="res://scenes/unit/spawner/spawn_points/spawn_hollow.tscn" id="spawn_point_hollow"]
 [ext_resource type="TileSet" path="res://assets/tile_sets/decor_tile_set.tres" id="decor_tile_set"]
 
+[sub_resource type="Curve2D" id="Curve2D_flight"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 152, -104, 0, 0, 0, 0, 56, -40, 0, 0, 0, 0, -24, 24, 0, 0, 0, 0, -120, 56, 0, 0, 0, 0, -232, 40, 0, 0, 0, 0, -296, 9)
+}
+point_count = 6
+
 [node name="Level008" type="Node2D" unique_id=483741352]
 y_sort_enabled = true
 script = ExtResource("1_k3t0t")
@@ -68,11 +74,15 @@ script = ExtResource("9_62d5o")
 id = 1
 end_point = NodePath("../EndPoint")
 
-[node name="Spawner3" type="Node2D" parent="." unique_id=1937345444 node_paths=PackedStringArray("end_point") groups=["Spawner"] instance=ExtResource("spawn_point_cave")]
+[node name="Spawner3" type="Node2D" parent="." unique_id=1937345444 node_paths=PackedStringArray("end_point", "flight_route") groups=["Spawner"] instance=ExtResource("spawn_point_cave")]
 position = Vector2(152, -104)
 script = ExtResource("9_62d5o")
 id = 2
 end_point = NodePath("../EndPoint")
+flight_route = NodePath("../FlightRoute")
+
+[node name="FlightRoute" type="Path2D" parent="."]
+curve = SubResource("Curve2D_flight")
 
 [node name="PlayerStats" type="Node" parent="." unique_id=666958696]
 script = ExtResource("10_gphns")

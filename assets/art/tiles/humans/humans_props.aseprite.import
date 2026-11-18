@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bjvl7ud0jyvx2"
+path="res://.godot/imported/humans_props.aseprite-c782d2c46080372e30e10a3711b6c300.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/humans/humans_props.aseprite"
+dest_files=["res://.godot/imported/humans_props.aseprite-c782d2c46080372e30e10a3711b6c300.res"]
+
+[params]
+

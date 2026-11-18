@@ -110,7 +110,7 @@ func _on_talents(is_open : bool) -> void:
 func _on_level_completed(level : Level) -> void:
 	var menu : LevelCompletedMenu = scene_manager.load_scene_by_name(LEVEL_COMPLETED_MENU_NAME, scene_manager.SceneType.UI, self)
 	menu.show_result(scene_manager.current_level_number >= scene_manager.get_last_level_number())
-	menu.show_talent_points(TalentRules.points_for_level(level), PlayerProgress.get_level_talent_points(scene_manager.current_level_number))
+	menu.show_talent_points(TalentRules.points_for_level(level), PlayerProgress.get_level_mode_talent_points(scene_manager.current_level_number, level.mode))
 
 
 func _on_upgrade_level_gained(new_level : int, cards : Array[UpgradeCard]) -> void:

@@ -1,0 +1,42 @@
+[gd_resource type="Resource" script_class="LevelData" format=3]
+
+[ext_resource type="Script" uid="uid://cpw7ia3ek2yvs" path="res://scenes/level/level_data/wave_data.gd" id="0_wave"]
+[ext_resource type="Script" uid="uid://c0cehaxum4b45" path="res://scenes/level/level_data/level_data.gd" id="1_level"]
+[ext_resource type="Script" uid="uid://bu8xwv71c6bbj" path="res://scenes/level/level_data/puffe_line.gd" id="9_line"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_037_wave_1.tres" id="w1"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_037_wave_2.tres" id="w2"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_037_wave_3.tres" id="w3"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_037_wave_4.tres" id="w4"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_037_wave_5.tres" id="w5"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_037_wave_6.tres" id="w6"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/modes/level_037_hard.tres" id="hard_mode"]
+
+[sub_resource type="Resource" id="PuffeLine_1"]
+script = ExtResource("9_line")
+text = "Sand. Ash. More sand. I cannot sleep on sand, it gets everywhere."
+
+[sub_resource type="Resource" id="PuffeLine_2"]
+script = ExtResource("9_line")
+trigger = 3
+wave_number = 3
+text = "Those are not humans. Those are bones. Walking bones."
+
+[sub_resource type="Resource" id="PuffeLine_3"]
+script = ExtResource("9_line")
+trigger = 4
+wave_number = 6
+text = "The Dragonslayer swore his oath to someone out here. I mean to find out who."
+
+[resource]
+script = ExtResource("1_level")
+level_name = "Ashfall Road"
+story_text = "Past the Dragonslayer's camp the green ends. Ash falls like snow on an old road into the desert, and the humans' rearguard still holds it."
+starting_gold = 31.0
+waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtResource("w3"), ExtResource("w4"), ExtResource("w5"), ExtResource("w6")])
+puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3")])
+first_wave_health = 1.7
+last_wave_health = 9.8
+health_scale = 1.847
+hard_health_scale = 1.976
+hard_mode = ExtResource("hard_mode")
+sandstorm_every = 75.0

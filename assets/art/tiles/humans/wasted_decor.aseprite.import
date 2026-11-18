@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bnyjils5pxefr"
+path="res://.godot/imported/wasted_decor.aseprite-077b4cd92644331a5a507913d3e573af.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/humans/wasted_decor.aseprite"
+dest_files=["res://.godot/imported/wasted_decor.aseprite-077b4cd92644331a5a507913d3e573af.res"]
+
+[params]
+

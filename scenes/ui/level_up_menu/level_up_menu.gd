@@ -7,6 +7,10 @@ const TITLE_TEXT : String = "Level %d: choose an upgrade for all towers"
 const CARD_MIN_SIZE : Vector2 = Vector2(96, 112)
 const CARD_ICON_SIZE : Vector2 = Vector2(32, 32)
 const CARD_MARGIN : int = 6
+const RARE_TEXT : String = "Rare"
+const FONT_COLOR : StringName = &"font_color"
+#coin gold (Endesga 32), the theme's accent colour
+const RARE_COLOR : Color = Color("feae34")
 
 @onready var title_label : Label = %TitleLabel
 @onready var card_container : HBoxContainer = %CardContainer
@@ -39,6 +43,14 @@ func _create_card_button(card : UpgradeCard, index : int) -> Button:
 	column.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	margin.add_child(column)
 
+	if card.resource.rarity == EvolveResource.Rarity.Rare:
+		var rare_label : Label = Label.new()
+		rare_label.text = RARE_TEXT
+		rare_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		rare_label.add_theme_color_override(FONT_COLOR, RARE_COLOR)
+		rare_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		column.add_child(rare_label)
+
 	var icon_rect : TextureRect = TextureRect.new()
 	icon_rect.texture = card.icon
 	icon_rect.custom_minimum_size = CARD_ICON_SIZE
@@ -60,6 +72,9 @@ func _create_card_button(card : UpgradeCard, index : int) -> Button:
 
 
 func _on_card_pressed(index : int) -> void:
+	#a second click before the old cards free would pick blind from the next level-up's offer
+	for button in card_container.get_children():
+		(button as Button).disabled = true
 	UISignals.upgrade_card_selected.emit(index)
 
 

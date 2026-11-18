@@ -11,3 +11,5 @@ extends Resource
 @export var talent_ranks : Dictionary[StringName, Dictionary] = {}
 ## The best talent points earned per level number; replays only earn the difference.
 @export var level_talent_points : Dictionary[int, int] = {}
+## The best talent points per mode other than Normal: mode (Utils.LevelMode) -> {level number: points}.
+@export var mode_talent_points : Dictionary[int, Dictionary] = {}

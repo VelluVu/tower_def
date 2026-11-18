@@ -21,7 +21,9 @@ var base_wait_time : float = 0.0 :
 		if base_wait_time <= 0.0:
 			return
 		
-		wait_time = base_wait_time / Utils.game_control.time_scale
+		#no Main (a level loaded on its own, the load check): normal speed
+		var time_scale : float = Utils.game_control.time_scale if Utils.game_control != null else 1.0
+		wait_time = base_wait_time / time_scale
 		#print(name, " base wait time is set to: ", base_wait_time)
 
 

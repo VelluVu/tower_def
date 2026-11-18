@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://hohixw01817k"
+path="res://.godot/imported/wasted_landmarks.aseprite-943a9bcc05afe18b4ba135a19f5c4d58.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/humans/wasted_landmarks.aseprite"
+dest_files=["res://.godot/imported/wasted_landmarks.aseprite-943a9bcc05afe18b4ba135a19f5c4d58.res"]
+
+[params]
+

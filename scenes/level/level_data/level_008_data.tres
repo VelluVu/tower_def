@@ -3,12 +3,12 @@
 [ext_resource type="Script" uid="uid://cpw7ia3ek2yvs" path="res://scenes/level/level_data/wave_data.gd" id="0_wave"]
 [ext_resource type="Script" uid="uid://c0cehaxum4b45" path="res://scenes/level/level_data/level_data.gd" id="1_level"]
 [ext_resource type="Script" uid="uid://bu8xwv71c6bbj" path="res://scenes/level/level_data/puffe_line.gd" id="9_line"]
-[ext_resource type="Resource" uid="uid://dy7ec50v5ixdk" path="res://scenes/level/level_data/waves/level_008_wave_1.tres" id="w1"]
-[ext_resource type="Resource" uid="uid://crqlgbsi5t7wn" path="res://scenes/level/level_data/waves/level_008_wave_2.tres" id="w2"]
-[ext_resource type="Resource" uid="uid://b8gve3jfe0xxl" path="res://scenes/level/level_data/waves/level_008_wave_3.tres" id="w3"]
-[ext_resource type="Resource" uid="uid://bsbleeax02que" path="res://scenes/level/level_data/waves/level_008_wave_4.tres" id="w4"]
-[ext_resource type="Resource" uid="uid://mj4d1w014boq" path="res://scenes/level/level_data/waves/level_008_wave_5.tres" id="w5"]
-[ext_resource type="Resource" uid="uid://bl14fyvq1dx2r" path="res://scenes/level/level_data/waves/level_008_wave_6.tres" id="w6"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_008_wave_1.tres" id="w1"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_008_wave_2.tres" id="w2"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_008_wave_3.tres" id="w3"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_008_wave_4.tres" id="w4"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_008_wave_5.tres" id="w5"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_008_wave_6.tres" id="w6"]
 
 [sub_resource type="Resource" id="PuffeLine_1"]
 script = ExtResource("9_line")
@@ -40,6 +40,10 @@ text = "Focus her down, and pop her brood before it scatters. I know a thing or 
 script = ExtResource("1_level")
 level_name = "Broodmother's Lair"
 story_text = "The castle by the great cave needs help now. The miners dug too deep, and something big is coming up from below."
-starting_gold = 20.0
+starting_gold = 23.0
 waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtResource("w3"), ExtResource("w4"), ExtResource("w5"), ExtResource("w6")])
 puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_4"), SubResource("PuffeLine_5")])
+first_wave_health = 1.6
+last_wave_health = 2.0
+health_scale = 0.856
+hard_health_scale = 1.188

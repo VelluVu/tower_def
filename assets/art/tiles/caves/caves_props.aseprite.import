@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://ckynad3bldd70"
+path="res://.godot/imported/caves_props.aseprite-4c1faf649938c8123eb7ddc396e2de74.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/caves/caves_props.aseprite"
+dest_files=["res://.godot/imported/caves_props.aseprite-4c1faf649938c8123eb7ddc396e2de74.res"]
+
+[params]
+

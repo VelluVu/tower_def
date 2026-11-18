@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://2o0qmq7u42gn"
+path="res://.godot/imported/puffe_game_icon.aseprite-7376427de17c2c3de88eb11bc3459d9d.res"
+
+[deps]
+
+source_file="res://assets/art/ui/puffe_game_icon.aseprite"
+dest_files=["res://.godot/imported/puffe_game_icon.aseprite-7376427de17c2c3de88eb11bc3459d9d.res"]
+
+[params]
+

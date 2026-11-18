@@ -7,6 +7,15 @@
 [ext_resource type="Texture2D" uid="uid://b0lq8n018q8r4" path="res://assets/art/tiles/props/rock_tiles.png" id="5_rock"]
 [ext_resource type="Texture2D" uid="uid://lqg06nlpkfma" path="res://assets/art/tiles/props/rock_tiles_high.png" id="6_rock_high"]
 [ext_resource type="Texture2D" uid="uid://ts64ucwgjcr7" path="res://assets/art/tiles/props/rock_tiles_peak.png" id="7_rock_peak"]
+[ext_resource type="Texture2D" uid="uid://ftiq5iygngd6" path="res://assets/art/tiles/humans/humans_props.png" id="8_humans_props"]
+[ext_resource type="Texture2D" uid="uid://dgi1y0r68wdv4" path="res://assets/art/tiles/desert/desert_props.png" id="9_desert_props"]
+[ext_resource type="Texture2D" uid="uid://dbj1gs7y5xjqa" path="res://assets/art/tiles/volcano/volcano_props.png" id="10_volcano_props"]
+[ext_resource type="Texture2D" uid="uid://b44ilr110hurc" path="res://assets/art/tiles/desert/desert_landmarks.png" id="11_desert_landmarks"]
+[ext_resource type="Texture2D" uid="uid://dn417lfd5gqo6" path="res://assets/art/tiles/volcano/volcano_landmarks.png" id="12_volcano_landmarks"]
+[ext_resource type="Texture2D" uid="uid://qphketacsnp2" path="res://assets/art/tiles/swamp/swamp_landmarks.png" id="13_swamp_landmarks"]
+[ext_resource type="Texture2D" uid="uid://bc0nced33absk" path="res://assets/art/tiles/humans/fields_landmarks.png" id="14_fields_landmarks"]
+[ext_resource type="Texture2D" path="res://assets/art/tiles/humans/fence_tiles.png" id="15_fence_tiles"]
+[ext_resource type="Texture2D" path="res://assets/art/tiles/humans/wasted_landmarks.png" id="16_wasted_landmarks"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7yheq"]
 texture = ExtResource("1_1w8xv")
@@ -127,6 +136,146 @@ texture = ExtResource("2_65qo7")
 1:3/0 = 0
 1:3/0/y_sort_origin = 6
 1:3/0/custom_data_0 = 2
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_desert_landmarks"]
+texture = ExtResource("11_desert_landmarks")
+0:0/0 = 0
+0:0/0/custom_data_0 = 2
+1:0/0 = 0
+1:0/0/custom_data_0 = 2
+2:0/0 = 0
+2:0/0/custom_data_0 = 2
+3:0/0 = 0
+3:0/0/custom_data_0 = 2
+0:1/0 = 0
+0:1/0/custom_data_0 = 2
+1:1/0 = 0
+1:1/0/custom_data_0 = 2
+2:1/0 = 0
+2:1/0/custom_data_0 = 2
+3:1/0 = 0
+3:1/0/custom_data_0 = 2
+0:2/0 = 0
+0:2/0/custom_data_0 = 2
+1:2/0 = 0
+1:2/0/custom_data_0 = 2
+2:2/0 = 0
+2:2/0/custom_data_0 = 2
+3:2/0 = 0
+3:2/0/custom_data_0 = 2
+0:3/0 = 0
+0:3/0/custom_data_0 = 2
+1:3/0 = 0
+1:3/0/custom_data_0 = 2
+2:3/0 = 0
+2:3/0/custom_data_0 = 2
+3:3/0 = 0
+3:3/0/custom_data_0 = 2
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_volcano_landmarks"]
+texture = ExtResource("12_volcano_landmarks")
+0:0/0 = 0
+0:0/0/custom_data_0 = 2
+1:0/0 = 0
+1:0/0/custom_data_0 = 2
+2:0/0 = 0
+2:0/0/custom_data_0 = 2
+3:0/0 = 0
+3:0/0/custom_data_0 = 2
+0:1/0 = 0
+0:1/0/custom_data_0 = 2
+1:1/0 = 0
+1:1/0/custom_data_0 = 2
+2:1/0 = 0
+2:1/0/custom_data_0 = 2
+3:1/0 = 0
+3:1/0/custom_data_0 = 2
+0:2/0 = 0
+0:2/0/custom_data_0 = 2
+1:2/0 = 0
+1:2/0/custom_data_0 = 2
+2:2/0 = 0
+2:2/0/custom_data_0 = 2
+3:2/0 = 0
+3:2/0/custom_data_0 = 2
+0:3/0 = 0
+0:3/0/custom_data_0 = 2
+1:3/0 = 0
+1:3/0/custom_data_0 = 2
+2:3/0 = 0
+2:3/0/custom_data_0 = 2
+3:3/0 = 0
+3:3/0/custom_data_0 = 2
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_swamp_landmarks"]
+texture = ExtResource("13_swamp_landmarks")
+0:0/0 = 0
+0:0/0/custom_data_0 = 2
+1:0/0 = 0
+1:0/0/custom_data_0 = 2
+2:0/0 = 0
+2:0/0/custom_data_0 = 2
+3:0/0 = 0
+3:0/0/custom_data_0 = 2
+0:1/0 = 0
+0:1/0/custom_data_0 = 2
+1:1/0 = 0
+1:1/0/custom_data_0 = 2
+2:1/0 = 0
+2:1/0/custom_data_0 = 2
+3:1/0 = 0
+3:1/0/custom_data_0 = 2
+0:2/0 = 0
+0:2/0/custom_data_0 = 2
+1:2/0 = 0
+1:2/0/custom_data_0 = 2
+2:2/0 = 0
+2:2/0/custom_data_0 = 2
+3:2/0 = 0
+3:2/0/custom_data_0 = 2
+0:3/0 = 0
+0:3/0/custom_data_0 = 2
+1:3/0 = 0
+1:3/0/custom_data_0 = 2
+2:3/0 = 0
+2:3/0/custom_data_0 = 2
+3:3/0 = 0
+3:3/0/custom_data_0 = 2
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fields_landmarks"]
+texture = ExtResource("14_fields_landmarks")
+0:0/0 = 0
+0:0/0/custom_data_0 = 2
+1:0/0 = 0
+1:0/0/custom_data_0 = 2
+2:0/0 = 0
+2:0/0/custom_data_0 = 2
+3:0/0 = 0
+3:0/0/custom_data_0 = 2
+0:1/0 = 0
+0:1/0/custom_data_0 = 2
+1:1/0 = 0
+1:1/0/custom_data_0 = 2
+2:1/0 = 0
+2:1/0/custom_data_0 = 2
+3:1/0 = 0
+3:1/0/custom_data_0 = 2
+0:2/0 = 0
+0:2/0/custom_data_0 = 2
+1:2/0 = 0
+1:2/0/custom_data_0 = 2
+2:2/0 = 0
+2:2/0/custom_data_0 = 2
+3:2/0 = 0
+3:2/0/custom_data_0 = 2
+0:3/0 = 0
+0:3/0/custom_data_0 = 2
+1:3/0 = 0
+1:3/0/custom_data_0 = 2
+2:3/0 = 0
+2:3/0/custom_data_0 = 2
+3:3/0 = 0
+3:3/0/custom_data_0 = 2
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2yd6c"]
 texture = ExtResource("3_mrt1c")
@@ -730,6 +879,121 @@ texture = ExtResource("7_rock_peak")
 7:7/0 = 0
 7:7/0/custom_data_0 = 2
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_humans_props"]
+texture = ExtResource("8_humans_props")
+0:0/0 = 0
+0:0/0/custom_data_0 = 2
+1:0/0 = 0
+1:0/0/custom_data_0 = 2
+2:0/0 = 0
+2:0/0/custom_data_0 = 2
+0:1/0 = 0
+0:1/0/custom_data_0 = 2
+1:1/0 = 0
+1:1/0/custom_data_0 = 2
+2:1/0 = 0
+2:1/0/custom_data_0 = 2
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_desert_props"]
+texture = ExtResource("9_desert_props")
+0:0/0 = 0
+0:0/0/custom_data_0 = 2
+1:0/0 = 0
+1:0/0/custom_data_0 = 2
+2:0/0 = 0
+2:0/0/custom_data_0 = 2
+0:1/0 = 0
+0:1/0/custom_data_0 = 2
+1:1/0 = 0
+1:1/0/custom_data_0 = 2
+2:1/0 = 0
+2:1/0/custom_data_0 = 2
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_volcano_props"]
+texture = ExtResource("10_volcano_props")
+0:0/0 = 0
+0:0/0/custom_data_0 = 2
+1:0/0 = 0
+1:0/0/custom_data_0 = 2
+2:0/0 = 0
+2:0/0/custom_data_0 = 2
+0:1/0 = 0
+0:1/0/custom_data_0 = 2
+1:1/0 = 0
+1:1/0/custom_data_0 = 2
+2:1/0 = 0
+2:1/0/custom_data_0 = 2
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fence"]
+texture = ExtResource("15_fence_tiles")
+0:0/0 = 0
+0:0/0/custom_data_0 = 2
+1:0/0 = 0
+1:0/0/custom_data_0 = 2
+2:0/0 = 0
+2:0/0/custom_data_0 = 2
+3:0/0 = 0
+3:0/0/custom_data_0 = 2
+0:1/0 = 0
+0:1/0/custom_data_0 = 2
+1:1/0 = 0
+1:1/0/custom_data_0 = 2
+2:1/0 = 0
+2:1/0/custom_data_0 = 2
+3:1/0 = 0
+3:1/0/custom_data_0 = 2
+0:2/0 = 0
+0:2/0/custom_data_0 = 2
+1:2/0 = 0
+1:2/0/custom_data_0 = 2
+2:2/0 = 0
+2:2/0/custom_data_0 = 2
+3:2/0 = 0
+3:2/0/custom_data_0 = 2
+0:3/0 = 0
+0:3/0/custom_data_0 = 2
+1:3/0 = 0
+1:3/0/custom_data_0 = 2
+2:3/0 = 0
+2:3/0/custom_data_0 = 2
+3:3/0 = 0
+3:3/0/custom_data_0 = 2
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wasted_landmarks"]
+texture = ExtResource("16_wasted_landmarks")
+0:0/0 = 0
+0:0/0/custom_data_0 = 2
+1:0/0 = 0
+1:0/0/custom_data_0 = 2
+2:0/0 = 0
+2:0/0/custom_data_0 = 2
+3:0/0 = 0
+3:0/0/custom_data_0 = 2
+0:1/0 = 0
+0:1/0/custom_data_0 = 2
+1:1/0 = 0
+1:1/0/custom_data_0 = 2
+2:1/0 = 0
+2:1/0/custom_data_0 = 2
+3:1/0 = 0
+3:1/0/custom_data_0 = 2
+0:2/0 = 0
+0:2/0/custom_data_0 = 2
+1:2/0 = 0
+1:2/0/custom_data_0 = 2
+2:2/0 = 0
+2:2/0/custom_data_0 = 2
+3:2/0 = 0
+3:2/0/custom_data_0 = 2
+0:3/0 = 0
+0:3/0/custom_data_0 = 2
+1:3/0 = 0
+1:3/0/custom_data_0 = 2
+2:3/0 = 0
+2:3/0/custom_data_0 = 2
+3:3/0 = 0
+3:3/0/custom_data_0 = 2
+
 [resource]
 custom_data_layer_0/name = "TileType"
 custom_data_layer_0/type = 2
@@ -740,3 +1004,12 @@ sources/3 = SubResource("TileSetAtlasSource_d85ei")
 sources/4 = SubResource("TileSetAtlasSource_rock")
 sources/5 = SubResource("TileSetAtlasSource_rock_high")
 sources/6 = SubResource("TileSetAtlasSource_rock_peak")
+sources/7 = SubResource("TileSetAtlasSource_humans_props")
+sources/8 = SubResource("TileSetAtlasSource_desert_props")
+sources/9 = SubResource("TileSetAtlasSource_volcano_props")
+sources/10 = SubResource("TileSetAtlasSource_desert_landmarks")
+sources/11 = SubResource("TileSetAtlasSource_volcano_landmarks")
+sources/12 = SubResource("TileSetAtlasSource_swamp_landmarks")
+sources/13 = SubResource("TileSetAtlasSource_fields_landmarks")
+sources/14 = SubResource("TileSetAtlasSource_wasted_landmarks")
+sources/15 = SubResource("TileSetAtlasSource_fence")

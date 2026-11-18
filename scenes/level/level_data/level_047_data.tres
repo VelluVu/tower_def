@@ -1,0 +1,42 @@
+[gd_resource type="Resource" script_class="LevelData" format=3]
+
+[ext_resource type="Script" uid="uid://cpw7ia3ek2yvs" path="res://scenes/level/level_data/wave_data.gd" id="0_wave"]
+[ext_resource type="Script" uid="uid://c0cehaxum4b45" path="res://scenes/level/level_data/level_data.gd" id="1_level"]
+[ext_resource type="Script" uid="uid://bu8xwv71c6bbj" path="res://scenes/level/level_data/puffe_line.gd" id="9_line"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_047_wave_1.tres" id="w1"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_047_wave_2.tres" id="w2"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_047_wave_3.tres" id="w3"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_047_wave_4.tres" id="w4"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_047_wave_5.tres" id="w5"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_047_wave_6.tres" id="w6"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/modes/level_047_hard.tres" id="hard_mode"]
+
+[sub_resource type="Resource" id="PuffeLine_1"]
+script = ExtResource("9_line")
+text = "Walls of bone, built by the dead. Each one has a gap. Each gap is a door for them, and a trap for us."
+
+[sub_resource type="Resource" id="PuffeLine_2"]
+script = ExtResource("9_line")
+trigger = 3
+wave_number = 3
+text = "Three roads, one gate at a time. Build where they all have to pass."
+
+[sub_resource type="Resource" id="PuffeLine_3"]
+script = ExtResource("9_line")
+trigger = 4
+wave_number = 6
+text = "Past the last wall. The elder is close now. I wish it were not."
+
+[resource]
+script = ExtResource("1_level")
+level_name = "Gate of Bones"
+story_text = "Four walls of bone across the road to the elder's resting place, a gap in each. Everything the desert has comes through them at once."
+starting_gold = 35.0
+waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtResource("w3"), ExtResource("w4"), ExtResource("w5"), ExtResource("w6")])
+puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3")])
+first_wave_health = 1.8
+last_wave_health = 10.8
+hard_mode = ExtResource("hard_mode")
+sandstorm_every = 50.0
+health_scale = 1.000
+hard_health_scale = 2.500

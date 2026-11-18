@@ -16,10 +16,14 @@ signal enemy_hit(enemy : Enemy, damage_data : DamageData)
 signal element_reaction(position : Vector2, reaction : ElementReaction)
 #every attack of a tower, trap or enemy; the audio plays skill.activate_sound
 signal skill_activated(skill : Skill)
+#every attack of a building's skill (not a continuous beam), with or without a sound: talent strikes count these
+signal tower_attacked(skill : Skill)
 
 signal selected_unit(unit : Node2D)
 signal deselected_unit(unit : Node2D)
 signal forced_selection(unit : Node2D)
+#something else takes the selection panel (a wall group): the selected unit lets go
+signal selection_clear_requested()
 signal building_is_placing(unit : Node2D)
 
 signal resource_change(new_value : int, resource_index : int)
@@ -38,6 +42,8 @@ signal level_completed(level : Level)
 #early_start_bonus is what starting the next wave now would pay, 0 during a break
 signal wave_state_changed(wave_number : int, wave_count : int, can_start_next : bool, early_start_bonus : float)
 signal wave_cleared(wave_number : int)
+#a wave began spawning (1-based)
+signal wave_started(wave_number : int)
 
 signal upgrade_xp_changed(xp : float, xp_needed : float, upgrade_level : int)
 signal upgrade_level_gained(new_level : int, cards : Array[UpgradeCard])

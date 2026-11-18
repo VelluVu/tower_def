@@ -11,3 +11,6 @@ extends Resource
 @export var delay : float = 0.0
 #matches Spawner.id in the level scene
 @export var spawner_id : int = 0
+#how many of the group are elites (spread evenly through it), and their affix
+@export var elites : int = 0
+@export var elite_affix : Elite.Affix = Elite.Affix.Random

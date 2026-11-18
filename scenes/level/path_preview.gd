@@ -38,7 +38,8 @@ func _ready() -> void:
 	z_index = GROUND_Z_INDEX
 	GameSignals.astar_grid_updated.connect(_update_paths)
 	GameSignals.wave_cleared.connect(_on_wave_cleared)
-	UISignals.start_wave_pressed.connect(_on_start_wave_pressed)
+	#the wave itself, not the button: Survival starts its next wave by itself
+	GameSignals.wave_started.connect(_on_wave_started)
 	_update_paths()
 
 
@@ -105,7 +106,7 @@ func _set_is_route_visible(value : bool) -> void:
 	queue_redraw()
 
 
-func _on_start_wave_pressed() -> void:
+func _on_wave_started(_wave_number : int) -> void:
 	is_route_visible = false
 
 

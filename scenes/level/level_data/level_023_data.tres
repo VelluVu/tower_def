@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="LevelData" format=3]
+
+[ext_resource type="Script" uid="uid://cpw7ia3ek2yvs" path="res://scenes/level/level_data/wave_data.gd" id="0_wave"]
+[ext_resource type="Script" uid="uid://c0cehaxum4b45" path="res://scenes/level/level_data/level_data.gd" id="1_level"]
+[ext_resource type="Script" uid="uid://bu8xwv71c6bbj" path="res://scenes/level/level_data/puffe_line.gd" id="9_line"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_023_wave_1.tres" id="w1"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_023_wave_2.tres" id="w2"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_023_wave_3.tres" id="w3"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_023_wave_4.tres" id="w4"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_023_wave_5.tres" id="w5"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_023_wave_6.tres" id="w6"]
+
+[sub_resource type="Resource" id="PuffeLine_1"]
+script = ExtResource("9_line")
+text = "Everything in the swamp is coming. The Hydra must be close."
+
+[sub_resource type="Resource" id="PuffeLine_2"]
+script = ExtResource("9_line")
+trigger = 4
+wave_number = 6
+text = "The deep is ours. Now, the Hydra."
+
+[resource]
+script = ExtResource("1_level")
+level_name = "The Drowning Deep"
+story_text = "The last mire before the Hydra's home. Two long canals, and every creature of the swamp on the move."
+starting_gold = 29.0
+waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtResource("w3"), ExtResource("w4"), ExtResource("w5"), ExtResource("w6")])
+puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2")])
+first_wave_health = 1.4
+last_wave_health = 3.9
+health_scale = 1.120
+hard_health_scale = 1.422

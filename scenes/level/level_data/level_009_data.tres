@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="LevelData" format=3]
+[gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://btk4fnjwwadp4"]
 
 [ext_resource type="Script" uid="uid://cpw7ia3ek2yvs" path="res://scenes/level/level_data/wave_data.gd" id="0_wave"]
 [ext_resource type="Script" uid="uid://c0cehaxum4b45" path="res://scenes/level/level_data/level_data.gd" id="1_level"]
@@ -42,6 +42,10 @@ text = "The last of the brood. After this, the lake road north."
 script = ExtResource("1_level")
 level_name = "Collapsed Tunnels"
 story_text = "Beaten, the Broodmother sealed the deep tunnels. The brood she left behind is fleeing north along the lake, straight through this castle's fields."
-starting_gold = 20.0
+starting_gold = 23.0
 waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtResource("w3"), ExtResource("w4"), ExtResource("w5"), ExtResource("w6")])
 puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_4"), SubResource("PuffeLine_5")])
+first_wave_health = 1.8
+last_wave_health = 2.9
+health_scale = 1.404
+hard_health_scale = 1.200

@@ -17,7 +17,6 @@ enemy_scene = ExtResource("e_fastling")
 count = 8
 interval = 2.0
 delay = 10.0
-spawner_id = 1
 
 [resource]
 script = ExtResource("1_wave")

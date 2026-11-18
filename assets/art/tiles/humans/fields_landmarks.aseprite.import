@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://3pw5j6p7legi"
+path="res://.godot/imported/fields_landmarks.aseprite-4103e82974f7d7dcc585163f98ffbb63.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/humans/fields_landmarks.aseprite"
+dest_files=["res://.godot/imported/fields_landmarks.aseprite-4103e82974f7d7dcc585163f98ffbb63.res"]
+
+[params]
+

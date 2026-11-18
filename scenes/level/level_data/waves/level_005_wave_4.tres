@@ -11,7 +11,7 @@ script = ExtResource("2_group")
 enemy_scene = ExtResource("3_beefling")
 count = 12
 interval = 3.0
-spawner_id = 2
+spawner_id = 1
 
 [sub_resource type="Resource" id="Resource_group2"]
 script = ExtResource("2_group")
@@ -19,6 +19,7 @@ enemy_scene = ExtResource("4_fastling")
 count = 18
 interval = 1.6
 delay = 2.0
+spawner_id = 2
 
 [sub_resource type="Resource" id="Resource_group3"]
 script = ExtResource("2_group")
@@ -26,7 +27,7 @@ enemy_scene = ExtResource("5_weakling")
 count = 22
 interval = 1.6
 delay = 6.0
-spawner_id = 1
+spawner_id = 2
 
 [resource]
 script = ExtResource("1_wave")

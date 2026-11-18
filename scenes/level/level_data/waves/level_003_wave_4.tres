@@ -18,7 +18,6 @@ enemy_scene = ExtResource("4_swarmling")
 count = 12
 interval = 0.3
 delay = 4.0
-spawner_id = 2
 
 [sub_resource type="Resource" id="Resource_group3"]
 script = ExtResource("2_group")
@@ -33,7 +32,6 @@ enemy_scene = ExtResource("4_swarmling")
 count = 12
 interval = 0.3
 delay = 24.0
-spawner_id = 2
 
 [resource]
 script = ExtResource("1_wave")

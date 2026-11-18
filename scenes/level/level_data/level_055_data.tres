@@ -1,0 +1,42 @@
+[gd_resource type="Resource" script_class="LevelData" format=3]
+
+[ext_resource type="Script" uid="uid://cpw7ia3ek2yvs" path="res://scenes/level/level_data/wave_data.gd" id="0_wave"]
+[ext_resource type="Script" uid="uid://c0cehaxum4b45" path="res://scenes/level/level_data/level_data.gd" id="1_level"]
+[ext_resource type="Script" uid="uid://bu8xwv71c6bbj" path="res://scenes/level/level_data/puffe_line.gd" id="9_line"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_055_wave_1.tres" id="w1"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_055_wave_2.tres" id="w2"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_055_wave_3.tres" id="w3"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_055_wave_4.tres" id="w4"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_055_wave_5.tres" id="w5"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_055_wave_6.tres" id="w6"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/modes/level_055_hard.tres" id="hard_mode"]
+
+[sub_resource type="Resource" id="PuffeLine_1"]
+script = ExtResource("9_line")
+text = "Three lava rivers. The walkers take the fords; the salamanders take the short way."
+
+[sub_resource type="Resource" id="PuffeLine_2"]
+script = ExtResource("9_line")
+trigger = 3
+wave_number = 2
+text = "Cool a river with Frost and it turns to rock. Rock I can build on, right where they swim."
+
+[sub_resource type="Resource" id="PuffeLine_3"]
+script = ExtResource("9_line")
+trigger = 3
+wave_number = 4
+text = "Golems across the glass. Slow, but they never stop."
+
+[resource]
+script = ExtResource("1_level")
+level_name = "Glassfield"
+story_text = "A long field of black glass, cut by three rivers of lava with a ford at one end of each. The salamanders do not need fords."
+starting_gold = 35.0
+waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtResource("w3"), ExtResource("w4"), ExtResource("w5"), ExtResource("w6")])
+puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3")])
+first_wave_health = 1.9
+last_wave_health = 5.8
+hard_mode = ExtResource("hard_mode")
+lava_cools = true
+health_scale = 1.000
+hard_health_scale = 1.504

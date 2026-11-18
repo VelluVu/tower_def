@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://b17onpqjok3ut"
+path="res://.godot/imported/desert_landmarks.aseprite-67fcd776ea2d8cbf018144ae280081e6.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/desert/desert_landmarks.aseprite"
+dest_files=["res://.godot/imported/desert_landmarks.aseprite-67fcd776ea2d8cbf018144ae280081e6.res"]
+
+[params]
+

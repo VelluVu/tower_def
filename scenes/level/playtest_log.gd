@@ -6,7 +6,6 @@ extends Node
 ## builds only. Created by the Level, after the talents have added their start gold.
 
 const LOG_PATH : String = "user://playtests.jsonl"
-const MODE_NORMAL : String = "normal"
 const PLAYER : String = "player"
 const RESULT_WON : String = "won"
 const RESULT_LOST : String = "lost"
@@ -179,7 +178,7 @@ func _record(result : String) -> Dictionary:
 		"time": Time.get_datetime_string_from_system(),
 		"player": player,
 		"level": _level_number(),
-		"mode": MODE_NORMAL,
+		"mode": String(Utils.LevelMode.keys()[level.mode]).to_lower(),
 		"result": result,
 		"wave": level.wave_runner.wave_number,
 		"waves": level.wave_runner.wave_count,

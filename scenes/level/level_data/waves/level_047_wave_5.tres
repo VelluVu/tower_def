@@ -1,0 +1,55 @@
+[gd_resource type="Resource" script_class="WaveData" format=3]
+
+[ext_resource type="Script" uid="uid://cpw7ia3ek2yvs" path="res://scenes/level/level_data/wave_data.gd" id="1_wave"]
+[ext_resource type="Script" uid="uid://bbhd3iyjav4h2" path="res://scenes/level/level_data/spawn_group_data.gd" id="2_group"]
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/bone_rider.tscn" id="e_bone_rider"]
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/bone_thrall.tscn" id="e_bone_thrall"]
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/grave_caller.tscn" id="e_grave_caller"]
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/revenant_knight.tscn" id="e_revenant_knight"]
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/rusted_ballista.tscn" id="e_rusted_ballista"]
+
+[sub_resource type="Resource" id="Resource_group1"]
+script = ExtResource("2_group")
+enemy_scene = ExtResource("e_revenant_knight")
+count = 8
+interval = 2.6
+elites = 2
+
+[sub_resource type="Resource" id="Resource_group2"]
+script = ExtResource("2_group")
+enemy_scene = ExtResource("e_grave_caller")
+count = 4
+interval = 3.4
+spawner_id = 1
+elites = 1
+
+[sub_resource type="Resource" id="Resource_group3"]
+script = ExtResource("2_group")
+enemy_scene = ExtResource("e_rusted_ballista")
+count = 3
+interval = 4.4
+delay = 6.0
+spawner_id = 2
+
+[sub_resource type="Resource" id="Resource_group4"]
+script = ExtResource("2_group")
+enemy_scene = ExtResource("e_bone_rider")
+count = 10
+interval = 1.8
+delay = 8.0
+spawner_id = 2
+elites = 1
+
+[sub_resource type="Resource" id="Resource_group5"]
+script = ExtResource("2_group")
+enemy_scene = ExtResource("e_bone_thrall")
+count = 20
+interval = 1.0
+delay = 10.0
+spawner_id = 1
+elites = 2
+
+[resource]
+script = ExtResource("1_wave")
+spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_group3"), SubResource("Resource_group4"), SubResource("Resource_group5")])
+early_start_bonus = 3.0

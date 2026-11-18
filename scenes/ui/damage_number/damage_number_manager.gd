@@ -34,7 +34,6 @@ func _on_element_reaction(_position : Vector2, reaction : ElementReaction) -> vo
 	_get_damage_number().activate_text(_position + REACTION_TEXT_OFFSET, reaction.display_name + REACTION_TEXT_SUFFIX, reaction.color)
 
 
-#fix this signal is not happening
 func _get_damage_number() -> DamageNumber:
 	var number : DamageNumber = null
 	
@@ -46,13 +45,13 @@ func _get_damage_number() -> DamageNumber:
 	else:
 		number = damage_number_pool.pop_back()
 	
-	#this is not signaled
+	#a number comes back to the pool when its float ends
 	if not number.deactivated.is_connected(_on_damage_number_available):
 		number.deactivated.connect(_on_damage_number_available)
 		
 	return number
 
-#this never occurs somehow
+
 func _on_damage_number_available(damage_number : DamageNumber) -> void:
 	if damage_number_pool.has(damage_number):
 		return

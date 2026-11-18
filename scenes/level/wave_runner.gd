@@ -11,10 +11,13 @@ var waves : Array[WaveData] = []
 var spawners : Dictionary[int, Spawner] = {}
 var current_wave_index : int = -1
 var running_groups : int = 0
+## Survival: the waves loop with no last one (SurvivalRules.make_wave grows each loop).
+var is_endless : bool = false
 
+#0 when endless: there is no last wave
 var wave_count : int :
 	get:
-		return waves.size()
+		return 0 if is_endless else waves.size()
 
 #1-based, 0 before the first wave
 var wave_number : int :
@@ -27,14 +30,16 @@ var is_spawning : bool :
 
 var is_last_wave_started : bool :
 	get:
-		return wave_number >= wave_count
+		return not is_endless and wave_number >= wave_count
 
 var can_start_next_wave : bool :
 	get:
-		return not is_spawning and not is_last_wave_started
+		return not waves.is_empty() and not is_spawning and not is_last_wave_started
 
 var next_wave : WaveData :
 	get:
+		if is_endless:
+			return waves[(current_wave_index + 1) % waves.size()] if not waves.is_empty() else null
 		return null if is_last_wave_started else waves[current_wave_index + 1]
 
 
@@ -51,8 +56,9 @@ func start_next_wave() -> void:
 
 	current_wave_index += 1
 	var groups : Array[SpawnGroupData] = []
+	var wave : WaveData = SurvivalRules.make_wave(waves, wave_number) if is_endless else waves[current_wave_index]
 
-	for group in waves[current_wave_index].spawn_groups:
+	for group in wave.spawn_groups:
 		if not spawners.has(group.spawner_id):
 			push_warning(name, NO_SPAWNER_WITH_ID_WARNING, group.spawner_id)
 			continue
@@ -60,6 +66,7 @@ func start_next_wave() -> void:
 
 	#count every group first, a group without delay finishes inside spawn_group
 	running_groups = groups.size()
+	GameSignals.wave_started.emit(wave_number)
 
 	if groups.is_empty():
 		spawning_finished.emit()

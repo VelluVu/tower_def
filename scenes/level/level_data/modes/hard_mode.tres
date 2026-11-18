@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="LevelModeData" format=3]
+
+[ext_resource type="Script" path="res://scenes/level/level_data/level_mode_data.gd" id="1_mode"]
+
+[resource]
+script = ExtResource("1_mode")
+health_multiplier = 2.0
+speed_multiplier = 1.15
+count_multiplier = 1.4
+interval_multiplier = 0.85
+first_wave_share = 0.2
+last_wave_share = 1.0
+xp_multiplier = 1.5

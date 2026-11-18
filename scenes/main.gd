@@ -41,9 +41,9 @@ func _ready() -> void:
 	UISignals.faster_speed_pressed.connect(_on_faster_speed_pressed)
 
 
-func _on_start_level_pressed(level_number : int) -> void:
+func _on_start_level_pressed(level_number : int, mode : Utils.LevelMode) -> void:
 	scene_manager.unload_scene_by_name(ui.GAME_WORLD_MAP_SCENE_NAME, scene_manager.SceneType.UI)
-	scene_manager.load_level_by_number(level_number, self)
+	scene_manager.load_level_by_number(level_number, self, mode)
 
 
 func _on_continue_game() -> void:
@@ -62,6 +62,7 @@ func _on_continue_next_level_pressed() -> void:
 
 func _on_retry_level_pressed() -> void:
 	var level_number : int = scene_manager.current_level_number
+	var mode : Utils.LevelMode = scene_manager.current_level_mode
 	var old_level : Node = scene_manager.current_level
 	ui.unload_level()
 
@@ -69,7 +70,7 @@ func _on_retry_level_pressed() -> void:
 	if is_instance_valid(old_level) and old_level.is_inside_tree():
 		await old_level.tree_exited
 
-	scene_manager.load_level_by_number(level_number, self)
+	scene_manager.load_level_by_number(level_number, self, mode)
 
 
 func _on_level_loaded(_level : Level) -> void:
@@ -80,13 +81,19 @@ func _on_level_completed(level : Level) -> void:
 	reset_time_scale()
 	#unlocks the level after the cleared one; replaying an earlier level never lowers or skips progress
 	PlayerProgress.level_progress = scene_manager.current_level_number + 1
-	PlayerProgress.record_level_talent_points(scene_manager.current_level_number, TalentRules.points_for_level(level))
+	PlayerProgress.record_level_talent_points(scene_manager.current_level_number, TalentRules.points_for_level(level), level.mode)
 	PlayerProgress.save_progress()
 
 
 func _on_lose_level() -> void:
 	reset_time_scale()
 	pause_game(true)
+	#Survival always ends here: its points come from the waves cleared before the lives ran out
+	var level : Level = scene_manager.current_level as Level
+	if level != null and level.mode == Utils.LevelMode.Survival:
+		var cleared : int = maxi(level.wave_runner.wave_number - 1, 0)
+		PlayerProgress.record_level_talent_points(scene_manager.current_level_number, SurvivalRules.points_for_waves(cleared), level.mode)
+		PlayerProgress.save_progress()
 
 
 func _on_pause_game(is_paused : bool) -> void:

@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://mi3rlsk15pqw"
+path="res://.godot/imported/humans_ground_tiles.aseprite-5c5ef892dccf6037c4f01265d4a463e8.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/humans/humans_ground_tiles.aseprite"
+dest_files=["res://.godot/imported/humans_ground_tiles.aseprite-5c5ef892dccf6037c4f01265d4a463e8.res"]
+
+[params]
+

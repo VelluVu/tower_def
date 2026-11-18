@@ -25,6 +25,34 @@ enum StatType
 	EffectDuration,
 	EffectStacks,
 	EffectTickRate,
+	#the mechanic cards, Flat with base 0, whole numbers: enemies a bolt bounces on to after its target,
+	#extra launches a moment after each attack (Nova pulses), enemies a beam chains on to
+	Ricochet,
+	ExtraShots,
+	ChainTargets,
+	#Flat with base 0: the share of an enemy's resistances a tower's hits ignore (0.1 = 10 points off each)
+	ResistancePenetration,
+	#Flat with base 0: at 1 or more a tower's critical hits ignore every resistance
+	CriticalPenetration,
+	#Flat with base 0, tiles: a direct hit also hits the enemies this close to its target (SPLASH_SHARE of it)
+	SplashRadius,
+	#Flat with base 0: the chance a direct hit freezes its target, and for how many seconds (bosses never freeze)
+	FreezeChance,
+	FreezeDuration,
+	#Flat with base 0, whole numbers: enemies a bolt flies on through after its target
+	Pierce,
+	#Flat with base 0, whole numbers: path cells a direct hit pushes its target back (bosses and flyers never)
+	Knockback,
+	#Flat with base 0: seconds a direct hit's ground patch lasts, and the share of the hit it deals a second
+	PatchDuration,
+	PatchShare,
+	#Flat with base 0: at 1 a beam also hits every enemy along its line (LINE_DAMAGE_SHARE of it)
+	LineHits,
+	#Flat with base 0: shards a direct hit splits into (whole number) and the share of the hit each deals
+	SplitCount,
+	SplitShare,
+	#Flat with base 0, whole number: when a poisoned enemy dies to this tower, its nearest neighbours get half its hit, poison included
+	PoisonSpread,
 }
 
 enum TileType
@@ -101,6 +129,25 @@ enum LevelMode
 	Normal,
 	Hard,
 	Survival,
+}
+
+## Which enemy in range a tower that picks targets (Bolter, Beamer) shoots; set per tower (TargetPicker).
+enum TargetTactic
+{
+	## Closest to the castle along its path.
+	First,
+	## The most health left.
+	Strongest,
+	## Nearest to the tower.
+	Closest,
+	## Farthest from the tower, still in range.
+	Farthest,
+	## The highest speed.
+	Fastest,
+	## The least health left: finishes off the wounded.
+	Weakest,
+	## Farthest from the castle along its path.
+	Last,
 }
 
 func get_damage_type_color(damage_type : DamageType) -> Color:

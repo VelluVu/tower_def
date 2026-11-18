@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://54e7krx3d16a"
+path="res://.godot/imported/volcano_landmarks.aseprite-fce6cd0ba15060ac06cc871a58f6580d.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/volcano/volcano_landmarks.aseprite"
+dest_files=["res://.godot/imported/volcano_landmarks.aseprite-fce6cd0ba15060ac06cc871a58f6580d.res"]
+
+[params]
+
