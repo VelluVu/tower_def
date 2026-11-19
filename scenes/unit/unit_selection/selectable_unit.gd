@@ -118,6 +118,11 @@ func _signal_data_for_selection_panel(_is_selected : bool) -> void:
 			UISignals.deselected_unit.emit()
 
 
+## The name shown for the unit (selection card, boss bar).
+func get_display_name() -> String:
+	return _get_display_name()
+
+
 #the node name carries a placement counter (PuffeBolter00, 01, ...); the scene file is stable
 func _get_display_name() -> String:
 	if not display_name.is_empty():

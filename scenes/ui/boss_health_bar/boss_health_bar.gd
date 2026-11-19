@@ -31,7 +31,8 @@ func _on_enemy_spawned(enemy : Enemy) -> void:
 		return
 
 	boss = enemy
-	name_label.text = enemy.selectable.display_name if enemy.selectable.display_name != "" else String(enemy.name)
+	#the node name carries a spawn counter (MagmaTitan299); the selectable's name comes from the scene file
+	name_label.text = enemy.selectable.get_display_name()
 	show()
 	set_process(true)
 
