@@ -16,8 +16,8 @@ func test_ring_tiers(kit : TestKit) -> void:
 func test_token_rows(kit : TestKit) -> void:
 	kit.check(MapLevelElement.token_row(1) == 0 and MapLevelElement.token_row(12) == 0, "caves 1-12")
 	kit.check(MapLevelElement.token_row(13) == 1 and MapLevelElement.token_row(25) == 2, "swamp from 13, Wasted Lands from 25")
-	kit.check(MapLevelElement.token_row(37) == 3 and MapLevelElement.token_row(59) == 4, "desert from 37, volcano to 59")
-	for boss in [8, 24, 36, 48, 60]:
+	kit.check(MapLevelElement.token_row(37) == 3 and MapLevelElement.token_row(59) == 4, "desert from 37, volcano to 59 (57 is the Magma Titan)")
+	for boss in [8, 24, 36, 48, 57, 60]:
 		kit.check(MapLevelElement.token_row(boss) == MapLevelElement.BOSS_ROW, "level %d has the boss token" % boss)
 	var rows : int = floori(MapLevelElement.TOKEN_SHEET.get_height() / float(MapLevelElement.TOKEN_CELL))
 	kit.check(rows == MapLevelElement.BOSS_ROW + 1, "the sheet has every row")

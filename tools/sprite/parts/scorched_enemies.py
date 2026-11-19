@@ -590,7 +590,91 @@ def ashen_wyrm():
 # drakes, DEATH crashes. Drawn from parts by tools/sprite/parts/scorched_enemies.py.''', (40, 40), tags)
 
 
+# ----------------------------------------------------------------------------------------- the Magma Titan
+OBS = ['0f0b14', '1e1a26', '2c2432', '54485a', '7a6a7e']
+
+
+def titan(far=(9, 26), near_=(31, 26), y=0, step=0, head_dy=0, core=1, rock=None, shock=0, sink=0, glow=True):
+    """the Magma Titan facing right: obsidian plates over a molten core. far/near_ are the fists (the far arm is drawn
+    behind the body), rock a held or flying magma rock, shock a ring of lava at the feet, sink pulls it into a pool"""
+    px = {}
+    lava = FIRE if glow else [OBS[2], OBS[2], OBS[3], OBS[3]]
+    hips, sh_far, sh_near = (20, 27 + y), (12, 15 + y), (28, 15 + y)
+
+    def arm(shoulder, fist):
+        elbow = ((shoulder[0] + fist[0]) // 2 + (2 if fist[0] > shoulder[0] else -2), (shoulder[1] + fist[1]) // 2 + 1)
+        thick(px, [shoulder, elbow, fist], OBS[1:], 4)
+        blob(px, fist[0], fist[1], 3, 3, OBS[1:])
+        px[(fist[0], fist[1])] = lava[2]
+
+    arm(sh_far, (far[0], far[1] + y))
+    # legs and feet
+    for lx, off in ((17, -step), (23, step)):
+        thick(px, [(lx, hips[1]), (lx + off, 35)], OBS[1:], 4)
+        blob(px, lx + off + 1, 36, 3, 1.5, OBS[1:])
+    # torso, shoulder plates, head
+    blob(px, 20, 20 + y, 9, 8, OBS[1:])
+    for sx, sy in (sh_far, sh_near):
+        blob(px, sx, sy - 1, 4.5, 3.5, OBS[2:])
+    blob(px, 22, 9 + y + head_dy, 4, 3.5, OBS[2:])
+    #a heavy brow over the eyes, inside the head's outline, and a lava seam over the crown
+    for x in range(22, 26):
+        px[(x, 8 + y + head_dy)] = OBS[0]
+    for x in (20, 21, 22):
+        px[(x, 6 + y + head_dy + (1 if x == 20 else 0))] = lava[1]
+    for x in (23, 25):
+        px[(x, 9 + y + head_dy)] = GLOW if glow else OBS[3]
+    # lava cracks and the core
+    for a, b in (((16, 14), (19, 20)), ((19, 20), (17, 25)), ((24, 15), (26, 22)), ((13, 13), (11, 16)), ((29, 13), (30, 16))):
+        line_pts(lambda x, yy, c: px.__setitem__((x, yy), c), a[0], a[1] + y, b[0], b[1] + y, lava[1])
+    if core:
+        blob(px, 21, 20 + y, 1.5 + core, 1.5 + core, [lava[0], lava[1], lava[2], lava[3]], light=(0.0, 0.0))
+        px[(21, 20 + y)] = lava[3]
+    arm(sh_near, (near_[0], near_[1] + y))
+    if rock:
+        blob(px, rock[0], rock[1], 2.5, 2.5, [FIRE[1], FIRE[2], FIRE[3]])
+    if shock:
+        for x in range(20 - 6 * shock, 21 + 6 * shock):
+            if (x + shock) % 3:
+                px[(x, 37 - (abs(x - 20) % 2))] = FIRE[2] if abs(x - 20) < 4 * shock else FIRE[1]
+    if sink:
+        moved = {}
+        for (x, yy), c in px.items():
+            if yy + sink <= 35:
+                moved[(x, yy + sink)] = c
+        px = moved
+        pool = OBS if sink > 10 else FIRE
+        blob(px, 20, 36, 8 + sink // 3, 2, [pool[1], pool[2], pool[3]], light=(0.0, 0.5))
+    return {p: c for p, c in px.items() if 1 <= p[0] <= 38 and 1 <= p[1] <= 38}
+
+
+def magma_titan():
+    tags = [
+        ('IDLE', 180, [titan(core=1), titan(core=2), titan(core=2, y=1), titan(core=1, y=1)]),
+        ('WALK', 150, [titan(step=-2, near_=(32, 25), far=(8, 27)), titan(y=1), titan(step=2, near_=(30, 27), far=(10, 25)), titan(y=1)]),
+        ('ATTACK', 110, [titan(near_=(31, 8)), titan(near_=(33, 5), head_dy=-1), titan(near_=(34, 31), core=2, shock=1),
+                         titan(near_=(32, 28))]),
+        ('SLAM', 120, [titan(far=(16, 5), near_=(26, 4), head_dy=-1), titan(far=(14, 2), near_=(28, 2), head_dy=-1, core=2),
+                       titan(far=(12, 33), near_=(30, 33), y=1, core=2, shock=1), titan(far=(12, 33), near_=(30, 33), y=1, shock=2),
+                       titan(y=1)]),
+        ('HURL', 120, [titan(near_=(17, 6), rock=(17, 3)), titan(near_=(14, 4), rock=(13, 2), head_dy=-1),
+                       titan(near_=(35, 13), rock=(37, 10), core=2), titan(near_=(33, 18)), titan()]),
+        ('ROAR', 130, [titan(head_dy=-1, core=2), titan(far=(5, 17), near_=(35, 17), head_dy=-2, core=3),
+                       titan(far=(4, 15), near_=(36, 15), head_dy=-2, core=3), titan(head_dy=-1, core=2)]),
+        ('DEATH', 160, [titan(head_dy=1, core=3), titan(far=(8, 30), near_=(30, 31), y=2, core=2, sink=3),
+                        titan(far=(8, 30), near_=(30, 31), y=2, core=1, sink=7), titan(far=(8, 30), near_=(30, 31), y=2, core=0, sink=11),
+                        titan(far=(8, 30), near_=(30, 31), y=2, core=0, sink=15, glow=False),
+                        titan(far=(8, 30), near_=(30, 31), y=2, core=0, sink=19, glow=False)]),
+    ]
+    save('magma_titan', '''
+# Magma Titan: the volcano's mid-boss (level 57, Magma Heart), a hulking giant of black obsidian plates 0f0b14..7a6a7e
+# over a molten core, lava glowing through the cracks, ember eyes. ATTACK smashes a fist down, SLAM brings both down
+# (cracking the ground), HURL throws a magma rock, ROAR calls up the magma, DEATH sinks into a pool of lava that cools.
+# Drawn from parts by tools/sprite/parts/scorched_enemies.py.''', (40, 40), tags)
+
+
 ALL = {
+    'magma_titan': magma_titan,
     'bone_thrall': bone_thrall, 'ash_runner': ash_runner, 'scarab': scarab, 'revenant_knight': revenant_knight,
     'ash_drake': ash_drake, 'grave_caller': grave_caller, 'rusted_ballista': rusted_ballista,
     'bone_colossus': bone_colossus, 'bone_rider': bone_rider, 'cinder_imp': cinder_imp, 'magma_salamander': magma_salamander,

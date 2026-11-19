@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://b8y8kg6ycbi6v"
+path="res://.godot/imported/magma_titan.aseprite-919eb81c333e03df5592b66209a4007b.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/magma_titan/magma_titan.aseprite"
+dest_files=["res://.godot/imported/magma_titan.aseprite-919eb81c333e03df5592b66209a4007b.res"]
+
+[params]
+

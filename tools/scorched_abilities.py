@@ -65,6 +65,23 @@ SETUP = {
         "damage = 3.0", "damage_type = %d" % FIRE, "area_radius = 1.0", "scorch_seconds = 10.0",
         'shot_texture = ExtResource("scorched_lava_glob")', "shot_hframes = 2", "shot_vframes = 2", "shot_speed = 90.0",
         "shot_arc = 24.0", "shot_offset = Vector2(0, -12)"])],
+    # the volcano's mid-boss (57): slams and hurls magma above 66%, cracks the ground under towers 66-33% (the Wyrm's
+    # Erupt), and under 33% roars up magma blobs and speeds up; the hurl and slam go on through every phase
+    "magma_titan": [
+        MOLTEN,
+        ("ability", "MagmaCall", ABILITIES + "brood_frenzy_ability.gd", [
+            "max_health_ratio = 0.33", "cooldown = 0.0", 'screech_animation = "ROAR"', "silence_radius = 3.0",
+            "speed_bonus = 0.3", 'swarm_scene = ExtResource("scorched_magma_blob")', "swarm_count = 6"]),
+        ("ability", "Erupt", ABILITIES + "erupt_ability.gd", [
+            "min_health_ratio = 0.33", "max_health_ratio = 0.66", "cooldown = 8.0", "starts_on_cooldown = true"]),
+        ("ability", "MagmaSlam", ABILITIES + "multi_strike_ability.gd", [
+            "cooldown = 6.0", "strike_range = 2.0", "targets = 3", "damage = 3.0", "damage_type = %d" % FIRE,
+            'strike_animation = "SLAM"']),
+        ("ability", "MagmaHurl", ABILITIES + "ranged_shot_ability.gd", [
+            "cooldown = 8.0", "starts_on_cooldown = true", "shot_range = 5.0", "target_rule = 1", "towers_only = true",
+            "damage = 3.0", "damage_type = %d" % FIRE, "area_radius = 1.0", "scorch_seconds = 10.0", 'shot_animation = "HURL"',
+            'shot_texture = ExtResource("scorched_lava_glob")', "shot_hframes = 2", "shot_vframes = 2", "shot_speed = 90.0",
+            "shot_arc = 28.0", "shot_offset = Vector2(0, -26)"])],
     "ashen_wyrm": [
         MOLTEN,
         ("ability", "Land", ABILITIES + "land_ability.gd", ["max_health_ratio = 0.66", "cooldown = 0.0"]),

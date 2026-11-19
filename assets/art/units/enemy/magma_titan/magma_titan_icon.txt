@@ -1,0 +1,26 @@
+# Source of res://assets/art/units/enemy/magma_titan/magma_titan_icon.png (python tools/gd.py icon <this> <out.png>); cropped from the sprite's first IDLE frame
+a = 54485a
+b = e43b44
+c = 7a6a7e
+d = 2c2432
+e = 1e1a26
+f = f77622
+g = fee761
+h = 0f0b14
+---
+................
+.......dbbdd....
+......dbddaad...
+......dddhhhh...
+.....ddaaagaga..
+......aaaaccc...
+dd....daaccccddd
+aad....aacacdddd
+baaaeeeeeeedddda
+aacbeeeeeddddaaa
+cccbeeeddddbacad
+ccaebedddddbdcca
+aceedbddddddbaca
+eedddbdbfbdabacc
+eddddbbfffbabaac
+ddddddffgffabaac

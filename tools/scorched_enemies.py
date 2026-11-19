@@ -7,6 +7,7 @@ scorched_abilities.py after it).
     python tools/scorched_enemies.py [names...]
 """
 import os
+import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -33,10 +34,25 @@ SCORCHED = {
     "phoenix": ("giant_eagle", ["health=30", "speed=24", "price=4"], "ember_spirit"),
     "ember_cultist": ("priest", ["health=26", "speed=15", "price=4"], "cultist"),
     "lava_spitter": ("destroyerling", ["health=60", "speed=10", "price=6"], "volcanic"),
+    "magma_titan": ("bog_hydra", ["health=6000", "speed=7", "price=90"], "volcanic"),
     "ashen_wyrm": ("giant_eagle", ["health=7000", "speed=10", "price=120", "boss=1", "damage=10", "sprite_y=-14", "popup_y=-30", "hitbox=24x18"], "ashen_wyrm"),
 }
+
+# the gore a variant keeps from its parent is not always its own: the Magma Titan bleeds lava (the red spill), not
+# the Bog Hydra's ichor
+GORE = {"magma_titan": "res://scenes/unit/blood_spill.tscn"}
+
+
+def set_gore(name, scene):
+    path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "scenes", "unit", "enemy", "enemies", name + ".tscn")
+    text = open(path, encoding="utf8").read()
+    text = re.sub(r'path="res://scenes/unit/[a-z_]+_spill\.tscn"', 'path="%s"' % scene, text)
+    open(path, "w", encoding="utf8", newline="\n").write(text)
+
 
 if __name__ == "__main__":
     for name in sys.argv[1:] or SCORCHED:
         parent, stats, profile = SCORCHED[name]
         build(name, parent, stats, profile, None)
+        if name in GORE:
+            set_gore(name, GORE[name])
