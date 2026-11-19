@@ -32,6 +32,8 @@ signal navigation_rebaked()
 signal astar_grid_updated()
 
 signal lose_game()
+#a Survival run ended (after lose_game, once the lose menu is up): its waves cleared and the level's record
+signal survival_run_ended(waves_cleared : int, best_waves : int, is_new_best : bool)
 signal time_scale_change(new_time_scale : float)
 signal game_stop()
 signal game_pause(is_paused : bool)

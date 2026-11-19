@@ -13,3 +13,7 @@ extends Resource
 @export var level_talent_points : Dictionary[int, int] = {}
 ## The best talent points per mode other than Normal: mode (Utils.LevelMode) -> {level number: points}.
 @export var mode_talent_points : Dictionary[int, Dictionary] = {}
+## The most waves cleared in one Survival run per level number (the mode's best score).
+@export var survival_best_waves : Dictionary[int, int] = {}
+## The highest level whose world map node has been shown; a newer unlocked one pops in when the map opens.
+@export var map_revealed_level : int = 0

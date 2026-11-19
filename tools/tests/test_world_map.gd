@@ -1,0 +1,62 @@
+extends RefCounted
+
+## The world map: only cleared levels and the next one show, completion rings, the newest level pops in once.
+
+const MAP_SCENE : String = "res://scenes/ui/game_world_map/game_world_map.tscn"
+
+
+func test_ring_tiers(kit : TestKit) -> void:
+	kit.check(CompletionRing.tier_for(false, 0, 15) == CompletionRing.Tier.NONE, "not cleared: no ring")
+	kit.check(CompletionRing.tier_for(true, 1, 15) == CompletionRing.Tier.BRONZE, "Normal cleared: bronze")
+	kit.check(CompletionRing.tier_for(true, 9, 15) == CompletionRing.Tier.BRONZE, "9 points: still bronze")
+	kit.check(CompletionRing.tier_for(true, 10, 15) == CompletionRing.Tier.SILVER, "10 points: silver")
+	kit.check(CompletionRing.tier_for(true, 15, 15) == CompletionRing.Tier.GOLD, "all 15: gold")
+
+
+func test_token_rows(kit : TestKit) -> void:
+	kit.check(MapLevelElement.token_row(1) == 0 and MapLevelElement.token_row(12) == 0, "caves 1-12")
+	kit.check(MapLevelElement.token_row(13) == 1 and MapLevelElement.token_row(25) == 2, "swamp from 13, Wasted Lands from 25")
+	kit.check(MapLevelElement.token_row(37) == 3 and MapLevelElement.token_row(59) == 4, "desert from 37, volcano to 59")
+	for boss in [8, 24, 36, 48, 60]:
+		kit.check(MapLevelElement.token_row(boss) == MapLevelElement.BOSS_ROW, "level %d has the boss token" % boss)
+	var rows : int = floori(MapLevelElement.TOKEN_SHEET.get_height() / float(MapLevelElement.TOKEN_CELL))
+	kit.check(rows == MapLevelElement.BOSS_ROW + 1, "the sheet has every row")
+
+
+func test_map_shows_cleared_and_next(kit : TestKit) -> void:
+	var saved : ProgressData = PlayerProgress._save.progress
+	var progress : ProgressData = ProgressData.new()
+	progress.level_progress = 4
+	progress.map_revealed_level = 3
+	progress.level_talent_points = {1: 5, 2: 1, 3: 3}
+	progress.mode_talent_points = {Utils.LevelMode.Hard: {1: 5, 3: 5}, Utils.LevelMode.Survival: {1: 5, 3: 2}}
+	PlayerProgress._save.progress = progress
+
+	var map : GameWorldMap = load(MAP_SCENE).instantiate()
+	kit.root.add_child(map)
+	await kit.frames(2)
+	var by_number : Dictionary[int, MapLevelElement] = {}
+	for element in map.map_level_elements:
+		by_number[element.level_number] = element
+
+	kit.check(by_number[4].visible and not by_number[5].visible and not by_number[60].visible, "level 4 is next, 5 and later hidden")
+	kit.check(by_number[4].is_next_to_play() and not by_number[3].is_next_to_play(), "only level 4 is next to play")
+	kit.check(by_number[1].completion_ring.tier == CompletionRing.Tier.GOLD, "15 points: gold")
+	kit.check(by_number[2].completion_ring.tier == CompletionRing.Tier.BRONZE, "1 point: bronze")
+	kit.check(by_number[3].completion_ring.tier == CompletionRing.Tier.SILVER, "10 points: silver")
+	kit.check(by_number[4].completion_ring.tier == CompletionRing.Tier.NONE and not by_number[4].completion_ring.visible, "next level: no ring")
+	#Godot keeps a scale a hair above zero
+	kit.check(by_number[4].select_button.scale.x < 0.01, "level 4 is new since the map was last shown: it pops in")
+	kit.check(PlayerProgress.map_revealed_level == 4, "and only once")
+	map.queue_free()
+	await kit.frames(1)
+
+	var again : GameWorldMap = load(MAP_SCENE).instantiate()
+	kit.root.add_child(again)
+	await kit.frames(2)
+	for element in again.map_level_elements:
+		if element.level_number == 4:
+			kit.check(element.select_button.scale == Vector2.ONE, "the second time it is just there")
+	again.queue_free()
+	await kit.frames(1)
+	PlayerProgress._save.progress = saved

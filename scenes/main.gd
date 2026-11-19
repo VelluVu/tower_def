@@ -12,6 +12,8 @@ extends Node
 
 var is_game_paused : bool = false
 var time_scale : float = 1.0
+#the running Survival level, until its run is recorded (lost or quit)
+var survival_level : Level = null
 
 
 func reset_time_scale() -> void:
@@ -34,6 +36,7 @@ func _ready() -> void:
 	GameSignals.lose_game.connect(_on_lose_level)
 	UISignals.continue_next_level_pressed.connect(_on_continue_next_level_pressed)
 	UISignals.retry_level_pressed.connect(_on_retry_level_pressed)
+	UISignals.resign_level.connect(_on_resign_level)
 	UISignals.start_level_button_pressed.connect(_on_start_level_pressed)
 	UISignals.start_game.connect(_on_start_new_game)
 	UISignals.continue_last_save.connect(_on_continue_game)
@@ -73,8 +76,9 @@ func _on_retry_level_pressed() -> void:
 	scene_manager.load_level_by_number(level_number, self, mode)
 
 
-func _on_level_loaded(_level : Level) -> void:
+func _on_level_loaded(level : Level) -> void:
 	reset_time_scale()
+	survival_level = level if level.mode == Utils.LevelMode.Survival else null
 
 
 func _on_level_completed(level : Level) -> void:
@@ -88,12 +92,36 @@ func _on_level_completed(level : Level) -> void:
 func _on_lose_level() -> void:
 	reset_time_scale()
 	pause_game(true)
-	#Survival always ends here: its points come from the waves cleared before the lives ran out
-	var level : Level = scene_manager.current_level as Level
-	if level != null and level.mode == Utils.LevelMode.Survival:
-		var cleared : int = maxi(level.wave_runner.wave_number - 1, 0)
-		PlayerProgress.record_level_talent_points(scene_manager.current_level_number, SurvivalRules.points_for_waves(cleared), level.mode)
-		PlayerProgress.save_progress()
+	#Survival ends here when the lives run out: its points come from the waves cleared before that
+	if survival_level != null:
+		#the wave the lives ran out in is never cleared, even when its last enemy took the last life
+		var cleared : int = maxi(survival_level.wave_runner.wave_number - 1, 0)
+		var is_new_best : bool = _record_survival_run(cleared)
+		#deferred: the lose menu is loaded by another lose_game listener
+		GameSignals.survival_run_ended.emit.call_deferred(cleared, PlayerProgress.get_survival_best_waves(scene_manager.current_level_number), is_new_best)
+
+
+#quitting a Survival run from the pause menu ends it too, with the waves cleared so far
+func _on_resign_level() -> void:
+	if survival_level != null:
+		_record_survival_run(_get_survival_waves_cleared())
+
+
+#quitting in the break after a wave (nothing spawning, nothing alive) counts that wave as cleared
+func _get_survival_waves_cleared() -> int:
+	var runner : WaveRunner = survival_level.wave_runner
+	var is_in_break : bool = not runner.is_spawning and survival_level.existing_enemies.is_empty()
+	return runner.wave_number if is_in_break else maxi(runner.wave_number - 1, 0)
+
+
+## Records the running Survival run once (talent points and the best score); true when it beat the record.
+func _record_survival_run(cleared : int) -> bool:
+	var level_number : int = scene_manager.current_level_number
+	PlayerProgress.record_level_talent_points(level_number, SurvivalRules.points_for_waves(cleared), Utils.LevelMode.Survival)
+	var is_new_best : bool = PlayerProgress.record_survival_waves(level_number, cleared)
+	PlayerProgress.save_progress()
+	survival_level = null
+	return is_new_best
 
 
 func _on_pause_game(is_paused : bool) -> void:

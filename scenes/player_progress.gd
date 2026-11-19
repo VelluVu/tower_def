@@ -18,6 +18,16 @@ var level_progress : int :
 
 		_save.progress.level_progress = new_level_number
 
+## The highest level whose world map node has been shown (only goes up).
+var map_revealed_level : int :
+	get:
+		return _save.progress.map_revealed_level
+	set(value):
+		if value <= _save.progress.map_revealed_level:
+			return
+
+		_save.progress.map_revealed_level = value
+
 var has_save : bool :
 	get:
 		return _save.has_save()
@@ -111,6 +121,19 @@ func record_level_talent_points(level_number : int, points : int, mode : Utils.L
 
 	talents_changed.emit()
 	return points - best
+
+
+func get_survival_best_waves(level_number : int) -> int:
+	return _save.progress.survival_best_waves.get(level_number, 0)
+
+
+## Keeps the most waves cleared in one Survival run of the level; true when this run beat the record.
+func record_survival_waves(level_number : int, waves_cleared : int) -> bool:
+	if waves_cleared <= get_survival_best_waves(level_number):
+		return false
+
+	_save.progress.survival_best_waves[level_number] = waves_cleared
+	return true
 
 
 func set_talent_rank(tree_id : StringName, node_id : StringName, rank : int) -> void:

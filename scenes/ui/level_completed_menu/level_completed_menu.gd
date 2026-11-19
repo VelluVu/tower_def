@@ -2,14 +2,11 @@ class_name LevelCompletedMenu
 extends Control
 
 const LEVEL_COMPLETED_TEXT : String = "Level Completed"
-const GAME_WON_TEXT : String = "All castles saved!
-You won the game."
+const GAME_WON_TEXT : String = "All castles saved!\nYou won the game."
 
 const TALENT_POINTS_TEXT : String = "Talent points: %d / %d (best %d)"
 ## The story's end after the last castle (placeholder words for the user to rewrite).
-const EPILOGUE_TEXT : String = "The Ashen Wyrm falls into its own fire, and the mountain goes quiet. Its dead lie down again in the sand, the humans who served it scatter, and the rest march home over the northern bridge. In every castle the eggs begin to crack.
-
-Puffe yawns. The volcano is warm, for once, and quiet. He sleeps."
+const EPILOGUE_TEXT : String = "The Ashen Wyrm falls into its own fire, and the mountain goes quiet. Its dead lie down again in the sand, the humans who served it scatter, and the rest march home over the northern bridge. In every castle the eggs begin to crack.\n\nPuffe yawns. The volcano is warm, for once, and quiet. He sleeps."
 const EPILOGUE_WIDTH : float = 220.0
 
 @onready var label : Label = $MarginContainer/VBoxContainer/Label

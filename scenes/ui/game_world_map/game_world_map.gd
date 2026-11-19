@@ -13,6 +13,7 @@ var map_level_elements : Array[MapLevelElement]
 
 func _ready() -> void:
 	_get_map_level_elements()
+	_reveal_new_level()
 	to_menu_button.pressed.connect(_on_to_menu_pressed)
 	talents_button.pressed.connect(_on_talents_pressed)
 	PlayerProgress.talents_changed.connect(_update_talents_button)
@@ -41,6 +42,19 @@ func _get_map_level_elements() -> void:
 			map_level_elements.append(child)
 			if not child.is_selected.is_connected(_on_element_is_selected):
 				child.is_selected.connect(_on_element_is_selected)
+
+
+#the level unlocked since the map was last shown pops in, once
+func _reveal_new_level() -> void:
+	var newest : int = PlayerProgress.level_progress
+	if newest <= PlayerProgress.map_revealed_level:
+		return
+
+	for element in map_level_elements:
+		if element.level_number == newest and element.visible:
+			element.pop_in()
+	PlayerProgress.map_revealed_level = newest
+	PlayerProgress.save_progress()
 
 
 func _on_element_is_selected(map_level_element : MapLevelElement) -> void:
