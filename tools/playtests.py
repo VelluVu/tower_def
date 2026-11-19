@@ -4,6 +4,7 @@
     python tools/playtests.py --bot       the soak bot's runs (user://bot_playtests.jsonl)
     python tools/playtests.py --level 3   one level only
     python tools/playtests.py --last 20   the last 20 runs (default 30)
+    python tools/playtests.py --compare   your runs next to the bot's tuning result and talent budget per level
 
 Prints one line per run, then per level: runs, wins, average lives left, gold earned and spent.
 """
@@ -45,7 +46,35 @@ def mode_tag(run):
     return "" if mode == "normal" else mode[0].upper()
 
 
+TUNE_TABLE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "reports", "tune_levels.json")
+# the tuner's budgets (tools/tune_levels.py): an average player on Normal, a thorough one on Hard
+AVERAGE_PER_LEVEL, THOROUGH_PER_LEVEL, TREE_RANKS = 3, 8, 526
+
+
+def compare(runs):
+    """each of your runs (no cheats) next to what the tuner measured for the bot on that level and mode, with both
+    talent budgets, so the bot's targets can be checked against how you play (design doc: Difficulty model)"""
+    table = json.load(open(TUNE_TABLE, encoding="utf-8")) if os.path.exists(TUNE_TABLE) else {}
+    print("level  mode    you                           your talents  bot budget  bot result")
+    for r in runs:
+        if r.get("cheats"):
+            continue
+        level, mode = r.get("level"), r.get("mode", "normal")
+        entry = table.get(str(level), {})
+        if mode == "hard":
+            budget = min(TREE_RANKS, THOROUGH_PER_LEVEL * level - 3)
+            bot = entry.get("hard_runs", "not tuned")
+        else:
+            budget = AVERAGE_PER_LEVEL * (level - 1)
+            bot = entry.get("normal_runs", "not tuned")
+        you = f"{r.get('result')} wave {r.get('wave')}/{r.get('waves')}, {r.get('life', 0):.0f} lives"
+        print(f"{level:5}  {mode:6}  {you:28}  {sum(r.get('talents', {}).values()):12}  {budget:10}  {bot}")
+    return 0
+
+
 def main(args):
+    if "--compare" in args:
+        return compare(read_runs(PLAYER_LOG))
     path = BOT_LOG if "--bot" in args else PLAYER_LOG
     level = int(args[args.index("--level") + 1]) if "--level" in args else None
     last = int(args[args.index("--last") + 1]) if "--last" in args else 30

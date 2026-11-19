@@ -10,6 +10,7 @@
 [ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_027_wave_5.tres" id="w5"]
 [ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_027_wave_6.tres" id="w6"]
 [ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_027_wave_7.tres" id="w7"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/modes/level_027_hard.tres" id="hard_mode"]
 
 [sub_resource type="Resource" id="PuffeLine_1"]
 script = ExtResource("9_line")
@@ -35,6 +36,7 @@ text = "The ford is ours. Their camp cannot be far now."
 
 [resource]
 script = ExtResource("1_level")
+hard_mode = ExtResource("hard_mode")
 level_name = "Millstream Ford"
 story_text = "A mill stream runs across the fields, and the humans must cross it at one of its two fords. Their cavalry rides out for the first time."
 starting_gold = 27.0
@@ -43,4 +45,4 @@ puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResou
 first_wave_health = 1.9
 last_wave_health = 4.6
 health_scale = 1.954
-hard_health_scale = 2.500
+hard_health_scale = 1.535

@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://bbhd3iyjav4h2" path="res://scenes/level/level_data/spawn_group_data.gd" id="2_group"]
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/armored_knight.tscn" id="e_armored_knight"]
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/ember_cultist.tscn" id="e_ember_cultist"]
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/ash_drake.tscn" id="e_push_ash_drake"]
 
 [sub_resource type="Resource" id="Resource_group1"]
 script = ExtResource("2_group")
@@ -12,6 +13,7 @@ count = 4
 interval = 3.2
 delay = 2.0
 spawner_id = 2
+elites = 1
 
 [sub_resource type="Resource" id="Resource_group2"]
 script = ExtResource("2_group")
@@ -19,7 +21,16 @@ enemy_scene = ExtResource("e_armored_knight")
 count = 4
 interval = 3.2
 delay = 5.0
+elites = 1
+
+[sub_resource type="Resource" id="Resource_push1"]
+script = ExtResource("2_group")
+enemy_scene = ExtResource("e_push_ash_drake")
+count = 9
+interval = 1.6
+delay = 6.0
+elites = 1
 
 [resource]
 script = ExtResource("1_wave")
-spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2")])
+spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_push1")])

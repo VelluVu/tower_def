@@ -68,6 +68,16 @@ func _print_level(kit : TestKit, number : int, show_map : bool) -> void:
 				turns += 1
 		print("  route sp%d: %d cells, %d turns, %d on slow ground" % [spawner.id, path.size(), turns, slow])
 
+	#how much room a maze has: open ground (walkable and buildable, so walls can stand there) per route cell
+	var open_cells : int = 0
+	var region : Rect2i = grid.astar_grid.region
+	for y in range(region.position.y, region.end.y):
+		for x in range(region.position.x, region.end.x):
+			var cell : Vector2i = Vector2i(x, y)
+			if grid.is_cell_walkable(cell) and grid.is_position_buildable(grid.grid_position_to_world(cell)):
+				open_cells += 1
+	print("  maze room: %d open cells, %.1f per route cell" % [open_cells, open_cells / maxf(1.0, route_cells.size())])
+
 	if show_map:
 		_print_map(kit, route_cells)
 

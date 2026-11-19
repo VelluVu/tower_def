@@ -27,7 +27,14 @@ count = 12
 interval = 0.4
 delay = 18.0
 
+[sub_resource type="Resource" id="Resource_push1"]
+script = ExtResource("2_group")
+enemy_scene = ExtResource("4_leechling")
+count = 12
+interval = 0.3
+delay = 4.0
+
 [resource]
 script = ExtResource("1_wave")
-spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_group3")])
+spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_group3"), SubResource("Resource_push1")])
 early_start_bonus = 2.0

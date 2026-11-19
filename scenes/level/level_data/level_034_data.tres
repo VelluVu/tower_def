@@ -10,6 +10,7 @@
 [ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_034_wave_5.tres" id="w5"]
 [ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_034_wave_6.tres" id="w6"]
 [ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_034_wave_7.tres" id="w7"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/modes/level_034_hard.tres" id="hard_mode"]
 
 [sub_resource type="Resource" id="PuffeLine_1"]
 script = ExtResource("9_line")
@@ -23,6 +24,7 @@ text = "Their siege lines are broken. One more road, then their camp."
 
 [resource]
 script = ExtResource("1_level")
+hard_mode = ExtResource("hard_mode")
 level_name = "Siege Lines"
 story_text = "Three barricade lines across the field: the humans' siege works. The road doubles back on itself, and the sappers lead."
 starting_gold = 31.0
@@ -31,4 +33,4 @@ puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResou
 first_wave_health = 1.6
 last_wave_health = 4.7
 health_scale = 0.952
-hard_health_scale = 2.500
+hard_health_scale = 1.838

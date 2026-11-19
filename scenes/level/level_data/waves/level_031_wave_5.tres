@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/armored_knight.tscn" id="e_armored_knight"]
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/giant_eagle.tscn" id="e_giant_eagle"]
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/scout.tscn" id="e_scout"]
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/assault_dog.tscn" id="e_push_assault_dog"]
 
 [sub_resource type="Resource" id="Resource_group1"]
 script = ExtResource("2_group")
@@ -28,7 +29,14 @@ count = 18
 interval = 1.0
 delay = 4.0
 
+[sub_resource type="Resource" id="Resource_push1"]
+script = ExtResource("2_group")
+enemy_scene = ExtResource("e_push_assault_dog")
+count = 15
+interval = 0.3
+delay = 4.0
+
 [resource]
 script = ExtResource("1_wave")
-spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_group3")])
+spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_group3"), SubResource("Resource_push1")])
 early_start_bonus = 3.0

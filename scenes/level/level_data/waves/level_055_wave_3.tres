@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/ash_drake.tscn" id="e_ash_drake"]
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/ember_cultist.tscn" id="e_ember_cultist"]
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/magma_salamander.tscn" id="e_magma_salamander"]
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/ember_wisp.tscn" id="e_push_ember_wisp"]
 
 [sub_resource type="Resource" id="Resource_group1"]
 script = ExtResource("2_group")
@@ -26,7 +27,14 @@ count = 6
 interval = 1.8
 delay = 6.0
 
+[sub_resource type="Resource" id="Resource_push1"]
+script = ExtResource("2_group")
+enemy_scene = ExtResource("e_push_ember_wisp")
+count = 9
+interval = 0.3
+delay = 4.0
+
 [resource]
 script = ExtResource("1_wave")
-spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_group3")])
+spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_group3"), SubResource("Resource_push1")])
 early_start_bonus = 2.0

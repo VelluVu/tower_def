@@ -9,6 +9,7 @@
 [ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_021_wave_4.tres" id="w4"]
 [ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_021_wave_5.tres" id="w5"]
 [ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_021_wave_6.tres" id="w6"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/modes/level_021_hard.tres" id="hard_mode"]
 
 [sub_resource type="Resource" id="PuffeLine_1"]
 script = ExtResource("9_line")
@@ -22,6 +23,7 @@ text = "Shielded elites. Their shell eats part of every hit; focus them."
 
 [resource]
 script = ExtResource("1_level")
+hard_mode = ExtResource("hard_mode")
 level_name = "Plague Marsh"
 story_text = "Dry mud flats where the plague boars root. Poison does almost nothing here; frost and fire do."
 starting_gold = 28.0
