@@ -143,6 +143,9 @@ func _change_collision_state(state : bool) -> void:
 
 
 func _activate() -> void:
+	#outside the tree (a test's stand-in Main) the bolt was never readied and cannot fly
+	if not is_node_ready():
+		return
 	_on_time_scale_change(Utils.game_control.time_scale)
 	is_hit = false
 	current_pierced = 0

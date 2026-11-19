@@ -4,8 +4,7 @@ extends PanelContainer
 ## A small card fixed to the bottom-left corner: icon, name, the stats in two short lines,
 ## then the gold upgrades and Sell. Fixed width and a fixed corner, so it never moves.
 
-const UPGRADE_BUTTON_TEXT : String = "%s
-%dg"
+const UPGRADE_BUTTON_TEXT : String = "%s\n%dg"
 const EVOLVE_BUTTON_TEXT : String = "%dg"
 #fixed width, long titles end in "..." and the tooltip has the full one
 const UPGRADE_BUTTON_MIN_SIZE : Vector2 = Vector2(50, 0)

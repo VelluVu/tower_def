@@ -174,10 +174,15 @@ func run(kit : TestKit, args : PackedStringArray) -> void:
 	var bought : Dictionary[String, int] = {}
 	for tower in towers:
 		if is_instance_valid(tower):
-			elements[_type_of(tower)] = Utils.Element.find_key(tower.evolve_tree.evolve_element)
+			#a tower that has not chosen yet reads as Physical
+			if tower.evolve_tree.is_element_chosen:
+				elements[_type_of(tower)] = Utils.Element.find_key(tower.evolve_tree.evolve_element)
 			_add(bought, _type_of(tower), purchases.get(tower, 0))
-	print("SOAK result %s: wave %d/%d, life %.0f/%.0f, cards %d, early starts %d, gold left %.0f" % [
-		result, level.wave_runner.wave_number, level.wave_runner.wave_count, level.player_stats.life, starting_life, cards, level.early_starts, level.player_stats.gold])
+	#Survival has no last wave (wave_count 0)
+	var wave_text : String = str(level.wave_runner.wave_number) if level.wave_runner.wave_count == 0 \
+		else "%d/%d" % [level.wave_runner.wave_number, level.wave_runner.wave_count]
+	print("SOAK result %s: wave %s, life %.0f/%.0f, cards %d, early starts %d, gold left %.0f" % [
+		result, wave_text, level.player_stats.life, starting_life, cards, level.early_starts, level.player_stats.gold])
 	print("SOAK built %d towers, %d traps, %d walls (%.0f of %.0f gold), route %d -> %d cells, purchases %s, elements %s" % [
 		towers.size(), traps, walls, wall_gold, gold_spent, start_length, _route_length(level), bought, elements])
 	print("SOAK enemies spawned %s, killed %s, leaked %s" % [spawned, killed, leaked])
