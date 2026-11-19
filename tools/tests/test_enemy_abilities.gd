@@ -2,6 +2,8 @@ extends RefCounted
 
 ## The ranged enemies' shots (archer, wizard, destroyerling), the priest's heal and the bosses' strikes.
 
+const MAGMA_BLOB_FILE : String = "magma_blob.tscn"
+
 
 func _cell_near(kit : TestKit, from : Vector2, min_tiles : float, max_tiles : float, taken : Array[Vector2i] = []) -> Vector2i:
 	return kit.find_cell(func(c : Vector2i) -> bool:
@@ -182,3 +184,36 @@ func test_a_shot_lands_after_its_shooter_is_gone(kit : TestKit) -> void:
 	archer.free()
 	await kit.run_until(func() -> bool: return _health(tower) < full, 3.0)
 	kit.check(_health(tower) < full, "the arrow lands on the tower (%.0f -> %.0f)" % [full, _health(tower)])
+
+
+func test_magma_titan_slams_then_calls_the_magma(kit : TestKit) -> void:
+	await kit.load_level(57)
+	var spawn : Vector2 = kit.level.get_spawners()[0].global_position
+	var taken : Array[Vector2i] = []
+	var towers : Array[Building] = []
+	for i in 3:
+		var cell : Vector2i = _cell_near(kit, spawn, 1.0, 1.9, taken)
+		if cell == Vector2i.MAX:
+			break
+		taken.append(cell)
+		towers.append(await kit.place("puffe_beamer", cell))
+	kit.check(towers.size() == 3, "three towers by the titan (%d)" % towers.size())
+	var titan : Enemy = kit.spawn_enemy("magma_titan")
+	kit.check(titan.is_boss, "the titan is a boss")
+	var slam : EnemyAbility = titan.abilities.get_node("MagmaSlam")
+	await kit.run_until(func() -> bool: return slam.use_count > 0 and not slam.is_active, 10.0)
+	kit.check(slam.use_count > 0, "it slams")
+	kit.check(towers.any(func(t : Building) -> bool: return _health(t) < 10.0), "the slam hurts a tower")
+
+	#under a third of its health: Magma Call, once
+	var blobs : Array[int] = [0]
+	var count_blob : Callable = func(enemy : Enemy) -> void:
+		if enemy.scene_file_path.ends_with(MAGMA_BLOB_FILE):
+			blobs[0] += 1
+	GameSignals.enemy_spawned.connect(count_blob)
+	titan.stats.get_stat(Utils.StatType.Health).value = titan.stats.get_stat_value(Utils.StatType.MaxHealth) * 0.3
+	var magma_call : EnemyAbility = titan.abilities.get_node("MagmaCall")
+	await kit.run_until(func() -> bool: return magma_call.use_count > 0 and not magma_call.is_active, 10.0)
+	GameSignals.enemy_spawned.disconnect(count_blob)
+	kit.check(magma_call.use_count == 1, "Magma Call under 33%")
+	kit.check(blobs[0] == 6, "six magma blobs rise (%d)" % blobs[0])

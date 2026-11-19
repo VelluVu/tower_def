@@ -38,5 +38,5 @@ first_wave_health = 1.8
 last_wave_health = 10.8
 hard_mode = ExtResource("hard_mode")
 sandstorm_every = 50.0
-health_scale = 1.000
-hard_health_scale = 2.128
+health_scale = 1.404
+hard_health_scale = 2.383
