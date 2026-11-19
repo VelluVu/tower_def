@@ -44,6 +44,12 @@ func test_map_shows_cleared_and_next(kit : TestKit) -> void:
 	kit.check(by_number[1].completion_ring.tier == CompletionRing.Tier.GOLD, "15 points: gold")
 	kit.check(by_number[2].completion_ring.tier == CompletionRing.Tier.BRONZE, "1 point: bronze")
 	kit.check(by_number[3].completion_ring.tier == CompletionRing.Tier.SILVER, "10 points: silver")
+	kit.check(by_number[4].next_arrow != null and by_number[3].next_arrow == null, "the arrow is over the next level only")
+	kit.check(by_number[4].start_label == null, "no Start here once a level is cleared")
+	by_number[4].tooltip.visible = true
+	kit.check(not by_number[4].next_arrow.visible, "the arrow hides while the level's panel is open")
+	by_number[4].tooltip.visible = false
+	kit.check(by_number[4].next_arrow.visible, "and comes back when it closes")
 	kit.check(by_number[4].completion_ring.tier == CompletionRing.Tier.NONE and not by_number[4].completion_ring.visible, "next level: no ring")
 	#Godot keeps a scale a hair above zero
 	kit.check(by_number[4].select_button.scale.x < 0.01, "level 4 is new since the map was last shown: it pops in")
@@ -58,5 +64,16 @@ func test_map_shows_cleared_and_next(kit : TestKit) -> void:
 		if element.level_number == 4:
 			kit.check(element.select_button.scale == Vector2.ONE, "the second time it is just there")
 	again.queue_free()
+	await kit.frames(1)
+
+	#a new game: level 1 gets the arrow and the Start here label
+	PlayerProgress._save.progress = ProgressData.new()
+	var fresh : GameWorldMap = load(MAP_SCENE).instantiate()
+	kit.root.add_child(fresh)
+	await kit.frames(2)
+	for element in fresh.map_level_elements:
+		if element.level_number == 1:
+			kit.check(element.next_arrow != null and element.start_label != null, "new game: arrow and Start here on level 1")
+	fresh.queue_free()
 	await kit.frames(1)
 	PlayerProgress._save.progress = saved

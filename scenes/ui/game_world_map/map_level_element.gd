@@ -37,6 +37,15 @@ const BOSS_RING_MARGIN : int = 5
 const TOKEN_STATES : Array[StringName] = [&"normal", &"hover", &"pressed", &"disabled"]
 const HOVER_PRESSED_STATE : StringName = &"hover_pressed"
 const PRESSED_STATE_COLUMN : int = 2
+## The arrow over the next level to play: ARROW_GAP pixels above the node, bobbing ARROW_BOB_PIXELS on its own
+## beat. On a new game a "Start here" label stands beside it.
+const NEXT_ARROW : Texture2D = preload("res://assets/art/ui/map_nodes/next_level_arrow.png")
+const ARROW_GAP : int = 1
+const ARROW_BOB_PIXELS : int = 2
+const ARROW_BOB_TIME : float = 0.35
+const START_HERE_TEXT : String = "Start here"
+const START_LABEL_GAP : int = 2
+const START_LABEL_RAISE : int = 2
 @onready var tooltip : Panel = $Tooltip
 @onready var start_button : Button = $Tooltip/StartButton
 @onready var close_button : Button = $Tooltip/CloseButton
@@ -51,6 +60,8 @@ var is_locked : bool = false :
 	set = _set_is_locked
 var selected_mode : Utils.LevelMode = Utils.LevelMode.Normal
 var completion_ring : CompletionRing = null
+var next_arrow : TextureRect = null
+var start_label : Label = null
 
 
 func _ready() -> void:
@@ -69,6 +80,7 @@ func _ready() -> void:
 	_show_talent_points()
 	if is_next_to_play():
 		_bob()
+		_add_next_arrow()
 
 
 ## The level unlocked but not cleared yet.
@@ -103,6 +115,42 @@ func pop_in() -> void:
 	#the size is laid out by the time the delay ends
 	tween.tween_callback(func() -> void: select_button.pivot_offset = select_button.size * 0.5).set_delay(POP_IN_DELAY)
 	tween.tween_property(select_button, "scale", Vector2.ONE, POP_IN_TIME).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+
+#on the button, so it pops in and bobs with the node; it hides while the node is hovered or its panel open
+func _add_next_arrow() -> void:
+	next_arrow = TextureRect.new()
+	next_arrow.texture = NEXT_ARROW
+	next_arrow.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	next_arrow.z_index = 1
+	var arrow_size : Vector2 = NEXT_ARROW.get_size()
+	var base_position : Vector2 = Vector2(floorf((size.x - arrow_size.x) * 0.5), -arrow_size.y - ARROW_GAP)
+	next_arrow.position = base_position
+	select_button.add_child(next_arrow)
+
+	#nothing cleared yet: a new game
+	if PlayerProgress.level_progress <= 1:
+		start_label = Label.new()
+		start_label.text = START_HERE_TEXT
+		start_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		start_label.position = Vector2(arrow_size.x + START_LABEL_GAP, -START_LABEL_RAISE)
+		next_arrow.add_child(start_label)
+
+	var tween : Tween = create_tween().set_loops()
+	tween.tween_interval(ARROW_BOB_TIME)
+	tween.tween_callback(func() -> void: next_arrow.position.y = base_position.y - ARROW_BOB_PIXELS)
+	tween.tween_interval(ARROW_BOB_TIME)
+	tween.tween_callback(func() -> void: next_arrow.position.y = base_position.y)
+
+	select_button.mouse_entered.connect(_update_next_arrow.bind(true))
+	select_button.mouse_exited.connect(_update_next_arrow.bind(false))
+	#the map also closes this panel when another node is picked
+	tooltip.visibility_changed.connect(_update_next_arrow.bind(false))
+
+
+func _update_next_arrow(is_hovered : bool = false) -> void:
+	if next_arrow != null:
+		next_arrow.visible = not is_hovered and not tooltip.visible
 
 
 #whole-pixel steps, not a smooth tween: every art pixel stays on a screen pixel

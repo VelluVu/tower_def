@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://b8emwlmfhw85k"
+path="res://.godot/imported/next_level_arrow.aseprite-9a9ae2787e26580d3b932d9547b0e614.res"
+
+[deps]
+
+source_file="res://assets/art/ui/map_nodes/next_level_arrow.aseprite"
+dest_files=["res://.godot/imported/next_level_arrow.aseprite-9a9ae2787e26580d3b932d9547b0e614.res"]
+
+[params]
+
