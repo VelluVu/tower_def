@@ -19,4 +19,5 @@ interval_multiplier = 0.75
 first_wave_share = 0.2
 last_wave_share = 1.0
 xp_multiplier = 1.5
+elite_share = 0.3
 added_groups = Array[ExtResource("0_wave")]([ExtResource("a1"), ExtResource("a2"), ExtResource("a3"), ExtResource("a4"), ExtResource("a5"), ExtResource("a6"), ExtResource("a7")])

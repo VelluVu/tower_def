@@ -23,6 +23,9 @@ extends Resource
 ## wave, so the mode presses the late game (where gold piles up) more than the opener.
 @export var first_wave_share : float = 1.0
 @export var last_wave_share : float = 1.0
+## The share of every group's enemies that come as elites in the last wave, ramped like the bonuses above (2026-11-19:
+## for Hard sides still won at the health cap); a group never gets fewer elites than its own, and a lone enemy none.
+@export var elite_share : float = 0.0
 
 
 ## The level's waves plus the extra ones, each a copy with the group counts and intervals scaled;
@@ -46,12 +49,20 @@ func get_waves(level_waves : Array[WaveData]) -> Array[WaveData]:
 			#a lone enemy stays alone: a boss group of one must not become two bosses
 			group_copy.count = group.count if group.count <= 1 else scaled_count(group.count, ramped(count_multiplier, share))
 			group_copy.interval = group.interval * ramped(interval_multiplier, share)
+			group_copy.elites = get_elites(group_copy, share)
 			groups.append(group_copy)
 
 		copy.spawn_groups = groups
 		waves.append(copy)
 
 	return waves
+
+
+## The elites of a scaled group copy: its own, or elite_share of the group at this wave's share, whichever is more.
+func get_elites(group : SpawnGroupData, share : float) -> int:
+	if group.count <= 1 or elite_share <= 0.0:
+		return group.elites
+	return mini(group.count, maxi(group.elites, roundi(group.count * elite_share * share)))
 
 
 ## Raises a newly spawned enemy's max health and speed for the wave it came in; it starts at full health.

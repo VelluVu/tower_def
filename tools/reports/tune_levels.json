@@ -170,7 +170,7 @@
   "normal_ok": true,
   "hard_ok": true,
   "normal_runs": "3/3 won, 8.0 lives",
-  "hard_runs": "3/3 won at 85%, 7.0 lives, 2/2 at 60%"
+  "hard_runs": "3/3 won at 85%, 8.0 lives, 1/2 at 60%"
  },
  "22": {
   "scale": 1.225,
@@ -348,12 +348,12 @@
   "normal_failed": 1.181
  },
  "48": {
-  "scale": 1.052,
+  "scale": 1.15,
   "hard": 2.5,
-  "normal_ok": false,
+  "normal_ok": true,
   "hard_ok": true,
-  "normal_runs": "2/3 won, 6.7 lives",
-  "hard_runs": "3/3 won at 85%, 9.7 lives, 2/2 at 60%",
+  "normal_runs": "3/3 won, 10.0 lives",
+  "hard_runs": "3/3 won at 85%, 10.0 lives, 2/2 at 60%",
   "normal_failed": 1.144
  },
  "49": {
@@ -433,7 +433,7 @@
   "normal_ok": true,
   "hard_ok": true,
   "normal_runs": "3/3 won, 9.7 lives",
-  "hard_runs": "3/3 won at 85%, 9.7 lives, 2/2 at 60%"
+  "hard_runs": "3/3 won at 85%, 8.3 lives, 2/2 at 60%"
  },
  "45": {
   "scale": 0.4,
@@ -458,7 +458,7 @@
   "normal_ok": true,
   "hard_ok": true,
   "normal_runs": "3/3 won, 9.3 lives",
-  "hard_runs": "2/3 won at 85%, 3.3 lives, 2/2 at 60%"
+  "hard_runs": "3/3 won at 85%, 10.0 lives, 2/2 at 60%"
  },
  "54": {
   "scale": 0.872,
@@ -487,12 +487,13 @@
   "hard_runs": "3/3 won at 85%, 9.7 lives, 0/2 at 60%"
  },
  "57": {
-  "scale": 0.466,
-  "hard": 2.025,
+  "scale": 0.4,
+  "hard": 2.5,
   "normal_ok": true,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 9.3 lives",
-  "hard_runs": "3/3 won at 85%, 10.0 lives, 1/2 at 60%"
+  "normal_runs": "2/3 won, 6.7 lives",
+  "hard_runs": "3/3 won at 85%, 10.0 lives, 2/2 at 60%",
+  "normal_failed": 0.4
  },
  "58": {
   "scale": 0.92,

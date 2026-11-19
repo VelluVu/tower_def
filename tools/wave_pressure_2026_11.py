@@ -77,6 +77,20 @@ ELITE_SHARE = 4  # one elite per this many enemies of a group, at least one
 HARD_DENSER = {level: ("1.8", "0.75") for level in (21, 39, 44, 45, 47, 48, 49, 50)}
 
 
+# Step three (after the second retune, 2026-11-19, the user picked "stronger Hard waves"): these still won at 60% of
+# the budget at x2.5, so a share of every group in their Hard waves (the level's own groups too) comes as elites,
+# growing with the waves (LevelModeData.elite_share)
+HARD_ELITES = {level: "0.3" for level in (21, 39, 44, 47, 48, 49)}
+
+
+def set_elite_share(level):
+    path = res_path(MODE % (level, ""))
+    text = open(path, encoding="utf-8").read()
+    text = re.sub(r"(?m)^elite_share = .*\n", "", text)
+    text = re.sub(r"(?m)^(xp_multiplier = .*)$", r"\1\nelite_share = " + HARD_ELITES[level], text, count=1)
+    open(path, "w", encoding="utf-8", newline="\n").write(text)
+
+
 def make_denser(level):
     path = res_path(MODE % (level, ""))
     count, interval = HARD_DENSER[level]
@@ -251,6 +265,9 @@ def main():
     for level in HARD_DENSER:
         make_denser(level)
         print("Hard %d: groups x%s, intervals x%s" % ((level,) + HARD_DENSER[level]))
+    for level in HARD_ELITES:
+        set_elite_share(level)
+        print("Hard %d: elite share %s" % (level, HARD_ELITES[level]))
 
 
 if __name__ == "__main__":

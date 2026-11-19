@@ -107,3 +107,24 @@ func test_hard_never_doubles_a_boss(kit : TestKit) -> void:
 			if group.enemy_scene.resource_path.ends_with("bog_hydra.tscn"):
 				hydras += group.count
 	kit.check(hydras == 1, "one Bog Hydra on Hard (%d)" % hydras)
+
+
+func test_hard_elite_share_makes_late_elites(kit : TestKit) -> void:
+	var mode : LevelModeData = load("res://scenes/level/level_data/modes/hard_mode.tres").duplicate()
+	mode.elite_share = 0.5
+	mode.first_wave_share = 0.0
+	mode.last_wave_share = 1.0
+	var group : SpawnGroupData = SpawnGroupData.new()
+	group.count = 10
+	kit.check(mode.get_elites(group, 0.0) == 0, "no elites at no share")
+	kit.check(mode.get_elites(group, 1.0) == 5, "half the group at the full share")
+	group.elites = 7
+	kit.check(mode.get_elites(group, 1.0) == 7, "a group keeps its own elites when they are more")
+	group.count = 1
+	group.elites = 0
+	kit.check(mode.get_elites(group, 1.0) == 0, "a lone enemy (a boss) never turns elite")
+	var waves : Array[WaveData] = mode.get_waves(kit.level_data(3).waves)
+	var last_elites : int = 0
+	for wave_group in waves[-1].spawn_groups:
+		last_elites += wave_group.elites
+	kit.check(last_elites > 0 and waves[0].spawn_groups[0].elites == kit.level_data(3).waves[0].spawn_groups[0].elites, "elites in the last wave, wave 1 as it was")

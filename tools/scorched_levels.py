@@ -82,6 +82,12 @@ class Grid(sw.Grid):
         """a rock ridge one cell high, left to right"""
         return self.rect(c0, r, c1, r, "X")
 
+    def shape(self, r0, spans, ch):
+        """an irregular patch: one (first column, last column) span per row from r0 down"""
+        for i, (c0, c1) in enumerate(spans):
+            self.rect(c0, r0 + i, c1, r0 + i, ch)
+        return self
+
     def props(self, *cells):
         for c, r, ch in cells:
             self.rect(c, r, c, r, ch)
@@ -329,8 +335,11 @@ def level_57():
     """Magma Heart (34x30, tall): two lakes of magma under the summit, a strip of rock between them. The walkers go
     round; the salamanders swim through."""
     g = Grid(30, 34)
-    g.rect(9, 8, 24, 13, "~").rect(9, 16, 24, 21, "~").ridge(4, 10, 24).ridge(29, 10, 24).ledge(0, 13, 6).ledge(20, 33, 6)
-    g.rect(10, 14, 23, 15, "h").rect(12, 2, 21, 4, "u").rect(1, 26, 6, 28, "h")
+    # the lakes have rounded, uneven shores (2026-11-19, the user's OK: rectangles looked man-made); column 16 stays
+    # lava from row 8 to 13 and 16 to 21 for the crossings
+    g.shape(8, [(13, 20), (11, 22), (10, 23), (9, 24), (9, 23), (10, 22)], "~")
+    g.shape(16, [(10, 23), (9, 24), (9, 24), (10, 23), (11, 22), (13, 20)], "~").ridge(4, 10, 24).ridge(29, 10, 24).ledge(0, 13, 6).ledge(20, 33, 6)
+    g.shape(14, [(11, 22), (10, 23)], "h").shape(2, [(13, 20), (12, 21), (13, 21)], "u").shape(26, [(2, 5), (1, 6), (1, 5)], "h")
     g.props((2, 4, "B"), (31, 4, "O"), (6, 16, "V"), (27, 16, "V"), (26, 27, "Y"), (16, 6, "K"))
     g.crossing(16, 7, 16, 14).crossing(16, 15, 16, 22)
     g.rect(15, 25, 17, 27, "C").rect(5, 0, 5, 0, "S").rect(28, 0, 28, 0, "S")
