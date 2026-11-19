@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://6t4e2c8di3ko"]
+[gd_scene load_steps=45 format=3 uid="uid://6t4e2c8di3ko"]
 
 [ext_resource type="AudioStream" uid="uid://bsxfgems0e4g4" path="res://assets/audio/sfx/kenney/trap_snap.ogg" id="snd_activate"]
 [ext_resource type="Script" path="res://scenes/unit/building/trap.gd" id="1_oqrf3"]
@@ -40,6 +40,12 @@
 [ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/leopard_trap_poison_t2.tres" id="tier_poison_t2"]
 [ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/leopard_trap_poison_t3.tres" id="tier_poison_t3"]
 [ext_resource type="Script" path="res://scenes/unit/evolve_tree/evolve_tier_data.gd" id="tier_script"]
+[ext_resource type="PackedScene" path="res://scenes/unit/evolve_tree/leopard_trap_evolve/fire_leopard_trap.tscn" id="trap_sprite_fire"]
+[ext_resource type="PackedScene" path="res://scenes/unit/evolve_tree/leopard_trap_evolve/frost_leopard_trap.tscn" id="trap_sprite_frost"]
+[ext_resource type="PackedScene" path="res://scenes/unit/evolve_tree/leopard_trap_evolve/poison_leopard_trap.tscn" id="trap_sprite_poison"]
+[ext_resource type="Texture2D" path="res://assets/art/units/building/leopard_trap/fire_lebu_trap_icon.png" id="trap_selected_icon_fire"]
+[ext_resource type="Texture2D" path="res://assets/art/units/building/leopard_trap/frost_lebu_trap_icon.png" id="trap_selected_icon_frost"]
+[ext_resource type="Texture2D" path="res://assets/art/units/building/leopard_trap/poison_lebu_trap_icon.png" id="trap_selected_icon_poison"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_4ih23"]
 
@@ -399,7 +405,8 @@ evolve_level = 2
 [node name="FireElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch2"]
 script = ExtResource("trap_leaf_script")
 evolve_element = 2
-selected_icon = ExtResource("trap_selected_icon")
+selected_icon = ExtResource("trap_selected_icon_fire")
+new_animated_sprite_scene = ExtResource("trap_sprite_fire")
 new_damage_data_scene = ExtResource("trap_damage_red")
 evolve_glow_color = Color(1, 0.518903, 0.445677, 1)
 icon = ExtResource("trap_icon_fire")
@@ -431,7 +438,8 @@ evolve_level = 2
 [node name="FrostElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch3"]
 script = ExtResource("trap_leaf_script")
 evolve_element = 4
-selected_icon = ExtResource("trap_selected_icon")
+selected_icon = ExtResource("trap_selected_icon_frost")
+new_animated_sprite_scene = ExtResource("trap_sprite_frost")
 new_damage_data_scene = ExtResource("trap_damage_blue")
 evolve_glow_color = Color(0.494118, 1, 1, 1)
 icon = ExtResource("trap_icon_frost")
@@ -457,7 +465,8 @@ evolve_level = 2
 [node name="PoisonElementEvolveLeaf" type="Node" parent="EvolveTree/EvolveBranch4"]
 script = ExtResource("trap_leaf_script")
 evolve_element = 8
-selected_icon = ExtResource("trap_selected_icon")
+selected_icon = ExtResource("trap_selected_icon_poison")
+new_animated_sprite_scene = ExtResource("trap_sprite_poison")
 new_damage_data_scene = ExtResource("trap_damage_green")
 evolve_glow_color = Color(0.571428, 1, 0.494981, 1)
 icon = ExtResource("trap_icon_poison")

@@ -29,8 +29,9 @@ python tools/sprite/sprite.py build assets/art/units/enemy/giant_wasp/giant_wasp
 | `area_props.py` | cave decor, swamp ruins, human farm props, desert battlefield and volcano props |
 | `scorched_enemies.py` | the Scorched Lands roster (37-48): most drawn over an existing enemy's frames with a new palette and overlays, the rusted ballista and the Ashen Wyrm from parts; the lava glob and bone shard shots |
 | `elites.py` | the elite version of every enemy that comes as an elite: golden armour with a travelling glint for the armoured humans, crowns, a halo, plumes, horns, gold markings, hems and ridges for the rest; `<name>_elite.png` keeps `<name>.png`'s cell layout |
+| `trap_elements_art.py` | the Fire, Frost and Poison Leopard Trap (`<element>_lebu_trap`), repainted from `lebu_trap.aseprite`'s colour roles (same cell layout as `lebu_trap.png`), and their paw print icons |
 
-The generators that draw over existing art (`walls.py`, `tower_tiers.py`, `upgrade_fx.py`, `area_ground.py`, `elites.py`) read
+The generators that draw over existing art (`walls.py`, `tower_tiers.py`, `upgrade_fx.py`, `area_ground.py`, `elites.py`, `trap_elements_art.py`) read
 their source sheets, so rerun them after the source changes. `<parts dir> <art dir>` are their arguments; see
 each script's docstring.
 

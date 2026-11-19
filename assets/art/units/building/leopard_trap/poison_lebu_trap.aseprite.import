@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://b13sogrtfgf1f"
+path="res://.godot/imported/poison_lebu_trap.aseprite-c66c3128d9caa83d3abba8e161d8c4a7.res"
+
+[deps]
+
+source_file="res://assets/art/units/building/leopard_trap/poison_lebu_trap.aseprite"
+dest_files=["res://.godot/imported/poison_lebu_trap.aseprite-c66c3128d9caa83d3abba8e161d8c4a7.res"]
+
+[params]
+

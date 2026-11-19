@@ -56,3 +56,27 @@ func test_fire_trap_burns_the_ground(kit : TestKit) -> void:
 	await kit.frames(1)
 	_snap(trap, enemy)
 	kit.check(not enemy.overtime_effect_handler.get_active_stacks(Utils.DamageType.Fire).is_empty(), "the snap always ignites")
+
+
+## Each element has its own leopard and icon (tools/sprite/parts/trap_elements_art.py, 2026-11-19); Leopard keeps the base ones.
+func test_trap_elements_swap_the_sprite(kit : TestKit) -> void:
+	await kit.load_level(1)
+	var sheets : Dictionary = {
+		"PhysicalElementEvolveLeaf": "lebu_trap.png",
+		"FireElementEvolveLeaf": "fire_lebu_trap.png",
+		"FrostElementEvolveLeaf": "frost_lebu_trap.png",
+		"PoisonElementEvolveLeaf": "poison_lebu_trap.png",
+	}
+	for leaf_name : String in sheets:
+		var trap : Building = await _evolved_trap(kit, leaf_name)
+		await kit.frames(1)
+		var frames : SpriteFrames = trap.animation_control.sprite_frames
+		for animation : StringName in [&"IDLE", &"ATTACK"]:
+			kit.check(frames.has_animation(animation), "%s: the sprite has %s" % [leaf_name, animation])
+		var atlas : AtlasTexture = frames.get_frame_texture(&"IDLE", 0) as AtlasTexture
+		var sheet : String = atlas.atlas.resource_path.get_file() if atlas != null else ""
+		kit.check(sheet == sheets[leaf_name], "%s draws from %s (%s)" % [leaf_name, sheets[leaf_name], sheet])
+		kit.check(trap.animation_control.position == Vector2(0, -5), "%s: the sprite keeps its place" % leaf_name)
+		var icon : String = trap.icon.resource_path.get_file() if trap.icon != null else ""
+		var want : String = sheets[leaf_name].replace(".png", "_icon.png")
+		kit.check(icon == want, "%s shows the %s icon (%s)" % [leaf_name, want, icon])

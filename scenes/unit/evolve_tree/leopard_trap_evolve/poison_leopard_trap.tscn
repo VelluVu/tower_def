@@ -1,0 +1,102 @@
+[gd_scene load_steps=14 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/art/units/building/leopard_trap/poison_lebu_trap.png" id="1_sheet"]
+[ext_resource type="Script" path="res://scenes/unit/animation_control.gd" id="2_control"]
+[ext_resource type="Material" uid="uid://c3sja1ms0jrnf" path="res://assets/shaders/shader_materials/building_hit_shader_material.tres" id="3_material"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nkgt1"]
+atlas = ExtResource("1_sheet")
+region = Rect2(0, 20, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xd10m"]
+atlas = ExtResource("1_sheet")
+region = Rect2(20, 20, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d1e0g"]
+atlas = ExtResource("1_sheet")
+region = Rect2(40, 20, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ccjf"]
+atlas = ExtResource("1_sheet")
+region = Rect2(0, 40, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lejbf"]
+atlas = ExtResource("1_sheet")
+region = Rect2(20, 40, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c23v5"]
+atlas = ExtResource("1_sheet")
+region = Rect2(40, 40, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ok487"]
+atlas = ExtResource("1_sheet")
+region = Rect2(0, 0, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_elbc7"]
+atlas = ExtResource("1_sheet")
+region = Rect2(20, 0, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x5s2i"]
+atlas = ExtResource("1_sheet")
+region = Rect2(40, 0, 20, 20)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0yamy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nkgt1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xd10m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d1e0g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5ccjf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lejbf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c23v5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xd10m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nkgt1")
+}],
+"loop": false,
+"name": &"ATTACK",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ok487")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ok487")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_elbc7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_elbc7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x5s2i")
+}],
+"loop": true,
+"name": &"IDLE",
+"speed": 10.0
+}]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D"]
+texture_filter = 1
+material = ExtResource("3_material")
+position = Vector2(0, -5)
+sprite_frames = SubResource("SpriteFrames_0yamy")
+animation = &"IDLE"
+autoplay = "IDLE"
+script = ExtResource("2_control")

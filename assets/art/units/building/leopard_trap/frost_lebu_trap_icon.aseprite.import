@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bkdgc70snb2vl"
+path="res://.godot/imported/frost_lebu_trap_icon.aseprite-25853b69796d333c0b9eff4cd0c78d0f.res"
+
+[deps]
+
+source_file="res://assets/art/units/building/leopard_trap/frost_lebu_trap_icon.aseprite"
+dest_files=["res://.godot/imported/frost_lebu_trap_icon.aseprite-25853b69796d333c0b9eff4cd0c78d0f.res"]
+
+[params]
+
