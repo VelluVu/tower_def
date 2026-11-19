@@ -35,6 +35,11 @@ enum Rarity { Common, Rare }
 ## "{value}" in it shows the card's value.
 @export_multiline var description : String = ""
 
+@export_group("Talent unlock")
+## An element card from a talent tree: offered only once the tree (TalentTree.id) has talent_ranks ranks learned.
+@export var talent_tree : StringName = &""
+@export var talent_ranks : int = 0
+
 @export_group("Drawback")
 ## A trade-off card: the bonus comes with this penalty on another stat, never capped, never rolled.
 @export var has_drawback : bool = false

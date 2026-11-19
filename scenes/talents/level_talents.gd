@@ -148,6 +148,22 @@ static func get_learned_effects() -> Array[Dictionary]:
 	return learned
 
 
+## The ranks learned in one tree (TalentTree.id), all its nodes together.
+static func get_tree_ranks(tree_id : StringName) -> int:
+	var ranks : int = 0
+	for rank in PlayerProgress.get_talent_ranks(tree_id).values():
+		ranks += int(rank)
+	return ranks
+
+
+## The tree with this id, null when the book has none.
+static func get_talent_tree(tree_id : StringName) -> TalentTree:
+	for tree in TALENT_BOOK.trees:
+		if tree.id == tree_id:
+			return tree
+	return null
+
+
 ## The element of the element tree with the most ranks learned (the first in the book on a tie), None without any.
 static func get_leaning_element() -> Utils.Element:
 	var best : Utils.Element = Utils.Element.None

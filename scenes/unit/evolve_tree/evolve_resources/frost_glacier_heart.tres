@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="EvolveResource" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scenes/unit/evolve_tree/evolve_resource.gd" id="1_evolve"]
+[ext_resource type="Texture2D" path="res://assets/art/ui/frost_element_icon.png" id="2_icon"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_evolve")
+evolve_icon = ExtResource("2_icon")
+max_picks = 1
+modifier_type = 0
+elements = 4
+modify_stat_type = 10
+modify_type = 0
+is_randomized_modify_value = false
+is_percent = true
+modify_value = 0.4
+evolve_name = "Glacier Heart"
+rarity = 1
+description = "Frost towers slow {value}% deeper"
+talent_tree = &"frost"
+talent_ranks = 15

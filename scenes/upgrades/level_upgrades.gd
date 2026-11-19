@@ -171,6 +171,10 @@ func _can_offer(resource : EvolveResource, new_level : int) -> bool:
 	if resource.max_picks > 0 and chosen_cards.filter(func(card : UpgradeCard) -> bool: return card.resource == resource).size() >= resource.max_picks:
 		return false
 
+	#an element card waits for its talent tree
+	if resource.talent_ranks > 0 and LevelTalents.get_tree_ranks(resource.talent_tree) < resource.talent_ranks:
+		return false
+
 	if resource.card_target == EvolveResource.CardTarget.Gold:
 		return true
 

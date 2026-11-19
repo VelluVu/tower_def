@@ -8,6 +8,7 @@ const CARD_MIN_SIZE : Vector2 = Vector2(96, 112)
 const CARD_ICON_SIZE : Vector2 = Vector2(32, 32)
 const CARD_MARGIN : int = 6
 const RARE_TEXT : String = "Rare"
+const TREE_TEXT : String = "%s tree"
 const FONT_COLOR : StringName = &"font_color"
 #coin gold (Endesga 32), the theme's accent colour
 const RARE_COLOR : Color = Color("feae34")
@@ -50,6 +51,16 @@ func _create_card_button(card : UpgradeCard, index : int) -> Button:
 		rare_label.add_theme_color_override(FONT_COLOR, RARE_COLOR)
 		rare_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		column.add_child(rare_label)
+
+	#an element card names its talent tree, in the tree's accent colour
+	var tree : TalentTree = LevelTalents.get_talent_tree(card.resource.talent_tree) if card.resource.talent_ranks > 0 else null
+	if tree != null:
+		var tree_label : Label = Label.new()
+		tree_label.text = TREE_TEXT % tree.display_name
+		tree_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		tree_label.add_theme_color_override(FONT_COLOR, tree.accent)
+		tree_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		column.add_child(tree_label)
 
 	var icon_rect : TextureRect = TextureRect.new()
 	icon_rect.texture = card.icon
