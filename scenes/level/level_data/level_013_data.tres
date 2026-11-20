@@ -60,5 +60,5 @@ waves = Array[ExtResource("0_wave")]([ExtResource("2_w1"), ExtResource("3_w2"), 
 puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_4"), SubResource("PuffeLine_5"), SubResource("PuffeLine_6"), SubResource("PuffeLine_7")])
 first_wave_health = 1.9
 last_wave_health = 3.6
-health_scale = 1.404
+health_scale = 1.572
 hard_health_scale = 1.514
