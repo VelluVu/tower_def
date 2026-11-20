@@ -28,6 +28,8 @@ extends RefCounted
 ##   play=rules|smart   rules: the fixed rules above; smart: smart_play.gd values every action by the damage it
 ##                       adds per gold and buys the best (ignores depth, min_towers, the wall share and
 ##                       wall_min_towers; walls=0 still turns walls off), picks cards by their gain, starts early when safe
+##   smart=smart_play    the smart player's script in tools/reports/ (smart_play_v2: pair walls, a knapsack per
+##                       build break, sells towers the route has left)
 
 const MAIN_SCENE : String = "res://scenes/main.tscn"
 const TOWERS : Array[String] = ["puffe_bolter", "puffe_nova", "puffe_beamer"]
@@ -67,8 +69,9 @@ var options : Dictionary[String, String] = {
 	"level": "1", "mode": "normal", "build": "mixed", "cards": "random", "economy": "real", "talents": "none", "health": "1.0", "speed": "1.0", "life": "",
 	"rotation": "0", "order": "fixed", "towers": "40", "traps": "2", "min_towers": "3", "depth": "3", "wall_min_towers": "5",
 	"walls": "0.3", "early": "0", "unlocked": "level", "seed": "1", "speed_up": "3.0", "play": "rules", "types": "",
+	"smart": "smart_play",
 }
-const SmartPlay : GDScript = preload("res://tools/reports/smart_play.gd")
+const SMART_PATH : String = "res://tools/reports/%s.gd"
 var smart : RefCounted = null
 var towers : Array[Building] = []
 var traps : int = 0
@@ -111,7 +114,7 @@ func run(kit : TestKit, args : PackedStringArray) -> void:
 
 	var spent_talents : Dictionary[String, int] = _spend_talents(options.talents)
 	if options.play == "smart":
-		smart = SmartPlay.new(self)
+		smart = (load(SMART_PATH % options.smart) as GDScript).new(self)
 	var main : Main = load(MAIN_SCENE).instantiate()
 	kit.root.add_child(main)
 	await kit.frames(2)
