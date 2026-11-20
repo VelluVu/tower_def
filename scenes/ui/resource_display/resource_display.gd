@@ -3,6 +3,8 @@ extends Control
 
 
 const UPGRADE_XP_TEXT : String = "Lv %d  %d / %d XP"
+## GameSignals.resource_change index of the life counter (0 is gold).
+const LIFE_INDEX : int = 1
 
 @onready var upgrade_xp_label : Label = %UpgradeXpLabel
 
@@ -23,4 +25,9 @@ func _resource_change(new_value : int, index : int) -> void:
 		push_warning(name ," resource index " , index , " is out of bounds")
 		return
 	
-	resource_display_elements[index].change_value(new_value)
+	var element : ResourceDisplayElement = resource_display_elements[index]
+	#a level start sets life up from 0, only a drop is a leak
+	var is_leak : bool = index == LIFE_INDEX and new_value < element.last_value
+	element.change_value(new_value)
+	if is_leak:
+		element.flash()

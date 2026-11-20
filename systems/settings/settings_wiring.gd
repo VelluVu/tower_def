@@ -12,12 +12,18 @@ const OPTION_VSYNC: String = "vsync"
 ## Frames per second cap, 0 for none.
 const OPTION_MAX_FPS: String = "max_fps"
 const OPTION_DAMAGE_NUMBERS: String = "damage_numbers"
+## With damage numbers on: only critical hits and reactions show (the user found them blocking the view).
+const OPTION_DAMAGE_NUMBERS_CRITS_ONLY: String = "damage_numbers_crits_only"
+## A small health bar over each hurt enemy (EnemyHealthBar).
+const OPTION_HEALTH_BARS: String = "health_bars"
 ## Multiplies the camera's key movement and edge scrolling speed.
 const OPTION_CAMERA_SPEED: String = "camera_speed"
 ## The camera moves when the mouse touches the window edge.
 const OPTION_EDGE_SCROLL: String = "edge_scroll"
 ## Alt-tab during a wave would otherwise let enemies walk in unseen.
 const OPTION_PAUSE_ON_FOCUS_LOSS: String = "pause_on_focus_loss"
+## The camera shakes a little when an enemy reaches the castle.
+const OPTION_SCREEN_SHAKE: String = "screen_shake"
 
 const MAX_FPS_CHOICES: Array[int] = [0, 30, 60, 120, 144, 240]
 
@@ -31,9 +37,12 @@ func _init() -> void:
 		OPTION_VSYNC: true,
 		OPTION_MAX_FPS: 0,
 		OPTION_DAMAGE_NUMBERS: true,
+		OPTION_DAMAGE_NUMBERS_CRITS_ONLY: false,
+		OPTION_HEALTH_BARS: true,
 		OPTION_CAMERA_SPEED: 1.0,
 		OPTION_EDGE_SCROLL: false,
 		OPTION_PAUSE_ON_FOCUS_LOSS: true,
+		OPTION_SCREEN_SHAKE: true,
 	}
 	save_path = "user://settings.cfg"
 	supported_locales = ["en"]

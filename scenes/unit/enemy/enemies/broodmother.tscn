@@ -599,6 +599,8 @@ min_health_ratio = 0.33
 max_health_ratio = 0.66
 cooldown = 12.0
 tunnel_scene = ExtResource("24_beefling")
+seeks_weak_spot = true
+max_cells_ahead = 14
 
 [node name="LayEgg" type="Node" parent="EnemyAbilities"]
 script = ExtResource("22_egg")

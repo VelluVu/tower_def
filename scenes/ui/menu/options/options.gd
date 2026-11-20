@@ -16,11 +16,18 @@ const MAX_FPS_UNLIMITED_TEXT : String = "Unlimited"
 const PIXEL_PERFECT_LABEL : String = "Sharp pixels"
 const PIXEL_PERFECT_TOOLTIP : String = "Scales the picture in whole steps only, so every pixel is the same size. Can leave black bars at the edges."
 const DAMAGE_NUMBERS_LABEL : String = "Damage numbers"
+## The damage numbers row's choices, in this order (_add_damage_numbers_row reads the index).
+const DAMAGE_NUMBER_MODE_TEXTS : Array[String] = ["All", "Crits only", "Off"]
+const DAMAGE_NUMBERS_TOOLTIP : String = "Crits only shows the critical hits, heals and reactions, so the numbers never cover the fight."
+const HEALTH_BARS_LABEL : String = "Health bars"
+const HEALTH_BARS_TOOLTIP : String = "A small bar over each hurt enemy."
 const CAMERA_SPEED_LABEL : String = "Camera speed"
 const EDGE_SCROLL_LABEL : String = "Edge scrolling"
 const EDGE_SCROLL_TOOLTIP : String = "Moves the camera when the mouse touches the edge of the window."
 const FOCUS_PAUSE_LABEL : String = "Pause in background"
 const FOCUS_PAUSE_TOOLTIP : String = "Opens the pause menu when you switch to another window during a level."
+const SCREEN_SHAKE_LABEL : String = "Screen shake"
+const SCREEN_SHAKE_TOOLTIP : String = "A short shake when an enemy reaches the castle."
 const CONTROLS_TAB_NAME : String = "Controls"
 const PERCENT_FORMAT : String = "%d%%"
 const SPEED_FORMAT : String = "%.2fx"
@@ -51,11 +58,13 @@ func _ready() -> void:
 	_add_option_check_row(display_tab, VSYNC_LABEL, VSYNC_TOOLTIP, SettingsManager.OPTION_VSYNC)
 	_add_max_fps_row()
 	_add_check_row(display_tab, PIXEL_PERFECT_LABEL, PIXEL_PERFECT_TOOLTIP, SettingsManager.pixel_perfect, SettingsManager.set_pixel_perfect)
-	_add_option_check_row(display_tab, DAMAGE_NUMBERS_LABEL, "", SettingsManager.OPTION_DAMAGE_NUMBERS)
+	_add_damage_numbers_row()
+	_add_option_check_row(display_tab, HEALTH_BARS_LABEL, HEALTH_BARS_TOOLTIP, SettingsManager.OPTION_HEALTH_BARS)
 
 	_add_camera_speed_row()
 	_add_option_check_row(gameplay_tab, EDGE_SCROLL_LABEL, EDGE_SCROLL_TOOLTIP, SettingsManager.OPTION_EDGE_SCROLL)
 	_add_option_check_row(gameplay_tab, FOCUS_PAUSE_LABEL, FOCUS_PAUSE_TOOLTIP, SettingsManager.OPTION_PAUSE_ON_FOCUS_LOSS)
+	_add_option_check_row(gameplay_tab, SCREEN_SHAKE_LABEL, SCREEN_SHAKE_TOOLTIP, SettingsManager.OPTION_SCREEN_SHAKE)
 
 	_key_bindings = KeyBindingsTab.new()
 	_key_bindings.setup(InputManager)
@@ -108,6 +117,22 @@ func _add_max_fps_row() -> void:
 	option_button.item_selected.connect(func(index : int) -> void:
 		SettingsManager.set_option(SettingsManager.OPTION_MAX_FPS, SettingsManager.MAX_FPS_CHOICES[index]))
 	_add_row(display_tab, MAX_FPS_LABEL, "", [option_button])
+
+
+## All, Crits only or Off: two options underneath (on/off, crits only), so older settings files keep working.
+func _add_damage_numbers_row() -> void:
+	var option_button : OptionButton = OptionButton.new()
+	option_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	for text in DAMAGE_NUMBER_MODE_TEXTS:
+		option_button.add_item(text)
+	var current : int = 2
+	if SettingsManager.get_option(SettingsManager.OPTION_DAMAGE_NUMBERS):
+		current = 1 if SettingsManager.get_option(SettingsManager.OPTION_DAMAGE_NUMBERS_CRITS_ONLY) else 0
+	option_button.select(current)
+	option_button.item_selected.connect(func(index : int) -> void:
+		SettingsManager.set_option(SettingsManager.OPTION_DAMAGE_NUMBERS, index != 2)
+		SettingsManager.set_option(SettingsManager.OPTION_DAMAGE_NUMBERS_CRITS_ONLY, index == 1))
+	_add_row(display_tab, DAMAGE_NUMBERS_LABEL, DAMAGE_NUMBERS_TOOLTIP, [option_button])
 
 
 func _add_camera_speed_row() -> void:

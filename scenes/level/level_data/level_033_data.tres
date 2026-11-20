@@ -33,4 +33,4 @@ puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResou
 first_wave_health = 1.6
 last_wave_health = 4.7
 health_scale = 1.612
-hard_health_scale = 1.305
+hard_health_scale = 1.462

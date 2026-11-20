@@ -8,3 +8,5 @@ castle_bell.ogg       Impact Sounds, impactBell_heavy_002.ogg      https://kenne
 building_sold.ogg     RPG Audio, handleCoins2.ogg                  https://kenney.nl/assets/rpg-audio
 trap_snap.ogg         RPG Audio, chop.ogg                          https://kenney.nl/assets/rpg-audio
 wave_cleared.ogg      Music Jingles, Pizzicato jingles/jingles_PIZZI00.ogg   https://kenney.nl/assets/music-jingles
+card_picked.ogg       Interface Sounds, confirmation_001.ogg       https://kenney.nl/assets/interface-sounds
+boss_arrives.ogg      Music Jingles, Hit jingles/jingles_HIT00.ogg https://kenney.nl/assets/music-jingles

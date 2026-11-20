@@ -6,8 +6,19 @@ const RANGE_AREA_OBJECT_NULL_ERROR_MESSAGE : String = "NO RANGE AREA ON TOWER, U
 #how a silenced tower looks
 const SILENCED_MODULATE : Color = Color(0.55, 0.55, 0.7)
 
-@onready var range_area : Area2D = $RangeArea 
+@onready var range_area : Area2D = $RangeArea
 @onready var area_shape : CollisionShape2D = $RangeArea/CollisionShape2D
+
+## Flyers count as targets from the start; off for the Nova.
+@export var can_hit_air : bool = true
+## Flyers count from this tier on (0 = never by tier): the Nova at T2. Every tower hits flyers in the end or has an
+## upgrade for it (the user, 2026-11-20: T2, since at T1 three Novas carried whole flyer levels; traps get Bird
+## Catcher at Leopard T2).
+@export var air_from_tier : int = 0
+
+var hits_air : bool :
+	get:
+		return can_hit_air or (air_from_tier > 0 and evolve_tree != null and evolve_tree.tier >= air_from_tier)
 
 var targets : Array[Node2D]
 var target : Node2D = null
@@ -56,6 +67,9 @@ func _ready() -> void:
 	if not range_area.body_exited.is_connected(_on_range_area_body_exited):
 		range_area.body_exited.connect(_on_range_area_body_exited)
 
+	if air_from_tier > 0 and evolve_tree != null and not evolve_tree.tier_changed.is_connected(_on_tier_changed):
+		evolve_tree.tier_changed.connect(_on_tier_changed)
+
 
 #range modifiers land on the skill's stat when it has one, so listen to both
 func _connect_range_stats() -> void:
@@ -98,7 +112,18 @@ func _on_enemy_destroyed(enemy : Enemy) -> void:
 
 
 func _on_range_area_body_entered(body: Node2D) -> void:
+	if not hits_air and body is Enemy and body.is_flying:
+		return
 	targets.append(body)
+
+
+#the flyers already in range become targets the moment the tier lets the tower reach them
+func _on_tier_changed(_tier : int) -> void:
+	if not hits_air:
+		return
+	for body in range_area.get_overlapping_bodies():
+		if body is Enemy and body.is_flying and not targets.has(body):
+			targets.append(body)
 
 
 func _on_range_area_body_exited(body: Node2D) -> void:

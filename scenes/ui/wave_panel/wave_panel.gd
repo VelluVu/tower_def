@@ -13,6 +13,7 @@ const EARLY_START_TEXT : String = "Next +%d gold"
 
 func _ready() -> void:
 	GameSignals.wave_state_changed.connect(_on_wave_state_changed)
+	add_child(WaveBanner.new())
 
 
 func _on_start_wave_pressed() -> void:

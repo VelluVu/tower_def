@@ -79,3 +79,39 @@ func test_traps_skip_flyers(kit : TestKit) -> void:
 	kit.check(trap.targets.has(batling), "with can_hit_air it takes it")
 	trap._on_range_area_body_entered(weakling)
 	kit.check(trap.targets.has(weakling), "walkers are still taken")
+
+
+## A Nova's burst stays on the ground until its T2 (the user, 2026-11-20: every tower hits flyers in the end or has
+## an upgrade for it; at T1 three Novas carried whole flyer levels).
+func test_nova_reaches_flyers_from_t2(kit : TestKit) -> void:
+	await kit.load_level(1)
+	var nova : Tower = await kit.place("puffe_nova", kit.find_cell(func(c : Vector2i) -> bool: return kit.level.grid.is_position_buildable(kit.level.grid.grid_position_to_world(c))))
+	var batling : Enemy = kit.spawn_enemy("batling")
+	var weakling : Enemy = kit.spawn_enemy("weakling")
+	await kit.frames(1)
+	nova.targets.clear()
+	nova._on_range_area_body_entered(batling)
+	kit.check(not nova.targets.has(batling), "the Nova does not target a flyer")
+	nova._on_range_area_body_entered(weakling)
+	kit.check(nova.targets.has(weakling), "it targets a walker")
+
+	var burst : CustomAreaEffect = load("res://scenes/unit/skills/projectiles/physical_nova_area_effect.tscn").instantiate()
+	kit.level.add_child(burst)
+	burst.skill_data = SkillData.new()
+	burst.skill_data.damage_data = nova.skill.damage_data
+	var flyer_health : float = batling.stats.get_stat_value(Utils.StatType.Health)
+	var walker_health : float = weakling.stats.get_stat_value(Utils.StatType.Health)
+	burst._on_enemy_hit(batling.hit_box)
+	burst._on_enemy_hit(weakling.hit_box)
+	kit.check_near(batling.stats.get_stat_value(Utils.StatType.Health), flyer_health, "the burst passes under the flyer")
+	kit.check(weakling.stats.get_stat_value(Utils.StatType.Health) < walker_health, "the burst hits the walker")
+
+	nova.evolve_tree.choose_element(Utils.Element.Fire)
+	kit.check(not nova.hits_air, "its element (T1) is not enough")
+	nova.evolve_tree.tier = 2
+	kit.check(nova.hits_air, "at T2 the Nova reaches flyers")
+	nova._on_range_area_body_entered(batling)
+	kit.check(nova.targets.has(batling), "and targets them")
+	burst._on_enemy_hit(batling.hit_box)
+	kit.check(batling.stats.get_stat_value(Utils.StatType.Health) < flyer_health, "its burst hits the flyer")
+	burst.queue_free()

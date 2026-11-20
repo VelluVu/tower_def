@@ -24,6 +24,10 @@ extends RefCounted
 ##   early=0|1           start waves early, or only once a wave is cleared
 ##   unlocked=level|all  level: only the buildings unlocked by this level (BuildingListElement.unlock_level)
 ##   seed=1 speed_up=3.0
+##   types=puffe_bolter,puffe_nova  only these tower types (over the build's), still only unlocked ones
+##   play=rules|smart   rules: the fixed rules above; smart: smart_play.gd values every action by the damage it
+##                       adds per gold and buys the best (ignores depth, min_towers, the wall share and
+##                       wall_min_towers; walls=0 still turns walls off), picks cards by their gain, starts early when safe
 
 const MAIN_SCENE : String = "res://scenes/main.tscn"
 const TOWERS : Array[String] = ["puffe_bolter", "puffe_nova", "puffe_beamer"]
@@ -47,10 +51,14 @@ const BUILDS : Dictionary[String, Dictionary] = {
 	"mixed": {},
 	"fire": {"towers": ["puffe_bolter", "puffe_nova"], "leaf": "FireElementEvolveLeaf", "element": Utils.Element.Fire, "tree": "fire", "walls": 0.3,
 		"cards": [Utils.StatType.Damage, Utils.StatType.AttackSpeed, Utils.StatType.EffectPotency, Utils.StatType.CriticalChance]},
-	"frost": {"towers": ["puffe_nova", "puffe_beamer", "puffe_bolter"], "leaf": "FrostElementEvolveLeaf", "element": Utils.Element.Frost, "tree": "frost", "walls": 0.5,
+	#opens with a Beamer: a Nova first lost wave 1 often and never hits flyers (2026-11-20)
+	"frost": {"towers": ["puffe_beamer", "puffe_nova", "puffe_bolter"], "leaf": "FrostElementEvolveLeaf", "element": Utils.Element.Frost, "tree": "frost", "walls": 0.5,
 		"cards": [Utils.StatType.EffectPotency, Utils.StatType.AttackRange, Utils.StatType.Damage, Utils.StatType.AttackSpeed]},
 	"poison": {"towers": ["puffe_beamer", "puffe_bolter"], "leaf": "PoisonElementEvolveLeaf", "element": Utils.Element.Poison, "tree": "poison", "walls": 0.3,
 		"cards": [Utils.StatType.EffectPotency, Utils.StatType.Damage, Utils.StatType.ActiveDuration, Utils.StatType.AttackSpeed]},
+	#a cheese check: Bolters only, no maze (the user won Normal levels with three upgraded Bolters)
+	"bolter": {"towers": ["puffe_bolter"], "leaf": "PhysicalElementEvolveLeaf", "element": Utils.Element.Physical, "tree": "building", "walls": 0.0,
+		"cards": [Utils.StatType.Damage, Utils.StatType.AttackSpeed, Utils.StatType.CriticalChance, Utils.StatType.CriticalMultiplier]},
 	"physical": {"towers": ["puffe_bolter", "puffe_beamer", "puffe_nova"], "leaf": "PhysicalElementEvolveLeaf", "element": Utils.Element.Physical, "tree": "building", "walls": 0.4,
 		"cards": [Utils.StatType.Damage, Utils.StatType.CriticalChance, Utils.StatType.CriticalMultiplier, Utils.StatType.AttackSpeed]},
 }
@@ -58,8 +66,10 @@ const BUILDS : Dictionary[String, Dictionary] = {
 var options : Dictionary[String, String] = {
 	"level": "1", "mode": "normal", "build": "mixed", "cards": "random", "economy": "real", "talents": "none", "health": "1.0", "speed": "1.0", "life": "",
 	"rotation": "0", "order": "fixed", "towers": "40", "traps": "2", "min_towers": "3", "depth": "3", "wall_min_towers": "5",
-	"walls": "0.3", "early": "0", "unlocked": "level", "seed": "1", "speed_up": "3.0",
+	"walls": "0.3", "early": "0", "unlocked": "level", "seed": "1", "speed_up": "3.0", "play": "rules", "types": "",
 }
+const SmartPlay : GDScript = preload("res://tools/reports/smart_play.gd")
+var smart : RefCounted = null
 var towers : Array[Building] = []
 var traps : int = 0
 var walls : int = 0
@@ -100,6 +110,8 @@ func run(kit : TestKit, args : PackedStringArray) -> void:
 	PlaytestLog.player = "bot " + " ".join(args)
 
 	var spent_talents : Dictionary[String, int] = _spend_talents(options.talents)
+	if options.play == "smart":
+		smart = SmartPlay.new(self)
 	var main : Main = load(MAIN_SCENE).instantiate()
 	kit.root.add_child(main)
 	await kit.frames(2)
@@ -149,15 +161,26 @@ func run(kit : TestKit, args : PackedStringArray) -> void:
 			result = "won"
 			break
 		#the first wave waits until the opening build is done
-		await _spend(kit, level)
+		if smart != null:
+			await smart.step(kit, level)
+		else:
+			await _spend(kit, level)
 		if not level.upgrades.offered_cards.is_empty():
 			cards += 1
-			level.upgrades._on_upgrade_card_selected(_pick_card(level.upgrades.offered_cards))
+			var card : int = smart.pick_card(level, level.upgrades.offered_cards) if smart != null else _pick_card(level.upgrades.offered_cards)
+			level.upgrades._on_upgrade_card_selected(card)
 		var is_ready : bool = level.wave_runner.wave_number > 0 or towers.size() >= int(options.min_towers)
-		if is_ready and level.wave_runner.can_start_next_wave and (is_early or level.existing_enemies.is_empty()):
+		var wants_early : bool = is_early
+		if smart != null:
+			is_ready = level.wave_runner.wave_number > 0 or (smart.is_idle and not towers.is_empty())
+			wants_early = smart.wants_early(level)
+		if is_ready and level.wave_runner.can_start_next_wave and (wants_early or level.existing_enemies.is_empty()):
 			UISignals.start_wave_pressed.emit()
 		await kit.root.get_tree().process_frame
-		time += kit.root.get_process_delta_time()
+		var frame_time : float = kit.root.get_process_delta_time()
+		time += frame_time
+		if smart != null:
+			smart.tick(level, frame_time * main.time_scale)
 
 	if result == "timeout":
 		#a wave that never ends: who is still alive, and where
@@ -185,6 +208,8 @@ func run(kit : TestKit, args : PackedStringArray) -> void:
 		result, wave_text, level.player_stats.life, starting_life, cards, level.early_starts, level.player_stats.gold])
 	print("SOAK built %d towers, %d traps, %d walls (%.0f of %.0f gold), route %d -> %d cells, purchases %s, elements %s" % [
 		towers.size(), traps, walls, wall_gold, gold_spent, start_length, _route_length(level), bought, elements])
+	if smart != null:
+		print("SOAK smart bought %s" % smart.bought)
 	print("SOAK enemies spawned %s, killed %s, leaked %s" % [spawned, killed, leaked])
 	print("SOAK damage by tower %s" % _rounded(tower_damage))
 	print("SOAK damage by enemy %s" % _rounded(enemy_damage))
@@ -297,7 +322,8 @@ func _pick_card(offered : Array[UpgradeCard]) -> int:
 ## The tower types this run builds, in order: the build's unlocked ones, or every unlocked type.
 func _tower_types() -> Array[String]:
 	var types : Array[String] = []
-	for scene_name in build.get("towers", TOWERS):
+	var wanted : Array = build.get("towers", TOWERS) if options.types.is_empty() else Array(options.types.split(",", false))
+	for scene_name in wanted:
 		if _is_unlocked(scene_name):
 			types.append(scene_name)
 	if types.is_empty():
@@ -625,6 +651,8 @@ func _on_enemy_hit(enemy : Enemy, hit : DamageData) -> void:
 		source += " effects"
 	_add(tower_damage, source, hit.damage)
 	_add(enemy_damage, _type_of(enemy), hit.damage)
+	if smart != null:
+		smart.on_hit(hit)
 
 
 func _type_of(node : Node) -> String:

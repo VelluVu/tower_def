@@ -77,6 +77,68 @@ func test_wall_tiers(kit : TestKit) -> void:
 	progress.talent_ranks = saved_ranks
 
 
+## A tower touching an element wall extends the maze: from the element's T2 its walkable neighbours get the
+## wall's ground effect too (the user, 2026-11-20), below T2 they get only the plain maze slow.
+func test_tower_extends_element_maze(kit : TestKit) -> void:
+	await kit.load_level(1)
+	var grid : LevelGrid = kit.level.grid
+	var is_buildable : Callable = func(c : Vector2i) -> bool: return grid.is_position_buildable(grid.grid_position_to_world(c))
+	#a wall cell with a buildable neighbour for the tower, which has a walkable neighbour not beside the wall
+	var wall_cell : Vector2i = Vector2i.MAX
+	var tower_cell : Vector2i = Vector2i.MAX
+	var far_cell : Vector2i = Vector2i.MAX
+	for y in range(grid.astar_grid.region.position.y, grid.astar_grid.region.end.y):
+		for x in range(grid.astar_grid.region.position.x, grid.astar_grid.region.end.x):
+			var cell : Vector2i = Vector2i(x, y)
+			if wall_cell != Vector2i.MAX or not is_buildable.call(cell):
+				continue
+			for side in [Vector2i.RIGHT, Vector2i.LEFT, Vector2i.UP, Vector2i.DOWN]:
+				var beyond : Vector2i = cell + side * 2
+				if is_buildable.call(cell + side) and is_buildable.call(beyond) and not grid.astar_grid.is_point_solid(beyond):
+					wall_cell = cell
+					tower_cell = cell + side
+					far_cell = beyond
+					break
+	kit.check(wall_cell != Vector2i.MAX, "found a wall, tower and ground cell in a row")
+	var wall : Wall = await kit.place("wall", wall_cell)
+	await kit.place("puffe_bolter", tower_cell)
+	var plain : float = grid.get_move_speed_factor(far_cell)
+	wall.set_element(Utils.Element.Frost)
+	kit.check_near(grid.get_move_speed_factor(far_cell), plain, "a T1 Frost wall does not reach past the tower")
+	kit.level.building_type_upgrades.wall_element_tiers[Utils.Element.Frost] = 2
+	kit.check(wall.get_element_tier() == 2, "the Frost walls are T2")
+	kit.check(grid.get_move_speed_factor(far_cell) < plain, "at T2 the tower spreads the freezing ground")
+	kit.check(grid.get_maze_walls(far_cell).has(wall), "the wall counts as beside the ground past the tower")
+
+
+## At T3 the effect runs along a row of touching towers; at T2 it stops at the first tower.
+func test_tower_row_chains_at_t3(kit : TestKit) -> void:
+	await kit.load_level(1)
+	var grid : LevelGrid = kit.level.grid
+	var is_buildable : Callable = func(c : Vector2i) -> bool: return grid.is_position_buildable(grid.grid_position_to_world(c))
+	#a row: wall, tower, tower, open ground
+	var row : Array[Vector2i] = []
+	for y in range(grid.astar_grid.region.position.y, grid.astar_grid.region.end.y):
+		for x in range(grid.astar_grid.region.position.x, grid.astar_grid.region.end.x):
+			if not row.is_empty():
+				break
+			var start : Vector2i = Vector2i(x, y)
+			for side in [Vector2i.RIGHT, Vector2i.DOWN]:
+				var cells : Array[Vector2i] = [start, start + side, start + side * 2, start + side * 3]
+				if cells.all(func(c : Vector2i) -> bool: return is_buildable.call(c)):
+					row = cells
+					break
+	kit.check(row.size() == 4, "found a row of four buildable cells")
+	var wall : Wall = await kit.place("wall", row[0])
+	await kit.place("puffe_bolter", row[1])
+	await kit.place("puffe_bolter", row[2])
+	wall.set_element(Utils.Element.Frost)
+	kit.level.building_type_upgrades.wall_element_tiers[Utils.Element.Frost] = 2
+	kit.check(not grid.get_maze_walls(row[3]).has(wall), "at T2 the effect stops at the first tower")
+	kit.level.building_type_upgrades.wall_element_tiers[Utils.Element.Frost] = 3
+	kit.check(grid.get_maze_walls(row[3]).has(wall), "at T3 it runs along the row of towers")
+
+
 func test_rectangle_group(kit : TestKit) -> void:
 	await kit.load_level(1)
 	kit.level.player_stats.gold = 500.0

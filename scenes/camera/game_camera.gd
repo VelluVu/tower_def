@@ -13,6 +13,12 @@ const PAN_ACTION_NAME : String = "PanCamera"
 const EDGE_SCROLL_MARGIN : float = 4.0
 ## Below this distance the zoom tween snaps to its whole-number target.
 const ZOOM_SNAP_DISTANCE : float = 0.01
+## A leak shakes the view this many world pixels (a boss twice as far) for SHAKE_SECONDS.
+const SHAKE_PIXELS : float = 1.0
+const BOSS_SHAKE_PIXELS : float = 2.0
+const SHAKE_SECONDS : float = 0.24
+## New shake position every this many seconds, so the shake reads as a few jolts, not a blur.
+const SHAKE_STEP_SECONDS : float = 0.04
 
 enum CameraMode {Static, Free}
 
@@ -62,6 +68,13 @@ var is_panning : bool = false :
 
 var current_mode : CameraMode = CameraMode.Static
 
+var is_shake_on : bool = true
+var shake_time_left : float = 0.0
+var shake_step_left : float = 0.0
+var shake_pixels : float = 0.0
+#whole world pixels, added to the view's snap offset
+var shake_offset : Vector2 = Vector2.ZERO
+
 
 func _ready() -> void:
 	GameSignals.level_loaded.connect(_on_level_loaded)
@@ -69,6 +82,8 @@ func _ready() -> void:
 	SettingsManager.option_changed.connect(_on_option_changed)
 	speed_multiplier = SettingsManager.get_option(SettingsManager.OPTION_CAMERA_SPEED)
 	is_edge_scroll_on = SettingsManager.get_option(SettingsManager.OPTION_EDGE_SCROLL)
+	is_shake_on = SettingsManager.get_option(SettingsManager.OPTION_SCREEN_SHAKE)
+	GameSignals.enemy_reached_end_point.connect(_on_enemy_reached_end_point)
 	zoom_target_position = zoom
 	move_target_position = global_position
 	pan_initial_position = global_position
@@ -89,13 +104,39 @@ func _process(delta: float) -> void:
 	_move_camera_smoothly(delta)
 	_zoom_camera_smoothly(delta)
 	_pan_camera_smoothly(delta)
+	_update_shake(delta)
 	_snap_view_to_art_pixels()
 
 
 #the lerps keep the exact position; only the view is shifted onto whole world pixels,
 #so at 2x and 3x the tiles and units never sit half an art pixel off
 func _snap_view_to_art_pixels() -> void:
-	offset = global_position.round() - global_position
+	offset = global_position.round() - global_position + shake_offset
+
+
+func shake(pixels : float) -> void:
+	if not is_shake_on:
+		return
+	shake_pixels = maxf(pixels, shake_pixels if shake_time_left > 0.0 else 0.0)
+	shake_time_left = SHAKE_SECONDS
+	shake_step_left = 0.0
+
+
+func _update_shake(delta : float) -> void:
+	if shake_time_left <= 0.0:
+		shake_offset = Vector2.ZERO
+		return
+	shake_time_left -= delta
+	shake_step_left -= delta
+	if shake_step_left > 0.0:
+		return
+	shake_step_left = SHAKE_STEP_SECONDS
+	var direction : Vector2 = Vector2(randf_range(-1.0, 1.0), randf_range(-1.0, 1.0))
+	shake_offset = (direction * shake_pixels).round()
+
+
+func _on_enemy_reached_end_point(enemy : Enemy) -> void:
+	shake(BOSS_SHAKE_PIXELS if enemy.is_boss else SHAKE_PIXELS)
 
 
 func _zoom() -> void:
@@ -160,6 +201,8 @@ func _on_option_changed(key : String, value : Variant) -> void:
 		speed_multiplier = value
 	elif key == SettingsManager.OPTION_EDGE_SCROLL:
 		is_edge_scroll_on = value
+	elif key == SettingsManager.OPTION_SCREEN_SHAKE:
+		is_shake_on = value
 
 func _zoom_camera_smoothly(delta : float) -> void:
 	var min_zoom : Vector2 = Vector2.ONE * maxf(zoom_min.x, level_min_zoom)

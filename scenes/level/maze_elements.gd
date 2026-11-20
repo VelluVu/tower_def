@@ -2,7 +2,7 @@ class_name MazeElements
 extends Node
 
 ## The ground next to Fire and Poison walls (created by Level): every second each walking enemy beside such a
-## wall takes its element's damage, the wall as the source. Frost and Fortress walls slow instead (LevelGrid).
+## wall, or beside a tower touching one at T2+ (LevelGrid.get_maze_walls), takes its element's damage, the wall as the source. Frost and Fortress walls slow instead (LevelGrid).
 ## Starting numbers, to tune with the bot.
 
 const TICK_SECONDS : float = 1.0
@@ -29,11 +29,10 @@ func _tick() -> void:
 	for enemy in level.existing_enemies.duplicate():
 		if not is_instance_valid(enemy) or enemy.is_dead or enemy.is_deactivated or enemy.is_flying or enemy.is_burrowed:
 			continue
-		#one tick per element, from the first such wall beside the enemy
+		#one tick per element, from the first such wall beside the enemy (or lent by a tower beside it, LevelGrid)
 		var hit_elements : Array[Utils.Element] = []
-		for cell in level.grid.get_surrounding_cells(enemy.grid_position):
-			var wall : Wall = level.grid.get_building_from_cell_position(cell) as Wall
-			if wall == null or not GROUND_DAMAGE.has(wall.element) or hit_elements.has(wall.element):
+		for wall in level.grid.get_maze_walls(enemy.grid_position):
+			if not GROUND_DAMAGE.has(wall.element) or hit_elements.has(wall.element):
 				continue
 			hit_elements.append(wall.element)
 			var hit : DamageData = DamageData.new()

@@ -11,6 +11,8 @@ extends Area2D
 		return collider
 
 @export var animation_name : String = "default"
+## A burst reaches flyers when its tower does (Tower.hits_air: the Nova from its T2 on).
+@export var can_hit_air : bool = false
 
 var is_old : bool = false :
 	set = _set_is_old
@@ -89,8 +91,16 @@ func _deactivate() -> void:
 
 
 func _on_enemy_hit(area_hit : Area2D) -> void:
-	#print(name, " hits ", area_hit.actor.name)
+	if area_hit.actor is Enemy and area_hit.actor.is_flying and not _reaches_air():
+		return
 	area_hit.actor.take_damage(skill_data.damage_data)
+
+
+func _reaches_air() -> bool:
+	if can_hit_air:
+		return true
+	var tower : Tower = skill_data.damage_data.source as Tower if skill_data != null and is_instance_valid(skill_data.damage_data) else null
+	return tower != null and is_instance_valid(tower) and tower.hits_air
 
 
 func _on_time_scale_change(time_scale : float) -> void:

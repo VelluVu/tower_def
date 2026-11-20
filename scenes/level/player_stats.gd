@@ -28,8 +28,10 @@ func _on_enemy_reach_base(enemy : Enemy) -> void:
 	if level != null and level.talents != null and level.talents.mechanics != null and level.talents.mechanics.forgives_leak(enemy):
 		return
 	#the enemy's own damage is its leak cost, the melee skill's damage is only for hitting buildings
-	life -= round(enemy.stats.get_stat_value(Utils.StatType.Damage))
+	var cost : int = roundi(enemy.stats.get_stat_value(Utils.StatType.Damage))
+	life -= cost
 	GameSignals.resource_change.emit(life, 1)
+	GameSignals.life_lost.emit(enemy.global_position, cost)
 	if life <= 0:
 		lose()
 

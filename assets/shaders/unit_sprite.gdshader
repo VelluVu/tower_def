@@ -24,32 +24,6 @@ void vertex() {
 	VERTEX += (UV * 2.0 - 1.0) * get_margin();
 }
 
-bool has_opaque_neighbour(vec2 uv, vec2 texture_pixel_size, sampler2D tex) {
-	for (float i = -ceil(outline_width); i <= ceil(outline_width); i++) {
-		float x = abs(i) > outline_width ? outline_width * sign(i) : i;
-		float offset;
-
-		if (outline_pattern == 0) {
-			offset = outline_width - abs(x);
-		} else if (outline_pattern == 1) {
-			offset = floor(sqrt(pow(outline_width + 0.5, 2) - x * x));
-		} else {
-			offset = outline_width;
-		}
-
-		for (float j = -ceil(offset); j <= ceil(offset); j++) {
-			float y = abs(j) > offset ? offset * sign(j) : j;
-			vec2 xy = uv + texture_pixel_size * vec2(x, y);
-
-			if (xy == clamp(xy, vec2(0.0), vec2(1.0)) && texture(tex, xy).a > 0.0) {
-				return true;
-			}
-		}
-	}
-
-	return false;
-}
-
 void fragment() {
 	float margin = get_margin();
 	vec2 grown_pixel_size = vec2(1.0) / (vec2(1.0) / TEXTURE_PIXEL_SIZE + vec2(margin * 2.0));
@@ -58,9 +32,33 @@ void fragment() {
 	vec4 color = uv == clamp(uv, vec2(0.0), vec2(1.0)) ? texture(TEXTURE, uv) : vec4(0.0);
 	color.rgb = mix(color.rgb, hit_color.rgb, flash);
 
-	if (outline_enabled && color.a <= 0.0 && has_opaque_neighbour(uv, TEXTURE_PIXEL_SIZE, TEXTURE)) {
-		color.rgb = outline_color.rgb;
-		color.a += (1.0 - color.a) * outline_color.a;
+	// the outline search runs here, not in a helper: passing the built-in TEXTURE to a function made Godot print
+	// "custom_samplers.has(...)" on every run
+	if (outline_enabled && color.a <= 0.0) {
+		bool found = false;
+		for (float i = -ceil(outline_width); i <= ceil(outline_width) && !found; i++) {
+			float x = abs(i) > outline_width ? outline_width * sign(i) : i;
+			float offset;
+
+			if (outline_pattern == 0) {
+				offset = outline_width - abs(x);
+			} else if (outline_pattern == 1) {
+				offset = floor(sqrt(pow(outline_width + 0.5, 2) - x * x));
+			} else {
+				offset = outline_width;
+			}
+
+			for (float j = -ceil(offset); j <= ceil(offset) && !found; j++) {
+				float y = abs(j) > offset ? offset * sign(j) : j;
+				vec2 xy = uv + TEXTURE_PIXEL_SIZE * vec2(x, y);
+				found = xy == clamp(xy, vec2(0.0), vec2(1.0)) && texture(TEXTURE, xy).a > 0.0;
+			}
+		}
+
+		if (found) {
+			color.rgb = outline_color.rgb;
+			color.a += (1.0 - color.a) * outline_color.a;
+		}
 	}
 
 	COLOR = color * vertex_color;

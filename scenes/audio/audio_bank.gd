@@ -21,12 +21,16 @@ extends Resource
 @export var level_up : AudioStream
 @export var upgrade_bought : AudioStream
 @export var element_chosen : AudioStream
+## A stat card picked in the level-up menu.
+@export var card_picked : AudioStream
 
 @export_group("Waves")
 @export var wave_start : AudioStream
 @export var wave_cleared : AudioStream
 ## An enemy reaching the castle costs life.
 @export var castle_hit : AudioStream
+## A boss enters the level.
+@export var boss_arrives : AudioStream
 
 @export_group("World")
 @export var building_placed : AudioStream

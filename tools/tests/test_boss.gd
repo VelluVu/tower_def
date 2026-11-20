@@ -75,6 +75,34 @@ func test_broodmother_digs_up_further_along(kit : TestKit) -> void:
 	kit.check(_count(kit, "beefling") == 2, "her tunnel sends two beeflings (%d)" % _count(kit, "beefling"))
 
 
+## Dig Up comes up where the fewest towers reach, so one cluster of towers gets dug past (2026-11-20).
+func test_broodmother_digs_past_a_tower_cluster(kit : TestKit) -> void:
+	await kit.load_level(8)
+	var boss : Enemy = kit.spawn_enemy("broodmother")
+	await kit.run_until(func() -> bool: return boss.has_path and boss.current_waypoint_index > 1, 20.0)
+	var dig : BurrowAbility = _ability(boss, "DigUp")
+	kit.check(dig.seeks_weak_spot, "her Dig Up seeks the weak spot")
+	#a Bolter beside the path a few cells ahead of her
+	var grid : LevelGrid = kit.level.grid
+	var guarded : Vector2 = boss.point_path[mini(boss.current_waypoint_index + dig.min_cells_ahead + 1, boss.point_path.size() - 1)]
+	var tower_cell : Vector2i = Vector2i.MAX
+	for neighbour in grid.get_surrounding_cells(grid.world_position_to_grid(guarded)):
+		if grid.is_position_buildable(grid.grid_position_to_world(neighbour)) and not boss.point_path.has(grid.grid_position_to_world(neighbour)):
+			tower_cell = neighbour
+			break
+	kit.check(tower_cell != Vector2i.MAX, "a buildable cell beside her path")
+	await kit.place("puffe_bolter", tower_cell)
+	await kit.frames(2)
+	var towers : Array[Tower] = []
+	for building in kit.level.all_buildings:
+		if building is Tower:
+			towers.append(building)
+	var spot : Vector2 = dig._get_weak_spot()
+	var at_spot : int = BurrowAbility.count_towers_reaching(towers, spot)
+	kit.check(BurrowAbility.count_towers_reaching(towers, guarded) == 1, "the Bolter reaches the guarded cell")
+	kit.check(at_spot == 0, "she comes up where no tower reaches (%d towers there)" % at_spot)
+
+
 func test_bog_hydra_submerges_and_sends_leeches(kit : TestKit) -> void:
 	await kit.load_level(24)
 	var boss : Enemy = kit.spawn_enemy("bog_hydra")

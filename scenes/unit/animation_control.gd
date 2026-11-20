@@ -6,11 +6,14 @@ const FLASH_PARAMETER : StringName = &"flash"
 const NO_FLASH_MATERIAL_WARNING : String = " has no unit sprite material, unable to play the hit flash"
 #full flash, then half, then off: a hit during the half step shows as a new flash
 const FLASH_STEPS : Array[float] = [1.0, 0.5, 0.0]
+const HIT_COLOR_PARAMETER : StringName = &"hit_color"
 
 ## Seconds the hit flash lasts, split evenly between its steps.
 @export var flash_duration : float = 0.1
 
 var flash_tween : Tween = null
+#the material's own hit colour, put back by every hit flash after a coloured one
+var base_hit_color : Variant = null
 
 var actor : Node2D :
 	get:
@@ -50,11 +53,20 @@ func play_animation(animation_name : String, wanted_play_time : float = 0.0, is_
 
 
 func play_hit_animation() -> void:
+	play_flash(null)
+
+
+## The hit flash in another colour and length (a building going up flashes white); null is the hit colour.
+func play_flash(color : Variant, duration : float = flash_duration) -> void:
 	var shader_material : ShaderMaterial = material as ShaderMaterial
 
 	if shader_material == null:
 		push_warning(actor.name, NO_FLASH_MATERIAL_WARNING)
 		return
+
+	if base_hit_color == null:
+		base_hit_color = shader_material.get_shader_parameter(HIT_COLOR_PARAMETER)
+	shader_material.set_shader_parameter(HIT_COLOR_PARAMETER, base_hit_color if color == null else color)
 
 	#every hit restarts the flash at full, also one landing while the last flash is still on
 	if flash_tween != null:
@@ -62,7 +74,7 @@ func play_hit_animation() -> void:
 
 	shader_material.set_shader_parameter(FLASH_PARAMETER, FLASH_STEPS[0])
 	flash_tween = create_tween()
-	var step_time : float = flash_duration / (FLASH_STEPS.size() - 1)
+	var step_time : float = duration / (FLASH_STEPS.size() - 1)
 
 	for step in FLASH_STEPS.slice(1):
 		flash_tween.tween_interval(step_time)

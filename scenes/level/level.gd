@@ -163,6 +163,7 @@ func _on_enemy_spawned(enemy : Enemy) -> void:
 		var gold_multiplier : float = SurvivalRules.gold_multiplier(wave_runner.wave_number, level_wave_count)
 		if not is_equal_approx(gold_multiplier, 1.0):
 			enemy.modifier_manager.add_modifier(Elite.multiply(Utils.StatType.Price, gold_multiplier))
+	EnemyHealthBar.attach(enemy)
 	all_enemies.append(enemy)
 	existing_enemies.append(enemy)
 

@@ -24,6 +24,8 @@
 [ext_resource type="AudioStream" uid="uid://djcbd8tcot4hc" path="res://assets/audio/sfx/retro/enemy_death_2.ogg" id="s_death_2"]
 [ext_resource type="AudioStream" uid="uid://1tvqq1aedgbf" path="res://assets/audio/sfx/retro/enemy_death_3.ogg" id="s_death_3"]
 [ext_resource type="AudioStream" uid="uid://bdhyuavi7ifvn" path="res://assets/audio/sfx/retro/enemy_death_4.ogg" id="s_death_4"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/kenney/card_picked.ogg" id="s_card"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/kenney/boss_arrives.ogg" id="s_boss"]
 
 [resource]
 script = ExtResource("1_bank")
@@ -37,9 +39,11 @@ ui_click = ExtResource("s_click")
 level_up = ExtResource("s_level_up")
 upgrade_bought = ExtResource("s_upgrade")
 element_chosen = ExtResource("s_element")
+card_picked = ExtResource("s_card")
 wave_start = ExtResource("s_wave_start")
 wave_cleared = ExtResource("s_wave_cleared")
 castle_hit = ExtResource("s_castle")
+boss_arrives = ExtResource("s_boss")
 building_placed = ExtResource("s_placed")
 building_sold = ExtResource("s_sold")
 building_destroyed = ExtResource("s_destroyed")

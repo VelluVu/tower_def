@@ -14,6 +14,12 @@ const MAZE_SPEED_FACTOR : float = 0.85
 #on top of the maze slow next to an element wall: Frost about 75% speed in all, Fortress about 80%
 const WALL_ELEMENT_SPEED_FACTORS : Dictionary[Utils.Element, float] = {Utils.Element.Frost: 0.88, Utils.Element.Physical: 0.94}
 const FROST_T2_SPEED_FACTOR : float = 0.78
+#an element wall's maze effect spreads to the cells around a tower touching it from this tier on (T2 needs the
+#element tree's wall node and the shared wall line at Up 4: wall talents and improved walls)
+const MAZE_TOWER_MIN_TIER : int = 2
+#from this tier the effect runs on along a row of touching towers, up to this many towers from the cell
+const MAZE_CHAIN_MIN_TIER : int = 3
+const MAZE_CHAIN_TOWERS : int = 8
 #how far (cells) find_path looks for open ground when the start cell is solid (lava poured over an enemy)
 const OFF_SOLID_SEARCH_CELLS : int = 4
 
@@ -234,17 +240,49 @@ func get_move_speed_factor(cell : Vector2i) -> float:
 		factor *= maxf(maze_speed_factor - talent_maze_slow, 0.4)
 		#element walls: freezing ground next to Frost, hard going next to Fortress (strongest wall nearby counts)
 		var wall_factor : float = 1.0
-		for neighbour in get_surrounding_cells(cell):
-			var wall : Wall = get_building_from_cell_position(neighbour) as Wall
-			if wall != null:
-				var wall_slow : float = WALL_ELEMENT_SPEED_FACTORS.get(wall.element, 1.0)
-				#Frost T2: freezing ground, colder still
-				if wall.element == Utils.Element.Frost and wall.get_element_tier() >= 2:
-					wall_slow = FROST_T2_SPEED_FACTOR
-				wall_factor = minf(wall_factor, wall_slow)
+		for wall in get_maze_walls(cell):
+			var wall_slow : float = WALL_ELEMENT_SPEED_FACTORS.get(wall.element, 1.0)
+			#Frost T2: freezing ground, colder still
+			if wall.element == Utils.Element.Frost and wall.get_element_tier() >= 2:
+				wall_slow = FROST_T2_SPEED_FACTOR
+			wall_factor = minf(wall_factor, wall_slow)
 		factor *= wall_factor
 
 	return factor
+
+
+## The element walls whose maze-area effect reaches this cell: the element walls beside it, and through a tower
+## beside it the element walls at MAZE_TOWER_MIN_TIER or higher that touch that tower (the tower extends the maze;
+## the user, 2026-11-20). From MAZE_CHAIN_MIN_TIER the effect also runs along a row of touching towers (up to
+## MAZE_CHAIN_TOWERS of them). Only the ground side: attackers of the tower get nothing from the wall.
+func get_maze_walls(cell : Vector2i) -> Array[Wall]:
+	var walls : Array[Wall] = []
+	var towers : Array[Vector2i] = []
+	for neighbour in get_surrounding_cells(cell):
+		var building : Building = get_building_from_cell_position(neighbour)
+		if building is Wall:
+			if building.element != Utils.Element.None and not walls.has(building):
+				walls.append(building)
+		elif building is Tower and not towers.has(neighbour):
+			towers.append(neighbour)
+	if towers.is_empty():
+		return walls
+
+	#the towers beside the cell first (T2 walls touching them count), then the towers chained to them (T3 walls)
+	var first_count : int = towers.size()
+	var index : int = 0
+	while index < towers.size():
+		var tower_cell : Vector2i = towers[index]
+		var min_tier : int = MAZE_TOWER_MIN_TIER if index < first_count else MAZE_CHAIN_MIN_TIER
+		for touching in get_surrounding_cells(tower_cell):
+			var building : Building = get_building_from_cell_position(touching)
+			if building is Wall:
+				if building.element != Utils.Element.None and building.get_element_tier() >= min_tier and not walls.has(building):
+					walls.append(building)
+			elif building is Tower and not towers.has(touching) and towers.size() < MAZE_CHAIN_TOWERS:
+				towers.append(touching)
+		index += 1
+	return walls
 
 
 ## A cell next to a player building (traps don't count): the maze.

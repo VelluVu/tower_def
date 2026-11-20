@@ -6,6 +6,12 @@ const damage_number_scene : PackedScene = preload("res://scenes/ui/damage_number
 const NUMBER_LAYER_NAME : String = "DamageNumberLayer"
 const REACTION_TEXT_SUFFIX : String = "!"
 const REACTION_TEXT_OFFSET : Vector2 = Vector2(0, -8)
+#with health bars on, numbers start above the bar instead of over it (the user's playtest, 2026-10-28)
+#(the bar: 2 px plus its 1 px frame, then a pixel of air)
+const HEALTH_BAR_CLEARANCE : Vector2 = Vector2(0, -5)
+const LIFE_LOST_TEXT : String = "-%d"
+#Endesga 32 red, the life counter's flash colour
+const LIFE_LOST_COLOR : Color = Color("e43b44")
 
 var damage_number_pool : Array[DamageNumber]
 #screen space, so the numbers stay crisp at any camera zoom; drawn under the UI layer that follows in Main
@@ -19,19 +25,34 @@ func _ready() -> void:
 	add_child(number_layer)
 	GameSignals.damage_taken.connect(_on_damage_taken)
 	GameSignals.element_reaction.connect(_on_element_reaction)
+	GameSignals.life_lost.connect(_on_life_lost)
 
 
 func _on_damage_taken(_position : Vector2, _damage_data : DamageData) -> void:
 	if _damage_data.rounded_damage == 0.0 or not SettingsManager.get_option(SettingsManager.OPTION_DAMAGE_NUMBERS):
 		return
+	#crits only: the big hits and heals still show, the stream of small ones does not
+	if SettingsManager.get_option(SettingsManager.OPTION_DAMAGE_NUMBERS_CRITS_ONLY) and not _damage_data.is_critical and not _damage_data.is_healing:
+		return
 	var damage_number : DamageNumber = _get_damage_number()
-	damage_number.activate(_position, _damage_data)
+	damage_number.activate(_position + _clearance(), _damage_data)
+
+
+func _clearance() -> Vector2:
+	return HEALTH_BAR_CLEARANCE if SettingsManager.get_option(SettingsManager.OPTION_HEALTH_BARS) else Vector2.ZERO
 
 func _on_element_reaction(_position : Vector2, reaction : ElementReaction) -> void:
 	if not SettingsManager.get_option(SettingsManager.OPTION_DAMAGE_NUMBERS):
 		return
 	#a bit higher, so the word does not cover the hit's own number
-	_get_damage_number().activate_text(_position + REACTION_TEXT_OFFSET, reaction.display_name + REACTION_TEXT_SUFFIX, reaction.color)
+	_get_damage_number().activate_text(_position + REACTION_TEXT_OFFSET + _clearance(), reaction.display_name + REACTION_TEXT_SUFFIX, reaction.color)
+
+
+#always shown, also with damage numbers off: a leak is news, not noise
+func _on_life_lost(_position : Vector2, amount : int) -> void:
+	if amount <= 0:
+		return
+	_get_damage_number().activate_text(_position + REACTION_TEXT_OFFSET, LIFE_LOST_TEXT % amount, LIFE_LOST_COLOR)
 
 
 func _get_damage_number() -> DamageNumber:

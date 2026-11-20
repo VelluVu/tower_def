@@ -8,6 +8,8 @@ signal sell_building(building : Building)
 signal building_placement_change(is_placing : bool)
 
 signal enemy_reached_end_point(enemy : Enemy)
+#a leak that cost life (a forgiven one does not), at the enemy
+signal life_lost(position : Vector2, amount : int)
 signal enemy_destroyed(enemy : Enemy)
 signal enemy_spawned(enemy : Enemy)
 signal damage_taken(position : Vector2, damage_data : DamageData)

@@ -36,7 +36,9 @@ func test_fire_nova_tiers(kit : TestKit) -> void:
 	var nova : Building = await _to_up_3(kit, "puffe_nova", FIRE_LEAF_NAME)
 	var damage_before : float = nova.skill.stats.get_stat_value(Utils.StatType.Damage)
 	var frames_before : SpriteFrames = nova.animation_control.sprite_frames
+	kit.check(nova.evolve_tree.tier == 1 and not nova.hits_air, "at T1 the Nova stays on the ground")
 	_buy(kit, 0)
+	kit.check(nova.evolve_tree.tier == 2 and nova.hits_air, "T2: the tier is kept and the Nova reaches flyers")
 	kit.check(_extra_chance(nova) >= 1.0, "T2: bursts always ignite (chance +%.1f)" % _extra_chance(nova))
 	kit.check(nova.skill.stats.get_stat_value(Utils.StatType.Damage) > damage_before, "T2: its stat step")
 	kit.check(nova.animation_control.sprite_frames != frames_before, "T2: the tier sprite")

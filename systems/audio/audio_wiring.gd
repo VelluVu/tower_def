@@ -51,6 +51,8 @@ func _ready() -> void:
 	GameSignals.skill_activated.connect(_on_skill_activated)
 	GameSignals.upgrade_level_gained.connect(_on_upgrade_level_gained)
 	GameSignals.gold_upgrade_bought.connect(_on_gold_upgrade_bought)
+	GameSignals.enemy_spawned.connect(_on_enemy_spawned)
+	UISignals.upgrade_card_selected.connect(_on_upgrade_card_selected)
 	if FileAccess.file_exists(TEST_MUTE_FLAG_PATH):
 		# Deferred: SettingsManager applies the saved volumes and mutes in its own _ready().
 		AudioServer.set_bus_mute.call_deferred(AudioServer.get_bus_index(MASTER_BUS), true)
@@ -146,6 +148,15 @@ func _on_upgrade_level_gained(_new_level: int, _cards: Array[UpgradeCard]) -> vo
 
 func _on_gold_upgrade_bought(_building: Building, is_evolve: bool) -> void:
 	play_sfx(bank.element_chosen if is_evolve else bank.upgrade_bought)
+
+
+func _on_upgrade_card_selected(_index: int) -> void:
+	play_sfx(bank.card_picked)
+
+
+func _on_enemy_spawned(enemy: Enemy) -> void:
+	if enemy.is_boss:
+		play_sfx(bank.boss_arrives)
 
 
 ## A world sound with a varied pitch, skipped when the same sound played under

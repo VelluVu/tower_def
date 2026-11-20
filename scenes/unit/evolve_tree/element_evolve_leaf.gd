@@ -73,6 +73,8 @@ func evolve_tier(actor : Building, tier_index : int) -> void:
 		return
 
 	var tier : EvolveTierData = tiers[tier_index]
+	if actor.evolve_tree != null:
+		actor.evolve_tree.tier = maxi(actor.evolve_tree.tier, tier_index + 2)
 	for resource in tier.upgrade_resources:
 		actor.modifier_manager.add_modifier(resource.get_modifier_data())
 
