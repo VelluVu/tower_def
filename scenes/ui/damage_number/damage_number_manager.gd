@@ -12,6 +12,11 @@ const HEALTH_BAR_CLEARANCE : Vector2 = Vector2(0, -5)
 const LIFE_LOST_TEXT : String = "-%d"
 #Endesga 32 red, the life counter's flash colour
 const LIFE_LOST_COLOR : Color = Color("e43b44")
+const GOLD_EARNED_TEXT : String = "+%d"
+#Endesga 32 gold, the gold counter's colour
+const GOLD_EARNED_COLOR : Color = Color("feae34")
+#a little under the leak and reaction words, so a kill's gold and a reaction never sit on each other
+const GOLD_EARNED_OFFSET : Vector2 = Vector2(0, -2)
 
 var damage_number_pool : Array[DamageNumber]
 #screen space, so the numbers stay crisp at any camera zoom; drawn under the UI layer that follows in Main
@@ -26,6 +31,7 @@ func _ready() -> void:
 	GameSignals.damage_taken.connect(_on_damage_taken)
 	GameSignals.element_reaction.connect(_on_element_reaction)
 	GameSignals.life_lost.connect(_on_life_lost)
+	GameSignals.gold_earned.connect(_on_gold_earned)
 
 
 func _on_damage_taken(_position : Vector2, _damage_data : DamageData) -> void:
@@ -53,6 +59,12 @@ func _on_life_lost(_position : Vector2, amount : int) -> void:
 	if amount <= 0:
 		return
 	_get_damage_number().activate_text(_position + REACTION_TEXT_OFFSET, LIFE_LOST_TEXT % amount, LIFE_LOST_COLOR)
+
+
+func _on_gold_earned(_position : Vector2, amount : float) -> void:
+	if roundi(amount) <= 0 or not SettingsManager.get_option(SettingsManager.OPTION_KILL_GOLD):
+		return
+	_get_damage_number().activate_text(_position + GOLD_EARNED_OFFSET, GOLD_EARNED_TEXT % roundi(amount), GOLD_EARNED_COLOR)
 
 
 func _get_damage_number() -> DamageNumber:

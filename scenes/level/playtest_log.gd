@@ -64,6 +64,7 @@ func _ready() -> void:
 	GameSignals.enemy_destroyed.connect(func(_enemy : Enemy) -> void: killed += 1)
 	GameSignals.enemy_reached_end_point.connect(_on_enemy_reached_end)
 	GameSignals.wave_cleared.connect(_on_wave_cleared)
+	GameSignals.wave_started.connect(_on_wave_started)
 	GameSignals.time_scale_change.connect(_on_time_scale_change)
 	GameSignals.developer_mode_changed.connect(_on_developer_mode_changed)
 	GameSignals.level_completed.connect(func(_level : Level) -> void: _write(RESULT_WON))
@@ -104,9 +105,20 @@ func _on_enemy_reached_end(enemy : Enemy) -> void:
 	leaked[type] = leaked.get(type, 0) + 1
 
 
-func _on_wave_cleared(_wave_number : int) -> void:
-	life_by_wave.append(level.player_stats.life)
-	gold_by_wave.append(level.player_stats.gold)
+func _on_wave_cleared(wave_number : int) -> void:
+	_record_waves_up_to(wave_number)
+
+
+#an early start skips the cleared signal of the wave still on the field: its entry is the state when the next one began
+func _on_wave_started(wave_number : int) -> void:
+	_record_waves_up_to(wave_number - 1)
+
+
+## One life and gold entry per wave up to wave_count, so the lists never shift after an early start.
+func _record_waves_up_to(wave_count : int) -> void:
+	while life_by_wave.size() < wave_count:
+		life_by_wave.append(level.player_stats.life)
+		gold_by_wave.append(level.player_stats.gold)
 
 
 func _on_time_scale_change(time_scale : float) -> void:
@@ -137,8 +149,7 @@ func _write(result : String) -> void:
 func _record(result : String) -> Dictionary:
 	var is_won : bool = result == RESULT_WON
 	if is_won:
-		life_by_wave.append(level.player_stats.life)
-		gold_by_wave.append(level.player_stats.gold)
+		_record_waves_up_to(level.wave_runner.wave_number)
 
 	var spent_on : Dictionary = placing_spent.duplicate()
 	var placing_total : float = 0.0

@@ -18,6 +18,11 @@ const CORNER_MARGIN : float = 4.0
 const RESISTS_TEXT : String = "Resists: %s"
 const RESISTS_COLOR : Color = Color("86b8a0")
 const TACTIC_LABEL_TEXT : String = "Target"
+const SELL_TOOLTIP : String = "Sell  [%s]
+Refunds its price; gold spent on its upgrades is lost."
+const UPGRADE_KEY_SUFFIX : String = "  [%s]"
+const ELEMENT_CHOICE_TOOLTIP : String = "
+Pick one element: it stays for this tower."
 const TACTIC_TOOLTIP : String = "Which enemy in range this tower shoots. Change it any time, during a wave too."
 
 @onready var unit_info_grid_container : GridContainer = $HBoxContainer/InfoBox/UnitInfoGridContainer
@@ -33,6 +38,8 @@ var tactic_row : HBoxContainer = null
 var tactic_menu : OptionButton = null
 #the rectangle-selected walls: a row of buttons, shown instead of a single unit's card
 var wall_group_row : HBoxContainer = null
+#the shown gold upgrades, for the upgrade shortcut
+var upgrade_options : Array[GoldUpgradeOption] = []
 
 var horizontal_stat_fields : Array[HorizontalStatField] :
 	get:
@@ -75,6 +82,31 @@ func _ready() -> void:
 	wall_group_row.hide()
 	button_row.add_sibling(wall_group_row)
 	UISignals.wall_group_changed.connect(_on_wall_group_changed)
+	InputManager.shortcut_pressed.connect(_on_shortcut_pressed)
+
+
+func _on_shortcut_pressed(action : StringName) -> void:
+	if not visible:
+		return
+	if action == InputManager.ACTION_SELL_SELECTED:
+		if wall_group_row.visible:
+			UISignals.wall_group_action.emit(WallGroupSelect.SELL_ACTION)
+		elif sell_button.visible:
+			_on_sell_button_pressed()
+	elif action == InputManager.ACTION_UPGRADE_SELECTED and sell_button.visible and not wall_group_row.visible:
+		var index : int = get_shortcut_upgrade_index(upgrade_options)
+		if index >= 0:
+			_on_upgrade_button_pressed(index)
+
+
+## The option the upgrade key buys: the first one that can be bought now and is not
+## a pick between elements. -1 when there is none.
+static func get_shortcut_upgrade_index(options : Array[GoldUpgradeOption]) -> int:
+	for index in options.size():
+		var option : GoldUpgradeOption = options[index]
+		if option.is_affordable and not option.is_locked and not option.is_choice:
+			return index
+	return -1
 
 
 func _on_wall_group_changed(title : String, options : Array[GoldUpgradeOption]) -> void:
@@ -176,12 +208,20 @@ func _on_sell_button_pressed() -> void:
 
 
 func _on_gold_upgrades_changed(options : Array[GoldUpgradeOption]) -> void:
+	upgrade_options = options
 	for child in upgrade_option_container.get_children():
 		upgrade_option_container.remove_child(child)
 		child.queue_free()
 	
+	var shortcut_index : int = get_shortcut_upgrade_index(options)
 	for index in options.size():
-		upgrade_option_container.add_child(_create_upgrade_button(options[index], index))
+		var button : Button = _create_upgrade_button(options[index], index)
+		if index == shortcut_index:
+			button.tooltip_text += UPGRADE_KEY_SUFFIX % InputManager.get_binding_text(InputManager.ACTION_UPGRADE_SELECTED)
+		elif options[index].is_choice:
+			button.tooltip_text += ELEMENT_CHOICE_TOOLTIP
+		upgrade_option_container.add_child(button)
+	sell_button.tooltip_text = SELL_TOOLTIP % InputManager.get_binding_text(InputManager.ACTION_SELL_SELECTED)
 
 	_update_button_row()
 

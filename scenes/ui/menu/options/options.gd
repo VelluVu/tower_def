@@ -21,6 +21,8 @@ const DAMAGE_NUMBER_MODE_TEXTS : Array[String] = ["All", "Crits only", "Off"]
 const DAMAGE_NUMBERS_TOOLTIP : String = "Crits only shows the critical hits, heals and reactions, so the numbers never cover the fight."
 const HEALTH_BARS_LABEL : String = "Health bars"
 const HEALTH_BARS_TOOLTIP : String = "A small bar over each hurt enemy."
+const KILL_GOLD_LABEL : String = "Kill gold"
+const KILL_GOLD_TOOLTIP : String = "A gold +N where an enemy dies."
 const CAMERA_SPEED_LABEL : String = "Camera speed"
 const EDGE_SCROLL_LABEL : String = "Edge scrolling"
 const EDGE_SCROLL_TOOLTIP : String = "Moves the camera when the mouse touches the edge of the window."
@@ -60,6 +62,7 @@ func _ready() -> void:
 	_add_check_row(display_tab, PIXEL_PERFECT_LABEL, PIXEL_PERFECT_TOOLTIP, SettingsManager.pixel_perfect, SettingsManager.set_pixel_perfect)
 	_add_damage_numbers_row()
 	_add_option_check_row(display_tab, HEALTH_BARS_LABEL, HEALTH_BARS_TOOLTIP, SettingsManager.OPTION_HEALTH_BARS)
+	_add_option_check_row(display_tab, KILL_GOLD_LABEL, KILL_GOLD_TOOLTIP, SettingsManager.OPTION_KILL_GOLD)
 
 	_add_camera_speed_row()
 	_add_option_check_row(gameplay_tab, EDGE_SCROLL_LABEL, EDGE_SCROLL_TOOLTIP, SettingsManager.OPTION_EDGE_SCROLL)

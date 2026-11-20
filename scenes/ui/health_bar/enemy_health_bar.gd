@@ -77,6 +77,8 @@ func _health_ratio() -> float:
 
 
 func _draw() -> void:
+	#whole pixels: an odd width leans one pixel right
+	@warning_ignore("integer_division")
 	var left : int = -width / 2
 	draw_rect(Rect2(left - 1, -1, width + 2, HEIGHT + 2), FRAME_COLOR)
 	draw_rect(Rect2(left, 0, width, HEIGHT), EMPTY_COLOR)

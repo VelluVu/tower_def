@@ -13,6 +13,12 @@ func _ready() -> void:
 	GameSignals.building_placement_change.connect(_on_building_placement_change)
 	UISignals.focus_building_option.connect(_focus_building_changed)
 	UISignals.building_option_updated.connect(_on_building_option_updated)
+	UISignals.building_option_tooltip.connect(_on_building_option_tooltip)
+
+
+func _on_building_option_tooltip(_building_index : int, text : String) -> void:
+	if building_index == _building_index:
+		button.tooltip_text = text
 
 
 func _on_building_placement_change(is_placing : bool) -> void:

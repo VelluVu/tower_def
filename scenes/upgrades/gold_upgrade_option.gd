@@ -25,6 +25,11 @@ var is_evolve : bool :
 	get:
 		return not element_leaf_path.is_empty()
 
+#one of several elements to pick from (a tower's T1 or a wall's element): the player decides, a shortcut never buys it
+var is_choice : bool :
+	get:
+		return (is_evolve and tier == 0) or wall_element != Utils.Element.None
+
 
 static func wall_element_option(element : Utils.Element, _title : String, _icon : Texture2D, _cost : float) -> GoldUpgradeOption:
 	var option : GoldUpgradeOption = upgrade(_title, _icon, _cost)

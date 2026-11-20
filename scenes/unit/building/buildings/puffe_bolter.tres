@@ -9,3 +9,4 @@ script = ExtResource("1_3rnds")
 scene = ExtResource("2_agdrk")
 id = 1
 icon = ExtResource("1_a6iej")
+description = "Fires homing bolts at one enemy. Hits flyers."

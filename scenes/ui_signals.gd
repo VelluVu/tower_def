@@ -8,6 +8,8 @@ signal focus_building_option(building_index : int)
 signal on_sell_selected_building_pressed()
 signal buildings_updated(available_buildings : int)
 signal building_option_updated(building_index : int, new_icon : Texture2D)
+#the tray slot's tooltip: name, key, cost and what it does
+signal building_option_tooltip(building_index : int, text : String)
 signal upgrade_card_selected(index : int)
 signal gold_upgrades_changed(options : Array[GoldUpgradeOption])
 signal gold_upgrade_pressed(index : int)

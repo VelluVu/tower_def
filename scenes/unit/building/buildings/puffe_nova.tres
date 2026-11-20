@@ -10,3 +10,5 @@ scene = ExtResource("2_hw488")
 id = 3
 icon = ExtResource("1_dyqoh")
 unlock_level = 3
+description = "Bursts around itself and hits every enemy near it.
+Hits flyers from its T2."

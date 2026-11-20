@@ -9,11 +9,13 @@ const PATH_TO_BUILDINGS_FOLDER : String = "res://scenes/unit/building/buildings"
 const RESOURCE_ENDING : String = ".tres"
 const BUILDINGS_NODE_NAME = "Buildings"
 const BUILDABLE_CELL_CUSTOM_DATA_NAME : String = "Buildable"
-const SELECT_BUILDING_ONE_ACTION_NAME : String = "SelectBuilding1"
 const LEFT_CLICK_ACTION_NAME : String = "LeftClick"
 const RIGHT_CLICK_ACTION_NAME : String = "RightClick"
 const ESCAPE_ACTION_NAME : String = "Escape"
 const WALL_BUILDING_NAME : String = "wall"
+const TRAY_TITLE_FORMAT : String = "%s  [%s]"
+const TRAY_PRICE_FORMAT : String = "Cost %dg"
+const TRAY_PRICE_STEP_FORMAT : String = "Cost %dg, +%dg for each tower on the map"
 const SLASH : String = "/"
 
 @export var buildings : Array[BuildingListElement]
@@ -56,6 +58,29 @@ func remove_building(_building : Building) -> void:
 	GameSignals.building_is_removed.emit()
 
 
+## The tray slot's tooltip, read from the building's scene without adding it to the tree.
+static func get_tray_tooltip(element : BuildingListElement, slot : int) -> String:
+	var building : Building = element.scene.instantiate()
+	var title : String = building.scene_file_path.get_file().get_basename().capitalize()
+	var selectable : SelectableUnit = building.get_node_or_null(^"SelectableUnit")
+	if selectable != null and not selectable.display_name.is_empty():
+		title = selectable.display_name
+	var price : float = 0.0
+	for stat in building.get_node(^"Stats").get_children():
+		if stat is Stat and stat.type == Utils.StatType.Price:
+			price = stat.value
+	var step : float = building.price_step
+	building.free()
+
+	var key : String = InputManager.get_binding_text(InputManager.ACTION_BUILD_SLOTS[slot]) if slot < InputManager.ACTION_BUILD_SLOTS.size() else ""
+	var lines : PackedStringArray = [TRAY_TITLE_FORMAT % [title, key] if not key.is_empty() else title]
+	lines.append(TRAY_PRICE_STEP_FORMAT % [price, step] if step > 0.0 else TRAY_PRICE_FORMAT % price)
+	if not element.description.is_empty():
+		lines.append(element.description)
+	return "
+".join(lines)
+
+
 func _ready() -> void:
 	set_physics_process(false)
 	GameSignals.game_stop.connect(_on_game_stop)
@@ -68,7 +93,22 @@ func _ready() -> void:
 	GameSignals.level_completed.connect(_on_level_completed)
 	GameSignals.resource_change.connect(_on_resource_change)
 	UISignals.game_play_interface_loaded.connect(_on_game_interface_loaded)
+	InputManager.shortcut_pressed.connect(_on_shortcut_pressed)
 	_get_buildings()
+
+
+## A build slot key works over the tray too; pressing the slot being placed puts it away.
+func _on_shortcut_pressed(action : StringName) -> void:
+	var slot : int = InputManager.ACTION_BUILD_SLOTS.find(action)
+	if slot < 0 or not is_ready_to_build or level == null or slot >= available_buildings.size():
+		return
+
+	if is_placing_building and current_building_option_index == slot:
+		_stop_building_placement()
+		UISignals.focus_building_option.emit(-1)
+		return
+
+	_start_building_placement(slot)
 
 
 func _input(event : InputEvent) -> void:
@@ -84,9 +124,6 @@ func _input(event : InputEvent) -> void:
 	if event is InputEventKey and get_viewport().gui_get_focus_owner() is LineEdit:
 		return
 
-	if event.is_action_pressed(SELECT_BUILDING_ONE_ACTION_NAME):
-		_start_building_placement(0)
-	
 	#cancels only the line, the wall stays selected
 	if is_dragging_line and (event.is_action_pressed(RIGHT_CLICK_ACTION_NAME) or event.is_action_pressed(ESCAPE_ACTION_NAME)):
 		_cancel_wall_line()
@@ -196,6 +233,7 @@ func _update_building_options() -> void:
 
 	for i in available_buildings.size():
 		UISignals.building_option_updated.emit(i, available_buildings[i].icon)
+		UISignals.building_option_tooltip.emit(i, get_tray_tooltip(available_buildings[i], i))
 
 	UISignals.buildings_updated.emit(available_buildings.size())
 
@@ -206,9 +244,11 @@ func _on_game_stop() -> void:
 	level = null
 	#freed with the level
 	wall_line_preview = null
-	UISignals.building_option_selected.disconnect(_on_building_placement_selected)
-	UISignals.building_option_deselected.disconnect(_on_building_placement_deselected)
-	UISignals.mouse_on_gui.disconnect(_mouse_is_on_gui)
+	#a stop without a loaded level (a test's builder, a menu) has nothing connected
+	if UISignals.building_option_selected.is_connected(_on_building_placement_selected):
+		UISignals.building_option_selected.disconnect(_on_building_placement_selected)
+		UISignals.building_option_deselected.disconnect(_on_building_placement_deselected)
+		UISignals.mouse_on_gui.disconnect(_mouse_is_on_gui)
 
 
 func _mouse_is_on_gui(is_on : bool) -> void:

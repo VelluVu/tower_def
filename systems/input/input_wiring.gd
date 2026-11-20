@@ -8,19 +8,52 @@ extends InputBindings
 
 const ACTION_CANCEL: StringName = &"menu_cancel"
 const ACTION_OPEN_CONSOLE: StringName = &"open_console"
+## The build tray's slots, left to right (the tray hides locked buildings, so slot N is the Nth shown).
+const ACTION_BUILD_SLOTS: Array[StringName] = [&"build_slot_1", &"build_slot_2", &"build_slot_3", &"build_slot_4", &"build_slot_5"]
+const ACTION_START_WAVE: StringName = &"start_wave"
+const ACTION_SPEED_DOWN: StringName = &"speed_down"
+const ACTION_SPEED_UP: StringName = &"speed_up"
+const ACTION_UPGRADE_SELECTED: StringName = &"upgrade_selected"
+const ACTION_SELL_SELECTED: StringName = &"sell_selected"
 
 
 func _init() -> void:
 	cancel_action = ACTION_CANCEL
 	# DevConsole reads it in its own _input(), so it is a direct action.
 	rebindable_actions = [
+		ACTION_BUILD_SLOTS[0], ACTION_BUILD_SLOTS[1], ACTION_BUILD_SLOTS[2], ACTION_BUILD_SLOTS[3], ACTION_BUILD_SLOTS[4],
+		ACTION_START_WAVE,
+		ACTION_SPEED_DOWN,
+		ACTION_SPEED_UP,
+		ACTION_UPGRADE_SELECTED,
+		ACTION_SELL_SELECTED,
 		ACTION_OPEN_CONSOLE,
 	]
 	direct_actions = [ACTION_OPEN_CONSOLE]
 	default_keys = {
+		ACTION_BUILD_SLOTS[0]: KEY_1,
+		ACTION_BUILD_SLOTS[1]: KEY_2,
+		ACTION_BUILD_SLOTS[2]: KEY_3,
+		ACTION_BUILD_SLOTS[3]: KEY_4,
+		ACTION_BUILD_SLOTS[4]: KEY_5,
+		ACTION_START_WAVE: KEY_SPACE,
+		ACTION_SPEED_DOWN: KEY_Q,
+		ACTION_SPEED_UP: KEY_E,
+		ACTION_UPGRADE_SELECTED: KEY_U,
+		ACTION_SELL_SELECTED: KEY_X,
 		ACTION_OPEN_CONSOLE: KEY_C,
 	}
 	action_labels = {
+		ACTION_BUILD_SLOTS[0]: "Build slot 1",
+		ACTION_BUILD_SLOTS[1]: "Build slot 2",
+		ACTION_BUILD_SLOTS[2]: "Build slot 3",
+		ACTION_BUILD_SLOTS[3]: "Build slot 4",
+		ACTION_BUILD_SLOTS[4]: "Build slot 5",
+		ACTION_START_WAVE: "Start wave",
+		ACTION_SPEED_DOWN: "Slower",
+		ACTION_SPEED_UP: "Faster",
+		ACTION_UPGRADE_SELECTED: "Upgrade selected",
+		ACTION_SELL_SELECTED: "Sell selected",
 		ACTION_OPEN_CONSOLE: "Console",
 	}
 	save_path = "user://input_bindings.cfg"

@@ -18,7 +18,7 @@ text = "Hear that squeaking? A batling roost. Something deep below has woken the
 script = ExtResource("9_line")
 trigger = 3
 wave_number = 2
-text = "Batlings! They fly over the maze. The violet dots show their route, so put towers along it."
+text = "Batlings! They fly over the maze. The violet dots show their route: Bolters and Beamers along it. A Nova only reaches them from its T2."
 
 [sub_resource type="Resource" id="PuffeLine_3"]
 script = ExtResource("9_line")

@@ -77,8 +77,10 @@ func _on_enemy_destroyed(enemy : Enemy) -> void:
 	if not enemy.gives_reward:
 		return
 
-	gold += enemy.stats.get_stat_value(Utils.StatType.Price)
+	var reward : float = enemy.stats.get_stat_value(Utils.StatType.Price)
+	gold += reward
 	GameSignals.resource_change.emit(gold, 0)
+	GameSignals.gold_earned.emit(enemy.global_position, reward)
 
 
 func _on_building_placed(building : Building) -> void:

@@ -10,3 +10,5 @@ scene = ExtResource("2_4jj3c")
 id = 4
 icon = ExtResource("1_0ch3o")
 unlock_level = 4
+description = "Enemies walk over it and get bitten; it never blocks the path.
+Hits flyers only as the Bird Catcher (Leopard T2)."

@@ -9,3 +9,6 @@ script = ExtResource("1_4u06c")
 scene = ExtResource("2_oyljx")
 id = 0
 icon = ExtResource("1_njrqw")
+description = "Blocks the path, so enemies walk around it.
+Build a maze that keeps them in your towers' reach.
+Drag to build a line, Shift + drag to select walls."
