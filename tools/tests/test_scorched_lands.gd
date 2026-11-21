@@ -108,6 +108,23 @@ func test_sandstorm_cuts_range_and_hides_flyers(kit : TestKit) -> void:
 	kit.check(not drake.is_concealed, "and the flyer shows again")
 
 
+#a tower destroyed or sold inside the band broke the storm's cleanup (found by the 2026-11-21 sweep, levels 40 and 47)
+func test_sandstorm_survives_a_freed_tower(kit : TestKit) -> void:
+	await kit.load_level(38)
+	var storm : Sandstorm = kit.level.get_node(Level.SANDSTORM_NAME)
+	var spot : Vector2i = kit.find_cell(func(c : Vector2i) -> bool:
+		return kit.level.grid.is_position_buildable(kit.level.grid.grid_position_to_world(c)))
+	var tower : Building = await kit.place("puffe_bolter", spot)
+	storm.start()
+	storm.band_x = tower.global_position.x - storm.band_width * 0.5
+	storm._update_cover()
+	kit.check(storm.covered.size() == 1, "the tower is covered")
+	tower.free()
+	storm._stop()
+	kit.check(storm.covered.is_empty(), "the storm lets go of a freed tower")
+	kit.check(not storm.is_blowing, "and stops")
+
+
 #Normal never locks the player into one element; Hard mixes in a faction with another weakness (2026-11-17)
 func test_hard_mixes_in_other_factions(kit : TestKit) -> void:
 	var data : LevelData = kit.level_data(40)

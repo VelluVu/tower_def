@@ -584,6 +584,11 @@ func _paths(level : Level) -> Array[PackedVector2Array]:
 		for spawner in level.get_spawners():
 			if ids.is_empty() or ids.has(spawner.id):
 				cached_paths.append(level.grid.find_path(spawner.global_position, spawner.end_point.global_position))
+				#waders leave a long maze for a crossing (Magma Heart's salamanders): cover their way too
+				if not level.grid.bog_crossings.is_empty():
+					var wading : WadingRoute = level.grid.find_wading_route(spawner.global_position, spawner.end_point.global_position)
+					if wading.crossing != null:
+						cached_paths.append(wading.path)
 	return cached_paths
 
 

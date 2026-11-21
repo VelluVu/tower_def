@@ -61,3 +61,19 @@ func test_a_blocked_road_to_the_stones_keeps_the_road(kit : TestKit) -> void:
 	var road_cells : int = kit.level.grid.find_path(toad.global_position, toad.end_point.global_position).size()
 	var stones_cost : float = crossing.get_cost()
 	kit.check(toad.wade_crossing == null or stones_cost < road_cells, "it only wades when the stones are cheaper (cost %.0f vs %d road cells)" % [stones_cost, road_cells])
+
+
+#the route preview showed only the road, so the salamanders of Magma Heart (57) crossed the lava out of sight
+#(found by the 2026-11-21 sweep): a level with crossings shows the waders' way too
+func test_preview_shows_the_wading_route(kit : TestKit) -> void:
+	await kit.load_level(57)
+	var preview : PathPreview = kit.level.get_children().filter(func(child) -> bool: return child is PathPreview).front()
+	kit.check(preview != null, "the level has a route preview")
+	preview._update_paths()
+	kit.check(preview.wade_paths.is_empty(), "on the open map the road is cheaper, nothing to show")
+	#a maze makes the road dear: here the stones themselves get cheap, as a long maze would make them
+	for child in kit.level.get_children():
+		if child is BogCrossing:
+			child.wade_speed_factor = 100.0
+	preview._update_paths()
+	kit.check(not preview.wade_paths.is_empty(), "once the crossing is cheaper the preview shows it (%d)" % preview.wade_paths.size())

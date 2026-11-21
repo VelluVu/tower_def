@@ -576,7 +576,7 @@ func _is_active(level : Level, unit : Building) -> bool:
 
 
 func _tower_count() -> int:
-	return units.filter(func(unit : Building) -> bool: return is_instance_valid(unit) and not unit is Trap).size()
+	return units.filter(func(unit) -> bool: return is_instance_valid(unit) and not unit is Trap).size()
 
 
 func _key_of(unit : Node) -> String:

@@ -3,10 +3,12 @@ extends Node2D
 
 ## Marks every spawn point and castle, and draws the dotted enemy routes between them while the
 ## player builds. The routes follow the maze as buildings change the grid and hide during a wave.
-## A spawner with a flight_route also shows the flyers' route, in its own colour with wider dots.
+## A spawner with a flight_route also shows the flyers' route, in its own colour with wider dots, and a
+## route that wading enemies (Enemy.can_wade) take over a crossing shows in the wade colour.
 
 const DOT_SPACING : float = 8.0
 const FLIGHT_DOT_SPACING : float = 12.0
+const WADE_DOT_SPACING : float = 10.0
 const DOT_SIZE : Vector2 = Vector2(2, 2)
 const SPAWN_RADIUS : float = 6.0
 const END_RADIUS : float = 9.0
@@ -20,10 +22,14 @@ const GROUND_Z_INDEX : int = -1
 @export var spawn_color : Color = Color(1.0, 0.35, 0.3, 0.9)
 @export var end_color : Color = Color(0.45, 0.8, 1.0, 0.9)
 @export var flight_color : Color = Color(0.95, 0.5, 1.0, 0.95)
+#mint like Puffe: readable over bog, lava and sand
+@export var wade_color : Color = Color(0.45, 1.0, 0.8, 0.95)
 
 var paths : Array[PackedVector2Array] = []
 #spawn, route points, castle: the corners only, without the flyers' wave
 var flight_paths : Array[PackedVector2Array] = []
+#the routes over a crossing, only where a wader would leave the road for one
+var wade_paths : Array[PackedVector2Array] = []
 var is_route_visible : bool = true :
 	set = _set_is_route_visible
 
@@ -49,9 +55,14 @@ func _update_paths() -> void:
 		return
 
 	paths.clear()
+	wade_paths.clear()
 
 	for route in level.get_routes():
 		paths.append(level.grid.find_path(route[0], route[1]))
+		if not level.grid.bog_crossings.is_empty():
+			var wading : WadingRoute = level.grid.find_wading_route(route[0], route[1])
+			if wading.crossing != null:
+				wade_paths.append(wading.path)
 
 	flight_paths.clear()
 	for spawner in level.get_spawners():
@@ -81,6 +92,8 @@ func _draw() -> void:
 	if is_route_visible:
 		for path in flight_paths:
 			_draw_dots(path, FLIGHT_DOT_SPACING, flight_color)
+		for path in wade_paths:
+			_draw_dots(path, WADE_DOT_SPACING, wade_color)
 
 
 func _draw_dots(path : PackedVector2Array, spacing : float, color : Color) -> void:

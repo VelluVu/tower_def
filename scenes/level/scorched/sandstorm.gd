@@ -23,8 +23,8 @@ var is_blowing : bool = false
 var band_x : float = 0.0
 var current_time_scale : float = 1.0
 var next_timer : CustomTimer = null
-#towers inside the band and the modifier each got
-var covered : Dictionary[Building, ModifierData] = {}
+#towers inside the band (by instance id, so a tower freed inside it is dropped safely) and the modifier each got
+var covered : Dictionary[int, ModifierData] = {}
 
 var band_width : float :
 	get:
@@ -72,8 +72,8 @@ func _process(delta : float) -> void:
 
 func _stop() -> void:
 	is_blowing = false
-	for building in covered.keys():
-		_uncover(building)
+	for id in covered.keys():
+		_uncover(id)
 	for enemy in level.existing_enemies:
 		if is_instance_valid(enemy):
 			enemy.is_concealed = false
@@ -87,24 +87,26 @@ func _update_cover() -> void:
 		if not is_instance_valid(building) or building is not Tower or not building.is_placed:
 			continue
 		var inside : bool = band.has_point(building.global_position)
-		if inside and not covered.has(building):
+		var id : int = building.get_instance_id()
+		if inside and not covered.has(id):
 			var cut : ModifierData = Elite.multiply(Utils.StatType.AttackRange, 1.0 + RANGE_CUT)
 			building.modifier_manager.add_modifier(cut)
-			covered[building] = cut
-		elif not inside and covered.has(building):
-			_uncover(building)
-	for building in covered.keys():
-		if not is_instance_valid(building):
-			covered.erase(building)
+			covered[id] = cut
+		elif not inside and covered.has(id):
+			_uncover(id)
+	for id in covered.keys():
+		if not is_instance_id_valid(id):
+			covered.erase(id)
 	for enemy in level.existing_enemies:
 		if is_instance_valid(enemy):
 			enemy.is_concealed = enemy.is_flying and band.has_point(enemy.global_position)
 
 
-func _uncover(building : Building) -> void:
-	if is_instance_valid(building):
-		building.modifier_manager.remove_modifier(covered[building])
-	covered.erase(building)
+func _uncover(id : int) -> void:
+	var building : Building = instance_from_id(id) as Building if is_instance_id_valid(id) else null
+	if building != null:
+		building.modifier_manager.remove_modifier(covered[id])
+	covered.erase(id)
 
 
 #a sand band with drifting streaks, on whole pixels
