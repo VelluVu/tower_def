@@ -13,6 +13,8 @@ signal life_lost(position : Vector2, amount : int)
 signal enemy_destroyed(enemy : Enemy)
 #kill gold paid, at the enemy (the "+N" over the kill)
 signal gold_earned(position : Vector2, amount : float)
+## A click to build that the gold on hand cannot pay (price: what it would cost).
+signal not_enough_gold(position : Vector2, price : float)
 signal enemy_spawned(enemy : Enemy)
 signal damage_taken(position : Vector2, damage_data : DamageData)
 #an enemy took a hit (after its effects were added); element reactions listen to it

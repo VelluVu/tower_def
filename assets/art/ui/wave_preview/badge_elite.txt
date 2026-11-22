@@ -1,0 +1,12 @@
+o = 181425
+y = feae34
+h = fee761
+d = f77622
+---
+...o...
+..oho..
+ooohooo
+oyhhhyo
+.oyyyo.
+.oydyo.
+.oo.oo.

@@ -1,0 +1,10 @@
+c = 2ce8f5
+b = 0099db
+---
+...c...
+.bbcbb.
+.b...b.
+cc.c.cc
+.b...b.
+.bbcbb.
+...c...

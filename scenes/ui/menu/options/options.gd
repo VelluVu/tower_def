@@ -23,6 +23,8 @@ const HEALTH_BARS_LABEL : String = "Health bars"
 const HEALTH_BARS_TOOLTIP : String = "A small bar over each hurt enemy."
 const KILL_GOLD_LABEL : String = "Kill gold"
 const KILL_GOLD_TOOLTIP : String = "A gold +N where an enemy dies."
+const HIT_EFFECTS_LABEL : String = "Hit effects"
+const HIT_EFFECTS_TOOLTIP : String = "A burst, sparks or claw marks in the tower's element where its hits land."
 const CAMERA_SPEED_LABEL : String = "Camera speed"
 const EDGE_SCROLL_LABEL : String = "Edge scrolling"
 const EDGE_SCROLL_TOOLTIP : String = "Moves the camera when the mouse touches the edge of the window."
@@ -63,6 +65,7 @@ func _ready() -> void:
 	_add_damage_numbers_row()
 	_add_option_check_row(display_tab, HEALTH_BARS_LABEL, HEALTH_BARS_TOOLTIP, SettingsManager.OPTION_HEALTH_BARS)
 	_add_option_check_row(display_tab, KILL_GOLD_LABEL, KILL_GOLD_TOOLTIP, SettingsManager.OPTION_KILL_GOLD)
+	_add_option_check_row(display_tab, HIT_EFFECTS_LABEL, HIT_EFFECTS_TOOLTIP, SettingsManager.OPTION_HIT_EFFECTS)
 
 	_add_camera_speed_row()
 	_add_option_check_row(gameplay_tab, EDGE_SCROLL_LABEL, EDGE_SCROLL_TOOLTIP, SettingsManager.OPTION_EDGE_SCROLL)
@@ -163,20 +166,22 @@ func _add_check_row(tab : Control, label_text : String, tooltip : String, is_on 
 
 
 ## A fixed-width label, then the controls; the tooltip covers the whole row.
+## A rich tooltip: the row's name as its title, the tooltip as the body.
 func _add_row(tab : Control, label_text : String, tooltip : String, controls : Array[Control]) -> void:
-	var row : HBoxContainer = HBoxContainer.new()
+	var row : RichTooltipBox = RichTooltipBox.new()
 	row.custom_minimum_size.y = ROW_HEIGHT
 	var label : Label = Label.new()
 	label.text = label_text
 	label.custom_minimum_size.x = ROW_LABEL_WIDTH
-	label.tooltip_text = tooltip
-	label.mouse_filter = Control.MOUSE_FILTER_PASS if tooltip != "" else Control.MOUSE_FILTER_IGNORE
 	row.add_child(label)
 
 	for control : Control in controls:
-		control.tooltip_text = tooltip
 		row.add_child(control)
 
+	if tooltip != "":
+		row.tooltip_text = "%s
+%s" % [label_text, tooltip]
+		row.pass_children_to_row()
 	tab.add_child(row)
 
 

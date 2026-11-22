@@ -5,6 +5,9 @@ extends Node
 ## Prints PASS/FAIL lines and quits with exit code 1 on any failure.
 
 const TEST_METHOD_PREFIX : String = "test_"
+const QUIET_AUDIO_FRAMES : int = 3
+## A test that leaves nodes out of the tree unfreed (they are reported as leaks at exit).
+const ORPHANS_MESSAGE : String = "ORPHANS %s: %d node(s) never freed"
 const SCRIPT_EXTENSION : String = ".gd"
 const USAGE_ERROR : String = "usage: -- [--deadline <s>] --test <file or folder>... | --run <file> [args]"
 const DEADLINE_ARG : String = "--deadline"
@@ -41,15 +44,27 @@ func _ready() -> void:
 
 	match args[0]:
 		"--test":
-			get_tree().quit(await _run_tests(args.slice(1)))
+			var code : int = await _run_tests(args.slice(1))
+			await _quiet_audio()
+			get_tree().quit(code)
 		"--run":
 			current_name = args[1]
 			var instance : Object = load(args[1]).new()
-			await instance.run(TestKit.new(self), args.slice(2))
+			var kit : TestKit = TestKit.new(self)
+			await instance.run(kit, args.slice(2))
+			kit.dispose()
+			await _quiet_audio()
 			get_tree().quit(0)
 		_:
 			push_error(USAGE_ERROR)
 			get_tree().quit(1)
+
+
+#the audio thread lets go of stopped sounds on its next mix: a quit right away reported them as leaks
+func _quiet_audio() -> void:
+	AudioManager.stop_all()
+	for i in QUIET_AUDIO_FRAMES:
+		await get_tree().process_frame
 
 
 func _run_tests(paths : PackedStringArray) -> int:
@@ -65,8 +80,15 @@ func _run_tests(paths : PackedStringArray) -> int:
 			var test_name : String = "%s::%s" % [script_path.get_file().get_basename(), method.name]
 			current_name = test_name
 			var kit : TestKit = TestKit.new(self)
+			var orphans_before : int = int(Performance.get_monitor(Performance.OBJECT_ORPHAN_NODE_COUNT))
 			await Callable(script.new(), method.name).call(kit)
 			kit.free_level()
+			kit.dispose()
+			#queue_free()d nodes go at the end of the frame
+			await get_tree().process_frame
+			var orphans : int = int(Performance.get_monitor(Performance.OBJECT_ORPHAN_NODE_COUNT)) - orphans_before
+			if orphans > 0:
+				print(ORPHANS_MESSAGE % [test_name, orphans])
 
 			#a script error ends the test early without a failure, so a test that checked nothing failed
 			if kit.checks == 0:

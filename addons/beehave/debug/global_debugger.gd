@@ -5,7 +5,10 @@ var _active_tree
 
 
 func _enter_tree() -> void:
-	EngineDebugger.register_message_capture("beehave", _on_debug_message)
+	# Puffe TD patch (2026-11-22): without a debugger the capture is never really taken, and the
+	# engine's exit printed "Capture not registered: 'beehave'"; register only with one attached.
+	if EngineDebugger.is_active():
+		EngineDebugger.register_message_capture("beehave", _on_debug_message)
 
 
 func _on_debug_message(message: String, data: Array) -> bool:

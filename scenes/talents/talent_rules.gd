@@ -7,6 +7,11 @@ extends RefCounted
 
 const MAX_POINTS_PER_LEVEL : int = 5
 const TALENT_BOOK_PATH : String = "res://scenes/talents/talent_book.tres"
+const CLEAR_CONDITION_TEXT : String = "Castle saved"
+const HALF_LIFE_CONDITION_FORMAT : String = "Half the lives kept (%s)"
+const FULL_LIFE_CONDITION_TEXT : String = "No life lost"
+const HALF_EARLY_CONDITION_FORMAT : String = "Half the waves started early (%s)"
+const ALL_EARLY_CONDITION_TEXT : String = "Every wave started early"
 
 
 ## A node's display name by tree and node id (the id itself when it is not found).
@@ -119,21 +124,24 @@ static func get_spent(ranks : Dictionary) -> int:
 ## 1 for the clear, 1 for half the lives left, 1 for no lives lost, 1 for starting at least half
 ## of the waves that could start early, 1 for starting all of them (placeholder thresholds).
 static func points_for_result(life_left : float, starting_life : float, early_starts : int, early_start_chances : int) -> int:
-	var points : int = 1
-
-	if life_left * 2.0 >= starting_life:
-		points += 1
-
-	if life_left >= starting_life:
-		points += 1
-
-	if early_start_chances > 0 and early_starts * 2 >= early_start_chances:
-		points += 1
-
-	if early_start_chances > 0 and early_starts >= early_start_chances:
-		points += 1
-
+	var points : int = 0
+	for condition in point_conditions(life_left, starting_life, early_starts, early_start_chances):
+		if condition.met:
+			points += 1
 	return mini(points, MAX_POINTS_PER_LEVEL)
+
+
+## The five point conditions of a cleared level, each {text, met}, for the win screen's checklist.
+static func point_conditions(life_left : float, starting_life : float, early_starts : int, early_start_chances : int) -> Array[Dictionary]:
+	var life_text : String = "%d/%d" % [int(life_left), int(starting_life)]
+	var start_text : String = "%d/%d" % [early_starts, early_start_chances]
+	return [
+		{"text": CLEAR_CONDITION_TEXT, "met": true},
+		{"text": HALF_LIFE_CONDITION_FORMAT % life_text, "met": life_left * 2.0 >= starting_life},
+		{"text": FULL_LIFE_CONDITION_TEXT, "met": life_left >= starting_life},
+		{"text": HALF_EARLY_CONDITION_FORMAT % start_text, "met": early_start_chances > 0 and early_starts * 2 >= early_start_chances},
+		{"text": ALL_EARLY_CONDITION_TEXT, "met": early_start_chances > 0 and early_starts >= early_start_chances},
+	]
 
 
 ## The points a cleared level earns with its lives left and early starts. The first wave never
@@ -141,6 +149,11 @@ static func points_for_result(life_left : float, starting_life : float, early_st
 static func points_for_level(level : Level) -> int:
 	var starting_life : float = level.level_data.starting_life if level.level_data != null else level.player_stats.life
 	return points_for_result(level.player_stats.life, starting_life, level.early_starts, maxi(level.wave_runner.wave_count - 1, 0))
+
+
+static func point_conditions_for_level(level : Level) -> Array[Dictionary]:
+	var starting_life : float = level.level_data.starting_life if level.level_data != null else level.player_stats.life
+	return point_conditions(level.player_stats.life, starting_life, level.early_starts, maxi(level.wave_runner.wave_count - 1, 0))
 
 
 static func _needs_met(node : TalentNode, ranks : Dictionary) -> bool:

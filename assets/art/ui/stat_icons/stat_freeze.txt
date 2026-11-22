@@ -1,0 +1,11 @@
+c = 2ce8f5
+w = ffffff
+b = 0099db
+---
+c..c..c
+.b.c.b.
+..bwb..
+ccwwwcc
+..bwb..
+.b.c.b.
+c..c..c

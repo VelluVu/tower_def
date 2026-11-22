@@ -6,17 +6,28 @@ const WAVE_TEXT : String = "Wave %d/%d"
 const ENDLESS_WAVE_TEXT : String = "Wave %d"
 const START_WAVE_TEXT : String = "Start wave"
 const EARLY_START_TEXT : String = "Next +%d gold"
-const START_WAVE_TOOLTIP : String = "Sends the next wave  [%s]"
-const EARLY_START_TOOLTIP : String = "Sends the next wave now, while this one is still out  [%s]
-An early start pays %d bonus gold."
+const START_WAVE_TOOLTIP : String = "Start wave  [%s]
+Sends the next wave."
+const EARLY_START_TOOLTIP : String = "Early start  [%s]
+Sends the next wave now, while this one is still out. Pays %d bonus gold."
 
 @onready var wave_value : Label = $MarginContainer/Panel/MarginContainer/VBoxContainer/WaveValue
 @onready var start_wave_button : Button = $MarginContainer/Panel/MarginContainer/VBoxContainer/StartWaveButton
+@onready var wave_box : VBoxContainer = $MarginContainer/Panel/MarginContainer/VBoxContainer
+@onready var panel : Panel = $MarginContainer/Panel
+@onready var panel_margin : MarginContainer = $MarginContainer/Panel/MarginContainer
+
+var preview : WavePreview = null
+#the scene's panel height, before the preview row grew it
+var base_panel_height : float = -1.0
 
 
 func _ready() -> void:
 	GameSignals.wave_state_changed.connect(_on_wave_state_changed)
 	add_child(WaveBanner.new())
+	preview = WavePreview.new()
+	wave_box.add_child(preview)
+	preview.hide()
 	InputManager.shortcut_pressed.connect(_on_shortcut_pressed)
 
 
@@ -47,3 +58,29 @@ func _on_wave_state_changed(wave_number : int, wave_count : int, can_start_next 
 	start_wave_button.text = EARLY_START_TEXT % early_start_bonus if early_start_bonus > 0.0 else START_WAVE_TEXT
 	var key : String = InputManager.get_binding_text(InputManager.ACTION_START_WAVE)
 	start_wave_button.tooltip_text = EARLY_START_TOOLTIP % [key, early_start_bonus] if early_start_bonus > 0.0 else START_WAVE_TOOLTIP % key
+
+	var next_wave : WaveData = get_next_wave() if start_wave_button.visible else null
+	preview.show_wave(next_wave)
+	_fit_panel.call_deferred()
+	if next_wave != null:
+		start_wave_button.tooltip_text += "
+" + WavePreview.describe(next_wave)
+
+
+## A Panel does not grow with its content: fit its height to the preview row (deferred, so the new entries have their size).
+func _fit_panel() -> void:
+	if base_panel_height < 0.0:
+		base_panel_height = panel.custom_minimum_size.y
+	panel.custom_minimum_size.y = maxf(base_panel_height, panel_margin.get_combined_minimum_size().y)
+
+
+## The wave the button sends; in Survival the grown copy the runner will make.
+static func get_next_wave() -> WaveData:
+	var manager : Object = Utils.game_control.get(&"scene_manager") if Utils.game_control != null else null
+	var level : Object = manager.get(&"current_level") if manager != null else null
+	if not level is Level or level.wave_runner == null:
+		return null
+	var runner : WaveRunner = level.wave_runner
+	if runner.is_endless:
+		return SurvivalRules.make_wave(runner.waves, runner.wave_number + 1) if not runner.waves.is_empty() else null
+	return runner.next_wave

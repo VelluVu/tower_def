@@ -14,6 +14,9 @@ var is_game_paused : bool = false
 var time_scale : float = 1.0
 #the running Survival level, until its run is recorded (lost or quit)
 var survival_level : Level = null
+var screen_fade : ScreenFade = null
+#a screen switch is fading out: a second click waits for nothing and is dropped
+var is_switching : bool = false
 
 
 func reset_time_scale() -> void:
@@ -29,6 +32,9 @@ func pause_game(is_pause : bool) -> void:
 func _ready() -> void:
 	Utils.game_control = self
 	reset_time_scale()
+	#before the UI, so it sees the main menu being added
+	screen_fade = ScreenFade.new()
+	add_child(screen_fade)
 	ui.initialize(scene_manager)
 	GameSignals.game_pause.connect(_on_pause_game)
 	GameSignals.level_loaded.connect(_on_level_loaded)
@@ -44,26 +50,47 @@ func _ready() -> void:
 	UISignals.faster_speed_pressed.connect(_on_faster_speed_pressed)
 
 
+## Fades the old screen out before a switch; false while another switch is already fading.
+func _begin_switch() -> bool:
+	if is_switching:
+		return false
+	is_switching = true
+	if screen_fade != null:
+		await screen_fade.fade_out()
+	is_switching = false
+	return true
+
+
 func _on_start_level_pressed(level_number : int, mode : Utils.LevelMode) -> void:
+	if not await _begin_switch():
+		return
 	scene_manager.unload_scene_by_name(ui.GAME_WORLD_MAP_SCENE_NAME, scene_manager.SceneType.UI)
 	scene_manager.load_level_by_number(level_number, self, mode)
 
 
 func _on_continue_game() -> void:
+	if not await _begin_switch():
+		return
 	PlayerProgress.load_last_progress_data()
 	ui.load_game_world_map(true)
 
 
 func _on_start_new_game() -> void:
+	if not await _begin_switch():
+		return
 	PlayerProgress.new_game()
 	ui.load_game_world_map(true)
 
 
 func _on_continue_next_level_pressed() -> void:
+	if not await _begin_switch():
+		return
 	ui.load_game_world_map(false)
 
 
 func _on_retry_level_pressed() -> void:
+	if not await _begin_switch():
+		return
 	var level_number : int = scene_manager.current_level_number
 	var mode : Utils.LevelMode = scene_manager.current_level_mode
 	var old_level : Node = scene_manager.current_level

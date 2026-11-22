@@ -18,6 +18,7 @@ const OPTION_DAMAGE_NUMBERS_CRITS_ONLY: String = "damage_numbers_crits_only"
 const OPTION_HEALTH_BARS: String = "health_bars"
 ## A gold "+N" where an enemy dies, so the kill gold is seen where it is earned.
 const OPTION_KILL_GOLD: String = "kill_gold"
+const OPTION_HIT_EFFECTS: String = "hit_effects"
 ## Multiplies the camera's key movement and edge scrolling speed.
 const OPTION_CAMERA_SPEED: String = "camera_speed"
 ## The camera moves when the mouse touches the window edge.
@@ -42,6 +43,7 @@ func _init() -> void:
 		OPTION_DAMAGE_NUMBERS_CRITS_ONLY: false,
 		OPTION_HEALTH_BARS: true,
 		OPTION_KILL_GOLD: true,
+		OPTION_HIT_EFFECTS: true,
 		OPTION_CAMERA_SPEED: 1.0,
 		OPTION_EDGE_SCROLL: false,
 		OPTION_PAUSE_ON_FOCUS_LOSS: true,

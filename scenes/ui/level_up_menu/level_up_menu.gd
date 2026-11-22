@@ -12,6 +12,15 @@ const TREE_TEXT : String = "%s tree"
 const FONT_COLOR : StringName = &"font_color"
 #coin gold (Endesga 32), the theme's accent colour
 const RARE_COLOR : Color = Color("feae34")
+## Card frames (tools/art/card_frames.py): rows common and rare, columns normal, hover, pressed.
+const FRAMES : Texture2D = preload("res://assets/art/ui/cards/card_frames.png")
+const FRAME_CELL : int = 24
+## The frame's corner size in the sheet; the rest stretches.
+const FRAME_MARGIN : float = 7.0
+const FRAME_STATES : Array[StringName] = [&"normal", &"hover", &"pressed"]
+const EMPTY_STYLES : Array[StringName] = [&"focus"]
+## The card's content rises this many pixels while the mouse is on it.
+const HOVER_LIFT : float = 2.0
 
 @onready var title_label : Label = %TitleLabel
 @onready var card_container : HBoxContainer = %CardContainer
@@ -27,10 +36,31 @@ func show_cards(new_level : int, cards : Array[UpgradeCard]) -> void:
 		card_container.add_child(_create_card_button(cards[index], index))
 
 
+## The card's frame for its rarity, one sheet cell per button state.
+static func apply_frame(button : Button, is_rare : bool) -> void:
+	for state in FRAME_STATES.size():
+		var style : StyleBoxTexture = StyleBoxTexture.new()
+		style.texture = FRAMES
+		style.region_rect = Rect2(state * FRAME_CELL, (1 if is_rare else 0) * FRAME_CELL, FRAME_CELL, FRAME_CELL)
+		style.set_texture_margin_all(FRAME_MARGIN)
+		button.add_theme_stylebox_override(FRAME_STATES[state], style)
+	for style_name in EMPTY_STYLES:
+		button.add_theme_stylebox_override(style_name, StyleBoxEmpty.new())
+
+
+## Lifts the card's content (the frame lights up by itself) and ticks on the way in.
+func _on_card_hovered(content : Control, is_on : bool) -> void:
+	content.offset_top = -HOVER_LIFT if is_on else 0.0
+	content.offset_bottom = -HOVER_LIFT if is_on else 0.0
+	if is_on:
+		UISignals.upgrade_card_hovered.emit()
+
+
 #Button can't stack its icon above wrapped text, so the card lays out its own icon and label
 func _create_card_button(card : UpgradeCard, index : int) -> Button:
 	var button : Button = Button.new()
 	button.custom_minimum_size = CARD_MIN_SIZE
+	apply_frame(button, card.resource.rarity == EvolveResource.Rarity.Rare)
 	button.pressed.connect(_on_card_pressed.bind(index))
 
 	var margin : MarginContainer = MarginContainer.new()
@@ -39,6 +69,8 @@ func _create_card_button(card : UpgradeCard, index : int) -> Button:
 	for side in ["left", "top", "right", "bottom"]:
 		margin.add_theme_constant_override("margin_" + side, CARD_MARGIN)
 	button.add_child(margin)
+	button.mouse_entered.connect(_on_card_hovered.bind(margin, true))
+	button.mouse_exited.connect(_on_card_hovered.bind(margin, false))
 
 	var column : VBoxContainer = VBoxContainer.new()
 	column.mouse_filter = Control.MOUSE_FILTER_IGNORE

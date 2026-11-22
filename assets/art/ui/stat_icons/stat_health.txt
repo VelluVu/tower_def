@@ -1,0 +1,12 @@
+o = 181425
+r = e43b44
+h = f6757a
+d = a22633
+---
+.oo.oo.
+ohrorro
+orrrrro
+orrrrdo
+.orrdo.
+..odo..
+...o...

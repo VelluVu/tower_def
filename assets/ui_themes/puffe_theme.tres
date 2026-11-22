@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://bosjat67bgkjx" path="res://assets/art/ui/theme/ui_theme.png" id="1_atlas"]
 [ext_resource type="FontFile" uid="uid://besds3dvgiq7k" path="res://assets/fonts/pixel_operator/PixelOperator8.ttf" id="2_text"]
 [ext_resource type="FontFile" uid="uid://b8g22qntipvlr" path="res://assets/fonts/pixel_operator/PixelOperator-Bold.ttf" id="3_title"]
+[ext_resource type="FontFile" uid="uid://du5lepfpv63p3" path="res://assets/fonts/pixel_operator/PixelOperator8-Bold.ttf" id="5_text_bold"]
 [ext_resource type="Texture2D" uid="uid://bmo1ug871qd3q" path="res://assets/art/ui/theme/map_node_button.png" id="4_map_node"]
 
 [sub_resource type="StyleBoxTexture" id="Panel_accent"]
@@ -384,6 +385,15 @@ TitleLabel/base_type = &"Label"
 TitleLabel/colors/font_color = Color(0.9961, 0.9059, 0.3804, 1)
 TitleLabel/font_sizes/font_size = 16
 TitleLabel/fonts/font = ExtResource("3_title")
+TooltipText/base_type = &"RichTextLabel"
+TooltipText/colors/default_color = Color(0.03922, 0.0902, 0.07059, 1)
+TooltipText/colors/font_shadow_color = Color(0, 0, 0, 0)
+TooltipText/constants/line_separation = 2
+TooltipText/constants/outline_size = 0
+TooltipText/font_sizes/bold_font_size = 8
+TooltipText/font_sizes/normal_font_size = 8
+TooltipText/fonts/bold_font = ExtResource("5_text_bold")
+TooltipText/fonts/normal_font = ExtResource("2_text")
 TooltipLabel/colors/font_color = Color(0.03922, 0.0902, 0.07059, 1)
 TooltipLabel/colors/font_shadow_color = Color(0, 0, 0, 0)
 TooltipLabel/constants/outline_size = 0

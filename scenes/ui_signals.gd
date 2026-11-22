@@ -10,6 +10,8 @@ signal buildings_updated(available_buildings : int)
 signal building_option_updated(building_index : int, new_icon : Texture2D)
 #the tray slot's tooltip: name, key, cost and what it does
 signal building_option_tooltip(building_index : int, text : String)
+## What a tray slot's building costs now (its base price plus the tower price step).
+signal building_option_price(building_index : int, price : float)
 signal upgrade_card_selected(index : int)
 signal gold_upgrades_changed(options : Array[GoldUpgradeOption])
 signal gold_upgrade_pressed(index : int)
@@ -39,3 +41,5 @@ signal talents(is_open : bool)
 signal slower_speed_pressed()
 signal faster_speed_pressed()
 signal start_wave_pressed()
+## The mouse went onto a level-up card (a hover sound).
+signal upgrade_card_hovered()

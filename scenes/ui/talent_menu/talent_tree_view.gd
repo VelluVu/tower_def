@@ -53,6 +53,28 @@ const HINT_MOVE_TEXT : String = "Drag to move, wheel to zoom"
 const HINT_EDIT_TEXT : String = "Drag a node to move it, drag elsewhere to pan, wheel to zoom"
 #node positions keep three decimals, like the generated trees
 const EDIT_SNAP : float = 0.001
+## Node art (polish, 2026-11-22): a bevel on the square nodes, the effect's icon inside (when the node is big enough),
+## rank pips under a node with more than one rank from zoom 1, and the tree's element as a faint emblem behind it all.
+const BEVEL_LIGHTEN : float = 0.3
+const BEVEL_DARKEN : float = 0.4
+const ICON_SIZE : int = 7
+const ICON_LOCKED : Color = Color(0.7, 0.7, 0.7, 0.9)
+const ICON_OPEN : Color = Color(0.9, 0.9, 0.9)
+const PIP_SIZE : Vector2 = Vector2(2, 2)
+const PIP_SPACING : float = 3.0
+const PIP_GAP : float = 2.0
+## Room the pips take under a node; labels sit below it.
+const PIP_ROOM : float = 4.0
+const PIP_EMPTY : Color = Color("26332e")
+const EMBLEM_SCALE : int = 8
+const EMBLEM_ALPHA : float = 0.06
+const EMBLEMS : Dictionary[Utils.Element, Texture2D] = {
+	Utils.Element.Fire: preload("res://assets/art/ui/fire_element_icon.png"),
+	Utils.Element.Frost: preload("res://assets/art/ui/frost_element_icon.png"),
+	Utils.Element.Poison: preload("res://assets/art/ui/poison_element_icon.png"),
+}
+## The Building tree has no element: its emblem is the wall.
+const BUILDING_EMBLEM : Texture2D = preload("res://assets/art/ui/stat_icons/stat_wall.png")
 ## Edit mode: nodes can be dragged; the player's ranks are not drawn.
 @export var edit_mode : bool = false
 var tree : TalentTree = null
@@ -219,6 +241,7 @@ func _draw() -> void:
 		return
 
 	draw_rect(Rect2(Vector2.ZERO, size), tree.background)
+	_draw_emblem()
 
 	for node in tree.nodes:
 		for linked_id in node.links:
@@ -235,6 +258,14 @@ func _draw() -> void:
 			_draw_label(node)
 
 	_draw_hint()
+
+
+#fixed on the screen, so it stays behind the tree whatever the pan and zoom; whole-step scaled
+func _draw_emblem() -> void:
+	var emblem : Texture2D = EMBLEMS.get(tree.element, BUILDING_EMBLEM)
+	var emblem_size : Vector2 = emblem.get_size() * EMBLEM_SCALE * (2 if emblem == BUILDING_EMBLEM else 1)
+	var at : Vector2 = ((size - emblem_size) / 2.0).round()
+	draw_texture_rect(emblem, Rect2(at, emblem_size), false, Color(1, 1, 1, EMBLEM_ALPHA))
 
 
 #one line in the corner tells a new player what to do here
@@ -314,6 +345,7 @@ func _draw_node(node : TalentNode) -> void:
 	else:
 		var rect : Rect2 = Rect2(center - Vector2(half, half), Vector2(half * 2 + 1, half * 2 + 1))
 		draw_rect(rect, fill)
+		_draw_bevel(rect, fill)
 		draw_rect(rect, edge, false, 1.0)
 		if node.kind == TalentNode.Kind.Capstone:
 			draw_rect(rect.grow(-2), edge, false, 1.0)
@@ -322,13 +354,41 @@ func _draw_node(node : TalentNode) -> void:
 	if not node.is_implemented and zoom_index > 0:
 		draw_rect(Rect2(center + Vector2(half, -half - 1), Vector2(2, 2)), HINT_COLOR.darkened(NOT_BUILT_DARKEN))
 
-	if zoom_index > 0 and rank > 0:
-		_draw_text(str(rank), center + Vector2(0, 3), NODE_EDGE, false)
+	#any zoom where the icon fits inside the frame (the default whole-tree view too)
+	if node_size >= ICON_SIZE + 2:
+		var icon : Texture2D = TalentNodeIcons.for_node(node)
+		if icon != null:
+			var tint : Color = Color.WHITE if rank > 0 or is_pickable else ICON_OPEN if TalentRules.is_open(tree, ranks, node) else ICON_LOCKED
+			draw_texture(icon, center - Vector2(ICON_SIZE / 2, ICON_SIZE / 2), tint)
+	if zoom_index > 0 and node.max_rank > 1 and (rank > 0 or is_pickable):
+		_draw_pips(center + Vector2(0, half + PIP_GAP + 1), rank, node.max_rank)
+
+
+#light along the top and left inside the frame, shade along the bottom and right: a raised gem
+func _draw_bevel(rect : Rect2, fill : Color) -> void:
+	var inner : Rect2 = rect.grow(-1)
+	if inner.size.x < 3.0:
+		return
+	var light : Color = fill.lightened(BEVEL_LIGHTEN)
+	var shade : Color = fill.darkened(BEVEL_DARKEN)
+	draw_rect(Rect2(inner.position, Vector2(inner.size.x, 1)), light)
+	draw_rect(Rect2(inner.position, Vector2(1, inner.size.y)), light)
+	draw_rect(Rect2(Vector2(inner.position.x, inner.end.y - 1), Vector2(inner.size.x, 1)), shade)
+	draw_rect(Rect2(Vector2(inner.end.x - 1, inner.position.y), Vector2(1, inner.size.y)), shade)
+
+
+#one pip per rank under the node, lit in the tree's accent up to the rank
+func _draw_pips(top_center : Vector2, rank : int, max_rank : int) -> void:
+	var width : float = (max_rank - 1) * PIP_SPACING + PIP_SIZE.x
+	var left : float = roundf(top_center.x - width / 2.0)
+	for i in max_rank:
+		draw_rect(Rect2(Vector2(left + i * PIP_SPACING, top_center.y), PIP_SIZE), tree.accent if i < rank else PIP_EMPTY)
 
 
 func _draw_label(node : TalentNode) -> void:
 	var half : float = NODE_SIZES[zoom_index] / 2.0
-	_draw_text(node.display_name, _to_screen(node.position) + Vector2(0, half + FONT_SIZE + 1), TEXT, true)
+	var pip_room : float = PIP_ROOM if zoom_index > 0 and node.max_rank > 1 else 0.0
+	_draw_text(node.display_name, _to_screen(node.position) + Vector2(0, half + FONT_SIZE + 1 + pip_room), TEXT, true)
 
 
 func _draw_text(text : String, at : Vector2, color : Color, outlined : bool) -> void:

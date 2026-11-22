@@ -9,6 +9,8 @@ enum Mood { NONE, MENU, WORLD_MAP, BUILD, BATTLE, VICTORY, DEFEAT }
 const SKILL_VOLUME_DB: float = -8.0
 const ENEMY_DEATH_VOLUME_DB: float = -6.0
 const WORLD_VOLUME_DB: float = -3.0
+## Hovering over the cards is frequent: a soft tick under the pick sound.
+const CARD_HOVER_VOLUME_DB: float = -10.0
 ## Varied pitch so a row of the same shot or death doesn't sound identical.
 const PITCH_JITTER: float = 0.08
 ## Three towers firing in the same frame, or a whole group dying to one nova, would
@@ -44,6 +46,7 @@ func _ready() -> void:
 	GameSignals.level_completed.connect(_on_level_completed)
 	GameSignals.lose_game.connect(_on_lose_game)
 	GameSignals.enemy_reached_end_point.connect(_on_enemy_reached_end_point)
+	GameSignals.not_enough_gold.connect(_on_not_enough_gold)
 	GameSignals.enemy_destroyed.connect(_on_enemy_destroyed)
 	GameSignals.building_placed.connect(_on_building_placed)
 	GameSignals.sell_building.connect(_on_building_sold)
@@ -53,9 +56,12 @@ func _ready() -> void:
 	GameSignals.gold_upgrade_bought.connect(_on_gold_upgrade_bought)
 	GameSignals.enemy_spawned.connect(_on_enemy_spawned)
 	UISignals.upgrade_card_selected.connect(_on_upgrade_card_selected)
+	UISignals.upgrade_card_hovered.connect(_on_upgrade_card_hovered)
 	if FileAccess.file_exists(TEST_MUTE_FLAG_PATH):
 		# Deferred: SettingsManager applies the saved volumes and mutes in its own _ready().
 		AudioServer.set_bus_mute.call_deferred(AudioServer.get_bus_index(MASTER_BUS), true)
+		# and nothing starts at all, so no stream is left playing at exit
+		is_silent = true
 
 
 ## Changes the music only when the mood changes, so an early start during a wave or the
@@ -117,6 +123,14 @@ func _on_lose_game() -> void:
 
 func _on_enemy_reached_end_point(_enemy: Enemy) -> void:
 	play_sfx(bank.castle_hit)
+
+
+func _on_upgrade_card_hovered() -> void:
+	play_sfx(bank.card_hover, CARD_HOVER_VOLUME_DB)
+
+
+func _on_not_enough_gold(_position: Vector2, _price: float) -> void:
+	play_sfx(bank.not_enough_gold)
 
 
 func _on_enemy_destroyed(enemy: Enemy) -> void:

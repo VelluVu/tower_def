@@ -1,0 +1,12 @@
+o = 181425
+b = ead4aa
+s = c28569
+r = e43b44
+---
+.ooooo.
+obbbbbo
+orbbrbo
+obbbbso
+.obbso.
+.obobo.
+..ooo..

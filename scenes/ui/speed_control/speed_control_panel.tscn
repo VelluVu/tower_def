@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bob4ocak1ttmy"]
+[gd_scene load_steps=3 format=3 uid="uid://bob4ocak1ttmy"]
 
 [ext_resource type="Script" path="res://scenes/ui/speed_control/speed_control_panel.gd" id="1_v0xnj"]
+[ext_resource type="Script" path="res://systems/tooltip/rich_tooltip_button.gd" id="rich_tooltip_button"]
 
 [node name="SpeedControlPanel" type="Control"]
 layout_mode = 3
@@ -44,11 +45,13 @@ layout_mode = 2
 alignment = 1
 
 [node name="Slower" type="Button" parent="MarginContainer/Panel/MarginContainer/HBoxContainer"]
+script = ExtResource("rich_tooltip_button")
 custom_minimum_size = Vector2(28, 0)
 layout_mode = 2
 text = "<<"
 
 [node name="Faster" type="Button" parent="MarginContainer/Panel/MarginContainer/HBoxContainer"]
+script = ExtResource("rich_tooltip_button")
 custom_minimum_size = Vector2(28, 0)
 layout_mode = 2
 text = ">>"

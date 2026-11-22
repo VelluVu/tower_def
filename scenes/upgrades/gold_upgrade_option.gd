@@ -7,6 +7,8 @@ extends RefCounted
 const LOCKED_TEXT : String = "%s needs %s in the %s tree"
 
 var title : String = ""
+#what it gives, the tooltip's body under the title (UpgradeTooltipText)
+var description : String = ""
 var icon : Texture2D = null
 var cost : float = 0.0
 var is_affordable : bool = false
@@ -48,6 +50,7 @@ static func upgrade(_title : String, _icon : Texture2D, _cost : float) -> GoldUp
 static func evolve(leaf : ElementEvolveLeaf, building : Building, _cost : float) -> GoldUpgradeOption:
 	var option : GoldUpgradeOption = GoldUpgradeOption.new()
 	option.title = leaf.info
+	option.description = UpgradeTooltipText.for_element(leaf)
 	option.icon = leaf.icon
 	option.cost = _cost
 	option.element_leaf_path = building.get_path_to(leaf)
@@ -57,7 +60,7 @@ static func evolve(leaf : ElementEvolveLeaf, building : Building, _cost : float)
 static func evolve_tier(leaf : ElementEvolveLeaf, building : Building, tier_index : int, _cost : float) -> GoldUpgradeOption:
 	var data : EvolveTierData = leaf.tiers[tier_index]
 	var option : GoldUpgradeOption = GoldUpgradeOption.new()
-	option.title = data.title if data.info.is_empty() else "%s: %s" % [data.title, data.info]
+	option.title = data.title
 	option.icon = data.icon if data.icon != null else leaf.icon
 	option.cost = _cost
 	option.element_leaf_path = building.get_path_to(leaf)
@@ -65,4 +68,5 @@ static func evolve_tier(leaf : ElementEvolveLeaf, building : Building, tier_inde
 	option.is_locked = not data.is_unlocked()
 	if option.is_locked:
 		option.title = LOCKED_TEXT % [data.title, TalentRules.get_node_name(data.talent_tree, data.talent_node), data.talent_tree.capitalize()]
+	option.description = UpgradeTooltipText.for_tier(data, option.is_locked)
 	return option

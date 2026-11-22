@@ -1,0 +1,12 @@
+o = 181425
+w = ffffff
+l = c0cbdc
+s = 8b9bb4
+---
+.....oo
+...oowo
+.oowwlo
+owwllo.
+ollso..
+osso...
+.oo....

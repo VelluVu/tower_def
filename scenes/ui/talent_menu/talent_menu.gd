@@ -43,6 +43,10 @@ const NOT_LEANING_TEXT : String = "Learn %s the most and towers lean to it befor
 @onready var info_panel : PanelContainer = %Info
 @onready var remove_button : Button = %RemoveButton
 
+## The selected node's icon at 2x, in front of its kind line (polish, 2026-11-22).
+const INFO_ICON_SCALE : int = 2
+var info_icon : TextureRect = null
+
 var tree : TalentTree = null
 var selected : TalentNode = null
 var _is_reset_armed : bool = false
@@ -123,6 +127,21 @@ func _show_reactions() -> void:
 	reactions_label.visible = not lines.is_empty()
 
 
+func _show_info_icon(icon : Texture2D) -> void:
+	if info_icon == null:
+		var row : HBoxContainer = HBoxContainer.new()
+		kind_label.add_sibling(row)
+		kind_label.reparent(row)
+		info_icon = TextureRect.new()
+		info_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		info_icon.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		row.add_child(info_icon)
+		row.move_child(info_icon, 0)
+	info_icon.texture = icon
+	info_icon.custom_minimum_size = icon.get_size() * INFO_ICON_SCALE if icon != null else Vector2.ZERO
+	info_icon.visible = icon != null
+
+
 func _show_info() -> void:
 	if selected == null:
 		return
@@ -134,6 +153,7 @@ func _show_info() -> void:
 
 	name_label.text = selected.display_name
 	kind_label.text = KIND_TEXTS[selected.kind]
+	_show_info_icon(TalentNodeIcons.for_node(selected))
 	rank_label.text = RANK_TEXT % [rank, selected.max_rank]
 	description_label.text = selected.description
 	add_button.disabled = not can_add

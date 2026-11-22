@@ -1,0 +1,12 @@
+o = 181425
+g = 63c74d
+d = 3e8948
+w = ffffff
+---
+...o...
+..ogo..
+.ogggo.
+ogwgggo
+ogggddo
+.oggddo
+..ooo..

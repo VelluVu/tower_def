@@ -23,6 +23,10 @@ extends Resource
 @export var element_chosen : AudioStream
 ## A stat card picked in the level-up menu.
 @export var card_picked : AudioStream
+## A click to build without the gold for it.
+@export var not_enough_gold : AudioStream
+## The mouse on a level-up card.
+@export var card_hover : AudioStream
 
 @export_group("Waves")
 @export var wave_start : AudioStream

@@ -8,11 +8,13 @@ const LEVEL_DATA_PATH_FORMAT : String = "res://scenes/level/level_data/level_%03
 const DEFAULT_NAME_FORMAT : String = "Level %d"
 const INFO_FORMAT : String = "Level %d, %d waves\nStart: %d gold, %d life"
 const STORY_FORMAT : String = "%s\n\n%s"
-const TALENT_POINTS_FORMAT : String = "%s\nTalent points: %d/%d"
-const MODE_POINTS_FORMAT : String = "%s: %d/%d talent points"
+const MODE_POINTS_FORMAT : String = "%s
+%d/%d talent points"
 const SURVIVAL_BEST_FORMAT : String = "%s\nBest: %d waves"
-const MODE_LOCKED_FORMAT : String = "%s: coming later"
-const MODE_NEEDS_NORMAL_FORMAT : String = "%s: clear Normal first"
+const MODE_LOCKED_FORMAT : String = "%s
+Coming later"
+const MODE_NEEDS_NORMAL_FORMAT : String = "%s
+Clear Normal first"
 const FONT_COLOR_NAME : StringName = &"font_color"
 const FONT_COLOR_NAMES : Array[StringName] = [&"font_color", &"font_hover_color", &"font_pressed_color", &"font_hover_pressed_color", &"font_focus_color", &"font_disabled_color"]
 ## Modes that can be played; the rest show a disabled tab until they are built.
@@ -46,6 +48,24 @@ const ARROW_BOB_TIME : float = 0.35
 const START_HERE_TEXT : String = "Start here"
 const START_LABEL_GAP : int = 2
 const START_LABEL_RAISE : int = 2
+## The level panel (polish, 2026-11-22): the selected mode's points as gems, the level's enemies, a big Start.
+const POINT_EARNED : Texture2D = preload("res://assets/art/ui/talent_points/point_earned.png")
+const POINT_MISSED : Texture2D = preload("res://assets/art/ui/talent_points/point_missed.png")
+const POINTS_TEXT : String = "Points"
+const BEST_WAVES_FORMAT : String = "Best: %d waves"
+const ENEMIES_TEXT : String = "Enemies"
+const START_TEXT : String = "Start"
+const START_BUTTON_VARIATION : StringName = &"BigButton"
+#Endesga 32 grey-blue row labels, as the win screen's missed lines
+const ROW_LABEL_COLOR : Color = Color("8b9bb4")
+const ROW_LABEL_WIDTH : float = 40.0
+const ROW_SEPARATION : int = 2
+## Room under the rows for the big Start button.
+const PANEL_BOTTOM_MARGIN : int = 32
+## Over the other nodes' arrows and rings.
+const PANEL_Z_INDEX : int = 10
+## Kept inside the screen by this much when it opens near an edge.
+const SCREEN_MARGIN : float = 4.0
 @onready var tooltip : Panel = $Tooltip
 @onready var start_button : Button = $Tooltip/StartButton
 @onready var close_button : Button = $Tooltip/CloseButton
@@ -62,6 +82,9 @@ var selected_mode : Utils.LevelMode = Utils.LevelMode.Normal
 var completion_ring : CompletionRing = null
 var next_arrow : TextureRect = null
 var start_label : Label = null
+var level_data : LevelData = null
+var point_icons : Array[TextureRect] = []
+var best_waves_label : Label = null
 
 
 func _ready() -> void:
@@ -78,6 +101,12 @@ func _ready() -> void:
 	_show_level_info()
 	_add_mode_tabs()
 	_show_talent_points()
+	_add_points_row()
+	_add_enemy_row()
+	start_button.text = START_TEXT
+	start_button.theme_type_variation = START_BUTTON_VARIATION
+	(info_label.get_parent().get_parent() as Control).add_theme_constant_override(&"margin_bottom", PANEL_BOTTOM_MARGIN)
+	tooltip.z_index = PANEL_Z_INDEX
 	if is_next_to_play():
 		_bob()
 		_add_next_arrow()
@@ -172,6 +201,7 @@ func _show_level_info() -> void:
 		return
 
 	var data : LevelData = load(path) as LevelData
+	level_data = data
 	if not data.level_name.is_empty():
 		name_label.text = data.level_name
 	info_label.text = INFO_FORMAT % [level_number, data.waves.size(), data.starting_gold, data.starting_life]
@@ -188,7 +218,7 @@ func _add_mode_tabs() -> void:
 
 	for mode : Utils.LevelMode in Utils.LevelMode.values():
 		var mode_name : String = Utils.LevelMode.keys()[mode]
-		var tab : Button = Button.new()
+		var tab : Button = RichTooltipButton.new()
 		tab.text = mode_name
 		tab.toggle_mode = true
 		tab.button_group = group
@@ -228,7 +258,6 @@ func _show_talent_points() -> void:
 		points += PlayerProgress.get_level_mode_talent_points(level_number, mode)
 
 	var max_points : int = TalentRules.MAX_POINTS_PER_LEVEL * Utils.LevelMode.size()
-	info_label.text = TALENT_POINTS_FORMAT % [info_label.text, points, max_points]
 
 	#on the button, so it bobs and pops in with it
 	completion_ring = CompletionRing.new()
@@ -249,6 +278,71 @@ func _is_normal_cleared() -> bool:
 
 func _on_mode_tab_pressed(mode : Utils.LevelMode) -> void:
 	selected_mode = mode
+	_update_points_row()
+
+
+## "Points" and five gems for the selected mode, earned ones gold; Survival adds its best run.
+func _add_points_row() -> void:
+	var row : HBoxContainer = _new_row(POINTS_TEXT)
+	for i in TalentRules.MAX_POINTS_PER_LEVEL:
+		var icon : TextureRect = TextureRect.new()
+		icon.stretch_mode = TextureRect.STRETCH_KEEP_CENTERED
+		icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		row.add_child(icon)
+		point_icons.append(icon)
+	best_waves_label = Label.new()
+	best_waves_label.add_theme_color_override(FONT_COLOR_NAME, ROW_LABEL_COLOR)
+	row.add_child(best_waves_label)
+	info_label.add_sibling(row)
+	_update_points_row()
+
+
+func _update_points_row() -> void:
+	var points : int = PlayerProgress.get_level_mode_talent_points(level_number, selected_mode)
+	for i in point_icons.size():
+		point_icons[i].texture = POINT_EARNED if i < points else POINT_MISSED
+	var best_waves : int = PlayerProgress.get_survival_best_waves(level_number)
+	best_waves_label.text = BEST_WAVES_FORMAT % best_waves if selected_mode == Utils.LevelMode.Survival and best_waves > 0 else ""
+
+
+## Every enemy kind the level sends, with the flyer and boss badges.
+func _add_enemy_row() -> void:
+	if level_data == null or level_data.waves.is_empty():
+		return
+	var row : HBoxContainer = _new_row(ENEMIES_TEXT)
+	var roster : WavePreview = WavePreview.new()
+	roster.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	row.add_child(roster)
+	roster.show_roster(level_data.waves)
+	roster.alignment = FlowContainer.ALIGNMENT_BEGIN
+	var vbox : Node = info_label.get_parent()
+	vbox.add_child(row)
+
+
+func _new_row(label_text : String) -> HBoxContainer:
+	var row : HBoxContainer = HBoxContainer.new()
+	row.add_theme_constant_override(SEPARATION_NAME, ROW_SEPARATION)
+	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var label : Label = Label.new()
+	label.text = label_text
+	label.custom_minimum_size.x = ROW_LABEL_WIDTH
+	label.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+	label.add_theme_color_override(FONT_COLOR_NAME, ROW_LABEL_COLOR)
+	row.add_child(label)
+	return row
+
+
+## Grows the panel upwards to fit its rows (its bottom stays by the node), then keeps it on screen.
+func _fit_tooltip() -> void:
+	var content : Control = info_label.get_parent().get_parent() as Control
+	var height : float = maxf(tooltip.custom_minimum_size.y, content.get_combined_minimum_size().y)
+	tooltip.offset_top = tooltip.offset_bottom - height
+	var screen : Rect2 = get_viewport_rect().grow(-SCREEN_MARGIN)
+	var rect : Rect2 = tooltip.get_global_rect()
+	var shift : Vector2 = Vector2.ZERO
+	shift.x = minf(0.0, screen.end.x - rect.end.x) + maxf(0.0, screen.position.x - rect.position.x)
+	shift.y = minf(0.0, screen.end.y - rect.end.y) + maxf(0.0, screen.position.y - rect.position.y)
+	tooltip.position += shift.round()
 
 
 func _on_select_button_pressed() -> void:
@@ -256,6 +350,7 @@ func _on_select_button_pressed() -> void:
 		return
 		
 	tooltip.visible = true
+	_fit_tooltip.call_deferred()
 	is_selected.emit(self)
 
 

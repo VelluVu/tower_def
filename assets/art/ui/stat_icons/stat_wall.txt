@@ -1,0 +1,11 @@
+o = 181425
+s = 8b9bb4
+l = c0cbdc
+---
+ooooooo
+ollsols
+ooooooo
+lsollso
+ooooooo
+ollsols
+ooooooo

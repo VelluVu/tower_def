@@ -18,6 +18,8 @@ var root : Node = null
 var level : Level = null
 var failures : PackedStringArray = []
 var checks : int = 0
+#the stand-in Main and its SceneManager, never in the tree: freed by dispose()
+var stand_in_main : Main = null
 
 
 func _init(test_root : Node) -> void:
@@ -27,9 +29,22 @@ func _init(test_root : Node) -> void:
 	#tests leave no playtest lines; the soak bot turns its own log back on
 	PlaytestLog.is_enabled = false
 	PlaytestLog.log_path = TEST_PLAYTEST_LOG_PATH
-	var main : Main = Main.new()
-	main.scene_manager = SceneManager.new()
-	Utils.game_control = main
+	stand_in_main = Main.new()
+	stand_in_main.scene_manager = SceneManager.new()
+	Utils.game_control = stand_in_main
+
+
+## Frees the stand-in Main (nodes out of the tree are never freed by the engine; each one kept
+## its scripts and their preloaded resources alive, and the exit reported hundreds of leaks).
+func dispose() -> void:
+	if not is_instance_valid(stand_in_main) or stand_in_main.is_inside_tree():
+		return
+	if Utils.game_control == stand_in_main:
+		Utils.game_control = null
+	if is_instance_valid(stand_in_main.scene_manager) and not stand_in_main.scene_manager.is_inside_tree():
+		stand_in_main.scene_manager.free()
+	stand_in_main.free()
+	stand_in_main = null
 
 
 func load_level(number : int, mode : Utils.LevelMode = Utils.LevelMode.Normal) -> Level:

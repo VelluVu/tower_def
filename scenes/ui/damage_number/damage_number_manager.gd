@@ -17,6 +17,12 @@ const GOLD_EARNED_TEXT : String = "+%d"
 const GOLD_EARNED_COLOR : Color = Color("feae34")
 #a little under the leak and reaction words, so a kill's gold and a reaction never sit on each other
 const GOLD_EARNED_OFFSET : Vector2 = Vector2(0, -2)
+const NEED_GOLD_TEXT : String = "Need %dg"
+const UPGRADED_TEXT : String = "Upgraded"
+const EVOLVED_TEXT : String = "Evolved!"
+#Endesga 32 light gold, the upgrade flash's colour
+const UPGRADED_COLOR : Color = Color("fee761")
+const UPGRADED_OFFSET : Vector2 = Vector2(0, -14)
 
 var damage_number_pool : Array[DamageNumber]
 #screen space, so the numbers stay crisp at any camera zoom; drawn under the UI layer that follows in Main
@@ -32,6 +38,8 @@ func _ready() -> void:
 	GameSignals.element_reaction.connect(_on_element_reaction)
 	GameSignals.life_lost.connect(_on_life_lost)
 	GameSignals.gold_earned.connect(_on_gold_earned)
+	GameSignals.not_enough_gold.connect(_on_not_enough_gold)
+	GameSignals.gold_upgrade_bought.connect(_on_gold_upgrade_bought)
 
 
 func _on_damage_taken(_position : Vector2, _damage_data : DamageData) -> void:
@@ -65,6 +73,18 @@ func _on_gold_earned(_position : Vector2, amount : float) -> void:
 	if roundi(amount) <= 0 or not SettingsManager.get_option(SettingsManager.OPTION_KILL_GOLD):
 		return
 	_get_damage_number().activate_text(_position + GOLD_EARNED_OFFSET, GOLD_EARNED_TEXT % roundi(amount), GOLD_EARNED_COLOR)
+
+
+#always shown: it answers a click
+func _on_not_enough_gold(_position : Vector2, price : float) -> void:
+	_get_damage_number().activate_text(_position + REACTION_TEXT_OFFSET, NEED_GOLD_TEXT % ceili(price), LIFE_LOST_COLOR)
+
+
+#over the building's head; an element or tier says Evolved
+func _on_gold_upgrade_bought(building : Building, is_evolve : bool) -> void:
+	if not is_instance_valid(building):
+		return
+	_get_damage_number().activate_text(building.global_position + UPGRADED_OFFSET, EVOLVED_TEXT if is_evolve else UPGRADED_TEXT, UPGRADED_COLOR)
 
 
 func _get_damage_number() -> DamageNumber:

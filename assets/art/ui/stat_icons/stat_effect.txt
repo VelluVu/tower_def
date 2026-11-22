@@ -1,0 +1,12 @@
+o = 181425
+g = c0cbdc
+p = b55088
+h = f6757a
+---
+..ooo..
+..ogo..
+..ogo..
+.ophpo.
+ophpppo
+opppppo
+.ooooo.

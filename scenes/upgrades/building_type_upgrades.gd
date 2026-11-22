@@ -31,6 +31,9 @@ const WALL_ELEMENTS : Dictionary[Utils.Element, Array] = {
 	Utils.Element.Poison: ["Poison wall", "res://assets/art/ui/poison_element_icon.png"],
 }
 const MISSING_ELEMENT_LEAF_WARNING : String = " cannot find element leaf "
+#coin gold (Endesga 32): a bought upgrade flashes every building it reaches, as a new one flashes mint
+const UPGRADE_FLASH_COLOR : Color = Color("fee761")
+const UPGRADE_FLASH_SECONDS : float = 0.3
 const UPGRADE_PIPS_NAME : String = "UpgradePips"
 
 
@@ -184,6 +187,8 @@ func _on_gold_upgrade_pressed(index : int) -> void:
 
 		_update_pips(building, state)
 		building.stats_changed.emit()
+		if building.animation_control != null:
+			building.animation_control.play_flash(UPGRADE_FLASH_COLOR, UPGRADE_FLASH_SECONDS)
 
 	GameSignals.gold_upgrade_bought.emit(selected_unit, option.is_evolve)
 	_emit_options()
@@ -216,7 +221,9 @@ func _build_options() -> Array[GoldUpgradeOption]:
 	match UpgradeRules.next_gold_step(state.upgrades_bought, state.tiers_evolved, data.upgrade_cost_ratios.size(), tier_count, data.upgrades_before_tier(state.tiers_evolved)):
 		UpgradeRules.GoldStep.Upgrade:
 			var upgrade_price : float = UpgradeRules.gold_price(building_price, data.upgrade_cost_ratios[state.upgrades_bought] * _price_share() * _first_upgrade_share(building, state))
-			new_options.append(GoldUpgradeOption.upgrade(UPGRADE_TITLE_TEXT % (state.upgrades_bought + 1), data.upgrade_icon, upgrade_price))
+			var upgrade_option : GoldUpgradeOption = GoldUpgradeOption.upgrade(UPGRADE_TITLE_TEXT % (state.upgrades_bought + 1), data.upgrade_icon, upgrade_price)
+			upgrade_option.description = UpgradeTooltipText.for_upgrade(data, state.tiers_evolved > 0)
+			new_options.append(upgrade_option)
 		UpgradeRules.GoldStep.Evolve:
 			var evolve_price : float = UpgradeRules.gold_price(building_price, data.evolve_cost_ratios[state.tiers_evolved] * _price_share())
 			if state.tiers_evolved == 0:
@@ -231,7 +238,9 @@ func _build_options() -> Array[GoldUpgradeOption]:
 			#Fortress waits for its Building tree node; the other elements have no talent lock at T1
 			if element == Utils.Element.Physical and PlayerProgress.get_talent_ranks(FORTRESS_TREE).get(FORTRESS_NODE, 0) <= 0:
 				continue
-			new_options.append(GoldUpgradeOption.wall_element_option(element, WALL_ELEMENTS[element][0], load(WALL_ELEMENTS[element][1]), WALL_ELEMENT_PRICE))
+			var element_option : GoldUpgradeOption = GoldUpgradeOption.wall_element_option(element, WALL_ELEMENTS[element][0], load(WALL_ELEMENTS[element][1]), WALL_ELEMENT_PRICE)
+			element_option.description = UpgradeTooltipText.for_wall_element(element)
+			new_options.append(element_option)
 
 	#an element wall: its element's next tier once the shared line is far enough (locked until its tree node)
 	if building is Wall and building.element != Utils.Element.None:
@@ -241,6 +250,7 @@ func _build_options() -> Array[GoldUpgradeOption]:
 			tier_option.wall_tier = next_tier
 			var nodes : Array = WALL_TIER_NODES[building.element]
 			tier_option.is_locked = PlayerProgress.get_talent_ranks(nodes[0]).get(nodes[next_tier - 1], 0) <= 0
+			tier_option.description = UpgradeTooltipText.for_wall_tier(building.element, WALL_ELEMENTS[building.element][0], next_tier, tier_option.is_locked)
 			new_options.append(tier_option)
 
 	for option in new_options:

@@ -24,6 +24,9 @@ var _world_pool: Array[AudioStreamPlayer2D] = []
 var _next_world_player_index: int = 0
 
 var _music_player: AudioStreamPlayer
+## Nothing starts playing while on (silent test runs): a headless run's dummy driver never mixes, so a
+## stream once started was never let go, and the exit reported it as leaked.
+var is_silent: bool = false
 var _playlist: Array[AudioStream] = []
 var _playlist_index: int = 0
 var _looping: bool = false
@@ -49,6 +52,32 @@ func _ready() -> void:
 		get_tree().node_added.connect(_on_node_added)
 
 
+## Stops every sound and the music and lets go of their streams. The audio thread frees a stopped
+## stream's playback on its next mix, so call this a frame or two before quitting (the window's close
+## does it here); at exit itself the engine would report the playing streams as leaked.
+func stop_all() -> void:
+	_playlist.clear()
+	_looping = false
+	var players: Array[Node] = []
+	players.append_array(_sfx_pool)
+	players.append_array(_world_pool)
+	players.append(_music_player)
+	for player: Node in players:
+		if player == null:
+			continue
+		player.call(&"stop")
+		player.set(&"stream", null)
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_CLOSE_REQUEST:
+		stop_all()
+
+
+func _exit_tree() -> void:
+	stop_all()
+
+
 ## One-shot sound. A click requested in the same frame gives way to it.
 func play_sfx(stream: AudioStream, volume_db: float = 0.0, pitch_scale: float = 1.0) -> void:
 	_specific_sfx_frame = Engine.get_process_frames()
@@ -58,7 +87,7 @@ func play_sfx(stream: AudioStream, volume_db: float = 0.0, pitch_scale: float = 
 ## One-shot sound at a place in the world, panned and faded by its distance to the listener.
 ## An empty `bus` plays on the effects bus.
 func play_sfx_at(stream: AudioStream, world_position: Vector2, volume_db: float = 0.0, pitch_scale: float = 1.0, bus: StringName = &"") -> void:
-	if stream == null:
+	if stream == null or is_silent:
 		return
 	var player := _world_pool[_next_world_player_index]
 	_next_world_player_index = (_next_world_player_index + 1) % _world_pool.size()
@@ -126,7 +155,7 @@ func _add_world_player() -> AudioStreamPlayer2D:
 
 
 func _play_stream(stream: AudioStream, volume_db: float = 0.0, pitch_scale: float = 1.0) -> void:
-	if stream == null:
+	if stream == null or is_silent:
 		return
 	var player := _sfx_pool[_next_sfx_player_index]
 	_next_sfx_player_index = (_next_sfx_player_index + 1) % _sfx_pool.size()
@@ -157,6 +186,8 @@ func _play_playlist_track() -> void:
 ## Stops the old track first, so the switch never overlaps two songs.
 func _switch_music(stream: AudioStream) -> void:
 	_music_player.stop()
+	if is_silent:
+		return
 	_music_player.stream = stream
 	_music_player.play()
 

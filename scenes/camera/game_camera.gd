@@ -16,6 +16,8 @@ const ZOOM_SNAP_DISTANCE : float = 0.01
 ## A leak shakes the view this many world pixels (a boss twice as far) for SHAKE_SECONDS.
 const SHAKE_PIXELS : float = 1.0
 const BOSS_SHAKE_PIXELS : float = 2.0
+## A boss falling shakes harder than anything else.
+const BOSS_DEFEATED_SHAKE_PIXELS : float = 3.0
 const SHAKE_SECONDS : float = 0.24
 ## New shake position every this many seconds, so the shake reads as a few jolts, not a blur.
 const SHAKE_STEP_SECONDS : float = 0.04
@@ -84,6 +86,7 @@ func _ready() -> void:
 	is_edge_scroll_on = SettingsManager.get_option(SettingsManager.OPTION_EDGE_SCROLL)
 	is_shake_on = SettingsManager.get_option(SettingsManager.OPTION_SCREEN_SHAKE)
 	GameSignals.enemy_reached_end_point.connect(_on_enemy_reached_end_point)
+	GameSignals.enemy_destroyed.connect(_on_enemy_destroyed)
 	zoom_target_position = zoom
 	move_target_position = global_position
 	pan_initial_position = global_position
@@ -137,6 +140,11 @@ func _update_shake(delta : float) -> void:
 
 func _on_enemy_reached_end_point(enemy : Enemy) -> void:
 	shake(BOSS_SHAKE_PIXELS if enemy.is_boss else SHAKE_PIXELS)
+
+
+func _on_enemy_destroyed(enemy : Enemy) -> void:
+	if enemy.is_boss:
+		shake(BOSS_DEFEATED_SHAKE_PIXELS)
 
 
 func _zoom() -> void:

@@ -45,8 +45,9 @@ const ELITE_SHEET_FORMAT : String = "%s_elite.%s"
 #with elite art the affix tint only hints, so the gold stays gold
 const ART_TINT_STRENGTH : float = 0.35
 
-#an enemy scene's SpriteFrames -> its elite copy (null: no elite sheet), shared by every elite of that scene
-static var elite_frames_cache : Dictionary[SpriteFrames, SpriteFrames] = {}
+#an enemy scene's SpriteFrames keep their elite copy as metadata (false: no elite sheet), shared by
+#every elite of that scene and freed with the frames; a static cache kept them past exit and leaked them
+const ELITE_FRAMES_META : StringName = &"elite_frames"
 
 var enemy : Enemy = null
 var affix : Affix = Affix.Shielded
@@ -112,8 +113,9 @@ func _ready() -> void:
 static func get_elite_frames(frames : SpriteFrames) -> SpriteFrames:
 	if frames == null:
 		return null
-	if elite_frames_cache.has(frames):
-		return elite_frames_cache[frames]
+	if frames.has_meta(ELITE_FRAMES_META):
+		var cached : Variant = frames.get_meta(ELITE_FRAMES_META)
+		return cached as SpriteFrames if cached is SpriteFrames else null
 
 	var elite_frames : SpriteFrames = SpriteFrames.new()
 	var has_elite_sheet : bool = false
@@ -131,8 +133,8 @@ static func get_elite_frames(frames : SpriteFrames) -> SpriteFrames:
 	if not frames.has_animation(&"default") and elite_frames.has_animation(&"default"):
 		elite_frames.remove_animation(&"default")
 
-	elite_frames_cache[frames] = elite_frames if has_elite_sheet else null
-	return elite_frames_cache[frames]
+	frames.set_meta(ELITE_FRAMES_META, elite_frames if has_elite_sheet else false)
+	return elite_frames if has_elite_sheet else null
 
 
 #the same region of <sheet>_elite.png, or the texture itself when there is none

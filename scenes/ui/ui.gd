@@ -17,6 +17,16 @@ const WAVE_PANEL_NAME : String = "wave_panel"
 const PUFFE_DIALOGUE_NAME : String = "puffe_dialogue"
 const TALENT_MENU_NAME : String = "talent_menu"
 const BOSS_HEALTH_BAR_NAME : String = "boss_health_bar"
+## Behind the pause, options, win and lose screens, so they stand out from the busy map (the level-up menu has its own).
+const DIM_COLOR : Color = Color(0, 0, 0, 0.5)
+## The win screen waits this long after the last kill, so the "Castle saved!" (or the boss's) banner shows.
+const WIN_SCREEN_DELAY : float = 1.2
+const HEADLESS : String = "headless"
+
+#a Quit fading out: a second click is dropped
+var is_resigning : bool = false
+#the win screen is on its way: no pause menu meanwhile
+var is_winning : bool = false
 
 var scene_manager : SceneManager
 var level_up_menu : LevelUpMenu = null
@@ -57,7 +67,7 @@ func unload_level() -> void:
 
 
 func is_other_menus_open() -> bool:
-	return scene_manager.is_scene_loaded(LOSE_GAME_MENU_NAME, scene_manager.SceneType.UI) or scene_manager.is_scene_loaded(LEVEL_COMPLETED_MENU_NAME, scene_manager.SceneType.UI) or is_instance_valid(level_up_menu)
+	return is_winning or scene_manager.is_scene_loaded(LOSE_GAME_MENU_NAME, scene_manager.SceneType.UI) or scene_manager.is_scene_loaded(LEVEL_COMPLETED_MENU_NAME, scene_manager.SceneType.UI) or is_instance_valid(level_up_menu)
 
 
 func _input(event: InputEvent) -> void:
@@ -89,12 +99,24 @@ func _on_developer_mode_changed(is_enabled : bool) -> void:
 	$DeveloperModeNotification.visible = is_enabled
 
 
+#the pause menu's Quit and the lose screen's World Map: the level fades out first, as the other switches do
 func _on_resign_level() -> void:
+	if is_resigning:
+		return
+	is_resigning = true
+	var main : Main = Utils.game_control as Main
+	if main != null and main.screen_fade != null:
+		await main.screen_fade.fade_out()
+	is_resigning = false
 	load_game_world_map(false)
 
 
 func _on_lose_game() -> void:
-	scene_manager.load_scene_by_name(LOSE_GAME_MENU_NAME, scene_manager.SceneType.UI, self)
+	var menu : LoseGameMenu = scene_manager.load_scene_by_name(LOSE_GAME_MENU_NAME, scene_manager.SceneType.UI, self)
+	dim_behind(menu)
+	var level : Level = scene_manager.current_level as Level
+	if menu != null and level != null:
+		menu.show_defeat(level.wave_runner.wave_number, level.wave_runner.wave_count, level.player_stats.leaks)
 
 
 #the talent screen opens over the world map and closes back to it
@@ -108,9 +130,18 @@ func _on_talents(is_open : bool) -> void:
 
 
 func _on_level_completed(level : Level) -> void:
+	#real time, the game is not paused yet; a headless run (tests, the bot) never waits
+	if DisplayServer.get_name() != HEADLESS:
+		is_winning = true
+		await get_tree().create_timer(WIN_SCREEN_DELAY).timeout
+		is_winning = false
+	if not is_instance_valid(level) or not level.is_inside_tree():
+		return
 	var menu : LevelCompletedMenu = scene_manager.load_scene_by_name(LEVEL_COMPLETED_MENU_NAME, scene_manager.SceneType.UI, self)
+	dim_behind(menu)
 	menu.show_result(scene_manager.current_level_number >= scene_manager.get_last_level_number())
 	menu.show_talent_points(TalentRules.points_for_level(level), PlayerProgress.get_level_mode_talent_points(scene_manager.current_level_number, level.mode))
+	menu.show_point_conditions(TalentRules.point_conditions_for_level(level))
 
 
 func _on_upgrade_level_gained(new_level : int, cards : Array[UpgradeCard]) -> void:
@@ -139,7 +170,7 @@ func _menu(_to_main_menu : bool, from_scene_name : String) -> void:
 			scene_manager.unload_current_level()
 		scene_manager.load_scene_by_name(MAIN_MENU_NAME, scene_manager.SceneType.UI, self)
 	else:
-		scene_manager.load_scene_by_name(PAUSE_MENU_NAME, scene_manager.SceneType.UI, self)
+		dim_behind(scene_manager.load_scene_by_name(PAUSE_MENU_NAME, scene_manager.SceneType.UI, self))
 		GameSignals.game_pause.emit(true)
 
 
@@ -151,6 +182,21 @@ func _options() -> void:
 		
 	var options = scene_manager.load_scene_by_name(OPTIONS_NAME, scene_manager.SceneType.UI, self)
 	options.in_main_menu = not scene_manager.is_in_level()
+	if scene_manager.is_in_level():
+		dim_behind(options)
+
+
+## A dark full-screen layer just under the menu, freed with it; it also keeps clicks off the map.
+func dim_behind(menu : Node) -> void:
+	if not menu is Control or menu.get_parent() != self:
+		return
+	var dim : ColorRect = ColorRect.new()
+	dim.color = DIM_COLOR
+	dim.mouse_filter = Control.MOUSE_FILTER_STOP
+	dim.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	add_child(dim)
+	move_child(dim, menu.get_index())
+	menu.tree_exiting.connect(dim.queue_free)
 
 
 func _continue_from_pause_menu() -> void:

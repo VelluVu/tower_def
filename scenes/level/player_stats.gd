@@ -8,6 +8,8 @@ extends Node
 	set = _set_life
 
 var has_lost : bool = false
+## Enemy scene path -> {count, lives}: what got through this level, for the lose screen.
+var leaks : Dictionary[String, Dictionary] = {}
 
 var is_alive : bool :
 	get:
@@ -29,6 +31,9 @@ func _on_enemy_reach_base(enemy : Enemy) -> void:
 		return
 	#the enemy's own damage is its leak cost, the melee skill's damage is only for hitting buildings
 	var cost : int = roundi(enemy.stats.get_stat_value(Utils.StatType.Damage))
+	var leak : Dictionary = leaks.get_or_add(enemy.scene_file_path, {"count": 0, "lives": 0})
+	leak.count += 1
+	leak.lives += cost
 	life -= cost
 	GameSignals.resource_change.emit(life, 1)
 	GameSignals.life_lost.emit(enemy.global_position, cost)
@@ -92,8 +97,10 @@ func _on_building_placed(building : Building) -> void:
 
 
 func _on_building_sell(building : Building) -> void:
-	gold += building.stats.get_stat_value(Utils.StatType.Price)
+	var refund : float = building.stats.get_stat_value(Utils.StatType.Price)
+	gold += refund
 	GameSignals.resource_change.emit(gold, 0)
+	GameSignals.gold_earned.emit(building.global_position, refund)
 
 
 func _set_life(value : float) -> void:

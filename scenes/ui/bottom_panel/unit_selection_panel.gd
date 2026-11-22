@@ -15,7 +15,18 @@ const UPGRADE_BUTTON_FONT_SIZE : int = 8
 const LOCKED_ICON : Texture2D = preload("res://assets/art/ui/lock.png")
 ## Space between the card and the window's bottom-left corner.
 const CORNER_MARGIN : float = 4.0
-const RESISTS_TEXT : String = "Resists: %s"
+const RESISTS_TEXT : String = "Resists"
+const RESIST_SHARE_FORMAT : String = "%d%%"
+const RESISTS_TOOLTIP : String = "Resistances
+The share of each hit it ignores. A tower's element and its kind both count, together at most 75%."
+## 7x7 icons for the element resistances; tower kinds stay as words.
+const RESIST_ICONS : Dictionary[Utils.Element, Texture2D] = {
+	Utils.Element.Physical: preload("res://assets/art/ui/stat_icons/stat_damage.png"),
+	Utils.Element.Fire: preload("res://assets/art/ui/stat_icons/stat_dragon.png"),
+	Utils.Element.Frost: preload("res://assets/art/ui/stat_icons/stat_freeze.png"),
+	Utils.Element.Poison: preload("res://assets/art/ui/stat_icons/stat_poison.png"),
+}
+const RESIST_PART_SEPARATION : int = 1
 const RESISTS_COLOR : Color = Color("86b8a0")
 const TACTIC_LABEL_TEXT : String = "Target"
 const SELL_TOOLTIP : String = "Sell  [%s]
@@ -32,7 +43,7 @@ const TACTIC_TOOLTIP : String = "Which enemy in range this tower shoots. Change 
 @onready var upgrade_option_container : HBoxContainer = $HBoxContainer/InfoBox/ButtonRow/UpgradeOptionContainer
 @onready var button_row : HBoxContainer = $HBoxContainer/InfoBox/ButtonRow
 
-var resists_label : Label = null
+var resists_row : RichTooltipBox = null
 #a Bolter's or Beamer's targeting tactic: a label and a menu of every tactic
 var tactic_row : HBoxContainer = null
 var tactic_menu : OptionButton = null
@@ -70,13 +81,13 @@ func _ready() -> void:
 	UISignals.deselected_unit.connect(_on_unit_deselected)
 	UISignals.gold_upgrades_changed.connect(_on_gold_upgrades_changed)
 	#an enemy's resistances under its stats; the UI signal carries no unit, the gameplay one does
-	resists_label = Label.new()
-	resists_label.add_theme_color_override(&"font_color", RESISTS_COLOR)
-	resists_label.hide()
-	unit_info_grid_container.add_sibling(resists_label)
+	resists_row = RichTooltipBox.new()
+	resists_row.tooltip_text = RESISTS_TOOLTIP
+	resists_row.hide()
+	unit_info_grid_container.add_sibling(resists_row)
 	GameSignals.selected_unit.connect(_on_selected_unit_node)
 	_create_tactic_menu()
-	resists_label.add_sibling(tactic_row)
+	resists_row.add_sibling(tactic_row)
 	UISignals.target_tactic_changed.connect(_on_target_tactic_changed)
 	wall_group_row = HBoxContainer.new()
 	wall_group_row.hide()
@@ -132,14 +143,16 @@ func _on_wall_group_changed(title : String, options : Array[GoldUpgradeOption]) 
 		for connection in button.pressed.get_connections():
 			button.pressed.disconnect(connection.callable)
 		button.pressed.connect(func() -> void: UISignals.wall_group_action.emit(index))
+		button.tooltip_text = get_upgrade_tooltip(options[index], false)
 		wall_group_row.add_child(button)
 	wall_group_row.show()
 	_fit_to_corner.call_deferred()
 
 
 func _create_tactic_menu() -> void:
-	tactic_row = HBoxContainer.new()
-	tactic_row.tooltip_text = TACTIC_TOOLTIP
+	tactic_row = RichTooltipBox.new()
+	tactic_row.tooltip_text = "%s
+%s" % [TACTIC_LABEL_TEXT, TACTIC_TOOLTIP]
 	tactic_row.hide()
 	var label : Label = Label.new()
 	label.text = TACTIC_LABEL_TEXT
@@ -147,7 +160,6 @@ func _create_tactic_menu() -> void:
 	tactic_menu = OptionButton.new()
 	tactic_menu.add_theme_font_size_override(&"font_size", UPGRADE_BUTTON_FONT_SIZE)
 	tactic_menu.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	tactic_menu.tooltip_text = TACTIC_TOOLTIP
 	#in the menu's order, each item's id is its tactic
 	for tactic in TargetPicker.MENU_ORDER:
 		tactic_menu.add_item(TargetPicker.TACTIC_NAMES[tactic], tactic)
@@ -156,6 +168,7 @@ func _create_tactic_menu() -> void:
 	tactic_menu.item_selected.connect(func(index : int) -> void:
 		UISignals.target_tactic_selected.emit(tactic_menu.get_item_id(index) as Utils.TargetTactic))
 	tactic_row.add_child(tactic_menu)
+	(tactic_row as RichTooltipBox).pass_children_to_row()
 
 
 func _on_target_tactic_changed(tactic : int) -> void:
@@ -167,9 +180,42 @@ func _on_target_tactic_changed(tactic : int) -> void:
 
 
 func _on_selected_unit_node(unit : Node2D) -> void:
-	var summary : String = unit.resistances.get_summary() if unit is Enemy and unit.resistances != null else ""
-	resists_label.text = RESISTS_TEXT % summary
-	resists_label.visible = not summary.is_empty()
+	#a typed empty list: an untyped [] in a ternary does not fit Array[Array]
+	var parts : Array[Array] = []
+	if unit is Enemy and unit.resistances != null:
+		parts = unit.resistances.get_parts()
+	_show_resists(parts)
+
+
+## "Resists" then an icon (or a tower kind's name) and the share for each resistance.
+func _show_resists(parts : Array[Array]) -> void:
+	for child in resists_row.get_children():
+		resists_row.remove_child(child)
+		child.queue_free()
+	resists_row.visible = not parts.is_empty()
+	if parts.is_empty():
+		return
+	resists_row.add_child(_resist_label(RESISTS_TEXT))
+	for part in parts:
+		var box : HBoxContainer = HBoxContainer.new()
+		box.add_theme_constant_override(&"separation", RESIST_PART_SEPARATION)
+		if RESIST_ICONS.has(part[2]):
+			var icon : TextureRect = TextureRect.new()
+			icon.texture = RESIST_ICONS[part[2]]
+			icon.stretch_mode = TextureRect.STRETCH_KEEP_CENTERED
+			box.add_child(icon)
+		else:
+			box.add_child(_resist_label(part[0]))
+		box.add_child(_resist_label(RESIST_SHARE_FORMAT % roundi(part[1] * 100.0)))
+		resists_row.add_child(box)
+	resists_row.pass_children_to_row()
+
+
+func _resist_label(text : String) -> Label:
+	var label : Label = Label.new()
+	label.text = text
+	label.add_theme_color_override(&"font_color", RESISTS_COLOR)
+	return label
 
 
 func _on_unit_selected(unit_name : String, actor_stats : Stats, main_skill : Skill, icon : Texture2D, _is_building : bool = false) -> void:
@@ -198,7 +244,7 @@ func _on_unit_deselected() -> void:
 	unit_info_grid_container.hide()
 	unit_icon.hide()
 	sell_button.visible = false
-	resists_label.hide()
+	resists_row.hide()
 	tactic_row.hide()
 	hide()
 
@@ -216,10 +262,7 @@ func _on_gold_upgrades_changed(options : Array[GoldUpgradeOption]) -> void:
 	var shortcut_index : int = get_shortcut_upgrade_index(options)
 	for index in options.size():
 		var button : Button = _create_upgrade_button(options[index], index)
-		if index == shortcut_index:
-			button.tooltip_text += UPGRADE_KEY_SUFFIX % InputManager.get_binding_text(InputManager.ACTION_UPGRADE_SELECTED)
-		elif options[index].is_choice:
-			button.tooltip_text += ELEMENT_CHOICE_TOOLTIP
+		button.tooltip_text = get_upgrade_tooltip(options[index], index == shortcut_index)
 		upgrade_option_container.add_child(button)
 	sell_button.tooltip_text = SELL_TOOLTIP % InputManager.get_binding_text(InputManager.ACTION_SELL_SELECTED)
 
@@ -239,7 +282,7 @@ func _fit_to_corner() -> void:
 
 
 func _create_upgrade_button(option : GoldUpgradeOption, index : int) -> Button:
-	var button : Button = Button.new()
+	var button : Button = RichTooltipButton.new()
 	button.theme = sell_button.theme
 	button.custom_minimum_size = EVOLVE_BUTTON_MIN_SIZE if option.icon != null else UPGRADE_BUTTON_MIN_SIZE
 	#an evolve button shows only its price: it grows to fit it (T2 and T3 cost two digits), never cut
@@ -253,10 +296,23 @@ func _create_upgrade_button(option : GoldUpgradeOption, index : int) -> Button:
 	button.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	button.vertical_icon_alignment = VERTICAL_ALIGNMENT_TOP
 	button.text = EVOLVE_BUTTON_TEXT % option.cost if option.icon != null else UPGRADE_BUTTON_TEXT % [option.title, option.cost]
-	button.tooltip_text = option.title
 	button.disabled = not option.is_affordable
 	button.pressed.connect(_on_upgrade_button_pressed.bind(index))
 	return button
+
+
+## The title (with the upgrade key on the shortcut's button), then what it gives.
+static func get_upgrade_tooltip(option : GoldUpgradeOption, is_shortcut : bool) -> String:
+	var text : String = option.title
+	if is_shortcut:
+		text += UPGRADE_KEY_SUFFIX % InputManager.get_binding_text(InputManager.ACTION_UPGRADE_SELECTED)
+	if not option.description.is_empty():
+		text += "
+" + option.description
+	#a wall's element says so in its own description
+	if option.is_choice and option.wall_element == Utils.Element.None:
+		text += ELEMENT_CHOICE_TOOLTIP
+	return text
 
 
 func _on_upgrade_button_pressed(index : int) -> void:

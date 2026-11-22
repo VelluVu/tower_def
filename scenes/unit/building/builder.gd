@@ -17,6 +17,9 @@ const TRAY_TITLE_FORMAT : String = "%s  [%s]"
 const TRAY_PRICE_FORMAT : String = "Cost %dg"
 const TRAY_PRICE_STEP_FORMAT : String = "Cost %dg, +%dg for each tower on the map"
 const SLASH : String = "/"
+## A tray building's base price and step, read once and kept as metadata on its list element (a static
+## cache on this script kept the script past exit, and with it most of the game: hundreds of leaks).
+const BASE_PRICE_META : StringName = &"tray_base_price_and_step"
 
 @export var buildings : Array[BuildingListElement]
 #the unlocked buildings in tray order; the tray slots and the select shortcuts index this list
@@ -79,6 +82,31 @@ static func get_tray_tooltip(element : BuildingListElement, slot : int) -> Strin
 		lines.append(element.description)
 	return "
 ".join(lines)
+
+
+## Base price (x) and price step (y) of a tray building, read once from its scene.
+static func get_base_price_and_step(element : BuildingListElement) -> Vector2:
+	if element.has_meta(BASE_PRICE_META):
+		return element.get_meta(BASE_PRICE_META)
+	var building : Building = element.scene.instantiate()
+	var price : float = 0.0
+	for stat in building.get_node(^"Stats").get_children():
+		if stat is Stat and stat.type == Utils.StatType.Price:
+			price = stat.value
+	var result : Vector2 = Vector2(price, building.price_step)
+	building.free()
+	element.set_meta(BASE_PRICE_META, result)
+	return result
+
+
+## Sends every tray slot its price now: the tower price step grows with each tower on the map.
+func emit_tray_prices() -> void:
+	if level == null:
+		return
+	var step_count : int = level.get_price_step_count()
+	for i in available_buildings.size():
+		var base : Vector2 = get_base_price_and_step(available_buildings[i])
+		UISignals.building_option_price.emit(i, base.x + (UpgradeRules.price_step_extra(base.y, step_count) if base.y > 0.0 else 0.0))
 
 
 func _ready() -> void:
@@ -189,8 +217,9 @@ func _on_building_placed(_building : Building) -> void:
 	_refresh_ghost_price.call_deferred()
 
 
-#the ghost shows and checks the price the next tower will cost
+#the ghost shows and checks the price the next tower will cost; the tray shows it too
 func _refresh_ghost_price() -> void:
+	emit_tray_prices()
 	if not is_placing_building or not is_instance_valid(current_building) or level == null:
 		return
 
@@ -234,6 +263,7 @@ func _update_building_options() -> void:
 	for i in available_buildings.size():
 		UISignals.building_option_updated.emit(i, available_buildings[i].icon)
 		UISignals.building_option_tooltip.emit(i, get_tray_tooltip(available_buildings[i], i))
+	emit_tray_prices()
 
 	UISignals.buildings_updated.emit(available_buildings.size())
 
@@ -292,6 +322,7 @@ func _place_building(building_index : int) -> void:
 		return
 	
 	if not has_enough_gold(current_building.stats.get_stat_value(Utils.StatType.Price)):
+		GameSignals.not_enough_gold.emit(get_global_mouse_position(), current_building.stats.get_stat_value(Utils.StatType.Price))
 		return
 	
 	grid_position = level.grid.world_position_to_grid(get_global_mouse_position())

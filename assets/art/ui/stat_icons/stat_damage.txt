@@ -1,0 +1,12 @@
+l = 8b9bb4
+w = ffffff
+y = feae34
+d = 733e39
+---
+.....ll
+....lwl
+...lwl.
+y.lwl..
+.yyl...
+.dyy...
+d...y..

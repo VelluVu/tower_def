@@ -1,0 +1,12 @@
+o = 181425
+w = ead4aa
+g = 63c74d
+y = feae34
+---
+.ooooo.
+owwwwwo
+owgggwo
+owgygwo
+owgggwo
+owwwwwo
+.ooooo.

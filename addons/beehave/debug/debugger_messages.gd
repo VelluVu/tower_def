@@ -2,7 +2,9 @@ class_name BeehaveDebuggerMessages
 
 
 static func can_send_message() -> bool:
-	return not Engine.is_editor_hint() and OS.has_feature("editor")
+	# Puffe TD patch (2026-11-22): an editor build run without a debugger (headless tests) printed
+	# "Can't send message. No active debugger" on every tick; send only while one is attached.
+	return not Engine.is_editor_hint() and OS.has_feature("editor") and EngineDebugger.is_active()
 
 
 static func register_tree(beehave_tree: Dictionary) -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cfky3fr2vue8u"]
+[gd_scene load_steps=8 format=3 uid="uid://cfky3fr2vue8u"]
 
 [ext_resource type="Script" path="res://scenes/ui/bottom_panel/bottom_panel.gd" id="1_4q4xm"]
 [ext_resource type="Script" path="res://scenes/ui/bottom_panel/building_panel.gd" id="2_mh1um"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://d1s2xw53fx6au" path="res://icon.svg" id="4_y8rhs"]
 [ext_resource type="Script" path="res://scenes/ui/bottom_panel/unit_selection_panel.gd" id="5_l2uok"]
 [ext_resource type="Script" path="res://scenes/ui/bottom_panel/horizontal_stat_field.gd" id="6_or30t"]
+[ext_resource type="Script" path="res://systems/tooltip/rich_tooltip_button.gd" id="rich_tooltip_button"]
 
 [node name="BottomPanel" type="Control"]
 layout_mode = 3
@@ -77,6 +78,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("3_5wo0p")
 
 [node name="SelectBuildingButton" type="Button" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption"]
+script = ExtResource("rich_tooltip_button")
 layout_mode = 1
 theme_type_variation = &"SlotButton"
 anchors_preset = 15
@@ -97,6 +99,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("3_5wo0p")
 
 [node name="SelectBuildingButton" type="Button" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption2"]
+script = ExtResource("rich_tooltip_button")
 layout_mode = 1
 theme_type_variation = &"SlotButton"
 anchors_preset = 15
@@ -117,6 +120,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("3_5wo0p")
 
 [node name="SelectBuildingButton" type="Button" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption3"]
+script = ExtResource("rich_tooltip_button")
 layout_mode = 1
 theme_type_variation = &"SlotButton"
 anchors_preset = 15
@@ -137,6 +141,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("3_5wo0p")
 
 [node name="SelectBuildingButton" type="Button" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption4"]
+script = ExtResource("rich_tooltip_button")
 layout_mode = 1
 theme_type_variation = &"SlotButton"
 anchors_preset = 15
@@ -157,6 +162,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("3_5wo0p")
 
 [node name="SelectBuildingButton" type="Button" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption5"]
+script = ExtResource("rich_tooltip_button")
 layout_mode = 1
 theme_type_variation = &"SlotButton"
 anchors_preset = 15
@@ -177,6 +183,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("3_5wo0p")
 
 [node name="SelectBuildingButton" type="Button" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption6"]
+script = ExtResource("rich_tooltip_button")
 layout_mode = 1
 theme_type_variation = &"SlotButton"
 anchors_preset = 15
@@ -197,6 +204,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("3_5wo0p")
 
 [node name="SelectBuildingButton" type="Button" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption7"]
+script = ExtResource("rich_tooltip_button")
 layout_mode = 1
 theme_type_variation = &"SlotButton"
 anchors_preset = 15
@@ -217,6 +225,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("3_5wo0p")
 
 [node name="SelectBuildingButton" type="Button" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption8"]
+script = ExtResource("rich_tooltip_button")
 layout_mode = 1
 theme_type_variation = &"SlotButton"
 anchors_preset = 15
@@ -237,6 +246,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("3_5wo0p")
 
 [node name="SelectBuildingButton" type="Button" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption9"]
+script = ExtResource("rich_tooltip_button")
 layout_mode = 1
 theme_type_variation = &"SlotButton"
 anchors_preset = 15
@@ -257,6 +267,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("3_5wo0p")
 
 [node name="SelectBuildingButton" type="Button" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption10"]
+script = ExtResource("rich_tooltip_button")
 layout_mode = 1
 theme_type_variation = &"SlotButton"
 anchors_preset = 15
@@ -277,6 +288,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("3_5wo0p")
 
 [node name="SelectBuildingButton" type="Button" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption11"]
+script = ExtResource("rich_tooltip_button")
 layout_mode = 1
 theme_type_variation = &"SlotButton"
 anchors_preset = 15
@@ -297,6 +309,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("3_5wo0p")
 
 [node name="SelectBuildingButton" type="Button" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption12"]
+script = ExtResource("rich_tooltip_button")
 layout_mode = 1
 theme_type_variation = &"SlotButton"
 anchors_preset = 15
@@ -317,6 +330,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("3_5wo0p")
 
 [node name="SelectBuildingButton" type="Button" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption13"]
+script = ExtResource("rich_tooltip_button")
 layout_mode = 1
 theme_type_variation = &"SlotButton"
 anchors_preset = 15
@@ -337,6 +351,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("3_5wo0p")
 
 [node name="SelectBuildingButton" type="Button" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption14"]
+script = ExtResource("rich_tooltip_button")
 layout_mode = 1
 theme_type_variation = &"SlotButton"
 anchors_preset = 15
@@ -357,6 +372,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("3_5wo0p")
 
 [node name="SelectBuildingButton" type="Button" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption15"]
+script = ExtResource("rich_tooltip_button")
 layout_mode = 1
 theme_type_variation = &"SlotButton"
 anchors_preset = 15
@@ -377,6 +393,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("3_5wo0p")
 
 [node name="SelectBuildingButton" type="Button" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption16"]
+script = ExtResource("rich_tooltip_button")
 layout_mode = 1
 theme_type_variation = &"SlotButton"
 anchors_preset = 15
@@ -397,6 +414,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("3_5wo0p")
 
 [node name="SelectBuildingButton" type="Button" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption17"]
+script = ExtResource("rich_tooltip_button")
 layout_mode = 1
 theme_type_variation = &"SlotButton"
 anchors_preset = 15
@@ -417,6 +435,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("3_5wo0p")
 
 [node name="SelectBuildingButton" type="Button" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption18"]
+script = ExtResource("rich_tooltip_button")
 layout_mode = 1
 theme_type_variation = &"SlotButton"
 anchors_preset = 15
@@ -437,6 +456,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("3_5wo0p")
 
 [node name="SelectBuildingButton" type="Button" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption19"]
+script = ExtResource("rich_tooltip_button")
 layout_mode = 1
 theme_type_variation = &"SlotButton"
 anchors_preset = 15
@@ -457,6 +477,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("3_5wo0p")
 
 [node name="SelectBuildingButton" type="Button" parent="MarginContainer/HBoxContainer/BuildingPanel/MarginContainer/BackgroundImage/ScrollContainer/GridContainer/BuildingOption20"]
+script = ExtResource("rich_tooltip_button")
 layout_mode = 1
 theme_type_variation = &"SlotButton"
 anchors_preset = 15
@@ -599,6 +620,7 @@ size_flags_horizontal = 3
 theme_override_constants/separation = 2
 
 [node name="SellButton" type="Button" parent="UnitSelectionPanel/HBoxContainer/InfoBox/ButtonRow"]
+script = ExtResource("rich_tooltip_button")
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 4

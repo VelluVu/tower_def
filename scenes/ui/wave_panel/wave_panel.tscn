@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://scenes/ui/wave_panel/wave_panel.gd" id="1_wavep"]
+[ext_resource type="Script" path="res://systems/tooltip/rich_tooltip_button.gd" id="rich_tooltip_button"]
 
 [node name="WavePanel" type="Control"]
 layout_mode = 3
@@ -54,6 +55,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="StartWaveButton" type="Button" parent="MarginContainer/Panel/MarginContainer/VBoxContainer"]
+script = ExtResource("rich_tooltip_button")
 layout_mode = 2
 text = "Start wave"
 

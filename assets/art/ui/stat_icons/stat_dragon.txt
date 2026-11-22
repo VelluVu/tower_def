@@ -1,0 +1,12 @@
+o = 181425
+r = e43b44
+y = feae34
+h = fee761
+---
+...o...
+..oro..
+.oryro.
+.oryyo.
+oryhyro
+oryhhro
+.ooooo.

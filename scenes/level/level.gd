@@ -8,6 +8,8 @@ const BUILDING_TYPE_UPGRADES_NAME : String = "BuildingTypeUpgrades"
 const LEVEL_TALENTS_NAME : String = "LevelTalents"
 const ELEMENT_REACTIONS_NAME : String = "ElementReactions"
 const MAZE_ELEMENTS_NAME : String = "MazeElements"
+const DUST_PUFFS_NAME : String = "DustPuffs"
+const HIT_EFFECTS_NAME : String = "HitEffects"
 const WALL_GROUP_NAME : String = "WallGroupSelect"
 const PATH_PREVIEW_NAME : String = "PathPreview"
 const PLAYTEST_LOG_NAME : String = "PlaytestLog"
@@ -88,6 +90,12 @@ func _ready() -> void:
 	var maze_elements : MazeElements = MazeElements.new()
 	maze_elements.name = MAZE_ELEMENTS_NAME
 	add_child(maze_elements)
+	var dust_puffs : DustPuffs = DustPuffs.new()
+	dust_puffs.name = DUST_PUFFS_NAME
+	add_child(dust_puffs)
+	var hit_effects : HitEffects = HitEffects.new()
+	hit_effects.name = HIT_EFFECTS_NAME
+	add_child(hit_effects)
 	var backdrop : LevelBackdrop = LevelBackdrop.new()
 	backdrop.name = BACKDROP_NAME
 	add_child(backdrop)

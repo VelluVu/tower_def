@@ -47,10 +47,18 @@ func get_tower(skill_type : Utils.SkillType) -> float:
 
 ## "Poison 40%, Fire 20%, Bolter 30%": the resistances above 0, strongest first; empty with none.
 func get_summary() -> String:
-	var parts : Array = [["Physical", physical], ["Fire", fire], ["Frost", frost], ["Poison", poison],
-		["Bolter", projectile], ["Nova", area], ["Beamer", beam]].filter(func(part : Array) -> bool: return part[1] > 0.0)
+	return ", ".join(get_parts().map(func(part : Array) -> String: return "%s %d%%" % [part[0], roundi(part[1] * 100.0)]))
+
+
+## [name, share, element] for each resistance above 0, strongest first; element is Utils.Element.None for a tower kind.
+func get_parts() -> Array[Array]:
+	var parts : Array[Array] = []
+	for part : Array in [["Physical", physical, Utils.Element.Physical], ["Fire", fire, Utils.Element.Fire], ["Frost", frost, Utils.Element.Frost],
+			["Poison", poison, Utils.Element.Poison], ["Bolter", projectile, Utils.Element.None], ["Nova", area, Utils.Element.None], ["Beamer", beam, Utils.Element.None]]:
+		if part[1] > 0.0:
+			parts.append(part)
 	parts.sort_custom(func(a : Array, b : Array) -> bool: return a[1] > b[1])
-	return ", ".join(parts.map(func(part : Array) -> String: return "%s %d%%" % [part[0], roundi(part[1] * 100.0)]))
+	return parts
 
 
 ## The share of a hit that gets through: element and tower resistance stack, the total capped at 75%.
