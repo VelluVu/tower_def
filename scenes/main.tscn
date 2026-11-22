@@ -38,7 +38,6 @@ limit_top = -448
 limit_right = 704
 limit_bottom = 448
 script = ExtResource("5_nmsmd")
-pan_speed = 16.0
 
 [node name="DamageNumberManager" parent="." unique_id=1265623864 instance=ExtResource("8_1x856")]
 

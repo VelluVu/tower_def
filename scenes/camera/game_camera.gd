@@ -11,8 +11,6 @@ const ZOOM_IN_ACTION_NAME : String = "ZoomCameraIn"
 const PAN_ACTION_NAME : String = "PanCamera"
 ## How close to the window edge the mouse scrolls the camera, in viewport pixels.
 const EDGE_SCROLL_MARGIN : float = 4.0
-## Below this distance the zoom tween snaps to its whole-number target.
-const ZOOM_SNAP_DISTANCE : float = 0.01
 ## A leak shakes the view this many world pixels (a boss twice as far) for SHAKE_SECONDS.
 const SHAKE_PIXELS : float = 1.0
 const BOSS_SHAKE_PIXELS : float = 2.0
@@ -26,12 +24,8 @@ enum CameraMode {Static, Free}
 
 @export var move_step : float = 16
 @export var move_speed : float = 10
-@export var pan_step : float = 16
-@export var pan_speed : float = 10
-@export var zoom_speed : float = 10
 @export var zoom_min = Vector2(1, 1)
-@export var zoom_max = Vector2(5,5)
-@export var pan_speed_scale : float = 20.0
+@export var zoom_max = Vector2(3, 3)
 ## Space kept around the spawners and end points when a level starts, in world pixels.
 @export var level_frame_margin : float = 48.0
 ## The start view zooms out to fit the path, but never closer than this.
@@ -45,14 +39,11 @@ var current_delta : float = 0
 
 var base_move_speed : float = 0
 var move_lerp_start_position : Vector2 = Vector2.ZERO
-var zoom_lerp_start_position : Vector2 = Vector2.ZERO
 var move_target_position : Vector2 = Vector2.ZERO
-var zoom_target_position : Vector2 = Vector2.ZERO
 var fixed_toggle_position = Vector3.ZERO
+#the drag holds the world point under the mouse: where the mouse and the camera were at the grab
 var pan_initial_position : Vector2 = Vector2.ZERO
-var pan_current_position : Vector2 = Vector2.ZERO
-var pan_end_position : Vector2 = Vector2.ZERO
-var pan_lerp_target_pos : Vector2 = Vector2.ZERO
+var pan_start_camera_position : Vector2 = Vector2.ZERO
 var move_direction : Vector2 = Vector2.ZERO
 
 #the widest zoom in the current level: the level always fills the view's width
@@ -87,10 +78,7 @@ func _ready() -> void:
 	is_shake_on = SettingsManager.get_option(SettingsManager.OPTION_SCREEN_SHAKE)
 	GameSignals.enemy_reached_end_point.connect(_on_enemy_reached_end_point)
 	GameSignals.enemy_destroyed.connect(_on_enemy_destroyed)
-	zoom_target_position = zoom
 	move_target_position = global_position
-	pan_initial_position = global_position
-	pan_lerp_target_pos = global_position
 
 
 func _process(delta: float) -> void:
@@ -100,13 +88,12 @@ func _process(delta: float) -> void:
 	#keys typed into a text field (the console) must not move the camera
 	if get_viewport().gui_get_focus_owner() is LineEdit:
 		move_direction = Vector2.ZERO
+		is_panning = false
 	else:
 		_zoom()
 		_movement()
-	_pan()
+		_pan()
 	_move_camera_smoothly(delta)
-	_zoom_camera_smoothly(delta)
-	_pan_camera_smoothly(delta)
 	_update_shake(delta)
 	_snap_view_to_art_pixels()
 
@@ -150,10 +137,50 @@ func _on_enemy_destroyed(enemy : Enemy) -> void:
 func _zoom() -> void:
 	if is_cursor_on_gui:
 		return
+	var steps : float = 0.0
 	if Input.is_action_just_pressed(ZOOM_IN_ACTION_NAME):
-		zoom_target_position = (zoom_target_position + Vector2.ONE * zoom_step).round()
+		steps += zoom_step
 	if Input.is_action_just_pressed(ZOOM_OUT_ACTION_NAME):
-		zoom_target_position = (zoom_target_position - Vector2.ONE * zoom_step).round()
+		steps -= zoom_step
+	if steps == 0.0:
+		return
+	var min_zoom : float = _get_min_zoom()
+	var new_zoom : float = clampf(roundf(zoom.x + steps), min_zoom, maxf(min_zoom, zoom_max.x))
+	if new_zoom == zoom.x:
+		return
+	_zoom_at(_get_zoom_anchor(), new_zoom)
+
+
+#no tween: a fractional zoom between the whole steps makes the pixel art shimmer
+func _zoom_at(screen_point : Vector2, new_zoom : float) -> void:
+	var from_center : Vector2 = screen_point - get_viewport_rect().size * 0.5
+	var world_point : Vector2 = global_position + from_center / zoom
+	zoom = Vector2.ONE * new_zoom
+	global_position = _clamp_to_limits(world_point - from_center / zoom)
+	move_target_position = global_position
+	if is_panning:
+		pan_initial_position = get_viewport().get_mouse_position()
+		pan_start_camera_position = global_position
+
+
+#the wheel zooms at the cursor; a key with the mouse outside the view zooms at the centre
+#(an embedded or unfocused window can report a cursor far outside the view)
+func _get_zoom_anchor() -> Vector2:
+	var mouse_position : Vector2 = get_viewport().get_mouse_position()
+	if is_mouse_in_window and get_viewport_rect().has_point(mouse_position):
+		return mouse_position
+	return get_viewport_rect().size * 0.5
+
+
+func _get_min_zoom() -> float:
+	return maxf(zoom_min.x, level_min_zoom)
+
+
+func _clamp_to_limits(target : Vector2) -> Vector2:
+	var viewport_half : Vector2 = get_viewport_rect().size * 0.5 / zoom
+	var limit_min : Vector2 = Vector2(limit_left + viewport_half.x, limit_top + viewport_half.y)
+	var limit_max : Vector2 = Vector2(limit_right - viewport_half.x, limit_bottom - viewport_half.y)
+	return target.clamp(limit_min, limit_max)
 
 
 func _movement() -> void:
@@ -212,62 +239,32 @@ func _on_option_changed(key : String, value : Variant) -> void:
 	elif key == SettingsManager.OPTION_SCREEN_SHAKE:
 		is_shake_on = value
 
-func _zoom_camera_smoothly(delta : float) -> void:
-	var min_zoom : Vector2 = Vector2.ONE * maxf(zoom_min.x, level_min_zoom)
-	zoom_target_position = clamp(zoom_target_position, min_zoom, zoom_max)
-	zoom = zoom.lerp(zoom_target_position, zoom_speed * delta)
-	if zoom.distance_to(zoom_target_position) < ZOOM_SNAP_DISTANCE:
-		zoom = zoom_target_position
-	zoom = zoom.clamp(min_zoom, zoom_max)
-
-
 func _move_camera_smoothly(delta : float) -> void:
 	if is_panning:
 		return
-		
-	var viewport_half = get_viewport_rect().size * 0.5 * ( Vector2.ONE / zoom )
-	var limit_min = Vector2(limit_left + viewport_half.x, limit_top + viewport_half.y)
-	var limit_max = Vector2(limit_right - viewport_half.x, limit_bottom - viewport_half.y)
-	
-	move_target_position = global_position + move_direction * move_step * speed_multiplier
-	move_target_position = move_target_position.clamp(limit_min, limit_max)
-	global_position = global_position.lerp(move_target_position, move_speed * delta)
-	global_position = global_position.clamp(limit_min, limit_max)
+	#divided by the zoom so the screen scrolls equally fast at 1x and 3x
+	var step : float = move_step * speed_multiplier / zoom.x
+	move_target_position = _clamp_to_limits(global_position + move_direction * step)
+	global_position = _clamp_to_limits(global_position.lerp(move_target_position, move_speed * delta))
 
 
+#grab and drag: the world point under the mouse stays under it
 func _pan() -> void:
-	if Input.is_action_pressed(PAN_ACTION_NAME):
-		is_panning = true
-		pan_current_position = get_viewport().get_mouse_position()
-		var from_initial_to_current = pan_current_position - pan_initial_position
-		pan_lerp_target_pos = global_position - from_initial_to_current.normalized()
-		
-	if Input.is_action_just_released(PAN_ACTION_NAME):
-		is_panning = false
+	is_panning = Input.is_action_pressed(PAN_ACTION_NAME)
+	if not is_panning:
+		return
+	var dragged : Vector2 = get_viewport().get_mouse_position() - pan_initial_position
+	global_position = _clamp_to_limits(pan_start_camera_position - dragged / zoom)
+	move_target_position = global_position
 
 
 func _set_is_panning(value : bool) -> void:
 	if is_panning == value:
 		return
-		
 	is_panning = value
-	
 	if is_panning:
 		pan_initial_position = get_viewport().get_mouse_position()
-	else:
-		pan_end_position = get_viewport().get_mouse_position()
-
-
-func _pan_camera_smoothly(delta : float) -> void:
-	if not is_panning:
-		return
-		
-	var viewport_half = get_viewport_rect().size * 0.5 * ( Vector2.ONE / zoom )
-	var limit_min = Vector2(limit_left + viewport_half.x, limit_top + viewport_half.y)
-	var limit_max = Vector2(limit_right - viewport_half.x, limit_bottom - viewport_half.y)
-	pan_lerp_target_pos = pan_lerp_target_pos.clamp(limit_min, limit_max)
-	global_position = global_position.slerp(pan_lerp_target_pos, pan_speed * pan_speed_scale * delta)
-	global_position = global_position.clamp(limit_min, limit_max)
+		pan_start_camera_position = global_position
 
 
 func _on_level_loaded(level : Level) -> void:
@@ -296,14 +293,8 @@ func _frame_level(bounds : Rect2) -> void:
 	#rounded down to a whole zoom so the framed path stays in view
 	var start_zoom : float = clampf(floorf(fit), level_min_zoom, maxf(level_min_zoom, level_frame_max_zoom))
 	zoom = Vector2.ONE * start_zoom
-	zoom_target_position = zoom
-
-	var viewport_half : Vector2 = viewport_size * 0.5 / zoom
-	var limit_min : Vector2 = Vector2(limit_left + viewport_half.x, limit_top + viewport_half.y)
-	var limit_max : Vector2 = Vector2(limit_right - viewport_half.x, limit_bottom - viewport_half.y)
-	global_position = framed.get_center().clamp(limit_min, limit_max)
+	global_position = _clamp_to_limits(framed.get_center())
 	move_target_position = global_position
-	pan_lerp_target_pos = global_position
 
 
 func _on_mouse_on_gui(value : bool) -> void:
