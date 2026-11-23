@@ -66,6 +66,15 @@ const PANEL_BOTTOM_MARGIN : int = 32
 const PANEL_Z_INDEX : int = 10
 ## Kept inside the screen by this much when it opens near an edge.
 const SCREEN_MARGIN : float = 4.0
+## The area's picture under the level name (tools/art/area_banners.py, 80x22 at 2x), one per LEVELS_PER_AREA.
+const AREA_BANNERS : Array[Texture2D] = [
+	preload("res://assets/art/ui/area_banners/area_banner_caves.png"),
+	preload("res://assets/art/ui/area_banners/area_banner_swamp.png"),
+	preload("res://assets/art/ui/area_banners/area_banner_wasted_lands.png"),
+	preload("res://assets/art/ui/area_banners/area_banner_ash_desert.png"),
+	preload("res://assets/art/ui/area_banners/area_banner_volcano.png"),
+]
+const AREA_BANNER_SCALE : int = 2
 @onready var tooltip : Panel = $Tooltip
 @onready var start_button : Button = $Tooltip/StartButton
 @onready var close_button : Button = $Tooltip/CloseButton
@@ -100,6 +109,7 @@ func _ready() -> void:
 	_apply_token()
 	_show_level_info()
 	_add_mode_tabs()
+	_add_area_banner()
 	_show_talent_points()
 	_add_points_row()
 	_add_enemy_row()
@@ -115,6 +125,11 @@ func _ready() -> void:
 ## The level unlocked but not cleared yet.
 func is_next_to_play() -> bool:
 	return not is_locked and not _is_normal_cleared()
+
+
+## The level's area: 0 Caves, 1 Swamp, 2 Wasted Lands, 3 Ash Desert, 4 Volcano.
+static func area_of(level : int) -> int:
+	return clampi(floori((level - 1) / float(LEVELS_PER_AREA)), 0, AREA_BANNERS.size() - 1)
 
 
 ## The token row for a level: its area's, or the boss row for an area boss.
@@ -207,6 +222,18 @@ func _show_level_info() -> void:
 	info_label.text = INFO_FORMAT % [level_number, data.waves.size(), data.starting_gold, data.starting_life]
 	if not data.story_text.is_empty():
 		info_label.text = STORY_FORMAT % [data.story_text, info_label.text]
+
+
+## The area's picture right under the level name, above the mode tabs.
+func _add_area_banner() -> void:
+	var banner : TextureRect = TextureRect.new()
+	banner.texture = AREA_BANNERS[area_of(level_number)]
+	banner.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	banner.stretch_mode = TextureRect.STRETCH_SCALE
+	banner.custom_minimum_size = banner.texture.get_size() * AREA_BANNER_SCALE
+	banner.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	banner.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	name_label.add_sibling(banner)
 
 
 #one tab per mode under the title, built here so the six map tooltips stay the same; a mode

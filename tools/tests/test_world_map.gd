@@ -40,6 +40,9 @@ func test_map_shows_cleared_and_next(kit : TestKit) -> void:
 		by_number[element.level_number] = element
 
 	kit.check(by_number[4].visible and not by_number[5].visible and not by_number[60].visible, "level 4 is next, 5 and later hidden")
+	kit.check(MapLevelElement.area_of(12) == 0 and MapLevelElement.area_of(13) == 1 and MapLevelElement.area_of(60) == 4, "twelve levels to an area")
+	var banner : TextureRect = by_number[13].name_label.get_parent().get_child(by_number[13].name_label.get_index() + 1) as TextureRect
+	kit.check(banner != null and banner.texture == MapLevelElement.AREA_BANNERS[1], "the swamp picture under a swamp level's name")
 	kit.check(by_number[4].is_next_to_play() and not by_number[3].is_next_to_play(), "only level 4 is next to play")
 	kit.check(by_number[1].completion_ring.tier == CompletionRing.Tier.GOLD, "15 points: gold")
 	kit.check(by_number[2].completion_ring.tier == CompletionRing.Tier.BRONZE, "1 point: bronze")

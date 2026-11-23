@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cefopk67rqs5k"
+path="res://.godot/imported/area_banner_wasted_lands.aseprite-a54e80529ad09bc5cf0356324ce4d0af.res"
+
+[deps]
+
+source_file="res://assets/art/ui/area_banners/area_banner_wasted_lands.aseprite"
+dest_files=["res://.godot/imported/area_banner_wasted_lands.aseprite-a54e80529ad09bc5cf0356324ce4d0af.res"]
+
+[params]
+

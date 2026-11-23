@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://lc06vlpoqev4"
+path="res://.godot/imported/area_banner_volcano.aseprite-eaf520b735c6ca36462b112f7e676cb6.res"
+
+[deps]
+
+source_file="res://assets/art/ui/area_banners/area_banner_volcano.aseprite"
+dest_files=["res://.godot/imported/area_banner_volcano.aseprite-eaf520b735c6ca36462b112f7e676cb6.res"]
+
+[params]
+
