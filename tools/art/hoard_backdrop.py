@@ -730,10 +730,11 @@ def egg_frames(el):
 
 class Pose:
     def __init__(self, head_dy=0, front=(0, 0), back=(0, 0), wings="fold", tail=True, legs=True, body=True,
-                 blink=False, tail_dy=0, puff=0, body_dy=0):
+                 blink=False, tail_dy=0, puff=0, body_dy=0, tear=0):
         self.head_dy, self.front, self.back, self.wings = head_dy, front, back, wings
         self.tail, self.legs, self.body, self.blink = tail, legs, body, blink
         self.tail_dy, self.puff, self.body_dy = tail_dy, puff, body_dy
+        self.tear = tear
 
 
 HATCH_W, HATCH_H = 26, 22
@@ -812,6 +813,10 @@ def draw_hatchling(cv, el, hx, hy, pose, bx=None, by=None):
         cv.put(hx + 3, hy, EYE)
         cv.put(hx + 1, hy - 1, GLINT)
     cv.put(hx + 4, hy + 3, ramp[1])       # the corner of the mouth
+    if pose.tear:
+        # a tear rolling down from the near eye
+        cv.put(hx + 1, hy + pose.tear, "b2")
+        cv.put(hx + 1, hy + pose.tear + 1, "white")
     if pose.puff:
         core, glow, fringe = PUFF[el]
         px, py = hx + 7, hy + 2
@@ -888,6 +893,12 @@ def hatchling_frames(el):
     puff = [Pose(head_dy=-1), Pose(head_dy=-1, puff=1), Pose(puff=2), Pose(puff=3), Pose(puff=4), Pose()]
     poses += puff
     tags.append(("PUFF", 110, len(puff)))
+    # the lose screen: sitting with its head hung low, a tear now and then
+    sad = [Pose(head_dy=3, blink=True, tail_dy=1, wings="fold"), Pose(head_dy=3, blink=True, tail_dy=1),
+           Pose(head_dy=4, blink=True, tail_dy=1, tear=1), Pose(head_dy=4, blink=True, tail_dy=1, tear=2),
+           Pose(head_dy=3, blink=True, tail_dy=1, tear=3)]
+    poses += sad
+    tags.append(("SAD", 380, len(sad)))
     frames = []
     for pose in poses:
         cv = Canvas(HATCH_W, HATCH_H)
@@ -1008,7 +1019,7 @@ def write_sprite_frames(name, fw, fh, count, tags):
     """A SpriteFrames .tres over the packed sheet (ceil(sqrt(n)) columns, as sprite.py exports it)."""
     columns = math.ceil(math.sqrt(count))
     out = ["[gd_resource type=\"SpriteFrames\" load_steps=%d format=3]" % (count + 2), "",
-           "[ext_resource type=\"Texture2D\" path=\"res://assets/art/ui/title/hoard/%s.png\" id=\"1_sheet\"]" % name, ""]
+           "[ext_resource type=\"Texture2D\" path=\"res://%s\" id=\"1_sheet\"]" % (ART / (name + ".png")).relative_to(ROOT).as_posix(), ""]
     for i in range(count):
         out += ["[sub_resource type=\"AtlasTexture\" id=\"AtlasTexture_%d\"]" % i, "atlas = ExtResource(\"1_sheet\")",
                 "region = Rect2(%d, %d, %d, %d)" % (i % columns * fw, i // columns * fh, fw, fh), ""]

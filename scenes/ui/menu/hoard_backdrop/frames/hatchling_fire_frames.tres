@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=22 format=3]
+[gd_resource type="SpriteFrames" load_steps=27 format=3]
 
 [ext_resource type="Texture2D" path="res://assets/art/ui/title/hoard/hatchling_fire.png" id="1_sheet"]
 
@@ -81,6 +81,26 @@ region = Rect2(78, 66, 26, 22)
 [sub_resource type="AtlasTexture" id="AtlasTexture_19"]
 atlas = ExtResource("1_sheet")
 region = Rect2(104, 66, 26, 22)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_20"]
+atlas = ExtResource("1_sheet")
+region = Rect2(0, 88, 26, 22)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_21"]
+atlas = ExtResource("1_sheet")
+region = Rect2(26, 88, 26, 22)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_22"]
+atlas = ExtResource("1_sheet")
+region = Rect2(52, 88, 26, 22)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_23"]
+atlas = ExtResource("1_sheet")
+region = Rect2(78, 88, 26, 22)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_24"]
+atlas = ExtResource("1_sheet")
+region = Rect2(104, 88, 26, 22)
 
 [resource]
 animations = [{
@@ -168,4 +188,24 @@ animations = [{
 "loop": false,
 "name": &"PUFF",
 "speed": 9.091
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_20")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_21")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_22")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_23")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_24")
+}],
+"loop": true,
+"name": &"SAD",
+"speed": 2.632
 }]

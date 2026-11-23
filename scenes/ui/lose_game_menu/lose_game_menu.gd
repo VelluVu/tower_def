@@ -32,6 +32,11 @@ const DEFEAT_BOX_NAME : StringName = &"DefeatSummary"
 
 func _ready() -> void:
 	GameSignals.survival_run_ended.connect(_on_survival_run_ended)
+	#the plundered hall above the result
+	var box : VBoxContainer = survival_label.get_parent()
+	var picture : EndVignette = EndVignette.build(EndVignette.Kind.LOSE)
+	box.add_child(picture)
+	box.move_child(picture, 0)
 
 
 func _on_survival_run_ended(waves_cleared : int, best_waves : int, is_new_best : bool) -> void:

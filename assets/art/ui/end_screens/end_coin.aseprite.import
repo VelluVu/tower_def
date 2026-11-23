@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cl8o8op8y6f5u"
+path="res://.godot/imported/end_coin.aseprite-321c436ec849f07c3ad6b56721182950.res"
+
+[deps]
+
+source_file="res://assets/art/ui/end_screens/end_coin.aseprite"
+dest_files=["res://.godot/imported/end_coin.aseprite-321c436ec849f07c3ad6b56721182950.res"]
+
+[params]
+

@@ -40,7 +40,7 @@ func setup(frames : SpriteFrames, start : Vector2, target_picker : Callable) -> 
 	centered = false
 	pick_target = target_picker
 	spot = start
-	_face(1.0)
+	face(1.0)
 	_place()
 	if not animation_finished.is_connected(_on_animation_finished):
 		animation_finished.connect(_on_animation_finished)
@@ -53,7 +53,7 @@ func hop_to(landing : Vector2) -> void:
 	_hop_time = 0.0
 	target = landing
 	z_index = HOP_Z_INDEX
-	_face(signf(landing.x - spot.x))
+	face(signf(landing.x - spot.x))
 	play(GlobalAnimationNames.HOP_ANIMATION)
 
 
@@ -62,7 +62,7 @@ func fly_off() -> void:
 	z_index = HOP_Z_INDEX
 	#away from the middle of the scene, the shorter way out
 	_fly_direction = 1.0 if spot.x >= HoardBackdrop.ART_SIZE.x * 0.6 else -1.0
-	_face(_fly_direction)
+	face(_fly_direction)
 	play(GlobalAnimationNames.FLY_ANIMATION)
 
 
@@ -112,7 +112,7 @@ func _walk() -> void:
 		_rest()
 		return
 	state = State.WALK
-	_face(signf(target.x - spot.x))
+	face(signf(target.x - spot.x))
 	play(GlobalAnimationNames.WALK_ANIMATION)
 
 
@@ -122,7 +122,8 @@ func _on_animation_finished() -> void:
 		play(GlobalAnimationNames.IDLE_ANIMATION)
 
 
-func _face(direction : float) -> void:
+## Turns it to face right (1) or left (-1), keeping its feet on the spot.
+func face(direction : float) -> void:
 	if direction == 0.0:
 		return
 	flip_h = direction < 0.0

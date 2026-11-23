@@ -20,6 +20,13 @@ const CHECKLIST_NAME : StringName = &"PointChecklist"
 @onready var talent_points_label : Label = $MarginContainer/VBoxContainer/TalentPoints
 
 
+func _ready() -> void:
+	#the cheering hoard above the result
+	var box : VBoxContainer = label.get_parent()
+	var picture : EndVignette = EndVignette.build(EndVignette.Kind.WIN)
+	box.add_child(picture)
+	box.move_child(picture, 0)
+
 ## After the last level the menu tells the player the game is won.
 func show_result(is_last_level : bool) -> void:
 	label.text = GAME_WON_TEXT if is_last_level else LEVEL_COMPLETED_TEXT

@@ -21,6 +21,7 @@ const EMPTY_ANIMATION : String = "EMPTY"
 const HOP_ANIMATION : String = "HOP"
 const FLY_ANIMATION : String = "FLY"
 const PUFF_ANIMATION : String = "PUFF"
+const SAD_ANIMATION : String = "SAD"
 const OATH_ANIMATION : String = "OATH"
 const SWEEP_ANIMATION : String = "SWEEP"
 #the Ashen Wyrm: walking once it has landed, coming down, calling the ash drakes

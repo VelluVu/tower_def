@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://83cs3o3a1jao"
+path="res://.godot/imported/end_smoke.aseprite-ddc0e4b3fb9cad5a8d49d7124e68cdef.res"
+
+[deps]
+
+source_file="res://assets/art/ui/end_screens/end_smoke.aseprite"
+dest_files=["res://.godot/imported/end_smoke.aseprite-ddc0e4b3fb9cad5a8d49d7124e68cdef.res"]
+
+[params]
+
