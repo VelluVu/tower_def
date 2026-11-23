@@ -99,8 +99,11 @@ func _on_enemy_hit(area_hit : Area2D) -> void:
 func _reaches_air() -> bool:
 	if can_hit_air:
 		return true
-	var tower : Tower = skill_data.damage_data.source as Tower if skill_data != null and is_instance_valid(skill_data.damage_data) else null
-	return tower != null and is_instance_valid(tower) and tower.hits_air
+	if skill_data == null or not is_instance_valid(skill_data.damage_data):
+		return false
+	#the Nova may be sold while its burst still plays: cast only a live source
+	var source : Node = skill_data.damage_data.source
+	return is_instance_valid(source) and source is Tower and source.hits_air
 
 
 func _on_time_scale_change(time_scale : float) -> void:

@@ -22,14 +22,16 @@ func use(_target : Node2D) -> void:
 
 
 func new_projectile(new_scene : PackedScene) -> void:
-	if not launched_projectiles.is_empty():
-		for old_projectile in launched_projectiles:
-			old_projectile.is_old = true
-	
-	if not projectile_pool.is_empty():
-		for item in projectile_pool:
-			item.is_old = true
-	
+	#idle pooled ones go now (marked old, they were dropped one per shot and never freed); ones in flight
+	#are freed when they finish (_on_projectile_finished)
+	for item in projectile_pool:
+		launched_projectiles.erase(item)
+		item.clear()
+	projectile_pool.clear()
+
+	for old_projectile in launched_projectiles:
+		old_projectile.is_old = true
+
 	projectile_scene = new_scene
 
 
@@ -118,8 +120,6 @@ func _get_projectile() -> Node2D:
 	
 	if not projectile_pool.is_empty():
 		projectile = projectile_pool.pop_back()
-		if projectile.is_old:
-			projectile = null
 	
 	if projectile == null:
 		projectile = projectile_scene.instantiate()

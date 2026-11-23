@@ -58,3 +58,28 @@ func test_xp_gain_card(kit : TestKit) -> void:
 	var xp : float = kit.level.upgrades.xp
 	kit.level.upgrades._on_enemy_destroyed(enemy)
 	kit.check_near(kit.level.upgrades.xp - xp, WEAKLING_KILL_XP * 1.5, "kill xp with the bonus")
+
+
+func test_an_open_offer_closes_when_the_level_ends(kit : TestKit) -> void:
+	await kit.load_level(1)
+	var upgrades : LevelUpgrades = kit.level.upgrades
+	var pauses : Array[bool] = []
+	var count_pause : Callable = func(is_paused : bool) -> void: pauses.append(is_paused)
+	GameSignals.game_pause.connect(count_pause)
+
+	#lost in the frame a kill's XP opened the cards: closed, and the lose screen's pause stays
+	upgrades.add_xp(upgrades.xp_needed)
+	kit.check(not upgrades.offered_cards.is_empty(), "the XP opened an offer")
+	pauses.clear()
+	upgrades._on_level_finished()
+	kit.check(upgrades.offered_cards.is_empty(), "the lost level closed the offer")
+	upgrades._on_upgrade_card_selected(0)
+	kit.check(not pauses.has(false), "nothing unpaused the lost level")
+
+	#won with an offer open: closed and unpaused, the level runs on behind its menu
+	upgrades.is_finished = false
+	upgrades.add_xp(upgrades.xp_needed)
+	pauses.clear()
+	upgrades._on_level_won(kit.level)
+	kit.check(upgrades.offered_cards.is_empty() and pauses == [false], "the won level closed the offer and unpaused")
+	GameSignals.game_pause.disconnect(count_pause)

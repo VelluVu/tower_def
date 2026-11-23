@@ -26,6 +26,8 @@ const BASE_PRICE_META : StringName = &"tray_base_price_and_step"
 var available_buildings : Array[BuildingListElement] = []
 
 var is_ready_to_build : bool = false
+#won or lost: an unpause must not turn building back on behind the result screen
+var is_level_over : bool = false
 var is_cursor_on_gui : bool = false
 var is_walkable_tile_on_buildings_cells_free : bool = false
 var current_building_option_index : int = 0
@@ -194,11 +196,14 @@ func _validate_placement_position(_pos : Vector2) -> bool:
 
 func _on_lose_game() -> void:
 	_stop_building_placement()
+	is_level_over = true
+	is_ready_to_build = false
 
 
 #the level stays running behind the completed menu, so building has to stop by hand
 func _on_level_completed(_level : Level) -> void:
 	_stop_building_placement()
+	is_level_over = true
 	is_ready_to_build = false
 
 
@@ -234,12 +239,13 @@ func _on_resource_change(_value : int, resource_index : int) -> void:
 
 
 func _on_game_pause(is_paused : bool) -> void:
-	is_ready_to_build = not is_paused
+	is_ready_to_build = not is_paused and not is_level_over
 
 
 func _on_level_loaded(_level : Level) -> void:
 	placed_buildings.clear()
 	placed_building_id = 0
+	is_level_over = false
 	#a menu freed under the cursor may never send mouse_on_gui(false)
 	is_cursor_on_gui = false
 	level = _level

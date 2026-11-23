@@ -135,7 +135,7 @@ func get_sheet(style : String, damage_type : Utils.DamageType) -> Texture2D:
 func play(sheet : Texture2D, frame_size : int, at : Vector2) -> void:
 	var sprite : Sprite2D = Sprite2D.new()
 	sprite.texture = sheet
-	sprite.hframes = int(sheet.get_width() / frame_size)
+	sprite.hframes = floori(float(sheet.get_width()) / frame_size)
 	add_child(sprite)
 	sprite.global_position = at.round()
 	var tween : Tween = sprite.create_tween()

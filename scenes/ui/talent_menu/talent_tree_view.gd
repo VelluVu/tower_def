@@ -375,7 +375,7 @@ func _draw_node(node : TalentNode) -> void:
 		var icon : Texture2D = TalentNodeIcons.for_node(node)
 		if icon != null:
 			var tint : Color = Color.WHITE if rank > 0 or is_pickable else ICON_OPEN if TalentRules.is_open(tree, ranks, node) else ICON_LOCKED
-			draw_texture(icon, center - Vector2(ICON_SIZE / 2, ICON_SIZE / 2), tint)
+			draw_texture(icon, center - Vector2(floorf(ICON_SIZE / 2.0), floorf(ICON_SIZE / 2.0)), tint)
 	if zoom_index > 0 and node.max_rank > 1 and (rank > 0 or is_pickable):
 		_draw_pips(center + Vector2(0, half + PIP_GAP + 1), rank, node.max_rank)
 

@@ -208,11 +208,13 @@ func _run_queued_end_check() -> void:
 
 func _on_building_placed(building : Building) -> void:
 	all_buildings.append(building)
+	grid.mark_buildings_changed()
 	GameSignals.astar_grid_updated.emit()
 
 
 func _on_building_erase(building : Building) -> void:
 	all_buildings.erase(building)
+	grid.mark_buildings_changed()
 	GameSignals.astar_grid_updated.emit()
 
 
@@ -354,7 +356,9 @@ func _get_unit_selection() -> void:
 		if has_node("UnitSelection"):
 			unit_selection = get_node("UnitSelection")
 		else:
+			#a level scene without one gets its own; out of the tree it would never select and leak
 			unit_selection = ResourceLoader.load(PATH_TO_UNIT_SELECTION_SCENE).instantiate()
+			add_child(unit_selection)
 
 
 func _get_early_start_bonus() -> float:

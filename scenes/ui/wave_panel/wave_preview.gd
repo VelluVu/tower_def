@@ -133,7 +133,7 @@ static func enemy_kind(scene : PackedScene) -> Dictionary:
 static func make_portrait(frames : SpriteFrames) -> Texture2D:
 	if frames == null or frames.get_animation_names().is_empty():
 		return null
-	var animation : StringName = StringName(GlobalAnimationNames.IDLE_ANIMATION) if frames.has_animation(GlobalAnimationNames.IDLE_ANIMATION) else frames.get_animation_names()[0]
+	var animation : StringName = StringName(GlobalAnimationNames.IDLE_ANIMATION) if frames.has_animation(GlobalAnimationNames.IDLE_ANIMATION) else StringName(frames.get_animation_names()[0])
 	if frames.get_frame_count(animation) == 0:
 		return null
 	var frame : Texture2D = frames.get_frame_texture(animation, 0)
@@ -144,10 +144,10 @@ static func make_portrait(frames : SpriteFrames) -> Texture2D:
 	var used : Rect2i = image.get_used_rect()
 	if used.size == Vector2i.ZERO:
 		return null
-	var crop : Rect2i = Rect2i(used.position.x + (used.size.x - PORTRAIT_SIZE) / 2, used.position.y, PORTRAIT_SIZE, PORTRAIT_SIZE)
+	var crop : Rect2i = Rect2i(used.position.x + floori((used.size.x - PORTRAIT_SIZE) / 2.0), used.position.y, PORTRAIT_SIZE, PORTRAIT_SIZE)
 	#a small sprite sits in the middle of the square instead
 	if used.size.x <= PORTRAIT_SIZE and used.size.y <= PORTRAIT_SIZE:
-		crop.position = used.position + (used.size - Vector2i(PORTRAIT_SIZE, PORTRAIT_SIZE)) / 2
+		crop.position = used.position + Vector2i((Vector2(used.size - Vector2i(PORTRAIT_SIZE, PORTRAIT_SIZE)) / 2.0).floor())
 	var portrait : Image = Image.create_empty(PORTRAIT_SIZE, PORTRAIT_SIZE, false, Image.FORMAT_RGBA8)
 	var source : Rect2i = crop.intersection(Rect2i(Vector2i.ZERO, image.get_size()))
 	portrait.blit_rect(image, source, source.position - crop.position)

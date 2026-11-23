@@ -37,6 +37,10 @@ var talent_maze_slow : float = 0.0
 var bog_crossings : Array[BogCrossing] = []
 #cells whose tile flags something in the level replaced (lava cooled into rock, an eruption over a road)
 var cell_overrides : Dictionary[Vector2i, int] = {}
+#buildings by cell, rebuilt on the next lookup after mark_buildings_changed: the maze checks ask for
+#up to twenty cells per enemy step and per tower hit, too many for a scan of every building each time
+var buildings_by_cell : Dictionary[Vector2i, Building] = {}
+var is_cell_index_dirty : bool = true
 
 
 func _init(level_tiles : Tiles, level_buildings : Array[Building]) -> void:
@@ -320,10 +324,26 @@ func has_building_in_cell_position(_grid_pos : Vector2i) -> bool:
 
 
 func get_building_from_cell_position(_grid_pos : Vector2i) -> Building:
+	if is_cell_index_dirty:
+		_rebuild_cell_index()
+	return buildings_by_cell.get(_grid_pos, null)
+
+
+## Call after a building is added to or removed from `buildings` (Level does it).
+func mark_buildings_changed() -> void:
+	is_cell_index_dirty = true
+
+
+#the first building in the list wins a cell, as the old scan did
+func _rebuild_cell_index() -> void:
+	buildings_by_cell.clear()
 	for building in buildings:
-		if world_position_to_grid(building.global_position) == _grid_pos:
-			return building
-	return null
+		if not is_instance_valid(building):
+			continue
+		var cell : Vector2i = world_position_to_grid(building.global_position)
+		if not buildings_by_cell.has(cell):
+			buildings_by_cell[cell] = building
+	is_cell_index_dirty = false
 
 
 #exact match: callers pass a cell centre (snap_position_to_grid) to find the building there

@@ -44,8 +44,8 @@ func _on_time_scale_change(new_scale : float) -> void:
 	speed_value.text = format_speed(new_scale)
 
 
-static func format_speed(scale : float) -> String:
-	var text : String = String.num(scale, 2)
+static func format_speed(speed : float) -> String:
+	var text : String = String.num(speed, 2)
 	if text.contains("."):
 		text = text.rstrip("0").rstrip(".")
 	return SPEED_FORMAT % text

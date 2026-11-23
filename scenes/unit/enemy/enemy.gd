@@ -21,7 +21,7 @@ const TURN_DOT_LIMIT : float = 0.5
 @onready var selectable : SelectableUnit = $SelectableUnit
 @onready var pop_up_spot : Node2D = $PopUpSpot
 #only flyers carry one, see FlightMovement
-@onready var flight_movement : FlightMovement = _find_flight_movement()
+@onready var flight_movement : FlightMovement = Utils.find_child_of_type(self, FlightMovement)
 
 @onready var modifier_manager : ModifierManager = $ModifierManager :
 	get:
@@ -56,26 +56,20 @@ const TURN_DOT_LIMIT : float = 0.5
 @export var skill : Skill :
 	get:
 		if skill == null:
-			for child in get_children():
-				if child is Skill:
-					skill = child
+			skill = Utils.find_child_of_type(self, Skill)
 		return skill
 
 var beehave_tree : BeehaveTree :
 	get:
 		if beehave_tree == null:
-			for child in get_children():
-				if child is BeehaveTree:
-					beehave_tree = child
+			beehave_tree = Utils.find_child_of_type(self, BeehaveTree)
 		return beehave_tree
 
 #only enemies with abilities (bosses, egg sacs) carry one
 var abilities : EnemyAbilities :
 	get:
 		if abilities == null:
-			for child in get_children():
-				if child is EnemyAbilities:
-					abilities = child
+			abilities = Utils.find_child_of_type(self, EnemyAbilities)
 		return abilities
 
 var is_colliding_building : bool = false :
@@ -163,9 +157,9 @@ signal selected(is_selected : bool)
 
 
 func take_damage(damage_data : DamageData) -> void:
-	#print(name, " takes damage: ", damage_data.damage)
 	if is_dead:
 		return
+	damage_data.drop_freed_source()
 	if damage_data.damage > 0.0 and fire_ward != null and fire_ward.absorb(damage_data):
 		return
 
@@ -194,7 +188,7 @@ func take_damage(damage_data : DamageData) -> void:
 		if damage_data.source != null:
 			damage_data.source.dealt_damage(self, damage_data)
 		gore_emitter.emit_gore(damage_data)
-		animation_control.play_hit_animation()
+		animation_control.play_hit_animation(not damage_data.is_overtime)
 		TowerHitEffects.apply(self, damage_data, raw_damage)
 
 
@@ -247,7 +241,6 @@ func get_resistance_factor(damage_data : DamageData) -> float:
 
 
 func dealt_damage(_target : Node2D, _damage_data : DamageData) -> void:
-	#print(name, " dealt ", _damage_data.damage ," damage to ", _target.name)
 	pass
 
 
@@ -314,8 +307,6 @@ func _get_cell_speed_factor() -> float:
 
 
 func path_to(from : Vector2, to : Vector2) -> void:
-	#to = level.grid.snap_position_to_grid(to)
-
 	if is_flying:
 		point_path = flight_movement.get_route(from, to)
 		current_waypoint_index = 0
@@ -346,9 +337,9 @@ func path_to(from : Vector2, to : Vector2) -> void:
 		return
 		
 	var direction_to_first_waypoint : Vector2 = global_position.direction_to(point_path[0])
-	var dot = velocity.dot(direction_to_first_waypoint)
-	
-	if dot < 0:
+	var dot : float = velocity.dot(direction_to_first_waypoint)
+
+	if dot < 0.0:
 		iterate_next_waypoint()
 		return
 
@@ -474,7 +465,7 @@ func get_spacing_speed_factor(move_direction : Vector2) -> float:
 
 
 func get_remaining_path_waypoint_count() -> int:
-	return range(current_waypoint_index, point_path.size()).size()
+	return maxi(point_path.size() - current_waypoint_index, 0)
 
 
 #the building in this enemy's cell first, then one in a neighbour cell; traps are walked over, never attacked
@@ -575,9 +566,3 @@ func _set_is_the_end_point_reached(value : bool) -> void:
 		hide()
 		queue_free()
 
-
-func _find_flight_movement() -> FlightMovement:
-	for child in get_children():
-		if child is FlightMovement:
-			return child
-	return null

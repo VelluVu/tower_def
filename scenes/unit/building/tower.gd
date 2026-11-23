@@ -40,14 +40,6 @@ var has_target : bool :
 	get:
 		return not targets.is_empty() and not is_silenced
 
-var behaviour_tree : BeehaveTree :
-	get:
-		if behaviour_tree == null:
-			for child in get_children():
-				if child is BeehaveTree:
-					behaviour_tree = child
-		return behaviour_tree
-
 
 func _ready() -> void:
 	super()
@@ -168,10 +160,10 @@ func get_closest_target_to_end() -> Node2D:
 
 func _enable_tower() -> void:
 	super()
-	behaviour_tree.enable()
+	beehave_tree.enable()
 
 
 func _set_is_placing(value : bool) -> void:
 	super(value)
 	if is_placing:
-		behaviour_tree.disable()
+		beehave_tree.disable()

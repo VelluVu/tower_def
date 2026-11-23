@@ -133,8 +133,12 @@ static func get_elite_frames(frames : SpriteFrames) -> SpriteFrames:
 	if not frames.has_animation(&"default") and elite_frames.has_animation(&"default"):
 		elite_frames.remove_animation(&"default")
 
-	frames.set_meta(ELITE_FRAMES_META, elite_frames if has_elite_sheet else false)
-	return elite_frames if has_elite_sheet else null
+	#false marks "checked, no elite sheet" so the scan runs once per SpriteFrames
+	if not has_elite_sheet:
+		frames.set_meta(ELITE_FRAMES_META, false)
+		return null
+	frames.set_meta(ELITE_FRAMES_META, elite_frames)
+	return elite_frames
 
 
 #the same region of <sheet>_elite.png, or the texture itself when there is none

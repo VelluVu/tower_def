@@ -13,9 +13,7 @@ const LINE_DAMAGE_SHARE : float = 0.6
 @onready var line : Line2D = $Line2D :
 	get: 
 		if line == null:
-			for child in get_children():
-				if child is Line2D:
-					line = child
+			line = Utils.find_child_of_type(self, Line2D)
 		return line
 		
 @onready var damage_timer : CustomTimer = $DamageTimer
@@ -172,7 +170,7 @@ func _set_is_active(value : bool) -> void:
 	else:
 		chained_targets.clear()
 		_set_line_point_count(end_line_index + 1)
-		line.set_point_position(1, Vector2.ZERO)
+		line.set_point_position(end_line_index, Vector2.ZERO)
 		damage_timer.stop()
 		actor.animation_control.play_animation(GlobalAnimationNames.STOP_ATTACK_ANIMATION)
 		is_ready = true

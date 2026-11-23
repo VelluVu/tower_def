@@ -139,6 +139,46 @@ func test_a_stack_ticks_its_duration(kit : TestKit) -> void:
 	burn.free()
 
 
+func test_a_hit_lands_after_its_tower_is_sold(kit : TestKit) -> void:
+	await kit.load_level(1)
+	var enemy : Enemy = _tough_enemy(kit)
+	var bolter : Building = await kit.place("puffe_bolter", Vector2i(12, 6))
+	await kit.frames()
+	#a bolt in flight carries the hit it was given at launch
+	var hit : DamageData = bolter.skill.damage_data
+	hit.damage = 10.0
+	hit.is_critical = false
+	GameSignals.sell_building.emit(bolter)
+	bolter.remove()
+	await kit.frames(2)
+	kit.check(not is_instance_valid(bolter), "the tower is gone")
+	var landed : Array[int] = [0]
+	var count_hit : Callable = func(_position : Vector2, _data : DamageData) -> void: landed[0] += 1
+	GameSignals.damage_taken.connect(count_hit)
+	#`source is Building` on the freed tower was a script error that stopped take_damage
+	enemy.take_damage(hit)
+	GameSignals.damage_taken.disconnect(count_hit)
+	kit.check(landed[0] == 1, "the hit landed")
+	kit.check(hit.source == null and not is_instance_valid(hit.source), "the hit forgot its freed source")
+	hit.free()
+
+
+func test_an_arrow_lands_after_its_archer_died(kit : TestKit) -> void:
+	await kit.load_level(1)
+	var wall : Building = await kit.place("wall", Vector2i(12, 6))
+	var archer : Enemy = kit.spawn_enemy("weakling")
+	await kit.frames()
+	var arrow : DamageData = DamageData.new()
+	arrow.damage = 1.0
+	arrow.source = archer
+	archer.free()
+	var before : float = wall.stats.get_stat_value(Utils.StatType.Health)
+	#Wall.take_damage casts the source to Enemy before the base class: a freed one was a script error
+	wall.take_damage(arrow)
+	kit.check(wall.stats.get_stat_value(Utils.StatType.Health) < before, "the wall took the arrow")
+	arrow.free()
+
+
 func test_hits_leave_no_orphan_nodes(kit : TestKit) -> void:
 	await kit.load_level(1)
 	var spawner : Spawner = kit.level.get_spawners()[0]

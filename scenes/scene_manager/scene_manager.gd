@@ -10,6 +10,7 @@ const LEVEL_RESOURCE_NONEXISTENT_WARNING : String = " Unable to find level resou
 const UI_RESOURCE_NONEXISTENT_WARNING : String = " Unable to find ui resource in path: "
 const FOLDER_PATH_WARNING : String = " Unable to find folder in path: "
 const INVALID_RESOURCE_IN_PATH_WARNING : String = " Unable to find resource in path: "
+const LEVEL_NUMBER_MISSING_WARNING : String = " Level file name has no level number, skipped: "
 const SCENE_ENDING : String = ".tscn"
 const SLASH : String = "/"
 const ENDING_CHAR_COUNT : int = 5
@@ -193,12 +194,13 @@ func _find_and_append_all_ui_scenes_from_file_names_in_directory_path(file_names
 			file_name = file_name.replace(".uid", "")
 			
 		var file_path : String = directory_path + SLASH + file_name
-		
+
+		#scenes only: other files (scripts, .import files in an export) are no reason to warn
+		if not file_path.ends_with(SCENE_ENDING):
+			continue
+
 		if not ResourceLoader.exists(file_path):
 			push_warning(name, INVALID_RESOURCE_IN_PATH_WARNING , file_path)
-			continue
-		
-		if not file_path.ends_with(SCENE_ENDING):
 			continue
 
 		_add_ui_path(file_path)
@@ -221,7 +223,9 @@ func _get_level_packed_scenes_from_project_folder() -> void:
 		if not full_path.ends_with(SCENE_ENDING):
 			continue
 
-		if ResourceLoader.exists(full_path):
+		if _get_level_number_from_level_name(_get_scene_name(full_path)) <= 0:
+			push_warning(name, LEVEL_NUMBER_MISSING_WARNING, full_path)
+		elif ResourceLoader.exists(full_path):
 			_add_level_path(full_path)
 		else:
 			push_warning(name, LEVEL_RESOURCE_NONEXISTENT_WARNING, full_path)
@@ -250,5 +254,6 @@ func _remove_ending_after_marking_from_file_name(file_name : String, marking : S
 func _get_level_number_from_level_name(file_name : String) -> int:
 	var regex : RegEx = RegEx.new()
 	regex.compile("\\d+")
-	var result = regex.search(file_name)
-	return result.get_string().to_int()
+	var result : RegExMatch = regex.search(file_name)
+	#0 = no number in the name: not a level
+	return result.get_string().to_int() if result != null else 0

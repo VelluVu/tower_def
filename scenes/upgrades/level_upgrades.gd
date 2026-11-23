@@ -41,7 +41,7 @@ func _ready() -> void:
 	GameSignals.building_placed.connect(_on_building_placed)
 	GameSignals.sell_building.connect(_on_building_removed)
 	GameSignals.building_destroyed.connect(_on_building_removed)
-	GameSignals.level_completed.connect(_on_level_finished)
+	GameSignals.level_completed.connect(_on_level_won)
 	GameSignals.lose_game.connect(_on_level_finished)
 	UISignals.upgrade_card_selected.connect(_on_upgrade_card_selected)
 	UISignals.game_play_interface_loaded.connect(_emit_xp_changed)
@@ -73,8 +73,22 @@ func _on_enemy_destroyed(enemy : Enemy) -> void:
 	add_xp(UpgradeRules.kill_xp(base_health, enemy.xp_multiplier) * mode_xp * (1.0 + xp_bonus))
 
 
-func _on_level_finished(_level : Level = null) -> void:
+#an offer still open when the level ends (a kill's XP in the same frame as the last leak) is closed with it:
+#picking a card afterwards unpaused the game behind the lose screen
+func _on_level_finished() -> void:
 	is_finished = true
+	if offered_cards.is_empty():
+		return
+	offered_cards.clear()
+	GameSignals.upgrade_cards_closed.emit()
+
+
+#a won level keeps running behind its menu, so the offer's pause is lifted too (a lost one stays paused)
+func _on_level_won(_level : Level) -> void:
+	var had_offer : bool = not offered_cards.is_empty()
+	_on_level_finished()
+	if had_offer:
+		GameSignals.game_pause.emit(false)
 
 
 func _on_building_placed(building : Building) -> void:

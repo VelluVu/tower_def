@@ -52,7 +52,8 @@ func alter_time_left(new_time_scale : float) -> void:
 	var old_time_scale : float = current_time_scale
 	current_time_scale = new_time_scale
 
-	if time_left <= 0.0:
+	#a timer out of the tree (being freed, or a node not added yet) cannot be restarted
+	if time_left <= 0.0 or not is_inside_tree():
 		return
 
 	var timer_time_left : float = time_left * old_time_scale / new_time_scale

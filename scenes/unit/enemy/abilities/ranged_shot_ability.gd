@@ -103,7 +103,13 @@ func _make_hit() -> ShotHit:
 
 
 func _fire() -> void:
-	var aim : Vector2 = target.global_position if is_instance_valid(target) else enemy.global_position
+	#the target was sold during the wind-up: the next building in range, or no shot (aiming at its own
+	#feet let an area shot hit the walls around the shooter)
+	if not is_instance_valid(target) or target.is_dead:
+		target = _pick_target()
+		if target == null:
+			return
+	var aim : Vector2 = target.global_position
 	if shot_texture == null:
 		push_warning(enemy.name, NO_TEXTURE_WARNING)
 		_land(aim, weakref(target), weakref(enemy.level), _make_hit())

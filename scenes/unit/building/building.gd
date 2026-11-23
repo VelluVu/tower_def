@@ -36,17 +36,13 @@ const SKILL_DAMAGE_DATA_NODE_NAME : String = "DamageData"
 @export var skill : Skill : 
 	get:
 		if skill == null:
-			for child in get_children():
-				if child is Skill:
-					skill = child
+			skill = Utils.find_child_of_type(self, Skill)
 		return skill
 
 @export var beehave_tree : BeehaveTree :
 	get: 
 		if beehave_tree == null:
-			for child in get_children():
-				if child is BeehaveTree:
-					beehave_tree = child
+			beehave_tree = Utils.find_child_of_type(self, BeehaveTree)
 		return beehave_tree
 
 @export var icon : Texture2D = null
@@ -106,7 +102,8 @@ func place(value : Vector2) -> void:
 func take_damage(damage_data : DamageData) -> void:
 	if is_dead:
 		return
-		
+	damage_data.drop_freed_source()
+
 	#talents: weakened attackers hit softer, armoured walls take less
 	if damage_data.damage > 0.0 and level != null and level.talents != null:
 		if damage_data.source is Enemy:
@@ -257,7 +254,6 @@ func _get_is_placed() -> bool:
 
 
 func _set_is_placed(value : bool) -> void:
-	#print(name, " is placed: ", value)
 	if is_placed == value:
 		return
 		

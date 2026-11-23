@@ -53,8 +53,16 @@ var modifiers : Array[Modifier] :
 		return modifiers
 
 
+## Forgets a source freed since the hit was made (a sold tower's bolt or burn tick, a dead archer's arrow):
+## `source is Building` on a freed instance is a script error. take_damage calls it first.
+func drop_freed_source() -> void:
+	if not is_instance_valid(source):
+		source = null
+
+
 func _set_source(new_source : Node) -> void:
-	if source == new_source:
+	#a freed source may compare equal to null, so only a live one counts as unchanged
+	if source == new_source and is_instance_valid(source):
 		return
 	
 	source = new_source

@@ -44,12 +44,21 @@ static func _freeze(target : Enemy, tower : Building) -> void:
 		target.freeze_for(tower.stats.get_stat_value(Utils.StatType.FreezeDuration))
 
 
+#an enemy other than the target that a tower's splash, shard or spread can land on: alive, above ground,
+#within reach, and in the air only for a tower that hits flyers (a sandstorm's hidden flyers never)
+#enemy untyped: a freed one must reach the is_instance_valid check, a typed parameter rejects it first
+static func _can_reach(enemy, target : Enemy, tower : Building, reach : float) -> bool:
+	if not is_instance_valid(enemy) or enemy == target or enemy.is_dead or enemy.is_deactivated or enemy.is_burrowed:
+		return false
+	if enemy.is_flying and (enemy.is_concealed or (tower is Tower and not tower.hits_air)):
+		return false
+	return enemy.global_position.distance_to(target.global_position) <= reach
+
+
 #up to count living, reachable enemies within SPLIT_RANGE_TILES of the target, nearest first
-static func _nearest_others(target : Enemy, count : int) -> Array:
+static func _nearest_others(target : Enemy, tower : Building, count : int) -> Array:
 	var reach : float = SPLIT_RANGE_TILES * Utils.TILE_SIZE
-	var near : Array = target.level.existing_enemies.filter(func(enemy : Enemy) -> bool:
-		return enemy != target and is_instance_valid(enemy) and not enemy.is_dead and not enemy.is_deactivated and not enemy.is_burrowed \
-			and enemy.global_position.distance_to(target.global_position) <= reach)
+	var near : Array = target.level.existing_enemies.filter(func(enemy) -> bool: return _can_reach(enemy, target, tower, reach))
 	near.sort_custom(func(a : Enemy, b : Enemy) -> bool:
 		return a.global_position.distance_squared_to(target.global_position) < b.global_position.distance_squared_to(target.global_position))
 	return near.slice(0, count)
@@ -62,7 +71,7 @@ static func _spread_poison(target : Enemy, tower : Building, count : int) -> voi
 		return
 	if target.overtime_effect_handler.get_active_stacks(Utils.DamageType.Poison).is_empty():
 		return
-	for enemy in _nearest_others(target, count):
+	for enemy in _nearest_others(target, tower, count):
 		var infection : DamageData = tower.skill.damage_data
 		infection.damage *= POISON_SPREAD_SHARE
 		infection.is_splash = true
@@ -74,7 +83,7 @@ static func _spread_poison(target : Enemy, tower : Building, count : int) -> voi
 static func _split(target : Enemy, tower : Building, damage_data : DamageData, shard_damage : float, shards : int) -> void:
 	if target.level == null or shard_damage <= 0.0:
 		return
-	for enemy in _nearest_others(target, shards):
+	for enemy in _nearest_others(target, tower, shards):
 		var shard : DamageData = DamageData.new()
 		shard.damage_type = damage_data.damage_type
 		shard.damage = shard_damage
@@ -89,9 +98,7 @@ static func _splash(target : Enemy, tower : Building, damage_data : DamageData, 
 		return
 
 	for enemy in target.level.existing_enemies.duplicate():
-		if enemy == target or not is_instance_valid(enemy) or enemy.is_dead or enemy.is_deactivated or enemy.is_burrowed:
-			continue
-		if enemy.global_position.distance_to(target.global_position) > reach:
+		if not _can_reach(enemy, target, tower, reach):
 			continue
 		var splash : DamageData = DamageData.new()
 		splash.damage_type = damage_data.damage_type

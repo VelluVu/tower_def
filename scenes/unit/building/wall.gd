@@ -99,6 +99,8 @@ func destroy_building() -> void:
 
 #the blocking side: an enemy that hits an element wall pays for it
 func take_damage(damage_data : DamageData) -> void:
+	#before the cast: an arrow can land after its archer died
+	damage_data.drop_freed_source()
 	var attacker : Enemy = damage_data.source as Enemy
 	var tier : int = get_element_tier()
 	#Poison T2 weakens its attackers, Fortress T2 takes less

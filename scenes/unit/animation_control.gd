@@ -7,9 +7,15 @@ const NO_FLASH_MATERIAL_WARNING : String = " has no unit sprite material, unable
 #full flash, then half, then off: a hit during the half step shows as a new flash
 const FLASH_STEPS : Array[float] = [1.0, 0.5, 0.0]
 const HIT_COLOR_PARAMETER : StringName = &"hit_color"
+#a hit enemy's sprite jumps this many world pixels backwards for a moment (whole pixels, see _process)
+const FLINCH_PIXELS : float = 1.0
 
 ## Seconds the hit flash lasts, split evenly between its steps.
 @export var flash_duration : float = 0.1
+## Game seconds an enemy's flinch lasts.
+@export var flinch_time : float = 0.06
+## Game seconds after a flinch before the next one: a beam's ticks would otherwise make the sprite shake.
+@export var flinch_cooldown : float = 0.25
 
 var flash_tween : Tween = null
 #the material's own hit colour, put back by every hit flash after a coloured one
@@ -31,6 +37,8 @@ var current_time_scale : float = 1.0
 var current_wanted_playtime : float = 0.0
 #the sprite's position in its scene; the pixel snap moves it less than a pixel around this
 var pixel_snap_position : Vector2 = Vector2.ZERO
+var flinch_left : float = 0.0
+var flinch_cooldown_left : float = 0.0
 
 
 func play_animation(animation_name : String, wanted_play_time : float = 0.0, is_no_slowing : bool = false) -> void:
@@ -52,8 +60,12 @@ func play_animation(animation_name : String, wanted_play_time : float = 0.0, is_
 	_alter_current_animation_speed(is_no_slowing)
 
 
-func play_hit_animation() -> void:
+## The hit flash; with flinch, an enemy also recoils a pixel (direct hits, not burn or poison ticks).
+func play_hit_animation(flinch : bool = false) -> void:
 	play_flash(null)
+	if flinch and actor is Enemy and flinch_cooldown_left <= 0.0:
+		flinch_left = flinch_time
+		flinch_cooldown_left = flinch_cooldown
 
 
 ## The hit flash in another colour and length (a building going up flashes white); null is the hit colour.
@@ -113,8 +125,15 @@ func _ready() -> void:
 #the body moves in fractions of a pixel; the sprite is drawn on whole world pixels,
 #so at 2x and 3x zoom a walking unit never sits half an art pixel off
 #(position, not offset: Godot's own snap rounds the offset away)
-func _process(_delta : float) -> void:
-	position = pixel_snap_position + actor.global_position.round() - actor.global_position
+func _process(delta : float) -> void:
+	var game_delta : float = delta * current_time_scale
+	flinch_cooldown_left = maxf(0.0, flinch_cooldown_left - game_delta)
+	var recoil : Vector2 = Vector2.ZERO
+	if flinch_left > 0.0:
+		flinch_left -= game_delta
+		#backwards: a sprite facing left (flip_h) jumps right
+		recoil.x = FLINCH_PIXELS if flip_h else -FLINCH_PIXELS
+	position = pixel_snap_position + recoil + actor.global_position.round() - actor.global_position
 
 
 func _alter_current_animation_speed(no_slowing : bool = false) -> void:

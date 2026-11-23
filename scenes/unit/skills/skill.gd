@@ -12,9 +12,7 @@ extends Node2D
 @onready var stats : Stats = $Stats :
 	get:
 		if stats == null:
-			for child in get_children():
-				if child is Stats:
-					stats = child
+			stats = Utils.find_child_of_type(self, Stats)
 		return stats
 
 @export var skill_type : Utils.SkillType = Utils.SkillType.Projectile
@@ -123,15 +121,15 @@ func activate() -> void:
 	
 	if active_timer.base_wait_time > 0.0:
 		#interrupt active skill
-		if active_timer.base_wait_time > 0.0:
-			active_timer.stop()
-			_interrupted_active()
-		
+		active_timer.stop()
+		_interrupted_active()
 		active_timer.start()
-	
+
 	if cooldown_timer.base_wait_time > 0.0:
 		cooldown_timer.start()
-		return
+	else:
+		#no cooldown: ready again next frame, after the subclass has fired (it would otherwise never be ready)
+		_on_cooldown_end.call_deferred()
 
 
 func stop() -> void:
@@ -230,17 +228,8 @@ func _is_target_valid(_target : Node2D) -> bool:
 
 
 func _get_is_valid_target() -> bool:
-	if not is_instance_valid(target):
-		return false
-	
-	if actor is Building:
-		if not actor.targets.has(target):
-			return false
-	
-	if target.is_dead:
-		return false
-		
-	return true
+	#checked here first: a freed target cannot be passed to the typed parameter
+	return is_instance_valid(target) and _is_target_valid(target)
 
 
 func _set_target(new_target : Node2D) -> void:

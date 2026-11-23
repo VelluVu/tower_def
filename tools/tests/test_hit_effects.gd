@@ -34,6 +34,24 @@ func test_splash_hits_the_neighbours_for_half(kit : TestKit) -> void:
 	kit.check_near(far_before - health.call(far), 0.0, "an enemy four tiles off takes nothing")
 
 
+func test_splash_reaches_flyers_only_from_air_towers(kit : TestKit) -> void:
+	await kit.load_level(1)
+	var nova : Building = await _tower(kit, "puffe_nova")
+	var bolter : Building = await _tower(kit, "puffe_bolter")
+	kit.check(not nova.hits_air and bolter.hits_air, "a T1 Nova cannot hit flyers, a Bolter can")
+	for tower in [nova, bolter]:
+		tower.stats.get_stat(Utils.StatType.SplashRadius).value = 1.0
+	var target : Enemy = kit.spawn_enemy("weakling")
+	var flyer : Enemy = kit.spawn_enemy("batling")
+	await kit.frames(1)
+	flyer.global_position = target.global_position + Vector2(8, 0)
+	var before : float = flyer.stats.get_stat_value(Utils.StatType.Health)
+	_hit(target, nova, 2.0)
+	kit.check_near(flyer.stats.get_stat_value(Utils.StatType.Health), before, "the Nova's splash passes under the flyer")
+	_hit(target, bolter, 2.0)
+	kit.check_near(flyer.stats.get_stat_value(Utils.StatType.Health), before - 1.0, "the Bolter's splash hits it")
+
+
 func test_freeze_stops_and_bosses_never_freeze(kit : TestKit) -> void:
 	await kit.load_level(8)
 	var nova : Building = await _tower(kit, "puffe_nova")
@@ -142,3 +160,26 @@ func test_poison_spreads_on_death(kit : TestKit) -> void:
 	kit.check(not target.overtime_effect_handler.get_active_stacks(Utils.DamageType.Poison).is_empty(), "the target is poisoned")
 	_hit(target, beamer, 9999.0)
 	kit.check(not near.overtime_effect_handler.get_active_stacks(Utils.DamageType.Poison).is_empty(), "its death poisons the enemy next to it")
+
+
+func test_a_direct_hit_flinches_a_pixel_and_ticks_do_not(kit : TestKit) -> void:
+	await kit.load_level(1)
+	var enemy : Enemy = kit.spawn_enemy("weakling")
+	await kit.frames(2)
+	var sprite : AnimationControl = enemy.animation_control
+	var tick : DamageData = DamageData.new()
+	tick.damage = 0.1
+	tick.is_overtime = true
+	enemy.take_damage(tick)
+	tick.free()
+	kit.check(sprite.flinch_left <= 0.0, "a burn or poison tick does not flinch")
+	_hit(enemy, null, 0.1)
+	kit.check(sprite.flinch_left > 0.0, "a direct hit flinches")
+	await kit.frames(1)
+	#the pixel snap alone moves the sprite less than half a pixel; the flinch adds a whole one
+	kit.check(absf(sprite.position.x - sprite.pixel_snap_position.x) > 0.5, "the sprite sits a pixel back")
+	sprite.flinch_left = 0.0
+	_hit(enemy, null, 0.1)
+	kit.check(sprite.flinch_left <= 0.0, "a second hit inside the cooldown does not flinch again (beams would shake it)")
+	await kit.run_until(func() -> bool: return false, sprite.flinch_cooldown + 0.1)
+	kit.check(absf(sprite.position.x - sprite.pixel_snap_position.x) <= 0.51, "and it is back in place")
