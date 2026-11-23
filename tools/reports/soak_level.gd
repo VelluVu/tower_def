@@ -24,6 +24,7 @@ extends RefCounted
 ##   early=0|1           start waves early, or only once a wave is cleared
 ##   unlocked=level|all  level: only the buildings unlocked by this level (BuildingListElement.unlock_level)
 ##   seed=1 speed_up=3.0
+##   chaos=N            every N game seconds of a wave, sell a random building (freed-mid-fight bugs); 0 = off
 ##   types=puffe_bolter,puffe_nova  only these tower types (over the build's), still only unlocked ones
 ##   play=rules|smart   rules: the fixed rules above; smart: smart_play.gd values every action by the damage it
 ##                       adds per gold and buys the best (ignores depth, min_towers, the wall share and
@@ -69,8 +70,12 @@ var options : Dictionary[String, String] = {
 	"level": "1", "mode": "normal", "build": "mixed", "cards": "random", "economy": "real", "talents": "none", "health": "1.0", "speed": "1.0", "life": "",
 	"rotation": "0", "order": "fixed", "towers": "40", "traps": "2", "min_towers": "3", "depth": "3", "wall_min_towers": "5",
 	"walls": "0.3", "early": "0", "unlocked": "level", "seed": "1", "speed_up": "3.0", "play": "rules", "types": "",
-	"smart": "smart_play",
+	"smart": "smart_play", "chaos": "0",
 }
+#chaos=N: every N game seconds of a wave a random building is sold, so shots, beams and effects lose their tower mid-fight
+var chaos_interval : float = 0.0
+var chaos_left : float = 0.0
+var chaos_sold : int = 0
 const SMART_PATH : String = "res://tools/reports/%s.gd"
 var smart : RefCounted = null
 var towers : Array[Building] = []
@@ -155,6 +160,8 @@ func run(kit : TestKit, args : PackedStringArray) -> void:
 	var is_early : bool = options.early == "1"
 	var start_length : int = _route_length(level)
 
+	chaos_interval = float(options.chaos)
+	chaos_left = chaos_interval
 	var time : float = 0.0
 	while result == "timeout" and time < LEVEL_SECONDS:
 		if is_free:
@@ -184,6 +191,11 @@ func run(kit : TestKit, args : PackedStringArray) -> void:
 		time += frame_time
 		if smart != null:
 			smart.tick(level, frame_time * main.time_scale)
+		if chaos_interval > 0.0 and not level.existing_enemies.is_empty():
+			chaos_left -= frame_time * main.time_scale
+			if chaos_left <= 0.0:
+				chaos_left = chaos_interval
+				_chaos_sell(level)
 
 	if result == "timeout":
 		#a wave that never ends: who is still alive, and where
@@ -217,6 +229,8 @@ func run(kit : TestKit, args : PackedStringArray) -> void:
 	print("SOAK damage by tower %s" % _rounded(tower_damage))
 	print("SOAK damage by enemy %s" % _rounded(enemy_damage))
 	print("SOAK reactions %s" % reactions)
+	if chaos_interval > 0.0:
+		print("SOAK chaos sold %d buildings mid-wave" % chaos_sold)
 	main.get_tree().paused = false
 	#writes this run to the bot log
 	level.queue_free()
@@ -347,6 +361,21 @@ func _tree_steps(tree : TalentTree) -> Dictionary[StringName, int]:
 				steps[next_id] = steps[current] + 1
 				queue.append(next_id)
 	return steps
+
+
+## chaos=N: sells a random standing building mid-wave, as a player changing their mind would; the bot rebuilds.
+func _chaos_sell(level : Level) -> void:
+	var standing : Array[Building] = []
+	for candidate in level.all_buildings:
+		if is_instance_valid(candidate) and candidate.is_placed and not candidate.is_dead:
+			standing.append(candidate)
+	if standing.is_empty():
+		return
+	var sold : Building = standing.pick_random()
+	towers.erase(sold)
+	purchases.erase(sold)
+	chaos_sold += 1
+	GameSignals.sell_building.emit(sold)
 
 
 ## One action a frame, like a player clicking: the first towers, then walls while they are under

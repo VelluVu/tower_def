@@ -11,7 +11,9 @@ const ENEMY_PATH : String = "res://scenes/unit/enemy/enemies/%s.tscn"
 const CARD_PATH : String = "res://scenes/unit/evolve_tree/evolve_resources/%s.tres"
 #Builder puts placed buildings in this container; Building.level is its parent
 const BUILDINGS_NODE_NAME : String = "Buildings"
-const TEST_SAVE_PATH : String = "user://test_progress.tres"
+## One save per process, so bots run side by side never write over each other's (they failed hundreds of saves).
+const TEST_SAVE_PATH : String = "user://test_progress_%d.tres"
+const TEST_SAVE_SUFFIXES : Array[String] = [".tres", ".tmp.tres", ".bak.tres"]
 const TEST_PLAYTEST_LOG_PATH : String = "user://bot_playtests.jsonl"
 
 var root : Node = null
@@ -25,13 +27,26 @@ var stand_in_main : Main = null
 func _init(test_root : Node) -> void:
 	root = test_root
 	#a test that saves progress must never overwrite the player's own save
-	PlayerProgress._save.save_path = TEST_SAVE_PATH
+	PlayerProgress._save.save_path = get_test_save_path()
 	#tests leave no playtest lines; the soak bot turns its own log back on
 	PlaytestLog.is_enabled = false
 	PlaytestLog.log_path = TEST_PLAYTEST_LOG_PATH
 	stand_in_main = Main.new()
 	stand_in_main.scene_manager = SceneManager.new()
 	Utils.game_control = stand_in_main
+
+
+static func get_test_save_path() -> String:
+	return TEST_SAVE_PATH % OS.get_process_id()
+
+
+## Deletes this process's test save and its temp and backup copies (the runner calls it before quitting).
+static func remove_test_saves() -> void:
+	var base : String = get_test_save_path().get_basename()
+	for suffix in TEST_SAVE_SUFFIXES:
+		var path : String = base + suffix
+		if FileAccess.file_exists(path):
+			DirAccess.remove_absolute(ProjectSettings.globalize_path(path))
 
 
 ## Frees the stand-in Main (nodes out of the tree are never freed by the engine; each one kept

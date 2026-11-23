@@ -62,6 +62,7 @@ func _ready() -> void:
 
 #the audio thread lets go of stopped sounds on its next mix: a quit right away reported them as leaks
 func _quiet_audio() -> void:
+	TestKit.remove_test_saves()
 	AudioManager.stop_all()
 	for i in QUIET_AUDIO_FRAMES:
 		await get_tree().process_frame
