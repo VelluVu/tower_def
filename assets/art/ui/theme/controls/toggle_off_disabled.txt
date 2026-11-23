@@ -1,0 +1,18 @@
+# CheckButton off, disabled.
+# Drawn from this grid (Puffe theme colours, 2026-11-23).
+K = 0a1712
+t = 123a2b
+H = 4fd9ad
+Y = 1c5a41
+E = 174a36
+---
+..KKKKKKKKKKKKKK..
+.KKKKKKKttttttttK.
+KKHYYYYEKttttttttK
+KKYYYYYEKttttttttK
+KKYYYYYEKttttttttK
+KKYYYYYEKttttttttK
+KKYYYYYEKttttttttK
+KKYEEEEEKttttttttK
+.KKKKKKKttttttttK.
+..KKKKKKKKKKKKKK..

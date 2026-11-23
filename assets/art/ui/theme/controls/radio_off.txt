@@ -1,0 +1,15 @@
+# PopupMenu radio, not chosen: an empty socket.
+# Drawn from this grid (Puffe theme colours, 2026-11-23).
+K = 0a1712
+h = 1c5a41
+y = 0d2a1f
+e = 0d2a1f
+---
+...KK...
+..KhyK..
+.KhyyeK.
+KhyyyyeK
+KyyyyeeK
+.KyyeeK.
+..KeeK..
+...KK...

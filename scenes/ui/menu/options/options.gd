@@ -37,8 +37,8 @@ const CAMERA_FOLLOWS_TOOLTIP : String = "The camera glides to a boss when it arr
 const CONTROLS_TAB_NAME : String = "Controls"
 const PERCENT_FORMAT : String = "%d%%"
 const SPEED_FORMAT : String = "%.2fx"
-## Fits the longest label, "Pause in background".
-const ROW_LABEL_WIDTH : float = 128.0
+## Wide enough for the longest label ("Camera follows events"), so every row's control lines up.
+const ROW_LABEL_WIDTH : float = 144.0
 const VALUE_LABEL_WIDTH : float = 32.0
 const ROW_HEIGHT : float = 18.0
 const VOLUME_STEP : float = 0.05

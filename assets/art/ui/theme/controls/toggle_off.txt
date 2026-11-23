@@ -1,0 +1,18 @@
+# CheckButton off: dark track, mint knob left.
+# Drawn from this grid (Puffe theme colours, 2026-11-23).
+K = 0a1712
+t = 1c5a41
+H = ffffff
+Y = 87ffdb
+E = 4fd9ad
+---
+..KKKKKKKKKKKKKK..
+.KKKKKKKttttttttK.
+KKHYYYYEKttttttttK
+KKYYYYYEKttttttttK
+KKYYYYYEKttttttttK
+KKYYYYYEKttttttttK
+KKYYYYYEKttttttttK
+KKYEEEEEKttttttttK
+.KKKKKKKttttttttK.
+..KKKKKKKKKKKKKK..

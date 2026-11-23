@@ -1,0 +1,17 @@
+# HSlider knob, hovered or dragged.
+# Drawn from this grid (Puffe theme colours, 2026-11-23).
+K = 0a1712
+h = ffffff
+y = fee761
+e = feae34
+---
+.KKKKKK.
+KhyyyyeK
+KyhyyyeK
+KyyyyyeK
+KyyyyyeK
+KyyyyyeK
+KyyyyeeK
+.KeeeeK.
+..KeeK..
+...KK...

@@ -1,0 +1,15 @@
+# PopupMenu radio, chosen, disabled.
+# Drawn from this grid (Puffe theme colours, 2026-11-23).
+K = 0a1712
+h = 4fd9ad
+y = 1c5a41
+e = 174a36
+---
+...KK...
+..KhyK..
+.KhyyeK.
+KhyyyyeK
+KyyyyeeK
+.KyyeeK.
+..KeeK..
+...KK...

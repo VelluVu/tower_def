@@ -1,0 +1,18 @@
+# CheckButton on: teal track, gold knob right.
+# Drawn from this grid (Puffe theme colours, 2026-11-23).
+K = 0a1712
+t = 0d8f6c
+H = ffffff
+Y = feae34
+E = e49927
+---
+..KKKKKKKKKKKKKK..
+.KttttttttKKKKKKK.
+KttttttttKHYYYYEKK
+KttttttttKYYYYYEKK
+KttttttttKYYYYYEKK
+KttttttttKYYYYYEKK
+KttttttttKYYYYYEKK
+KttttttttKYEEEEEKK
+.KttttttttKKKKKKK.
+..KKKKKKKKKKKKKK..

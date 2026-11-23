@@ -1,0 +1,17 @@
+# HSlider knob: a gold drake scale.
+# Drawn from this grid (Puffe theme colours, 2026-11-23).
+K = 0a1712
+h = ffffff
+y = feae34
+e = e49927
+---
+.KKKKKK.
+KhyyyyeK
+KyhyyyeK
+KyyyyyeK
+KyyyyyeK
+KyyyyyeK
+KyyyyeeK
+.KeeeeK.
+..KeeK..
+...KK...

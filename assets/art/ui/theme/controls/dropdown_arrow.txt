@@ -1,0 +1,9 @@
+# OptionButton arrow.
+# Drawn from this grid (Puffe theme colours, 2026-11-23).
+w = d8fff0
+---
+ww...ww
+www.www
+.wwwww.
+..www..
+...w...
