@@ -125,9 +125,24 @@ mmmmcdddddddRco
     return f
 
 
+def ds_toppling():
+    """Halfway onto its face: the body pitched forward, arms thrown out to catch the ground, legs trailing."""
+    f = Frame(26, 26)
+    leg(f, 9, 19, -3, 'b', 'a', 23, 0, 3, 'a')
+    ds_arm(f, 12, 14, 19, 21, False)
+    f.stamp(DS_SACK, 4, 12)
+    f.stamp(DS_TORSO, 8, 13)
+    f.stamp(DS_HEAD, 16, 11)
+    leg(f, 13, 20, -2, 'c', 'a', 23, 0, 3, 'b')
+    ds_arm(f, 18, 15, 22, 21, True)
+    f.stamp(ROCK, 20, 19)
+    return f
+
+
+# hit, stumbles forward dropping the rock, pitches onto its face
 ds_death = [destroyerling(legs=(1, -1), x=1, far=(8, 19), near=(20, 20)),
-            destroyerling(legs=(1, -1), x=1, y=2, far=(9, 20), near=(21, 21)),
-            ds_dead(False), ds_dead(True), ds_dead(True)]
+            destroyerling(legs=(2, 1), x=1, y=1, far=(10, 20), near=(21, 20)),
+            ds_toppling(), ds_dead(False), ds_dead(True)]
 
 write_spec(ENEMY + '/destroyerling/destroyerling.txt', '''
 # Source of destroyerling.aseprite and destroyerling.png (python tools/sprite/sprite.py build <this> destroyerling.aseprite).
@@ -177,7 +192,9 @@ HEAD_DEAD = part('''
 .1122qq.''')
 
 
-def hydra(sway=(0, 0, 0), strike=None, y=0, legs=0, droop=0, sink=0, open_=None):
+def hydra(sway=(0, 0, 0), strike=None, y=0, legs=0, droop=0, sink=0, open_=None, fallen=None):
+    """fallen: {head index: (x, y)} heads lying on the ground (dead), drawn in front of the body."""
+    fallen = fallen or {}
     f = Frame(40, 40)
     by = 26 + y + sink
     # far legs
@@ -186,7 +203,14 @@ def hydra(sway=(0, 0, 0), strike=None, y=0, legs=0, droop=0, sink=0, open_=None)
         line(f, lx + legs + 1, by + 4, lx + legs, min(36, by + 8), '2')
     heads = [((13, by - 2), (8, 13)), ((19, by - 4), (19, 7)), ((25, by - 2), (29, 12))]
     order = [0, 2, 1]
+    # fallen side necks lie behind the body, out to the side and down to the ground
+    for i, (hx, hy) in fallen.items():
+        if i != 1:
+            base = heads[i][0]
+            thick(f, [base, ((base[0] + 2 * hx) // 3, by + 3), (hx, hy + 1)], SKIN, 3)
     for i in order:
+        if i in fallen:
+            continue
         base, top = heads[i]
         hx, hy = top[0] + sway[i], top[1] + droop * (i + 1) + y
         if strike == i:
@@ -207,6 +231,11 @@ def hydra(sway=(0, 0, 0), strike=None, y=0, legs=0, droop=0, sink=0, open_=None)
     f.px[(16, by - 5)] = 'u'
     f.px[(17, by - 5)] = 'U'
     f.px[(22, by - 5)] = 'U'
+    # fallen heads on the ground; the middle neck drapes straight down the front of the body
+    for i, (hx, hy) in fallen.items():
+        if i == 1:
+            thick(f, [heads[1][0], (hx, hy + 1)], SKIN, 3)
+        f.stamp(HEAD_DEAD, hx - 3, hy - 1)
     # near legs
     for lx in (15, 27):
         line(f, lx - legs, by + 5, lx - legs + 1, min(37, by + 9), '3')
@@ -221,8 +250,14 @@ hy_walk = [hydra((0, 0, 0), legs=-1), hydra((-1, 0, 1), y=-1, legs=0), hydra((-1
            hydra((0, 1, 0), y=-1, legs=0)]
 hy_atk = [hydra((-2, -1, -2)), hydra((0, 0, 0), strike=2), hydra((0, 0, 0), strike=1), hydra((0, 0, 0), strike=0),
           hydra((0, 0, 0))]
-hy_death = [hydra((1, 1, 1), droop=1), hydra((2, 2, 2), droop=2, sink=1), hydra((2, 2, 2), droop=3, sink=2),
-            hydra((2, 2, 2), droop=3, sink=2), hydra((2, 2, 2), droop=3, sink=3), hydra((2, 2, 2), droop=3, sink=3)]
+# rears in pain, then the heads crash down one by one (left, right, middle) and the body settles into the bog
+LEFT_DOWN, RIGHT_DOWN, MID_DOWN = (5, 33), (33, 33), (26, 35)
+hy_death = [hydra((-1, -2, -1), y=-1, open_=1),
+            hydra((0, 1, 1), droop=1, open_=1, fallen={0: LEFT_DOWN}),
+            hydra((0, 2, 0), droop=1, sink=1, fallen={0: LEFT_DOWN, 2: RIGHT_DOWN}),
+            hydra((0, 0, 0), sink=2, fallen={0: LEFT_DOWN, 2: RIGHT_DOWN, 1: MID_DOWN}),
+            hydra((0, 0, 0), sink=3, legs=1, fallen={0: LEFT_DOWN, 2: RIGHT_DOWN, 1: MID_DOWN}),
+            hydra((0, 0, 0), sink=3, legs=1, fallen={0: LEFT_DOWN, 2: RIGHT_DOWN, 1: MID_DOWN})]
 
 
 

@@ -30,6 +30,18 @@ class Frame:
             if x == 0 or y == 0 or x == self.w - 1 or y == self.h - 1:
                 raise SystemExit('%s touches the edge at %d,%d' % (name, x, y))
 
+def squash(src, scale, dx=0):
+    """A slump: src squashed vertically to scale, rows sampled nearest and anchored on its lowest row, shifted dx."""
+    ys = [y for _, y in src.px]
+    bottom, top = max(ys), min(ys)
+    out = Frame(src.w, src.h)
+    for k in range(max(1, round((bottom - top + 1) * scale))):
+        sy = max(top, bottom - round(k / scale))
+        for (x, y), c in src.px.items():
+            if y == sy and 1 <= x + dx <= src.w - 2:
+                out.px[(x + dx, bottom - k)] = c
+    return out
+
 def write_spec(path, header, palette, size, tags):
     out = [header.strip(), 'size = %dx%d' % size]
     out += ['%s = %s' % kv for kv in palette.items()]

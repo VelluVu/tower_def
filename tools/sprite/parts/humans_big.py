@@ -348,7 +348,8 @@ efDCCD..xxrrrxxxx.............
 d_death = [slayer(legs=(1, -1), x=-1, head_dx=-1, sword=REST),
            slayer(legs=(2, -1), x=-1, y=0, crouch=4, head_dx=-1, sword=((24, 26), (33, 33))),
            slayer(legs=(2, -1), x=-2, crouch=7, head_dx=-2, sword=None),
-           d_dead(False), d_dead(True), d_dead(True)]
+           squash(slayer(legs=(2, -1), x=-2, crouch=7, head_dx=-2, sword=None), 0.75, -2),
+           d_dead(True), d_dead(True)]
 
 
 
