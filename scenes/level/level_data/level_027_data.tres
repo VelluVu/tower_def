@@ -33,6 +33,7 @@ script = ExtResource("9_line")
 trigger = 4
 wave_number = 7
 text = "The ford is ours. Their camp cannot be far now."
+mood = 1
 
 [resource]
 script = ExtResource("1_level")

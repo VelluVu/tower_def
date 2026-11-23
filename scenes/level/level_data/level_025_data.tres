@@ -13,6 +13,7 @@
 [sub_resource type="Resource" id="PuffeLine_1"]
 script = ExtResource("9_line")
 text = "Fields! Soft grass, warm hay... I could sleep here. If the humans would stop marching."
+mood = 3
 
 [sub_resource type="Resource" id="PuffeLine_2"]
 script = ExtResource("9_line")

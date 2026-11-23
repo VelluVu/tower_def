@@ -14,18 +14,21 @@
 [sub_resource type="Resource" id="PuffeLine_1"]
 script = ExtResource("9_line")
 text = "Shh. Something big is breathing under the bog. Something with too many heads."
+mood = 2
 
 [sub_resource type="Resource" id="PuffeLine_2"]
 script = ExtResource("9_line")
 trigger = 3
 wave_number = 7
 text = "The Bog Hydra! Three heads, one temper. Slow her in the mud and burn her down!"
+mood = 3
 
 [sub_resource type="Resource" id="PuffeLine_3"]
 script = ExtResource("9_line")
 trigger = 4
 wave_number = 7
 text = "The swamp is quiet. Finally. Now, about that nap..."
+mood = 4
 
 [resource]
 script = ExtResource("1_level")

@@ -26,11 +26,13 @@ script = ExtResource("9_line")
 trigger = 3
 wave_number = 4
 text = "The ground caved in, a tunnel in the middle of the field!"
+mood = 3
 
 [sub_resource type="Resource" id="PuffeLine_4"]
 script = ExtResource("9_line")
 trigger = 7
 text = "They are not even fighting, just fleeing. But not into our castle!"
+mood = 2
 
 [sub_resource type="Resource" id="PuffeLine_5"]
 script = ExtResource("9_line")

@@ -19,6 +19,7 @@ script = ExtResource("9_line")
 trigger = 4
 wave_number = 6
 text = "The deep is ours. Now, the Hydra."
+mood = 1
 
 [resource]
 script = ExtResource("1_level")

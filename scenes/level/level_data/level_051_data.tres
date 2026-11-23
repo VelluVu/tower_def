@@ -14,6 +14,7 @@
 [sub_resource type="Resource" id="PuffeLine_1"]
 script = ExtResource("9_line")
 text = "Humans. Here? They are wearing robes with flames on them. Oh no."
+mood = 2
 
 [sub_resource type="Resource" id="PuffeLine_2"]
 script = ExtResource("9_line")

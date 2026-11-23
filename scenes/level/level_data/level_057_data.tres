@@ -33,6 +33,7 @@ script = ExtResource("9_line")
 trigger = 3
 wave_number = 7
 text = "The heart itself is walking. A Magma Titan! Frost cracks its crust; keep it off the towers."
+mood = 3
 
 [resource]
 script = ExtResource("1_level")

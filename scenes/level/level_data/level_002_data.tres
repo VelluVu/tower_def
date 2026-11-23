@@ -23,12 +23,14 @@ text = "Click a drakeling to spend gold on upgrades. An upgrade helps only that 
 script = ExtResource("9_line")
 trigger = 5
 text = "Stronger already! Keep some gold for new drakelings too."
+mood = 1
 
 [sub_resource type="Resource" id="PuffeLine_4"]
 script = ExtResource("9_line")
 trigger = 3
 wave_number = 4
 text = "Last wave here. Stay sharp, drakelings!"
+mood = 3
 
 [resource]
 script = ExtResource("1_level")

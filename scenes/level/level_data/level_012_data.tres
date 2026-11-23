@@ -13,6 +13,7 @@
 script = ExtResource("9_line")
 trigger = 0
 text = "Humans! They hold the bridge, our only way north. Fortify this castle and hold them back."
+mood = 3
 
 [sub_resource type="Resource" id="PuffeLine_2"]
 script = ExtResource("9_line")
@@ -30,12 +31,14 @@ text = "War dogs, in packs! The Nova is made for this."
 script = ExtResource("9_line")
 trigger = 7
 text = "Humans at the castle! Not one egg leaves this place."
+mood = 2
 
 [sub_resource type="Resource" id="PuffeLine_5"]
 script = ExtResource("9_line")
 trigger = 3
 wave_number = 5
 text = "One last push. Hold, and the road to the swamp is ours."
+mood = 1
 
 [resource]
 script = ExtResource("1_level")

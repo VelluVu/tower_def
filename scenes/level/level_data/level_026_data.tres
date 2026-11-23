@@ -26,6 +26,7 @@ script = ExtResource("9_line")
 trigger = 3
 wave_number = 3
 text = "Priests heal the others. Hit the priest first!"
+mood = 3
 
 [sub_resource type="Resource" id="PuffeLine_4"]
 script = ExtResource("9_line")

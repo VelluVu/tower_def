@@ -14,6 +14,7 @@
 script = ExtResource("9_line")
 trigger = 0
 text = "The big cave by the river. Something huge stirs in there, and this castle has no walls yet. Build fast!"
+mood = 2
 
 [sub_resource type="Resource" id="PuffeLine_2"]
 script = ExtResource("9_line")
@@ -25,6 +26,7 @@ text = "The deep caves send everything they have. Keep the roads long."
 script = ExtResource("9_line")
 trigger = 7
 text = "Do not let them through, the eggs are right behind us!"
+mood = 2
 
 [sub_resource type="Resource" id="PuffeLine_4"]
 script = ExtResource("9_line")

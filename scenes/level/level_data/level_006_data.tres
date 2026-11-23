@@ -13,6 +13,7 @@
 script = ExtResource("9_line")
 trigger = 0
 text = "Hear that squeaking? A batling roost. Something deep below has woken them."
+mood = 2
 
 [sub_resource type="Resource" id="PuffeLine_2"]
 script = ExtResource("9_line")
@@ -24,6 +25,7 @@ text = "Batlings! They fly over the maze. The violet dots show their route: Bolt
 script = ExtResource("9_line")
 trigger = 7
 text = "Over the walls they come. Cover the flight route!"
+mood = 2
 
 [sub_resource type="Resource" id="PuffeLine_4"]
 script = ExtResource("9_line")
@@ -36,6 +38,7 @@ script = ExtResource("9_line")
 trigger = 3
 wave_number = 5
 text = "Last wave. Hold the gate!"
+mood = 3
 
 [resource]
 script = ExtResource("1_level")

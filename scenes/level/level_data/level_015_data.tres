@@ -26,6 +26,7 @@ script = ExtResource("9_line")
 trigger = 3
 wave_number = 7
 text = "Everything that lives in this bog is coming at once. Show them what drakelings are made of!"
+mood = 3
 
 [resource]
 script = ExtResource("1_level")

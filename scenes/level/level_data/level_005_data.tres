@@ -24,12 +24,14 @@ text = "Beeflings! Too tough to drop at once. Burn or poison them and let the da
 script = ExtResource("9_line")
 trigger = 7
 text = "They are slipping through! Find the weakest road."
+mood = 2
 
 [sub_resource type="Resource" id="PuffeLine_4"]
 script = ExtResource("9_line")
 trigger = 3
 wave_number = 5
 text = "Hold the crossroads, and the road east to the great cave is ours."
+mood = 1
 
 [resource]
 script = ExtResource("1_level")

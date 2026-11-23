@@ -1,6 +1,6 @@
 extends RefCounted
 
-## The pictures at the top of the level end screens (2026-11-23).
+## The pictures at the top of the level end screens and Puffe's moods (2026-11-23).
 
 
 func test_win_picture_cheers_under_a_gold_rain(kit : TestKit) -> void:
@@ -32,4 +32,24 @@ func test_lose_picture_mourns(kit : TestKit) -> void:
 	picture._process(EndVignette.SMOKE_INTERVAL + 0.01)
 	kit.check(picture._bits.size() == 1, "smoke rises from the gate")
 	menu.queue_free()
+	await kit.frames(1)
+
+
+func test_puffe_shows_the_line_s_mood(kit : TestKit) -> void:
+	var dialogue : PuffeDialogue = (load("res://scenes/ui/puffe_dialogue/puffe_dialogue.tscn") as PackedScene).instantiate()
+	kit.root.add_child(dialogue)
+	var cheer : PuffeLine = PuffeLine.new()
+	cheer.text = "Well fought."
+	cheer.mood = PuffeLine.Mood.Happy
+	var plain : PuffeLine = PuffeLine.new()
+	plain.text = "Two roads."
+	dialogue.lines = [cheer, plain]
+	dialogue.queue = [0, 1]
+	dialogue._show_next_line()
+	kit.check(dialogue.portrait.texture == PuffeDialogue.MOOD_PORTRAITS[PuffeLine.Mood.Happy], "a happy line, a happy face")
+	dialogue._show_next_line()
+	kit.check(dialogue.portrait.texture == PuffeDialogue.MOOD_PORTRAITS[PuffeLine.Mood.Neutral], "and back to his plain face")
+	var level_one : LevelData = kit.level_data(1)
+	kit.check(level_one.puffe_lines[0].mood == PuffeLine.Mood.Smug, "the yawning first line is smug")
+	dialogue.queue_free()
 	await kit.frames(1)

@@ -14,6 +14,7 @@
 script = ExtResource("9_line")
 trigger = 0
 text = "Smell that? The swamp. Damp, smelly and far too noisy for a nap."
+mood = 4
 
 [sub_resource type="Resource" id="PuffeLine_2"]
 script = ExtResource("9_line")

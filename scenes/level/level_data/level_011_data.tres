@@ -20,11 +20,13 @@ script = ExtResource("9_line")
 trigger = 3
 wave_number = 3
 text = "A big swarm. Novas by the shore!"
+mood = 3
 
 [sub_resource type="Resource" id="PuffeLine_3"]
 script = ExtResource("9_line")
 trigger = 7
 text = "The shore is leaking. Close the gap!"
+mood = 2
 
 [sub_resource type="Resource" id="PuffeLine_4"]
 script = ExtResource("9_line")

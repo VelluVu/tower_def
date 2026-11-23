@@ -19,6 +19,7 @@ script = ExtResource("9_line")
 trigger = 3
 wave_number = 1
 text = "Watch the stones: the waders take the short way. Towers by the far shore!"
+mood = 3
 
 [resource]
 script = ExtResource("1_level")

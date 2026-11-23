@@ -12,6 +12,7 @@
 script = ExtResource("9_line")
 trigger = 0
 text = "Swarmlings come in packs, too many for bolts. A Nova bursts a whole pack at once."
+mood = 2
 
 [sub_resource type="Resource" id="PuffeLine_2"]
 script = ExtResource("9_line")

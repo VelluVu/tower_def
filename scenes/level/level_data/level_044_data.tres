@@ -26,6 +26,7 @@ script = ExtResource("9_line")
 trigger = 4
 wave_number = 6
 text = "The elder lies further on. I can feel it in the sand. Something huge, and sad."
+mood = 2
 
 [resource]
 script = ExtResource("1_level")

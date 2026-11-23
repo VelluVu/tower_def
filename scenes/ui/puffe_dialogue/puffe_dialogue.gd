@@ -9,9 +9,18 @@ const CHARACTERS_PER_SECOND : float = 45.0
 const MIN_HOLD_TIME : float = 2.5
 const HOLD_TIME_PER_CHARACTER : float = 0.05
 const BETWEEN_LINES_DELAY : float = 0.4
+## His face per PuffeLine.Mood, in the enum's order (tools/art/puffe_moods.py draws all but the neutral one).
+const MOOD_PORTRAITS : Array[Texture2D] = [
+	preload("res://assets/art/ui/puffe_portrait.png"),
+	preload("res://assets/art/ui/puffe_moods/puffe_portrait_happy.png"),
+	preload("res://assets/art/ui/puffe_moods/puffe_portrait_worried.png"),
+	preload("res://assets/art/ui/puffe_moods/puffe_portrait_angry.png"),
+	preload("res://assets/art/ui/puffe_moods/puffe_portrait_smug.png"),
+]
 
 @onready var box : PanelContainer = $MarginContainer/Box
 @onready var text_label : Label = $MarginContainer/Box/HBoxContainer/Text
+@onready var portrait : TextureRect = $MarginContainer/Box/HBoxContainer/PortraitFrame/Portrait
 
 var lines : Array[PuffeLine] = []
 #indexes into lines, waiting to be shown
@@ -98,6 +107,7 @@ func _show_next_line() -> void:
 	current_index = queue.pop_front()
 	var line : PuffeLine = lines[current_index]
 	text_label.text = line.text
+	portrait.texture = MOOD_PORTRAITS[clampi(line.mood, 0, MOOD_PORTRAITS.size() - 1)]
 	text_label.visible_characters = 0
 	typed_characters = 0.0
 	is_typing = true

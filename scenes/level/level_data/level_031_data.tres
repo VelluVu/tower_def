@@ -15,6 +15,7 @@
 [sub_resource type="Resource" id="PuffeLine_1"]
 script = ExtResource("9_line")
 text = "Apples! Later. First the humans."
+mood = 3
 
 [sub_resource type="Resource" id="PuffeLine_2"]
 script = ExtResource("9_line")

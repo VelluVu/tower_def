@@ -14,6 +14,7 @@
 script = ExtResource("9_line")
 trigger = 0
 text = "The southern bridge is gone, smashed into the river. So it is the cave road for us, past tunnels on every side."
+mood = 2
 
 [sub_resource type="Resource" id="PuffeLine_2"]
 script = ExtResource("9_line")
@@ -31,6 +32,7 @@ text = "A new tunnel in the north-east! They are digging their way closer."
 script = ExtResource("9_line")
 trigger = 7
 text = "They found a gap. Close it!"
+mood = 2
 
 [sub_resource type="Resource" id="PuffeLine_5"]
 script = ExtResource("9_line")

@@ -32,6 +32,7 @@ script = ExtResource("9_line")
 trigger = 4
 wave_number = 7
 text = "His last words: my oath was sworn to the one in the mountain. The volcano rumbles. No haystack nap for me yet."
+mood = 4
 
 [resource]
 script = ExtResource("1_level")

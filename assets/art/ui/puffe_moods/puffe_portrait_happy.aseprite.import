@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://ctvxkbic4tu4l"
+path="res://.godot/imported/puffe_portrait_happy.aseprite-6d19378b43fde0eded4c4d954e978be5.res"
+
+[deps]
+
+source_file="res://assets/art/ui/puffe_moods/puffe_portrait_happy.aseprite"
+dest_files=["res://.godot/imported/puffe_portrait_happy.aseprite-6d19378b43fde0eded4c4d954e978be5.res"]
+
+[params]
+
