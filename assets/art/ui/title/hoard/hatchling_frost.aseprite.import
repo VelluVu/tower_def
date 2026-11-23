@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://r6w78hyeblqb"
+path="res://.godot/imported/hatchling_frost.aseprite-18cfdb8d3a71edb0dd05caeca5f72faa.res"
+
+[deps]
+
+source_file="res://assets/art/ui/title/hoard/hatchling_frost.aseprite"
+dest_files=["res://.godot/imported/hatchling_frost.aseprite-18cfdb8d3a71edb0dd05caeca5f72faa.res"]
+
+[params]
+

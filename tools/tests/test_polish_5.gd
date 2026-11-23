@@ -1,7 +1,7 @@
 extends RefCounted
 
 ## Polish round 5 (2026-11-22, "big polish"): screen fades, dimmed menus, the wave-cleared banner,
-## the title screen, card frames and rich tooltips on the options rows.
+## card frames (the title screen moved to test_title_hoard.gd) and rich tooltips on the options rows.
 
 
 func test_screen_fade_covers_then_clears(kit : TestKit) -> void:
@@ -36,17 +36,6 @@ func test_wave_cleared_banner(kit : TestKit) -> void:
 	kit.check(banner.title.text == WaveBanner.CLEARED_TEXT % 3 and banner.warning.text == WaveBanner.BREAK_TEXT, "Wave 3 cleared: %s / %s" % [banner.title.text, banner.warning.text])
 	kit.check(banner.modulate.a > 0.0, "it shows")
 	banner.queue_free()
-
-
-func test_title_screen(kit : TestKit) -> void:
-	var menu : Menu = (load("res://scenes/ui/menu/menu.tscn") as PackedScene).instantiate()
-	kit.root.add_child(menu)
-	kit.check(menu.backdrop != null and menu.backdrop.size == Menu.MAP.get_size() * Menu.MAP_SCALE, "the world map behind it, at a whole scale")
-	kit.check(not menu.title_label.visible, "the logo replaces the text title")
-	var start : Vector2 = menu.backdrop.position
-	menu._process(Menu.DRIFT_SECONDS / 4.0)
-	kit.check(menu.backdrop.position != start and menu.backdrop.position == menu.backdrop.position.round(), "it drifts in whole pixels")
-	menu.queue_free()
 
 
 func test_card_frames_by_rarity(kit : TestKit) -> void:

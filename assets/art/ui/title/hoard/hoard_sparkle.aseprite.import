@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bq4qclbgw1wrv"
+path="res://.godot/imported/hoard_sparkle.aseprite-04dfebe96eb33860e71163bba7ec053b.res"
+
+[deps]
+
+source_file="res://assets/art/ui/title/hoard/hoard_sparkle.aseprite"
+dest_files=["res://.godot/imported/hoard_sparkle.aseprite-04dfebe96eb33860e71163bba7ec053b.res"]
+
+[params]
+

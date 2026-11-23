@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://c4kf3hqvawclx"
+path="res://.godot/imported/hatchling_mint.aseprite-f105dec903eb3ff010b6f72b3a0581b8.res"
+
+[deps]
+
+source_file="res://assets/art/ui/title/hoard/hatchling_mint.aseprite"
+dest_files=["res://.godot/imported/hatchling_mint.aseprite-f105dec903eb3ff010b6f72b3a0581b8.res"]
+
+[params]
+

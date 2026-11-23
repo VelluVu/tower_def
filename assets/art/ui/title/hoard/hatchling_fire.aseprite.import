@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://ccu72lgbutd6p"
+path="res://.godot/imported/hatchling_fire.aseprite-c04c4b81f9bee56f117955b8d22a8bdc.res"
+
+[deps]
+
+source_file="res://assets/art/ui/title/hoard/hatchling_fire.aseprite"
+dest_files=["res://.godot/imported/hatchling_fire.aseprite-c04c4b81f9bee56f117955b8d22a8bdc.res"]
+
+[params]
+

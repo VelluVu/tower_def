@@ -14,6 +14,13 @@ const EMERGE_ANIMATION : String = "EMERGE"
 const LAY_EGG_ANIMATION : String = "LAY_EGG"
 const SCREECH_ANIMATION : String = "SCREECH"
 const HATCH_ANIMATION : String = "HATCH"
+#the title screen's hoard: the eggs (HATCH too) and the hatchlings
+const WOBBLE_ANIMATION : String = "WOBBLE"
+const CRACK_ANIMATION : String = "CRACK"
+const EMPTY_ANIMATION : String = "EMPTY"
+const HOP_ANIMATION : String = "HOP"
+const FLY_ANIMATION : String = "FLY"
+const PUFF_ANIMATION : String = "PUFF"
 const OATH_ANIMATION : String = "OATH"
 const SWEEP_ANIMATION : String = "SWEEP"
 #the Ashen Wyrm: walking once it has landed, coming down, calling the ash drakes

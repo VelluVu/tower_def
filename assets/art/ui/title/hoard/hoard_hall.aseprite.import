@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://ccot7vblyksuh"
+path="res://.godot/imported/hoard_hall.aseprite-79b2d411c64d49125fc1efeac7634ac4.res"
+
+[deps]
+
+source_file="res://assets/art/ui/title/hoard/hoard_hall.aseprite"
+dest_files=["res://.godot/imported/hoard_hall.aseprite-79b2d411c64d49125fc1efeac7634ac4.res"]
+
+[params]
+

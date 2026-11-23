@@ -162,6 +162,8 @@ func _on_upgrade_cards_closed() -> void:
 
 
 func _menu(_to_main_menu : bool, from_scene_name : String) -> void:
+	#back from the title screen's Options: the hoard there carries on behind the menu
+	var backdrop : HoardBackdrop = _take_title_backdrop(from_scene_name) if from_scene_name != "" else null
 	if from_scene_name != "":
 		scene_manager.unload_scene_by_name(from_scene_name, scene_manager.SceneType.UI)
 		GameSignals.game_pause.emit(false)
@@ -170,14 +172,22 @@ func _menu(_to_main_menu : bool, from_scene_name : String) -> void:
 		if scene_manager.is_in_level():
 			_unload_game_play_interface()
 			scene_manager.unload_current_level()
-		scene_manager.load_scene_by_name(MAIN_MENU_NAME, scene_manager.SceneType.UI, self)
+		var menu : Menu = scene_manager.load_scene_by_name(MAIN_MENU_NAME, scene_manager.SceneType.UI, self) as Menu
+		if menu != null and backdrop != null:
+			menu.adopt_backdrop(backdrop)
+		elif backdrop != null:
+			backdrop.queue_free()
+	elif backdrop != null:
+		backdrop.queue_free()
 	else:
 		dim_behind(scene_manager.load_scene_by_name(PAUSE_MENU_NAME, scene_manager.SceneType.UI, self))
 		GameSignals.game_pause.emit(true)
 
 
 func _options() -> void:
+	var backdrop : HoardBackdrop = null
 	if not scene_manager.is_in_level():
+		backdrop = _take_title_backdrop(MAIN_MENU_NAME)
 		scene_manager.unload_scene_by_name(MAIN_MENU_NAME, scene_manager.SceneType.UI)
 	else: 
 		scene_manager.unload_scene_by_name(PAUSE_MENU_NAME, scene_manager.SceneType.UI)
@@ -186,6 +196,21 @@ func _options() -> void:
 	options.in_main_menu = not scene_manager.is_in_level()
 	if scene_manager.is_in_level():
 		dim_behind(options)
+	else:
+		#the title screen's hoard stays behind Options, the same brood carrying on
+		options.add_child(backdrop if backdrop != null else HoardBackdrop.new())
+
+
+## Lifts the title screen's playing backdrop out of a UI scene about to be unloaded (null if it has none).
+func _take_title_backdrop(scene_name : String) -> HoardBackdrop:
+	for scene in scene_manager.loaded_ui_scenes:
+		if not is_instance_valid(scene) or scene.name.to_snake_case() != scene_name.to_snake_case():
+			continue
+		for child in scene.get_children():
+			if child is HoardBackdrop and not child.is_queued_for_deletion():
+				scene.remove_child(child)
+				return child
+	return null
 
 
 ## A dark full-screen layer just under the menu, freed with it; it also keeps clicks off the map.

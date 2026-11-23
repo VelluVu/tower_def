@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cti803wrbgyvx"
+path="res://.godot/imported/hatchling_poison.aseprite-9b4ccb85036d0a01819bd48c9fc6fbfa.res"
+
+[deps]
+
+source_file="res://assets/art/ui/title/hoard/hatchling_poison.aseprite"
+dest_files=["res://.godot/imported/hatchling_poison.aseprite-9b4ccb85036d0a01819bd48c9fc6fbfa.res"]
+
+[params]
+

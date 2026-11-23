@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dllyg7xetx6n7"
+path="res://.godot/imported/hoard_torch.aseprite-26ed8de91cd06af95acbef86d516e68c.res"
+
+[deps]
+
+source_file="res://assets/art/ui/title/hoard/hoard_torch.aseprite"
+dest_files=["res://.godot/imported/hoard_torch.aseprite-26ed8de91cd06af95acbef86d516e68c.res"]
+
+[params]
+
