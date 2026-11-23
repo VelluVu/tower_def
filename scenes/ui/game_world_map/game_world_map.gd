@@ -17,6 +17,7 @@ func _ready() -> void:
 	to_menu_button.pressed.connect(_on_to_menu_pressed)
 	talents_button.pressed.connect(_on_talents_pressed)
 	PlayerProgress.talents_changed.connect(_update_talents_button)
+	UISignals.talents.connect(_on_talents)
 	_update_talents_button()
 
 
@@ -30,7 +31,14 @@ func _on_talents_pressed() -> void:
 	UISignals.talents.emit(true)
 
 
+#hidden under the talent screen: the next-level arrow and an open level panel sit above z 0 and showed through it
+func _on_talents(is_open : bool) -> void:
+	visible = not is_open
+
+
 func _input(event: InputEvent) -> void:
+	if not visible:
+		return
 	if event.is_action_pressed("RightClick"):
 		for map_element in map_level_elements:
 			map_element._on_close_button_pressed()

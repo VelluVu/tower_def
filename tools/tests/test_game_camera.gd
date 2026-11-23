@@ -82,3 +82,41 @@ func test_drag_follows_the_mouse(kit : TestKit) -> void:
 	kit.check_near(camera.global_position.x, start.x - 10.0, "20 viewport px at 2x moves the world 10 px")
 	kit.check_near(camera.global_position.y, start.y, "no vertical drift")
 	camera.queue_free()
+
+
+func test_glide_reaches_the_point_and_keys_end_it(kit : TestKit) -> void:
+	var camera : GameCamera = await _make_camera(kit, 13)
+	var size : Vector2 = camera.get_viewport_rect().size
+	camera._zoom_at(size * 0.5, 3.0)
+	camera.is_follow_events_on = true
+	var target : Vector2 = camera._clamp_to_limits(Vector2(camera.limit_left, camera.global_position.y))
+	kit.check(camera.glide_to(target), "a glide starts")
+	for i in range(600):
+		camera._move_camera_smoothly(1.0 / 60.0)
+		if not camera.is_gliding:
+			break
+	kit.check(not camera.is_gliding, "the glide ends")
+	kit.check_near(camera.global_position.x, target.x, "at the point")
+	camera.glide_to(Vector2(camera.limit_right, camera.global_position.y))
+	camera.move_direction = Vector2.UP
+	camera._move_camera_smoothly(1.0 / 60.0)
+	camera.move_direction = Vector2.ZERO
+	kit.check(not camera.is_gliding, "a camera key ends the glide")
+	camera.is_follow_events_on = false
+	kit.check(not camera.glide_to(target), "no glide with the option off")
+	camera.queue_free()
+
+
+func test_frame_level_returns_to_the_start_view(kit : TestKit) -> void:
+	var camera : GameCamera = await _make_camera(kit, 13)
+	var start_zoom : Vector2 = camera.zoom
+	var start : Vector2 = camera.global_position
+	var size : Vector2 = camera.get_viewport_rect().size
+	camera._zoom_at(Vector2.ZERO, 3.0)
+	camera.frame_level()
+	kit.check(camera.zoom == start_zoom, "the start zoom again")
+	kit.check_near(camera.global_position.x, start.x, "the start x again")
+	kit.check_near(camera.global_position.y, start.y, "the start y again")
+	kit.check(camera.is_point_in_view(camera.global_position), "the centre is in view")
+	kit.check(not camera.is_point_in_view(camera.global_position + size), "a point a whole view away is not")
+	camera.queue_free()

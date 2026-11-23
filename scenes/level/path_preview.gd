@@ -5,6 +5,7 @@ extends Node2D
 ## player builds. The routes follow the maze as buildings change the grid and hide during a wave.
 ## A spawner with a flight_route also shows the flyers' route, in its own colour with wider dots, and a
 ## route that wading enemies (Enemy.can_wade) take over a crossing shows in the wade colour.
+## In a build break the spawn points the next wave sends enemies from pulse; the others stay dim.
 
 const DOT_SPACING : float = 8.0
 const FLIGHT_DOT_SPACING : float = 12.0
@@ -17,6 +18,11 @@ const MARKER_POINTS : int = 24
 const CENTER_DOT_SIZE : Vector2 = Vector2(4, 4)
 #the ground tile layers are at -1; drawn after them, so units and trees stay on top
 const GROUND_Z_INDEX : int = -1
+## The pulse ring grows from the marker this many world pixels out, in whole-pixel steps.
+const PULSE_GROWTH : float = 8.0
+const PULSE_SECONDS : float = 1.2
+## A spawn point the next wave leaves unused keeps this share of its colour's alpha.
+const IDLE_SPAWN_ALPHA : float = 0.35
 
 @export var path_color : Color = Color(1.0, 0.85, 0.4, 0.7)
 @export var spawn_color : Color = Color(1.0, 0.35, 0.3, 0.9)
@@ -32,6 +38,9 @@ var flight_paths : Array[PackedVector2Array] = []
 var wade_paths : Array[PackedVector2Array] = []
 var is_route_visible : bool = true :
 	set = _set_is_route_visible
+#the spawn points the next wave uses, as world positions; empty when nothing is known yet
+var next_wave_spawns : Array[Vector2] = []
+var pulse_time : float = 0.0
 
 var level : Level :
 	get:
@@ -47,6 +56,13 @@ func _ready() -> void:
 	#the wave itself, not the button: Survival starts its next wave by itself
 	GameSignals.wave_started.connect(_on_wave_started)
 	_update_paths()
+
+
+func _process(delta : float) -> void:
+	if not is_route_visible or next_wave_spawns.is_empty():
+		return
+	pulse_time = fmod(pulse_time + delta, PULSE_SECONDS)
+	queue_redraw()
 
 
 func _update_paths() -> void:
@@ -73,7 +89,45 @@ func _update_paths() -> void:
 		corners.append(spawner.end_point.global_position)
 		flight_paths.append(corners)
 
+	_update_next_wave_spawns()
 	queue_redraw()
+
+
+func _update_next_wave_spawns() -> void:
+	next_wave_spawns.clear()
+	var runner : WaveRunner = level.wave_runner
+	if runner == null or runner.next_wave == null:
+		return
+	var ids : Array[int] = []
+	for group in runner.next_wave.spawn_groups:
+		if group != null and not ids.has(group.spawner_id):
+			ids.append(group.spawner_id)
+	for spawner in level.get_spawners():
+		if ids.has(spawner.id):
+			next_wave_spawns.append(spawner.global_position)
+
+
+#a spawn point the next wave does not use is drawn dim, while the routes show
+func _get_spawn_color(world_position : Vector2) -> Color:
+	if not is_route_visible or next_wave_spawns.is_empty() or _is_next_wave_spawn(world_position):
+		return spawn_color
+	return Color(spawn_color, spawn_color.a * IDLE_SPAWN_ALPHA)
+
+
+func _is_next_wave_spawn(world_position : Vector2) -> bool:
+	for spawn in next_wave_spawns:
+		if spawn.distance_squared_to(world_position) < 1.0:
+			return true
+	return false
+
+
+func _draw_pulses() -> void:
+	var progress : float = pulse_time / PULSE_SECONDS
+	#whole pixels, so the ring never blurs between art pixels
+	var radius : float = roundf(SPAWN_RADIUS + PULSE_GROWTH * progress)
+	var color : Color = Color(spawn_color, spawn_color.a * (1.0 - progress))
+	for spawn in next_wave_spawns:
+		draw_arc(to_local(spawn), radius, 0.0, TAU, MARKER_POINTS, color, MARKER_WIDTH)
 
 
 func _draw() -> void:
@@ -81,7 +135,7 @@ func _draw() -> void:
 		if path.is_empty():
 			continue
 
-		_draw_marker(path[0], SPAWN_RADIUS, spawn_color)
+		_draw_marker(path[0], SPAWN_RADIUS, _get_spawn_color(path[0]))
 		_draw_marker(path[path.size() - 1], END_RADIUS, end_color)
 
 		if not is_route_visible:
@@ -90,6 +144,7 @@ func _draw() -> void:
 		_draw_dots(path, DOT_SPACING, path_color)
 
 	if is_route_visible:
+		_draw_pulses()
 		for path in flight_paths:
 			_draw_dots(path, FLIGHT_DOT_SPACING, flight_color)
 		for path in wade_paths:

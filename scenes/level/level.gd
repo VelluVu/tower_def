@@ -107,6 +107,9 @@ func _ready() -> void:
 	var path_preview : PathPreview = PathPreview.new()
 	path_preview.name = PATH_PREVIEW_NAME
 	add_child(path_preview)
+	var hover_info : EnemyHoverInfo = EnemyHoverInfo.new()
+	hover_info.name = EnemyHoverInfo.NODE_NAME
+	add_child(hover_info)
 	#last: it reads the start gold after the talents
 	var playtest_log : PlaytestLog = PlaytestLog.new()
 	playtest_log.name = PLAYTEST_LOG_NAME

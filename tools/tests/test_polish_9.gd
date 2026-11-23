@@ -44,3 +44,29 @@ func test_tree_view_draws_at_every_zoom(kit : TestKit) -> void:
 			await kit.frames(1)
 	kit.check(true, "drew all four trees at %d zooms without an error" % TalentTreeView.UNIT_SIZES.size())
 	view.queue_free()
+
+
+#(the user, 2026-11-23): a drag far away lost the tree out of the view
+func test_tree_cannot_be_dragged_out_of_view(kit : TestKit) -> void:
+	var view : TalentTreeView = TalentTreeView.new()
+	view.size = Vector2(440, 300)
+	kit.root.add_child(view)
+	view.show_tree(BOOK.trees[0])
+	var view_rect : Rect2 = Rect2(Vector2.ZERO, view.size)
+	for zoom in TalentTreeView.UNIT_SIZES.size():
+		view.zoom_index = zoom
+		for far in [Vector2(-100000, 0), Vector2(100000, 0), Vector2(0, -100000), Vector2(0, 100000), Vector2(-90000, 90000)]:
+			view.origin = view._clamp_origin(view.origin + far)
+			var bounds : Rect2 = view._get_bounds()
+			var unit : float = TalentTreeView.UNIT_SIZES[zoom]
+			var on_screen : Rect2 = Rect2(view.origin + bounds.position * unit, bounds.size * unit)
+			var overlap : Rect2 = on_screen.intersection(view_rect)
+			kit.check(overlap.size.x >= TalentTreeView.KEEP_IN_VIEW - 1.0 and overlap.size.y >= TalentTreeView.KEEP_IN_VIEW - 1.0,
+					"zoom %d, drag %s: the tree stays in view (%s)" % [zoom, far, overlap.size])
+	#zooming in at a corner cannot throw it out either
+	view.fit_tree()
+	view._zoom(2, Vector2.ZERO)
+	var unit_after : float = TalentTreeView.UNIT_SIZES[view.zoom_index]
+	var shown : Rect2 = Rect2(view.origin + view._get_bounds().position * unit_after, view._get_bounds().size * unit_after)
+	kit.check(shown.intersects(view_rect), "a corner zoom keeps it in view")
+	view.queue_free()

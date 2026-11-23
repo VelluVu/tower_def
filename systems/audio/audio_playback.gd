@@ -17,13 +17,20 @@ var world_panning_strength: float = 0.6
 var click_stream: AudioStream
 ## Every button that enters the tree plays the click when pressed, so none is left silent.
 var click_all_buttons: bool = true
+## Seconds a new track takes to fade in while the old one fades out; 0 cuts at once.
+var music_fade_time: float = 1.2
+## The volume a fade starts from and ends at, quiet enough to count as silent.
+const MUSIC_SILENT_DB: float = -40.0
 
 var _sfx_pool: Array[AudioStreamPlayer] = []
 var _next_sfx_player_index: int = 0
 var _world_pool: Array[AudioStreamPlayer2D] = []
 var _next_world_player_index: int = 0
 
+## The playing track's player; the other one fades the previous track out during a switch.
 var _music_player: AudioStreamPlayer
+var _fading_music_player: AudioStreamPlayer
+var _music_tweens: Dictionary[AudioStreamPlayer, Tween] = {}
 ## Nothing starts playing while on (silent test runs): a headless run's dummy driver never mixes, so a
 ## stream once started was never let go, and the exit reported it as leaked.
 var is_silent: bool = false
@@ -43,11 +50,8 @@ func _ready() -> void:
 		_sfx_pool.append(_add_player(sfx_bus))
 	for i in range(world_pool_size):
 		_world_pool.append(_add_world_player())
-	_music_player = _add_player(music_bus)
-	# The web's default sample playback lost track of a looping song, so the menu music
-	# kept playing under the run's. Streamed, the engine's own mixer plays it as on desktop.
-	_music_player.playback_type = AudioServer.PLAYBACK_TYPE_STREAM
-	_music_player.finished.connect(_on_music_finished)
+	_music_player = _add_music_player()
+	_fading_music_player = _add_music_player()
 	if click_all_buttons:
 		get_tree().node_added.connect(_on_node_added)
 
@@ -62,6 +66,11 @@ func stop_all() -> void:
 	players.append_array(_sfx_pool)
 	players.append_array(_world_pool)
 	players.append(_music_player)
+	players.append(_fading_music_player)
+	for tween: Tween in _music_tweens.values():
+		if tween != null:
+			tween.kill()
+	_music_tweens.clear()
 	for player: Node in players:
 		if player == null:
 			continue
@@ -144,6 +153,15 @@ func _add_player(bus: StringName) -> AudioStreamPlayer:
 	return player
 
 
+func _add_music_player() -> AudioStreamPlayer:
+	var player := _add_player(music_bus)
+	# The web's default sample playback lost track of a looping song, so the menu music
+	# kept playing under the run's. Streamed, the engine's own mixer plays it as on desktop.
+	player.playback_type = AudioServer.PLAYBACK_TYPE_STREAM
+	player.finished.connect(_on_music_finished.bind(player))
+	return player
+
+
 func _add_world_player() -> AudioStreamPlayer2D:
 	var player := AudioStreamPlayer2D.new()
 	player.bus = sfx_bus
@@ -183,16 +201,55 @@ func _play_playlist_track() -> void:
 	_switch_music(_playlist[_playlist_index])
 
 
-## Stops the old track first, so the switch never overlaps two songs.
+## Crossfades: the old track fades out on the spare player while the new one fades in, so
+## a switch is never a hard cut. A track still fading out from an earlier switch stops.
 func _switch_music(stream: AudioStream) -> void:
-	_music_player.stop()
-	if is_silent:
+	_stop_music_player(_fading_music_player)
+	var old_player := _music_player
+	_music_player = _fading_music_player
+	_fading_music_player = old_player
+	if is_silent or music_fade_time <= 0.0:
+		_stop_music_player(old_player)
+	elif old_player.playing:
+		_fade_music(old_player, MUSIC_SILENT_DB, true)
+	if is_silent or stream == null:
 		return
 	_music_player.stream = stream
+	_music_player.volume_db = MUSIC_SILENT_DB if music_fade_time > 0.0 else 0.0
 	_music_player.play()
+	if music_fade_time > 0.0:
+		_fade_music(_music_player, 0.0, false)
 
 
-func _on_music_finished() -> void:
+func _fade_music(player: AudioStreamPlayer, to_db: float, stop_at_end: bool) -> void:
+	_kill_music_tween(player)
+	var tween := player.create_tween()
+	# Menus pause the tree, and the music keeps playing under them; so does the fade.
+	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	tween.tween_property(player, ^"volume_db", to_db, music_fade_time)
+	if stop_at_end:
+		tween.tween_callback(_stop_music_player.bind(player))
+	_music_tweens[player] = tween
+
+
+func _kill_music_tween(player: AudioStreamPlayer) -> void:
+	var tween: Tween = _music_tweens.get(player)
+	if tween != null and tween.is_valid():
+		tween.kill()
+	_music_tweens.erase(player)
+
+
+func _stop_music_player(player: AudioStreamPlayer) -> void:
+	_kill_music_tween(player)
+	player.stop()
+	player.stream = null
+	player.volume_db = 0.0
+
+
+func _on_music_finished(player: AudioStreamPlayer) -> void:
+	# The fading player's track ending mid-fade is not the current track ending.
+	if player != _music_player:
+		return
 	if _looping:
 		_music_player.play()
 		return

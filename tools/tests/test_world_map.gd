@@ -77,3 +77,16 @@ func test_map_shows_cleared_and_next(kit : TestKit) -> void:
 	fresh.queue_free()
 	await kit.frames(1)
 	PlayerProgress._save.progress = saved
+
+
+#(the user, 2026-11-23): the next-level arrow (z 1) showed through the talent screen
+func test_map_hides_under_the_talent_screen(kit : TestKit) -> void:
+	var map : GameWorldMap = load(MAP_SCENE).instantiate()
+	kit.root.add_child(map)
+	await kit.frames(1)
+	kit.check(map.visible, "the map shows")
+	UISignals.talents.emit(true)
+	kit.check(not map.visible, "hidden while the talent screen is open")
+	UISignals.talents.emit(false)
+	kit.check(map.visible, "back when it closes")
+	map.queue_free()

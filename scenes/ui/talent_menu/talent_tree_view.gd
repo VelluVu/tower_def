@@ -19,6 +19,9 @@ const FONT_SIZE : int = 8
 const DRAG_THRESHOLD : float = 3.0
 const PICK_RADIUS : float = 9.0
 const FIT_MARGIN : float = 1.5
+## Panning and zooming keep at least this many screen pixels of the tree inside the view (less in a
+## smaller view), so the tree can never be dragged out of sight and lost.
+const KEEP_IN_VIEW : float = 64.0
 
 #what the player has not learned stays dim, so the learned path stands out; the shape's colours come from the tree
 #unlearned links are the tree's own lit colour, darkened
@@ -154,7 +157,7 @@ func _gui_input(event : InputEvent) -> void:
 			queue_redraw()
 			return
 		if _is_dragging:
-			origin += event.relative
+			origin = _clamp_origin(origin + event.relative)
 			queue_redraw()
 			return
 		var hovered : TalentNode = _get_node_at(event.position)
@@ -205,8 +208,21 @@ func _zoom(step : int, at : Vector2) -> void:
 
 	var tree_point : Vector2 = (at - origin) / UNIT_SIZES[zoom_index]
 	zoom_index = new_index
-	origin = (at - tree_point * UNIT_SIZES[zoom_index]).round()
+	origin = _clamp_origin((at - tree_point * UNIT_SIZES[zoom_index]).round())
 	queue_redraw()
+
+
+## The origin moved back just enough that KEEP_IN_VIEW pixels of the tree's bounds stay on screen on each axis.
+func _clamp_origin(wanted : Vector2) -> Vector2:
+	if tree == null or tree.nodes.is_empty():
+		return wanted
+	var bounds : Rect2 = _get_bounds()
+	var unit : float = UNIT_SIZES[zoom_index]
+	var keep : Vector2 = Vector2(minf(KEEP_IN_VIEW, size.x / 2.0), minf(KEEP_IN_VIEW, size.y / 2.0))
+	#the tree's screen rect is origin + bounds * unit: its far edge must reach keep, its near edge stay keep short of the far side
+	var lowest : Vector2 = keep - bounds.end * unit
+	var highest : Vector2 = size - keep - bounds.position * unit
+	return Vector2(clampf(wanted.x, lowest.x, highest.x), clampf(wanted.y, lowest.y, highest.y)).round()
 
 
 func _pick(at : Vector2) -> void:

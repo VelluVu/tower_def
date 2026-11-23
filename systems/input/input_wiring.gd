@@ -15,6 +15,8 @@ const ACTION_SPEED_DOWN: StringName = &"speed_down"
 const ACTION_SPEED_UP: StringName = &"speed_up"
 const ACTION_UPGRADE_SELECTED: StringName = &"upgrade_selected"
 const ACTION_SELL_SELECTED: StringName = &"sell_selected"
+## The camera goes back to the level's start view (spawners and castles in sight).
+const ACTION_FRAME_LEVEL: StringName = &"frame_level"
 
 
 func _init() -> void:
@@ -27,6 +29,7 @@ func _init() -> void:
 		ACTION_SPEED_UP,
 		ACTION_UPGRADE_SELECTED,
 		ACTION_SELL_SELECTED,
+		ACTION_FRAME_LEVEL,
 		ACTION_OPEN_CONSOLE,
 	]
 	direct_actions = [ACTION_OPEN_CONSOLE]
@@ -41,6 +44,7 @@ func _init() -> void:
 		ACTION_SPEED_UP: KEY_E,
 		ACTION_UPGRADE_SELECTED: KEY_U,
 		ACTION_SELL_SELECTED: KEY_X,
+		ACTION_FRAME_LEVEL: KEY_F,
 		ACTION_OPEN_CONSOLE: KEY_C,
 	}
 	action_labels = {
@@ -54,6 +58,7 @@ func _init() -> void:
 		ACTION_SPEED_UP: "Faster",
 		ACTION_UPGRADE_SELECTED: "Upgrade selected",
 		ACTION_SELL_SELECTED: "Sell selected",
+		ACTION_FRAME_LEVEL: "Frame the level",
 		ACTION_OPEN_CONSOLE: "Console",
 	}
 	save_path = "user://input_bindings.cfg"

@@ -27,6 +27,8 @@ const OPTION_EDGE_SCROLL: String = "edge_scroll"
 const OPTION_PAUSE_ON_FOCUS_LOSS: String = "pause_on_focus_loss"
 ## The camera shakes a little when an enemy reaches the castle.
 const OPTION_SCREEN_SHAKE: String = "screen_shake"
+## The camera glides to an arriving boss and to a leak out of view.
+const OPTION_CAMERA_FOLLOWS_EVENTS: String = "camera_follows_events"
 
 const MAX_FPS_CHOICES: Array[int] = [0, 30, 60, 120, 144, 240]
 
@@ -48,6 +50,7 @@ func _init() -> void:
 		OPTION_EDGE_SCROLL: false,
 		OPTION_PAUSE_ON_FOCUS_LOSS: true,
 		OPTION_SCREEN_SHAKE: true,
+		OPTION_CAMERA_FOLLOWS_EVENTS: true,
 	}
 	save_path = "user://settings.cfg"
 	supported_locales = ["en"]

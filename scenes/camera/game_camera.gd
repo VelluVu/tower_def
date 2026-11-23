@@ -19,6 +19,13 @@ const BOSS_DEFEATED_SHAKE_PIXELS : float = 3.0
 const SHAKE_SECONDS : float = 0.24
 ## New shake position every this many seconds, so the shake reads as a few jolts, not a blur.
 const SHAKE_STEP_SECONDS : float = 0.04
+## A glide to an event (a boss arriving, a leak out of view) moves this share of the way per
+## second's worth of move_speed, slower than the keys so it reads as the camera being led.
+const GLIDE_SPEED_FACTOR : float = 0.45
+## A glide ends this close to its point, in world pixels.
+const GLIDE_DONE_DISTANCE : float = 1.0
+## After a leak glide, further leaks for this many seconds leave the camera where it is.
+const LEAK_GLIDE_COOLDOWN_SECONDS : float = 8.0
 
 enum CameraMode {Static, Free}
 
@@ -68,6 +75,14 @@ var shake_pixels : float = 0.0
 #whole world pixels, added to the view's snap offset
 var shake_offset : Vector2 = Vector2.ZERO
 
+var is_follow_events_on : bool = true
+#the camera's own key or drag input ends a glide at once
+var is_gliding : bool = false
+var glide_target : Vector2 = Vector2.ZERO
+var leak_glide_cooldown_left : float = 0.0
+#kept from the level's load for the frame-the-level key
+var level_path_bounds : Rect2 = Rect2()
+
 
 func _ready() -> void:
 	GameSignals.level_loaded.connect(_on_level_loaded)
@@ -76,6 +91,9 @@ func _ready() -> void:
 	speed_multiplier = SettingsManager.get_option(SettingsManager.OPTION_CAMERA_SPEED)
 	is_edge_scroll_on = SettingsManager.get_option(SettingsManager.OPTION_EDGE_SCROLL)
 	is_shake_on = SettingsManager.get_option(SettingsManager.OPTION_SCREEN_SHAKE)
+	is_follow_events_on = SettingsManager.get_option(SettingsManager.OPTION_CAMERA_FOLLOWS_EVENTS)
+	InputManager.shortcut_pressed.connect(_on_shortcut_pressed)
+	GameSignals.enemy_spawned.connect(_on_enemy_spawned)
 	GameSignals.enemy_reached_end_point.connect(_on_enemy_reached_end_point)
 	GameSignals.enemy_destroyed.connect(_on_enemy_destroyed)
 	move_target_position = global_position
@@ -93,6 +111,7 @@ func _process(delta: float) -> void:
 		_zoom()
 		_movement()
 		_pan()
+	leak_glide_cooldown_left = maxf(0.0, leak_glide_cooldown_left - delta)
 	_move_camera_smoothly(delta)
 	_update_shake(delta)
 	_snap_view_to_art_pixels()
@@ -127,6 +146,49 @@ func _update_shake(delta : float) -> void:
 
 func _on_enemy_reached_end_point(enemy : Enemy) -> void:
 	shake(BOSS_SHAKE_PIXELS if enemy.is_boss else SHAKE_PIXELS)
+	if leak_glide_cooldown_left > 0.0 or is_point_in_view(enemy.global_position):
+		return
+	if glide_to(enemy.global_position):
+		leak_glide_cooldown_left = LEAK_GLIDE_COOLDOWN_SECONDS
+
+
+#deferred: the spawner places the enemy after it enters the tree
+func _on_enemy_spawned(enemy : Enemy) -> void:
+	if enemy.is_boss:
+		_glide_to_enemy.call_deferred(enemy)
+
+
+func _glide_to_enemy(enemy : Enemy) -> void:
+	if is_instance_valid(enemy):
+		glide_to(enemy.global_position)
+
+
+## Leads the view to a world point at the current zoom; the player's own camera input ends it.
+## Returns whether a glide started (off in the options, or before the level is framed, it does not).
+func glide_to(world_point : Vector2) -> bool:
+	if not is_follow_events_on or current_mode != CameraMode.Free or is_panning:
+		return false
+	glide_target = _clamp_to_limits(world_point)
+	is_gliding = true
+	return true
+
+
+func is_point_in_view(world_point : Vector2) -> bool:
+	var half_view : Vector2 = get_viewport_rect().size * 0.5 / zoom
+	return Rect2(global_position - half_view, half_view * 2.0).has_point(world_point)
+
+
+## Back to the level's start view: the spawners and the castles in sight.
+func frame_level() -> void:
+	if current_mode != CameraMode.Free:
+		return
+	is_gliding = false
+	_frame_level(level_path_bounds)
+
+
+func _on_shortcut_pressed(action : StringName) -> void:
+	if action == InputManager.ACTION_FRAME_LEVEL:
+		frame_level()
 
 
 func _on_enemy_destroyed(enemy : Enemy) -> void:
@@ -238,14 +300,33 @@ func _on_option_changed(key : String, value : Variant) -> void:
 		is_edge_scroll_on = value
 	elif key == SettingsManager.OPTION_SCREEN_SHAKE:
 		is_shake_on = value
+	elif key == SettingsManager.OPTION_CAMERA_FOLLOWS_EVENTS:
+		is_follow_events_on = value
+		if not is_follow_events_on:
+			is_gliding = false
 
 func _move_camera_smoothly(delta : float) -> void:
 	if is_panning:
+		is_gliding = false
+		return
+	if is_gliding and move_direction != Vector2.ZERO:
+		is_gliding = false
+	if is_gliding:
+		_glide(delta)
 		return
 	#divided by the zoom so the screen scrolls equally fast at 1x and 3x
 	var step : float = move_step * speed_multiplier / zoom.x
 	move_target_position = _clamp_to_limits(global_position + move_direction * step)
 	global_position = _clamp_to_limits(global_position.lerp(move_target_position, move_speed * delta))
+
+
+func _glide(delta : float) -> void:
+	var weight : float = minf(1.0, move_speed * GLIDE_SPEED_FACTOR * delta)
+	global_position = _clamp_to_limits(global_position.lerp(glide_target, weight))
+	move_target_position = global_position
+	if global_position.distance_to(glide_target) <= GLIDE_DONE_DISTANCE:
+		global_position = glide_target
+		is_gliding = false
 
 
 #grab and drag: the world point under the mouse stays under it
@@ -281,7 +362,9 @@ func _on_level_loaded(level : Level) -> void:
 	limit_top = -roundi(half_size.y)
 	limit_right = roundi(half_size.x)
 	limit_bottom = roundi(half_size.y)
-	_frame_level(level.get_path_bounds())
+	is_gliding = false
+	level_path_bounds = level.get_path_bounds()
+	_frame_level(level_path_bounds)
 	current_mode = CameraMode.Free
 
 

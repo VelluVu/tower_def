@@ -32,6 +32,8 @@ const FOCUS_PAUSE_LABEL : String = "Pause in background"
 const FOCUS_PAUSE_TOOLTIP : String = "Opens the pause menu when you switch to another window during a level."
 const SCREEN_SHAKE_LABEL : String = "Screen shake"
 const SCREEN_SHAKE_TOOLTIP : String = "A short shake when an enemy reaches the castle."
+const CAMERA_FOLLOWS_LABEL : String = "Camera follows events"
+const CAMERA_FOLLOWS_TOOLTIP : String = "The camera glides to a boss when it arrives, and to an enemy reaching a castle out of view."
 const CONTROLS_TAB_NAME : String = "Controls"
 const PERCENT_FORMAT : String = "%d%%"
 const SPEED_FORMAT : String = "%.2fx"
@@ -71,6 +73,7 @@ func _ready() -> void:
 	_add_option_check_row(gameplay_tab, EDGE_SCROLL_LABEL, EDGE_SCROLL_TOOLTIP, SettingsManager.OPTION_EDGE_SCROLL)
 	_add_option_check_row(gameplay_tab, FOCUS_PAUSE_LABEL, FOCUS_PAUSE_TOOLTIP, SettingsManager.OPTION_PAUSE_ON_FOCUS_LOSS)
 	_add_option_check_row(gameplay_tab, SCREEN_SHAKE_LABEL, SCREEN_SHAKE_TOOLTIP, SettingsManager.OPTION_SCREEN_SHAKE)
+	_add_option_check_row(gameplay_tab, CAMERA_FOLLOWS_LABEL, CAMERA_FOLLOWS_TOOLTIP, SettingsManager.OPTION_CAMERA_FOLLOWS_EVENTS)
 
 	_key_bindings = KeyBindingsTab.new()
 	_key_bindings.setup(InputManager)
