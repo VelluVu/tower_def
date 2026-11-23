@@ -26,7 +26,7 @@ func test_finds_the_nearest_enemy_under_the_cursor(kit : TestKit) -> void:
 	kit.check(info.find_enemy_at(at) == far, "a hidden enemy is skipped")
 	var text : String = EnemyHoverInfo.build_text(far)
 	var lines : PackedStringArray = text.split("\n")
-	kit.check(lines[0] == far.selectable._get_display_name(), "the title is the selection card's name (%s)" % lines[0])
+	kit.check(lines[0] == far.selectable.get_display_name(), "the title is the selection card's name (%s)" % lines[0])
 	kit.check(lines[1].begins_with("Health "), "then the health (%s)" % lines[1])
 	near.queue_free()
 	far.queue_free()

@@ -5,7 +5,7 @@ extends Node2D
 ## look does not need a click (the selection card still has the details). Waits HOVER_DELAY
 ## seconds on one enemy; hidden over the UI, while placing a building and for the selected
 ## enemy. Screen space, like the damage numbers, so the camera zoom never stretches its font.
-## Created by Level.
+## Created by Level. Runs while paused only to hide itself, so a pause menu never has a stale card over it.
 
 const NODE_NAME : String = "EnemyHoverInfo"
 ## How far from the cursor an enemy counts as under it, in world pixels.
@@ -14,8 +14,8 @@ const HOVER_DELAY : float = 0.2
 ## Screen pixels from the cursor to the card's corner.
 const CURSOR_OFFSET : Vector2 = Vector2(10, 10)
 const PANEL_THEME_TYPE : StringName = &"TooltipPanel"
-#over the damage numbers, under the game's UI layer (menus cover it)
-const LAYER : int = 2
+#the UI's layer (Main's UI CanvasLayer is layer 1); the card hides itself whenever a menu pauses the game
+const LAYER : int = 1
 const HEALTH_FORMAT : String = "Health %d / %d"
 const FLYING_TEXT : String = "Flying"
 const ELITE_TEXT : String = "Elite"
@@ -33,6 +33,7 @@ var panel : PanelContainer = null
 
 
 func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	layer = CanvasLayer.new()
 	layer.layer = LAYER
 	add_child(layer)
@@ -47,7 +48,7 @@ func _ready() -> void:
 
 func _process(delta : float) -> void:
 	var enemy : Enemy = null
-	if not is_cursor_on_gui and not is_placing_building:
+	if not is_cursor_on_gui and not is_placing_building and not get_tree().paused:
 		enemy = find_enemy_at(get_global_mouse_position())
 	if enemy != hovered:
 		hovered = enemy
@@ -79,7 +80,7 @@ func find_enemy_at(world_point : Vector2) -> Enemy:
 
 ## The card's text: the name as the selection card shows it, then health and tags.
 static func build_text(enemy : Enemy) -> String:
-	var title : String = enemy.selectable._get_display_name() if enemy.selectable != null else String(enemy.name)
+	var title : String = enemy.selectable.get_display_name() if enemy.selectable != null else String(enemy.name)
 	var health : float = maxf(0.0, enemy.stats.get_stat_value(Utils.StatType.Health))
 	var max_health : float = enemy.stats.get_stat_value(Utils.StatType.MaxHealth)
 	var lines : PackedStringArray = [title, HEALTH_FORMAT % [ceili(health), ceili(max_health)]]
@@ -103,7 +104,9 @@ func _is_visible(enemy : Enemy) -> bool:
 func _show(text : String) -> void:
 	if text != shown_text:
 		shown_text = text
+		#out of the panel at once, so reset_size() measures the new text, not the old one still waiting to be freed
 		for child in panel.get_children():
+			panel.remove_child(child)
 			child.queue_free()
 		var label : Control = RichTooltip.build(text)
 		if label != null:

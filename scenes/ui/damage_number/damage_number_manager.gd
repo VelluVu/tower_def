@@ -28,6 +28,8 @@ var damage_number_pool : Array[DamageNumber]
 #screen space, so the numbers stay crisp at any camera zoom; drawn under the UI layer that follows in Main
 var number_layer : CanvasLayer = null
 var spawned_count : int = 0
+#the parts of one sell (price, Salvage) that arrive in the same frame, shown as one "+N" at the end of it
+var pending_refunds : Dictionary[Vector2, float] = {}
 
 
 func _ready() -> void:
@@ -38,6 +40,7 @@ func _ready() -> void:
 	GameSignals.element_reaction.connect(_on_element_reaction)
 	GameSignals.life_lost.connect(_on_life_lost)
 	GameSignals.gold_earned.connect(_on_gold_earned)
+	GameSignals.gold_refunded.connect(_on_gold_refunded)
 	GameSignals.not_enough_gold.connect(_on_not_enough_gold)
 	GameSignals.gold_upgrade_bought.connect(_on_gold_upgrade_bought)
 
@@ -73,6 +76,21 @@ func _on_gold_earned(_position : Vector2, amount : float) -> void:
 	if roundi(amount) <= 0 or not SettingsManager.get_option(SettingsManager.OPTION_KILL_GOLD):
 		return
 	_get_damage_number().activate_text(_position + GOLD_EARNED_OFFSET, GOLD_EARNED_TEXT % roundi(amount), GOLD_EARNED_COLOR)
+
+
+#always shown, unlike kill gold: it answers the player's Sell
+func _on_gold_refunded(_position : Vector2, amount : float) -> void:
+	if pending_refunds.is_empty():
+		_flush_refunds.call_deferred()
+	pending_refunds[_position] = pending_refunds.get(_position, 0.0) + amount
+
+
+func _flush_refunds() -> void:
+	for at : Vector2 in pending_refunds:
+		var amount : int = roundi(pending_refunds[at])
+		if amount > 0:
+			_get_damage_number().activate_text(at + GOLD_EARNED_OFFSET, GOLD_EARNED_TEXT % amount, GOLD_EARNED_COLOR)
+	pending_refunds.clear()
 
 
 #always shown: it answers a click

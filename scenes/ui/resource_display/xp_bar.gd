@@ -44,6 +44,8 @@ func set_xp(xp : float, xp_needed : float, level : int) -> void:
 
 
 func _set_shown_ratio(value : float) -> void:
+	if shown_ratio == value:
+		return
 	shown_ratio = value
 	queue_redraw()
 

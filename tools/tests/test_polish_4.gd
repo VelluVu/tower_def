@@ -166,3 +166,11 @@ func test_lose_screen_names_the_leaks(kit : TestKit) -> void:
 	kit.check(summary != null and (summary.get_child(0) as Label).text == "Wave 4/6 broke through", "names the wave")
 	kit.check(summary.get_children().filter(func(row : Node) -> bool: return row is HBoxContainer).size() == 2, "one row per kind")
 	menu.free()
+
+
+#(review, 2026-11-23): the pause menu marked the clear as earned while the level was still being played
+func test_clear_condition_waits_for_the_win(kit : TestKit) -> void:
+	var playing : Array[Dictionary] = TalentRules.point_conditions(10, 10, 0, 4, false)
+	kit.check(not playing[0]["met"], "mid-level: Castle saved not earned yet")
+	var won : Array[Dictionary] = TalentRules.point_conditions(10, 10, 0, 4)
+	kit.check(won[0]["met"], "the win screen still counts it")

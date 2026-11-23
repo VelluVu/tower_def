@@ -105,10 +105,12 @@ func _on_resign_level() -> void:
 		return
 	is_resigning = true
 	var main : Main = Utils.game_control as Main
+	var may_switch : bool = true
 	if main != null and main.screen_fade != null:
-		await main.screen_fade.fade_out()
+		may_switch = await main.screen_fade.fade_out()
 	is_resigning = false
-	load_game_world_map(false)
+	if may_switch:
+		load_game_world_map(false)
 
 
 func _on_lose_game() -> void:

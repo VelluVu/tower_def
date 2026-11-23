@@ -106,7 +106,16 @@ func load_bindings() -> void:
 	var config := ConfigFile.new()
 	if config.load(save_path) != OK:
 		return
+	# An action added after the file was saved gets its default key, unless the player already gave
+	# that key to another action: then it starts unbound instead of losing to the older one.
+	var saved_keys: Array[int] = []
 	for action: StringName in rebindable_actions:
+		if config.has_section_key(SECTION_KEYS, String(action)):
+			saved_keys.append(int(config.get_value(SECTION_KEYS, String(action))))
+	for action: StringName in rebindable_actions:
+		if not config.has_section_key(SECTION_KEYS, String(action)) and saved_keys.has(int(default_keys[action])):
+			InputMap.action_erase_events(action)
+			continue
 		var keycode: int = config.get_value(SECTION_KEYS, String(action), default_keys[action])
 		if keycode != CANCEL_KEY and keycode != KEY_NONE:
 			_apply_key(action, keycode as Key)

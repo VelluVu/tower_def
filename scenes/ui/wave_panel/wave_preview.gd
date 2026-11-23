@@ -33,11 +33,15 @@ var show_counts : bool = true
 const KIND_META : StringName = &"wave_preview_kind"
 
 
+#the default alignment here, not in _ready, so a caller's own alignment set before adding it to the tree stays
+func _init() -> void:
+	alignment = FlowContainer.ALIGNMENT_CENTER
+
+
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_theme_constant_override(&"h_separation", 3)
 	add_theme_constant_override(&"v_separation", 1)
-	alignment = FlowContainer.ALIGNMENT_CENTER
 
 
 ## Shows the wave's kinds; null hides the row.

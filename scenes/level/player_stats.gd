@@ -100,7 +100,7 @@ func _on_building_sell(building : Building) -> void:
 	var refund : float = building.stats.get_stat_value(Utils.StatType.Price)
 	gold += refund
 	GameSignals.resource_change.emit(gold, 0)
-	GameSignals.gold_earned.emit(building.global_position, refund)
+	GameSignals.gold_refunded.emit(building.global_position, refund)
 
 
 func _set_life(value : float) -> void:

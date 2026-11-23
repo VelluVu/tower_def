@@ -132,11 +132,12 @@ static func points_for_result(life_left : float, starting_life : float, early_st
 
 
 ## The five point conditions of a cleared level, each {text, met}, for the win screen's checklist.
-static func point_conditions(life_left : float, starting_life : float, early_starts : int, early_start_chances : int) -> Array[Dictionary]:
+## `is_cleared` false: the level is still being played (the pause menu), so the clear is not earned yet.
+static func point_conditions(life_left : float, starting_life : float, early_starts : int, early_start_chances : int, is_cleared : bool = true) -> Array[Dictionary]:
 	var life_text : String = "%d/%d" % [int(life_left), int(starting_life)]
 	var start_text : String = "%d/%d" % [early_starts, early_start_chances]
 	return [
-		{"text": CLEAR_CONDITION_TEXT, "met": true},
+		{"text": CLEAR_CONDITION_TEXT, "met": is_cleared},
 		{"text": HALF_LIFE_CONDITION_FORMAT % life_text, "met": life_left * 2.0 >= starting_life},
 		{"text": FULL_LIFE_CONDITION_TEXT, "met": life_left >= starting_life},
 		{"text": HALF_EARLY_CONDITION_FORMAT % start_text, "met": early_start_chances > 0 and early_starts * 2 >= early_start_chances},
@@ -151,9 +152,9 @@ static func points_for_level(level : Level) -> int:
 	return points_for_result(level.player_stats.life, starting_life, level.early_starts, maxi(level.wave_runner.wave_count - 1, 0))
 
 
-static func point_conditions_for_level(level : Level) -> Array[Dictionary]:
+static func point_conditions_for_level(level : Level, is_cleared : bool = true) -> Array[Dictionary]:
 	var starting_life : float = level.level_data.starting_life if level.level_data != null else level.player_stats.life
-	return point_conditions(level.player_stats.life, starting_life, level.early_starts, maxi(level.wave_runner.wave_count - 1, 0))
+	return point_conditions(level.player_stats.life, starting_life, level.early_starts, maxi(level.wave_runner.wave_count - 1, 0), is_cleared)
 
 
 static func _needs_met(node : TalentNode, ranks : Dictionary) -> bool:

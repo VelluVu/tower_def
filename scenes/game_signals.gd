@@ -13,6 +13,8 @@ signal life_lost(position : Vector2, amount : int)
 signal enemy_destroyed(enemy : Enemy)
 #kill gold paid, at the enemy (the "+N" over the kill)
 signal gold_earned(position : Vector2, amount : float)
+## Gold back from selling a building (its price, and the Salvage talent's share of its upgrades): one "+N" over it.
+signal gold_refunded(position : Vector2, amount : float)
 ## A click to build that the gold on hand cannot pay (price: what it would cost).
 signal not_enough_gold(position : Vector2, price : float)
 signal enemy_spawned(enemy : Enemy)

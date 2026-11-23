@@ -30,9 +30,9 @@ func test_selling_shows_the_refund(kit : TestKit) -> void:
 	var tower : Building = await kit.place("puffe_bolter", cell)
 	var refunds : Array[float] = []
 	var on_gold : Callable = func(_position : Vector2, amount : float) -> void: refunds.append(amount)
-	GameSignals.gold_earned.connect(on_gold)
+	GameSignals.gold_refunded.connect(on_gold)
 	GameSignals.sell_building.emit(tower)
-	GameSignals.gold_earned.disconnect(on_gold)
+	GameSignals.gold_refunded.disconnect(on_gold)
 	kit.check(refunds.size() == 1 and refunds[0] > 0.0, "a gold +N for the refund (%s)" % [refunds])
 
 
@@ -47,3 +47,17 @@ func test_fade_out_is_instant_headless(kit : TestKit) -> void:
 
 func test_flyer_badge_is_7x7(kit : TestKit) -> void:
 	kit.check(WavePreview.FLYER_BADGE.get_size() == Vector2(7, 7), "the redrawn wing keeps its size")
+
+
+#(review, 2026-11-23): a new screen's fade-in killed the fade-out's tween, its waiter never woke, and no level could start
+func test_fade_in_ends_a_running_fade_out(kit : TestKit) -> void:
+	var fade : ScreenFade = ScreenFade.new()
+	kit.root.add_child(fade)
+	var done : Array[bool] = []
+	fade.fade_out_done.connect(func() -> void: done.append(true))
+	fade.is_fading_out = true
+	fade.fade_in()
+	await kit.frames(1)
+	kit.check(done.size() == 1, "the waiter is told the fade-out is over")
+	kit.check(not fade.is_fading_out, "and the next switch may fade again")
+	fade.queue_free()

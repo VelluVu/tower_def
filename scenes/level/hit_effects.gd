@@ -49,6 +49,8 @@ func _ready() -> void:
 	GameSignals.enemy_hit.connect(_on_enemy_hit)
 	GameSignals.tower_attacked.connect(_on_tower_attacked)
 	GameSignals.enemy_destroyed.connect(_on_enemy_destroyed)
+	#a leak frees the enemy without enemy_destroyed: forget it too, or a long Survival run piles up entries
+	GameSignals.enemy_reached_end_point.connect(_forget)
 
 
 func _on_enemy_hit(enemy : Enemy, damage_data : DamageData) -> void:
@@ -85,6 +87,11 @@ func _on_tower_attacked(skill : Skill) -> void:
 
 
 ## Fire burns it up, Frost shatters it, Poison melts it into gas; a physical death keeps its gore only.
+func _forget(enemy : Enemy) -> void:
+	_last_element.erase(enemy.get_instance_id())
+	_last_spark.erase(enemy.get_instance_id())
+
+
 func _on_enemy_destroyed(enemy : Enemy) -> void:
 	var id : int = enemy.get_instance_id()
 	var element : Utils.DamageType = _last_element.get(id, Utils.DamageType.None)

@@ -55,10 +55,11 @@ func _begin_switch() -> bool:
 	if is_switching:
 		return false
 	is_switching = true
+	var may_switch : bool = true
 	if screen_fade != null:
-		await screen_fade.fade_out()
+		may_switch = await screen_fade.fade_out()
 	is_switching = false
-	return true
+	return may_switch
 
 
 func _on_start_level_pressed(level_number : int, mode : Utils.LevelMode) -> void:

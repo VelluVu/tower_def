@@ -49,7 +49,8 @@ func _shoot(kit : TestKit) -> void:
 			if is_done:
 				return
 			frames_since_burst += 1
-			if bursts_left > 0 and frames_since_burst >= BURST_GAP_FRAMES 					and kit.root.get_tree().get_nodes_in_group(GroupNames.ENEMIES).size() >= BURST_MIN_ENEMIES:
+			if bursts_left > 0 and frames_since_burst >= BURST_GAP_FRAMES \
+					and kit.root.get_tree().get_nodes_in_group(GroupNames.ENEMIES).size() >= BURST_MIN_ENEMIES:
 				await _burst(kit)
 			#the bot starts the level by signal and never closes the start menu; it hides the view, not the game
 			var menu : Control = kit.root.find_child("Menu", true, false) as Control

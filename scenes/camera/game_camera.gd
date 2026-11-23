@@ -80,6 +80,8 @@ var is_follow_events_on : bool = true
 var is_gliding : bool = false
 var glide_target : Vector2 = Vector2.ZERO
 var leak_glide_cooldown_left : float = 0.0
+#a glide would move the world under a building in hand or a wall line being dragged
+var is_placing_building : bool = false
 #kept from the level's load for the frame-the-level key
 var level_path_bounds : Rect2 = Rect2()
 
@@ -94,6 +96,7 @@ func _ready() -> void:
 	is_follow_events_on = SettingsManager.get_option(SettingsManager.OPTION_CAMERA_FOLLOWS_EVENTS)
 	InputManager.shortcut_pressed.connect(_on_shortcut_pressed)
 	GameSignals.enemy_spawned.connect(_on_enemy_spawned)
+	GameSignals.building_placement_change.connect(_on_building_placement_change)
 	GameSignals.enemy_reached_end_point.connect(_on_enemy_reached_end_point)
 	GameSignals.enemy_destroyed.connect(_on_enemy_destroyed)
 	move_target_position = global_position
@@ -166,7 +169,7 @@ func _glide_to_enemy(enemy : Enemy) -> void:
 ## Leads the view to a world point at the current zoom; the player's own camera input ends it.
 ## Returns whether a glide started (off in the options, or before the level is framed, it does not).
 func glide_to(world_point : Vector2) -> bool:
-	if not is_follow_events_on or current_mode != CameraMode.Free or is_panning:
+	if not is_follow_events_on or current_mode != CameraMode.Free or is_panning or is_placing_building 			or Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		return false
 	glide_target = _clamp_to_limits(world_point)
 	is_gliding = true
@@ -184,6 +187,12 @@ func frame_level() -> void:
 		return
 	is_gliding = false
 	_frame_level(level_path_bounds)
+
+
+func _on_building_placement_change(is_placing : bool) -> void:
+	is_placing_building = is_placing
+	if is_placing:
+		is_gliding = false
 
 
 func _on_shortcut_pressed(action : StringName) -> void:
@@ -217,6 +226,8 @@ func _zoom() -> void:
 func _zoom_at(screen_point : Vector2, new_zoom : float) -> void:
 	var from_center : Vector2 = screen_point - get_viewport_rect().size * 0.5
 	var world_point : Vector2 = global_position + from_center / zoom
+	#the player's own zoom ends a glide: its target was clamped to the old zoom's limits
+	is_gliding = false
 	zoom = Vector2.ONE * new_zoom
 	global_position = _clamp_to_limits(world_point - from_center / zoom)
 	move_target_position = global_position

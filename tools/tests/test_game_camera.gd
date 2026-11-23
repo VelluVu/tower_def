@@ -120,3 +120,19 @@ func test_frame_level_returns_to_the_start_view(kit : TestKit) -> void:
 	kit.check(camera.is_point_in_view(camera.global_position), "the centre is in view")
 	kit.check(not camera.is_point_in_view(camera.global_position + size), "a point a whole view away is not")
 	camera.queue_free()
+
+
+#(review, 2026-11-23): a zoom during a glide ended at the wrong limits and never finished
+func test_zoom_and_building_end_a_glide(kit : TestKit) -> void:
+	var camera : GameCamera = await _make_camera(kit, 13)
+	var size : Vector2 = camera.get_viewport_rect().size
+	camera.is_follow_events_on = true
+	camera._zoom_at(size * 0.5, 3.0)
+	camera.glide_to(Vector2(camera.limit_left, 0))
+	camera._zoom_at(size * 0.5, 2.0)
+	kit.check(not camera.is_gliding, "the player's zoom ends the glide")
+	camera._on_building_placement_change(true)
+	kit.check(not camera.glide_to(Vector2(camera.limit_left, 0)), "no glide with a building in hand")
+	camera._on_building_placement_change(false)
+	kit.check(camera.glide_to(Vector2(camera.limit_left, 0)), "and again once it is placed")
+	camera.queue_free()

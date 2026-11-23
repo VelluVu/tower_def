@@ -208,6 +208,7 @@ func _refund_upgrades(building : Building) -> void:
 	upgrades.upgrade_gold.erase(building)
 	if share > 0.0 and spent > 0.0:
 		level.player_stats.add_gold(floorf(spent * share))
+		GameSignals.gold_refunded.emit(building.global_position, floorf(spent * share))
 
 
 func _on_building_removed(building : Building) -> void:

@@ -21,7 +21,9 @@ func _ready() -> void:
 	var info : Label = Label.new()
 	var level_name : String = level.level_data.level_name if level.level_data != null and not level.level_data.level_name.is_empty() else ""
 	var runner : WaveRunner = level.wave_runner
-	var wave_text : String = ENDLESS_WAVE_FORMAT % runner.wave_number if runner.wave_count <= 0 else WAVE_FORMAT % [runner.wave_number, runner.wave_count]
+	#before the first wave the player is building for wave 1, not on a "wave 0"
+	var shown_wave : int = maxi(runner.wave_number, 1)
+	var wave_text : String = ENDLESS_WAVE_FORMAT % shown_wave if runner.wave_count <= 0 else WAVE_FORMAT % [shown_wave, runner.wave_count]
 	info.text = "%s  %s" % [level_name, wave_text] if not level_name.is_empty() else wave_text
 	info.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	lines.append(info)
@@ -32,7 +34,7 @@ func _ready() -> void:
 		heading.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		heading.add_theme_color_override(&"font_color", SUBTITLE_COLOR)
 		lines.append(heading)
-		lines.append(LevelCompletedMenu.build_checklist(TalentRules.point_conditions_for_level(level)))
+		lines.append(LevelCompletedMenu.build_checklist(TalentRules.point_conditions_for_level(level, false)))
 	var gap : Control = Control.new()
 	gap.custom_minimum_size.y = GAP
 	lines.append(gap)

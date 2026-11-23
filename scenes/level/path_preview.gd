@@ -32,15 +32,19 @@ const IDLE_SPAWN_ALPHA : float = 0.35
 @export var wade_color : Color = Color(0.45, 1.0, 0.8, 0.95)
 
 var paths : Array[PackedVector2Array] = []
+#the spawner id of each path, same order
+var path_spawn_ids : Array[int] = []
 #spawn, route points, castle: the corners only, without the flyers' wave
 var flight_paths : Array[PackedVector2Array] = []
 #the routes over a crossing, only where a wader would leave the road for one
 var wade_paths : Array[PackedVector2Array] = []
 var is_route_visible : bool = true :
 	set = _set_is_route_visible
-#the spawn points the next wave uses, as world positions; empty when nothing is known yet
-var next_wave_spawns : Array[Vector2] = []
+#the spawner ids the next wave uses; empty when nothing is known yet
+var next_wave_spawn_ids : Array[int] = []
 var pulse_time : float = 0.0
+#the pulse rings on their own canvas item, so the animation does not redraw every route each frame
+var pulse_layer : Node2D = null
 
 var level : Level :
 	get:
@@ -51,6 +55,9 @@ var level : Level :
 
 func _ready() -> void:
 	z_index = GROUND_Z_INDEX
+	pulse_layer = Node2D.new()
+	pulse_layer.draw.connect(_draw_pulses)
+	add_child(pulse_layer)
 	GameSignals.astar_grid_updated.connect(_update_paths)
 	GameSignals.wave_cleared.connect(_on_wave_cleared)
 	#the wave itself, not the button: Survival starts its next wave by itself
@@ -59,10 +66,10 @@ func _ready() -> void:
 
 
 func _process(delta : float) -> void:
-	if not is_route_visible or next_wave_spawns.is_empty():
+	if not is_route_visible or next_wave_spawn_ids.is_empty():
 		return
 	pulse_time = fmod(pulse_time + delta, PULSE_SECONDS)
-	queue_redraw()
+	pulse_layer.queue_redraw()
 
 
 func _update_paths() -> void:
@@ -71,10 +78,16 @@ func _update_paths() -> void:
 		return
 
 	paths.clear()
+	path_spawn_ids.clear()
 	wade_paths.clear()
 
-	for route in level.get_routes():
+	#get_routes() has one route per spawner, in get_spawners() order
+	var spawners : Array[Spawner] = level.get_spawners()
+	var routes : Array[PackedVector2Array] = level.get_routes()
+	for i in routes.size():
+		var route : PackedVector2Array = routes[i]
 		paths.append(level.grid.find_path(route[0], route[1]))
+		path_spawn_ids.append(spawners[i].id if i < spawners.size() else -1)
 		if not level.grid.bog_crossings.is_empty():
 			var wading : WadingRoute = level.grid.find_wading_route(route[0], route[1])
 			if wading.crossing != null:
@@ -91,51 +104,46 @@ func _update_paths() -> void:
 
 	_update_next_wave_spawns()
 	queue_redraw()
+	pulse_layer.queue_redraw()
 
 
 func _update_next_wave_spawns() -> void:
-	next_wave_spawns.clear()
+	next_wave_spawn_ids.clear()
 	var runner : WaveRunner = level.wave_runner
 	if runner == null or runner.next_wave == null:
 		return
-	var ids : Array[int] = []
 	for group in runner.next_wave.spawn_groups:
-		if group != null and not ids.has(group.spawner_id):
-			ids.append(group.spawner_id)
-	for spawner in level.get_spawners():
-		if ids.has(spawner.id):
-			next_wave_spawns.append(spawner.global_position)
+		if group != null and not next_wave_spawn_ids.has(group.spawner_id):
+			next_wave_spawn_ids.append(group.spawner_id)
 
 
 #a spawn point the next wave does not use is drawn dim, while the routes show
-func _get_spawn_color(world_position : Vector2) -> Color:
-	if not is_route_visible or next_wave_spawns.is_empty() or _is_next_wave_spawn(world_position):
+func _get_spawn_color(spawner_id : int) -> Color:
+	if not is_route_visible or next_wave_spawn_ids.is_empty() or next_wave_spawn_ids.has(spawner_id):
 		return spawn_color
 	return Color(spawn_color, spawn_color.a * IDLE_SPAWN_ALPHA)
 
 
-func _is_next_wave_spawn(world_position : Vector2) -> bool:
-	for spawn in next_wave_spawns:
-		if spawn.distance_squared_to(world_position) < 1.0:
-			return true
-	return false
-
-
+#on the pulse layer, at the same point as the spawn's marker (the path's start)
 func _draw_pulses() -> void:
+	if not is_route_visible or next_wave_spawn_ids.is_empty():
+		return
 	var progress : float = pulse_time / PULSE_SECONDS
 	#whole pixels, so the ring never blurs between art pixels
 	var radius : float = roundf(SPAWN_RADIUS + PULSE_GROWTH * progress)
 	var color : Color = Color(spawn_color, spawn_color.a * (1.0 - progress))
-	for spawn in next_wave_spawns:
-		draw_arc(to_local(spawn), radius, 0.0, TAU, MARKER_POINTS, color, MARKER_WIDTH)
+	for i in paths.size():
+		if not paths[i].is_empty() and next_wave_spawn_ids.has(path_spawn_ids[i]):
+			pulse_layer.draw_arc(pulse_layer.to_local(paths[i][0]), radius, 0.0, TAU, MARKER_POINTS, color, MARKER_WIDTH)
 
 
 func _draw() -> void:
-	for path in paths:
+	for i in paths.size():
+		var path : PackedVector2Array = paths[i]
 		if path.is_empty():
 			continue
 
-		_draw_marker(path[0], SPAWN_RADIUS, _get_spawn_color(path[0]))
+		_draw_marker(path[0], SPAWN_RADIUS, _get_spawn_color(path_spawn_ids[i]))
 		_draw_marker(path[path.size() - 1], END_RADIUS, end_color)
 
 		if not is_route_visible:
@@ -144,7 +152,6 @@ func _draw() -> void:
 		_draw_dots(path, DOT_SPACING, path_color)
 
 	if is_route_visible:
-		_draw_pulses()
 		for path in flight_paths:
 			_draw_dots(path, FLIGHT_DOT_SPACING, flight_color)
 		for path in wade_paths:
@@ -172,6 +179,8 @@ func _set_is_route_visible(value : bool) -> void:
 
 	is_route_visible = value
 	queue_redraw()
+	if pulse_layer != null:
+		pulse_layer.queue_redraw()
 
 
 func _on_wave_started(_wave_number : int) -> void:
