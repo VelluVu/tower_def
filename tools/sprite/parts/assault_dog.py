@@ -81,8 +81,24 @@ def lying(eye_closed=True, legs_out=2):
             f.px[(bx + hx + i, by + hy)] = 'm'
     return f
 
-death = [dog((0, 0, 0, 0), TAIL_DOWN, head_dy=-1), dog((1, 1, 0, 0), TAIL_DOWN, dy=2, head_dy=1, foot_y=6),
-         lying(True, 1), lying(True, 2), lying(True, 2)]
+def belly_up():
+    """Mid-roll: on its back, body upside down, all four legs kicking up."""
+    f = Frame(18, 18)
+    bx, by = BX, BY + 1
+    for hx, top, col in ((1, -2, 's'), (6, -2, 's'), (2, -3, 'm'), (7, -3, 'm')):
+        for y in range(top, 1):
+            f.px[(bx + hx + (1 if y == top else 0), by + y)] = col
+    f.stamp(BODY, bx, by, flipv=True)
+    f.stamp(TAIL_DOWN, bx, by - 2)
+    f.stamp(HEAD_DEAD, bx + 6, by + 1, flipv=True)
+    f.px[(bx + 5, by + 3)] = 'r'
+    return f
+
+
+# yelps with the head thrown up, the legs give, rolls over onto its back legs up, then settles on its side
+death = [dog((0, 0, 1, 1), TAIL_DOWN, head=HEAD_OPEN, head_dy=-2),
+         dog((1, 1, 0, 0), TAIL_DOWN, dy=2, head_dy=1, foot_y=6),
+         belly_up(), lying(True, 2), lying(True, 2)]
 
 write_spec(sys.argv[2], '''
 # Source of assault_dog.aseprite and assault_dog.png (python tools/sprite/sprite.py build <this> assault_dog.aseprite).

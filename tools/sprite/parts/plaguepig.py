@@ -104,14 +104,18 @@ atk = [pig(x=-1, legs=(-1, -1, 1, 1), head=(0, 1)), pig(x=0, legs=(1, 1, -1, -1)
        pig(x=0, legs=(1, 1, -1, -1), head=(0, 0), mouth=True), pig()]
 
 
-def on_side(puddle):
+def on_side(puddle, legs_up=3):
     f = Frame(26, 26)
     cx, cy = 11, 19
-    # legs stick out to the front, stiff
-    for lx, ly, col in ((14, 22, 'D'), (6, 22, 'D'), (16, 23, 'M'), (8, 23, 'M')):
-        for i in range(3):
-            f.px[(lx + i + 2, ly)] = col
     ellipse(f, cx, cy, 9.0, 4.5)
+    # keeled over: the four stubby legs stick stiffly up off the swollen belly, the far pair darker
+    for lx, col, lean in ((5, 'D', -1), (13, 'D', 0), (8, 'M', 0), (16, 'M', 1)):
+        for i in range(legs_up):
+            x = lx + (lean if i == legs_up - 1 else 0)
+            f.px[(x, 15 - i)] = col
+            f.px[(x + 1, 15 - i)] = col
+        f.px[(lx + (lean if legs_up > 1 else 0), 15 - legs_up + 1)] = 'K'
+        f.px[(lx + 1 + (lean if legs_up > 1 else 0), 15 - legs_up + 1)] = 'K'
     for bx, by in BOILS[:3]:
         f.px[(bx, by + 5)] = 'a'
         f.px[(bx + 1, by + 5)] = 'g'
@@ -127,7 +131,7 @@ def on_side(puddle):
     return f
 
 
-death = [pig(head=(0, -1), eye='K', boil_pop=1), pig(y=2, lift=(2, 2, 2, 2), head=(0, 1), eye='K'), on_side(0),
+death = [pig(head=(0, -1), eye='K', boil_pop=1), pig(y=2, lift=(2, 2, 2, 2), head=(0, 1), eye='K'), on_side(0, 2),
          on_side(3), on_side(6), on_side(8)]
 
 write_spec(sys.argv[2], '''

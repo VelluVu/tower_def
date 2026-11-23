@@ -1,0 +1,11 @@
+o = 181425
+w = c0cbdc
+r = f77622
+---
+r..r..r
+..www..
+.wwwww.
+rwowowr
+.wwwww.
+..w.w..
+r..r..r

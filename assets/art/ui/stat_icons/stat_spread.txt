@@ -1,0 +1,11 @@
+g = 63c74d
+d = 3e8948
+w = ffffff
+---
+...g...
+..gwg..
+..gdg..
+.......
+.g...g.
+gwg.gwg
+gdg.gdg

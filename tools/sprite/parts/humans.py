@@ -103,8 +103,39 @@ def s_dead(blood):
     return f
 
 
+# hit and staggers back (feet kick forward, the spear tips away), falls through 45 degrees, lands on its back
+S_FALL = part('''
+...AAB.........
+..AABBC........
+.BAACCCD.......
+..sKsKnbb......
+...sstnbbbt....
+.....Cnbbbbn...
+......nmmgmm...
+.......nbbmmo..
+.........mm..o.
+..........o..oo
+.........oo....''')
+
+
+def s_stagger(f, x, y):
+    for i in range(10):
+        f.px[(13 + x + i // 3, 3 + y + i)] = 'l'
+    f.px[(12 + x, 1 + y)] = 'A'
+    f.px[(12 + x, 2 + y)] = 'B'
+
+
+def s_falling():
+    f = Frame(18, 18)
+    f.stamp(S_FALL, 1, 5)
+    f.stamp(pts([(x, 15) for x in range(9, 16)], 'l'), 0, 0)
+    f.px[(16, 15)] = 'B'
+    return f
+
+
 s_death = [soldier.frame(legs=(1, -1), x=-1, head_dx=-1, extra=spear_up(1, 1)),
-           soldier.frame(legs=(1, -1), x=-1, y=2, head_dx=-1), s_dead(False), s_dead(True), s_dead(True)]
+           soldier.frame(legs=(3, 1), x=-2, y=1, head_dx=-1, extra=s_stagger),
+           s_falling(), s_dead(False), s_dead(True)]
 
 write_spec(sys.argv[2] + '/soldier.txt', '''
 # Source of soldier.aseprite and soldier.png (python tools/sprite/sprite.py build <this> soldier.aseprite).
@@ -177,8 +208,37 @@ def c_dead(blood):
     return f
 
 
-c_death = [scout.frame(legs=(1, -1), x=-1, head_dx=-1), scout.frame(legs=(1, -1), x=-1, y=2, head_dx=-1),
-           c_dead(False), c_dead(True), c_dead(True)]
+# staggers back with the dagger flung up, falls through 45 degrees, lands on its back
+C_FALL = part('''
+..jhhh.........
+.jhhhhh........
+jjsKsKhml......
+.jjsstmllm.....
+....mmllmlm....
+......mllmmo...
+.......oooo.o..
+..........o..oo
+.........oo....''')
+
+
+def c_stagger(f, x, y):
+    f.px[(12 + x, 8 + y)] = 'l'
+    f.px[(13 + x, 7 + y)] = 't'
+    f.px[(14 + x, 6 + y)] = 'B'
+    f.px[(15 + x, 5 + y)] = 'A'
+
+
+def c_falling():
+    f = Frame(18, 18)
+    f.stamp(C_FALL, 1, 7)
+    f.px[(15, 15)] = 'B'
+    f.px[(16, 15)] = 'A'
+    return f
+
+
+c_death = [scout.frame(legs=(1, -1), x=-1, head_dx=-1, extra=dagger(11, 10)),
+           scout.frame(legs=(3, 1), x=-2, y=1, head_dx=-1, extra=c_stagger),
+           c_falling(), c_dead(False), c_dead(True)]
 
 write_spec(sys.argv[2] + '/scout.txt', '''
 # Source of scout.aseprite and scout.png (python tools/sprite/sprite.py build <this> scout.aseprite).

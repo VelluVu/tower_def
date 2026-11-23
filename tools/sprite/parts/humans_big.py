@@ -124,7 +124,45 @@ CKsnbgmo'''), 17, 19)
     return f
 
 
-cv_death = [cavalry(3, x=-1), cavalry(2, y=2, x=-1), cv_dead(False), cv_dead(True), cv_dead(True)]
+def cv_buckle():
+    """The front knees give: the hind legs still stand, the front ones fold under, the neck drops and the rider
+    pitches forward over it with the lance tipping down."""
+    f = Frame(26, 26)
+    horse_leg(f, 8, 19, -1, 0, 'm')
+    f.stamp(TAIL, 2, 14)
+    f.stamp(HORSE, 4, 15)
+    # folded forelegs: hip, knee on the ground, hoof tucked back
+    line(f, 17, 20, 19, 22, 'm')
+    line(f, 15, 20, 17, 23, 'l')
+    for p in ((18, 23), (19, 23), (16, 23)):
+        f.px[p] = 'o'
+    f.stamp(NECK, 16, 11)
+    horse_leg(f, 6, 19, -2, 0, 'l')
+    f.stamp(BLANKET, 8, 14)
+    f.stamp(RIDER, 12, 6)
+    line(f, 13, 15, 23, 10, 'l')
+    f.px[(24, 10)] = 'A'
+    return f
+
+
+def cv_tumble():
+    """The horse rolls onto its side, the rider goes over its head upside down, the lance lies already."""
+    f = Frame(26, 26)
+    f.stamp(part('''
+...........o....
+.oo.mllllllmll..
+oooomlllllllllKl
+.o.mllllllllllll
+...mmmmmmmmmmo..
+..o.o..o.o......'''), 2, 17)
+    line(f, 2, 23, 12, 23, 'l')
+    f.px[(13, 23)] = 'A'
+    f.stamp(RIDER, 19, 12, flipv=True)
+    return f
+
+
+# hit, the front knees buckle and the rider pitches forward, the horse rolls and the rider tumbles off, both down
+cv_death = [cavalry(3, x=-1), cv_buckle(), cv_tumble(), cv_dead(False), cv_dead(True)]
 
 write_spec(OUT + '/cavalry/cavalry.txt', '''
 # Source of cavalry.aseprite and cavalry.png (python tools/sprite/sprite.py build <this> cavalry.aseprite).

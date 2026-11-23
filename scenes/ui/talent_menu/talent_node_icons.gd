@@ -17,6 +17,15 @@ const WEAKEN : Texture2D = preload("res://assets/art/ui/stat_icons/stat_weaken.p
 const FREEZE : Texture2D = preload("res://assets/art/ui/stat_icons/stat_freeze.png")
 const CARD : Texture2D = preload("res://assets/art/ui/stat_icons/stat_card.png")
 const DRAGON : Texture2D = preload("res://assets/art/ui/stat_icons/stat_dragon.png")
+const PENETRATION : Texture2D = preload("res://assets/art/ui/stat_icons/stat_penetration.png")
+const SPLASH : Texture2D = preload("res://assets/art/ui/stat_icons/stat_splash.png")
+const PIERCE : Texture2D = preload("res://assets/art/ui/stat_icons/stat_pierce.png")
+const PATCH : Texture2D = preload("res://assets/art/ui/stat_icons/stat_patch.png")
+const LINE : Texture2D = preload("res://assets/art/ui/stat_icons/stat_line.png")
+const SPLIT : Texture2D = preload("res://assets/art/ui/stat_icons/stat_split.png")
+const SPREAD : Texture2D = preload("res://assets/art/ui/stat_icons/stat_spread.png")
+const STRIKE : Texture2D = preload("res://assets/art/ui/stat_icons/stat_strike.png")
+const BURST : Texture2D = preload("res://assets/art/ui/stat_icons/stat_burst.png")
 
 const STAT_ICONS : Dictionary[Utils.StatType, Texture2D] = {
 	Utils.StatType.Damage: DAMAGE,
@@ -32,8 +41,16 @@ const STAT_ICONS : Dictionary[Utils.StatType, Texture2D] = {
 	Utils.StatType.EffectDuration: EFFECT,
 	Utils.StatType.EffectStacks: EFFECT,
 	Utils.StatType.EffectTickRate: EFFECT,
-	Utils.StatType.PatchDuration: EFFECT,
-	Utils.StatType.PatchShare: EFFECT,
+	Utils.StatType.PatchDuration: PATCH,
+	Utils.StatType.PatchShare: PATCH,
+	Utils.StatType.ResistancePenetration: PENETRATION,
+	Utils.StatType.CriticalPenetration: PENETRATION,
+	Utils.StatType.SplashRadius: SPLASH,
+	Utils.StatType.Pierce: PIERCE,
+	Utils.StatType.LineHits: LINE,
+	Utils.StatType.SplitCount: SPLIT,
+	Utils.StatType.SplitShare: SPLIT,
+	Utils.StatType.PoisonSpread: SPREAD,
 	Utils.StatType.FreezeChance: FREEZE,
 	Utils.StatType.FreezeDuration: FREEZE,
 }
@@ -56,8 +73,8 @@ const KIND_ICONS : Dictionary[TalentEffect.Kind, Texture2D] = {
 	TalentEffect.Kind.CardOffer: CARD,
 	TalentEffect.Kind.FreezeLonger: FREEZE,
 	TalentEffect.Kind.FreezeExtra: FREEZE,
-	TalentEffect.Kind.Strike: CRIT,
-	TalentEffect.Kind.DeathBurst: CRIT,
+	TalentEffect.Kind.Strike: STRIKE,
+	TalentEffect.Kind.DeathBurst: BURST,
 	TalentEffect.Kind.CastleDragon: DRAGON,
 }
 

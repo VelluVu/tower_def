@@ -78,7 +78,9 @@ def flipped(lift, legs_bent):
     f.stamp(TAIL_LOW, bx - 3, by - 1, flipv=True)
     f.stamp(BODY, bx, by, flipv=True)
     f.stamp(HEAD_DEAD, bx + 8, by - 1 + 1, flipv=True)
-    leg = [(1, -1, 'd'), (1 if legs_bent else 0, -2, 'c'), (6, -1, 'd'), (7 if legs_bent else 6, -2, 'c')]
+    # legs in the air, two rows tall and lighter than the body so they read on its dark back; bent ones curl in
+    leg = [(1, -1, 'g'), (1, -2, 'g'), (2 if legs_bent else 0, -3, 'i'),
+           (6, -1, 'g'), (6, -2, 'g'), (5 if legs_bent else 7, -3, 'i')]
     for x, y, c in leg:
         f.px[(bx + x, by + y)] = c
     return f

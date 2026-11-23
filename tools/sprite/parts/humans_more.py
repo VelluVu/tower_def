@@ -131,9 +131,31 @@ CBKKKKBCrRRRRrGCCCDDD.
 ........DCCCCD..BRgB..''', 1, 19, extra, 26, 26)
 
 
+def k_falling():
+    """Halfway down: helm, torso and shield stepped along a 45 degree line from the feet, the sword falling away."""
+    f = Frame(26, 26)
+    # plate legs as straight diagonals from the hips to the boots, the far one first
+    line(f, 13, 19, 18, 23, 'C')
+    line(f, 14, 19, 19, 23, 'D')
+    line(f, 15, 19, 20, 23, 'B')
+    line(f, 16, 19, 21, 23, 'C')
+    for x in (19, 20, 21, 22):
+        f.px[(x, 23)] = 'D'
+    f.stamp(K_TORSO, 7, 14)
+    f.stamp(K_HELM, 1, 12)
+    f.stamp(K_SHIELD, 12, 13)
+    line(f, 18, 10, 23, 5, 'A')
+    f.px[(17, 11)] = 'm'
+    f.px[(18, 11)] = 'G'
+    f.px[(17, 10)] = 'g'
+    f.px[(19, 11)] = 'g'
+    return f
+
+
+# hit, staggers back with the sword tipping away, falls through 45 degrees, lands on its back
 k_death = [knight(legs=(1, -1), x=-1, head_dx=-1, sword=REST),
-           knight(legs=(1, -1), x=-2, y=2, head_dx=-1),
-           k_dead(False), k_dead(True), k_dead(True)]
+           knight(legs=(3, 1), x=-2, y=1, head_dx=-1, sword=((6, 15), (3, 7), 'back')),
+           k_falling(), k_dead(False), k_dead(True)]
 
 write_spec(OUT + '/armored_knight/armored_knight.txt', '''
 # Source of armored_knight.aseprite and armored_knight.png (python tools/sprite/sprite.py build <this> armored_knight.aseprite).
@@ -245,8 +267,28 @@ mllssjhhjmmmo.
 .mlstjhljmoomo''', 2, 12, extra)
 
 
-a_death = [archer.frame(legs=(1, -1), x=-1, head_dx=-1, extra=bow()), archer.frame(legs=(1, -1), x=-1, y=2, head_dx=-1),
-           a_dead(False), a_dead(True), a_dead(True)]
+A_FALL = '''
+..mmlrr........
+.mllllll.......
+..msKsKjh......
+...msstjhhs....
+....wwjhlhj....
+......jmmmmo...
+.......o..mo...
+..........o..oo
+.........oo....'''
+
+
+def a_falling(f):
+    line(f, 9, 15, 14, 15, 'l')
+    f.px[(8, 15)] = 'm'
+    f.px[(15, 15)] = 'm'
+
+
+# hit, staggers back, falls through 45 degrees (the bow drops), lands on its back
+a_death = [archer.frame(legs=(1, -1), x=-1, head_dx=-1, extra=bow()),
+           archer.frame(legs=(3, 1), x=-2, y=1, head_dx=-1, extra=bow(dy=1)),
+           lying(A_FALL, 1, 7, a_falling), a_dead(False), a_dead(True)]
 
 write_spec(OUT + '/archer/archer.txt', '''
 # Source of archer.aseprite and archer.png (python tools/sprite/sprite.py build <this> archer.aseprite).
@@ -324,8 +366,30 @@ qqpsKwqpgppPPo''', 1, 12, extra)
 
 
 W_PAL['r'] = 'a22633'
-w_death = [wizard.frame(legs=(1, -1), x=-1, head_dx=-1, extra=staff()), wizard.frame(legs=(1, -1), x=-1, y=2, head_dx=-1),
-           w_dead(False), w_dead(True), w_dead(True)]
+W_FALL = '''
+q.............
+.qqp..........
+..qqpgp.......
+.qqqqpppP.....
+...wsKsKqp....
+...wwwwqppP...
+......qqpgpP..
+.......qpppPP.
+........qpqqpP
+.........PPoo.'''
+
+
+def w_falling(f):
+    line(f, 14, 9, 16, 15, 'l')
+    f.px[(13, 8)] = 'c'
+    f.px[(14, 8)] = 'b'
+    f.px[(13, 7)] = 'b'
+
+
+# hit, staggers back, falls through 45 degrees (the staff flies off), lands on its back
+w_death = [wizard.frame(legs=(1, -1), x=-1, head_dx=-1, extra=staff()),
+           wizard.frame(legs=(3, 1), x=-2, y=1, head_dx=-1, extra=staff(dy=1)),
+           lying(W_FALL, 1, 6, w_falling), w_dead(False), w_dead(True)]
 
 write_spec(OUT + '/wizard/wizard.txt', '''
 # Source of wizard.aseprite and wizard.png (python tools/sprite/sprite.py build <this> wizard.aseprite).
@@ -396,8 +460,29 @@ def p_dead(blood):
 mmsKAwggggBBBo''', 1, 12, extra)
 
 
-p_death = [priest.frame(legs=(1, -1), x=-1, head_dx=-1, extra=sun_staff()), priest.frame(legs=(1, -1), x=-1, y=2, head_dx=-1),
-           p_dead(False), p_dead(True), p_dead(True)]
+P_FALL = '''
+..mmm.........
+.msssm........
+.msKsKAw......
+..ssstAwwB....
+.....AwgwBB...
+......AwwwwB..
+.......AgggggB
+.........BBoo.'''
+
+
+def p_falling(f):
+    line(f, 14, 9, 16, 15, 'G')
+    f.px[(13, 8)] = 'g'
+    f.px[(14, 7)] = 'g'
+    f.px[(15, 8)] = 'g'
+    f.px[(14, 8)] = 'y'
+
+
+# hit, staggers back, falls through 45 degrees (the sun staff drops), lands on its back
+p_death = [priest.frame(legs=(1, -1), x=-1, head_dx=-1, extra=sun_staff()),
+           priest.frame(legs=(3, 1), x=-2, y=1, head_dx=-1, extra=sun_staff(dy=1)),
+           lying(P_FALL, 1, 8, p_falling), p_dead(False), p_dead(True)]
 
 write_spec(OUT + '/priest/priest.txt', '''
 # Source of priest.aseprite and priest.png (python tools/sprite/sprite.py build <this> priest.aseprite).

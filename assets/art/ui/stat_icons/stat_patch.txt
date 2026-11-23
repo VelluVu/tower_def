@@ -1,0 +1,11 @@
+o = 181425
+p = b55088
+h = f6757a
+---
+..h....
+....h..
+.......
+.ooooo.
+oppphpo
+ophpppo
+.ooooo.

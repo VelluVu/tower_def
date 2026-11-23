@@ -1,0 +1,12 @@
+y = feae34
+h = fee761
+l = c0cbdc
+w = ffffff
+---
+.....lw
+....l..
+...l...
+yyhlllw
+...l...
+....l..
+.....lw

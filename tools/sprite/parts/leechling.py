@@ -75,7 +75,9 @@ def coil(size, dark):
     return f
 
 
-death = [leech(HEAD, 10, 3), coil(1, False), coil(1, False), coil(0, True), leech(10, 6, 0, sucker='none', thick=2, dark=True)]
+# hit and humps, rears up with the sucker gaping, writhes, then goes dark and deflates flat
+death = [leech(HEAD, 10, 3), leech(HEAD, 11, 0, raise_head=4, sucker='open'), leech(HEAD - 1, 9, 3, raise_head=1),
+         leech(HEAD - 2, 8, 1, sucker='none', thick=3, dark=True), leech(10, 6, 0, sucker='none', thick=2, dark=True)]
 
 write_spec(sys.argv[2], '''
 # Source of leechling.aseprite and leechling.png (python tools/sprite/sprite.py build <this> leechling.aseprite).

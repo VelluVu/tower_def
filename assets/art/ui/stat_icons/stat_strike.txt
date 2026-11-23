@@ -1,0 +1,13 @@
+o = 181425
+s = 5a6988
+l = 8b9bb4
+r = b86f50
+d = 733e39
+---
+.ooooo.
+olllllo
+osssslo
+.ooroo.
+...r...
+...r...
+...d...

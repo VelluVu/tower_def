@@ -1,0 +1,11 @@
+y = feae34
+r = e43b44
+h = fee761
+---
+.y.y.y.
+y.....y
+..rrr..
+y.rhr.y
+..rrr..
+y.....y
+.y.y.y.

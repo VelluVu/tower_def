@@ -1,0 +1,12 @@
+b = 0099db
+c = 2ce8f5
+w = ffffff
+r = e43b44
+---
+.......
+.r.r.r.
+bcccccc
+wwwwwww
+bcccccc
+.r.r.r.
+.......

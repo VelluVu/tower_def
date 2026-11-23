@@ -1,0 +1,13 @@
+o = 181425
+l = c0cbdc
+h = ffffff
+r = e43b44
+d = a22633
+---
+..rr...
+.rddr..
+.rddrh.
+llllllh
+.rddrh.
+.rddr..
+..rr...
