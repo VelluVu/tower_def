@@ -2,6 +2,7 @@
 
 T2: an element crest on the head (it follows the head's bob) and a few element sparks orbiting the body.
 T3: a bigger crown, more sparks and an element ring glowing at the feet.
+Both tiers rim the body's and wings' outer edges in the element's light colour (2026-11-23), so the tier reads at 1x.
 The canvas, frame count, durations and tags stay the T1 sprite's, so the scenes' SpriteFrames regions fit.
 usage: tower_tiers.py <parts dir> <puffe art dir>   (writes <t1 name>_t2.txt and _t3.txt next to each T1 sheet)"""
 import math
@@ -48,6 +49,8 @@ ELEMENT = {
         'crest': ['u.u', 'gUg', 'GgG'],
         'crown': ['U...U', 'u.U.u', 'gugug', 'GgggG', '.GGG.'],
         'spark': ['63c74d', 'b55088'], 'ring': ['63c74d', '3e8948', 'b55088'],
+        # the light green spark vanishes on the green body; the rim takes the swamp acid instead
+        'rim': 'b6d53c',
         'pal': {'g': '63c74d', 'G': '3e8948', 'u': '68386c', 'U': 'b55088'},
     },
 }
@@ -97,7 +100,8 @@ def build(base, element, tier):
         for p in im.get_flattened_data():
             if p[3]:
                 colours.setdefault('%02x%02x%02x' % p[:3], None)
-    for c in list(el['pal'].values()) + el['spark'] + el['ring']:
+    rim = el.get('rim', el['spark'][0])
+    for c in list(el['pal'].values()) + el['spark'] + el['ring'] + [rim]:
         colours.setdefault(c, None)
     key = {c: KEYS[i] for i, c in enumerate(colours)}
     el_key = {k: key[v] for k, v in el['pal'].items()}
@@ -115,7 +119,7 @@ def build(base, element, tier):
                 for k in range(28):
                     ang = k / 28 * 2 * math.pi
                     x, y = round(9 + 7 * math.cos(ang)), round(cy + 2 * math.sin(ang))
-                    if 1 <= x <= 16 and 1 <= y <= 32 and (k + i) % 4 != 0:
+                    if 1 <= x <= 16 and 1 <= y <= 32 and (k + i) % 7 != 0:
                         f.px[(x, y)] = key[el['ring'][(k // 3 + i) % 2]]
             for y in range(h):
                 for x in range(w):
@@ -123,6 +127,17 @@ def build(base, element, tier):
                     if p[3]:
                         f.px[(x, y)] = key['%02x%02x%02x' % p[:3]]
             top, cx = head_top(im)
+            # the element rim: the outermost T1 pixel on each side of every body row turns the element's light colour
+            # (T3 two pixels deep at the widest rows, the wing tips)
+            bottom = body_box(frames[0])[1]
+            for y in range(max(1, top + 3), bottom - 1):
+                xs = [x for x in range(w) if im.getpixel((x, y))[3]]
+                if len(xs) < 4:
+                    continue
+                for edge, step in ((xs[0], 1), (xs[-1], -1)):
+                    f.px[(edge, y)] = key[rim]
+                    if tier == 3 and xs[-1] - xs[0] >= 12 and im.getpixel((edge + step, y))[3]:
+                        f.px[(edge + step, y)] = key[el['spark'][1]]
             # keep the crest on the head: follow the head's bob, not the attack effects above it
             if abs(top - head0) > 2:
                 top = head0
