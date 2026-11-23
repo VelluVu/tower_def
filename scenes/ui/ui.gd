@@ -18,6 +18,7 @@ const PUFFE_DIALOGUE_NAME : String = "puffe_dialogue"
 const TALENT_MENU_NAME : String = "talent_menu"
 const BOSS_HEALTH_BAR_NAME : String = "boss_health_bar"
 const BOSS_INTRO_NAME : String = "boss_intro"
+const PAUSE_MENU_FAILED_WARNING : String = "UI: the pause menu could not open, the game stays unpaused"
 ## Behind the pause, options, win and lose screens, so they stand out from the busy map (the level-up menu has its own).
 const DIM_COLOR : Color = Color(0, 0, 0, 0.5)
 ## The win screen waits this long after the last kill, so the "Castle saved!" (or the boss's) banner shows.
@@ -86,9 +87,15 @@ func _notification(what : int) -> void:
 		return
 	if not SettingsManager.get_option(SettingsManager.OPTION_PAUSE_ON_FOCUS_LOSS):
 		return
+	#a frame later: during the notification this node is busy and cannot take the pause menu as a child
+	_pause_on_focus_loss.call_deferred()
+
+
+func _pause_on_focus_loss() -> void:
 	if get_tree().paused or not scene_manager.is_in_level() or is_other_menus_open():
 		return
-
+	if scene_manager.is_scene_loaded(PAUSE_MENU_NAME, scene_manager.SceneType.UI):
+		return
 	UISignals.to_menu.emit(false, "")
 
 
@@ -178,10 +185,17 @@ func _menu(_to_main_menu : bool, from_scene_name : String) -> void:
 			menu.adopt_backdrop(backdrop)
 		elif backdrop != null:
 			backdrop.queue_free()
-	elif backdrop != null:
-		backdrop.queue_free()
 	else:
-		dim_behind(scene_manager.load_scene_by_name(PAUSE_MENU_NAME, scene_manager.SceneType.UI, self))
+		if backdrop != null:
+			backdrop.queue_free()
+		var pause_menu : Node = scene_manager.load_scene_by_name(PAUSE_MENU_NAME, scene_manager.SceneType.UI, self)
+		#never pause without the menu showing: the game would look frozen with no way out
+		if pause_menu == null or not pause_menu.is_inside_tree():
+			push_warning(PAUSE_MENU_FAILED_WARNING)
+			if pause_menu != null:
+				scene_manager.unload_scene_by_name(PAUSE_MENU_NAME, scene_manager.SceneType.UI)
+			return
+		dim_behind(pause_menu)
 		GameSignals.game_pause.emit(true)
 
 
