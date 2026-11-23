@@ -197,7 +197,8 @@ func _can_offer(resource : EvolveResource, new_level : int) -> bool:
 
 	#the maze cards wait for a maze: at least one wall
 	if resource.card_target == EvolveResource.CardTarget.MazeDamage or resource.card_target == EvolveResource.CardTarget.MazeSlow:
-		return level.all_buildings.any(func(building : Building) -> bool: return is_instance_valid(building) and building is Wall)
+		#untyped: a freed building in a typed lambda parameter is a script error before is_instance_valid runs
+		return level.all_buildings.any(func(building) -> bool: return is_instance_valid(building) and building is Wall)
 
 	var cap : StatCap = CARD_CAPS.get_cap(resource.modify_stat_type)
 

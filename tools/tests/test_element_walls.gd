@@ -163,6 +163,29 @@ func test_rectangle_group(kit : TestKit) -> void:
 	kit.check(not kit.level.all_buildings.has(first) and not kit.level.all_buildings.has(second), "Sell all sells them")
 
 
+#2026-11-23: a grouped wall destroyed by enemies stayed in the group freed, and buying an element for the group
+#then spent the gold and failed with a script error before any wall got it
+func test_rectangle_group_survives_a_destroyed_wall(kit : TestKit) -> void:
+	await kit.load_level(1)
+	kit.level.player_stats.gold = 500.0
+	var group : WallGroupSelect = kit.level.get_node(Level.WALL_GROUP_NAME)
+	var first : Wall = await _wall(kit)
+	var second : Wall = await _wall(kit)
+	GameSignals.selected_unit.emit(first)
+	UISignals.gold_upgrade_pressed.emit(0)
+	UISignals.gold_upgrade_pressed.emit(0)
+	group.drag_start = first.global_position.min(second.global_position) - Vector2(4, 4)
+	group.drag_end = first.global_position.max(second.global_position) + Vector2(4, 4)
+	group._collect()
+	kit.check(group.walls.size() == 2, "both walls in the group")
+	#torn down by enemies and gone at once, while the group's panel is still open
+	kit.level.all_buildings.erase(first)
+	first.free()
+	UISignals.wall_group_action.emit(0)
+	kit.check(second.element != Utils.Element.None, "the standing wall still gets the element")
+	kit.check(group.walls.size() == 1, "and the group lets go of the gone one (%d)" % group.walls.size())
+
+
 #a group takes the selection panel: the unit selected before it lets go, so its card cannot show through or stay
 #behind as an empty "N walls" card after Sell all
 func test_rectangle_group_lets_go_of_the_selection(kit : TestKit) -> void:

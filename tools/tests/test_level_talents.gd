@@ -78,6 +78,12 @@ func test_pinning_shot_freezes_every_fifth_bolt(kit : TestKit) -> void:
 	kit.check(not enemy.is_frozen, "four bolts do not pin")
 	GameSignals.tower_attacked.emit(bolter.skill)
 	kit.check(enemy.is_frozen, "the fifth bolt freezes its target")
+	#the target leaks (freed at once) while the next fifth bolt is cast: the strike skips it, no script error
+	for i in 4:
+		GameSignals.tower_attacked.emit(bolter.skill)
+	enemy.free()
+	GameSignals.tower_attacked.emit(bolter.skill)
+	kit.check(not is_instance_valid(bolter.skill.target), "a strike on a target that has gone does nothing")
 	PlayerProgress._save.progress.talent_ranks = saved
 
 

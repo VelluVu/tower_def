@@ -14,6 +14,16 @@ func _ready() -> void:
 	GameSignals.building_is_placing.connect(_on_building_is_placing)
 	UISignals.on_sell_selected_building_pressed.connect(_on_selected_building_sell_pressed)
 	UISignals.mouse_on_gui.connect(_mouse_is_on_gui)
+	#a selected unit that dies, leaks or is torn down is deselected while it still exists: otherwise its card
+	#stayed up and the selection holders kept a freed node (2026-11-23)
+	GameSignals.enemy_destroyed.connect(_on_unit_gone)
+	GameSignals.enemy_reached_end_point.connect(_on_unit_gone)
+	GameSignals.building_destroyed.connect(_on_unit_gone)
+
+
+func _on_unit_gone(unit : Node2D) -> void:
+	if unit == selected_unit:
+		_clear_selection()
 
 
 func _mouse_is_on_gui(is_on_ui : bool) -> void:

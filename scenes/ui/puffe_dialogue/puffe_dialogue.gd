@@ -52,7 +52,9 @@ func _ready() -> void:
 	UISignals.to_menu.connect(_on_to_menu)
 	UISignals.continue_from_pause_menu.connect(_on_continue_from_pause_menu)
 
-	var level : Level = Utils.game_control.scene_manager.current_level as Level
+	#checked before the cast: `as` on a freed level is a script error
+	var current : Variant = Utils.game_control.scene_manager.current_level
+	var level : Level = current as Level if is_instance_valid(current) else null
 	if level != null and level.level_data != null:
 		lines = level.level_data.puffe_lines
 

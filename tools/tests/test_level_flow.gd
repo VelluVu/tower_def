@@ -76,6 +76,26 @@ func test_the_level_is_lost_once(kit : TestKit) -> void:
 	GameSignals.lose_game.disconnect(on_lost)
 
 
+#2026-11-23: a clicked enemy that died kept its card up, and the selection holders kept the freed node
+func test_a_selected_enemy_that_dies_is_deselected(kit : TestKit) -> void:
+	await kit.load_level(1)
+	var selection : UnitSelection = kit.level.get_node("UnitSelection")
+	var enemy : Enemy = kit.spawn_enemy("weakling")
+	await kit.frames(2)
+	var deselected : Array[int] = [0]
+	var on_deselected : Callable = func() -> void: deselected[0] += 1
+	UISignals.deselected_unit.connect(on_deselected)
+	GameSignals.forced_selection.emit(enemy)
+	kit.check(selection.selected_unit == enemy and enemy.selectable.is_selected, "the enemy is selected")
+	_hit(enemy, 10000.0)
+	#the behaviour tree's Dead leaf calls die() on its next tick
+	await kit.run_until(func() -> bool: return enemy.is_deactivated, 2.0)
+	kit.check(selection.selected_unit == null and not enemy.selectable.is_selected, "its death deselects it")
+	kit.check(deselected[0] == 1, "and its card closes (%d)" % deselected[0])
+	kit.check(kit.level.building_type_upgrades.selected_unit == null, "the upgrades let go of it too")
+	UISignals.deselected_unit.disconnect(on_deselected)
+
+
 func test_an_enemy_caught_by_an_eruption_walks_off_the_lava(kit : TestKit) -> void:
 	await kit.load_level(52)
 	var lava_field : LavaField = kit.level.get_node(Level.LAVA_FIELD_NAME)

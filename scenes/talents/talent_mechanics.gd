@@ -103,7 +103,8 @@ func _fits(effect : TalentEffect, tower : Building) -> bool:
 
 
 func _strike(effect : TalentEffect, value : float, tower : Building, skill : Skill) -> void:
-	var target : Enemy = skill.target as Enemy
+	#the target may have leaked (freed at once) during the cast: `as` on a freed instance is a script error
+	var target : Enemy = skill.target as Enemy if is_instance_valid(skill.target) else null
 	var centre : Vector2 = tower.global_position
 	var reach : float = 0.0
 	if effect.at_tower:

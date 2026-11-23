@@ -43,7 +43,8 @@ func _pick_cells() -> Array[Vector2i]:
 	if enemy == null or enemy.level == null or enemy.is_flying or enemy.level.get_node_or_null(Level.LAVA_FIELD_NAME) == null:
 		return cells
 	var range_px : float = reach * Utils.TILE_SIZE
-	var towers : Array = enemy.level.all_buildings.filter(func(building : Building) -> bool:
+	#untyped: a freed building in a typed lambda parameter fails the filter before is_instance_valid can run
+	var towers : Array = enemy.level.all_buildings.filter(func(building) -> bool:
 		return is_instance_valid(building) and building is Tower and not building.is_dead and building.is_placed \
 			and building.global_position.distance_to(enemy.global_position) <= range_px)
 	towers.sort_custom(func(a : Building, b : Building) -> bool:

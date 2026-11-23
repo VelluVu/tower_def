@@ -57,8 +57,9 @@ func _ready() -> void:
 	GameSignals.level_completed.connect(_on_level_completed)
 	GameSignals.level_loaded.connect(_on_level_loaded)
 	var manager : Object = Utils.game_control.get(&"scene_manager") if Utils.game_control != null else null
-	var current : Object = manager.get(&"current_level") if manager != null else null
-	if current is Level:
+	#untyped and checked first: a level freed under the manager would be a script error in a typed variable
+	var current : Variant = manager.get(&"current_level") if manager != null else null
+	if is_instance_valid(current) and current is Level:
 		level = current
 
 

@@ -77,8 +77,9 @@ func _fit_panel() -> void:
 ## The wave the button sends; in Survival the grown copy the runner will make.
 static func get_next_wave() -> WaveData:
 	var manager : Object = Utils.game_control.get(&"scene_manager") if Utils.game_control != null else null
-	var level : Object = manager.get(&"current_level") if manager != null else null
-	if not level is Level or level.wave_runner == null:
+	#untyped and checked first: a level freed under the manager would be a script error in a typed variable
+	var level : Variant = manager.get(&"current_level") if manager != null else null
+	if not is_instance_valid(level) or not level is Level or level.wave_runner == null:
 		return null
 	var runner : WaveRunner = level.wave_runner
 	if runner.is_endless:

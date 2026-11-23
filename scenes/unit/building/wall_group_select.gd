@@ -65,7 +65,7 @@ func _collect() -> void:
 	var box : Rect2 = Rect2(drag_start, drag_end - drag_start).abs().grow(Utils.TILE_SIZE * 0.5)
 	walls.clear()
 	for building in level.all_buildings:
-		if building is Wall and is_instance_valid(building) and building.is_placed and box.has_point(building.global_position):
+		if is_instance_valid(building) and building is Wall and building.is_placed and box.has_point(building.global_position):
 			walls.append(building)
 	#the group takes the selection panel, so a selected unit lets go first (its card would show through)
 	if not walls.is_empty():
@@ -81,12 +81,14 @@ func _clear() -> void:
 
 
 ## The plain walls of the group (no element yet), the ones an element is bought for.
+#the lambdas take the wall untyped: a wall destroyed while grouped is freed, and a freed element in a typed
+#parameter fails the whole filter (a script error, after the element's gold was already spent)
 func get_plain_walls() -> Array[Wall]:
-	return walls.filter(func(wall : Wall) -> bool: return is_instance_valid(wall) and wall.element == Utils.Element.None)
+	return walls.filter(func(wall) -> bool: return is_instance_valid(wall) and wall.element == Utils.Element.None)
 
 
 func _emit() -> void:
-	walls = walls.filter(func(wall : Wall) -> bool: return is_instance_valid(wall) and not wall.is_dead)
+	walls = walls.filter(func(wall) -> bool: return is_instance_valid(wall) and not wall.is_dead)
 	element_options.clear()
 	var plain : int = get_plain_walls().size()
 	var upgrades : BuildingTypeUpgrades = level.building_type_upgrades
