@@ -23,7 +23,9 @@ var _nodes_by_id : Dictionary[StringName, TalentNode] = {}
 
 
 func get_node_by_id(node_id : StringName) -> TalentNode:
-	if _nodes_by_id.is_empty():
+	#rebuilt when the list changed size: the editor's Talents screen adds and removes nodes on a live tree
+	if _nodes_by_id.size() != nodes.size():
+		_nodes_by_id.clear()
 		for node in nodes:
 			_nodes_by_id[node.id] = node
 

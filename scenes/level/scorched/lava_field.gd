@@ -17,6 +17,7 @@ const OBSIDIAN_SOURCE : int = 2
 const OBSIDIAN_TILE : Vector2i = Vector2i(40, 0)
 ## Share of a building's max health an eruption burns away when lava flows over its cell.
 const ERUPTION_DAMAGE_SHARE : float = 0.75
+const NO_OVERRIDE : int = -1
 const NEIGHBOURS : Array[Vector2i] = [Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(-1, 0), Vector2i(1, 0),
 	Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)]
 
@@ -25,8 +26,9 @@ signal cell_cooled(cell : Vector2i)
 var level : Level = null
 #cooling progress per lava cell, in seconds of one cooler
 var cooling : Dictionary[Vector2i, float] = {}
-#cells an eruption flooded: they turn back into their ground when cooled
-var erupted : Dictionary[Vector2i, bool] = {}
+#cells an eruption flooded, each with its override from before (NO_OVERRIDE for none), put back when its lava
+#sets or cools: cooled lava-river rock erupted again would otherwise lose its OnlyBuildable and open a road
+var erupted : Dictionary[Vector2i, int] = {}
 var tick_timer : CustomTimer = null
 
 var water_layer : TileMapLayer :
@@ -53,11 +55,12 @@ func erupt(cells : Array[Vector2i]) -> void:
 	for cell in cells:
 		if is_lava(cell) or level.grid.reserved_cells.has(cell):
 			continue
+		var previous : int = level.grid.cell_overrides.get(cell, NO_OVERRIDE)
 		level.grid.set_cell_override(cell, Utils.TileType.Blocking)
 		if not _all_routes_open():
-			level.grid.clear_cell_override(cell)
+			_restore_override(cell, previous)
 			continue
-		erupted[cell] = true
+		erupted[cell] = previous
 		water_layer.set_cell(cell, LAVA_SOURCE, LAVA_TILES[absi(cell.x * 7 + cell.y * 3) % LAVA_TILES.size()])
 		var building : Building = level.grid.get_building_from_cell_position(cell)
 		if building != null and not building.is_dead:
@@ -83,8 +86,9 @@ func settle(cells : Array[Vector2i]) -> void:
 func cool(cell : Vector2i) -> void:
 	water_layer.erase_cell(cell)
 	cooling.erase(cell)
-	if erupted.erase(cell):
-		level.grid.clear_cell_override(cell)
+	if erupted.has(cell):
+		_restore_override(cell, erupted[cell])
+		erupted.erase(cell)
 	else:
 		level.tiles.ground_layer.set_cell(cell, OBSIDIAN_SOURCE, OBSIDIAN_TILE)
 		level.grid.set_cell_override(cell, Utils.TileType.OnlyBuildable)
@@ -107,6 +111,14 @@ func _tick() -> void:
 				cool(lava)
 	if reopened:
 		GameSignals.astar_grid_updated.emit()
+
+
+#a scorch's OnlyWalkable is not put back: the scorch ends by itself, and kept it would forbid building there for good
+func _restore_override(cell : Vector2i, previous : int) -> void:
+	if previous == NO_OVERRIDE or previous == Utils.TileType.OnlyWalkable:
+		level.grid.clear_cell_override(cell)
+	else:
+		level.grid.set_cell_override(cell, previous)
 
 
 func _all_routes_open() -> bool:

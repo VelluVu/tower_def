@@ -217,3 +217,17 @@ func test_magma_titan_slams_then_calls_the_magma(kit : TestKit) -> void:
 	GameSignals.enemy_spawned.disconnect(count_blob)
 	kit.check(magma_call.use_count == 1, "Magma Call under 33%")
 	kit.check(blobs[0] == 6, "six magma blobs rise (%d)" % blobs[0])
+
+
+#(review, 2026-11-23): near the castle the Broodmother's Dig Up came up behind herself, or on the castle
+func test_weak_spot_dig_never_goes_back_or_onto_the_castle(kit : TestKit) -> void:
+	await kit.load_level(8)
+	var brood : Enemy = kit.spawn_enemy("broodmother")
+	var burrow : BurrowAbility = brood.find_children("*", "BurrowAbility", true, false).front() as BurrowAbility
+	kit.check(burrow != null and burrow.seeks_weak_spot, "the Broodmother digs to a weak spot")
+	var here : Vector2 = kit.level.grid.snap_position_to_grid(brood.global_position)
+	var step : Vector2 = Vector2(Utils.TILE_SIZE, 0)
+	brood.point_path = PackedVector2Array([here - step * 2, here - step, here, here + step])
+	brood.current_waypoint_index = 2
+	kit.check(burrow._get_weak_spot() == here, "within the castle margin: up where she is (%s)" % burrow._get_weak_spot())
+	brood.queue_free()

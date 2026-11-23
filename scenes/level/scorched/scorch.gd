@@ -24,8 +24,9 @@ static func make(target_level : Level, at : Vector2, radius : float, seconds : f
 			var cell : Vector2i = centre + Vector2i(dx, dy)
 			if Vector2(dx, dy).length() > radius + 0.01 and (dx != 0 or dy != 0):
 				continue
+			#walkable too: OnlyWalkable on a build-only tile would open it to the enemies' paths
 			if grid.cell_overrides.has(cell) or grid.has_building_in_cell_position(cell) \
-					or not grid.is_position_buildable(grid.grid_position_to_world(cell)):
+					or not grid.is_position_buildable(grid.grid_position_to_world(cell)) or not grid.is_cell_walkable(cell):
 				continue
 			scorch.cells.append(cell)
 	if scorch.cells.is_empty():

@@ -26,13 +26,15 @@ var mending_timer : CustomTimer = null
 var leaning_element : int = Utils.Element.None
 #the strikes, death bursts and castle dragon; null without such a talent
 var mechanics : TalentMechanics = null
+#the last wave WaveGold paid for
+var last_paid_wave : int = 0
 
 
 func _ready() -> void:
 	GameSignals.building_placed.connect(_on_building_placed)
 	GameSignals.sell_building.connect(_on_building_removed)
 	GameSignals.sell_building.connect(_refund_upgrades)
-	GameSignals.building_destroyed.connect(_on_building_removed)
+	GameSignals.building_destroyed.connect(_on_building_destroyed)
 	level.player_stats.gold += get_start_gold()
 	leaning_element = get_leaning_element()
 	var new_mechanics : TalentMechanics = TalentMechanics.new()
@@ -110,10 +112,13 @@ func get_wall_armor(damage_data : DamageData) -> float:
 	return minf(armor, 0.75)
 
 
-func _on_wave_cleared(_wave_number : int) -> void:
+#early starts clear several waves at once (only the last one is announced): each of them pays
+func _on_wave_cleared(wave_number : int) -> void:
+	var waves : int = maxi(wave_number - last_paid_wave, 1)
+	last_paid_wave = wave_number
 	var gold : float = get_total(TalentEffect.Kind.WaveGold)
 	if gold > 0.0:
-		level.player_stats.add_gold(gold)
+		level.player_stats.add_gold(gold * waves)
 
 
 #walls mend the full share, towers and traps a quarter of it
@@ -213,6 +218,13 @@ func _refund_upgrades(building : Building) -> void:
 
 func _on_building_removed(building : Building) -> void:
 	applied_modifiers.erase(building)
+
+
+#a sell erases its upgrade gold in _refund_upgrades (Salvage reads it first); a destroyed tower's stayed as a freed key
+func _on_building_destroyed(building : Building) -> void:
+	_on_building_removed(building)
+	if level.building_type_upgrades != null:
+		level.building_type_upgrades.upgrade_gold.erase(building)
 
 
 #an element talent comes off when the building leaves the element, and goes on when it takes it

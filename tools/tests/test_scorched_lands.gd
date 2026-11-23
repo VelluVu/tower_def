@@ -151,3 +151,38 @@ func test_survival_fissures_erupt_every_loop(kit : TestKit) -> void:
 	kit.check(fissure.is_warning, "the second loop warns before the same wave")
 	GameSignals.wave_started.emit(looped)
 	kit.check(lava_field.is_lava(cell), "and erupts again in Survival's second loop (wave %d)" % looped)
+
+
+#(review, 2026-11-23): an early start never clears the wave it overtakes, and the warning and the settle hung on clears
+func test_fissure_warns_and_sets_through_early_starts(kit : TestKit) -> void:
+	await kit.load_level(52)
+	var fissure : Fissure = kit.level.get_node("Fissure1")
+	var lava_field : LavaField = _lava_field(kit)
+	var erupts : int = fissure.erupt_waves[0]
+	var cell : Vector2i = fissure.cells[0]
+	GameSignals.wave_started.emit(erupts - 1)
+	kit.check(fissure.is_warning, "the wave before warns from its start, no clear needed")
+	GameSignals.wave_started.emit(erupts)
+	kit.check(lava_field.is_lava(cell), "it erupts")
+	#one wave short of the settle, then the settle's own wave: a second eruption on that wave would flood it again
+	fissure.erupt_waves = [erupts]
+	for wave in range(erupts + 1, erupts + fissure.lava_waves):
+		GameSignals.wave_started.emit(wave)
+	kit.check(lava_field.is_lava(cell), "still lava one wave short")
+	GameSignals.wave_started.emit(erupts + fissure.lava_waves)
+	kit.check(not lava_field.is_lava(cell), "the lava sets after lava_waves waves, all started early")
+
+
+#(review, 2026-11-23): an eruption on cooled river rock left plain ground behind, a new road over the river
+func test_erupted_obsidian_stays_obsidian(kit : TestKit) -> void:
+	await kit.load_level(49)
+	var lava_field : LavaField = _lava_field(kit)
+	var river : Array[Vector2i] = kit.level.tiles.water_layer.get_used_cells()
+	var cell : Vector2i = river[0]
+	lava_field.cool(cell)
+	kit.check(kit.level.grid.cell_overrides.get(cell, -1) == Utils.TileType.OnlyBuildable, "cooled river rock is build-only")
+	lava_field.erupt([cell] as Array[Vector2i])
+	if lava_field.is_lava(cell):
+		lava_field.cool(cell)
+	kit.check(kit.level.grid.cell_overrides.get(cell, -1) == Utils.TileType.OnlyBuildable, "and is again after an eruption cools")
+	kit.check(not kit.level.grid.is_cell_walkable(cell), "no road over the river")

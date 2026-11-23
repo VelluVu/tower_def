@@ -18,6 +18,8 @@ var half_width : float = 8.0
 var shown : bool = true
 var elapsed : float = 0.0
 var is_flame : bool = false
+#game speed: the blink and the flame count game time, like every other gameplay clock
+var current_time_scale : float = 1.0
 
 
 static func make(level : Level, start : Vector2, end : Vector2, width : float) -> TelegraphLine:
@@ -37,8 +39,18 @@ static func make_flame(level : Level, start : Vector2, end : Vector2, width : fl
 	return line
 
 
+func _ready() -> void:
+	GameSignals.time_scale_change.connect(_on_time_scale_change)
+	if Utils.game_control != null:
+		_on_time_scale_change(Utils.game_control.time_scale)
+
+
+func _on_time_scale_change(time_scale : float) -> void:
+	current_time_scale = time_scale
+
+
 func _process(delta : float) -> void:
-	elapsed += delta
+	elapsed += delta * current_time_scale
 	if is_flame:
 		if elapsed >= FLAME_SECONDS:
 			queue_free()

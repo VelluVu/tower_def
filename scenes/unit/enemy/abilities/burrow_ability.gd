@@ -67,6 +67,10 @@ func _get_weak_spot() -> Vector2:
 	if path.is_empty():
 		return enemy.level.grid.snap_position_to_grid(enemy.global_position)
 	var last : int = path.size() - 1 - castle_margin
+	#already within castle_margin of the castle: no cell ahead may be used, so she comes up where she is
+	#(a negative last indexed the castle itself, a small one put her behind herself)
+	if last <= enemy.current_waypoint_index:
+		return enemy.level.grid.snap_position_to_grid(enemy.global_position)
 	var first : int = mini(enemy.current_waypoint_index + min_cells_ahead, last)
 	var towers : Array[Tower] = []
 	for building in enemy.level.all_buildings:

@@ -9,7 +9,7 @@ extends Node2D
 @export var cells : Array[Vector2i] = []
 ## Waves (1-based) at whose start the fissure erupts.
 @export var erupt_waves : Array[int] = []
-## Waves cleared after an eruption until the lava sets by itself.
+## Waves done after an eruption (its own wave included) until the lava sets by itself.
 @export var lava_waves : int = 2
 
 const CRACK_COLOR : Color = Color("f77622")
@@ -18,8 +18,9 @@ const HALF_TILE : float = Utils.TILE_SIZE * 0.5
 
 var level : Level = null
 var is_warning : bool = false
-#waves cleared since the last eruption, -1 when no lava of this fissure is out
-var waves_since_eruption : int = -1
+#the wave this fissure last erupted at, -1 when no lava of it is out. Counted by wave numbers, not clears: an early
+#start never clears the wave it overtook, and the warning and the settle went missing then
+var eruption_wave : int = -1
 
 
 func _ready() -> void:
@@ -43,22 +44,30 @@ func _erupts_at(wave_number : int) -> bool:
 	return erupt_waves.has(wave_number)
 
 
+#the wave before an eruption warns from its start, so an early start into the erupting wave still saw the cracks
 func _on_wave_started(wave_number : int) -> void:
-	if not _erupts_at(wave_number) or get_lava_field() == null:
-		return
-	_set_warning(false)
-	get_lava_field().erupt(cells)
-	waves_since_eruption = 0
+	#waves done since the eruption: every wave before this one (an early start skips their clears)
+	_settle_after(wave_number - 1)
+	if _erupts_at(wave_number) and get_lava_field() != null:
+		get_lava_field().erupt(cells)
+		eruption_wave = wave_number
+	_set_warning(_erupts_at(wave_number + 1))
 
 
 func _on_wave_cleared(wave_number : int) -> void:
+	_settle_after(wave_number)
 	_set_warning(_erupts_at(wave_number + 1))
-	if waves_since_eruption < 0:
+
+
+## The lava sets once lava_waves waves, the eruption's own wave included, are done.
+func _settle_after(last_done_wave : int) -> void:
+	if eruption_wave < 0 or last_done_wave - eruption_wave + 1 < lava_waves or get_lava_field() == null:
 		return
-	waves_since_eruption += 1
-	if waves_since_eruption >= lava_waves and get_lava_field() != null:
-		get_lava_field().settle(cells)
-		waves_since_eruption = -1
+	get_lava_field().settle(cells)
+	eruption_wave = -1
+	#an ability's cracks (EruptAbility) never erupt again: gone once their lava has set
+	if erupt_waves.is_empty():
+		queue_free()
 
 
 func _set_warning(value : bool) -> void:

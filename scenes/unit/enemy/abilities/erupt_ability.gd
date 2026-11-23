@@ -34,7 +34,7 @@ func _run() -> void:
 	cracks._set_warning(false)
 	if lava_field != null:
 		lava_field.erupt(cells)
-		cracks.waves_since_eruption = 0
+		cracks.eruption_wave = maxi(level.wave_runner.wave_number, 1) if level.wave_runner != null else 1
 	_finish()
 
 

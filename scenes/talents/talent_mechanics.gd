@@ -60,7 +60,8 @@ func _ready() -> void:
 		add_child(dragon_timer)
 		dragon_timer.timeout.connect(_breathe)
 		dragon_timer.start()
-		GameSignals.wave_cleared.connect(func(_wave : int) -> void: forgiven_castles.clear())
+		#per wave started, not cleared: an early start never clears the wave it overtook
+		GameSignals.wave_started.connect(func(_wave : int) -> void: forgiven_castles.clear())
 
 
 ## Keep Awakens: the first enemy to reach each castle every wave costs no life.
@@ -165,8 +166,11 @@ func _on_enemy_destroyed(enemy : Enemy) -> void:
 			continue
 		var damage : float = enemy.stats.get_stat_value(Utils.StatType.MaxHealth) * pair[1]
 		for other in _enemies_near(enemy.global_position, effect.radius_tiles * Utils.TILE_SIZE):
-			if other != enemy:
-				_hit_plain(other, damage * (BOSS_BREATH_FACTOR if other.is_boss else 1.0), effect.elements)
+			if other == enemy:
+				continue
+			#a boss's thousands of health would wipe out its whole escort: its burst takes each one's own share instead
+			var burst : float = other.stats.get_stat_value(Utils.StatType.MaxHealth) * pair[1] if enemy.is_boss else damage
+			_hit_plain(other, burst * (BOSS_BREATH_FACTOR if other.is_boss else 1.0), effect.elements)
 
 
 func _breathe() -> void:
