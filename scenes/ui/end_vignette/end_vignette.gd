@@ -152,10 +152,12 @@ func _add_bit(frames : SpriteFrames, spot : Vector2) -> AnimatedSprite2D:
 func _move_bits(delta : float) -> void:
 	for i in range(_bits.size() - 1, -1, -1):
 		var bit : Dictionary = _bits[i]
-		var node : AnimatedSprite2D = bit.node
-		if not is_instance_valid(node) or node.is_queued_for_deletion():
+		#checked untyped first: smoke frees itself when its animation loops, and Godot 4.7 errors on
+		#assigning a freed instance to a typed variable
+		if not is_instance_valid(bit.node) or bit.node.is_queued_for_deletion():
 			_bits.remove_at(i)
 			continue
+		var node : AnimatedSprite2D = bit.node
 		var spot : Vector2 = node.get_meta(&"spot")
 		if spot.y >= bit.floor:
 			#a landed coin lies flat for a moment

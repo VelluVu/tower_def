@@ -31,6 +31,11 @@ func test_lose_picture_mourns(kit : TestKit) -> void:
 	kit.check(sad.size() == 1 and (sad[0] as HoardHatchling).animation == GlobalAnimationNames.SAD_ANIMATION, "one drakeling sits by the egg")
 	picture._process(EndVignette.SMOKE_INTERVAL + 0.01)
 	kit.check(picture._bits.size() == 1, "smoke rises from the gate")
+	#a puff frees itself when its animation loops; the next frame must drop it, not error on it (2026-11-23 bug:
+	#the lose screen broke into the debugger once the first puff had gone)
+	(picture._bits[0].node as Node).free()
+	picture._process(0.01)
+	kit.check(picture._bits.is_empty(), "a puff that has gone is dropped")
 	menu.queue_free()
 	await kit.frames(1)
 

@@ -221,6 +221,8 @@ func run(kit : TestKit, args : PackedStringArray) -> void:
 	#writes this run to the bot log
 	level.queue_free()
 	await kit.frames(2)
+	#the smart player holds this bot and the bot holds it: break the RefCounted cycle, or both leak at exit
+	smart = null
 
 
 ## Spends each tree's points one rank at a time on the nearest node that can take it, working

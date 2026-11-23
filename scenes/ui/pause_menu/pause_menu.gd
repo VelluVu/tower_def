@@ -14,8 +14,12 @@ const GAP : float = 4.0
 
 func _ready() -> void:
 	var manager : Object = Utils.game_control.get(&"scene_manager") if Utils.game_control != null else null
-	var level : Level = manager.get(&"current_level") as Level if manager != null else null
-	if level == null or not is_instance_valid(level):
+	#checked before the cast: `as` on a freed level is a script error in Godot 4.7
+	var current_level : Variant = manager.get(&"current_level") if manager != null else null
+	if not is_instance_valid(current_level):
+		return
+	var level : Level = current_level as Level
+	if level == null:
 		return
 	var lines : Array[Control] = []
 	var info : Label = Label.new()
