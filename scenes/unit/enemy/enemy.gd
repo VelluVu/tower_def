@@ -46,6 +46,8 @@ const TURN_DOT_LIMIT : float = 0.5
 @export var xp_multiplier : float = 1.0
 #shows the boss health bar while alive
 @export var is_boss : bool = false
+## A boss's line under its name on the intro card (BossIntro).
+@export var boss_title : String = ""
 #takes a level's bog crossings when they are cheaper than the road (the toad, the leech)
 @export var can_wade : bool = false
 #the faction role's resistances (scenes/unit/enemy/resistances/); none = takes every hit in full

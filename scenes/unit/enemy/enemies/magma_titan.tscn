@@ -315,6 +315,7 @@ resistances = ExtResource("res_profile")
 icon = ExtResource("2_n88ha")
 is_boss = true
 skill = NodePath("MeleeAttack")
+boss_title = "Heart of the Mountain"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_lot5f")

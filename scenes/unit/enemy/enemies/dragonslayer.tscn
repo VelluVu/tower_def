@@ -279,6 +279,7 @@ resistances = ExtResource("res_profile")
 icon = ExtResource("2_kr4lh")
 is_boss = true
 skill = NodePath("MeleeAttack")
+boss_title = "Sworn Bane of Dragons"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_lot5f")

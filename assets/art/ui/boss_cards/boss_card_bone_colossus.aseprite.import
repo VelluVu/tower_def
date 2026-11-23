@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://ccyycnjrbucon"
+path="res://.godot/imported/boss_card_bone_colossus.aseprite-949f656b81533c26cff059f4cebf8259.res"
+
+[deps]
+
+source_file="res://assets/art/ui/boss_cards/boss_card_bone_colossus.aseprite"
+dest_files=["res://.godot/imported/boss_card_bone_colossus.aseprite-949f656b81533c26cff059f4cebf8259.res"]
+
+[params]
+

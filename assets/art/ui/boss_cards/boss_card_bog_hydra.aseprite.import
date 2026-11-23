@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cfb0mcr2f6lts"
+path="res://.godot/imported/boss_card_bog_hydra.aseprite-7da2a4bbafe02e0bd32b8ecea0833b94.res"
+
+[deps]
+
+source_file="res://assets/art/ui/boss_cards/boss_card_bog_hydra.aseprite"
+dest_files=["res://.godot/imported/boss_card_bog_hydra.aseprite-7da2a4bbafe02e0bd32b8ecea0833b94.res"]
+
+[params]
+

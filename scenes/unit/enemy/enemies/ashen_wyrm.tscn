@@ -297,6 +297,7 @@ script = ExtResource("1_pnuqq")
 resistances = ExtResource("res_profile")
 icon = ExtResource("2_w8sqj")
 is_boss = true
+boss_title = "The Fallen Elder"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -10)

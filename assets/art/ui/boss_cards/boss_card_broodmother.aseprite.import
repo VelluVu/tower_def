@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dtga87dultxv1"
+path="res://.godot/imported/boss_card_broodmother.aseprite-cd3f6d08311a81860d2888a49d96e2b0.res"
+
+[deps]
+
+source_file="res://assets/art/ui/boss_cards/boss_card_broodmother.aseprite"
+dest_files=["res://.godot/imported/boss_card_broodmother.aseprite-cd3f6d08311a81860d2888a49d96e2b0.res"]
+
+[params]
+

@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://d4fasp84co8w6"
+path="res://.godot/imported/boss_card_magma_titan.aseprite-e07958047d8595176ddfaea853a2f088.res"
+
+[deps]
+
+source_file="res://assets/art/ui/boss_cards/boss_card_magma_titan.aseprite"
+dest_files=["res://.godot/imported/boss_card_magma_titan.aseprite-e07958047d8595176ddfaea853a2f088.res"]
+
+[params]
+
