@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dcmr86w2svna0"
+path="res://.godot/imported/brood_torch.aseprite-d4f21938037a855c40fb9f32dfdbe78a.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/lairs/brood_torch.aseprite"
+dest_files=["res://.godot/imported/brood_torch.aseprite-d4f21938037a855c40fb9f32dfdbe78a.res"]
+
+[params]
+

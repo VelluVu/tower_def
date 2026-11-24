@@ -14,6 +14,9 @@
         past the map's edge (forest; forest with bog below; bog pools and dark trees; bare dark ground for the desert
         and the volcano, which the `rock` pass then terraces), over the dark fill and the rock band;
         run it after `edge` and before `rock`
+    python tools/level_tiles.py enclose <level numbers...> [--dry]   a boss lair's cave (LAIRS): every cell past the
+        map's edge becomes rock, except the lair's openings (a mouth to the daylight, tunnels into the dark: winding
+        cobbled floor, TUNNEL_ALT), then the `rock` pass terraces it; rerun it after changing LAIRS
     python tools/level_tiles.py falls <level numbers...> [--dry]   the still waterfall pieces become the animated
         waterfall_tiles (BackgroundTileMapLayer source 1)
     python tools/level_tiles.py render <level number> <out.png> [--scale 3]
@@ -102,6 +105,18 @@ SURROUND_DEPTH = 4
 BOG_POOLS = [[(8, 0), (9, 0), (8, 1), (9, 1)], [(6, 2), (7, 2), (6, 3), (7, 3)], [(8, 2), (9, 2), (8, 3), (9, 3)],
              [(0, 4), (1, 4), (0, 5), (1, 5)]]
 ROCK_FILL = [(0, 6), (0, 7), (0, 8), (0, 9), (1, 7), (1, 8), (1, 9)]  # background_tiles stone without rims
+# boss lairs enclosed in rock (`enclose`): openings as (start cell, end cell, half width at the start, at the end); a
+# tunnel winds a little and runs past the rock's edge. Its floor is rock fill flipped (TUNNEL_ALT), which the rock
+# pass treats as open ground, so the walls round off along it. Level 8 is the Brood Cavern (moves to 12).
+TUNNEL_ALT = FLIP_H
+TUNNEL_OVERRUN = 3
+ENCLOSE_MARGIN = 4
+LAIRS = {
+    8: [((-25, -2), (-31, -2), 2.6, 3.4),  # the cave mouth behind the castle, out to the daylight
+        ((9, -10), (10, -16), 1.4, 1.0),  # behind the north spawn
+        ((24, 0), (31, 1), 1.4, 0.9),  # the brood's tunnel east
+        ((-2, 8), (-3, 15), 1.4, 1.0)],  # down into the deep
+}
 # the rim and ends of the rock band under the map (river-mouth gaps), shaped with the rest of the outside rock
 ROCK_BAND_RIM = set([(x, 6) for x in range(4, 8)] + [(2, 7), (3, 7), (4, 10), (5, 10)])
 
@@ -341,7 +356,7 @@ def _shape_outside_rock(level, field, spawn_cells, log):
     shaped = set(c for c, (s, _, _) in level.cells("FrontTileMapLayer").items() if s in ROCK_SOURCES and c not in field and c not in spawn_cells)
     if shaped:
         return shaped  # shaped on an earlier run: keep it, so a rerun does not grow more spurs
-    outside = set(c for c, (s, t, _) in background.items() if s == 0 and (t in ROCK or t in ROCK_BAND_RIM) and c not in field)
+    outside = set(c for c, (s, t, a) in background.items() if s == 0 and (t in ROCK or t in ROCK_BAND_RIM) and a != TUNNEL_ALT and c not in field)
     spurs = set()
     for c in sorted(outside):
         for d in (N, E, S, W):
@@ -422,7 +437,8 @@ def build_rock(level, log):
         if n in rock:
             return level_of(n) >= level_of(c)  # a higher step shows its rim and face over a lower one
         # outside the map: the border cliff continues the rock, the dark fill, the grass frame and nothing do not
-        return n not in field and n in background and background[n][0] == 0 and background[n][1] in ROCK
+        return (n not in field and n in background and background[n][0] == 0 and background[n][1] in ROCK
+                and background[n][2] != TUNNEL_ALT)
 
     for c in sorted(rock, key=lambda c: (c[1], c[0])):
         mask = sum(bit for d, bit in ROCK_MASK_BITS if is_rock(c, add(c, d)))
@@ -432,6 +448,56 @@ def build_rock(level, log):
             log.append(("rock", c, "mask", mask))
         front[c] = (source, tile, 0)
     level.set_cells("FrontTileMapLayer", front)
+
+
+def _tunnel_cells(start, end, half0, half1, key):
+    """a winding tunnel from start to end and TUNNEL_OVERRUN cells on, narrowing from half0 to half1"""
+    (x0, y0), (x1, y1) = start, end
+    length = max(abs(x1 - x0), abs(y1 - y0), 1)
+    dx, dy = (x1 - x0) / length, (y1 - y0) / length
+    cells = set()
+    for step in range(length + TUNNEL_OVERRUN + 1):
+        t = min(1.0, step / length)
+        wiggle = pick([-0.6, 0.0, 0.0, 0.6], key, step) if step > 1 else 0.0
+        cx, cy = x0 + dx * step - dy * wiggle, y0 + dy * step + dx * wiggle
+        half = half0 + (half1 - half0) * t
+        r = int(half) + 1
+        for ox in range(-r, r + 1):
+            for oy in range(-r, r + 1):
+                if (ox * ox + oy * oy) ** 0.5 <= half + 0.25:
+                    cells.add((round(cx + ox), round(cy + oy)))
+    return cells
+
+
+def build_enclosure(level, log):
+    field = playfield(level)
+    spawn = set(c for cells in spawn_squares(level).values() for c in cells)
+    background = level.cells("BackgroundTileMapLayer")
+    front = level.cells("FrontTileMapLayer")
+    # the rock box is the map plus ENCLOSE_MARGIN; anything past it from an earlier run goes, so a rerun is the same
+    xs = [min(c[0] for c in field) - ENCLOSE_MARGIN, max(c[0] for c in field) + ENCLOSE_MARGIN]
+    ys = [min(c[1] for c in field) - ENCLOSE_MARGIN, max(c[1] for c in field) + ENCLOSE_MARGIN]
+    for layer in (background, front):
+        for c in [c for c in layer if not (xs[0] <= c[0] <= xs[1] and ys[0] <= c[1] <= ys[1])]:
+            del layer[c]
+    falls = set(c for c, (s, _, _) in background.items() if s == FALLS_SOURCE)
+    tunnels = set()
+    for i, (start, end, half0, half1) in enumerate(LAIRS.get(level.number, [])):
+        tunnels |= _tunnel_cells(start, end, half0, half1, (level.number, i))
+    tunnels -= field | spawn | falls
+    for x in range(min(xs), max(xs) + 1):
+        for y in range(min(ys), max(ys) + 1):
+            c = (x, y)
+            if c not in field and c not in spawn and c not in falls:
+                front.pop(c, None)
+                background[c] = (0, pick(ROCK_FILL, c), 0)
+    for c in tunnels:
+        front.pop(c, None)
+        background[c] = (0, pick(ROCK_FILL, c), TUNNEL_ALT)
+    level.set_cells("BackgroundTileMapLayer", background)
+    level.set_cells("FrontTileMapLayer", front)
+    log.append(("enclosed", (min(xs), min(ys)), (max(xs), max(ys)), "tunnel cells", len(tunnels)))
+    build_rock(level, log)
 
 
 def _outside_distance(c, field, limit):
@@ -621,7 +687,7 @@ def render(level, out_path, scale):
 
 
 def main(args):
-    if len(args) < 2 or args[0] not in ("edge", "water", "rock", "ground", "falls", "surround", "render"):
+    if len(args) < 2 or args[0] not in ("edge", "water", "rock", "ground", "falls", "surround", "enclose", "render"):
         sys.exit(__doc__)
     if args[0] == "render":
         scale = int(args[args.index("--scale") + 1]) if "--scale" in args else 3
@@ -639,6 +705,8 @@ def main(args):
             build_ground(level, log)
         elif args[0] == "falls":
             build_falls(level, log)
+        elif args[0] == "enclose":
+            build_enclosure(level, log)
         elif args[0] == "surround":
             build_surroundings(level, args[1], log)
         else:

@@ -28,3 +28,5 @@ const SWEEP_ANIMATION : String = "SWEEP"
 const GROUND_WALK_ANIMATION : String = "GROUND_WALK"
 const LAND_ANIMATION : String = "LAND"
 const ROAR_ANIMATION : String = "ROAR"
+#a boss lair's camouflaged castle shedding its rock when the boss arrives
+const REVEAL_ANIMATION : String = "REVEAL"

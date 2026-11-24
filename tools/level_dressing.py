@@ -22,13 +22,19 @@ ROOT = lt.ROOT
 # object_tile_set_01 sources (and their area copies): four landmarks, two by two on a 64x64 sheet. The human lands
 # (the Wasted Lands since 2026-11-18) take their landmarks in turn from the timber-and-quarry sheet (14) and the farm
 # sheet (13): two of the first to one of the second.
-LANDMARK_SOURCES = {"swamp": [12], "fields": [14, 13, 14]}
-AREAS = {"swamp": range(13, 25), "fields": range(25, 37)}
+LANDMARK_SOURCES = {"swamp": [12], "fields": [14, 13, 14], "brood": [16]}
+AREAS = {"swamp": range(13, 25), "fields": range(25, 37), "brood": [8]}
+# a sheet's landmark count and columns when it is not four, two by two (the boss lairs, tools/sprite/parts/lair_art.py;
+# the Brood Cavern moves to 12 with the Broodmother)
+LANDMARK_LAYOUT = {16: (5, 3)}
+LANDMARK_COUNT = {"brood": 5}
 # ground decor (decor_tile_set source 3, twelve pieces four by three: stumps, chips, ruts, gravel...), on about one open
 # cell in DECOR_ONE_IN of the Wasted Lands; a rerun replaces it
-DECOR_SOURCE = {"fields": 3}
-DECOR_PIECES = 12
-DECOR_ONE_IN = 7
+DECOR_SOURCE = {"fields": 3, "brood": 4}
+DECOR_PIECES = {3: (12, 4), 4: (6, 3)}  # pieces and columns per decor source
+DECOR_ONE_IN = {"fields": 7, "brood": 9}
+# areas whose level loses the meadow decor (decor_tile_set source 0) under its own: the cave lair has no grass
+DECOR_REPLACES_MEADOW = {"brood"}
 WATER_LAYER = "WaterTileMapLayer"
 
 
@@ -39,9 +45,9 @@ def area_of(number):
     return None
 
 
-def find_spots(numbers):
+def find_spots(numbers, count=3):
     out = subprocess.run([sys.executable, os.path.join(ROOT, "tools", "gd.py"), "--timeout", "900", "run",
-                          "tools/reports/landmark_spots.gd"] + [str(n) for n in numbers] + ["--raw"],
+                          "tools/reports/landmark_spots.gd"] + [str(n) for n in numbers] + ["count=%d" % count, "--raw"],
                          capture_output=True, text=True, encoding="utf-8", errors="replace").stdout
     spots = {}
     for m in re.finditer(r"^SPOT (\d+) (-?\d+) (-?\d+)$", out, re.M):
@@ -57,37 +63,41 @@ def dress(number, cells):
     for k in [k for k, v in front.items() if v[0] in sources]:
         del front[k]
     # a level's landmarks are different kinds, starting from a kind picked per level
-    first = zlib.crc32(repr(number).encode()) % 4
     for i, (x, y) in enumerate(cells):
-        kind = (first + i) % 4
         source = sources[i % len(sources)]
+        kinds, columns = LANDMARK_LAYOUT.get(source, (4, 2))
+        kind = (zlib.crc32(repr(number).encode()) + i) % kinds
         for dc in (0, 1):
             for dr in (0, 1):
-                front[(x + dc, y + dr)] = (source, (kind % 2 * 2 + dc, kind // 2 * 2 + dr), 0)
+                front[(x + dc, y + dr)] = (source, (kind % columns * 2 + dc, kind // columns * 2 + dr), 0)
     level.set_cells("FrontTileMapLayer", front)
     if area in DECOR_SOURCE:
-        scatter_decor(level, front, DECOR_SOURCE[area])
+        scatter_decor(level, front, DECOR_SOURCE[area], area)
     level.save()
     print("level %d: %d landmarks (%s)" % (number, len(cells), area))
 
 
-def scatter_decor(level, front, source):
+def scatter_decor(level, front, source, area):
     """the area's ground pieces on open ground: on the playfield, not under water or a front tile; a piece may take
     the place of an old meadow tuft (almost every meadow cell has one)"""
-    decor = {k: v for k, v in level.cells("DecorTileMapLayer").items() if v[0] != source}
+    cleared = (source, 0) if area in DECOR_REPLACES_MEADOW else (source,)
+    decor = {k: v for k, v in level.cells("DecorTileMapLayer").items() if v[0] not in cleared}
+    pieces, columns = DECOR_PIECES[source]
     water = level.cells(WATER_LAYER)
     for cell in level.cells("GroundTileMapLayer"):
         if cell in water or cell in front:
             continue
-        if zlib.crc32(repr((level.number, cell, "decor")).encode()) % DECOR_ONE_IN == 0:
-            i = zlib.crc32(repr((level.number, cell, "piece")).encode()) % DECOR_PIECES
-            decor[cell] = (source, (i % 4, i // 4), 0)
+        if zlib.crc32(repr((level.number, cell, "decor")).encode()) % DECOR_ONE_IN[area] == 0:
+            i = zlib.crc32(repr((level.number, cell, "piece")).encode()) % pieces
+            decor[cell] = (source, (i % columns, i // columns), 0)
     level.set_cells("DecorTileMapLayer", decor)
 
 
 if __name__ == "__main__":
     numbers = [int(a) for a in sys.argv[1:]] or [n for numbers in AREAS.values() for n in numbers]
     numbers = [n for n in numbers if area_of(n)]
-    spots = find_spots(numbers)
+    spots = {}
+    for count in sorted(set(LANDMARK_COUNT.get(area_of(n), 3) for n in numbers)):
+        spots.update(find_spots([n for n in numbers if LANDMARK_COUNT.get(area_of(n), 3) == count], count))
     for n in numbers:
         dress(n, spots.get(n, []))

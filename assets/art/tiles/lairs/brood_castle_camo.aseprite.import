@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dfthkm1b7qi2l"
+path="res://.godot/imported/brood_castle_camo.aseprite-ae9934d0774cd20e1b445e5d47cffb37.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/lairs/brood_castle_camo.aseprite"
+dest_files=["res://.godot/imported/brood_castle_camo.aseprite-ae9934d0774cd20e1b445e5d47cffb37.res"]
+
+[params]
+

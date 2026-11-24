@@ -15,10 +15,12 @@ KEYS = 'abcdefghijklmnopqrstuvwxyz'
 SRC = Image.open(TILES + '/green_land/ground_tiles.png').convert('RGBA')
 
 AREAS = {
-    'caves': ('''cave floor: slate 3a4466 with a 5a6988 rim, block 1 black moss 193c3e, pale sand = gravel 8b9bb4/c0cbdc,
-# sand = cave dust b86f50/c28569, red = amethyst veins 68386c, bog = dark pools 181425/262b44''', {
-        '439148': '3a4466', '63c74d': '5a6988', '2f6b3d': '262b44', '568239': '193c3e',
-        'cdb99a': '8b9bb4', 'dacab7': 'c0cbdc', 'e4a672': 'b86f50', 'e8b796': 'c28569', 'bc6e48': '68386c',
+    'caves': ('''cave floor: slate 3a4466 with a 5a6988 rim, block 1 slate 3a4466, pale sand = gravel 5a6988/8b9bb4,
+# sand = cave dust 733e39/b86f50, red = amethyst veins 68386c, bog = dark pools 181425/262b44 (2026-11-24: a cool
+# mid-tone slate for the Brood Cavern, the first level to use it, so the warm torchlight stands out; its LairLighting
+# does the darkening)''', {
+        '439148': '3a4466', '63c74d': '5a6988', '2f6b3d': '262b44', '568239': '3a4466',
+        'cdb99a': '5a6988', 'dacab7': '8b9bb4', 'e4a672': '733e39', 'e8b796': 'b86f50', 'bc6e48': '68386c',
         '45472a': '181425', '56602f': '262b44', '323a26': '181425', '3a3b24': '1e2033'}),
     'swamp': ('''swamp: dull marsh grass 4b6a35 with a 6b8a3a rim, block 1 rotting moss 3a4d2a, pale sand = dry mud
 # a08a5a/b09a6a, sand = wet mud 6b5638/7a6442, red = toxic patches 68386c, bog as green_land's''', {

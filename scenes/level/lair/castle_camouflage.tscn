@@ -1,0 +1,10 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/level/lair/castle_camouflage.gd" id="1_script"]
+[ext_resource type="SpriteFrames" path="res://scenes/level/lair/frames/brood_castle_camo_frames.tres" id="2_frames"]
+
+[node name="CastleCamouflage" type="AnimatedSprite2D" groups=["lair_lit"]]
+offset = Vector2(0, -17)
+sprite_frames = ExtResource("2_frames")
+animation = &"IDLE"
+script = ExtResource("1_script")

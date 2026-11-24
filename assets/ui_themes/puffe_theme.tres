@@ -5,17 +5,17 @@
 [ext_resource type="FontFile" uid="uid://b8g22qntipvlr" path="res://assets/fonts/pixel_operator/PixelOperator-Bold.ttf" id="3_title"]
 [ext_resource type="Texture2D" uid="uid://bmo1ug871qd3q" path="res://assets/art/ui/theme/map_node_button.png" id="4_map_node"]
 [ext_resource type="FontFile" uid="uid://du5lepfpv63p3" path="res://assets/fonts/pixel_operator/PixelOperator8-Bold.ttf" id="5_text_bold"]
-[ext_resource type="Texture2D" path="res://assets/art/ui/theme/controls/slider_grabber.png" id="6_slider_grabber"]
-[ext_resource type="Texture2D" path="res://assets/art/ui/theme/controls/slider_grabber_hover.png" id="7_slider_grabber_hover"]
-[ext_resource type="Texture2D" path="res://assets/art/ui/theme/controls/slider_grabber_disabled.png" id="8_slider_grabber_disabled"]
-[ext_resource type="Texture2D" path="res://assets/art/ui/theme/controls/toggle_on.png" id="9_toggle_on"]
-[ext_resource type="Texture2D" path="res://assets/art/ui/theme/controls/toggle_off.png" id="10_toggle_off"]
-[ext_resource type="Texture2D" path="res://assets/art/ui/theme/controls/toggle_on_disabled.png" id="11_toggle_on_disabled"]
-[ext_resource type="Texture2D" path="res://assets/art/ui/theme/controls/toggle_off_disabled.png" id="12_toggle_off_disabled"]
-[ext_resource type="Texture2D" path="res://assets/art/ui/theme/controls/dropdown_arrow.png" id="13_dropdown_arrow"]
-[ext_resource type="Texture2D" path="res://assets/art/ui/theme/controls/radio_on.png" id="15_radio_on"]
-[ext_resource type="Texture2D" path="res://assets/art/ui/theme/controls/radio_off.png" id="16_radio_off"]
-[ext_resource type="Texture2D" path="res://assets/art/ui/theme/controls/radio_on_disabled.png" id="17_radio_on_disabled"]
+[ext_resource type="Texture2D" uid="uid://cwy27e3lmphqs" path="res://assets/art/ui/theme/controls/slider_grabber.png" id="6_slider_grabber"]
+[ext_resource type="Texture2D" uid="uid://dh5qks4g11mmf" path="res://assets/art/ui/theme/controls/slider_grabber_hover.png" id="7_slider_grabber_hover"]
+[ext_resource type="Texture2D" uid="uid://5cmwsfl06uid" path="res://assets/art/ui/theme/controls/slider_grabber_disabled.png" id="8_slider_grabber_disabled"]
+[ext_resource type="Texture2D" uid="uid://cuxgxmkftd6yf" path="res://assets/art/ui/theme/controls/toggle_on.png" id="9_toggle_on"]
+[ext_resource type="Texture2D" uid="uid://b7ne8tpimwm3b" path="res://assets/art/ui/theme/controls/toggle_off.png" id="10_toggle_off"]
+[ext_resource type="Texture2D" uid="uid://b8gug3ldwnsjw" path="res://assets/art/ui/theme/controls/toggle_on_disabled.png" id="11_toggle_on_disabled"]
+[ext_resource type="Texture2D" uid="uid://ckx2ihjci81i2" path="res://assets/art/ui/theme/controls/toggle_off_disabled.png" id="12_toggle_off_disabled"]
+[ext_resource type="Texture2D" uid="uid://bqs3udkdihm04" path="res://assets/art/ui/theme/controls/dropdown_arrow.png" id="13_dropdown_arrow"]
+[ext_resource type="Texture2D" uid="uid://byu3s47a1jf8v" path="res://assets/art/ui/theme/controls/radio_on.png" id="15_radio_on"]
+[ext_resource type="Texture2D" uid="uid://chauyyc5y23ul" path="res://assets/art/ui/theme/controls/radio_off.png" id="16_radio_off"]
+[ext_resource type="Texture2D" uid="uid://c72in56okaxn7" path="res://assets/art/ui/theme/controls/radio_on_disabled.png" id="17_radio_on_disabled"]
 
 [sub_resource type="StyleBoxTexture" id="Panel_accent"]
 content_margin_left = 5.0
@@ -319,12 +319,12 @@ Button/styles/normal = SubResource("Button_normal")
 Button/styles/pressed = SubResource("Button_pressed")
 CheckButton/icons/checked = ExtResource("9_toggle_on")
 CheckButton/icons/checked_disabled = ExtResource("11_toggle_on_disabled")
+CheckButton/icons/checked_disabled_mirrored = ExtResource("11_toggle_on_disabled")
+CheckButton/icons/checked_mirrored = ExtResource("9_toggle_on")
 CheckButton/icons/unchecked = ExtResource("10_toggle_off")
 CheckButton/icons/unchecked_disabled = ExtResource("12_toggle_off_disabled")
-CheckButton/icons/checked_mirrored = ExtResource("9_toggle_on")
-CheckButton/icons/unchecked_mirrored = ExtResource("10_toggle_off")
-CheckButton/icons/checked_disabled_mirrored = ExtResource("11_toggle_on_disabled")
 CheckButton/icons/unchecked_disabled_mirrored = ExtResource("12_toggle_off_disabled")
+CheckButton/icons/unchecked_mirrored = ExtResource("10_toggle_off")
 CheckButton/styles/disabled = SubResource("Empty")
 CheckButton/styles/hover = SubResource("Empty")
 CheckButton/styles/hover_pressed = SubResource("Empty")
@@ -373,17 +373,17 @@ MapNodeButton/styles/hover = SubResource("MapNode_hover")
 MapNodeButton/styles/hover_pressed = SubResource("MapNode_pressed")
 MapNodeButton/styles/normal = SubResource("MapNode_normal")
 MapNodeButton/styles/pressed = SubResource("MapNode_pressed")
+OptionButton/icons/arrow = ExtResource("13_dropdown_arrow")
 Panel/styles/panel = SubResource("Panel_stone")
 PanelContainer/styles/panel = SubResource("Panel_stone")
-OptionButton/icons/arrow = ExtResource("13_dropdown_arrow")
+PopupMenu/colors/font_color = Color(0.902, 1, 0.9647, 1)
+PopupMenu/colors/font_hover_color = Color(1, 1, 1, 1)
+PopupMenu/icons/checked = ExtResource("15_radio_on")
 PopupMenu/icons/radio_checked = ExtResource("15_radio_on")
 PopupMenu/icons/radio_checked_disabled = ExtResource("17_radio_on_disabled")
 PopupMenu/icons/radio_unchecked = ExtResource("16_radio_off")
 PopupMenu/icons/radio_unchecked_disabled = ExtResource("16_radio_off")
-PopupMenu/icons/checked = ExtResource("15_radio_on")
 PopupMenu/icons/unchecked = ExtResource("16_radio_off")
-PopupMenu/colors/font_color = Color(0.902, 1, 0.9647, 1)
-PopupMenu/colors/font_hover_color = Color(1, 1, 1, 1)
 PopupMenu/styles/hover = SubResource("Button_hover")
 PopupMenu/styles/panel = SubResource("Panel_stone")
 ProgressBar/colors/font_color = Color(0.902, 1, 0.9647, 1)

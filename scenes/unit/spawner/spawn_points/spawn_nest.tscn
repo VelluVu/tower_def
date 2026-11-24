@@ -1,0 +1,19 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" uid="uid://dgjmgs3g8oeq6" path="res://scenes/unit/spawner/spawner.tscn" id="1_base"]
+[ext_resource type="SpriteFrames" path="res://scenes/level/lair/frames/brood_nest_frames.tres" id="2_art"]
+[ext_resource type="Script" path="res://scenes/level/lair/lair_light.gd" id="3_light"]
+
+[node name="Spawner" instance=ExtResource("1_base")]
+
+[node name="Art" parent="." index="0"]
+sprite_frames = ExtResource("2_art")
+animation = &"IDLE"
+
+[node name="NestGlow" type="Node2D" parent="."]
+position = Vector2(0, -14)
+script = ExtResource("3_light")
+color = Color(0.89, 0.23, 0.27, 1)
+radius_tiles = 3.0
+strength = 0.8
+flicker = 0.3

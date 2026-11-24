@@ -21,6 +21,8 @@ KIND_OF_ENEMY = {
     "burrower": "cave", "crystal_brute": "den", "leaper_frog": "hollow", "bloater": "den",
 }
 SPAWN_KIND = re.compile(r'spawn_points/spawn_(\w+)\.tscn')
+# a boss lair's own spawn art stands in for a kind: the Broodmother's nest is the Brood Cavern's den
+SPAWN_KIND_ALIAS = {"nest": "den"}
 
 
 def res_path(path):
@@ -35,7 +37,7 @@ def spawners(level_text):
     for m in re.finditer(r'\[node name="Spawner\d*"[^\n]*instance=ExtResource\("([^"]+)"\)\]\n((?:[^\[\n][^\n]*\n)*)', level_text):
         kind = SPAWN_KIND.search(ext.get(m.group(1), ""))
         sid = re.search(r'^id = (\d+)', m.group(2), re.M)
-        found[int(sid.group(1)) if sid else 0] = kind.group(1) if kind else "plain"
+        found[int(sid.group(1)) if sid else 0] = SPAWN_KIND_ALIAS.get(kind.group(1), kind.group(1)) if kind else "plain"
     return found
 
 
