@@ -166,7 +166,8 @@ func get_damage_type_color(damage_type : DamageType) -> Color:
 
 ## The first direct child of parent that is a type (a class_name script or a native class), or null.
 ## For the getters that find a unit's parts (Skill, BeehaveTree, ...) when their export is empty.
-static func find_child_of_type(parent : Node, type : Variant) -> Node:
+## Not static: it is called through the Utils autoload, and a static call on an instance warns in the editor.
+func find_child_of_type(parent : Node, type : Variant) -> Node:
 	for child in parent.get_children():
 		if is_instance_of(child, type):
 			return child

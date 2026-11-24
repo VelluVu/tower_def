@@ -1,6 +1,8 @@
 extends Node
 
 signal mouse_on_gui()
+## Asks GameCursor for a cursor mode (GameCursor.Mode) on behalf of `source`; POINTER lets go of it.
+signal cursor_mode_requested(source : StringName, mode : int)
 
 signal building_option_deselected(index : int)
 signal building_option_selected(index : int)

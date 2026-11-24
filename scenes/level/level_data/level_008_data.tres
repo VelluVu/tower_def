@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://bg8o7ufjngnur"]
+[gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://btk4fnjwwadp4"]
 
 [ext_resource type="Script" uid="uid://cpw7ia3ek2yvs" path="res://scenes/level/level_data/wave_data.gd" id="0_wave"]
 [ext_resource type="Script" uid="uid://c0cehaxum4b45" path="res://scenes/level/level_data/level_data.gd" id="1_level"]
@@ -13,39 +13,41 @@
 [sub_resource type="Resource" id="PuffeLine_1"]
 script = ExtResource("9_line")
 trigger = 0
-text = "The big cave by the river. Something huge stirs in there, and this castle has no walls yet. Build fast!"
-mood = 2
+text = "The old tunnels are caving in, and the cave folk are pouring out of them. Right through here."
 
 [sub_resource type="Resource" id="PuffeLine_2"]
 script = ExtResource("9_line")
 trigger = 3
 wave_number = 2
-text = "The deep caves send everything they have. Keep the roads long."
+text = "Batlings from the old roost. Mind the flight route."
 
 [sub_resource type="Resource" id="PuffeLine_3"]
 script = ExtResource("9_line")
-trigger = 7
-text = "Do not let them through, the eggs are right behind us!"
-mood = 2
+trigger = 3
+wave_number = 4
+text = "The ground caved in, a tunnel in the middle of the field!"
+mood = 3
 
 [sub_resource type="Resource" id="PuffeLine_4"]
 script = ExtResource("9_line")
-trigger = 3
-wave_number = 6
-text = "There she is: the Broodmother. Mother of all the cave folk, and she does not like miners."
+trigger = 7
+text = "They are not even fighting, just running from something. But not into our castle!"
+mood = 2
 
 [sub_resource type="Resource" id="PuffeLine_5"]
 script = ExtResource("9_line")
-text = "Focus her down, and pop her brood before it scatters. I know a thing or two about guarding eggs."
+trigger = 3
+wave_number = 6
+text = "The last of them. Whatever woke down there is heading north, and so are we."
 
 [resource]
 script = ExtResource("1_level")
-level_name = "Broodmother's Lair"
-story_text = "The castle by the great cave needs help now. The miners dug too deep, and something big is coming up from below."
+level_name = "Collapsed Tunnels"
+story_text = "The miners' old tunnels under the southern mountain are falling in. Something woke deep below, and the cave folk are fleeing north ahead of it, straight through this castle's fields."
 starting_gold = 23.0
 waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtResource("w3"), ExtResource("w4"), ExtResource("w5"), ExtResource("w6")])
 puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_4"), SubResource("PuffeLine_5")])
-first_wave_health = 1.6
-last_wave_health = 2.0
-health_scale = 1.5
-hard_health_scale = 1.188
+first_wave_health = 1.8
+last_wave_health = 2.9
+health_scale = 1.404
+hard_health_scale = 1.200

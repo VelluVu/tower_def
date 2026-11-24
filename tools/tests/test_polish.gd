@@ -8,7 +8,7 @@ func _free_cell(kit : TestKit) -> Vector2i:
 
 
 func test_wave_banner_texts(kit : TestKit) -> void:
-	await kit.load_level(8)
+	await kit.load_level(12)
 	var banner : WaveBanner = WaveBanner.new()
 	kit.root.add_child(banner)
 	banner.level = kit.level

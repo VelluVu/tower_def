@@ -33,7 +33,7 @@ const TOKEN_SHEET : Texture2D = preload("res://assets/art/ui/map_nodes/map_node_
 const TOKEN_CELL : int = 24
 const TOKEN_EXPAND : int = 2
 const LEVELS_PER_AREA : int = 12
-const BOSS_LEVELS : Array[int] = [8, 24, 36, 48, 57, 60]
+const BOSS_LEVELS : Array[int] = [12, 24, 36, 48, 57, 60]
 const BOSS_ROW : int = 5
 const BOSS_RING_MARGIN : int = 5
 const TOKEN_STATES : Array[StringName] = [&"normal", &"hover", &"pressed", &"disabled"]
@@ -84,6 +84,9 @@ const AREA_BANNER_SCALE : int = 2
 @onready var info_label : Label = $Tooltip/InfoMarginContainer/VBoxContainer/LevelInfo
 
 @export var level_number : int = 1
+## Points the trail into this level passes on the way from the level before, in Map units (2026-11-24: round
+## the great cave's mountain). Empty: a gentle bow.
+@export var trail_via : PackedVector2Array = PackedVector2Array()
 
 var is_locked : bool = false :
 	set = _set_is_locked
@@ -152,12 +155,12 @@ func _apply_token() -> void:
 			select_button.add_theme_stylebox_override(HOVER_PRESSED_STATE, style)
 
 
-## The node grows in from nothing, for a level unlocked since the map was last shown.
-func pop_in() -> void:
+## The node grows in from nothing, for a level unlocked since the map was last shown, after `delay` seconds.
+func pop_in(delay : float = POP_IN_DELAY) -> void:
 	select_button.scale = Vector2.ZERO
 	var tween : Tween = create_tween()
 	#the size is laid out by the time the delay ends
-	tween.tween_callback(func() -> void: select_button.pivot_offset = select_button.size * 0.5).set_delay(POP_IN_DELAY)
+	tween.tween_callback(func() -> void: select_button.pivot_offset = select_button.size * 0.5).set_delay(maxf(delay, POP_IN_DELAY))
 	tween.tween_property(select_button, "scale", Vector2.ONE, POP_IN_TIME).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 

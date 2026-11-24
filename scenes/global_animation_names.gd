@@ -30,3 +30,5 @@ const LAND_ANIMATION : String = "LAND"
 const ROAR_ANIMATION : String = "ROAR"
 #a boss lair's camouflaged castle shedding its rock when the boss arrives
 const REVEAL_ANIMATION : String = "REVEAL"
+#a boss lair's spawn art stirring when the boss comes up out of it (the Hydra's pool)
+const BOIL_ANIMATION : String = "BOIL"

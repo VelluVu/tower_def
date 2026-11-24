@@ -221,7 +221,7 @@ func test_magma_titan_slams_then_calls_the_magma(kit : TestKit) -> void:
 
 #(review, 2026-11-23): near the castle the Broodmother's Dig Up came up behind herself, or on the castle
 func test_weak_spot_dig_never_goes_back_or_onto_the_castle(kit : TestKit) -> void:
-	await kit.load_level(8)
+	await kit.load_level(12)
 	var brood : Enemy = kit.spawn_enemy("broodmother")
 	var burrow : BurrowAbility = brood.find_children("*", "BurrowAbility", true, false).front() as BurrowAbility
 	kit.check(burrow != null and burrow.seeks_weak_spot, "the Broodmother digs to a weak spot")

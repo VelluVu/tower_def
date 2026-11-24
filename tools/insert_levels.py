@@ -4,6 +4,9 @@ between their neighbours (provisional, for the user to move). The new levels' ow
 (swamp_levels.py, field_levels.py, ...). Saves need a SaveWiring._migrate step for the same insertion.
 
     python tools/insert_levels.py <at> <count>
+    python tools/insert_levels.py rotate <from> <to>     (2026-11-24) level `from` moves to `to` and the levels between
+        close up behind it (rotate 8 12: 8 -> 12, 9-12 -> 8-11); the world map nodes keep their numbers and places
+        (move them by hand), the tuner's results follow their levels. Saves need a _migrate step for it too.
 """
 import os
 import re
@@ -52,7 +55,7 @@ def map_blocks(text):
     for i, (start, number) in enumerate(starts):
         end = starts[i + 1][0] if i + 1 < len(starts) else None
         if end is None:
-            nxt = re.search(r'\n\[node name="[^"]+" type="[^"]+" parent="(?!MarginContainer/Map/Level_)', text[start:])
+            nxt = re.search(r'\n\[node name="[^"]+" type="[^"]+" parent="(?!MapView/Map/Level_)', text[start:])
             end = start + nxt.start() + 1 if nxt else len(text)
         blocks[number] = (start, end)
     return blocks
@@ -110,7 +113,36 @@ def shift_tune_report(at, count):
         json.dump(moved, f, indent=1)
 
 
+TEMP_NUMBER = 999
+
+
+def rotate(start, end):
+    """level `start` to `end`, the ones between one step towards start (either direction)"""
+    step = 1 if end > start else -1
+    rename(start, TEMP_NUMBER)
+    for number in range(start + step, end + step, step):
+        rename(number, number - step)
+        print("level %d -> %d" % (number, number - step))
+    rename(TEMP_NUMBER, end)
+    print("level %d -> %d" % (start, end))
+    if os.path.exists(TUNE_REPORT):
+        import json
+        with open(TUNE_REPORT, encoding="utf8") as f:
+            report = json.load(f)
+        lo, hi = min(start, end), max(start, end)
+        moved = {}
+        for k, v in report.items():
+            n = int(k)
+            new = end if n == start else n - step if lo <= n <= hi else n
+            moved[str(new)] = v
+        with open(TUNE_REPORT, "w", encoding="utf8", newline="\n") as f:
+            json.dump(moved, f, indent=1)
+
+
 def main(argv):
+    if len(argv) == 4 and argv[1] == "rotate":
+        rotate(int(argv[2]), int(argv[3]))
+        return
     if len(argv) != 3:
         sys.exit(__doc__)
     at, count = int(argv[1]), int(argv[2])

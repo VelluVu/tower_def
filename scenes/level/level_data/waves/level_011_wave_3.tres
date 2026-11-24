@@ -2,40 +2,41 @@
 
 [ext_resource type="Script" uid="uid://cpw7ia3ek2yvs" path="res://scenes/level/level_data/wave_data.gd" id="1_wave"]
 [ext_resource type="Script" uid="uid://bbhd3iyjav4h2" path="res://scenes/level/level_data/spawn_group_data.gd" id="2_group"]
-[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/beefling.tscn" id="e_beefling"]
-[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/fastling.tscn" id="e_fastling"]
-[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/swarmling.tscn" id="e_swarmling"]
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/assault_dog.tscn" id="e_assault_dog"]
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/soldier.tscn" id="e_soldier"]
+
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/giant_eagle.tscn" id="e_giant_eagle"]
 
 [sub_resource type="Resource" id="Resource_group1"]
 script = ExtResource("2_group")
-enemy_scene = ExtResource("e_fastling")
-count = 24
-interval = 1.1
-spawner_id = 1
+enemy_scene = ExtResource("e_assault_dog")
+count = 10
+interval = 0.3
 
 [sub_resource type="Resource" id="Resource_group2"]
 script = ExtResource("2_group")
-enemy_scene = ExtResource("e_beefling")
-count = 8
-interval = 3.0
-delay = 3.0
+enemy_scene = ExtResource("e_soldier")
+count = 12
+interval = 2.4
+delay = 4.0
+spawner_id = 1
 
 [sub_resource type="Resource" id="Resource_group3"]
 script = ExtResource("2_group")
-enemy_scene = ExtResource("e_swarmling")
-count = 12
+enemy_scene = ExtResource("e_assault_dog")
+count = 10
 interval = 0.3
-delay = 8.0
+delay = 18.0
 spawner_id = 1
 
-[sub_resource type="Resource" id="Resource_group4"]
+[sub_resource type="Resource" id="Resource_eagles"]
 script = ExtResource("2_group")
-enemy_scene = ExtResource("e_swarmling")
-count = 12
-interval = 0.3
-delay = 24.0
+enemy_scene = ExtResource("e_giant_eagle")
+count = 5
+interval = 1.6
+delay = 8.0
 
 [resource]
 script = ExtResource("1_wave")
-spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_group3"), SubResource("Resource_group4")])
+spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_group3"), SubResource("Resource_eagles")])
 early_start_bonus = 2.0

@@ -35,6 +35,8 @@ func _ready() -> void:
 	#before the UI, so it sees the main menu being added
 	screen_fade = ScreenFade.new()
 	add_child(screen_fade)
+	#the game's own pixel cursor, made here rather than in the scene so it is always there
+	add_child(GameCursor.new())
 	ui.initialize(scene_manager)
 	GameSignals.game_pause.connect(_on_pause_game)
 	GameSignals.level_loaded.connect(_on_level_loaded)

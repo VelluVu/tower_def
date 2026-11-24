@@ -20,7 +20,7 @@ func _ability(enemy : Enemy, ability_name : String) -> EnemyAbility:
 
 
 func test_egg_sac_hatches_without_reward(kit : TestKit) -> void:
-	await kit.load_level(8)
+	await kit.load_level(12)
 	var egg : Enemy = kit.spawn_enemy("egg_sac")
 	await kit.frames(2)
 	var gold : float = kit.level.player_stats.gold
@@ -36,7 +36,7 @@ func test_egg_sac_hatches_without_reward(kit : TestKit) -> void:
 
 
 func test_popped_egg_sac_hatches_nothing(kit : TestKit) -> void:
-	await kit.load_level(8)
+	await kit.load_level(12)
 	var egg : Enemy = kit.spawn_enemy("egg_sac")
 	await kit.frames(2)
 	var gold : float = kit.level.player_stats.gold
@@ -48,7 +48,7 @@ func test_popped_egg_sac_hatches_nothing(kit : TestKit) -> void:
 
 
 func test_broodmother_lays_eggs(kit : TestKit) -> void:
-	await kit.load_level(8)
+	await kit.load_level(12)
 	var boss : Enemy = kit.spawn_enemy("broodmother")
 	await kit.frames(2)
 	var time : float = await kit.run_until(func() -> bool: return _count(kit, "egg_sac") > 0, 12.0)
@@ -60,7 +60,7 @@ func test_broodmother_lays_eggs(kit : TestKit) -> void:
 
 
 func test_broodmother_digs_up_further_along(kit : TestKit) -> void:
-	await kit.load_level(8)
+	await kit.load_level(12)
 	var boss : Enemy = kit.spawn_enemy("broodmother")
 	await kit.run_until(func() -> bool: return boss.has_path and boss.current_waypoint_index > 1, 20.0)
 	var remaining : int = boss.get_remaining_path_waypoint_count()
@@ -77,7 +77,7 @@ func test_broodmother_digs_up_further_along(kit : TestKit) -> void:
 
 ## Dig Up comes up where the fewest towers reach, so one cluster of towers gets dug past (2026-11-20).
 func test_broodmother_digs_past_a_tower_cluster(kit : TestKit) -> void:
-	await kit.load_level(8)
+	await kit.load_level(12)
 	var boss : Enemy = kit.spawn_enemy("broodmother")
 	await kit.run_until(func() -> bool: return boss.has_path and boss.current_waypoint_index > 1, 20.0)
 	var dig : BurrowAbility = _ability(boss, "DigUp")
@@ -143,7 +143,7 @@ func test_bog_hydra_heads_frenzy_when_low(kit : TestKit) -> void:
 
 
 func test_broodmother_frenzy_and_screech(kit : TestKit) -> void:
-	await kit.load_level(8)
+	await kit.load_level(12)
 	var boss : Enemy = kit.spawn_enemy("broodmother")
 	await kit.frames(2)
 	var tower_cell : Vector2i = kit.find_cell(func(c : Vector2i) -> bool:
@@ -174,7 +174,7 @@ func _blood_splats(kit : TestKit) -> Array[BloodSplat]:
 
 
 func test_broodmother_dies_in_a_pool_of_blood(kit : TestKit) -> void:
-	await kit.load_level(8)
+	await kit.load_level(12)
 	var boss : Enemy = kit.spawn_enemy("broodmother")
 	await kit.frames(2)
 	var bursts : int = boss.gore_emitter.death_bursts

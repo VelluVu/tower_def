@@ -25,7 +25,7 @@ def g(count, enemy, interval, spawner=0, delay=0.0, elites=0, affix="Random"):
 
 
 LEVELS = {
-    10: dict(name="Crystal Deep", gold=26, health=(1.8, 2.9),
+    9: dict(name="Crystal Deep", gold=26, health=(1.8, 2.9),
              story="A hollow lit by blue crystal on the way north. The cave folk here dig under walls, and some have grown crystal shells.",
              lines=[(None, 0, "Crystals everywhere. Pretty, but the folk wearing them are hard to crack."),
                     (WAVE_STARTED, 2, "Burrowers! They dig under the maze and come up further on. Keep towers along the whole road."),

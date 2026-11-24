@@ -22,12 +22,13 @@ ROOT = lt.ROOT
 # object_tile_set_01 sources (and their area copies): four landmarks, two by two on a 64x64 sheet. The human lands
 # (the Wasted Lands since 2026-11-18) take their landmarks in turn from the timber-and-quarry sheet (14) and the farm
 # sheet (13): two of the first to one of the second.
-LANDMARK_SOURCES = {"swamp": [12], "fields": [14, 13, 14], "brood": [16]}
-AREAS = {"swamp": range(13, 25), "fields": range(25, 37), "brood": [8]}
+# Hydra's Mire (24) mixes its own landmarks (object_tile_set_swamp source 16, lair_mire_art.py) with the swamp's
+LANDMARK_SOURCES = {"swamp": [12], "fields": [14, 13, 14], "brood": [16], "mire": [16, 12, 16]}
+AREAS = {"swamp": range(13, 24), "fields": range(25, 37), "brood": [12], "mire": [24]}
 # a sheet's landmark count and columns when it is not four, two by two (the boss lairs, tools/sprite/parts/lair_art.py;
-# the Brood Cavern moves to 12 with the Broodmother)
-LANDMARK_LAYOUT = {16: (5, 3)}
-LANDMARK_COUNT = {"brood": 5}
+# the Brood Cavern is level 12)
+LANDMARK_LAYOUT = {("brood", 16): (5, 3)}  # by area: source 16 of the swamp set is the mire's sheet, four two by two
+LANDMARK_COUNT = {"brood": 5, "mire": 5}
 # ground decor (decor_tile_set source 3, twelve pieces four by three: stumps, chips, ruts, gravel...), on about one open
 # cell in DECOR_ONE_IN of the Wasted Lands; a rerun replaces it
 DECOR_SOURCE = {"fields": 3, "brood": 4}
@@ -65,7 +66,7 @@ def dress(number, cells):
     # a level's landmarks are different kinds, starting from a kind picked per level
     for i, (x, y) in enumerate(cells):
         source = sources[i % len(sources)]
-        kinds, columns = LANDMARK_LAYOUT.get(source, (4, 2))
+        kinds, columns = LANDMARK_LAYOUT.get((area, source), (4, 2))
         kind = (zlib.crc32(repr(number).encode()) + i) % kinds
         for dc in (0, 1):
             for dr in (0, 1):

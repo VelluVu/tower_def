@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://ykm64yoltlj8"
+path="res://.godot/imported/mire_pool.aseprite-d0d1ee971dea047aa20c8646468fe14a.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/lairs/mire_pool.aseprite"
+dest_files=["res://.godot/imported/mire_pool.aseprite-d0d1ee971dea047aa20c8646468fe14a.res"]
+
+[params]
+

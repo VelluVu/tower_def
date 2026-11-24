@@ -4,7 +4,7 @@ extends RefCounted
 
 
 func test_boss_fall_banner_and_ring(kit : TestKit) -> void:
-	await kit.load_level(8)
+	await kit.load_level(12)
 	var banner : WaveBanner = WaveBanner.new()
 	kit.root.add_child(banner)
 	var boss : Enemy = kit.spawn_enemy("broodmother")

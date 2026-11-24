@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://74akfgpmlups" path="res://assets/art/tiles/desert/desert_decor.png" id="2_desert_decor"]
 [ext_resource type="Texture2D" uid="uid://rspy3ri227tr" path="res://assets/art/tiles/volcano/volcano_decor.png" id="3_volcano_decor"]
 [ext_resource type="Texture2D" uid="uid://dw742wanv6own" path="res://assets/art/tiles/humans/wasted_decor.png" id="4_wasted_decor"]
-[ext_resource type="Texture2D" path="res://assets/art/tiles/caves/caves_props.png" id="5_caves_props"]
+[ext_resource type="Texture2D" uid="uid://ib1fcyu5lsxi" path="res://assets/art/tiles/caves/caves_props.png" id="5_caves_props"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_decor"]
 texture = ExtResource("1_decor")

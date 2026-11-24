@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dpnch330dx2mo"
+path="res://.godot/imported/mire_landmarks.aseprite-9e87346102e886ddf4ce114cdc9ffbc4.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/lairs/mire_landmarks.aseprite"
+dest_files=["res://.godot/imported/mire_landmarks.aseprite-9e87346102e886ddf4ce114cdc9ffbc4.res"]
+
+[params]
+

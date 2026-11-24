@@ -3,7 +3,7 @@ extends RefCounted
 ## Screenshots of a boss lair in a window (lighting, torches, the castle's camouflage and its reveal): loads the level,
 ## lets a few enemies walk in, saves a shot, spawns the boss and saves shots through the reveal.
 ## Run it windowed (gd.py is headless), on the editor's display:
-##     godot --path . --position X,Y res://tools/test/test_runner.tscn -- --run res://tools/showcase/lair_view.gd level=8 boss=broodmother shots=C:/out [ambient=0.1]
+##     godot --path . --position X,Y res://tools/test/test_runner.tscn -- --run res://tools/showcase/lair_view.gd level=12 boss=broodmother shots=C:/out [ambient=0.1]
 ## ambient= overrides the lair's ambient light (a low one shows where the lights reach).
 
 const SETTLE_FRAMES : int = 90
@@ -17,7 +17,7 @@ const LIGHTING_NODE : String = "LairLighting"
 
 
 func run(kit : TestKit, args : PackedStringArray) -> void:
-	var level_number : int = 8
+	var level_number : int = 12
 	var boss_name : String = "broodmother"
 	var shots : String = ""
 	var ambient_override : float = -1.0
@@ -66,6 +66,9 @@ func run(kit : TestKit, args : PackedStringArray) -> void:
 			walker.die()
 	if is_instance_valid(boss):
 		boss.die()
+	await kit.frames(2)
+	#whatever the boss called up still walks: free the level before the kit lets go of its stand-in Main
+	kit.free_level()
 	await kit.frames(2)
 
 

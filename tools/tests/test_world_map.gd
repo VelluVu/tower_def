@@ -14,10 +14,10 @@ func test_ring_tiers(kit : TestKit) -> void:
 
 
 func test_token_rows(kit : TestKit) -> void:
-	kit.check(MapLevelElement.token_row(1) == 0 and MapLevelElement.token_row(12) == 0, "caves 1-12")
+	kit.check(MapLevelElement.token_row(1) == 0 and MapLevelElement.token_row(11) == 0, "caves 1-11 (12 is the Broodmother)")
 	kit.check(MapLevelElement.token_row(13) == 1 and MapLevelElement.token_row(25) == 2, "swamp from 13, Wasted Lands from 25")
 	kit.check(MapLevelElement.token_row(37) == 3 and MapLevelElement.token_row(59) == 4, "desert from 37, volcano to 59 (57 is the Magma Titan)")
-	for boss in [8, 24, 36, 48, 57, 60]:
+	for boss in [12, 24, 36, 48, 57, 60]:
 		kit.check(MapLevelElement.token_row(boss) == MapLevelElement.BOSS_ROW, "level %d has the boss token" % boss)
 	var rows : int = floori(MapLevelElement.TOKEN_SHEET.get_height() / float(MapLevelElement.TOKEN_CELL))
 	kit.check(rows == MapLevelElement.BOSS_ROW + 1, "the sheet has every row")
@@ -93,3 +93,85 @@ func test_map_hides_under_the_talent_screen(kit : TestKit) -> void:
 	UISignals.talents.emit(false)
 	kit.check(map.visible, "back when it closes")
 	map.queue_free()
+
+
+#(the user, 2026-11-24): the map is 2x2 screens; it scrolls inside its edges, opens on the newest level, and the
+#trail into a newly unlocked level draws in before its node pops up
+func test_map_scrolls_and_draws_trails(kit : TestKit) -> void:
+	var saved : ProgressData = PlayerProgress._save.progress
+	var progress : ProgressData = ProgressData.new()
+	progress.level_progress = 30
+	progress.map_revealed_level = 29
+	PlayerProgress._save.progress = progress
+	var map : GameWorldMap = load(MAP_SCENE).instantiate()
+	kit.root.add_child(map)
+	await kit.frames(3)
+	kit.check(map.map.size.x > map.map_view.size.x and map.map.size.y > map.map_view.size.y, "the map is bigger than the screen both ways")
+	var newest : MapLevelElement = null
+	for element in map.map_level_elements:
+		if element.level_number == 30:
+			newest = element
+	var centre : Vector2 = newest.get_global_rect().get_center()
+	kit.check(map.map_view.get_global_rect().has_point(centre), "the view opens with the newest level in it")
+	kit.check(map.trails.revealing_level == 30, "the trail into the new level draws in")
+	map.scroll_by(Vector2(99999, 99999))
+	kit.check(map.map.position == Vector2.ZERO, "scrolling stops at the top left corner")
+	map.scroll_by(Vector2(-99999, -99999))
+	kit.check(map.map.position == (map.map_view.size - map.map.size).round(), "and at the bottom right")
+	var done : Array[bool] = [false]
+	map.trails.revealed.connect(func() -> void: done[0] = true)
+	await kit.run_until(func() -> bool: return done[0], MapTrails.REVEAL_SECONDS + 1.0)
+	kit.check(done[0] and map.trails.reveal_progress == 1.0, "the trail finishes drawing")
+	map.queue_free()
+	await kit.frames(1)
+	PlayerProgress._save.progress = saved
+
+
+#(the user, 2026-11-24): clouds, swamp mist, lava smoke and sea sparkles find their places on the map picture
+func test_map_ambience_finds_its_spots(kit : TestKit) -> void:
+	var map : GameWorldMap = load(MAP_SCENE).instantiate()
+	kit.root.add_child(map)
+	await kit.frames(3)
+	var ambience : MapAmbience = map.map.get_node("MapAmbience") as MapAmbience
+	kit.check(ambience.clouds.size() == MapAmbience.CLOUD_COUNT, "the clouds are up")
+	kit.check(ambience.sparkles.size() > MapAmbience.SPARKLE_COUNT / 2, "sparkles on the sea (%d)" % ambience.sparkles.size())
+	kit.check(ambience.vents.size() > 2, "smoke over the lava (%d)" % ambience.vents.size())
+	kit.check(ambience.mists.size() > 2, "mist in the swamp (%d)" % ambience.mists.size())
+	var before : Vector2 = ambience.clouds[0].at
+	await kit.frames(10)
+	kit.check(ambience.clouds[0].at.x > before.x, "the clouds drift east")
+	map.queue_free()
+	await kit.frames(1)
+
+
+#(the user, 2026-11-24): fog lies over the land not reached yet; the newest level's patch opens with its trail; the
+#fog glows over the volcano's lava from the start
+func test_fog_lifts_as_levels_are_revealed(kit : TestKit) -> void:
+	var saved : ProgressData = PlayerProgress._save.progress
+	var progress : ProgressData = ProgressData.new()
+	progress.level_progress = 13
+	progress.map_revealed_level = 12
+	PlayerProgress._save.progress = progress
+	var map : GameWorldMap = load(MAP_SCENE).instantiate()
+	kit.root.add_child(map)
+	await kit.frames(3)
+	var centres : Dictionary[int, Vector2] = {}
+	for element in map.map_level_elements:
+		centres[element.level_number] = element.position + element.size * 0.5
+	kit.check(map.fog != null and map.fog.get_index() < map.trails.get_index(), "the fog lies under the trails and the nodes")
+	kit.check(map.fog.density_at(centres[1]) == 0.0 and map.fog.density_at(centres[12]) == 0.0, "clear round the levels reached")
+	kit.check(map.fog.density_at(centres[13]) > 0.3, "the new level starts in the fog (its neighbour thins it) (%.2f)" % map.fog.density_at(centres[13]))
+	kit.check(map.fog.density_at(centres[40]) > 0.9, "the desert is still fogged")
+	var lava_texels : int = 0
+	for y in map.fog.density.get_height():
+		for x in map.fog.density.get_width():
+			if map.fog.density.get_pixel(x, y).g >= MapFog.LAVA_GLOW - 0.01 and map.fog.density.get_pixel(x, y).r > 0.9:
+				lava_texels += 1
+	kit.check(lava_texels > 20, "the fog glows over the lava (%d texels)" % lava_texels)
+	await kit.run_until(func() -> bool: return map.fog.reveal_progress >= 1.0, MapFog.REVEAL_SECONDS + 1.0)
+	kit.check(map.fog.density_at(centres[13]) == 0.0, "the new level's patch opens")
+	var trail : PackedVector2Array = map.trails.trail_points(13)
+	kit.check(map.fog.density_at(trail[trail.size() / 2]) == 0.0, "and the trail to it")
+	map.queue_free()
+	await kit.frames(1)
+	PlayerProgress._save.progress = saved

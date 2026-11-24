@@ -21,8 +21,8 @@ KIND_OF_ENEMY = {
     "burrower": "cave", "crystal_brute": "den", "leaper_frog": "hollow", "bloater": "den",
 }
 SPAWN_KIND = re.compile(r'spawn_points/spawn_(\w+)\.tscn')
-# a boss lair's own spawn art stands in for a kind: the Broodmother's nest is the Brood Cavern's den
-SPAWN_KIND_ALIAS = {"nest": "den"}
+# a boss lair's own spawn art stands in for a kind: the Broodmother's nest is a den, the Hydra's pool a hollow
+SPAWN_KIND_ALIAS = {"nest": "den", "pool": "hollow"}
 
 
 def res_path(path):

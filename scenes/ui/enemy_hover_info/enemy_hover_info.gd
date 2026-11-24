@@ -11,6 +11,8 @@ const NODE_NAME : String = "EnemyHoverInfo"
 ## How far from the cursor an enemy counts as under it, in world pixels.
 const HOVER_RADIUS : float = 10.0
 const HOVER_DELAY : float = 0.2
+## GameCursor shows the target ring over an enemy (at once, before the card's delay).
+const CURSOR_SOURCE : StringName = &"enemy_hover"
 ## Screen pixels from the cursor to the card's corner.
 const CURSOR_OFFSET : Vector2 = Vector2(10, 10)
 const PANEL_THEME_TYPE : StringName = &"TooltipPanel"
@@ -23,6 +25,7 @@ const BOSS_TEXT : String = "Boss"
 const TAG_SEPARATOR : String = ", "
 
 var hovered : Enemy = null
+var is_targeting : bool = false
 var hover_time : float = 0.0
 var shown_text : String = ""
 var is_cursor_on_gui : bool = false
@@ -50,6 +53,10 @@ func _process(delta : float) -> void:
 	var enemy : Enemy = null
 	if not is_cursor_on_gui and not is_placing_building and not get_tree().paused:
 		enemy = find_enemy_at(get_global_mouse_position())
+	#on its own flag: a hovered enemy that died compares equal to null, so the change would be missed
+	if (enemy != null) != is_targeting:
+		is_targeting = enemy != null
+		UISignals.cursor_mode_requested.emit(CURSOR_SOURCE, GameCursor.Mode.TARGET if is_targeting else GameCursor.Mode.POINTER)
 	if enemy != hovered:
 		hovered = enemy
 		hover_time = 0.0
@@ -138,3 +145,9 @@ func _on_mouse_on_gui(value : bool) -> void:
 
 func _on_building_placement_change(is_placing : bool) -> void:
 	is_placing_building = is_placing
+
+
+func _exit_tree() -> void:
+	if is_targeting:
+		is_targeting = false
+		UISignals.cursor_mode_requested.emit(CURSOR_SOURCE, GameCursor.Mode.POINTER)

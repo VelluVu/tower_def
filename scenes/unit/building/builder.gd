@@ -20,6 +20,8 @@ const SLASH : String = "/"
 ## A tray building's base price and step, read once and kept as metadata on its list element (a static
 ## cache on this script kept the script past exit, and with it most of the game: hundreds of leaks).
 const BASE_PRICE_META : StringName = &"tray_base_price_and_step"
+## GameCursor: the build cursor while placing, the no-entry sign over a spot the building cannot take.
+const CURSOR_SOURCE : StringName = &"builder"
 
 @export var buildings : Array[BuildingListElement]
 #the unlocked buildings in tray order; the tray slots and the select shortcuts index this list
@@ -29,6 +31,7 @@ var is_ready_to_build : bool = false
 #won or lost: an unpause must not turn building back on behind the result screen
 var is_level_over : bool = false
 var is_cursor_on_gui : bool = false
+var cursor_mode : GameCursor.Mode = GameCursor.Mode.POINTER
 var is_walkable_tile_on_buildings_cells_free : bool = false
 var current_building_option_index : int = 0
 var grid_position : Vector2i = Vector2.ZERO
@@ -498,7 +501,16 @@ func _move_building_with_cursor() -> void:
 	
 	current_building.global_position = placement_position
 	current_building.is_valid_placement = _validate_placement_position(placement_position)
+	_request_cursor()
 
+
+func _request_cursor() -> void:
+	var mode : GameCursor.Mode = GameCursor.Mode.POINTER
+	if is_placing_building and current_building != null:
+		mode = GameCursor.Mode.BUILD if current_building.is_valid_placement else GameCursor.Mode.INVALID
+	if mode != cursor_mode:
+		cursor_mode = mode
+		UISignals.cursor_mode_requested.emit(CURSOR_SOURCE, mode)
 
 
 func _is_position_buildable(_pos : Vector2) -> bool:
@@ -534,6 +546,7 @@ func _set_is_placing_building(value : bool) -> void:
 			current_building.queue_free()
 			current_building = null
 	
+	_request_cursor()
 	GameSignals.building_placement_change.emit(is_placing_building)
 
 

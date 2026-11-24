@@ -43,7 +43,7 @@ text = "Hold the crossing, and we can face whatever is down there."
 [resource]
 script = ExtResource("1_level")
 level_name = "Echo Crossing"
-story_text = "The southern bridge lies smashed in the river, so the only way on runs past the great cave. Tunnels open on every side of this old crossing, and each of them echoes with something big moving below."
+story_text = "The southern bridge lies smashed in the river, so the only way on runs past the miners' tunnels. Tunnels open on every side of this old crossing, and each of them echoes with something big moving below."
 starting_gold = 27.0
 waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtResource("w3"), ExtResource("w4"), ExtResource("w5"), ExtResource("w6")])
 puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_4"), SubResource("PuffeLine_5")])

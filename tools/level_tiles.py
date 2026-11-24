@@ -107,12 +107,12 @@ BOG_POOLS = [[(8, 0), (9, 0), (8, 1), (9, 1)], [(6, 2), (7, 2), (6, 3), (7, 3)],
 ROCK_FILL = [(0, 6), (0, 7), (0, 8), (0, 9), (1, 7), (1, 8), (1, 9)]  # background_tiles stone without rims
 # boss lairs enclosed in rock (`enclose`): openings as (start cell, end cell, half width at the start, at the end); a
 # tunnel winds a little and runs past the rock's edge. Its floor is rock fill flipped (TUNNEL_ALT), which the rock
-# pass treats as open ground, so the walls round off along it. Level 8 is the Brood Cavern (moves to 12).
+# pass treats as open ground, so the walls round off along it. Level 12 is the Brood Cavern (the Broodmother's lair, at 8 until 2026-11-24).
 TUNNEL_ALT = FLIP_H
 TUNNEL_OVERRUN = 3
 ENCLOSE_MARGIN = 4
 LAIRS = {
-    8: [((-25, -2), (-31, -2), 2.6, 3.4),  # the cave mouth behind the castle, out to the daylight
+    12: [((-25, -2), (-31, -2), 2.6, 3.4),  # the cave mouth behind the castle, out to the daylight
         ((9, -10), (10, -16), 1.4, 1.0),  # behind the north spawn
         ((24, 0), (31, 1), 1.4, 0.9),  # the brood's tunnel east
         ((-2, 8), (-3, 15), 1.4, 1.0)],  # down into the deep

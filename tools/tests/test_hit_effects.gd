@@ -53,7 +53,7 @@ func test_splash_reaches_flyers_only_from_air_towers(kit : TestKit) -> void:
 
 
 func test_freeze_stops_and_bosses_never_freeze(kit : TestKit) -> void:
-	await kit.load_level(8)
+	await kit.load_level(12)
 	var nova : Building = await _tower(kit, "puffe_nova")
 	nova.stats.get_stat(Utils.StatType.FreezeChance).value = 1.0
 	nova.stats.get_stat(Utils.StatType.FreezeDuration).value = 1.0

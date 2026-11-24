@@ -37,7 +37,7 @@ func test_bar_shows_once_hurt(kit : TestKit) -> void:
 
 
 func test_bosses_keep_their_big_bar(kit : TestKit) -> void:
-	await kit.load_level(8)
+	await kit.load_level(12)
 	var boss : Enemy = kit.spawn_enemy("broodmother")
 	await kit.frames(2)
 	kit.check(_bar(boss) == null, "the Broodmother gets no small bar")

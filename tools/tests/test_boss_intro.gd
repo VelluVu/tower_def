@@ -4,7 +4,7 @@ extends RefCounted
 
 
 func test_a_boss_gets_its_card(kit : TestKit) -> void:
-	kit.load_level(8)
+	kit.load_level(12)
 	var intro : BossIntro = (load("res://scenes/ui/boss_intro/boss_intro.tscn") as PackedScene).instantiate()
 	kit.root.add_child(intro)
 	kit.spawn_enemy("weakling")

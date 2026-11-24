@@ -60,7 +60,7 @@ func test_normal_wave_health_ramp(kit : TestKit) -> void:
 
 
 func test_boss_skips_the_wave_ramp(kit : TestKit) -> void:
-	await kit.load_level(8)
+	await kit.load_level(12)
 	kit.level.wave_runner.current_wave_index = kit.level.wave_runner.wave_count - 1
 	var boss : Enemy = kit.spawn_enemy("broodmother")
 	await kit.frames(1)

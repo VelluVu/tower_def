@@ -1,33 +1,27 @@
-[gd_resource type="Resource" script_class="EvolveTierData" format=3]
+[gd_resource type="Resource" script_class="EvolveTierData" format=3 uid="uid://idvia0x67127"]
 
-[ext_resource type="Script" path="res://scenes/unit/evolve_tree/evolve_tier_data.gd" id="1_tier"]
-[ext_resource type="Script" path="res://scenes/unit/evolve_tree/evolve_resource.gd" id="2_evolve"]
+[ext_resource type="Script" uid="uid://vwr6ltwvjx32" path="res://scenes/unit/evolve_tree/evolve_tier_data.gd" id="1_tier"]
+[ext_resource type="Script" uid="uid://myr7yifukj43" path="res://scenes/unit/evolve_tree/evolve_resource.gd" id="2_evolve"]
 
 [sub_resource type="Resource" id="Resource_step0"]
 script = ExtResource("2_evolve")
-modifier_type = 0
 elements = 15
-modify_stat_type = 2
 modify_type = 2
 is_randomized_modify_value = false
-is_percent = true
 modify_value = 0.4
 evolve_name = "Damage"
 
 [sub_resource type="Resource" id="Resource_step1"]
 script = ExtResource("2_evolve")
-modifier_type = 0
 elements = 15
 modify_stat_type = 6
 modify_type = 0
 is_randomized_modify_value = false
-is_percent = true
 modify_value = 0.15
 evolve_name = "Attack Speed"
 
 [sub_resource type="Resource" id="Resource_step2"]
 script = ExtResource("2_evolve")
-modifier_type = 0
 elements = 15
 modify_stat_type = 20
 modify_type = 0

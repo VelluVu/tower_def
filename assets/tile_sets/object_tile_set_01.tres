@@ -16,7 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://bc0nced33absk" path="res://assets/art/tiles/humans/fields_landmarks.png" id="14_fields_landmarks"]
 [ext_resource type="Texture2D" uid="uid://xy4gyb4ttdcq" path="res://assets/art/tiles/humans/fence_tiles.png" id="15_fence_tiles"]
 [ext_resource type="Texture2D" uid="uid://c8nes2ug2bt0a" path="res://assets/art/tiles/humans/wasted_landmarks.png" id="16_wasted_landmarks"]
-[ext_resource type="Texture2D" path="res://assets/art/tiles/lairs/brood_landmarks.png" id="17_brood_landmarks"]
+[ext_resource type="Texture2D" uid="uid://03lkpjad4igt" path="res://assets/art/tiles/lairs/brood_landmarks.png" id="17_brood_landmarks"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7yheq"]
 texture = ExtResource("1_1w8xv")
@@ -331,6 +331,49 @@ texture = ExtResource("15_fence_tiles")
 2:1/0/custom_data_0 = 2
 3:1/0 = 0
 3:1/0/custom_data_0 = 2
+0:2/0 = 0
+0:2/0/custom_data_0 = 2
+1:2/0 = 0
+1:2/0/custom_data_0 = 2
+2:2/0 = 0
+2:2/0/custom_data_0 = 2
+3:2/0 = 0
+3:2/0/custom_data_0 = 2
+0:3/0 = 0
+0:3/0/custom_data_0 = 2
+1:3/0 = 0
+1:3/0/custom_data_0 = 2
+2:3/0 = 0
+2:3/0/custom_data_0 = 2
+3:3/0 = 0
+3:3/0/custom_data_0 = 2
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_brood_landmarks"]
+texture = ExtResource("17_brood_landmarks")
+0:0/0 = 0
+0:0/0/custom_data_0 = 2
+1:0/0 = 0
+1:0/0/custom_data_0 = 2
+2:0/0 = 0
+2:0/0/custom_data_0 = 2
+3:0/0 = 0
+3:0/0/custom_data_0 = 2
+4:0/0 = 0
+4:0/0/custom_data_0 = 2
+5:0/0 = 0
+5:0/0/custom_data_0 = 2
+0:1/0 = 0
+0:1/0/custom_data_0 = 2
+1:1/0 = 0
+1:1/0/custom_data_0 = 2
+2:1/0 = 0
+2:1/0/custom_data_0 = 2
+3:1/0 = 0
+3:1/0/custom_data_0 = 2
+4:1/0 = 0
+4:1/0/custom_data_0 = 2
+5:1/0 = 0
+5:1/0/custom_data_0 = 2
 0:2/0 = 0
 0:2/0/custom_data_0 = 2
 1:2/0 = 0
@@ -994,49 +1037,6 @@ texture = ExtResource("10_volcano_props")
 1:1/0/custom_data_0 = 2
 2:1/0 = 0
 2:1/0/custom_data_0 = 2
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_brood_landmarks"]
-texture = ExtResource("17_brood_landmarks")
-0:0/0 = 0
-0:0/0/custom_data_0 = 2
-1:0/0 = 0
-1:0/0/custom_data_0 = 2
-2:0/0 = 0
-2:0/0/custom_data_0 = 2
-3:0/0 = 0
-3:0/0/custom_data_0 = 2
-4:0/0 = 0
-4:0/0/custom_data_0 = 2
-5:0/0 = 0
-5:0/0/custom_data_0 = 2
-0:1/0 = 0
-0:1/0/custom_data_0 = 2
-1:1/0 = 0
-1:1/0/custom_data_0 = 2
-2:1/0 = 0
-2:1/0/custom_data_0 = 2
-3:1/0 = 0
-3:1/0/custom_data_0 = 2
-4:1/0 = 0
-4:1/0/custom_data_0 = 2
-5:1/0 = 0
-5:1/0/custom_data_0 = 2
-0:2/0 = 0
-0:2/0/custom_data_0 = 2
-1:2/0 = 0
-1:2/0/custom_data_0 = 2
-2:2/0 = 0
-2:2/0/custom_data_0 = 2
-3:2/0 = 0
-3:2/0/custom_data_0 = 2
-0:3/0 = 0
-0:3/0/custom_data_0 = 2
-1:3/0 = 0
-1:3/0/custom_data_0 = 2
-2:3/0 = 0
-2:3/0/custom_data_0 = 2
-3:3/0 = 0
-3:3/0/custom_data_0 = 2
 
 [resource]
 custom_data_layer_0/name = "TileType"

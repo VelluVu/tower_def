@@ -9,6 +9,8 @@ const MOVE_DOWN_ACTION_NAME : String = "MoveCameraDown"
 const ZOOM_OUT_ACTION_NAME : String = "ZoomCameraOut"
 const ZOOM_IN_ACTION_NAME : String = "ZoomCameraIn"
 const PAN_ACTION_NAME : String = "PanCamera"
+## GameCursor shows the grabbing claw while the camera is dragged.
+const CURSOR_SOURCE : StringName = &"camera_pan"
 ## How close to the window edge the mouse scrolls the camera, in viewport pixels.
 const EDGE_SCROLL_MARGIN : float = 4.0
 ## A leak shakes the view this many world pixels (a boss twice as far) for SHAKE_SECONDS.
@@ -354,6 +356,7 @@ func _set_is_panning(value : bool) -> void:
 	if is_panning == value:
 		return
 	is_panning = value
+	UISignals.cursor_mode_requested.emit(CURSOR_SOURCE, GameCursor.Mode.GRAB if is_panning else GameCursor.Mode.POINTER)
 	if is_panning:
 		pan_initial_position = get_viewport().get_mouse_position()
 		pan_start_camera_position = global_position

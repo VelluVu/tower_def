@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cwy0yfoc3vl6"
+path="res://.godot/imported/mire_trees.aseprite-9e60c93abc1f4745987ba83e3deb6306.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/lairs/mire_trees.aseprite"
+dest_files=["res://.godot/imported/mire_trees.aseprite-9e60c93abc1f4745987ba83e3deb6306.res"]
+
+[params]
+

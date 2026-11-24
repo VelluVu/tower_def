@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://ct7ml1now6duj"
+path="res://.godot/imported/mire_castle_camo.aseprite-f2e76a6421b8ce712bfd139167ff449a.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/lairs/mire_castle_camo.aseprite"
+dest_files=["res://.godot/imported/mire_castle_camo.aseprite-f2e76a6421b8ce712bfd139167ff449a.res"]
+
+[params]
+

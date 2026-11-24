@@ -12,28 +12,36 @@
 
 [sub_resource type="Resource" id="PuffeLine_1"]
 script = ExtResource("9_line")
-text = "Crystals everywhere. Pretty, but the folk wearing them are hard to crack."
+trigger = 0
+text = "The lake road north, to the middle bridge. The water keeps them on the shore."
 
 [sub_resource type="Resource" id="PuffeLine_2"]
 script = ExtResource("9_line")
 trigger = 3
-wave_number = 2
-text = "Burrowers! They dig under the maze and come up further on. Keep towers along the whole road."
+wave_number = 3
+text = "A big swarm. Novas by the shore!"
+mood = 3
 
 [sub_resource type="Resource" id="PuffeLine_3"]
 script = ExtResource("9_line")
+trigger = 7
+text = "The shore is leaking. Close the gap!"
+mood = 2
+
+[sub_resource type="Resource" id="PuffeLine_4"]
+script = ExtResource("9_line")
 trigger = 3
-wave_number = 3
-text = "Crystal brutes. Plain hits glance off; fire, frost and poison bite better."
+wave_number = 6
+text = "Wait... humans? Scouts on the north road. They are watching the bridge."
 
 [resource]
 script = ExtResource("1_level")
-level_name = "Crystal Deep"
-story_text = "A hollow lit by blue crystal on the way north. The cave folk here dig under walls, and some have grown crystal shells."
-starting_gold = 26.0
+level_name = "Lakeshore Watch"
+story_text = "The lake road runs north to the middle bridge. The water keeps the cave folk on the shore, and something on the far road is watching."
+starting_gold = 23.0
 waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtResource("w3"), ExtResource("w4"), ExtResource("w5"), ExtResource("w6")])
-puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3")])
-first_wave_health = 1.8
-last_wave_health = 2.9
-health_scale = 1.000
-hard_health_scale = 1.614
+puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_4")])
+first_wave_health = 2.0
+last_wave_health = 3.3
+health_scale = 1.25
+hard_health_scale = 1.261
