@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bps4a7iq4ind6"
+path="res://.godot/imported/poison_spike_field.aseprite-bf45afa53d69f820e9cb9dfc5a39ad7b.res"
+
+[deps]
+
+source_file="res://assets/art/units/building/spike_field/poison_spike_field.aseprite"
+dest_files=["res://.godot/imported/poison_spike_field.aseprite-bf45afa53d69f820e9cb9dfc5a39ad7b.res"]
+
+[params]
+

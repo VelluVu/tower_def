@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BuildingListElement" format=3]
+
+[ext_resource type="Script" path="res://scenes/unit/building/building_list_element.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/art/units/building/puffe/puffe_elder/puffe_elder_icon.png" id="2_icon"]
+[ext_resource type="PackedScene" path="res://scenes/unit/building/buildings/puffe_elder.tscn" id="3_scene"]
+
+[resource]
+script = ExtResource("1_script")
+scene = ExtResource("3_scene")
+id = 15
+icon = ExtResource("2_icon")
+unlock_level = 37
+description = "An old drake: expensive, with heavy bites. Once every wave it breathes its element along the road, through as many enemies as it can line up."

@@ -1,0 +1,24 @@
+# Source of assets/art/units/building/spike_field/spike_field_icon.png (python tools/gd.py icon <this> <out.png>); cropped from the sprite's first IDLE frame
+w = 3e2731
+W = 5d3a2a
+v = 733e39
+V = 9a5a3a
+h = 181425
+c = c0cbdc
+---
+................
+wwwwwwwwwwwwwwww
+wVVVVVVVVVVVVVVw
+wvWcWWvcWWWcWWWw
+wWWhhvWhhWvhhWWw
+wWWWvWWWWvWWWWvw
+wWWcWWWcvWWcWvWw
+wWvhhWWhhWWhhWWw
+wvWWWWvWWWWvWWWw
+wWWcWvWcWWvcWWWw
+wWWhhWWhhvWhhWvw
+wWWvWWWWvWWWWvWw
+wWvWWWWvWWWWvWWw
+wwwwwwwwwwwwwwww
+................
+................

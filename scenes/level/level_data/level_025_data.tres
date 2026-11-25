@@ -34,13 +34,20 @@ wave_number = 5
 text = "Hear that drum? Every soldier near the drummer marches faster. Silence him!"
 mood = 3
 
+[sub_resource type="Resource" id="PuffeLine_u1125_shredder"]
+script = ExtResource("9_line")
+trigger = 1
+wave_number = 0
+text = "Their armour is thick, so meet the Shredder! Its pulse barely hurts, but it tears armour, and every tower near it hits harder."
+mood = 1
+
 [resource]
 script = ExtResource("1_level")
 level_name = "Wheatfield Road"
 story_text = "Past the northern bridge lie the humans' farms. Their soldiers march down the wheat roads towards the castle, and some of them have brought bows."
 starting_gold = 25.0
 waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtResource("w3"), ExtResource("w4"), ExtResource("w5"), ExtResource("w6")])
-puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_u1125_war_drummer")])
+puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_u1125_shredder"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_u1125_war_drummer")])
 first_wave_health = 1.8
 last_wave_health = 4.2
 health_scale = 1.780

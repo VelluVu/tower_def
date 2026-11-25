@@ -20,6 +20,9 @@ static func apply(target : Enemy, damage_data : DamageData, raw_damage : float) 
 		return
 
 	var tower : Building = damage_data.source
+	#a Shredder's pulse tears the target's armour
+	if tower is Shredder and not target.is_dead:
+		ResistanceShred.give(target, Shredder.SHRED_PER_STACK, Shredder.MAX_STACKS, Shredder.SHRED_SECONDS)
 	#a Spotter's mark: the target takes more of this element from every tower for a while
 	var mark_share : float = tower.stats.get_stat_value(Utils.StatType.MarkShare)
 	if mark_share > 0.0 and not target.is_dead:

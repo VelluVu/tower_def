@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://njinfdxh6sed"
+path="res://.godot/imported/red_puffe_shredder.aseprite-9a8ebaa1f5128f95a96c59abbfa2ff0c.res"
+
+[deps]
+
+source_file="res://assets/art/units/building/puffe/puffe_shredder/red_puffe_shredder.aseprite"
+dest_files=["res://.godot/imported/red_puffe_shredder.aseprite-9a8ebaa1f5128f95a96c59abbfa2ff0c.res"]
+
+[params]
+

@@ -9,7 +9,7 @@ extends InputBindings
 const ACTION_CANCEL: StringName = &"menu_cancel"
 const ACTION_OPEN_CONSOLE: StringName = &"open_console"
 ## The build tray's slots, left to right (the tray hides locked buildings, so slot N is the Nth shown).
-const ACTION_BUILD_SLOTS: Array[StringName] = [&"build_slot_1", &"build_slot_2", &"build_slot_3", &"build_slot_4", &"build_slot_5", &"build_slot_6", &"build_slot_7", &"build_slot_8", &"build_slot_9", &"build_slot_10", &"build_slot_11", &"build_slot_12"]
+const ACTION_BUILD_SLOTS: Array[StringName] = [&"build_slot_1", &"build_slot_2", &"build_slot_3", &"build_slot_4", &"build_slot_5", &"build_slot_6", &"build_slot_7", &"build_slot_8", &"build_slot_9", &"build_slot_10", &"build_slot_11", &"build_slot_12", &"build_slot_13", &"build_slot_14", &"build_slot_15", &"build_slot_16"]
 const ACTION_START_WAVE: StringName = &"start_wave"
 const ACTION_SPEED_DOWN: StringName = &"speed_down"
 const ACTION_SPEED_UP: StringName = &"speed_up"
@@ -24,6 +24,7 @@ func _init() -> void:
 	# DevConsole reads it in its own _input(), so it is a direct action.
 	rebindable_actions = [
 		ACTION_BUILD_SLOTS[0], ACTION_BUILD_SLOTS[1], ACTION_BUILD_SLOTS[2], ACTION_BUILD_SLOTS[3], ACTION_BUILD_SLOTS[4], ACTION_BUILD_SLOTS[5], ACTION_BUILD_SLOTS[6], ACTION_BUILD_SLOTS[7], ACTION_BUILD_SLOTS[8], ACTION_BUILD_SLOTS[9], ACTION_BUILD_SLOTS[10], ACTION_BUILD_SLOTS[11],
+		ACTION_BUILD_SLOTS[12], ACTION_BUILD_SLOTS[13], ACTION_BUILD_SLOTS[14], ACTION_BUILD_SLOTS[15],
 		ACTION_START_WAVE,
 		ACTION_SPEED_DOWN,
 		ACTION_SPEED_UP,
@@ -46,6 +47,11 @@ func _init() -> void:
 		ACTION_BUILD_SLOTS[9]: KEY_0,
 		ACTION_BUILD_SLOTS[10]: KEY_MINUS,
 		ACTION_BUILD_SLOTS[11]: KEY_EQUAL,
+		# sixteen buildings since 2026-11-25: the last four on the bottom row, left of the camera keys
+		ACTION_BUILD_SLOTS[12]: KEY_Z,
+		ACTION_BUILD_SLOTS[13]: KEY_V,
+		ACTION_BUILD_SLOTS[14]: KEY_B,
+		ACTION_BUILD_SLOTS[15]: KEY_N,
 		ACTION_START_WAVE: KEY_SPACE,
 		ACTION_SPEED_DOWN: KEY_Q,
 		ACTION_SPEED_UP: KEY_E,
@@ -67,6 +73,10 @@ func _init() -> void:
 		ACTION_BUILD_SLOTS[9]: "Build slot 10",
 		ACTION_BUILD_SLOTS[10]: "Build slot 11",
 		ACTION_BUILD_SLOTS[11]: "Build slot 12",
+		ACTION_BUILD_SLOTS[12]: "Build slot 13",
+		ACTION_BUILD_SLOTS[13]: "Build slot 14",
+		ACTION_BUILD_SLOTS[14]: "Build slot 15",
+		ACTION_BUILD_SLOTS[15]: "Build slot 16",
 		ACTION_START_WAVE: "Start wave",
 		ACTION_SPEED_DOWN: "Slower",
 		ACTION_SPEED_UP: "Faster",

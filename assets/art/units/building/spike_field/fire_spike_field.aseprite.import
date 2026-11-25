@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dtd361582kq8"
+path="res://.godot/imported/fire_spike_field.aseprite-b7d49e7760a3527e7894552fdd7f39cf.res"
+
+[deps]
+
+source_file="res://assets/art/units/building/spike_field/fire_spike_field.aseprite"
+dest_files=["res://.godot/imported/fire_spike_field.aseprite-b7d49e7760a3527e7894552fdd7f39cf.res"]
+
+[params]
+

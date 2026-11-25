@@ -25,7 +25,7 @@ EVOLVE = "scenes/unit/evolve_tree/puffe_breather_evolve"
 PROJ = "scenes/unit/skills/projectiles"
 ELEMENTS = ms.ELEMENTS
 UNLOCK_LEVEL = 14
-LIST_ID = 7
+LIST_ID = 9
 
 # the Breather's numbers (placeholders until playtests): a short cone, 4 hits on everything in it per gust
 PRICE = 5.0

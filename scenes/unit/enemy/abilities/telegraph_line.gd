@@ -18,6 +18,8 @@ var half_width : float = 8.0
 var shown : bool = true
 var elapsed : float = 0.0
 var is_flame : bool = false
+#the flame's colours, outer to core (the Elder Drake breathes its element's)
+var flame_layers : Array[Color] = FLAME_LAYERS
 #game speed: the blink and the flame count game time, like every other gameplay clock
 var current_time_scale : float = 1.0
 
@@ -82,7 +84,7 @@ func _draw() -> void:
 #narrower and brighter towards the core; the edges flicker, and the flame thins out as it dies
 func _draw_flame(a : Vector2, b : Vector2) -> void:
 	var fade : float = 1.0 - elapsed / FLAME_SECONDS
-	for i in FLAME_LAYERS.size():
+	for i in flame_layers.size():
 		var width : float = roundf(half_width * 2.0 * fade * (1.0 - i * 0.22) + (randi() % 3) - 1)
 		if width >= 1.0:
-			draw_line(a, b, FLAME_LAYERS[i], width)
+			draw_line(a, b, flame_layers[i], width)

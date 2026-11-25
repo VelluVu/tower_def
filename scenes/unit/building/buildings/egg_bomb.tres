@@ -7,7 +7,7 @@
 [resource]
 script = ExtResource("1_script")
 scene = ExtResource("3_scene")
-id = 5
+id = 6
 icon = ExtResource("2_icon")
 unlock_level = 7
 description = "A trap on the path: the first enemy on it lights the fuse, then one big blast hits everything around it, flyers too. It rebuilds itself slowly."

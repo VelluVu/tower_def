@@ -7,7 +7,7 @@
 [resource]
 script = ExtResource("1_script")
 scene = ExtResource("3_scene")
-id = 7
+id = 9
 icon = ExtResource("2_icon")
 unlock_level = 14
 description = "Breathes short gusts over a cone in front of it: every enemy in the cone is hit 4 times a gust. Short range; best at a maze corner where groups bunch up."

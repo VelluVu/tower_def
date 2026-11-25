@@ -26,7 +26,7 @@ EVOLVE = "scenes/unit/evolve_tree/puffe_harpooner_evolve"
 PROJ = "scenes/unit/skills/projectiles"
 ELEMENTS = ms.ELEMENTS
 UNLOCK_LEVEL = 19
-LIST_ID = 9
+LIST_ID = 11
 FLYERS_TACTIC = 8  # Utils.TargetTactic.Flyers
 
 # the Harpooner's numbers (placeholders until playtests): weaker than the Bolter, but every harpoon tethers its

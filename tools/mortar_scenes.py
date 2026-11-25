@@ -31,7 +31,7 @@ TOWER_BASE = {"physical": "basic_tower", "fire": "red_tower", "frost": "blue_tow
 BOLTER_DAMAGE = {"physical": "physical", "fire": "red", "frost": "blue", "poison": "green"}
 LOOPING = ("IDLE", "ATTACK", "FLY")
 UNLOCK_LEVEL = 16
-LIST_ID = 8
+LIST_ID = 10
 
 # the Mortar's numbers (placeholders until playtests): a slow, long-range lob that hits groups
 PRICE = 6.0

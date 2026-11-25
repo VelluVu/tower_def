@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BuildingListElement" format=3]
+
+[ext_resource type="Script" path="res://scenes/unit/building/building_list_element.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/art/units/building/puffe/puffe_shredder/puffe_shredder_icon.png" id="2_icon"]
+[ext_resource type="PackedScene" path="res://scenes/unit/building/buildings/puffe_shredder.tscn" id="3_scene"]
+
+[resource]
+script = ExtResource("1_script")
+scene = ExtResource("3_scene")
+id = 13
+icon = ExtResource("2_icon")
+unlock_level = 25
+description = "A weak, slow pulse that tears armour: every enemy it hits loses 15% of each resistance, up to three times, for a few seconds. Every tower around it hits harder."

@@ -255,12 +255,14 @@ func get_resistance_factor(damage_data : DamageData) -> float:
 	if resistances == null:
 		return 1.0
 
-	var element_resistance : float = resistances.get_element(damage_data.damage_type)
+	#a Shredder's torn armour comes off every resistance
+	var shred : float = ResistanceShred.get_share(self)
+	var element_resistance : float = maxf(resistances.get_element(damage_data.damage_type) - shred, 0.0)
 	var tower_resistance : float = 0.0
 	if damage_data.source is Building:
 		var source : Building = damage_data.source
 		if source.skill != null:
-			tower_resistance = resistances.get_tower(source.skill.skill_type)
+			tower_resistance = maxf(resistances.get_tower(source.skill.skill_type) - shred, 0.0)
 		#penetration (cards, talents) takes points off both; a crit with critical penetration ignores them all
 		if damage_data.is_critical and source.stats.get_stat_value(Utils.StatType.CriticalPenetration) >= 1.0:
 			return 1.0

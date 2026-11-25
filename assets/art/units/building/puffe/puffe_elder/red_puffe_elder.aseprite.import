@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://c0axmiohu2uf1"
+path="res://.godot/imported/red_puffe_elder.aseprite-4104196b4c679e6739ee1c54c1b9a97a.res"
+
+[deps]
+
+source_file="res://assets/art/units/building/puffe/puffe_elder/red_puffe_elder.aseprite"
+dest_files=["res://.godot/imported/red_puffe_elder.aseprite-4104196b4c679e6739ee1c54c1b9a97a.res"]
+
+[params]
+

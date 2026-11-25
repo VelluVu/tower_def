@@ -40,13 +40,20 @@ wave_number = 4
 text = "Mushroom folk! Kill them away from the others, or their spores heal the whole crowd. Fire burns the cloud away."
 mood = 2
 
+[sub_resource type="Resource" id="PuffeLine_u1125_spike_field"]
+script = ExtResource("9_line")
+trigger = 1
+wave_number = 0
+text = "A new trap: the Spike Field! Cheap, and it stabs everything that walks over it, again and again. It never breaks."
+mood = 1
+
 [resource]
 script = ExtResource("1_level")
 level_name = "Crossroads"
 story_text = "Every road meets here on the lake's south shore. The cave folk gather from every side, and the road east leads into their tunnels."
 starting_gold = 23.0
 waves = Array[ExtResource("0_wave")]([ExtResource("2_w1"), ExtResource("3_w2"), ExtResource("4_w3"), ExtResource("5_w4"), ExtResource("9_w5")])
-puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_u1125_spore_carrier"), SubResource("PuffeLine_4")])
+puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_u1125_spike_field"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_u1125_spore_carrier"), SubResource("PuffeLine_4")])
 first_wave_health = 1.6
 last_wave_health = 3.2
 health_scale = 1.489

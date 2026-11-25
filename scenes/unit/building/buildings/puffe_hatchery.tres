@@ -7,7 +7,7 @@
 [resource]
 script = ExtResource("1_script")
 scene = ExtResource("3_scene")
-id = 6
+id = 8
 icon = ExtResource("2_icon")
 unlock_level = 11
 description = "Hatches guard drakelings that stand on the path and hold the enemies that come, one each, clawing them while they fight back. Fallen guards hatch again. Rally picks where they stand."

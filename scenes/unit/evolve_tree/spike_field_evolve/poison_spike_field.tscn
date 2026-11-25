@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="Material" path="res://assets/shaders/shader_materials/building_hit_shader_material.tres" id="1_material"]
+[ext_resource type="Script" path="res://scenes/unit/animation_control.gd" id="2_control"]
+[ext_resource type="SpriteFrames" path="res://scenes/unit/evolve_tree/spike_field_evolve/poison_spike_field_frames.tres" id="3_frames"]
+
+[node name="PoisonSpikeField" type="AnimatedSprite2D"]
+texture_filter = 1
+material = ExtResource("1_material")
+position = Vector2(0, -5)
+sprite_frames = ExtResource("3_frames")
+animation = &"IDLE"
+autoplay = "IDLE"
+script = ExtResource("2_control")

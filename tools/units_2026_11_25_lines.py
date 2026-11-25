@@ -12,8 +12,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, "scenes", "level", "level_data")
 LINE_SCRIPT = "res://scenes/level/level_data/puffe_line.gd"
 MARK = "u1125"
-WAVE_STARTED, WAVE_CLEARED = 3, 4
-NEUTRAL, HAPPY, WORRIED, ANGRY = 0, 1, 2, 3
+AFTER_PREVIOUS, WAVE_STARTED, WAVE_CLEARED = 1, 3, 4
+NEUTRAL, HAPPY, WORRIED, ANGRY, SMUG = 0, 1, 2, 3, 4
 
 # unit: (level, wave, mood, text)
 LINES = {
@@ -37,6 +37,13 @@ LINES = {
     "bog_lurker": (20, 4, WORRIED, "Something swims under the water... Bolts and beams can't reach it. Bursts and breath can!"),
     "standard_bearer": (27, 5, ANGRY, "Their standard! Near that banner no frost slows them down. Bring down the bearer first."),
     "ash_wraith": (39, 4, WORRIED, "Wraiths of ash: they fade away now and then and our beams lose them. Bursts catch them when they're back."),
+}
+# the second round's towers: Puffe presents each right after the opening line of its unlock level, like the others
+TOWERS = {
+    "spike_field": (5, HAPPY, "A new trap: the Spike Field! Cheap, and it stabs everything that walks over it, again and again. It never breaks."),
+    "hoard_keeper": (10, SMUG, "Meet the Hoard Keeper. It never fights, it just sits on gold and pays us after every wave. Two of them pay in full."),
+    "shredder": (25, HAPPY, "Their armour is thick, so meet the Shredder! Its pulse barely hurts, but it tears armour, and every tower near it hits harder."),
+    "elder_drake": (37, HAPPY, "An Elder Drake joins us! Costly, but once every wave it breathes along the road through everything it can line up."),
 }
 
 
@@ -65,12 +72,15 @@ def main():
         new = re.sub(r', SubResource\("PuffeLine_%s_[^"]*"\)|SubResource\("PuffeLine_%s_[^"]*"\), ?' % (MARK, MARK), "", new)
         for unit, wave, mood, line in by_level.get(int(match.group(1)), []):
             new = add_line(new, unit, wave, mood, line)
+        for tower, (level, mood, line) in TOWERS.items():
+            if level == int(match.group(1)):
+                new = add_line(new, tower, 0, mood, line, AFTER_PREVIOUS)
         if new != text:
             open(path, "w", encoding="utf8", newline="\n").write(new)
             print("wrote", name)
 
 
-def add_line(text, unit, wave, mood, line):
+def add_line(text, unit, wave, mood, line, trigger=WAVE_STARTED):
     script_id = re.search(r'\[ext_resource type="Script"[^\n]*path="%s" id="([^"]+)"\]' % re.escape(LINE_SCRIPT), text)
     if script_id is None:
         last_ext = [m.end() for m in re.finditer(r'\[ext_resource [^\n]*\]\n', text)][-1]
@@ -80,7 +90,7 @@ def add_line(text, unit, wave, mood, line):
         sid = script_id.group(1)
     rid = "PuffeLine_%s_%s" % (MARK, unit)
     block = ('[sub_resource type="Resource" id="%s"]\nscript = ExtResource("%s")\ntrigger = %d\nwave_number = %d\ntext = "%s"\nmood = %d\n\n'
-             % (rid, sid, WAVE_STARTED, wave, line.replace('"', '\\"'), mood))
+             % (rid, sid, trigger, wave, line.replace('"', '\\"'), mood))
     resource = text.index("[resource]")
     text = text[:resource] + block + text[resource:]
 
@@ -97,7 +107,8 @@ def add_line(text, unit, wave, mood, line):
         previous = order_key("\n" + (found.group(1) if found else ""), previous)
         keys.append(previous)
     mine = wave * 2
-    at = next((i for i, key in enumerate(keys) if key > mine), len(ids))
+    # a tower's line follows the level's opening line, as every tower's introduction does
+    at = min(1, len(ids)) if trigger == AFTER_PREVIOUS else next((i for i, key in enumerate(keys) if key > mine), len(ids))
     ids.insert(at, rid)
     listed = ", ".join('SubResource("%s")' % i for i in ids)
     return text[:lines.start(1)] + listed + text[lines.end(1):]

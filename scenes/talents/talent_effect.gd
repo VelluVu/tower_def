@@ -95,9 +95,13 @@ const SPOTTER : int = 1 << 8
 const HARPOONER : int = 1 << 9
 const HATCHERY : int = 1 << 10
 const EGG_BOMB : int = 1 << 11
+const SPIKE_FIELD : int = 1 << 12
+const HOARD_KEEPER : int = 1 << 13
+const SHREDDER : int = 1 << 14
+const ELDER_DRAKE : int = 1 << 15
 
 @export var kind : Kind = Kind.BuildingStat
-@export_flags("Bolter", "Nova", "Beamer", "Trap", "Wall", "Mortar", "Buffer", "Breather", "Spotter", "Harpooner", "Hatchery", "Egg Bomb") var buildings : int = 0
+@export_flags("Bolter", "Nova", "Beamer", "Trap", "Wall", "Mortar", "Buffer", "Breather", "Spotter", "Harpooner", "Hatchery", "Egg Bomb", "Spike Field", "Hoard Keeper", "Shredder", "Elder Drake") var buildings : int = 0
 ## The element the building must have; none means any element.
 @export_flags("Physical", "Fire", "Frost", "Poison") var elements : int = 0
 @export var stat_type : Utils.StatType = Utils.StatType.Damage
@@ -167,6 +171,14 @@ static func get_building_flag(building : Building) -> int:
 	#a trap too, but with its own talents
 	if building is EggBomb:
 		return EGG_BOMB
+	if building.skill is SpikeStrike:
+		return SPIKE_FIELD
+	if building is HoardKeeper:
+		return HOARD_KEEPER
+	if building is Shredder:
+		return SHREDDER
+	if building is ElderDrake:
+		return ELDER_DRAKE
 
 	if building is Trap:
 		return TRAP

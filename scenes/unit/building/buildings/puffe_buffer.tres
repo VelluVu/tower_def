@@ -7,7 +7,7 @@
 [resource]
 script = ExtResource("1_script")
 scene = ExtResource("3_scene")
-id = 11
+id = 14
 icon = ExtResource("2_icon")
 unlock_level = 27
 description = "Never attacks: drums up the towers and traps around it. Buy its pips to choose what it raises; several Buffers never stack."

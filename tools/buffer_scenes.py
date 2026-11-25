@@ -19,7 +19,7 @@ import mortar_scenes as ms
 ART = "assets/art/units/building/puffe/puffe_buffer"
 EVOLVE = "scenes/unit/evolve_tree/puffe_buffer_evolve"
 UNLOCK_LEVEL = 27
-LIST_ID = 11
+LIST_ID = 14
 PRICE = 7.0
 AURA_TILES = 2.0
 ELEMENTS = ms.ELEMENTS

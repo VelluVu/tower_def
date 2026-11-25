@@ -34,13 +34,20 @@ trigger = 3
 wave_number = 6
 text = "Wait... humans? Scouts on the north road. They are watching the bridge."
 
+[sub_resource type="Resource" id="PuffeLine_u1125_hoard_keeper"]
+script = ExtResource("9_line")
+trigger = 1
+wave_number = 0
+text = "Meet the Hoard Keeper. It never fights, it just sits on gold and pays us after every wave. Two of them pay in full."
+mood = 4
+
 [resource]
 script = ExtResource("1_level")
 level_name = "Lakeshore Watch"
 story_text = "The lake road runs north to the middle bridge. The water keeps the cave folk on the shore, and something on the far road is watching."
 starting_gold = 23.0
 waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtResource("w3"), ExtResource("w4"), ExtResource("w5"), ExtResource("w6")])
-puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_4")])
+puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_u1125_hoard_keeper"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_4")])
 first_wave_health = 2.0
 last_wave_health = 3.3
 health_scale = 1.25
