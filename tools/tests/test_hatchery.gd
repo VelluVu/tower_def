@@ -43,7 +43,7 @@ func test_hatchery_basics(kit : TestKit) -> void:
 	kit.check_near(hatchery.guard_health, 24.0, "of 24 health")
 	kit.check(hatchery.guards.size() == Hatchery.BASE_GUARDS, "they are hatched when it is placed")
 	var list : BuildingListElement = load("res://scenes/unit/building/buildings/puffe_hatchery.tres")
-	kit.check(list.unlock_level == 43 and not list.is_unlocked(42) and list.is_unlocked(43), "it unlocks on level 43")
+	kit.check(list.unlock_level == 11 and not list.is_unlocked(10) and list.is_unlocked(11), "it unlocks on level 11")
 	await kit.run_until(func() -> bool: return _ready_guards(hatchery) == Hatchery.BASE_GUARDS, 4.0)
 	kit.check(_ready_guards(hatchery) == Hatchery.BASE_GUARDS, "all three hatch")
 	hatchery.remove()

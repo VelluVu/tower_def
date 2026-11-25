@@ -36,7 +36,7 @@ func test_spotter_basics(kit : TestKit) -> void:
 	kit.check(spotter.stats.get_stat(Utils.StatType.MarkShare) != null and spotter.stats.get_stat(Utils.StatType.ExecuteBelow) != null, "it has the mark and execute stats")
 	kit.check(spotter.skill.stats.get_stat_value(Utils.StatType.AttackRange) > 5.0, "it has a long range")
 	var list : BuildingListElement = load("res://scenes/unit/building/buildings/puffe_spotter.tres")
-	kit.check(list.unlock_level == 31 and not list.is_unlocked(30) and list.is_unlocked(31), "it unlocks on level 31")
+	kit.check(list.unlock_level == 23 and not list.is_unlocked(22) and list.is_unlocked(23), "it unlocks on level 23")
 
 
 func test_elite_tactic_order(kit : TestKit) -> void:

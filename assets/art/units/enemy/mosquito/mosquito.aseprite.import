@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://ch5l76ax4iceu"
+path="res://.godot/imported/mosquito.aseprite-e574b3a82a3308880bbaab6f88c84756.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/mosquito/mosquito.aseprite"
+dest_files=["res://.godot/imported/mosquito.aseprite-e574b3a82a3308880bbaab6f88c84756.res"]
+
+[params]
+

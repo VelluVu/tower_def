@@ -1,0 +1,30 @@
+# Source of assets/art/units/enemy/battering_ram/battering_ram_icon.png (python tools/gd.py icon <this> <out.png>); cropped from the sprite's first IDLE frame
+a = 847a80
+b = 4a4238
+c = 6e6250
+d = 733e39
+e = b86f50
+f = 9a5a3a
+g = 3a4466
+h = 8b9bb4
+i = 5a6988
+j = 5d3a2a
+k = 3e2731
+l = 124e89
+---
+accaccaccaccac..
+bbbbbbbbbbbbbb..
+..a......a..d...
+..a......a..d...
+..a......a..d...
+..a......a..dgg.
+efeeefeeefeeehig
+dddddddddddddhig
+............dgg.
+............d...
+............d...
+jjjjjjjjjjjjjj..
+kd.l...l.dkd....
+ak.l...l.kak....
+kd.l....ldkd....
+...k....k.......

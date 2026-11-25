@@ -1,0 +1,28 @@
+# Source of assets/art/units/enemy/shieldbearer/shieldbearer_icon.png (python tools/gd.py icon <this> <out.png>); cropped from the sprite's first IDLE frame
+a = 124e89
+b = 0099db
+c = 5a6988
+d = 8b9bb4
+e = c0cbdc
+f = 181425
+g = 3a4466
+h = 3f6ea8
+i = feae34
+j = 733e39
+---
+e.cdeeeeed......
+e.cdfffffd..gggg
+e.cdeefeed..ghhg
+e..cddddc...ghhg
+ecdeeeeeedc.ghhg
+egcabbbbcdddghig
+e.cabiibdbbigiig
+e.cabbbbdbiighhg
+iigiiiiidbbighhg
+j..abbbbadbighhg
+d..agadca.ddghig
+..cg...dc...gggg
+..cg...dc.......
+..cg...dc.......
+..gg...gg.......
+..ggg..ggg......

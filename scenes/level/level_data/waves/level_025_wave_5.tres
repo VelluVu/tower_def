@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/armored_knight.tscn" id="4_armored_knight"]
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/assault_dog.tscn" id="5_assault_dog"]
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/soldier.tscn" id="6_soldier"]
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/war_drummer.tscn" id="e_u1125_war_drummer"]
 
 [sub_resource type="Resource" id="Resource_group1"]
 script = ExtResource("2_group")
@@ -42,7 +43,14 @@ count = 15
 interval = 0.3
 delay = 4.0
 
+[sub_resource type="Resource" id="Resource_u1125_war_drummer"]
+script = ExtResource("2_group")
+enemy_scene = ExtResource("e_u1125_war_drummer")
+count = 2
+interval = 6.0
+delay = 3.0
+
 [resource]
 script = ExtResource("1_wave")
-spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_group3"), SubResource("Resource_group4"), SubResource("Resource_push1")])
+spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_group3"), SubResource("Resource_group4"), SubResource("Resource_push1"), SubResource("Resource_u1125_war_drummer")])
 early_start_bonus = 3.0

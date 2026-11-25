@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cgbokkgk0h5hr"
+path="res://.godot/imported/war_drummer_elite.aseprite-148a50e4893ec57fa3d092909bcd5204.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/war_drummer/war_drummer_elite.aseprite"
+dest_files=["res://.godot/imported/war_drummer_elite.aseprite-148a50e4893ec57fa3d092909bcd5204.res"]
+
+[params]
+

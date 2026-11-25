@@ -32,3 +32,5 @@ const ROAR_ANIMATION : String = "ROAR"
 const REVEAL_ANIMATION : String = "REVEAL"
 #a boss lair's spawn art stirring when the boss comes up out of it (the Hydra's pool)
 const BOIL_ANIMATION : String = "BOIL"
+#the snapping turtle hiding in its shell (ShellGuard)
+const SHELL_ANIMATION : String = "SHELL"

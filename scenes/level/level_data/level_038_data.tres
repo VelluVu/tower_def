@@ -27,13 +27,20 @@ trigger = 3
 wave_number = 4
 text = "A sandstorm. My towers cannot see far in it. Spread them out."
 
+[sub_resource type="Resource" id="PuffeLine_u1125_sand_wurm"]
+script = ExtResource("9_line")
+trigger = 3
+wave_number = 4
+text = "The sand moves... Wurms! They dive and come up far along the road. Keep towers near the castle."
+mood = 2
+
 [resource]
 script = ExtResource("1_level")
 level_name = "Bleached Dunes"
 story_text = "White salt flats between the dunes, where nothing grows. Scarabs swarm under the salt, and the wind brings storms."
 starting_gold = 31.0
 waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtResource("w3"), ExtResource("w4"), ExtResource("w5"), ExtResource("w6")])
-puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3")])
+puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_u1125_sand_wurm")])
 first_wave_health = 1.7
 last_wave_health = 10.0
 health_scale = 1.358

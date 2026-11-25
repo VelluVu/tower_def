@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bk0do3wad84hr"
+path="res://.godot/imported/bone_vulture.aseprite-439f52556d7e39fa401d7674a98ccdce.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/bone_vulture/bone_vulture.aseprite"
+dest_files=["res://.godot/imported/bone_vulture.aseprite-439f52556d7e39fa401d7674a98ccdce.res"]
+
+[params]
+

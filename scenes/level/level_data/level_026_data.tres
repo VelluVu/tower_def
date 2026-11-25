@@ -34,13 +34,20 @@ trigger = 3
 wave_number = 4
 text = "Giant eagles! They fly over the hedge, so build along their path too."
 
+[sub_resource type="Resource" id="PuffeLine_u1125_shieldbearer"]
+script = ExtResource("9_line")
+trigger = 3
+wave_number = 5
+text = "Tower shields! Bolts glance off everyone near them. Beams, bursts and fire go round a shield."
+mood = 2
+
 [resource]
 script = ExtResource("1_level")
 level_name = "Haystack Farm"
 story_text = "A big farmstead, its fields split by a long hedge. The humans fill the farm yard with wizards and priests, and giant eagles circle over the barns."
 starting_gold = 27.0
 waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtResource("w3"), ExtResource("w4"), ExtResource("w5"), ExtResource("w6"), ExtResource("w7")])
-puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_4")])
+puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_4"), SubResource("PuffeLine_u1125_shieldbearer")])
 first_wave_health = 1.9
 last_wave_health = 4.4
 health_scale = 1.184

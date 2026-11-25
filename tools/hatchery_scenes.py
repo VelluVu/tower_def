@@ -26,8 +26,8 @@ ART = "assets/art/units/building/puffe/puffe_hatchery"
 EVOLVE = "scenes/unit/evolve_tree/puffe_hatchery_evolve"
 GUARD_SCENE = "scenes/unit/building/hatchery/hatchery_guard.tscn"
 ELEMENTS = ms.ELEMENTS
-UNLOCK_LEVEL = 43
-LIST_ID = 10
+UNLOCK_LEVEL = 11
+LIST_ID = 6
 
 # the Hatchery's numbers (placeholders until playtests): three guards of 24 health clawing for 3 a second each
 PRICE = 7.0

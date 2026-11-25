@@ -22,8 +22,8 @@ ART = "assets/art/units/building/egg_bomb"
 EVOLVE = "scenes/unit/evolve_tree/egg_bomb_evolve"
 MORTAR_EVOLVE = "scenes/unit/evolve_tree/puffe_mortar_evolve"
 ELEMENTS = ms.ELEMENTS
-UNLOCK_LEVEL = 49
-LIST_ID = 11
+UNLOCK_LEVEL = 7
+LIST_ID = 5
 
 # the Egg Bomb's numbers (placeholders until playtests): about ten Bolter shots in one blast every 20 s
 PRICE = 8.0

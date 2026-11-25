@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/leaper_frog.tscn" id="e_leaper_frog"]
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/swbeefling.tscn" id="e_swbeefling"]
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/bloater.tscn" id="e_push_bloater"]
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/mosquito.tscn" id="e_u1125_mosquito"]
 
 [sub_resource type="Resource" id="Resource_group1"]
 script = ExtResource("2_group")
@@ -35,7 +36,15 @@ count = 4
 interval = 2.4
 delay = 6.0
 
+[sub_resource type="Resource" id="Resource_u1125_mosquito"]
+script = ExtResource("2_group")
+enemy_scene = ExtResource("e_u1125_mosquito")
+count = 10
+interval = 0.4
+delay = 6.0
+spawner_id = 1
+
 [resource]
 script = ExtResource("1_wave")
-spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_group3"), SubResource("Resource_push1")])
+spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_group3"), SubResource("Resource_push1"), SubResource("Resource_u1125_mosquito")])
 early_start_bonus = 2.0

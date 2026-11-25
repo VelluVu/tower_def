@@ -60,6 +60,22 @@ func find_path(from : Vector2, to : Vector2) -> PackedVector2Array:
 	return astar_grid.get_point_path(from_cell, to_cell, true)
 
 
+## find_path with every wall's cell weighing wall_weight instead of its building weight (the battering ram, the
+## wall crawler); the weights are put back before it returns.
+func find_path_with_wall_weight(from : Vector2, to : Vector2, wall_weight : float) -> PackedVector2Array:
+	var old_weights : Dictionary[Vector2i, float] = {}
+	for building in buildings:
+		if is_instance_valid(building) and building is Wall and building.is_placed:
+			var cell : Vector2i = world_position_to_grid(building.global_position)
+			if astar_grid.is_in_boundsv(cell) and not old_weights.has(cell):
+				old_weights[cell] = astar_grid.get_point_weight_scale(cell)
+				astar_grid.set_point_weight_scale(cell, wall_weight)
+	var path : PackedVector2Array = find_path(from, to)
+	for cell in old_weights:
+		astar_grid.set_point_weight_scale(cell, old_weights[cell])
+	return path
+
+
 #the shortest path from the nearest ring of open cells around a solid one that has a path reaching `to`
 func _find_path_off_solid(from_cell : Vector2i, to_cell : Vector2i) -> PackedVector2Array:
 	for radius in range(1, OFF_SOLID_SEARCH_CELLS + 1):

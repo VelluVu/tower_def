@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/revenant_knight.tscn" id="e_revenant_knight"]
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/rusted_ballista.tscn" id="e_rusted_ballista"]
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/scarab.tscn" id="e_scarab"]
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/bone_vulture.tscn" id="e_u1125_bone_vulture"]
 
 [sub_resource type="Resource" id="Resource_group1"]
 script = ExtResource("2_group")
@@ -37,7 +38,14 @@ interval = 1.8
 delay = 8.0
 spawner_id = 1
 
+[sub_resource type="Resource" id="Resource_u1125_bone_vulture"]
+script = ExtResource("2_group")
+enemy_scene = ExtResource("e_u1125_bone_vulture")
+count = 8
+interval = 0.6
+delay = 4.0
+
 [resource]
 script = ExtResource("1_wave")
-spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_group3"), SubResource("Resource_group4")])
+spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_group3"), SubResource("Resource_group4"), SubResource("Resource_u1125_bone_vulture")])
 early_start_bonus = 2.0

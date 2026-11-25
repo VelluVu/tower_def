@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dy3fvu5knga3y"
+path="res://.godot/imported/leech_mother.aseprite-f492e3e9a2922e3293185a3254190430.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/leech_mother/leech_mother.aseprite"
+dest_files=["res://.godot/imported/leech_mother.aseprite-f492e3e9a2922e3293185a3254190430.res"]
+
+[params]
+

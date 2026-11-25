@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/assault_dog.tscn" id="4_assault_dog"]
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/priest.tscn" id="5_priest"]
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/wizard.tscn" id="6_wizard"]
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/shieldbearer.tscn" id="e_u1125_shieldbearer"]
 
 [sub_resource type="Resource" id="Resource_group1"]
 script = ExtResource("2_group")
@@ -36,7 +37,14 @@ interval = 0.3
 delay = 14.0
 spawner_id = 2
 
+[sub_resource type="Resource" id="Resource_u1125_shieldbearer"]
+script = ExtResource("2_group")
+enemy_scene = ExtResource("e_u1125_shieldbearer")
+count = 2
+interval = 5.0
+delay = 4.0
+
 [resource]
 script = ExtResource("1_wave")
-spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_group3"), SubResource("Resource_group4")])
+spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_group3"), SubResource("Resource_group4"), SubResource("Resource_u1125_shieldbearer")])
 early_start_bonus = 3.0

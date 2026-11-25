@@ -36,7 +36,7 @@ func test_breather_basics(kit : TestKit) -> void:
 	kit.check(breather.evolve_tree.upgrade_data != null, "it has its upgrade data")
 	kit.check(breather.skill.projectile_scene != null, "it has its puffs")
 	var list : BuildingListElement = load("res://scenes/unit/building/buildings/puffe_breather.tres")
-	kit.check(list.unlock_level == 19 and not list.is_unlocked(18) and list.is_unlocked(19), "it unlocks on level 19")
+	kit.check(list.unlock_level == 14 and not list.is_unlocked(13) and list.is_unlocked(14), "it unlocks on level 14")
 
 
 func test_cone_hits_what_is_in_front(kit : TestKit) -> void:

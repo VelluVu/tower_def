@@ -27,13 +27,20 @@ trigger = 4
 wave_number = 2
 text = "When a golem breaks, two blobs of magma crawl on. Keep hitting."
 
+[sub_resource type="Resource" id="PuffeLine_u1125_ash_harpy"]
+script = ExtResource("9_line")
+trigger = 3
+wave_number = 4
+text = "Ash harpies! They dive at our towers with burning talons. Shoot them out of the sky!"
+mood = 3
+
 [resource]
 script = ExtResource("1_level")
 level_name = "Obsidian Pass"
 story_text = "Three narrow lanes of black glass climb the mountain. The castle at the top of the pass guards the way to the crater."
 starting_gold = 33.0
 waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtResource("w3"), ExtResource("w4"), ExtResource("w5"), ExtResource("w6")])
-puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3")])
+puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_u1125_ash_harpy")])
 first_wave_health = 1.8
 last_wave_health = 5.5
 health_scale = 1.678

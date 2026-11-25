@@ -28,13 +28,20 @@ wave_number = 7
 text = "Everything that lives in this bog is coming at once. Show them what drakelings are made of!"
 mood = 3
 
+[sub_resource type="Resource" id="PuffeLine_u1125_snapping_turtle"]
+script = ExtResource("9_line")
+trigger = 3
+wave_number = 5
+text = "Snapping turtles! A big hit makes them hide in their shells. Many small bites work better."
+mood = 0
+
 [resource]
 script = ExtResource("1_level")
 level_name = "Drowned Chapel"
 story_text = "Long ago the humans built a chapel here, and the swamp swallowed it. Its broken walls split the road of the swamp folk, and two hollows feed them now."
 starting_gold = 31.0
 waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtResource("w3"), ExtResource("w4"), ExtResource("w5"), ExtResource("w6"), ExtResource("w7")])
-puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3")])
+puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_u1125_snapping_turtle"), SubResource("PuffeLine_3")])
 first_wave_health = 1.6
 last_wave_health = 4.0
 health_scale = 1.161

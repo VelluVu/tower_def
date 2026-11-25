@@ -28,6 +28,7 @@ python tools/sprite/sprite.py build assets/art/units/enemy/giant_wasp/giant_wasp
 | `area_ground.py` | Caves, Swamp and Human ground sheets, recoloured from `ground_tiles.png` (same layout) |
 | `area_props.py` | cave decor, swamp ruins, human farm props, desert battlefield and volcano props |
 | `scorched_enemies.py` | the Scorched Lands roster (37-48): most drawn over an existing enemy's frames with a new palette and overlays, the rusted ballista and the Ashen Wyrm from parts; the lava glob and bone shard shots |
+| `units_2026_11_25_art.py` | the sixteen enemies of 2026-11-25 (cave shaman ... ash harpy): most over a parent's frames like `scorched_enemies.py` (it imports its helpers), the leech mother, sand wurm and battering ram from parts; the snapping turtle's SHELL tag |
 | `elites.py` | the elite version of every enemy that comes as an elite: golden armour with a travelling glint for the armoured humans, crowns, a halo, plumes, horns, gold markings, hems and ridges for the rest; `<name>_elite.png` keeps `<name>.png`'s cell layout |
 | `mortar_art.py` | the Mortar: the Bolter drakeling of each element (recoloured from the Bolter's element sheets) behind an iron mortar, its shells and blasts per element; T2/T3 by `tower_tiers.py ... mortar` |
 | `breather_art.py` | the Breather: the Bolter drakeling of each element with a bronze gorget, breathing in (START_ATTACK), the jaw open and blazing (ATTACK), smoke after (STOP_ATTACK); its breath puffs per element (10x10); T2/T3 by `tower_tiers.py ... breather` |

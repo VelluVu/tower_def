@@ -21,13 +21,20 @@ trigger = 3
 wave_number = 2
 text = "Sappers! They blow up whatever stands next to the road, walls too. Shoot them first."
 
+[sub_resource type="Resource" id="PuffeLine_u1125_battering_ram"]
+script = ExtResource("9_line")
+trigger = 3
+wave_number = 5
+text = "A battering ram! It doesn't walk the maze, it breaks through it. Towers along the walls!"
+mood = 2
+
 [resource]
 script = ExtResource("1_level")
 level_name = "Sapper's Trench"
 story_text = "The humans dig trenches across the fields and send sappers ahead with charges for our towers and walls."
 starting_gold = 28.0
 waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtResource("w3"), ExtResource("w4"), ExtResource("w5"), ExtResource("w6"), ExtResource("w7")])
-puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2")])
+puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_u1125_battering_ram")])
 first_wave_health = 1.7
 last_wave_health = 4.6
 health_scale = 0.953

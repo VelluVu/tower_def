@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://brpjju4xfrcvw"
+path="res://.godot/imported/cave_shaman_elite.aseprite-a469dd54b3c4073d8dc726a38e17c7d0.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/cave_shaman/cave_shaman_elite.aseprite"
+dest_files=["res://.godot/imported/cave_shaman_elite.aseprite-a469dd54b3c4073d8dc726a38e17c7d0.res"]
+
+[params]
+

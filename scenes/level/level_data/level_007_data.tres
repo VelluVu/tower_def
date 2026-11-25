@@ -40,13 +40,19 @@ trigger = 3
 wave_number = 6
 text = "Hold the crossing, and we can face whatever is down there."
 
+[sub_resource type="Resource" id="PuffeLine_egg_bomb"]
+script = ExtResource("9_line")
+trigger = 1
+text = "Meet the Egg Bomb! Not every egg is meant to hatch. Set it on the road, let the first one step on it, and stand well back."
+mood = 4
+
 [resource]
 script = ExtResource("1_level")
 level_name = "Echo Crossing"
 story_text = "The southern bridge lies smashed in the river, so the only way on runs past the miners' tunnels. Tunnels open on every side of this old crossing, and each of them echoes with something big moving below."
 starting_gold = 27.0
 waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtResource("w3"), ExtResource("w4"), ExtResource("w5"), ExtResource("w6")])
-puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_4"), SubResource("PuffeLine_5")])
+puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_egg_bomb"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_4"), SubResource("PuffeLine_5")])
 first_wave_health = 1.8
 last_wave_health = 3.4
 health_scale = 1.71

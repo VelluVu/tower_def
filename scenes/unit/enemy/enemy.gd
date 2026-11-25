@@ -52,6 +52,11 @@ const TURN_DOT_LIMIT : float = 0.5
 @export var can_wade : bool = false
 #the faction role's resistances (scenes/unit/enemy/resistances/); none = takes every hit in full
 @export var resistances : EnemyResistances = null
+## A Hatchery guard can stop it (the battering ram and the wall crawler go past).
+@export var can_be_held : bool = true
+## What a wall's cell costs on its path instead of the building weight (0 = the same as every building): the ram
+## would rather break through a wall than walk the maze, the wall crawler climbs them (WallClimber).
+@export var wall_path_weight : float = 0.0
 
 @export var skill : Skill :
 	get:
@@ -93,6 +98,8 @@ var is_burrowed : bool = false
 var is_concealed : bool = false
 #an ember cultist's ward: soaks the next hit (FireWard)
 var fire_ward : FireWard = null
+#walks over walls instead of attacking them (WallClimber sets it)
+var climbs_walls : bool = false
 #played while it moves; the Ashen Wyrm walks differently once it has landed
 var walk_animation : String = GlobalAnimationNames.WALK_ANIMATION
 #false for an enemy gone without a kill (a hatched egg sac): no gold or XP
@@ -183,6 +190,8 @@ func take_damage(damage_data : DamageData) -> void:
 		#a Spotter's mark: more of the marked element from every tower
 		if damage_data.source is Building:
 			damage_data.damage *= 1.0 + EnemyMarks.get_bonus(self, damage_data.damage_type)
+			#a shieldbearer's cover against bolts
+			damage_data.damage *= ShieldAura.get_factor(self, damage_data)
 
 	var health : Stat = stats.get_stat(Utils.StatType.Health)
 	var maxHealth : Stat = stats.get_stat(Utils.StatType.MaxHealth)
@@ -339,6 +348,8 @@ func path_to(from : Vector2, to : Vector2) -> void:
 		point_path = route.path
 		wade_exit_index = route.exit_index
 		wade_crossing = route.crossing
+	elif wall_path_weight > 0.0:
+		point_path = level.grid.find_path_with_wall_weight(from, to, wall_path_weight)
 	else:
 		point_path = level.grid.find_path(from, to)
 	current_waypoint_index = 0
@@ -446,7 +457,7 @@ func get_building_in_next_waypoint() -> Building:
 		return null
 
 	var building : Building = level.grid.get_building_from_world_position(level.grid.snap_position_to_grid(next_waypoint))
-	if building is Trap:
+	if building is Trap or (climbs_walls and building is Wall):
 		return null
 	return building
 
@@ -531,7 +542,7 @@ func _on_body_enter(body : Node) -> void:
 		return
 
 	if body.is_in_group(GroupNames.BUILDINGS):
-		if body is Trap:
+		if body is Trap or (climbs_walls and body is Wall):
 			return
 		collision_body = body
 

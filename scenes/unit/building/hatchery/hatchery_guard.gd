@@ -215,7 +215,7 @@ func _find_enemy() -> Enemy:
 func _can_take(candidate) -> bool:
 	if not is_instance_valid(candidate) or not candidate is Enemy or not EnemyQuery.is_hittable(candidate):
 		return false
-	if candidate.is_flying or candidate.is_wading:
+	if candidate.is_flying or candidate.is_wading or not candidate.can_be_held:
 		return false
 	return candidate.is_boss or not is_instance_valid(candidate.held_by)
 

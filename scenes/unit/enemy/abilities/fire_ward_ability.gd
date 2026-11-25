@@ -7,6 +7,8 @@ extends EnemyAbility
 ## In tiles.
 @export var ward_range : float = 3.0
 @export var targets : int = 4
+## The ward ring's colour (the cave shaman's stone skin is grey).
+@export var ward_color : Color = FireWard.COLOR
 
 var warded : Array[Enemy] = []
 
@@ -21,7 +23,7 @@ func _run() -> void:
 		return
 	for other in warded:
 		if is_instance_valid(other):
-			FireWard.give(other)
+			FireWard.give(other, ward_color)
 	_finish()
 
 

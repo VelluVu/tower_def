@@ -44,7 +44,7 @@ func test_egg_bomb_basics(kit : TestKit) -> void:
 	kit.check(TalentEffect.get_building_flag(egg) == TalentEffect.EGG_BOMB, "talents see it as an Egg Bomb, not a Leopard Trap")
 	kit.check_near(egg.get_blast_radius(), EggBomb.BLAST_RADIUS_TILES * Utils.TILE_SIZE, "a blast of 1.25 tiles")
 	var list : BuildingListElement = load("res://scenes/unit/building/buildings/egg_bomb.tres")
-	kit.check(list.unlock_level == 49 and not list.is_unlocked(48) and list.is_unlocked(49), "it unlocks on level 49")
+	kit.check(list.unlock_level == 7 and not list.is_unlocked(6) and list.is_unlocked(7), "it unlocks on level 7")
 
 
 func test_blast_falloff_and_flyers(kit : TestKit) -> void:

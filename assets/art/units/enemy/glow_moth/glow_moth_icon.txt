@@ -1,0 +1,27 @@
+# Source of assets/art/units/enemy/glow_moth/glow_moth_icon.png (python tools/gd.py icon <this> <out.png>); cropped from the sprite's first IDLE frame
+a = 1e2a30
+b = 6a8a8a
+c = 3e4a5a
+d = f0f0c0
+e = a8a868
+f = d8d890
+g = e6f07a
+h = 2a3a40
+i = b6d53c
+---
+................
+.............a..
+.............c..
+............ca..
+...d...e....ccca
+..df..fe...ccaa.
+b.dfdddfe.cacaa.
+b.fdgddge.caacca
+abfdddddecaaaaaa
+ab.fdhde.caaaa..
+aabfddfecaa.....
+aaafdfeeaa......
+..aiiiiha.......
+....ee.ee.......
+................
+................

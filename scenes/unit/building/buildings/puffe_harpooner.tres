@@ -9,5 +9,5 @@ script = ExtResource("1_script")
 scene = ExtResource("3_scene")
 id = 9
 icon = ExtResource("2_icon")
-unlock_level = 37
+unlock_level = 19
 description = "Harpoons flyers and drags them down into the maze. Every harpoon chains its target to the tower for a while and slows it hard."

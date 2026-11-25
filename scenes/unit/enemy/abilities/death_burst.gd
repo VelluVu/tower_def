@@ -8,6 +8,8 @@ extends Node
 @export var radius : float = 1.5
 @export var damage : float = 4.0
 @export var damage_type : Utils.DamageType = Utils.DamageType.Poison
+## Seconds every tower in reach stops attacking (the mummy priest's curse); 0 = none.
+@export var silence_time : float = 0.0
 
 @onready var enemy : Enemy = get_parent()
 
@@ -26,8 +28,11 @@ func _on_enemy_destroyed(destroyed : Enemy) -> void:
 			continue
 		if building.global_position.distance_to(enemy.global_position) > reach:
 			continue
-		var hit : DamageData = DamageData.new()
-		hit.damage_type = damage_type
-		hit.damage = damage
-		building.take_damage(hit)
-		hit.free()
+		if damage > 0.0:
+			var hit : DamageData = DamageData.new()
+			hit.damage_type = damage_type
+			hit.damage = damage
+			building.take_damage(hit)
+			hit.free()
+		if silence_time > 0.0 and is_instance_valid(building) and building is Tower and not building.is_dead:
+			building.silence(silence_time)

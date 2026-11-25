@@ -19,6 +19,9 @@ KIND_OF_ENEMY = {
     "swampling": "hollow", "fastswampling": "hollow", "leechling": "hollow",
     "batling": "roost", "swarmling": "roost", "giant_wasp": "roost",
     "burrower": "cave", "crystal_brute": "den", "leaper_frog": "hollow", "bloater": "den",
+    # 2026-11-25 (tools/units_2026_11_25.py)
+    "cave_shaman": "cave", "wall_crawler": "cave", "spore_carrier": "cave", "glow_moth": "roost",
+    "bog_witch": "hollow", "snapping_turtle": "den", "mosquito": "roost", "leech_mother": "hollow",
 }
 SPAWN_KIND = re.compile(r'spawn_points/spawn_(\w+)\.tscn')
 # a boss lair's own spawn art stands in for a kind: the Broodmother's nest is a den, the Hydra's pool a hollow

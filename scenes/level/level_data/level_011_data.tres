@@ -40,13 +40,19 @@ wave_number = 5
 text = "One last push. Hold, and the road north to the great cave is ours."
 mood = 1
 
+[sub_resource type="Resource" id="PuffeLine_hatchery"]
+script = ExtResource("9_line")
+trigger = 1
+text = "Meet the Hatchery! Its hatchlings are raised on beetle mash and vitamins. Put them on the bridge and they will hold it, one human each."
+mood = 1
+
 [resource]
 script = ExtResource("1_level")
 level_name = "Barricade Bridge"
 story_text = "The humans have barricaded the middle bridge, the only way north to the swamp. The castle on this bank is all that stands between them and the eggs."
 starting_gold = 23.0
 waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtResource("w3"), ExtResource("w4"), ExtResource("w5")])
-puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_4"), SubResource("PuffeLine_5")])
+puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_hatchery"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_4"), SubResource("PuffeLine_5")])
 first_wave_health = 2.2
 last_wave_health = 3.6
 health_scale = 1.45

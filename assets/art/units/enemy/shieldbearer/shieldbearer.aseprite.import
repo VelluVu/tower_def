@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://ct2npno4hk80v"
+path="res://.godot/imported/shieldbearer.aseprite-c149a48993e4f0439e4394b2ef3b9ce3.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/shieldbearer/shieldbearer.aseprite"
+dest_files=["res://.godot/imported/shieldbearer.aseprite-c149a48993e4f0439e4394b2ef3b9ce3.res"]
+
+[params]
+

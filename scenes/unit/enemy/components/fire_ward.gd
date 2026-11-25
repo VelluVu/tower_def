@@ -12,14 +12,17 @@ const RADIUS : float = 7.0
 
 var enemy : Enemy = null
 var timer : CustomTimer = null
+#the ring's colour: flame for the cultist, stone grey for the cave shaman's stone skin
+var color : Color = COLOR
 
 
 ## Wards the enemy unless it already has one; true when it got one.
-static func give(target : Enemy) -> bool:
+static func give(target : Enemy, ring_color : Color = COLOR) -> bool:
 	if target == null or target.fire_ward != null or target.is_dead or target.is_deactivated:
 		return false
 	var ward : FireWard = FireWard.new()
 	ward.name = NAME
+	ward.color = ring_color
 	target.add_child(ward)
 	return true
 
@@ -53,4 +56,4 @@ func _end() -> void:
 
 #a thin flame ring around the body
 func _draw() -> void:
-	draw_arc(Vector2.ZERO, RADIUS, 0.0, TAU, 16, COLOR, 1.0)
+	draw_arc(Vector2.ZERO, RADIUS, 0.0, TAU, 16, color, 1.0)

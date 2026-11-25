@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://7rjb1wvgh2bh"
+path="res://.godot/imported/glow_moth_elite.aseprite-36cd890b209f8fc86df566d5ee584448.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/glow_moth/glow_moth_elite.aseprite"
+dest_files=["res://.godot/imported/glow_moth_elite.aseprite-36cd890b209f8fc86df566d5ee584448.res"]
+
+[params]
+

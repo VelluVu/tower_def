@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bgrdq0yrmqn0f"
+path="res://.godot/imported/spore_carrier_elite.aseprite-7cfd75592cea8d467829738ac858f3d5.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/spore_carrier/spore_carrier_elite.aseprite"
+dest_files=["res://.godot/imported/spore_carrier_elite.aseprite-7cfd75592cea8d467829738ac858f3d5.res"]
+
+[params]
+

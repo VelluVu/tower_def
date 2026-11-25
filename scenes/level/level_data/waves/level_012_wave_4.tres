@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bj8fmaeegual3" path="res://scenes/unit/enemy/enemies/beefling.tscn" id="e_beefling"]
 [ext_resource type="PackedScene" uid="uid://dla7not0kpg61" path="res://scenes/unit/enemy/enemies/fastling.tscn" id="e_fastling"]
 [ext_resource type="PackedScene" uid="uid://bljkhytt20h3f" path="res://scenes/unit/enemy/enemies/weakling.tscn" id="e_weakling"]
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/cave_shaman.tscn" id="e_u1125_cave_shaman"]
 
 [sub_resource type="Resource" id="Resource_group1"]
 script = ExtResource("2_group")
@@ -27,7 +28,14 @@ count = 20
 interval = 1.6
 delay = 6.0
 
+[sub_resource type="Resource" id="Resource_u1125_cave_shaman"]
+script = ExtResource("2_group")
+enemy_scene = ExtResource("e_u1125_cave_shaman")
+count = 3
+interval = 5.0
+delay = 5.0
+
 [resource]
 script = ExtResource("1_wave")
-spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_group3")])
+spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_group3"), SubResource("Resource_u1125_cave_shaman")])
 early_start_bonus = 2.0

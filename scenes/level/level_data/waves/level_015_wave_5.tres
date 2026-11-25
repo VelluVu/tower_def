@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/plaguepig.tscn" id="4_plaguepig"]
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/swampling.tscn" id="5_swampling"]
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/leechling.tscn" id="e_push_leechling"]
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/snapping_turtle.tscn" id="e_u1125_snapping_turtle"]
 
 [sub_resource type="Resource" id="Resource_group1"]
 script = ExtResource("2_group")
@@ -34,7 +35,15 @@ count = 15
 interval = 0.3
 delay = 4.0
 
+[sub_resource type="Resource" id="Resource_u1125_snapping_turtle"]
+script = ExtResource("2_group")
+enemy_scene = ExtResource("e_u1125_snapping_turtle")
+count = 3
+interval = 4.0
+delay = 6.0
+spawner_id = 1
+
 [resource]
 script = ExtResource("1_wave")
-spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_group3"), SubResource("Resource_push1")])
+spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_group3"), SubResource("Resource_push1"), SubResource("Resource_u1125_snapping_turtle")])
 early_start_bonus = 3.0

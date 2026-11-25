@@ -7,6 +7,8 @@ extends Node
 
 @export_range(0.1, 1.0) var health_share : float = 0.6
 @export var put_out_by_area : bool = false
+## The copy comes back on the ground and walks the maze (the bone vulture: its wings are gone, the bones go on).
+@export var lands : bool = false
 
 @onready var enemy : Enemy = get_parent()
 
@@ -50,3 +52,5 @@ func _on_enemy_destroyed(destroyed : Enemy) -> void:
 	for child in copy.get_children():
 		if child is Rebirth:
 			child.is_used = true
+	if lands:
+		LandAbility.land(copy)

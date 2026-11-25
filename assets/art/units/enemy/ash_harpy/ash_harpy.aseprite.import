@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dvw2jqak63vfi"
+path="res://.godot/imported/ash_harpy.aseprite-5a29ecd8b2348a69b0a713a406bea1bc.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/ash_harpy/ash_harpy.aseprite"
+dest_files=["res://.godot/imported/ash_harpy.aseprite-5a29ecd8b2348a69b0a713a406bea1bc.res"]
+
+[params]
+

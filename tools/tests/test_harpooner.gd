@@ -37,7 +37,7 @@ func test_harpooner_basics(kit : TestKit) -> void:
 	kit.check_near(harpooner.stats.get_stat_value(Utils.StatType.TetherTime), 2.0, "a 2 s tether")
 	kit.check_near(harpooner.stats.get_stat_value(Utils.StatType.TetherSlow), 0.5, "at half speed")
 	var list : BuildingListElement = load("res://scenes/unit/building/buildings/puffe_harpooner.tres")
-	kit.check(list.unlock_level == 37 and not list.is_unlocked(36) and list.is_unlocked(37), "it unlocks on level 37")
+	kit.check(list.unlock_level == 19 and not list.is_unlocked(18) and list.is_unlocked(19), "it unlocks on level 19")
 
 
 func test_flyers_tactic(kit : TestKit) -> void:

@@ -25,8 +25,8 @@ PROJ_ART = "assets/art/projectile"
 EVOLVE = "scenes/unit/evolve_tree/puffe_spotter_evolve"
 PROJ = "scenes/unit/skills/projectiles"
 ELEMENTS = ms.ELEMENTS
-UNLOCK_LEVEL = 31
-LIST_ID = 8
+UNLOCK_LEVEL = 23
+LIST_ID = 10
 ELITE_TACTIC = 7  # Utils.TargetTactic.Elite
 
 # the Spotter's numbers (placeholders until playtests): a slow, heavy, long-range single shot

@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://d4ht0bm4nrsj6"
+path="res://.godot/imported/snapping_turtle.aseprite-47265efe6cdae8c9a87625aa34355523.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/snapping_turtle/snapping_turtle.aseprite"
+dest_files=["res://.godot/imported/snapping_turtle.aseprite-47265efe6cdae8c9a87625aa34355523.res"]
+
+[params]
+

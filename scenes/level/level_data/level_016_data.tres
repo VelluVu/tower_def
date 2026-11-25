@@ -21,13 +21,26 @@ wave_number = 1
 text = "Watch the stones: the waders take the short way. Towers by the far shore!"
 mood = 3
 
+[sub_resource type="Resource" id="PuffeLine_mortar"]
+script = ExtResource("9_line")
+trigger = 1
+text = "A new drakeling joins us: the Mortar! Its shells burst on a whole crowd of leeches, but it can't hit what's at its feet, or anything flying."
+mood = 1
+
+[sub_resource type="Resource" id="PuffeLine_u1125_leech_mother"]
+script = ExtResource("9_line")
+trigger = 3
+wave_number = 4
+text = "That fat leech drops babies as she crawls. Get her before the fen fills up!"
+mood = 2
+
 [resource]
 script = ExtResource("1_level")
 level_name = "Leech Fen"
 story_text = "Deep channels cut the fen. The road goes round them, but the toads and leeches know the old stepping stones."
 starting_gold = 26.0
 waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtResource("w3"), ExtResource("w4"), ExtResource("w5"), ExtResource("w6")])
-puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2")])
+puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_mortar"), SubResource("PuffeLine_2"), SubResource("PuffeLine_u1125_leech_mother")])
 first_wave_health = 1.3
 last_wave_health = 3.6
 health_scale = 1.166

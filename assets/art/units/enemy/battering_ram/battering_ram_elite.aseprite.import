@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://b2b4pxn42bhlq"
+path="res://.godot/imported/battering_ram_elite.aseprite-77496d0015087b437e857745112a9e89.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/battering_ram/battering_ram_elite.aseprite"
+dest_files=["res://.godot/imported/battering_ram_elite.aseprite-77496d0015087b437e857745112a9e89.res"]
+
+[params]
+

@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dla7not0kpg61" path="res://scenes/unit/enemy/enemies/fastling.tscn" id="e_fastling"]
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/swarmling.tscn" id="e_swarmling"]
 [ext_resource type="PackedScene" uid="uid://bljkhytt20h3f" path="res://scenes/unit/enemy/enemies/weakling.tscn" id="e_weakling"]
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/spore_carrier.tscn" id="e_u1125_spore_carrier"]
 
 [sub_resource type="Resource" id="Resource_group1"]
 script = ExtResource("2_group")
@@ -54,7 +55,14 @@ interval = 0.3
 delay = 4.0
 spawner_id = 2
 
+[sub_resource type="Resource" id="Resource_u1125_spore_carrier"]
+script = ExtResource("2_group")
+enemy_scene = ExtResource("e_u1125_spore_carrier")
+count = 5
+interval = 2.5
+delay = 6.0
+
 [resource]
 script = ExtResource("1_wave")
-spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_group3"), SubResource("Resource_group4"), SubResource("Resource_group5"), SubResource("Resource_push1")])
+spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_group3"), SubResource("Resource_group4"), SubResource("Resource_group5"), SubResource("Resource_push1"), SubResource("Resource_u1125_spore_carrier")])
 early_start_bonus = 3.0

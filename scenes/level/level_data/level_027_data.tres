@@ -35,6 +35,12 @@ wave_number = 7
 text = "The ford is ours. Their camp cannot be far now."
 mood = 1
 
+[sub_resource type="Resource" id="PuffeLine_buffer"]
+script = ExtResource("9_line")
+trigger = 1
+text = "Meet the Buffer! It never bites, it drums. Every drakeling near it fights harder, and its Physical drum cracks the knights' armour."
+mood = 1
+
 [resource]
 script = ExtResource("1_level")
 hard_mode = ExtResource("hard_mode")
@@ -42,7 +48,7 @@ level_name = "Millstream Ford"
 story_text = "A mill stream runs across the fields, and the humans must cross it at one of its two fords. Their cavalry rides out for the first time."
 starting_gold = 27.0
 waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtResource("w3"), ExtResource("w4"), ExtResource("w5"), ExtResource("w6"), ExtResource("w7")])
-puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_4")])
+puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_buffer"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_4")])
 first_wave_health = 1.9
 last_wave_health = 4.6
 health_scale = 1.954

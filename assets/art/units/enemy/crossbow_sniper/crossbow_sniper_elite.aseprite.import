@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://myutjm2wem2e"
+path="res://.godot/imported/crossbow_sniper_elite.aseprite-716daa4ad733f010a93155967c807083.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/crossbow_sniper/crossbow_sniper_elite.aseprite"
+dest_files=["res://.godot/imported/crossbow_sniper_elite.aseprite-716daa4ad733f010a93155967c807083.res"]
+
+[params]
+

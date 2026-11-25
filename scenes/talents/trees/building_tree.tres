@@ -4,200 +4,6 @@
 [ext_resource type="Script" uid="uid://dwes3ugk3ahrk" path="res://scenes/talents/talent_node.gd" id="2_node"]
 [ext_resource type="Script" uid="uid://mwbaxqyyxvt2" path="res://scenes/talents/talent_effect.gd" id="3_effect"]
 
-[sub_resource type="Resource" id="Effect_egg_bomb_nesting_instinct_0"]
-script = ExtResource("3_effect")
-buildings = 2048
-elements = 1
-stat_type = 6
-modify_type = 0
-value_per_rank = 0.1
-
-[sub_resource type="Resource" id="Effect_egg_bomb_big_egg_0"]
-script = ExtResource("3_effect")
-buildings = 2048
-elements = 1
-stat_type = 7
-modify_type = 0
-value_per_rank = 0.05
-
-[sub_resource type="Resource" id="Effect_egg_bomb_shrapnel_shell_0"]
-script = ExtResource("3_effect")
-buildings = 2048
-elements = 1
-stat_type = 18
-modify_type = 0
-value_per_rank = 0.1
-
-[sub_resource type="Resource" id="Effect_egg_bomb_wide_blast_0"]
-script = ExtResource("3_effect")
-buildings = 2048
-elements = 1
-stat_type = 20
-modify_type = 0
-value_per_rank = 0.1
-
-[sub_resource type="Resource" id="Effect_egg_bomb_quick_hatch_0"]
-script = ExtResource("3_effect")
-buildings = 2048
-elements = 1
-stat_type = 6
-modify_type = 0
-value_per_rank = 0.1
-
-[sub_resource type="Resource" id="Effect_egg_bomb_hard_shell_0"]
-script = ExtResource("3_effect")
-buildings = 2048
-elements = 1
-modify_type = 1
-value_per_rank = 0.08
-
-[sub_resource type="Resource" id="TalentEffect_unlock_spotter_t3"]
-script = ExtResource("3_effect")
-kind = 2
-buildings = 256
-elements = 1
-
-[sub_resource type="Resource" id="TalentEffect_unlock_spotter_t2"]
-script = ExtResource("3_effect")
-kind = 2
-buildings = 256
-elements = 1
-
-[sub_resource type="Resource" id="TalentEffect_unlock_phys_t3"]
-script = ExtResource("3_effect")
-kind = 2
-buildings = 7
-elements = 1
-
-[sub_resource type="Resource" id="TalentEffect_unlock_phys_t2"]
-script = ExtResource("3_effect")
-kind = 2
-buildings = 7
-elements = 1
-
-[sub_resource type="Resource" id="TalentEffect_unlock_mortar_t3"]
-script = ExtResource("3_effect")
-kind = 2
-buildings = 32
-elements = 1
-
-[sub_resource type="Resource" id="TalentEffect_unlock_mortar_t2"]
-script = ExtResource("3_effect")
-kind = 2
-buildings = 32
-elements = 1
-
-[sub_resource type="Resource" id="TalentEffect_unlock_leopard_t3"]
-script = ExtResource("3_effect")
-kind = 2
-buildings = 8
-elements = 1
-
-[sub_resource type="Resource" id="TalentEffect_unlock_leopard_t2"]
-script = ExtResource("3_effect")
-kind = 2
-buildings = 8
-elements = 1
-
-[sub_resource type="Resource" id="TalentEffect_unlock_hatchery_t3"]
-script = ExtResource("3_effect")
-kind = 2
-buildings = 1024
-elements = 1
-
-[sub_resource type="Resource" id="TalentEffect_unlock_hatchery_t2"]
-script = ExtResource("3_effect")
-kind = 2
-buildings = 1024
-elements = 1
-
-[sub_resource type="Resource" id="TalentEffect_unlock_harpooner_t3"]
-script = ExtResource("3_effect")
-kind = 2
-buildings = 512
-elements = 1
-
-[sub_resource type="Resource" id="TalentEffect_unlock_harpooner_t2"]
-script = ExtResource("3_effect")
-kind = 2
-buildings = 512
-elements = 1
-
-[sub_resource type="Resource" id="TalentEffect_unlock_egg_bomb_t3"]
-script = ExtResource("3_effect")
-kind = 2
-buildings = 2048
-elements = 1
-
-[sub_resource type="Resource" id="TalentEffect_unlock_egg_bomb_t2"]
-script = ExtResource("3_effect")
-kind = 2
-buildings = 2048
-elements = 1
-
-[sub_resource type="Resource" id="TalentEffect_unlock_buffer_t3"]
-script = ExtResource("3_effect")
-kind = 2
-buildings = 64
-elements = 1
-
-[sub_resource type="Resource" id="TalentEffect_unlock_buffer_t2"]
-script = ExtResource("3_effect")
-kind = 2
-buildings = 64
-elements = 1
-
-[sub_resource type="Resource" id="TalentEffect_unlock_breather_t3"]
-script = ExtResource("3_effect")
-kind = 2
-buildings = 128
-elements = 1
-
-[sub_resource type="Resource" id="TalentEffect_unlock_breather_t2"]
-script = ExtResource("3_effect")
-kind = 2
-buildings = 128
-elements = 1
-
-[sub_resource type="Resource" id="Effect_hatchery_sharp_claws_0"]
-script = ExtResource("3_effect")
-buildings = 1024
-elements = 1
-stat_type = 7
-modify_type = 0
-value_per_rank = 0.04
-
-[sub_resource type="Resource" id="Effect_hatchery_big_clutch_0"]
-script = ExtResource("3_effect")
-buildings = 1024
-elements = 1
-stat_type = 37
-modify_type = 0
-value_per_rank = 1.0
-
-[sub_resource type="Resource" id="Effect_hatchery_pumped_up_0"]
-script = ExtResource("3_effect")
-buildings = 1024
-elements = 1
-stat_type = 6
-modify_type = 0
-value_per_rank = 0.04
-
-[sub_resource type="Resource" id="Effect_hatchery_thick_scales_0"]
-script = ExtResource("3_effect")
-buildings = 1024
-elements = 1
-stat_type = 36
-modify_type = 1
-value_per_rank = 0.15
-
-[sub_resource type="Resource" id="Effect_hatchery_vitamin_feed_0"]
-script = ExtResource("3_effect")
-buildings = 1024
-elements = 1
-modify_type = 1
-value_per_rank = 0.08
-
 [sub_resource type="Resource" id="Effect_war_chest_0"]
 script = ExtResource("3_effect")
 kind = 1
@@ -289,6 +95,12 @@ color = Color(0.91, 0.933, 0.949, 1)
 links = Array[StringName]([&"piercing"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_long_sight_0")])
 
+[sub_resource type="Resource" id="TalentEffect_unlock_phys_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 7
+elements = 1
+
 [sub_resource type="Resource" id="Node_phys_t2"]
 script = ExtResource("2_node")
 id = &"phys_t2"
@@ -337,6 +149,12 @@ position = Vector2(3.3, 9)
 color = Color(0.91, 0.933, 0.949, 1)
 links = Array[StringName]([&"phys_t3"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_swift_wings_0")])
+
+[sub_resource type="Resource" id="TalentEffect_unlock_phys_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 7
+elements = 1
 
 [sub_resource type="Resource" id="Node_phys_t3"]
 script = ExtResource("2_node")
@@ -698,6 +516,12 @@ kind = 3
 position = Vector2(3.7, 17.2)
 color = Color(0.878, 0.541, 0.235, 1)
 
+[sub_resource type="Resource" id="TalentEffect_unlock_leopard_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 8
+elements = 1
+
 [sub_resource type="Resource" id="Node_leopard_t2"]
 script = ExtResource("2_node")
 id = &"leopard_t2"
@@ -738,6 +562,12 @@ description = "Cub bleed ticks 15% faster"
 max_rank = 3
 position = Vector2(3.3, 18.7)
 color = Color(0.878, 0.541, 0.235, 1)
+
+[sub_resource type="Resource" id="TalentEffect_unlock_leopard_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 8
+elements = 1
 
 [sub_resource type="Resource" id="Node_leopard_t3"]
 script = ExtResource("2_node")
@@ -1236,6 +1066,12 @@ color = Color(0.959, 0.975, 1, 1)
 links = Array[StringName]([&"spotter_t2"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_spotter_spotter_s_perch_0")])
 
+[sub_resource type="Resource" id="TalentEffect_unlock_spotter_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 256
+elements = 1
+
 [sub_resource type="Resource" id="Node_spotter_t2"]
 script = ExtResource("2_node")
 id = &"spotter_t2"
@@ -1343,6 +1179,12 @@ color = Color(0.959, 0.975, 1, 1)
 links = Array[StringName]([&"spotter_t3"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_spotter_heavy_bolt_0")])
 
+[sub_resource type="Resource" id="TalentEffect_unlock_spotter_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 256
+elements = 1
+
 [sub_resource type="Resource" id="Node_spotter_t3"]
 script = ExtResource("2_node")
 id = &"spotter_t3"
@@ -1410,6 +1252,12 @@ position = Vector2(-7, 22.6)
 color = Color(0.959, 0.966, 1, 1)
 links = Array[StringName]([&"mortar_t2"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_mortar_long_lob_0")])
+
+[sub_resource type="Resource" id="TalentEffect_unlock_mortar_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 32
+elements = 1
 
 [sub_resource type="Resource" id="Node_mortar_t2"]
 script = ExtResource("2_node")
@@ -1509,6 +1357,12 @@ color = Color(0.959, 0.966, 1, 1)
 links = Array[StringName]([&"mortar_t3"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_mortar_heavy_shells_0")])
 
+[sub_resource type="Resource" id="TalentEffect_unlock_mortar_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 32
+elements = 1
+
 [sub_resource type="Resource" id="Node_mortar_t3"]
 script = ExtResource("2_node")
 id = &"mortar_t3"
@@ -1567,6 +1421,12 @@ position = Vector2(-10.5, 23.6)
 color = Color(0.961, 0.959, 1, 1)
 links = Array[StringName]([&"breather_t2"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_breather_deep_lungs_0")])
+
+[sub_resource type="Resource" id="TalentEffect_unlock_breather_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 128
+elements = 1
 
 [sub_resource type="Resource" id="Node_breather_t2"]
 script = ExtResource("2_node")
@@ -1675,6 +1535,12 @@ color = Color(0.961, 0.959, 1, 1)
 links = Array[StringName]([&"breather_t3"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_breather_rending_roar_0")])
 
+[sub_resource type="Resource" id="TalentEffect_unlock_breather_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 128
+elements = 1
+
 [sub_resource type="Resource" id="Node_breather_t3"]
 script = ExtResource("2_node")
 id = &"breather_t3"
@@ -1697,6 +1563,13 @@ kind = 3
 position = Vector2(-10.5, 10.4)
 color = Color(0.961, 0.959, 1, 1)
 
+[sub_resource type="Resource" id="Effect_egg_bomb_hard_shell_0"]
+script = ExtResource("3_effect")
+buildings = 2048
+elements = 1
+modify_type = 1
+value_per_rank = 0.08
+
 [sub_resource type="Resource" id="Node_egg_bomb_hard_shell"]
 script = ExtResource("2_node")
 id = &"egg_bomb_hard_shell"
@@ -1707,6 +1580,14 @@ position = Vector2(23.5, 23.8)
 color = Color(0.948, 0.73, 0.254, 1)
 links = Array[StringName]([&"egg_bomb_quick_hatch"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_egg_bomb_hard_shell_0")])
+
+[sub_resource type="Resource" id="Effect_egg_bomb_quick_hatch_0"]
+script = ExtResource("3_effect")
+buildings = 2048
+elements = 1
+stat_type = 6
+modify_type = 0
+value_per_rank = 0.1
 
 [sub_resource type="Resource" id="Node_egg_bomb_quick_hatch"]
 script = ExtResource("2_node")
@@ -1719,6 +1600,12 @@ color = Color(0.948, 0.73, 0.254, 1)
 links = Array[StringName]([&"egg_bomb_t2"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_egg_bomb_quick_hatch_0")])
 
+[sub_resource type="Resource" id="TalentEffect_unlock_egg_bomb_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 2048
+elements = 1
+
 [sub_resource type="Resource" id="Node_egg_bomb_t2"]
 script = ExtResource("2_node")
 id = &"egg_bomb_t2"
@@ -1729,6 +1616,14 @@ position = Vector2(23.5, 19.4)
 color = Color(0.948, 0.73, 0.254, 1)
 links = Array[StringName]([&"egg_bomb_wide_blast", &"egg_bomb_short_fuse"])
 effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_egg_bomb_t2")])
+
+[sub_resource type="Resource" id="Effect_egg_bomb_wide_blast_0"]
+script = ExtResource("3_effect")
+buildings = 2048
+elements = 1
+stat_type = 20
+modify_type = 0
+value_per_rank = 0.1
 
 [sub_resource type="Resource" id="Node_egg_bomb_wide_blast"]
 script = ExtResource("2_node")
@@ -1741,6 +1636,14 @@ color = Color(0.948, 0.73, 0.254, 1)
 links = Array[StringName]([&"egg_bomb_shrapnel_shell"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_egg_bomb_wide_blast_0")])
 
+[sub_resource type="Resource" id="Effect_egg_bomb_shrapnel_shell_0"]
+script = ExtResource("3_effect")
+buildings = 2048
+elements = 1
+stat_type = 18
+modify_type = 0
+value_per_rank = 0.1
+
 [sub_resource type="Resource" id="Node_egg_bomb_shrapnel_shell"]
 script = ExtResource("2_node")
 id = &"egg_bomb_shrapnel_shell"
@@ -1751,6 +1654,14 @@ position = Vector2(22.6, 15)
 color = Color(0.948, 0.73, 0.254, 1)
 links = Array[StringName]([&"egg_bomb_big_egg"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_egg_bomb_shrapnel_shell_0")])
+
+[sub_resource type="Resource" id="Effect_egg_bomb_big_egg_0"]
+script = ExtResource("3_effect")
+buildings = 2048
+elements = 1
+stat_type = 7
+modify_type = 0
+value_per_rank = 0.05
 
 [sub_resource type="Resource" id="Node_egg_bomb_big_egg"]
 script = ExtResource("2_node")
@@ -1783,6 +1694,14 @@ position = Vector2(24.4, 15)
 color = Color(0.948, 0.73, 0.254, 1)
 links = Array[StringName]([&"egg_bomb_nesting_instinct"])
 
+[sub_resource type="Resource" id="Effect_egg_bomb_nesting_instinct_0"]
+script = ExtResource("3_effect")
+buildings = 2048
+elements = 1
+stat_type = 6
+modify_type = 0
+value_per_rank = 0.1
+
 [sub_resource type="Resource" id="Node_egg_bomb_nesting_instinct"]
 script = ExtResource("2_node")
 id = &"egg_bomb_nesting_instinct"
@@ -1793,6 +1712,12 @@ position = Vector2(24.4, 12.8)
 color = Color(0.948, 0.73, 0.254, 1)
 links = Array[StringName]([&"egg_bomb_t3"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_egg_bomb_nesting_instinct_0")])
+
+[sub_resource type="Resource" id="TalentEffect_unlock_egg_bomb_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 2048
+elements = 1
 
 [sub_resource type="Resource" id="Node_egg_bomb_t3"]
 script = ExtResource("2_node")
@@ -1852,6 +1777,12 @@ position = Vector2(27, 22.6)
 color = Color(0.948, 0.876, 0.254, 1)
 links = Array[StringName]([&"harpooner_t2"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_harpooner_long_chain_0")])
+
+[sub_resource type="Resource" id="TalentEffect_unlock_harpooner_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 512
+elements = 1
 
 [sub_resource type="Resource" id="Node_harpooner_t2"]
 script = ExtResource("2_node")
@@ -1970,6 +1901,12 @@ color = Color(0.948, 0.876, 0.254, 1)
 links = Array[StringName]([&"harpooner_t3"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_harpooner_heavy_harpoon_0")])
 
+[sub_resource type="Resource" id="TalentEffect_unlock_harpooner_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 512
+elements = 1
+
 [sub_resource type="Resource" id="Node_harpooner_t3"]
 script = ExtResource("2_node")
 id = &"harpooner_t3"
@@ -1992,6 +1929,13 @@ kind = 3
 position = Vector2(27, 9.4)
 color = Color(0.948, 0.876, 0.254, 1)
 
+[sub_resource type="Resource" id="Effect_hatchery_vitamin_feed_0"]
+script = ExtResource("3_effect")
+buildings = 1024
+elements = 1
+modify_type = 1
+value_per_rank = 0.08
+
 [sub_resource type="Resource" id="Node_hatchery_vitamin_feed"]
 script = ExtResource("2_node")
 id = &"hatchery_vitamin_feed"
@@ -2013,6 +1957,12 @@ position = Vector2(30.5, 23.6)
 color = Color(0.875, 0.948, 0.254, 1)
 links = Array[StringName]([&"hatchery_t2"])
 
+[sub_resource type="Resource" id="TalentEffect_unlock_hatchery_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 1024
+elements = 1
+
 [sub_resource type="Resource" id="Node_hatchery_t2"]
 script = ExtResource("2_node")
 id = &"hatchery_t2"
@@ -2023,6 +1973,14 @@ position = Vector2(30.5, 21.4)
 color = Color(0.875, 0.948, 0.254, 1)
 links = Array[StringName]([&"hatchery_thick_scales", &"hatchery_big_clutch"])
 effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_hatchery_t2")])
+
+[sub_resource type="Resource" id="Effect_hatchery_thick_scales_0"]
+script = ExtResource("3_effect")
+buildings = 1024
+elements = 1
+stat_type = 36
+modify_type = 1
+value_per_rank = 0.15
 
 [sub_resource type="Resource" id="Node_hatchery_thick_scales"]
 script = ExtResource("2_node")
@@ -2045,6 +2003,14 @@ position = Vector2(29.6, 17)
 color = Color(0.875, 0.948, 0.254, 1)
 links = Array[StringName]([&"hatchery_pumped_up"])
 
+[sub_resource type="Resource" id="Effect_hatchery_pumped_up_0"]
+script = ExtResource("3_effect")
+buildings = 1024
+elements = 1
+stat_type = 6
+modify_type = 0
+value_per_rank = 0.04
+
 [sub_resource type="Resource" id="Node_hatchery_pumped_up"]
 script = ExtResource("2_node")
 id = &"hatchery_pumped_up"
@@ -2055,6 +2021,14 @@ position = Vector2(29.6, 14.8)
 color = Color(0.875, 0.948, 0.254, 1)
 links = Array[StringName]([&"hatchery_t3"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_hatchery_pumped_up_0")])
+
+[sub_resource type="Resource" id="Effect_hatchery_big_clutch_0"]
+script = ExtResource("3_effect")
+buildings = 1024
+elements = 1
+stat_type = 37
+modify_type = 0
+value_per_rank = 1.0
 
 [sub_resource type="Resource" id="Node_hatchery_big_clutch"]
 script = ExtResource("2_node")
@@ -2076,6 +2050,14 @@ position = Vector2(31.4, 17)
 color = Color(0.875, 0.948, 0.254, 1)
 links = Array[StringName]([&"hatchery_sharp_claws"])
 
+[sub_resource type="Resource" id="Effect_hatchery_sharp_claws_0"]
+script = ExtResource("3_effect")
+buildings = 1024
+elements = 1
+stat_type = 7
+modify_type = 0
+value_per_rank = 0.04
+
 [sub_resource type="Resource" id="Node_hatchery_sharp_claws"]
 script = ExtResource("2_node")
 id = &"hatchery_sharp_claws"
@@ -2086,6 +2068,12 @@ position = Vector2(31.4, 14.8)
 color = Color(0.875, 0.948, 0.254, 1)
 links = Array[StringName]([&"hatchery_t3"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_hatchery_sharp_claws_0")])
+
+[sub_resource type="Resource" id="TalentEffect_unlock_hatchery_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 1024
+elements = 1
 
 [sub_resource type="Resource" id="Node_hatchery_t3"]
 script = ExtResource("2_node")
@@ -2126,6 +2114,12 @@ position = Vector2(34, 24.6)
 color = Color(0.652, 0.684, 0.745, 1)
 links = Array[StringName]([&"buffer_t2"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_buffer_drill_sergeant_0")])
+
+[sub_resource type="Resource" id="TalentEffect_unlock_buffer_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 64
+elements = 1
 
 [sub_resource type="Resource" id="Node_buffer_t2"]
 script = ExtResource("2_node")
@@ -2227,6 +2221,12 @@ max_rank = 2
 position = Vector2(34.9, 15.8)
 color = Color(0.652, 0.684, 0.745, 1)
 links = Array[StringName]([&"buffer_t3"])
+
+[sub_resource type="Resource" id="TalentEffect_unlock_buffer_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 64
+elements = 1
 
 [sub_resource type="Resource" id="Node_buffer_t3"]
 script = ExtResource("2_node")

@@ -28,13 +28,20 @@ trigger = 4
 wave_number = 6
 text = "Whoever raised them knows dragons well. Too well."
 
+[sub_resource type="Resource" id="PuffeLine_u1125_bone_vulture"]
+script = ExtResource("9_line")
+trigger = 3
+wave_number = 3
+text = "Bone vultures! Shoot one down and its bones keep walking. Frost keeps them down for good."
+mood = 0
+
 [resource]
 script = ExtResource("1_level")
 level_name = "Drakebone Graveyard"
 story_text = "Here the dragons of the old war fell, and their bones lie in rows in the sand. Something has woken them."
 starting_gold = 32.0
 waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtResource("w3"), ExtResource("w4"), ExtResource("w5"), ExtResource("w6")])
-puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3")])
+puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_u1125_bone_vulture"), SubResource("PuffeLine_3")])
 first_wave_health = 1.7
 last_wave_health = 10.4
 health_scale = 1.051

@@ -28,13 +28,20 @@ trigger = 3
 wave_number = 5
 text = "Their champions march with them now. Elite bones. Shinier bones."
 
+[sub_resource type="Resource" id="PuffeLine_u1125_mummy_priest"]
+script = ExtResource("9_line")
+trigger = 3
+wave_number = 4
+text = "Careful with the wrapped priests: when one falls, its curse silences every tower nearby."
+mood = 2
+
 [resource]
 script = ExtResource("1_level")
 level_name = "The Last Oasis"
 story_text = "The only water for days. The road splits around it, and the grave callers wait in the reeds to raise whoever falls."
 starting_gold = 33.0
 waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtResource("w3"), ExtResource("w4"), ExtResource("w5"), ExtResource("w6")])
-puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3")])
+puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_u1125_mummy_priest"), SubResource("PuffeLine_3")])
 first_wave_health = 1.7
 last_wave_health = 10.6
 health_scale = 0.970

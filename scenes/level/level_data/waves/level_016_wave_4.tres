@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/fastswampling.tscn" id="e_fastswampling"]
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/leechling.tscn" id="e_leechling"]
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/plaguepig.tscn" id="e_plaguepig"]
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/leech_mother.tscn" id="e_u1125_leech_mother"]
 
 [sub_resource type="Resource" id="Resource_group1"]
 script = ExtResource("2_group")
@@ -33,7 +34,14 @@ count = 12
 interval = 0.3
 delay = 4.0
 
+[sub_resource type="Resource" id="Resource_u1125_leech_mother"]
+script = ExtResource("2_group")
+enemy_scene = ExtResource("e_u1125_leech_mother")
+count = 2
+interval = 8.0
+delay = 5.0
+
 [resource]
 script = ExtResource("1_wave")
-spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_group3"), SubResource("Resource_push1")])
+spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_group3"), SubResource("Resource_push1"), SubResource("Resource_u1125_leech_mother")])
 early_start_bonus = 2.0

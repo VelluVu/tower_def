@@ -5,7 +5,7 @@ extends EnemyAbility
 ## spell, the destroyerling's rock, the Bog Hydra's acid. The shot hits where the building stood; with an area it hits every
 ## building there. Walks on while the shot flies.
 
-enum TargetRule {Nearest, Farthest}
+enum TargetRule {Nearest, Farthest, LongestRange}
 
 const NO_TEXTURE_WARNING : String = " has a ranged shot without a texture"
 ## How near the bolt's line a building must stand to be hit, in pixels.
@@ -25,6 +25,8 @@ const PIERCE_HALF_WIDTH : float = 6.0
 @export var pierce_line : bool = false
 ## The lava spitter's glob: the cells it lands on (area_radius) cannot be built on for this long (Scorch); 0 = none.
 @export var scorch_seconds : float = 0.0
+## Seconds a tower hit stops attacking (the crossbow sniper); 0 = none.
+@export var silence_time : float = 0.0
 
 @export_group("Shot")
 @export var shot_texture : Texture2D = null
@@ -70,6 +72,14 @@ func _pick_target() -> Building:
 		var distance : float = building.global_position.distance_to(enemy.global_position)
 		if distance > reach:
 			continue
+		#the longest reach first (ties: the nearest); walls have none, so they come last
+		if target_rule == TargetRule.LongestRange:
+			var tower_range : float = building.radius if building is Tower else -1.0
+			var best_range : float = -INF if best == null else (best.radius if best is Tower else -1.0)
+			if best == null or tower_range > best_range or (is_equal_approx(tower_range, best_range) and distance < best_distance):
+				best = building
+				best_distance = distance
+			continue
 		if best == null or (distance < best_distance if target_rule == TargetRule.Nearest else distance > best_distance):
 			best = building
 			best_distance = distance
@@ -89,6 +99,7 @@ class ShotHit:
 	## In pixels; 0 = no piercing.
 	var pierce_length : float = 0.0
 	var scorch_seconds : float = 0.0
+	var silence_time : float = 0.0
 
 
 func _make_hit() -> ShotHit:
@@ -99,6 +110,7 @@ func _make_hit() -> ShotHit:
 	hit.from = enemy.global_position
 	hit.pierce_length = shot_range * Utils.TILE_SIZE if pierce_line else 0.0
 	hit.scorch_seconds = scorch_seconds
+	hit.silence_time = silence_time
 	return hit
 
 
@@ -152,6 +164,8 @@ static func _land(at : Vector2, target_ref : WeakRef, level_ref : WeakRef, shot_
 		damage_data.damage = shot_hit.damage
 		building.take_damage(damage_data)
 		damage_data.free()
+		if shot_hit.silence_time > 0.0 and is_instance_valid(building) and building is Tower and not building.is_dead:
+			building.silence(shot_hit.silence_time)
 	#the lava spitter's shot: no building on those cells for a while
 	if shot_hit.scorch_seconds > 0.0:
 		Scorch.make(level, at, shot_hit.area_radius, shot_hit.scorch_seconds)

@@ -37,7 +37,7 @@ func test_buffer_is_support(kit : TestKit) -> void:
 	var card : EvolveResource = load("res://scenes/unit/evolve_tree/evolve_resources/damage.tres")
 	kit.check(not UpgradeRules.fits_tower(card, buffer.skill, Utils.Element.Physical, 99), "no card fits a Buffer")
 	var list : BuildingListElement = load("res://scenes/unit/building/buildings/puffe_buffer.tres")
-	kit.check(list.unlock_level == 25, "it unlocks on level 25")
+	kit.check(list.unlock_level == 27, "it unlocks on level 27")
 
 
 func test_pips_budget_and_tracks(kit : TestKit) -> void:

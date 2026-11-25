@@ -32,19 +32,13 @@ trigger = 3
 wave_number = 3
 text = "Fire barely hurts them here. Frost does."
 
-[sub_resource type="Resource" id="PuffeLine_egg_bomb"]
-script = ExtResource("9_line")
-trigger = 1
-text = "Meet the Egg Bomb! Not every egg is meant to hatch. Set it on the road, let the first one step on it, and stand well back."
-mood = 4
-
 [resource]
 script = ExtResource("1_level")
 level_name = "Cinder Gate"
 story_text = "The road climbs into the volcano's red lands. A river of lava cuts it with one ford, and the Wyrm's creatures come down to meet us."
 starting_gold = 33.0
 waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtResource("w3"), ExtResource("w4"), ExtResource("w5"), ExtResource("w6")])
-puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_egg_bomb"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_4")])
+puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_4")])
 first_wave_health = 1.8
 last_wave_health = 5.4
 health_scale = 1.379

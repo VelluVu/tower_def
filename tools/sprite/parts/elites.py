@@ -92,6 +92,23 @@ ELITES = {
     'ember_wisp': dict(swap={'f77622': 'fee761', 'feae34': 'ffffff', 'e43b44': 'f77622'}),
     'phoenix': dict(ornament=CROWN, anchor=['fee761'], side='right', span=5, climb=True),
     'ember_cultist': dict(ornament=CROWN_PLAIN, anchor=SKIN, climb=True, hem=['a22633', '8b2330']),
+    # the 2026-11-25 roster (tools/sprite/parts/units_2026_11_25_art.py)
+    'cave_shaman': dict(ornament=STAR, anchor=['ecd8b1', 'd5bf9b'], climb=True, gap=-2, hem=['5d3a2a', '9a6a44']),
+    'wall_crawler': dict(swap={'c89a5a': 'fee761', 'b07a44': 'feae34', '8a5a34': 'f77622'}, sheen=['c89a5a', 'b07a44', '8a5a34']),
+    'spore_carrier': dict(swap={'b55088': 'fee761', '68386c': 'feae34', '45254f': 'f77622'}),
+    'glow_moth': dict(ornament=CROWN_SMALL, anchor=['f0f0c0'], climb=True),
+    'bog_witch': dict(ornament=STAR, anchor=['8fc46a', '4a9a5c'], climb=True, gap=-2, hem=['1f5048', '2d7356']),
+    'snapping_turtle': dict(swap={'3e3a22': 'f77622', '5d5a2a': 'feae34', '7a6e34': 'fee761'}, sheen=['3e3a22', '5d5a2a', '7a6e34']),
+    'mosquito': dict(ornament=CROWN_SMALL, anchor=['847a80', '5e5458'], side='right', span=4, climb=True),
+    'leech_mother': dict(swap={'c89a3a': 'feae34'}, ornament=CROWN_PLAIN, anchor=['fee761'], climb=True),
+    'shieldbearer': dict(swap=STEEL_TO_GOLD, sheen=list(STEEL_TO_GOLD)),
+    'battering_ram': dict(swap={'4a4238': 'f77622', '6e6250': 'feae34', '847a80': 'fee761'}, sheen=['4a4238', '6e6250', '847a80']),
+    'war_drummer': dict(swap={'8a5a2a': 'f77622', 'c28a3a': 'feae34'}, ornament=PLUME, anchor=SKIN, climb=True),
+    'crossbow_sniper': dict(ornament=CROWN_PLAIN, anchor=SKIN, climb=True, hem=['5a6988', '3a4466']),
+    'sand_wurm': dict(swap={'9a8a6a': 'feae34', 'b0a080': 'fee761'}, sheen=['9a8a6a', 'b0a080']),
+    'bone_vulture': dict(ornament=CROWN, anchor=['ece6d8'], side='right', span=5, climb=True),
+    'mummy_priest': dict(ornament=HALO, anchor=['ddd0b0', '8a7a60'], climb=True, gap=1),
+    'ash_harpy': dict(ornament=CROWN, anchor=['e0caa3'], side='right', span=5, climb=True),
 }
 
 SHEEN_PERIOD = 12

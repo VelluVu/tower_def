@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/lava_spitter.tscn" id="e_lava_spitter"]
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/magma_salamander.tscn" id="e_magma_salamander"]
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/obsidian_golem.tscn" id="e_obsidian_golem"]
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/ash_harpy.tscn" id="e_u1125_ash_harpy"]
 
 [sub_resource type="Resource" id="Resource_group1"]
 script = ExtResource("2_group")
@@ -44,7 +45,14 @@ count = 12
 interval = 0.3
 delay = 4.0
 
+[sub_resource type="Resource" id="Resource_u1125_ash_harpy"]
+script = ExtResource("2_group")
+enemy_scene = ExtResource("e_u1125_ash_harpy")
+count = 5
+interval = 2.0
+delay = 5.0
+
 [resource]
 script = ExtResource("1_wave")
-spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_group3"), SubResource("Resource_group4"), SubResource("Resource_push1")])
+spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_group3"), SubResource("Resource_group4"), SubResource("Resource_push1"), SubResource("Resource_u1125_ash_harpy")])
 early_start_bonus = 2.0

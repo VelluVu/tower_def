@@ -40,13 +40,20 @@ wave_number = 5
 text = "Last wave. Hold the gate!"
 mood = 3
 
+[sub_resource type="Resource" id="PuffeLine_u1125_glow_moth"]
+script = ExtResource("9_line")
+trigger = 3
+wave_number = 3
+text = "Glow moths, a whole flock on the wind! Bolters and Beamers, look up!"
+mood = 2
+
 [resource]
 script = ExtResource("1_level")
 level_name = "Bat Roost"
 story_text = "A castle under the cliffs where the batlings nest. Whatever is waking in the deep caves has stirred them up."
 starting_gold = 23.0
 waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtResource("w3"), ExtResource("w4"), ExtResource("w5")])
-puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_4"), SubResource("PuffeLine_5")])
+puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_u1125_glow_moth"), SubResource("PuffeLine_4"), SubResource("PuffeLine_5")])
 first_wave_health = 1.8
 last_wave_health = 3.4
 health_scale = 1.11

@@ -27,13 +27,19 @@ wave_number = 6
 text = "The whole bog is coming. Hold the gate!"
 mood = 3
 
+[sub_resource type="Resource" id="PuffeLine_breather"]
+script = ExtResource("9_line")
+trigger = 1
+text = "Meet the Breather! Short reach, but its gusts catch every leech and toad in front of it. Put it where they bunch up."
+mood = 1
+
 [resource]
 script = ExtResource("1_level")
 level_name = "Mire Gate"
 story_text = "The real swamp begins here: bog up to the knees and mud that swallows feet. Good for slowing the swamp folk, bad for a drakeling who wants a nap."
 starting_gold = 23.0
 waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtResource("w3"), ExtResource("w4"), ExtResource("w5"), ExtResource("w6")])
-puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3")])
+puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_breather"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3")])
 first_wave_health = 1.6
 last_wave_health = 3.8
 health_scale = 0.999

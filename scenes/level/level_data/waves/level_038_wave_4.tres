@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/bone_thrall.tscn" id="e_bone_thrall"]
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/scarab.tscn" id="e_scarab"]
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/revenant_knight.tscn" id="e_push_revenant_knight"]
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/sand_wurm.tscn" id="e_u1125_sand_wurm"]
 
 [sub_resource type="Resource" id="Resource_group1"]
 script = ExtResource("2_group")
@@ -55,7 +56,14 @@ delay = 6.0
 spawner_id = 2
 elites = 1
 
+[sub_resource type="Resource" id="Resource_u1125_sand_wurm"]
+script = ExtResource("2_group")
+enemy_scene = ExtResource("e_u1125_sand_wurm")
+count = 3
+interval = 5.0
+delay = 5.0
+
 [resource]
 script = ExtResource("1_wave")
-spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_group3"), SubResource("Resource_group4"), SubResource("Resource_group5"), SubResource("Resource_push1")])
+spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_group3"), SubResource("Resource_group4"), SubResource("Resource_group5"), SubResource("Resource_push1"), SubResource("Resource_u1125_sand_wurm")])
 early_start_bonus = 2.0

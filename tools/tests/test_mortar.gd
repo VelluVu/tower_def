@@ -32,7 +32,7 @@ func test_mortar_is_artillery(kit : TestKit) -> void:
 	kit.check(TalentEffect.get_building_flag(mortar) == TalentEffect.MORTAR, "talents see it as a Mortar")
 	kit.check(mortar.evolve_tree.upgrade_data != null, "it has its upgrade data")
 	var list : BuildingListElement = load("res://scenes/unit/building/buildings/puffe_mortar.tres")
-	kit.check(list.unlock_level == 13 and not list.is_unlocked(12) and list.is_unlocked(13), "it unlocks on level 13")
+	kit.check(list.unlock_level == 16 and not list.is_unlocked(15) and list.is_unlocked(16), "it unlocks on level 16")
 
 
 func test_falloff(kit : TestKit) -> void:
