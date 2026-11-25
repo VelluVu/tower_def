@@ -23,6 +23,12 @@ trigger = 3
 wave_number = 3
 text = "Eagles over the orchard. They do not care about the walls."
 
+[sub_resource type="Resource" id="PuffeLine_spotter"]
+script = ExtResource("9_line")
+trigger = 1
+text = "Meet the Spotter! It sees the knights coming from far away and picks the biggest one first. Give it an element and every tower hits its mark harder."
+mood = 1
+
 [resource]
 script = ExtResource("1_level")
 hard_mode = ExtResource("hard_mode")
@@ -30,7 +36,7 @@ level_name = "Orchard Wall"
 story_text = "An apple orchard behind dry-stone walls. The road weaves between the rows, and eagles nest in the old trees."
 starting_gold = 29.0
 waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtResource("w3"), ExtResource("w4"), ExtResource("w5"), ExtResource("w6"), ExtResource("w7")])
-puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2")])
+puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_spotter"), SubResource("PuffeLine_2")])
 first_wave_health = 1.5
 last_wave_health = 4.5
 health_scale = 1.376

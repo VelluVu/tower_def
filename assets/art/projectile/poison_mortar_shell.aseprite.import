@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://ebloq26chxfa"
+path="res://.godot/imported/poison_mortar_shell.aseprite-9704b60b900bf4637a1c457df37966c6.res"
+
+[deps]
+
+source_file="res://assets/art/projectile/poison_mortar_shell.aseprite"
+dest_files=["res://.godot/imported/poison_mortar_shell.aseprite-9704b60b900bf4637a1c457df37966c6.res"]
+
+[params]
+

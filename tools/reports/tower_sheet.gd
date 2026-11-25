@@ -1,11 +1,11 @@
 extends RefCounted
 
-## `python tools/gd.py run tools/reports/tower_sheet.gd [seconds=60] [enemy=weakling] [cards=name:value,...]`:
+## `python tools/gd.py run tools/reports/tower_sheet.gd [seconds=60] [enemy=weakling] [cards=name:value,...] [towers=puffe_bolter,...]`:
 ## each tower at Base, Up 2, every element (T1) and Up 3, shooting a parked enemy that never dies.
 ## Prints measured damage per second (hits and effects apart), the average hit, the crit share,
 ## and how many hits kill the enemy at its real health.
 
-const TOWERS : PackedStringArray = ["puffe_bolter", "puffe_nova", "puffe_beamer", "leopard_trap"]
+const TOWERS : PackedStringArray = ["puffe_bolter", "puffe_nova", "puffe_beamer", "puffe_mortar", "puffe_breather", "puffe_spotter", "puffe_harpooner", "puffe_hatchery", "leopard_trap", "egg_bomb"]
 const LEAF_NAMES : PackedStringArray = ["PhysicalElementEvolveLeaf", "FireElementEvolveLeaf", "FrostElementEvolveLeaf", "PoisonElementEvolveLeaf"]
 const MAIN_SCENE : String = "res://scenes/main.tscn"
 const TOWER_CELL : Vector2i = Vector2i(12, 6)
@@ -31,7 +31,10 @@ func run(kit : TestKit, args : PackedStringArray) -> void:
 
 	print("TOWERS vs %s, %s s each%s" % [enemy_name, seconds, (", cards " + options["cards"]) if options.has("cards") else ""])
 	print(HEADER % ["tower / step", "dps", "hit", "effect", "avghit", "crit%", "hits", "to kill"])
+	var only : PackedStringArray = String(options.get("towers", "")).split(",", false)
 	for tower in TOWERS:
+		if not only.is_empty() and not only.has(tower):
+			continue
 		await _measure(kit, options, tower, -1, 0, seconds, enemy_name)
 		await _measure(kit, options, tower, -1, 2, seconds, enemy_name)
 		for leaf in LEAF_NAMES.size():
@@ -53,7 +56,7 @@ func _measure(kit : TestKit, options : Dictionary, tower : String, leaf : int, u
 	#a kinematic freeze: the range area does not see a statically frozen body
 	enemy.freeze_mode = RigidBody2D.FREEZE_MODE_KINEMATIC
 	enemy.freeze = true
-	enemy.global_position = building.global_position + ENEMY_OFFSET
+	enemy.global_position = building.global_position + _enemy_offset(building)
 	var health : Stat = enemy.stats.get_stat(Utils.StatType.Health)
 	_hit_damage = 0.0
 	_effect_damage = 0.0
@@ -61,7 +64,7 @@ func _measure(kit : TestKit, options : Dictionary, tower : String, leaf : int, u
 	_crits = 0
 	await kit.run_until(func() -> bool:
 		health.value = ENDLESS_HEALTH
-		enemy.global_position = building.global_position + ENEMY_OFFSET
+		enemy.global_position = building.global_position + _enemy_offset(building)
 		return false, seconds)
 
 	var avg_hit : float = _hit_damage / maxf(_hits, 1)
@@ -138,3 +141,10 @@ func _parse(args : PackedStringArray) -> Dictionary:
 		if parts.size() == 2:
 			options[parts[0]] = parts[1]
 	return options
+
+
+#a Mortar cannot fire at its feet: the enemy stands just past its minimum range
+func _enemy_offset(building : Building) -> Vector2:
+	if building is Tower and (building as Tower).min_range_tiles > 0.0:
+		return Vector2((building as Tower).min_range_tiles * Utils.TILE_SIZE + 8.0, 0.0)
+	return ENEMY_OFFSET

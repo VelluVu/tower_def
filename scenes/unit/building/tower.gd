@@ -15,6 +15,8 @@ const SILENCED_MODULATE : Color = Color(0.55, 0.55, 0.7)
 ## upgrade for it (the user, 2026-11-20: T2, since at T1 three Novas carried whole flyer levels; traps get Bird
 ## Catcher at Leopard T2).
 @export var air_from_tier : int = 0
+## Enemies closer than this many tiles are out of its reach (the Mortar cannot lob onto its own feet).
+@export var min_range_tiles : float = 0.0
 
 var hits_air : bool :
 	get:
@@ -23,12 +25,12 @@ var hits_air : bool :
 var targets : Array[Node2D]
 var target : Node2D = null
 #which enemy in range it shoots (the selection panel cycles it); only for towers that pick targets
-var target_tactic : Utils.TargetTactic = Utils.TargetTactic.First
+@export var target_tactic : Utils.TargetTactic = Utils.TargetTactic.First
 
 ## Bolter- and Beamer-like towers pick one target; a Nova bursts around itself and traps wait to be stepped on.
 var can_choose_target : bool :
 	get:
-		return skill != null and skill.skill_type in [Utils.SkillType.Projectile, Utils.SkillType.Beaming]
+		return skill != null and skill.skill_type in [Utils.SkillType.Projectile, Utils.SkillType.Beaming, Utils.SkillType.Artillery, Utils.SkillType.Breath, Utils.SkillType.Sniper, Utils.SkillType.Harpoon]
 #a screech: the tower sees no targets until the timer ends
 var silence_timer : CustomTimer = null
 
@@ -139,7 +141,17 @@ func get_first_target() -> Node2D:
 func get_tactic_target() -> Node2D:
 	if not has_target:
 		return null
-	return TargetPicker.pick(target_tactic if can_choose_target else Utils.TargetTactic.First, targets, global_position)
+	var candidates : Array[Node2D] = targets if min_range_tiles <= 0.0 else get_targets_beyond_min_range()
+	return TargetPicker.pick(target_tactic if can_choose_target else Utils.TargetTactic.First, candidates, global_position)
+
+
+## The targets in range that are not too close to fire at.
+func get_targets_beyond_min_range() -> Array[Node2D]:
+	var min_distance : float = min_range_tiles * Utils.TILE_SIZE
+	var beyond : Array[Node2D] = []
+	beyond.assign(targets.filter(func(candidate) -> bool:
+		return is_instance_valid(candidate) and candidate.global_position.distance_to(global_position) >= min_distance))
+	return beyond
 
 
 func get_closest_target_to_end() -> Node2D:

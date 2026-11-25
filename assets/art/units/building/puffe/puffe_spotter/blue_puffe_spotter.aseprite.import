@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://b4hjex6kl8ok6"
+path="res://.godot/imported/blue_puffe_spotter.aseprite-b67fd23bfb8ea7816574e1945999204a.res"
+
+[deps]
+
+source_file="res://assets/art/units/building/puffe/puffe_spotter/blue_puffe_spotter.aseprite"
+dest_files=["res://.godot/imported/blue_puffe_spotter.aseprite-b67fd23bfb8ea7816574e1945999204a.res"]
+
+[params]
+

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BuildingListElement" format=3]
+
+[ext_resource type="Script" path="res://scenes/unit/building/building_list_element.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/art/units/building/puffe/puffe_mortar/puffe_mortar_icon.png" id="2_icon"]
+[ext_resource type="PackedScene" path="res://scenes/unit/building/buildings/puffe_mortar.tscn" id="3_scene"]
+
+[resource]
+script = ExtResource("1_script")
+scene = ExtResource("3_scene")
+id = 5
+icon = ExtResource("2_icon")
+unlock_level = 13
+description = "Lobs shells that burst on every ground enemy around where they land. Long range, but cannot fire at enemies right next to it, nor at flyers."

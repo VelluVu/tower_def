@@ -1,0 +1,23 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/unit/skills/damage_data.gd" id="1_s7xre"]
+[ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_data.gd" id="2_q2gwu"]
+[ext_resource type="Script" path="res://scenes/unit/stats/modifier.gd" id="3_s7761"]
+
+[node name="FrostSpotterDamageData" type="Node"]
+script = ExtResource("1_s7xre")
+damage_type = 4
+
+[node name="SlowingOvertimeEffectData" type="Node" parent="."]
+script = ExtResource("2_q2gwu")
+max_count = 3
+tick_damage = 0.0
+tick_interval = 1.0
+damage_type = 4
+effectType = 1
+hit_share = 0.0
+max_stacks = 10
+
+[node name="SlowModifier" type="Node" parent="SlowingOvertimeEffectData"]
+script = ExtResource("3_s7761")
+value = -0.1

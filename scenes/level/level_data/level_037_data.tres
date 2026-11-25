@@ -27,13 +27,19 @@ trigger = 4
 wave_number = 6
 text = "The Dragonslayer swore his oath to someone out here. I mean to find out who."
 
+[sub_resource type="Resource" id="PuffeLine_harpooner"]
+script = ExtResource("9_line")
+trigger = 1
+text = "Meet the Harpooner! Its hooks drag flyers out of the sky and into our maze. Even on the ground, nothing walks fast with a chain in its back."
+mood = 1
+
 [resource]
 script = ExtResource("1_level")
 level_name = "Ashfall Road"
 story_text = "Past the Dragonslayer's camp the green ends. Ash falls like snow on an old road into the desert, and the humans' rearguard still holds it."
 starting_gold = 31.0
 waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtResource("w3"), ExtResource("w4"), ExtResource("w5"), ExtResource("w6")])
-puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3")])
+puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_harpooner"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3")])
 first_wave_health = 1.7
 last_wave_health = 9.8
 health_scale = 1.557

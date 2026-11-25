@@ -17,6 +17,7 @@ extends RefCounted
 ##   rotation=0-2        which element each tower type takes (Fire, Frost, Poison shifted by rotation)
 ##   order=fixed|shuffle tower types in Bolter, Nova, Beamer order or shuffled
 ##   towers=40 traps=2   most towers and traps the bot builds (12 left hundreds of gold unspent late)
+##   trap=mixed|leopard_trap|egg_bomb  which traps: mixed takes turns once the Egg Bomb is unlocked
 ##   wall_min_towers=5   no walls before this many towers (a player builds a defence before a maze)
 ##   min_towers=3        towers placed before anything else
 ##   depth=3             purchases every tower gets before the next tower (3 = Up 1, Up 2, element)
@@ -33,8 +34,12 @@ extends RefCounted
 ##                       build break, sells towers the route has left)
 
 const MAIN_SCENE : String = "res://scenes/main.tscn"
-const TOWERS : Array[String] = ["puffe_bolter", "puffe_nova", "puffe_beamer"]
+const TOWERS : Array[String] = ["puffe_bolter", "puffe_nova", "puffe_beamer", "puffe_mortar", "puffe_buffer", "puffe_breather", "puffe_spotter", "puffe_harpooner", "puffe_hatchery"]
+const BUFFER : String = "puffe_buffer"
+## A Buffer goes down once this many other towers stand, where it reaches the most of them.
+const BUFFER_MIN_TOWERS : int = 3
 const TRAP : String = "leopard_trap"
+const EGG_BOMB : String = "egg_bomb"
 const WALL : String = "wall"
 const BUILDING_LIST_PATH : String = "res://scenes/unit/building/buildings/%s.tres"
 const LEAVES : Array[String] = ["FireElementEvolveLeaf", "FrostElementEvolveLeaf", "PoisonElementEvolveLeaf"]
@@ -47,7 +52,8 @@ const DIGITS : String = "0123456789"
 const LEAF_META : StringName = &"soak_leaf"
 const RANGE_META : StringName = &"soak_range"
 const WALL_COVER_WEIGHT : int = 1000
-const TOWER_FLAGS : Dictionary[String, int] = {"puffe_bolter": TalentEffect.BOLTER, "puffe_nova": TalentEffect.NOVA, "puffe_beamer": TalentEffect.BEAMER}
+const TOWER_FLAGS : Dictionary[String, int] = {"puffe_bolter": TalentEffect.BOLTER, "puffe_nova": TalentEffect.NOVA, "puffe_beamer": TalentEffect.BEAMER,
+	"puffe_mortar": TalentEffect.MORTAR, "puffe_buffer": TalentEffect.BUFFER, "puffe_breather": TalentEffect.BREATHER, "puffe_spotter": TalentEffect.SPOTTER, "puffe_harpooner": TalentEffect.HARPOONER, "puffe_hatchery": TalentEffect.HATCHERY, "egg_bomb": TalentEffect.EGG_BOMB}
 ## A build: the tower types in build order, their element leaf, its talent tree, its wall share and the card
 ## stats it wants most first. A tower type not unlocked yet is skipped (the Bolter always is).
 const BUILDS : Dictionary[String, Dictionary] = {
@@ -70,7 +76,7 @@ var options : Dictionary[String, String] = {
 	"level": "1", "mode": "normal", "build": "mixed", "cards": "random", "economy": "real", "talents": "none", "health": "1.0", "speed": "1.0", "life": "",
 	"rotation": "0", "order": "fixed", "towers": "40", "traps": "2", "min_towers": "3", "depth": "3", "wall_min_towers": "5",
 	"walls": "0.3", "early": "0", "unlocked": "level", "seed": "1", "speed_up": "3.0", "play": "rules", "types": "",
-	"smart": "smart_play", "chaos": "0",
+	"smart": "smart_play", "chaos": "0", "trap": "mixed",
 }
 #chaos=N: every N game seconds of a wave a random building is sold, so shots, beams and effects lose their tower mid-fight
 var chaos_interval : float = 0.0
@@ -407,11 +413,12 @@ func _spend(kit : TestKit, level : Level) -> void:
 		await _buy_next(level, behind)
 		return
 
-	if traps < int(options.traps) and traps * 4 < towers.size() and _is_unlocked(TRAP):
-		if level.player_stats.has_enough_gold(_price_of(TRAP)):
+	var trap_name : String = _next_trap()
+	if traps < int(options.traps) and traps * 4 < towers.size() and _is_unlocked(trap_name):
+		if level.player_stats.has_enough_gold(_price_of(trap_name)):
 			var trap_cell : Vector2i = _best_trap_cell(level)
 			if trap_cell != Vector2i.MAX:
-				await _place(kit, level, TRAP, trap_cell)
+				await _place(kit, level, trap_name, trap_cell)
 				traps += 1
 		return
 
@@ -434,7 +441,15 @@ func _place_tower(kit : TestKit, level : Level) -> bool:
 	var scene_name : String = types[type]
 	if not level.player_stats.has_enough_gold(_placement_price(level, scene_name)):
 		return true
-	var cell : Vector2i = _best_tower_cell(level, _range_of(scene_name))
+	var cell : Vector2i = Vector2i.MAX
+	if scene_name == BUFFER:
+		#a Buffer waits for towers to drum up; meanwhile the next type goes first
+		cell = _best_buffer_cell(level)
+		if cell == Vector2i.MAX:
+			type_order.pop_front()
+			return true
+	else:
+		cell = _best_tower_cell(level, _range_of(scene_name), _min_range_of(scene_name))
 	if cell == Vector2i.MAX:
 		return false
 	type_order.pop_front()
@@ -490,8 +505,40 @@ func _has_options(level : Level, tower : Building) -> bool:
 	return level.building_type_upgrades.options.any(func(o : GoldUpgradeOption) -> bool: return not o.is_locked)
 
 
+## The free cell, off the routes, whose aura reaches the most of the bot's other towers (at least BUFFER_MIN_TOWERS);
+## Vector2i.MAX when there is none yet.
+func _best_buffer_cell(level : Level) -> Vector2i:
+	var placed : Array[Building] = []
+	for tower in towers:
+		if is_instance_valid(tower) and not tower is Buffer:
+			placed.append(tower)
+	if placed.size() < BUFFER_MIN_TOWERS:
+		return Vector2i.MAX
+	var on_route : Dictionary[Vector2i, bool] = {}
+	for cell in _route_cells(level):
+		on_route[cell] = true
+	var reach : float = _range_of(BUFFER) + 0.25
+	var best : Vector2i = Vector2i.MAX
+	var best_count : int = BUFFER_MIN_TOWERS - 1
+	var region : Rect2i = level.grid.astar_grid.region
+	for y in range(region.position.y, region.end.y):
+		for x in range(region.position.x, region.end.x):
+			var cell : Vector2i = Vector2i(x, y)
+			if on_route.has(cell) or not _is_free_to_build(level, cell):
+				continue
+			var count : int = 0
+			for tower in placed:
+				if Vector2(tower.grid_position - cell).length() <= reach:
+					count += 1
+			if count > best_count:
+				best_count = count
+				best = cell
+	return best
+
+
 ## The free cell, off the routes, that has the most route cells in range; nearer the castle on a tie.
-func _best_tower_cell(level : Level, range_tiles : float) -> Vector2i:
+#min_range_tiles: route cells closer than this are out of reach (the Mortar)
+func _best_tower_cell(level : Level, range_tiles : float, min_range_tiles : float = 0.0) -> Vector2i:
 	var route_cells : Array[Vector2i] = _route_cells(level)
 	var on_route : Dictionary[Vector2i, bool] = {}
 	for cell in route_cells:
@@ -501,6 +548,7 @@ func _best_tower_cell(level : Level, range_tiles : float) -> Vector2i:
 	var best_score : float = 0.0
 	var region : Rect2i = level.grid.astar_grid.region
 	var reach : float = range_tiles * range_tiles
+	var too_near : float = min_range_tiles * min_range_tiles
 
 	for y in range(region.position.y, region.end.y):
 		for x in range(region.position.x, region.end.x):
@@ -509,7 +557,8 @@ func _best_tower_cell(level : Level, range_tiles : float) -> Vector2i:
 				continue
 			var covered : int = 0
 			for route_cell in route_cells:
-				if Vector2(route_cell - cell).length_squared() <= reach:
+				var distance : float = Vector2(route_cell - cell).length_squared()
+				if distance <= reach and distance >= too_near:
 					covered += 1
 			var score : float = covered - Vector2(cell - castle).length() * 0.01
 			if covered > 0 and score > best_score:
@@ -637,6 +686,13 @@ func _is_free_to_build(level : Level, cell : Vector2i) -> bool:
 	return level.grid.is_position_buildable(level.grid.grid_position_to_world(cell)) and not level.grid.has_building_in_cell_position(cell)
 
 
+## The trap the bot builds next (option trap): mixed takes turns, Leopard Trap first, once the Egg Bomb is unlocked.
+func _next_trap() -> String:
+	if options.trap == EGG_BOMB or options.trap == TRAP:
+		return options.trap
+	return EGG_BOMB if traps % 2 == 1 and _is_unlocked(EGG_BOMB) else TRAP
+
+
 func _price_of(scene_name : String) -> float:
 	if not prices.has(scene_name):
 		prices[scene_name] = _base_stat(scene_name, Utils.StatType.Price)
@@ -655,6 +711,15 @@ func _range_of(scene_name : String) -> float:
 					range_tiles = maxf(range_tiles, stat.base_value)
 		instance.free()
 		prices[key] = range_tiles
+	return prices[key]
+
+
+func _min_range_of(scene_name : String) -> float:
+	var key : String = scene_name + "_min_range"
+	if not prices.has(key):
+		var instance : Node = load(TestKit.BUILDING_PATH % scene_name).instantiate()
+		prices[key] = (instance as Tower).min_range_tiles if instance is Tower else 0.0
+		instance.free()
 	return prices[key]
 
 

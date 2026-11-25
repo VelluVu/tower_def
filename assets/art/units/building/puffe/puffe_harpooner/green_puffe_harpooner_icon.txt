@@ -1,0 +1,39 @@
+# Source of green_puffe_harpooner_icon.png (python tools/gd.py icon <this> <out.png>); cropped from the sprite's first IDLE frame
+a = 5b893f
+b = 6ca54e
+c = 476331
+d = 7ec15e
+e = 74b355
+f = e7eee3
+g = 333d23
+h = 3d502a
+i = 8cb577
+j = a7dc8f
+k = 507638
+l = 639647
+m = b55088
+n = b86f50
+o = 733e39
+p = 5a6988
+q = 3a4466
+r = b6d53c
+s = c0cbdc
+t = 8b9bb4
+u = 68386c
+---
+.....a.a........
+....a...a.......
+....bcccb.......
+..ddceddcce.....
+...ddfgdfg......
+...heebdbdc.....
+i...ceejdjc..i..
+iiiiicaddciiim..
+.ikknnopppppqrm.
+.ideestsdleeeu..
+..ihllstdlch....
+..chleedjekh....
+.cchcleddlch....
+cc.hhhhhhhh.....
+c...hhhhhh......
+................

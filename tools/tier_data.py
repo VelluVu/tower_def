@@ -24,7 +24,9 @@ import enemy_scene as es
 ROOT = es.ROOT
 OUT = "scenes/unit/evolve_tree/tiers"
 ART = "assets/art/units/building/puffe/puffe_%s/%s_t%d"
-TOWERS = ("bolter", "nova", "beamer")
+TOWERS = ("bolter", "nova", "beamer", "mortar", "buffer", "breather", "spotter", "harpooner", "hatchery", "egg_bomb")
+# the Buffer never attacks: its tiers have no stat steps, their effects live in BufferAuras (2026-11-24)
+NO_STEP_TOWERS = ("buffer",)
 # the Leopard Trap's elements (tools/trap_elements.py, 2026-11-16): no tier art, its own scene and talent nodes
 TRAP = "leopard_trap"
 ELEMENTS = ("physical", "fire", "frost", "poison")
@@ -36,7 +38,9 @@ LOOPING = ("IDLE", "ATTACK")
 DAMAGE, ATTACK_SPEED, EFFECT_CHANCE, EXTRA_SHOTS, CHAIN_TARGETS = 2, 6, 11, 16, 17
 EFFECT_POTENCY, EFFECT_DURATION, EFFECT_STACKS, EFFECT_TICK_RATE, RICOCHET = 10, 12, 13, 14, 15
 SPLASH_RADIUS, FREEZE_CHANCE, FREEZE_DURATION, PIERCE, KNOCKBACK, PATCH_DURATION, PATCH_SHARE = 20, 21, 22, 23, 24, 25, 26
-LINE_HITS, SPLIT_COUNT, SPLIT_SHARE, POISON_SPREAD = 27, 28, 29, 30
+LINE_HITS, SPLIT_COUNT, SPLIT_SHARE, POISON_SPREAD, CONE_WIDTH, MARK_SHARE, EXECUTE_BELOW = 27, 28, 29, 30, 31, 32, 33
+TETHER_TIME, TETHER_SLOW = 34, 35
+GUARD_HEALTH, GUARD_COUNT = 36, 37
 FLAT, ADDITIVE = 0, 2
 STEP = {2: [("Damage", DAMAGE, ADDITIVE, 0.25, True)],
         3: [("Damage", DAMAGE, ADDITIVE, 0.4, True), ("Attack Speed", ATTACK_SPEED, FLAT, 0.15, True)]}
@@ -92,6 +96,111 @@ TIERS = {
     ("leopard_trap", "poison", 2): ([("Thick Cloud", PATCH_DURATION, FLAT, 2.0, False), ("Cloud Venom", PATCH_SHARE, FLAT, 0.2, False)],
                                     "The cloud lasts 5 s and stings harder"),
     ("leopard_trap", "poison", 3): ([("Spreading Venom", POISON_SPREAD, FLAT, 2.0, False)], "Poison spreads to 2 enemies when a poisoned enemy dies to it"),
+    # the Mortar (2026-11-24, design doc New Towers: cluster shells, a crater that slows, a rolling shell later)
+    # the Buffer (2026-11-24): T2 weakens the enemies in the aura, T3 roars; the element's chance grows (Buffer.gd)
+    **{("buffer", e, 2): ([], "Enemies in the aura take 10% more damage" + ("" if e == "physical" else "; the element rides on 25% of hits"))
+       for e in ELEMENTS},
+    **{("buffer", e, 3): ([], "Commander's Roar: every 12 s the buffed towers attack 0.4 faster for 3 s"
+                          + ("" if e == "physical" else "; the element rides on 30% of hits")) for e in ELEMENTS},
+    ("mortar", "physical", 2): ([("Cluster Shells", SPLIT_COUNT, FLAT, 3.0, False), ("Cluster Bite", SPLIT_SHARE, FLAT, 0.35, False)],
+                                "Shells break into 3 bomblets that hit the nearest enemies for 35% of the hit"),
+    ("mortar", "physical", 3): ([("Earthshaker", SPLASH_RADIUS, FLAT, 0.5, False), ("Shockwave", KNOCKBACK, FLAT, 1.0, False)],
+                                "A bigger blast (+0.5 tiles); the enemy at its centre is thrown back a cell"),
+    ("mortar", "fire", 2): ([("Napalm", PATCH_DURATION, FLAT, 2.0, False), ("Napalm Heat", PATCH_SHARE, FLAT, 0.15, False)],
+                            "The burning ground lasts 2 s longer and burns hotter"),
+    ("mortar", "fire", 3): ([("Second Shell", EXTRA_SHOTS, FLAT, 1.0, False)], "A second shell after each shot"),
+    ("mortar", "frost", 2): ([("Frozen Crater", PATCH_DURATION, FLAT, 2.0, False), ("Crater Cold", PATCH_SHARE, FLAT, 0.15, False)],
+                             "Shells leave a freezing crater that hurts for 2 s"),
+    ("mortar", "frost", 3): ([("Hailstorm", FREEZE_CHANCE, FLAT, 0.3, False), ("Freeze Time", FREEZE_DURATION, FLAT, 0.8, False),
+                              ("Wide Hail", SPLASH_RADIUS, FLAT, 0.25, False)],
+                             "A wider blast (+0.25 tiles); 30% of shells freeze the enemy at the centre for 0.8 s"),
+    ("mortar", "poison", 2): ([("Gas Shells", EFFECT_STACKS, FLAT, 2.0, False), ("Sure Dose", EFFECT_CHANCE, FLAT, 0.3, False)],
+                              "Shells stack poison faster on everything they hit"),
+    ("mortar", "poison", 3): ([("Plague Barrage", POISON_SPREAD, FLAT, 2.0, False), ("Thick Gas", PATCH_DURATION, FLAT, 2.0, False)],
+                              "The gas cloud lasts 2 s longer; poison jumps to 2 enemies when the centre enemy dies"),
+    # the Breather (2026-11-24, design doc New Towers: T3 sweeps a wider arc); one direct hit per enemy per gust
+    ("breather", "physical", 2): ([("Stunning Roar", FREEZE_CHANCE, FLAT, 0.3, False), ("Stun Time", FREEZE_DURATION, FLAT, 0.4, False)],
+                                  "30% of the enemies a roar hits are stunned for 0.4 s"),
+    ("breather", "physical", 3): ([("Thunder Roar", CONE_WIDTH, FLAT, 30.0, False), ("Shove", KNOCKBACK, FLAT, 1.0, False)],
+                                  "A wider cone (+30 degrees); the roar throws enemies 2 cells back"),
+    ("breather", "fire", 2): ([("Scorched Earth", PATCH_DURATION, FLAT, 2.0, False), ("Ground Heat", PATCH_SHARE, FLAT, 0.15, False)],
+                              "The burning ground lasts 2 s longer and burns hotter"),
+    ("breather", "fire", 3): ([("Dragonfire", CONE_WIDTH, FLAT, 30.0, False), ("Rising Heat", EFFECT_TICK_RATE, FLAT, 0.5, True)],
+                              "A wider cone (+30 degrees); burns tick 50% faster"),
+    ("breather", "frost", 2): ([("Frostbite", EFFECT_STACKS, FLAT, 2.0, False), ("Sure Chill", EFFECT_CHANCE, FLAT, 0.3, False)],
+                               "Slow stacks build faster"),
+    ("breather", "frost", 3): ([("Winter's Breath", CONE_WIDTH, FLAT, 30.0, False), ("Freezing Gust", FREEZE_CHANCE, FLAT, 0.15, False),
+                                ("Freeze Time", FREEZE_DURATION, FLAT, 0.8, False)],
+                               "A wider cone (+30 degrees); each gust freezes 15% of the enemies it hits for 0.8 s"),
+    ("breather", "poison", 2): ([("Choking Fumes", EFFECT_STACKS, FLAT, 2.0, False), ("Thick Cloud", PATCH_DURATION, FLAT, 1.0, False)],
+                                "Poison stacks higher; the cloud lasts 1 s longer"),
+    ("breather", "poison", 3): ([("Miasma", CONE_WIDTH, FLAT, 30.0, False), ("Spreading Venom", POISON_SPREAD, FLAT, 1.0, False)],
+                                "A wider cone (+30 degrees); poison jumps to the nearest enemy when a poisoned enemy dies to it"),
+    # the Spotter (2026-11-24, design doc New Towers: execute at a later tier); the marks grow at T3
+    ("spotter", "physical", 2): ([("Piercing Bolt", PIERCE, FLAT, 1.0, False)], "Bolts fly on through their target to the enemy behind"),
+    ("spotter", "physical", 3): ([("Execute", EXECUTE_BELOW, FLAT, 0.12, False)], "Hits kill enemies left under 12% health (not bosses)"),
+    ("spotter", "fire", 2): ([("Explosive Bolt", SPLASH_RADIUS, FLAT, 0.75, False)], "Bolts explode: half damage to enemies within 0.75 tiles"),
+    ("spotter", "fire", 3): ([("Searing Mark", MARK_SHARE, FLAT, 0.1, False), ("Burning Ground", PATCH_DURATION, FLAT, 2.0, False),
+                              ("Ground Heat", PATCH_SHARE, FLAT, 0.2, False)],
+                             "The mark grows to +20%; hits leave burning ground for 2 s"),
+    ("spotter", "frost", 2): ([("Pinning Bolt", FREEZE_CHANCE, FLAT, 0.3, False), ("Pin Time", FREEZE_DURATION, FLAT, 0.8, False)],
+                              "30% of hits freeze the target for 0.8 s"),
+    ("spotter", "frost", 3): ([("Frozen Mark", MARK_SHARE, FLAT, 0.1, False), ("Ice Lance", PIERCE, FLAT, 2.0, False)],
+                              "The mark grows to +20%; bolts pierce 2 enemies"),
+    ("spotter", "poison", 2): ([("Deep Dose", EFFECT_STACKS, FLAT, 2.0, False), ("Sure Dose", EFFECT_CHANCE, FLAT, 0.3, False)],
+                               "Poison stacks higher and more surely"),
+    ("spotter", "poison", 3): ([("Rotting Mark", MARK_SHARE, FLAT, 0.1, False), ("Plague Bolt", POISON_SPREAD, FLAT, 2.0, False)],
+                               "The mark grows to +20%; poison jumps to 2 enemies when the target dies"),
+    # the Harpooner (2026-11-24, design doc New Towers): every harpoon tethers; the tiers add to the hook
+    ("harpooner", "physical", 2): ([("Heavy Yank", KNOCKBACK, FLAT, 1.0, False), ("Stagger", FREEZE_CHANCE, FLAT, 0.25, False),
+                                    ("Stagger Time", FREEZE_DURATION, FLAT, 0.4, False)],
+                                   "The yank throws enemies 2 cells back; 25% of hits stagger for 0.4 s"),
+    ("harpooner", "physical", 3): ([("Skewer", PIERCE, FLAT, 1.0, False)], "The harpoon flies on through its target and chains the enemy behind too"),
+    ("harpooner", "fire", 2): ([("Searing Hook", SPLASH_RADIUS, FLAT, 0.75, False)], "The hook bursts: half damage to enemies within 0.75 tiles"),
+    ("harpooner", "fire", 3): ([("Drag to the Fire", PATCH_DURATION, FLAT, 2.0, False), ("Ground Heat", PATCH_SHARE, FLAT, 0.2, False)],
+                               "Hits leave burning ground for 2 s"),
+    ("harpooner", "frost", 2): ([("Ice Barbs", FREEZE_CHANCE, FLAT, 0.3, False), ("Ice Time", FREEZE_DURATION, FLAT, 0.8, False)],
+                                "30% of hits freeze their target for 0.8 s"),
+    ("harpooner", "frost", 3): ([("Anchor", TETHER_SLOW, FLAT, 0.15, False), ("Long Anchor", TETHER_TIME, FLAT, 1.5, False)],
+                                "The tether slows 15 points more and lasts 1.5 s longer"),
+    ("harpooner", "poison", 2): ([("Deep Barbs", EFFECT_STACKS, FLAT, 2.0, False), ("Sure Barbs", EFFECT_CHANCE, FLAT, 0.3, False)],
+                                 "More and surer poison stacks"),
+    ("harpooner", "poison", 3): ([("Plague Hook", POISON_SPREAD, FLAT, 2.0, False)], "Poison jumps to 2 enemies when the target dies"),
+    # the Hatchery (2026-11-25): the claws carry the tier effects (TowerHitEffects on every claw), the T3s add a guard
+    # or make them tougher
+    ("hatchery", "physical", 2): ([("Bruisers", GUARD_HEALTH, ADDITIVE, 0.5, True), ("Stunning Claws", FREEZE_CHANCE, FLAT, 0.2, False),
+                                   ("Stun Time", FREEZE_DURATION, FLAT, 0.4, False)],
+                                  "Guards are 50% tougher; 20% of claws stun for 0.4 s"),
+    ("hatchery", "physical", 3): ([("Fourth Guard", GUARD_COUNT, FLAT, 1.0, False)], "A fourth guard holds the line"),
+    ("hatchery", "fire", 2): ([("Scorched Ground", PATCH_DURATION, FLAT, 1.5, False), ("Ground Heat", PATCH_SHARE, FLAT, 0.2, False)],
+                              "Claws leave burning ground for 1.5 s"),
+    ("hatchery", "fire", 3): ([("Fire Breath", SPLASH_RADIUS, FLAT, 0.75, False), ("Fourth Guard", GUARD_COUNT, FLAT, 1.0, False)],
+                              "Claws burst: half damage to enemies within 0.75 tiles; a fourth guard"),
+    ("hatchery", "frost", 2): ([("Frozen Grip", FREEZE_CHANCE, FLAT, 0.2, False), ("Grip Time", FREEZE_DURATION, FLAT, 0.8, False)],
+                               "20% of claws freeze for 0.8 s"),
+    ("hatchery", "frost", 3): ([("Ice Scales", GUARD_HEALTH, ADDITIVE, 0.6, True), ("Fourth Guard", GUARD_COUNT, FLAT, 1.0, False)],
+                               "Guards are 60% tougher; a fourth guard"),
+    ("hatchery", "poison", 2): ([("Venom Glands", EFFECT_STACKS, FLAT, 2.0, False), ("Sure Venom", EFFECT_CHANCE, FLAT, 0.3, False)],
+                                "Poison stacks higher and more surely"),
+    # the Egg Bomb (2026-11-25): the blast's centre enemy takes the direct hit, so freezes, patches and spread fire there
+    ("egg_bomb", "physical", 2): ([("Shrapnel", SPLIT_COUNT, FLAT, 3.0, False), ("Shrapnel Bite", SPLIT_SHARE, FLAT, 0.3, False)],
+                                  "The shell flies as shrapnel: 3 more hits on the nearest enemies for 30%"),
+    ("egg_bomb", "physical", 3): ([("Big Egg", SPLASH_RADIUS, FLAT, 0.5, False), ("Shockwave", KNOCKBACK, FLAT, 1.0, False)],
+                                  "A bigger blast (+0.5 tiles); the enemy at its centre is thrown back a cell"),
+    ("egg_bomb", "fire", 2): ([("Fire Pit", PATCH_DURATION, FLAT, 2.0, False), ("Pit Heat", PATCH_SHARE, FLAT, 0.15, False)],
+                              "The burning ground lasts 2 s longer and burns hotter"),
+    ("egg_bomb", "fire", 3): ([("Inferno Egg", EFFECT_CHANCE, FLAT, 1.0, False), ("Wide Flames", SPLASH_RADIUS, FLAT, 0.5, False)],
+                              "Everything the blast hits burns; a bigger blast (+0.5 tiles)"),
+    ("egg_bomb", "frost", 2): ([("Frost Burst", EFFECT_STACKS, FLAT, 2.0, False), ("Sure Chill", EFFECT_CHANCE, FLAT, 0.3, False)],
+                               "The blast stacks its slow higher on everything it hits"),
+    ("egg_bomb", "frost", 3): ([("Glacier Egg", FREEZE_DURATION, FLAT, 1.0, False), ("Wide Frost", SPLASH_RADIUS, FLAT, 0.5, False)],
+                               "The centre freeze lasts 1 s longer; a bigger blast (+0.5 tiles)"),
+    ("egg_bomb", "poison", 2): ([("Rotten Yolk", EFFECT_STACKS, FLAT, 2.0, False), ("Sure Rot", EFFECT_CHANCE, FLAT, 0.3, False)],
+                                "Poison stacks higher and more surely"),
+    ("egg_bomb", "poison", 3): ([("Plague Egg", POISON_SPREAD, FLAT, 2.0, False), ("Thick Gas", PATCH_DURATION, FLAT, 2.0, False)],
+                                "The gas cloud lasts 2 s longer; poison jumps to 2 enemies when the centre enemy dies"),
+    ("hatchery", "poison", 3): ([("Plague Brood", POISON_SPREAD, FLAT, 2.0, False), ("Fourth Guard", GUARD_COUNT, FLAT, 1.0, False)],
+                                "Poison jumps to 2 enemies when a held enemy dies; a fourth guard"),
 }
 
 
@@ -104,6 +213,10 @@ def art_name(tower, element):
 def talent(tower, element, tier):
     if tower == TRAP:
         return ("building", "leopard_t%d" % tier) if element == "physical" else (element, "trap_t%d" % tier)
+    if tower in ("mortar", "buffer", "breather", "spotter", "harpooner", "hatchery", "egg_bomb"):
+        return ("building" if element == "physical" else element), "%s_t%d" % (tower, tier)
+    if tower == "mortar":
+        return ("building" if element == "physical" else element), "mortar_t%d" % tier
     if element == "physical":
         return "building", "phys_t%d" % tier
     return element, "%s_t%d" % (tower, tier)
@@ -118,6 +231,9 @@ def frames(tower, element, tier):
     if tower == TRAP:
         return None
     base = ART % (tower, art_name(tower, element), tier)
+    #the Egg Bomb's sheets are its own, not a drakeling's
+    if tower == "egg_bomb":
+        base = "assets/art/units/building/egg_bomb/%s_egg_bomb_t%d" % (element, tier)
     aseprite, png = os.path.join(ROOT, base + ".aseprite"), os.path.join(ROOT, base + ".png")
     w, h, durs, tags = es.info(aseprite)
     where = es.regions(aseprite, png, w, h, len(durs))
@@ -130,7 +246,7 @@ def frames(tower, element, tier):
                 i, where[i][0], where[i][1], w, h)
             refs.append('{\n"duration": 1.0,\n"texture": SubResource("AtlasTexture_f%02d")\n}' % i)
         anims.append('{\n"frames": [%s],\n"loop": %s,\n"name": &"%s",\n"speed": %.1f\n}' % (
-            ", ".join(refs), "true" if tag in LOOPING else "false", tag, 1000.0 / durs[a]))
+            ", ".join(refs), "true" if tag in (("IDLE",) if tower == "egg_bomb" else LOOPING) else "false", tag, 1000.0 / durs[a]))
     text += "[resource]\nanimations = [%s]\n" % ", ".join(anims)
     path = "%s/%s_%s_t%d_frames.tres" % (OUT, tower, element, tier)
     write(path, text)
@@ -145,13 +261,14 @@ def tier_data(tower, element, tier, frames_path):
             '[ext_resource type="Script" path="res://scenes/unit/evolve_tree/evolve_resource.gd" id="2_evolve"]\n'
             + ('[ext_resource type="SpriteFrames" path="res://%s" id="3_frames"]\n' % frames_path if frames_path else '') + '\n')
     ids = []
-    for i, (name, stat, modify, value, percent) in enumerate(STEP[tier] + extra):
+    steps = extra if tower in NO_STEP_TOWERS else STEP[tier] + extra
+    for i, (name, stat, modify, value, percent) in enumerate(steps):
         text += ('[sub_resource type="Resource" id="Resource_step%d"]\nscript = ExtResource("2_evolve")\nmodifier_type = 0\n'
                  'elements = 15\nmodify_stat_type = %d\nmodify_type = %d\nis_randomized_modify_value = false\n'
                  'is_percent = %s\nmodify_value = %s\nevolve_name = "%s"\n\n') % (
             i, stat, modify, "true" if percent else "false", repr(float(value)), name)
         ids.append('SubResource("Resource_step%d")' % i)
-    info = ". ".join(s for s in (extra_info, STEP_INFO[tier]) if s)
+    info = ". ".join(s for s in (extra_info, "" if tower in NO_STEP_TOWERS else STEP_INFO[tier]) if s)
     text += ('[resource]\nscript = ExtResource("1_tier")\ntitle = "T%d"\ninfo = "%s"\ntalent_tree = &"%s"\ntalent_node = &"%s"\n'
              'upgrade_resources = Array[ExtResource("2_evolve")]([%s])\n') % (
         tier, info, tree, node, ", ".join(ids))
@@ -164,7 +281,7 @@ def tier_data(tower, element, tier, frames_path):
 
 
 def wire_leaves(tower, paths):
-    scene = "scenes/unit/building/buildings/%s.tscn" % (tower if tower == TRAP else "puffe_" + tower)
+    scene = "scenes/unit/building/buildings/%s.tscn" % (tower if tower in (TRAP, "egg_bomb") else "puffe_" + tower)
     text = open(os.path.join(ROOT, scene), encoding="utf8").read()
     for element in ELEMENTS:
         ids = []
@@ -189,13 +306,13 @@ def rhythm(tower):
     text = open(os.path.join(ROOT, path), encoding="utf8").read()
     text = re.sub(r'tier_upgrades = [^\n]*\n', '', text)
     # the last section is [resource]; a default upgrades_per_tier is not written, so append instead of replacing
-    text = text.rstrip("\n") + "\ntier_upgrades = Array[int]([2, 3, 3])\n"
+    text = text.rstrip("\n") + "\ntier_upgrades = Array[int](%s)" % ("[2, 5, 8]" if tower == "buffer" else "[2, 3, 3]") + "\n"
     write(path, text)
 
 
 def unlock_effects():
-    # TalentEffect flags: buildings Bolter 1, Nova 2, Beamer 4; elements Physical 1, Fire 2, Frost 4, Poison 8
-    tower_flag = {"bolter": 1, "nova": 2, "beamer": 4, TRAP: 8}
+    # TalentEffect flags: buildings Bolter 1, Nova 2, Beamer 4, Trap 8, Mortar 32; elements Physical 1, Fire 2, Frost 4, Poison 8
+    tower_flag = {"bolter": 1, "nova": 2, "beamer": 4, TRAP: 8, "mortar": 32, "buffer": 64, "breather": 128, "spotter": 256, "harpooner": 512, "hatchery": 1024, "egg_bomb": 2048}
     element_flag = {"physical": 1, "fire": 2, "frost": 4, "poison": 8}
     unlocks = {}
     for t in TOWERS + (TRAP,):

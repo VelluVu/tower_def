@@ -4,6 +4,224 @@
 [ext_resource type="Script" uid="uid://dwes3ugk3ahrk" path="res://scenes/talents/talent_node.gd" id="2_node"]
 [ext_resource type="Script" uid="uid://mwbaxqyyxvt2" path="res://scenes/talents/talent_effect.gd" id="3_effect"]
 
+[sub_resource type="Resource" id="Effect_egg_bomb_fetid_nest_0"]
+script = ExtResource("3_effect")
+buildings = 2048
+elements = 8
+stat_type = 6
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Effect_egg_bomb_gas_pit_0"]
+script = ExtResource("3_effect")
+buildings = 2048
+elements = 8
+stat_type = 25
+modify_type = 0
+value_per_rank = 1.5
+
+[sub_resource type="Resource" id="Effect_egg_bomb_spore_shell_0"]
+script = ExtResource("3_effect")
+buildings = 2048
+elements = 8
+stat_type = 10
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Effect_egg_bomb_wide_blast_0"]
+script = ExtResource("3_effect")
+buildings = 2048
+elements = 8
+stat_type = 20
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Effect_egg_bomb_quick_hatch_0"]
+script = ExtResource("3_effect")
+buildings = 2048
+elements = 8
+stat_type = 6
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Effect_egg_bomb_rotten_yolk_0"]
+script = ExtResource("3_effect")
+buildings = 2048
+elements = 8
+modify_type = 1
+value_per_rank = 0.08
+
+[sub_resource type="Resource" id="TalentEffect_unlock_trap_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 8
+elements = 8
+
+[sub_resource type="Resource" id="TalentEffect_unlock_trap_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 8
+elements = 8
+
+[sub_resource type="Resource" id="TalentEffect_unlock_spotter_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 256
+elements = 8
+
+[sub_resource type="Resource" id="TalentEffect_unlock_spotter_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 256
+elements = 8
+
+[sub_resource type="Resource" id="TalentEffect_unlock_nova_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 2
+elements = 8
+
+[sub_resource type="Resource" id="TalentEffect_unlock_nova_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 2
+elements = 8
+
+[sub_resource type="Resource" id="TalentEffect_unlock_mortar_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 32
+elements = 8
+
+[sub_resource type="Resource" id="TalentEffect_unlock_mortar_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 32
+elements = 8
+
+[sub_resource type="Resource" id="TalentEffect_unlock_hatchery_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 1024
+elements = 8
+
+[sub_resource type="Resource" id="TalentEffect_unlock_hatchery_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 1024
+elements = 8
+
+[sub_resource type="Resource" id="TalentEffect_unlock_harpooner_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 512
+elements = 8
+
+[sub_resource type="Resource" id="TalentEffect_unlock_harpooner_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 512
+elements = 8
+
+[sub_resource type="Resource" id="TalentEffect_unlock_egg_bomb_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 2048
+elements = 8
+
+[sub_resource type="Resource" id="TalentEffect_unlock_egg_bomb_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 2048
+elements = 8
+
+[sub_resource type="Resource" id="TalentEffect_unlock_buffer_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 64
+elements = 8
+
+[sub_resource type="Resource" id="TalentEffect_unlock_buffer_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 64
+elements = 8
+
+[sub_resource type="Resource" id="TalentEffect_unlock_breather_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 128
+elements = 8
+
+[sub_resource type="Resource" id="TalentEffect_unlock_breather_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 128
+elements = 8
+
+[sub_resource type="Resource" id="TalentEffect_unlock_bolter_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 1
+elements = 8
+
+[sub_resource type="Resource" id="TalentEffect_unlock_bolter_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 1
+elements = 8
+
+[sub_resource type="Resource" id="TalentEffect_unlock_beamer_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 4
+elements = 8
+
+[sub_resource type="Resource" id="TalentEffect_unlock_beamer_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 4
+elements = 8
+
+[sub_resource type="Resource" id="Effect_hatchery_fierce_hatchlings_0"]
+script = ExtResource("3_effect")
+buildings = 1024
+elements = 8
+stat_type = 6
+modify_type = 0
+value_per_rank = 0.04
+
+[sub_resource type="Resource" id="Effect_hatchery_big_clutch_0"]
+script = ExtResource("3_effect")
+buildings = 1024
+elements = 8
+stat_type = 37
+modify_type = 0
+value_per_rank = 1.0
+
+[sub_resource type="Resource" id="Effect_hatchery_hardy_brood_0"]
+script = ExtResource("3_effect")
+buildings = 1024
+elements = 8
+stat_type = 36
+modify_type = 1
+value_per_rank = 0.15
+
+[sub_resource type="Resource" id="Effect_hatchery_venom_claws_0"]
+script = ExtResource("3_effect")
+buildings = 1024
+elements = 8
+stat_type = 10
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Effect_hatchery_venom_fed_brood_0"]
+script = ExtResource("3_effect")
+buildings = 1024
+elements = 8
+modify_type = 1
+value_per_rank = 0.08
+
 [sub_resource type="Resource" id="Effect_toxic_ooze_0"]
 script = ExtResource("3_effect")
 buildings = 15
@@ -19,7 +237,7 @@ description = "Poison damage +5% (every Poison building)"
 max_rank = 3
 position = Vector2(8.923, 0)
 color = Color(0.651, 0.89, 0.29, 1)
-links = Array[StringName]([&"virulence", &"toxic_burst", &"venom_bolts", &"acid_beam", &"venom_snare", &"toxic_mortar", &"spiked_moss"])
+links = Array[StringName]([&"virulence", &"toxic_burst", &"venom_bolts", &"acid_beam", &"venom_snare", &"toxic_mortar", &"spiked_moss", &"toxic_maze"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_toxic_ooze_0")])
 
 [sub_resource type="Resource" id="Node_black_venom"]
@@ -209,7 +427,7 @@ effects = Array[ExtResource("3_effect")]([SubResource("Effect_plague_level")])
 
 [sub_resource type="Resource" id="Effect_toxic_burst_0"]
 script = ExtResource("3_effect")
-buildings = 2
+buildings = 34
 elements = 8
 modify_type = 1
 value_per_rank = 0.08
@@ -218,11 +436,11 @@ value_per_rank = 0.08
 script = ExtResource("2_node")
 id = &"toxic_burst"
 display_name = "Toxic Burst"
-description = "Poison Nova damage +8%"
+description = "Poison Nova and Mortar damage +8%"
 max_rank = 3
 position = Vector2(2.564, 1.538)
 color = Color(0.784, 0.42, 0.847, 1)
-links = Array[StringName]([&"wide_cloud"])
+links = Array[StringName]([&"wide_cloud", &"mortar_rot_shells"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_toxic_burst_0")])
 
 [sub_resource type="Resource" id="Effect_wide_cloud_0"]
@@ -262,12 +480,6 @@ position = Vector2(2.564, 4.821)
 color = Color(0.784, 0.42, 0.847, 1)
 links = Array[StringName]([&"nova_t2"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_quick_pulse_p_0")])
-
-[sub_resource type="Resource" id="TalentEffect_unlock_nova_t2"]
-script = ExtResource("3_effect")
-kind = 2
-buildings = 2
-elements = 8
 
 [sub_resource type="Resource" id="Node_nova_t2"]
 script = ExtResource("2_node")
@@ -382,12 +594,6 @@ color = Color(0.784, 0.42, 0.847, 1)
 links = Array[StringName]([&"nova_t3"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_spreading_fumes_0")])
 
-[sub_resource type="Resource" id="TalentEffect_unlock_nova_t3"]
-script = ExtResource("3_effect")
-kind = 2
-buildings = 2
-elements = 8
-
 [sub_resource type="Resource" id="Node_nova_t3"]
 script = ExtResource("2_node")
 id = &"nova_t3"
@@ -423,7 +629,7 @@ effects = Array[ExtResource("3_effect")]([SubResource("Effect_toxic_bloom_level"
 
 [sub_resource type="Resource" id="Effect_venom_bolts_0"]
 script = ExtResource("3_effect")
-buildings = 1
+buildings = 257
 elements = 8
 modify_type = 1
 value_per_rank = 0.08
@@ -432,11 +638,11 @@ value_per_rank = 0.08
 script = ExtResource("2_node")
 id = &"venom_bolts"
 display_name = "Venom Bolts"
-description = "Poison Bolter damage +8%"
+description = "Poison Bolter and Spotter damage +8%"
 max_rank = 3
 position = Vector2(5.846, 2.359)
 color = Color(0.902, 0.949, 0.627, 1)
-links = Array[StringName]([&"quick_draw_p"])
+links = Array[StringName]([&"quick_draw_p", &"spotter_viper_eye"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_venom_bolts_0")])
 
 [sub_resource type="Resource" id="Effect_quick_draw_p_0"]
@@ -476,12 +682,6 @@ position = Vector2(5.846, 5.641)
 color = Color(0.902, 0.949, 0.627, 1)
 links = Array[StringName]([&"bolter_t2"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_long_flight_p_0")])
-
-[sub_resource type="Resource" id="TalentEffect_unlock_bolter_t2"]
-script = ExtResource("3_effect")
-kind = 2
-buildings = 1
-elements = 8
 
 [sub_resource type="Resource" id="Node_bolter_t2"]
 script = ExtResource("2_node")
@@ -569,12 +769,6 @@ position = Vector2(5.846, 12.205)
 color = Color(0.902, 0.949, 0.627, 1)
 links = Array[StringName]([&"bolter_t3"])
 
-[sub_resource type="Resource" id="TalentEffect_unlock_bolter_t3"]
-script = ExtResource("3_effect")
-kind = 2
-buildings = 1
-elements = 8
-
 [sub_resource type="Resource" id="Node_bolter_t3"]
 script = ExtResource("2_node")
 id = &"bolter_t3"
@@ -609,7 +803,7 @@ effects = Array[ExtResource("3_effect")]([SubResource("Effect_hydra_bolts_level"
 
 [sub_resource type="Resource" id="Effect_acid_beam_0"]
 script = ExtResource("3_effect")
-buildings = 4
+buildings = 132
 elements = 8
 modify_type = 1
 value_per_rank = 0.08
@@ -618,11 +812,11 @@ value_per_rank = 0.08
 script = ExtResource("2_node")
 id = &"acid_beam"
 display_name = "Acid Beam"
-description = "Poison Beamer damage +8%"
+description = "Poison Beamer and Breather damage +8%"
 max_rank = 3
 position = Vector2(12, 3.179)
 color = Color(0.345, 0.784, 0.541, 1)
-links = Array[StringName]([&"clear_lens_p"])
+links = Array[StringName]([&"clear_lens_p", &"breather_acid_breath"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_acid_beam_0")])
 
 [sub_resource type="Resource" id="Effect_clear_lens_p_0"]
@@ -662,12 +856,6 @@ position = Vector2(12, 6.462)
 color = Color(0.345, 0.784, 0.541, 1)
 links = Array[StringName]([&"beamer_t2"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_steady_beam_p_0")])
-
-[sub_resource type="Resource" id="TalentEffect_unlock_beamer_t2"]
-script = ExtResource("3_effect")
-kind = 2
-buildings = 4
-elements = 8
 
 [sub_resource type="Resource" id="Node_beamer_t2"]
 script = ExtResource("2_node")
@@ -755,12 +943,6 @@ color = Color(0.345, 0.784, 0.541, 1)
 links = Array[StringName]([&"beamer_t3"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_concentrated_0")])
 
-[sub_resource type="Resource" id="TalentEffect_unlock_beamer_t3"]
-script = ExtResource("3_effect")
-kind = 2
-buildings = 4
-elements = 8
-
 [sub_resource type="Resource" id="Node_beamer_t3"]
 script = ExtResource("2_node")
 id = &"beamer_t3"
@@ -794,7 +976,7 @@ effects = Array[ExtResource("3_effect")]([SubResource("Effect_acid_splash_level"
 
 [sub_resource type="Resource" id="Effect_venom_snare_0"]
 script = ExtResource("3_effect")
-buildings = 8
+buildings = 3592
 elements = 8
 modify_type = 1
 value_per_rank = 0.08
@@ -803,11 +985,11 @@ value_per_rank = 0.08
 script = ExtResource("2_node")
 id = &"venom_snare"
 display_name = "Venom Snare"
-description = "Poison trap damage +8%"
+description = "Poison trap, Harpooner, Hatchery and Egg Bomb damage +8%"
 max_rank = 3
 position = Vector2(15.282, 2.154)
 color = Color(0.722, 0.604, 0.29, 1)
-links = Array[StringName]([&"quick_reset"])
+links = Array[StringName]([&"quick_reset", &"egg_bomb_rotten_yolk", &"harpooner_venom_hooks", &"hatchery_venom_fed_brood"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_venom_snare_0")])
 
 [sub_resource type="Resource" id="Effect_quick_reset_0"]
@@ -847,12 +1029,6 @@ position = Vector2(15.282, 5.436)
 color = Color(0.722, 0.604, 0.29, 1)
 links = Array[StringName]([&"trap_t2"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_thick_cloud_level")])
-
-[sub_resource type="Resource" id="TalentEffect_unlock_trap_t2"]
-script = ExtResource("3_effect")
-kind = 2
-buildings = 8
-elements = 8
 
 [sub_resource type="Resource" id="Node_trap_t2"]
 script = ExtResource("2_node")
@@ -948,12 +1124,6 @@ position = Vector2(15.282, 12)
 color = Color(0.722, 0.604, 0.29, 1)
 links = Array[StringName]([&"trap_t3"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_venom_sacs_0")])
-
-[sub_resource type="Resource" id="TalentEffect_unlock_trap_t3"]
-script = ExtResource("3_effect")
-kind = 2
-buildings = 8
-elements = 8
 
 [sub_resource type="Resource" id="Node_trap_t3"]
 script = ExtResource("2_node")
@@ -1052,13 +1222,1162 @@ position = Vector2(17.846, 3.385)
 color = Color(0.604, 0.651, 0.69, 1)
 links = Array[StringName]([&"wall_t3"])
 
+[sub_resource type="Resource" id="Effect_buffer_maze_entry_poison"]
+script = ExtResource("3_effect")
+kind = 21
+buildings = 64
+elements = 8
+value_per_rank = 0.05
+
+[sub_resource type="Resource" id="Node_toxic_maze"]
+script = ExtResource("2_node")
+id = &"toxic_maze"
+display_name = "Toxic Maze"
+description = "Poison walls poison their attackers 10% harder, and Poison Buffer auras are 5% stronger"
+max_rank = 3
+position = Vector2(-11, -2)
+color = Color(0.604, 0.651, 0.69, 1)
+links = Array[StringName]([&"maze_thorn_walls", &"buffer_spore_aura"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_buffer_maze_entry_poison")])
+
+[sub_resource type="Resource" id="Node_maze_thorn_walls"]
+script = ExtResource("2_node")
+id = &"maze_thorn_walls"
+display_name = "Thorn Walls"
+description = "Enemies walking next to a Poison wall gain 1 poison stack every 2 s"
+max_rank = 3
+position = Vector2(-14.5, -1)
+color = Color(0.652, 0.684, 0.745, 1)
+links = Array[StringName]([&"maze_rotting_corners"])
+
+[sub_resource type="Resource" id="Node_maze_rotting_corners"]
+script = ExtResource("2_node")
+id = &"maze_rotting_corners"
+display_name = "Rotting Corners"
+description = "Turns next to Poison walls add 1 poison stack"
+max_rank = 2
+position = Vector2(-14.5, 1)
+color = Color(0.652, 0.684, 0.745, 1)
+links = Array[StringName]([&"maze_bog_maze"])
+
+[sub_resource type="Resource" id="Node_maze_bog_maze"]
+script = ExtResource("2_node")
+id = &"maze_bog_maze"
+display_name = "Bog Maze"
+description = "Poisoned enemies in the maze move 5% slower for every 5 stacks"
+kind = 1
+position = Vector2(-14.5, 3)
+color = Color(0.652, 0.684, 0.745, 1)
+
+[sub_resource type="Resource" id="Effect_spotter_viper_eye_0"]
+script = ExtResource("3_effect")
+buildings = 256
+elements = 8
+modify_type = 1
+value_per_rank = 0.08
+
+[sub_resource type="Resource" id="Node_spotter_viper_eye"]
+script = ExtResource("2_node")
+id = &"spotter_viper_eye"
+display_name = "Viper Eye"
+description = "Poison Spotter damage +8%"
+max_rank = 3
+position = Vector2(-7, 1)
+color = Color(0.879, 1, 0.661, 1)
+links = Array[StringName]([&"spotter_still_fangs"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_spotter_viper_eye_0")])
+
+[sub_resource type="Resource" id="Effect_spotter_still_fangs_0"]
+script = ExtResource("3_effect")
+buildings = 256
+elements = 8
+stat_type = 5
+modify_type = 0
+value_per_rank = 0.2
+
+[sub_resource type="Resource" id="Node_spotter_still_fangs"]
+script = ExtResource("2_node")
+id = &"spotter_still_fangs"
+display_name = "Still Fangs"
+description = "Poison Spotter range +0.2 tiles"
+max_rank = 2
+position = Vector2(-7, 3)
+color = Color(0.879, 1, 0.661, 1)
+links = Array[StringName]([&"spotter_t2"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_spotter_still_fangs_0")])
+
+[sub_resource type="Resource" id="Node_spotter_t2"]
+script = ExtResource("2_node")
+id = &"spotter_t2"
+display_name = "Spotter T2"
+description = "Unlocks Poison Spotter T2"
+kind = 2
+position = Vector2(-7, 5)
+color = Color(0.879, 1, 0.661, 1)
+links = Array[StringName]([&"spotter_venom_mark", &"spotter_patient_aim"])
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_spotter_t2")])
+
+[sub_resource type="Resource" id="Effect_spotter_venom_mark_0"]
+script = ExtResource("3_effect")
+buildings = 256
+elements = 8
+stat_type = 10
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Node_spotter_venom_mark"]
+script = ExtResource("2_node")
+id = &"spotter_venom_mark"
+display_name = "Venom Mark"
+description = "Poison Spotter potency +10%"
+max_rank = 3
+position = Vector2(-7.9, 7)
+color = Color(0.879, 1, 0.661, 1)
+links = Array[StringName]([&"spotter_toxic_mark"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_spotter_venom_mark_0")])
+
+[sub_resource type="Resource" id="Effect_spotter_toxic_mark_0"]
+script = ExtResource("3_effect")
+buildings = 256
+elements = 8
+stat_type = 32
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Node_spotter_toxic_mark"]
+script = ExtResource("2_node")
+id = &"spotter_toxic_mark"
+display_name = "Toxic Mark"
+description = "A Spotter hit marks its target: it takes +10% Poison damage from every tower for 3 s"
+max_rank = 2
+position = Vector2(-7.9, 9)
+color = Color(0.879, 1, 0.661, 1)
+links = Array[StringName]([&"spotter_deep_dose"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_spotter_toxic_mark_0")])
+
+[sub_resource type="Resource" id="Effect_spotter_deep_dose_0"]
+script = ExtResource("3_effect")
+buildings = 256
+elements = 8
+stat_type = 13
+modify_type = 0
+value_per_rank = 1.0
+
+[sub_resource type="Resource" id="Node_spotter_deep_dose"]
+script = ExtResource("2_node")
+id = &"spotter_deep_dose"
+display_name = "Deep Dose"
+description = "Each shot adds 1 more poison stack"
+max_rank = 2
+position = Vector2(-7.9, 11)
+color = Color(0.879, 1, 0.661, 1)
+links = Array[StringName]([&"spotter_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_spotter_deep_dose_0")])
+
+[sub_resource type="Resource" id="Effect_spotter_patient_aim_0"]
+script = ExtResource("3_effect")
+buildings = 256
+elements = 8
+stat_type = 6
+modify_type = 0
+value_per_rank = 0.03
+
+[sub_resource type="Resource" id="Node_spotter_patient_aim"]
+script = ExtResource("2_node")
+id = &"spotter_patient_aim"
+display_name = "Patient Aim"
+description = "Poison Spotter attack speed +0.03"
+max_rank = 3
+position = Vector2(-6.1, 7)
+color = Color(0.879, 1, 0.661, 1)
+links = Array[StringName]([&"spotter_rot_round"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_spotter_patient_aim_0")])
+
+[sub_resource type="Resource" id="Node_spotter_rot_round"]
+script = ExtResource("2_node")
+id = &"spotter_rot_round"
+display_name = "Rot Round"
+description = "Shots also hit enemies within 0.5 tiles of the target for 25% and poison them"
+max_rank = 2
+position = Vector2(-6.1, 9)
+color = Color(0.879, 1, 0.661, 1)
+links = Array[StringName]([&"spotter_weak_spot"])
+
+[sub_resource type="Resource" id="Effect_spotter_weak_spot_0"]
+script = ExtResource("3_effect")
+buildings = 256
+elements = 8
+stat_type = 7
+modify_type = 0
+value_per_rank = 0.04
+
+[sub_resource type="Resource" id="Node_spotter_weak_spot"]
+script = ExtResource("2_node")
+id = &"spotter_weak_spot"
+display_name = "Weak Spot"
+description = "Poison Spotter critical chance +4 points"
+max_rank = 2
+position = Vector2(-6.1, 11)
+color = Color(0.879, 1, 0.661, 1)
+links = Array[StringName]([&"spotter_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_spotter_weak_spot_0")])
+
+[sub_resource type="Resource" id="Node_spotter_t3"]
+script = ExtResource("2_node")
+id = &"spotter_t3"
+display_name = "Spotter T3"
+description = "Unlocks Poison Spotter T3"
+kind = 2
+position = Vector2(-7, 13)
+color = Color(0.879, 1, 0.661, 1)
+links = Array[StringName]([&"spotter_death_sentence"])
+one_way_links = Array[StringName]([&"black_venom"])
+needs = &"spotter_t2"
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_spotter_t3")])
+
+[sub_resource type="Resource" id="Node_spotter_death_sentence"]
+script = ExtResource("2_node")
+id = &"spotter_death_sentence"
+display_name = "Death Sentence"
+description = "A shot on an enemy with 10 or more stacks deals all their remaining poison damage at once"
+kind = 3
+position = Vector2(-7, 15)
+color = Color(0.879, 1, 0.661, 1)
+
+[sub_resource type="Resource" id="Effect_mortar_rot_shells_0"]
+script = ExtResource("3_effect")
+buildings = 32
+elements = 8
+modify_type = 1
+value_per_rank = 0.08
+
+[sub_resource type="Resource" id="Node_mortar_rot_shells"]
+script = ExtResource("2_node")
+id = &"mortar_rot_shells"
+display_name = "Rot Shells"
+description = "Poison Mortar damage +8%"
+max_rank = 3
+position = Vector2(-3.5, 2)
+color = Color(0.915, 0.454, 0.886, 1)
+links = Array[StringName]([&"mortar_long_lob"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_mortar_rot_shells_0")])
+
+[sub_resource type="Resource" id="Effect_mortar_long_lob_0"]
+script = ExtResource("3_effect")
+buildings = 32
+elements = 8
+stat_type = 5
+modify_type = 0
+value_per_rank = 0.2
+
+[sub_resource type="Resource" id="Node_mortar_long_lob"]
+script = ExtResource("2_node")
+id = &"mortar_long_lob"
+display_name = "Long Lob"
+description = "Poison Mortar range +0.2 tiles"
+max_rank = 2
+position = Vector2(-3.5, 4)
+color = Color(0.915, 0.454, 0.886, 1)
+links = Array[StringName]([&"mortar_t2"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_mortar_long_lob_0")])
+
+[sub_resource type="Resource" id="Node_mortar_t2"]
+script = ExtResource("2_node")
+id = &"mortar_t2"
+display_name = "Mortar T2"
+description = "Unlocks Poison Mortar T2"
+kind = 2
+position = Vector2(-3.5, 6)
+color = Color(0.915, 0.454, 0.886, 1)
+links = Array[StringName]([&"mortar_toxic_fill", &"mortar_quick_loader"])
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_mortar_t2")])
+
+[sub_resource type="Resource" id="Effect_mortar_toxic_fill_0"]
+script = ExtResource("3_effect")
+buildings = 32
+elements = 8
+stat_type = 10
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Node_mortar_toxic_fill"]
+script = ExtResource("2_node")
+id = &"mortar_toxic_fill"
+display_name = "Toxic Fill"
+description = "Poison Mortar potency +10%"
+max_rank = 3
+position = Vector2(-4.4, 8)
+color = Color(0.915, 0.454, 0.886, 1)
+links = Array[StringName]([&"mortar_gas_shells"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_mortar_toxic_fill_0")])
+
+[sub_resource type="Resource" id="Effect_mortar_gas_shells_0"]
+script = ExtResource("3_effect")
+buildings = 32
+elements = 8
+stat_type = 25
+modify_type = 0
+value_per_rank = 1.5
+
+[sub_resource type="Resource" id="Effect_mortar_gas_shells_1"]
+script = ExtResource("3_effect")
+buildings = 32
+elements = 8
+stat_type = 26
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Node_mortar_gas_shells"]
+script = ExtResource("2_node")
+id = &"mortar_gas_shells"
+display_name = "Gas Shells"
+description = "A shell leaves a poison cloud for 1.5 s"
+max_rank = 2
+position = Vector2(-4.4, 10)
+color = Color(0.915, 0.454, 0.886, 1)
+links = Array[StringName]([&"mortar_wide_shells"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_mortar_gas_shells_0"), SubResource("Effect_mortar_gas_shells_1")])
+
+[sub_resource type="Resource" id="Effect_mortar_wide_shells_0"]
+script = ExtResource("3_effect")
+buildings = 32
+elements = 8
+stat_type = 20
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Node_mortar_wide_shells"]
+script = ExtResource("2_node")
+id = &"mortar_wide_shells"
+display_name = "Wide Shells"
+description = "Poison Mortar splash radius +0.1 tiles"
+max_rank = 2
+position = Vector2(-4.4, 12)
+color = Color(0.915, 0.454, 0.886, 1)
+links = Array[StringName]([&"mortar_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_mortar_wide_shells_0")])
+
+[sub_resource type="Resource" id="Effect_mortar_quick_loader_0"]
+script = ExtResource("3_effect")
+buildings = 32
+elements = 8
+stat_type = 6
+modify_type = 0
+value_per_rank = 0.04
+
+[sub_resource type="Resource" id="Node_mortar_quick_loader"]
+script = ExtResource("2_node")
+id = &"mortar_quick_loader"
+display_name = "Quick Loader"
+description = "Poison Mortar attack speed +0.04"
+max_rank = 3
+position = Vector2(-2.6, 8)
+color = Color(0.915, 0.454, 0.886, 1)
+links = Array[StringName]([&"mortar_corroding_splash"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_mortar_quick_loader_0")])
+
+[sub_resource type="Resource" id="Node_mortar_corroding_splash"]
+script = ExtResource("2_node")
+id = &"mortar_corroding_splash"
+display_name = "Corroding Splash"
+description = "The splash lowers armor by 5% for 3 s"
+max_rank = 2
+position = Vector2(-2.6, 10)
+color = Color(0.915, 0.454, 0.886, 1)
+links = Array[StringName]([&"mortar_heavy_dose"])
+
+[sub_resource type="Resource" id="Node_mortar_heavy_dose"]
+script = ExtResource("2_node")
+id = &"mortar_heavy_dose"
+display_name = "Heavy Dose"
+description = "Each splash hit adds 1 more poison stack"
+max_rank = 2
+position = Vector2(-2.6, 12)
+color = Color(0.915, 0.454, 0.886, 1)
+links = Array[StringName]([&"mortar_t3"])
+
+[sub_resource type="Resource" id="Node_mortar_t3"]
+script = ExtResource("2_node")
+id = &"mortar_t3"
+display_name = "Mortar T3"
+description = "Unlocks Poison Mortar T3"
+kind = 2
+position = Vector2(-3.5, 14)
+color = Color(0.915, 0.454, 0.886, 1)
+links = Array[StringName]([&"mortar_plague_barrage"])
+one_way_links = Array[StringName]([&"black_venom"])
+needs = &"mortar_t2"
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_mortar_t3")])
+
+[sub_resource type="Resource" id="Node_mortar_plague_barrage"]
+script = ExtResource("2_node")
+id = &"mortar_plague_barrage"
+display_name = "Plague Barrage"
+description = "Every 5th shell bursts into 3 gas bombs around the landing spot"
+kind = 3
+position = Vector2(-3.5, 16)
+color = Color(0.915, 0.454, 0.886, 1)
+
+[sub_resource type="Resource" id="Effect_breather_acid_breath_0"]
+script = ExtResource("3_effect")
+buildings = 128
+elements = 8
+modify_type = 1
+value_per_rank = 0.08
+
+[sub_resource type="Resource" id="Node_breather_acid_breath"]
+script = ExtResource("2_node")
+id = &"breather_acid_breath"
+display_name = "Acid Breath"
+description = "Poison Breather damage +8%"
+max_rank = 3
+position = Vector2(21.5, 2)
+color = Color(0.373, 0.847, 0.684, 1)
+links = Array[StringName]([&"breather_deep_lungs"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_breather_acid_breath_0")])
+
+[sub_resource type="Resource" id="Effect_breather_deep_lungs_0"]
+script = ExtResource("3_effect")
+buildings = 128
+elements = 8
+stat_type = 5
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Node_breather_deep_lungs"]
+script = ExtResource("2_node")
+id = &"breather_deep_lungs"
+display_name = "Deep Lungs"
+description = "Poison Breather cone length +0.1 tiles"
+max_rank = 2
+position = Vector2(21.5, 4)
+color = Color(0.373, 0.847, 0.684, 1)
+links = Array[StringName]([&"breather_t2"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_breather_deep_lungs_0")])
+
+[sub_resource type="Resource" id="Node_breather_t2"]
+script = ExtResource("2_node")
+id = &"breather_t2"
+display_name = "Breather T2"
+description = "Unlocks Poison Breather T2"
+kind = 2
+position = Vector2(21.5, 6)
+color = Color(0.373, 0.847, 0.684, 1)
+links = Array[StringName]([&"breather_wide_fumes", &"breather_steady_breath"])
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_breather_t2")])
+
+[sub_resource type="Resource" id="Effect_breather_wide_fumes_0"]
+script = ExtResource("3_effect")
+buildings = 128
+elements = 8
+stat_type = 31
+modify_type = 0
+value_per_rank = 10.0
+
+[sub_resource type="Resource" id="Node_breather_wide_fumes"]
+script = ExtResource("2_node")
+id = &"breather_wide_fumes"
+display_name = "Wide Fumes"
+description = "Poison Breather cone width +10 degrees"
+max_rank = 2
+position = Vector2(20.6, 8)
+color = Color(0.373, 0.847, 0.684, 1)
+links = Array[StringName]([&"breather_choking_breath"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_breather_wide_fumes_0")])
+
+[sub_resource type="Resource" id="Effect_breather_choking_breath_0"]
+script = ExtResource("3_effect")
+buildings = 128
+elements = 8
+stat_type = 10
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Node_breather_choking_breath"]
+script = ExtResource("2_node")
+id = &"breather_choking_breath"
+display_name = "Choking Breath"
+description = "Poison Breather potency +10%"
+max_rank = 3
+position = Vector2(20.6, 10)
+color = Color(0.373, 0.847, 0.684, 1)
+links = Array[StringName]([&"breather_lingering_breath"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_breather_choking_breath_0")])
+
+[sub_resource type="Resource" id="Effect_breather_lingering_breath_0"]
+script = ExtResource("3_effect")
+buildings = 128
+elements = 8
+stat_type = 25
+modify_type = 0
+value_per_rank = 1.0
+
+[sub_resource type="Resource" id="Effect_breather_lingering_breath_1"]
+script = ExtResource("3_effect")
+buildings = 128
+elements = 8
+stat_type = 26
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Node_breather_lingering_breath"]
+script = ExtResource("2_node")
+id = &"breather_lingering_breath"
+display_name = "Lingering Breath"
+description = "The breath leaves a poison cloud for 1 s"
+max_rank = 2
+position = Vector2(20.6, 12)
+color = Color(0.373, 0.847, 0.684, 1)
+links = Array[StringName]([&"breather_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_breather_lingering_breath_0"), SubResource("Effect_breather_lingering_breath_1")])
+
+[sub_resource type="Resource" id="Effect_breather_steady_breath_0"]
+script = ExtResource("3_effect")
+buildings = 128
+elements = 8
+stat_type = 6
+modify_type = 0
+value_per_rank = 0.04
+
+[sub_resource type="Resource" id="Node_breather_steady_breath"]
+script = ExtResource("2_node")
+id = &"breather_steady_breath"
+display_name = "Steady Breath"
+description = "Poison Breather attack speed +0.04"
+max_rank = 3
+position = Vector2(22.4, 8)
+color = Color(0.373, 0.847, 0.684, 1)
+links = Array[StringName]([&"breather_corrosive_breath"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_breather_steady_breath_0")])
+
+[sub_resource type="Resource" id="Effect_breather_corrosive_breath_0"]
+script = ExtResource("3_effect")
+kind = 3
+buildings = 128
+elements = 8
+modify_type = 0
+value_per_rank = 0.03
+condition = 2
+per_stack = true
+
+[sub_resource type="Resource" id="Node_breather_corrosive_breath"]
+script = ExtResource("2_node")
+id = &"breather_corrosive_breath"
+display_name = "Corrosive Breath"
+description = "The breath deals +3% damage for every poison stack on the enemy"
+max_rank = 2
+position = Vector2(22.4, 10)
+color = Color(0.373, 0.847, 0.684, 1)
+links = Array[StringName]([&"breather_thick_fumes"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_breather_corrosive_breath_0")])
+
+[sub_resource type="Resource" id="Effect_breather_thick_fumes_0"]
+script = ExtResource("3_effect")
+buildings = 128
+elements = 8
+stat_type = 13
+modify_type = 0
+value_per_rank = 1.0
+
+[sub_resource type="Resource" id="Node_breather_thick_fumes"]
+script = ExtResource("2_node")
+id = &"breather_thick_fumes"
+display_name = "Thick Fumes"
+description = "The breath's poison stacks 1 more time on each enemy"
+max_rank = 2
+position = Vector2(22.4, 12)
+color = Color(0.373, 0.847, 0.684, 1)
+links = Array[StringName]([&"breather_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_breather_thick_fumes_0")])
+
+[sub_resource type="Resource" id="Node_breather_t3"]
+script = ExtResource("2_node")
+id = &"breather_t3"
+display_name = "Breather T3"
+description = "Unlocks Poison Breather T3"
+kind = 2
+position = Vector2(21.5, 14)
+color = Color(0.373, 0.847, 0.684, 1)
+links = Array[StringName]([&"breather_miasma"])
+one_way_links = Array[StringName]([&"black_venom"])
+needs = &"breather_t2"
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_breather_t3")])
+
+[sub_resource type="Resource" id="Node_breather_miasma"]
+script = ExtResource("2_node")
+id = &"breather_miasma"
+display_name = "Miasma"
+description = "The breath sweeps across a 120 degree arc, and every hit passes 1 stack to an enemy within 1 tile"
+kind = 3
+position = Vector2(21.5, 16)
+color = Color(0.373, 0.847, 0.684, 1)
+
+[sub_resource type="Resource" id="Node_egg_bomb_rotten_yolk"]
+script = ExtResource("2_node")
+id = &"egg_bomb_rotten_yolk"
+display_name = "Rotten Yolk"
+description = "Poison Egg Bomb blast damage +8%"
+max_rank = 3
+position = Vector2(25, 1)
+color = Color(0.78, 0.75, 0.313, 1)
+links = Array[StringName]([&"egg_bomb_quick_hatch"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_egg_bomb_rotten_yolk_0")])
+
+[sub_resource type="Resource" id="Node_egg_bomb_quick_hatch"]
+script = ExtResource("2_node")
+id = &"egg_bomb_quick_hatch"
+display_name = "Quick Hatch"
+description = "Poison Egg Bomb rebuilds 10% faster"
+max_rank = 3
+position = Vector2(25, 3)
+color = Color(0.78, 0.75, 0.313, 1)
+links = Array[StringName]([&"egg_bomb_t2"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_egg_bomb_quick_hatch_0")])
+
+[sub_resource type="Resource" id="Node_egg_bomb_t2"]
+script = ExtResource("2_node")
+id = &"egg_bomb_t2"
+display_name = "Egg Bomb T2"
+description = "Unlocks Poison Egg Bomb T2"
+kind = 2
+position = Vector2(25, 5)
+color = Color(0.78, 0.75, 0.313, 1)
+links = Array[StringName]([&"egg_bomb_wide_blast", &"egg_bomb_short_fuse"])
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_egg_bomb_t2")])
+
+[sub_resource type="Resource" id="Node_egg_bomb_wide_blast"]
+script = ExtResource("2_node")
+id = &"egg_bomb_wide_blast"
+display_name = "Wide Blast"
+description = "Poison Egg Bomb blast radius +0.1 tiles"
+max_rank = 2
+position = Vector2(24.1, 7)
+color = Color(0.78, 0.75, 0.313, 1)
+links = Array[StringName]([&"egg_bomb_spore_shell"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_egg_bomb_wide_blast_0")])
+
+[sub_resource type="Resource" id="Node_egg_bomb_spore_shell"]
+script = ExtResource("2_node")
+id = &"egg_bomb_spore_shell"
+display_name = "Spore Shell"
+description = "Poison Egg Bomb potency +10%"
+max_rank = 3
+position = Vector2(24.1, 9)
+color = Color(0.78, 0.75, 0.313, 1)
+links = Array[StringName]([&"egg_bomb_gas_pit"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_egg_bomb_spore_shell_0")])
+
+[sub_resource type="Resource" id="Node_egg_bomb_gas_pit"]
+script = ExtResource("2_node")
+id = &"egg_bomb_gas_pit"
+display_name = "Gas Pit"
+description = "The blast leaves a poison cloud for 1.5 s"
+max_rank = 2
+position = Vector2(24.1, 11)
+color = Color(0.78, 0.75, 0.313, 1)
+links = Array[StringName]([&"egg_bomb_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_egg_bomb_gas_pit_0")])
+
+[sub_resource type="Resource" id="Node_egg_bomb_short_fuse"]
+script = ExtResource("2_node")
+id = &"egg_bomb_short_fuse"
+display_name = "Short Fuse"
+description = "The egg goes off 0.1 s sooner"
+max_rank = 2
+position = Vector2(25.9, 7)
+color = Color(0.78, 0.75, 0.313, 1)
+links = Array[StringName]([&"egg_bomb_sticky_yolk"])
+
+[sub_resource type="Resource" id="Node_egg_bomb_sticky_yolk"]
+script = ExtResource("2_node")
+id = &"egg_bomb_sticky_yolk"
+display_name = "Sticky Yolk"
+description = "Enemies hit move 15% slower for 2 s"
+max_rank = 2
+position = Vector2(25.9, 9)
+color = Color(0.78, 0.75, 0.313, 1)
+links = Array[StringName]([&"egg_bomb_fetid_nest"])
+
+[sub_resource type="Resource" id="Node_egg_bomb_fetid_nest"]
+script = ExtResource("2_node")
+id = &"egg_bomb_fetid_nest"
+display_name = "Fetid Nest"
+description = "Poison Egg Bomb rebuilds 10% faster"
+max_rank = 3
+position = Vector2(25.9, 11)
+color = Color(0.78, 0.75, 0.313, 1)
+links = Array[StringName]([&"egg_bomb_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_egg_bomb_fetid_nest_0")])
+
+[sub_resource type="Resource" id="Node_egg_bomb_t3"]
+script = ExtResource("2_node")
+id = &"egg_bomb_t3"
+display_name = "Egg Bomb T3"
+description = "Unlocks Poison Egg Bomb T3"
+kind = 2
+position = Vector2(25, 13)
+color = Color(0.78, 0.75, 0.313, 1)
+links = Array[StringName]([&"egg_bomb_plague_egg"])
+one_way_links = Array[StringName]([&"black_venom"])
+needs = &"egg_bomb_t2"
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_egg_bomb_t3")])
+
+[sub_resource type="Resource" id="Node_egg_bomb_plague_egg"]
+script = ExtResource("2_node")
+id = &"egg_bomb_plague_egg"
+display_name = "Plague Egg"
+description = "The blast adds 5 poison stacks, and its cloud drifts along the enemy path for 3 s"
+kind = 3
+position = Vector2(25, 15)
+color = Color(0.78, 0.75, 0.313, 1)
+
+[sub_resource type="Resource" id="Effect_harpooner_venom_hooks_0"]
+script = ExtResource("3_effect")
+buildings = 512
+elements = 8
+modify_type = 1
+value_per_rank = 0.08
+
+[sub_resource type="Resource" id="Node_harpooner_venom_hooks"]
+script = ExtResource("2_node")
+id = &"harpooner_venom_hooks"
+display_name = "Venom Hooks"
+description = "Poison Harpooner damage +8%"
+max_rank = 3
+position = Vector2(28.5, 0)
+color = Color(0.711, 0.78, 0.313, 1)
+links = Array[StringName]([&"harpooner_long_chain"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_harpooner_venom_hooks_0")])
+
+[sub_resource type="Resource" id="Effect_harpooner_long_chain_0"]
+script = ExtResource("3_effect")
+buildings = 512
+elements = 8
+stat_type = 5
+modify_type = 0
+value_per_rank = 0.2
+
+[sub_resource type="Resource" id="Node_harpooner_long_chain"]
+script = ExtResource("2_node")
+id = &"harpooner_long_chain"
+display_name = "Long Chain"
+description = "Poison Harpooner range +0.2 tiles"
+max_rank = 2
+position = Vector2(28.5, 2)
+color = Color(0.711, 0.78, 0.313, 1)
+links = Array[StringName]([&"harpooner_t2"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_harpooner_long_chain_0")])
+
+[sub_resource type="Resource" id="Node_harpooner_t2"]
+script = ExtResource("2_node")
+id = &"harpooner_t2"
+display_name = "Harpooner T2"
+description = "Unlocks Poison Harpooner T2"
+kind = 2
+position = Vector2(28.5, 4)
+color = Color(0.711, 0.78, 0.313, 1)
+links = Array[StringName]([&"harpooner_toxic_barbs", &"harpooner_quick_reel"])
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_harpooner_t2")])
+
+[sub_resource type="Resource" id="Effect_harpooner_toxic_barbs_0"]
+script = ExtResource("3_effect")
+buildings = 512
+elements = 8
+stat_type = 10
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Node_harpooner_toxic_barbs"]
+script = ExtResource("2_node")
+id = &"harpooner_toxic_barbs"
+display_name = "Toxic Barbs"
+description = "Poison Harpooner potency +10%"
+max_rank = 3
+position = Vector2(27.6, 6)
+color = Color(0.711, 0.78, 0.313, 1)
+links = Array[StringName]([&"harpooner_festering_wound"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_harpooner_toxic_barbs_0")])
+
+[sub_resource type="Resource" id="Node_harpooner_festering_wound"]
+script = ExtResource("2_node")
+id = &"harpooner_festering_wound"
+display_name = "Festering Wound"
+description = "A tethered enemy gains 1 poison stack every second"
+max_rank = 2
+position = Vector2(27.6, 8)
+color = Color(0.711, 0.78, 0.313, 1)
+links = Array[StringName]([&"harpooner_tight_tether"])
+
+[sub_resource type="Resource" id="Effect_harpooner_tight_tether_0"]
+script = ExtResource("3_effect")
+buildings = 512
+elements = 8
+stat_type = 34
+modify_type = 0
+value_per_rank = 0.25
+
+[sub_resource type="Resource" id="Node_harpooner_tight_tether"]
+script = ExtResource("2_node")
+id = &"harpooner_tight_tether"
+display_name = "Tight Tether"
+description = "The tether lasts 0.25 s longer"
+max_rank = 2
+position = Vector2(27.6, 10)
+color = Color(0.711, 0.78, 0.313, 1)
+links = Array[StringName]([&"harpooner_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_harpooner_tight_tether_0")])
+
+[sub_resource type="Resource" id="Effect_harpooner_quick_reel_0"]
+script = ExtResource("3_effect")
+buildings = 512
+elements = 8
+stat_type = 6
+modify_type = 0
+value_per_rank = 0.04
+
+[sub_resource type="Resource" id="Node_harpooner_quick_reel"]
+script = ExtResource("2_node")
+id = &"harpooner_quick_reel"
+display_name = "Quick Reel"
+description = "Poison Harpooner attack speed +0.04"
+max_rank = 3
+position = Vector2(29.4, 6)
+color = Color(0.711, 0.78, 0.313, 1)
+links = Array[StringName]([&"harpooner_grounded_rot"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_harpooner_quick_reel_0")])
+
+[sub_resource type="Resource" id="Node_harpooner_grounded_rot"]
+script = ExtResource("2_node")
+id = &"harpooner_grounded_rot"
+display_name = "Grounded Rot"
+description = "Harpooned flyers lose 10% armor for 5 s"
+max_rank = 2
+position = Vector2(29.4, 8)
+color = Color(0.711, 0.78, 0.313, 1)
+links = Array[StringName]([&"harpooner_skyhook"])
+
+[sub_resource type="Resource" id="Effect_harpooner_skyhook_0"]
+script = ExtResource("3_effect")
+kind = 3
+buildings = 512
+elements = 8
+modify_type = 1
+value_per_rank = 0.15
+condition = 5
+
+[sub_resource type="Resource" id="Node_harpooner_skyhook"]
+script = ExtResource("2_node")
+id = &"harpooner_skyhook"
+display_name = "Skyhook"
+description = "Poison Harpooner damage +15% against flyers"
+max_rank = 2
+position = Vector2(29.4, 10)
+color = Color(0.711, 0.78, 0.313, 1)
+links = Array[StringName]([&"harpooner_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_harpooner_skyhook_0")])
+
+[sub_resource type="Resource" id="Node_harpooner_t3"]
+script = ExtResource("2_node")
+id = &"harpooner_t3"
+display_name = "Harpooner T3"
+description = "Unlocks Poison Harpooner T3"
+kind = 2
+position = Vector2(28.5, 12)
+color = Color(0.711, 0.78, 0.313, 1)
+links = Array[StringName]([&"harpooner_leech_chain"])
+one_way_links = Array[StringName]([&"black_venom"])
+needs = &"harpooner_t2"
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_harpooner_t3")])
+
+[sub_resource type="Resource" id="Node_harpooner_leech_chain"]
+script = ExtResource("2_node")
+id = &"harpooner_leech_chain"
+display_name = "Leech Chain"
+description = "Poison ticks on a tethered enemy also hit every enemy within 1 tile"
+kind = 3
+position = Vector2(28.5, 14)
+color = Color(0.711, 0.78, 0.313, 1)
+
+[sub_resource type="Resource" id="Node_hatchery_venom_fed_brood"]
+script = ExtResource("2_node")
+id = &"hatchery_venom_fed_brood"
+display_name = "Venom-Fed Brood"
+description = "Poison drakeling damage +8%"
+max_rank = 3
+position = Vector2(32, -1)
+color = Color(0.613, 0.78, 0.313, 1)
+links = Array[StringName]([&"hatchery_rot_clutch"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_hatchery_venom_fed_brood_0")])
+
+[sub_resource type="Resource" id="Node_hatchery_rot_clutch"]
+script = ExtResource("2_node")
+id = &"hatchery_rot_clutch"
+display_name = "Rot Clutch"
+description = "Poison Hatchery hatches 10% faster"
+max_rank = 3
+position = Vector2(32, 1)
+color = Color(0.613, 0.78, 0.313, 1)
+links = Array[StringName]([&"hatchery_t2"])
+
+[sub_resource type="Resource" id="Node_hatchery_t2"]
+script = ExtResource("2_node")
+id = &"hatchery_t2"
+display_name = "Hatchery T2"
+description = "Unlocks Poison Hatchery T2"
+kind = 2
+position = Vector2(32, 3)
+color = Color(0.613, 0.78, 0.313, 1)
+links = Array[StringName]([&"hatchery_venom_claws", &"hatchery_big_clutch"])
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_hatchery_t2")])
+
+[sub_resource type="Resource" id="Node_hatchery_venom_claws"]
+script = ExtResource("2_node")
+id = &"hatchery_venom_claws"
+display_name = "Venom Claws"
+description = "Poison drakeling potency +10%"
+max_rank = 3
+position = Vector2(31.1, 5)
+color = Color(0.613, 0.78, 0.313, 1)
+links = Array[StringName]([&"hatchery_toxic_blood"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_hatchery_venom_claws_0")])
+
+[sub_resource type="Resource" id="Node_hatchery_toxic_blood"]
+script = ExtResource("2_node")
+id = &"hatchery_toxic_blood"
+display_name = "Toxic Blood"
+description = "Poison drakelings poison the enemies that hit them"
+max_rank = 2
+position = Vector2(31.1, 7)
+color = Color(0.613, 0.78, 0.313, 1)
+links = Array[StringName]([&"hatchery_hardy_brood"])
+
+[sub_resource type="Resource" id="Node_hatchery_hardy_brood"]
+script = ExtResource("2_node")
+id = &"hatchery_hardy_brood"
+display_name = "Hardy Brood"
+description = "Poison drakeling health +15%"
+max_rank = 2
+position = Vector2(31.1, 9)
+color = Color(0.613, 0.78, 0.313, 1)
+links = Array[StringName]([&"hatchery_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_hatchery_hardy_brood_0")])
+
+[sub_resource type="Resource" id="Node_hatchery_big_clutch"]
+script = ExtResource("2_node")
+id = &"hatchery_big_clutch"
+display_name = "Big Clutch"
+description = "One more drakeling at a time"
+position = Vector2(32.9, 5)
+color = Color(0.613, 0.78, 0.313, 1)
+links = Array[StringName]([&"hatchery_acid_spit"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_hatchery_big_clutch_0")])
+
+[sub_resource type="Resource" id="Node_hatchery_acid_spit"]
+script = ExtResource("2_node")
+id = &"hatchery_acid_spit"
+display_name = "Acid Spit"
+description = "Every 4 s a Poison drakeling spits acid: the enemy loses 10% armor for 3 s"
+max_rank = 2
+position = Vector2(32.9, 7)
+color = Color(0.613, 0.78, 0.313, 1)
+links = Array[StringName]([&"hatchery_fierce_hatchlings"])
+
+[sub_resource type="Resource" id="Node_hatchery_fierce_hatchlings"]
+script = ExtResource("2_node")
+id = &"hatchery_fierce_hatchlings"
+display_name = "Fierce Hatchlings"
+description = "Poison drakeling attack speed +0.04"
+max_rank = 3
+position = Vector2(32.9, 9)
+color = Color(0.613, 0.78, 0.313, 1)
+links = Array[StringName]([&"hatchery_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_hatchery_fierce_hatchlings_0")])
+
+[sub_resource type="Resource" id="Node_hatchery_t3"]
+script = ExtResource("2_node")
+id = &"hatchery_t3"
+display_name = "Hatchery T3"
+description = "Unlocks Poison Hatchery T3"
+kind = 2
+position = Vector2(32, 11)
+color = Color(0.613, 0.78, 0.313, 1)
+links = Array[StringName]([&"hatchery_plague_brood"])
+one_way_links = Array[StringName]([&"black_venom"])
+needs = &"hatchery_t2"
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_hatchery_t3")])
+
+[sub_resource type="Resource" id="Node_hatchery_plague_brood"]
+script = ExtResource("2_node")
+id = &"hatchery_plague_brood"
+display_name = "Plague Brood"
+description = "A falling Poison drakeling leaves a poison cloud for 3 s"
+kind = 3
+position = Vector2(32, 13)
+color = Color(0.613, 0.78, 0.313, 1)
+
+[sub_resource type="Resource" id="Effect_buffer_spore_aura_0"]
+script = ExtResource("3_effect")
+buildings = 64
+elements = 8
+stat_type = 5
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Node_buffer_spore_aura"]
+script = ExtResource("2_node")
+id = &"buffer_spore_aura"
+display_name = "Spore Aura"
+description = "Poison Buffer aura radius +0.1 tiles"
+max_rank = 3
+position = Vector2(-11, 0)
+color = Color(0.652, 0.684, 0.745, 1)
+links = Array[StringName]([&"buffer_bitter_tonic"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_buffer_spore_aura_0")])
+
+[sub_resource type="Resource" id="Effect_buffer_bitter_tonic_0"]
+script = ExtResource("3_effect")
+kind = 21
+buildings = 64
+elements = 8
+value_per_rank = 0.05
+
+[sub_resource type="Resource" id="Node_buffer_bitter_tonic"]
+script = ExtResource("2_node")
+id = &"buffer_bitter_tonic"
+display_name = "Bitter Tonic"
+description = "Poison Buffer buffs +5% stronger"
+max_rank = 2
+position = Vector2(-11, 2)
+color = Color(0.652, 0.684, 0.745, 1)
+links = Array[StringName]([&"buffer_t2"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_buffer_bitter_tonic_0")])
+
+[sub_resource type="Resource" id="Node_buffer_t2"]
+script = ExtResource("2_node")
+id = &"buffer_t2"
+display_name = "Buffer T2"
+description = "Unlocks Poison Buffer T2: the aura also weakens enemies in it"
+kind = 2
+position = Vector2(-11, 4)
+color = Color(0.652, 0.684, 0.745, 1)
+links = Array[StringName]([&"buffer_venom_zeal", &"buffer_brew_song"])
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_buffer_t2")])
+
+[sub_resource type="Resource" id="Effect_buffer_venom_zeal_0"]
+script = ExtResource("3_effect")
+buildings = 64
+elements = 8
+stat_type = 11
+modify_type = 0
+value_per_rank = 0.03
+
+[sub_resource type="Resource" id="Node_buffer_venom_zeal"]
+script = ExtResource("2_node")
+id = &"buffer_venom_zeal"
+display_name = "Venom Zeal"
+description = "The poison stack chance a Poison Buffer gives +3 points"
+max_rank = 3
+position = Vector2(-11.9, 6)
+color = Color(0.652, 0.684, 0.745, 1)
+links = Array[StringName]([&"buffer_noxious_air"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_buffer_venom_zeal_0")])
+
+[sub_resource type="Resource" id="Node_buffer_noxious_air"]
+script = ExtResource("2_node")
+id = &"buffer_noxious_air"
+display_name = "Noxious Air"
+description = "Enemies in a Poison Buffer's aura take +5% Poison damage"
+max_rank = 2
+position = Vector2(-11.9, 8)
+color = Color(0.652, 0.684, 0.745, 1)
+links = Array[StringName]([&"buffer_deep_reserve"])
+
+[sub_resource type="Resource" id="Effect_buffer_deep_reserve_0"]
+script = ExtResource("3_effect")
+kind = 22
+buildings = 64
+elements = 8
+value_per_rank = 1.0
+
+[sub_resource type="Resource" id="Node_buffer_deep_reserve"]
+script = ExtResource("2_node")
+id = &"buffer_deep_reserve"
+display_name = "Deep Reserve"
+description = "Poison Buffer pip budget +1"
+max_rank = 2
+position = Vector2(-11.9, 10)
+color = Color(0.652, 0.684, 0.745, 1)
+links = Array[StringName]([&"buffer_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_buffer_deep_reserve_0")])
+
+[sub_resource type="Resource" id="Effect_buffer_brew_song_0"]
+script = ExtResource("3_effect")
+buildings = 64
+elements = 8
+stat_type = 10
+modify_type = 0
+value_per_rank = 0.05
+
+[sub_resource type="Resource" id="Node_buffer_brew_song"]
+script = ExtResource("2_node")
+id = &"buffer_brew_song"
+display_name = "Brew Song"
+description = "Buffed towers' poison potency +5%"
+max_rank = 3
+position = Vector2(-10.1, 6)
+color = Color(0.652, 0.684, 0.745, 1)
+links = Array[StringName]([&"buffer_sharp_senses"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_buffer_brew_song_0")])
+
+[sub_resource type="Resource" id="Node_buffer_sharp_senses"]
+script = ExtResource("2_node")
+id = &"buffer_sharp_senses"
+display_name = "Sharp Senses"
+description = "The critical chance buff of a Poison Buffer is 5% stronger"
+max_rank = 2
+position = Vector2(-10.1, 8)
+color = Color(0.652, 0.684, 0.745, 1)
+links = Array[StringName]([&"buffer_mossy_stones"])
+
+[sub_resource type="Resource" id="Node_buffer_mossy_stones"]
+script = ExtResource("2_node")
+id = &"buffer_mossy_stones"
+display_name = "Mossy Stones"
+description = "Poison walls in a Poison Buffer's aura heal 1% of their max health per second"
+max_rank = 2
+position = Vector2(-10.1, 10)
+color = Color(0.652, 0.684, 0.745, 1)
+links = Array[StringName]([&"buffer_t3"])
+
+[sub_resource type="Resource" id="Node_buffer_t3"]
+script = ExtResource("2_node")
+id = &"buffer_t3"
+display_name = "Buffer T3"
+description = "Unlocks Poison Buffer T3: Commander's Roar"
+kind = 2
+position = Vector2(-11, 12)
+color = Color(0.652, 0.684, 0.745, 1)
+links = Array[StringName]([&"buffer_heart_of_the_bog"])
+one_way_links = Array[StringName]([&"black_venom"])
+needs = &"buffer_t2"
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_buffer_t3")])
+
+[sub_resource type="Resource" id="Node_buffer_heart_of_the_bog"]
+script = ExtResource("2_node")
+id = &"buffer_heart_of_the_bog"
+display_name = "Heart of the Bog"
+description = "Every 10th attack of a buffed tower adds 3 poison stacks"
+kind = 3
+position = Vector2(-11, 14)
+color = Color(0.652, 0.684, 0.745, 1)
+
 [resource]
 script = ExtResource("1_tree")
 id = &"poison"
 display_name = "Poison"
 start_id = &"toxic_ooze"
 element = 8
-nodes = Array[ExtResource("2_node")]([SubResource("Node_toxic_ooze"), SubResource("Node_black_venom"), SubResource("Node_virulence"), SubResource("Node_lingering_toxins"), SubResource("Node_thick_venom"), SubResource("Node_seeping"), SubResource("Node_weakening"), SubResource("Node_corrosion"), SubResource("Node_potent_brew"), SubResource("Node_contagion"), SubResource("Node_necrosis"), SubResource("Node_plague"), SubResource("Node_toxic_burst"), SubResource("Node_wide_cloud"), SubResource("Node_quick_pulse_p"), SubResource("Node_nova_t2"), SubResource("Node_noxious_burst"), SubResource("Node_caustic_pulse"), SubResource("Node_lingering_cloud"), SubResource("Node_overdose"), SubResource("Node_spreading_fumes"), SubResource("Node_nova_t3"), SubResource("Node_toxic_bloom"), SubResource("Node_venom_bolts"), SubResource("Node_quick_draw_p"), SubResource("Node_long_flight_p"), SubResource("Node_bolter_t2"), SubResource("Node_envenomed_tips"), SubResource("Node_piercing_fangs"), SubResource("Node_barbed_bolts"), SubResource("Node_opportunist"), SubResource("Node_viper_strike"), SubResource("Node_bolter_t3"), SubResource("Node_hydra_bolts"), SubResource("Node_acid_beam"), SubResource("Node_clear_lens_p"), SubResource("Node_steady_beam_p"), SubResource("Node_beamer_t2"), SubResource("Node_toxic_stream"), SubResource("Node_searing_acid"), SubResource("Node_saturation"), SubResource("Node_dissolve"), SubResource("Node_concentrated"), SubResource("Node_beamer_t3"), SubResource("Node_acid_splash"), SubResource("Node_venom_snare"), SubResource("Node_quick_reset"), SubResource("Node_thick_cloud"), SubResource("Node_trap_t2"), SubResource("Node_choking_gas"), SubResource("Node_barbed_jaws"), SubResource("Node_wide_fog"), SubResource("Node_sickening_snap"), SubResource("Node_venom_sacs"), SubResource("Node_trap_t3"), SubResource("Node_creeping_fog"), SubResource("Node_toxic_mortar"), SubResource("Node_wall_t2"), SubResource("Node_spiked_moss"), SubResource("Node_wall_t3"), SubResource("Node_clinging_venom"), SubResource("Node_thornbark")])
+nodes = Array[ExtResource("2_node")]([SubResource("Node_toxic_ooze"), SubResource("Node_black_venom"), SubResource("Node_virulence"), SubResource("Node_lingering_toxins"), SubResource("Node_thick_venom"), SubResource("Node_seeping"), SubResource("Node_weakening"), SubResource("Node_corrosion"), SubResource("Node_potent_brew"), SubResource("Node_contagion"), SubResource("Node_necrosis"), SubResource("Node_plague"), SubResource("Node_toxic_burst"), SubResource("Node_wide_cloud"), SubResource("Node_quick_pulse_p"), SubResource("Node_nova_t2"), SubResource("Node_noxious_burst"), SubResource("Node_caustic_pulse"), SubResource("Node_lingering_cloud"), SubResource("Node_overdose"), SubResource("Node_spreading_fumes"), SubResource("Node_nova_t3"), SubResource("Node_toxic_bloom"), SubResource("Node_venom_bolts"), SubResource("Node_quick_draw_p"), SubResource("Node_long_flight_p"), SubResource("Node_bolter_t2"), SubResource("Node_envenomed_tips"), SubResource("Node_piercing_fangs"), SubResource("Node_barbed_bolts"), SubResource("Node_opportunist"), SubResource("Node_viper_strike"), SubResource("Node_bolter_t3"), SubResource("Node_hydra_bolts"), SubResource("Node_acid_beam"), SubResource("Node_clear_lens_p"), SubResource("Node_steady_beam_p"), SubResource("Node_beamer_t2"), SubResource("Node_toxic_stream"), SubResource("Node_searing_acid"), SubResource("Node_saturation"), SubResource("Node_dissolve"), SubResource("Node_concentrated"), SubResource("Node_beamer_t3"), SubResource("Node_acid_splash"), SubResource("Node_venom_snare"), SubResource("Node_quick_reset"), SubResource("Node_thick_cloud"), SubResource("Node_trap_t2"), SubResource("Node_choking_gas"), SubResource("Node_barbed_jaws"), SubResource("Node_wide_fog"), SubResource("Node_sickening_snap"), SubResource("Node_venom_sacs"), SubResource("Node_trap_t3"), SubResource("Node_creeping_fog"), SubResource("Node_toxic_mortar"), SubResource("Node_wall_t2"), SubResource("Node_spiked_moss"), SubResource("Node_wall_t3"), SubResource("Node_clinging_venom"), SubResource("Node_thornbark"), SubResource("Node_toxic_maze"), SubResource("Node_maze_thorn_walls"), SubResource("Node_maze_rotting_corners"), SubResource("Node_maze_bog_maze"), SubResource("Node_spotter_viper_eye"), SubResource("Node_spotter_still_fangs"), SubResource("Node_spotter_t2"), SubResource("Node_spotter_venom_mark"), SubResource("Node_spotter_toxic_mark"), SubResource("Node_spotter_deep_dose"), SubResource("Node_spotter_patient_aim"), SubResource("Node_spotter_rot_round"), SubResource("Node_spotter_weak_spot"), SubResource("Node_spotter_t3"), SubResource("Node_spotter_death_sentence"), SubResource("Node_mortar_rot_shells"), SubResource("Node_mortar_long_lob"), SubResource("Node_mortar_t2"), SubResource("Node_mortar_toxic_fill"), SubResource("Node_mortar_gas_shells"), SubResource("Node_mortar_wide_shells"), SubResource("Node_mortar_quick_loader"), SubResource("Node_mortar_corroding_splash"), SubResource("Node_mortar_heavy_dose"), SubResource("Node_mortar_t3"), SubResource("Node_mortar_plague_barrage"), SubResource("Node_breather_acid_breath"), SubResource("Node_breather_deep_lungs"), SubResource("Node_breather_t2"), SubResource("Node_breather_wide_fumes"), SubResource("Node_breather_choking_breath"), SubResource("Node_breather_lingering_breath"), SubResource("Node_breather_steady_breath"), SubResource("Node_breather_corrosive_breath"), SubResource("Node_breather_thick_fumes"), SubResource("Node_breather_t3"), SubResource("Node_breather_miasma"), SubResource("Node_egg_bomb_rotten_yolk"), SubResource("Node_egg_bomb_quick_hatch"), SubResource("Node_egg_bomb_t2"), SubResource("Node_egg_bomb_wide_blast"), SubResource("Node_egg_bomb_spore_shell"), SubResource("Node_egg_bomb_gas_pit"), SubResource("Node_egg_bomb_short_fuse"), SubResource("Node_egg_bomb_sticky_yolk"), SubResource("Node_egg_bomb_fetid_nest"), SubResource("Node_egg_bomb_t3"), SubResource("Node_egg_bomb_plague_egg"), SubResource("Node_harpooner_venom_hooks"), SubResource("Node_harpooner_long_chain"), SubResource("Node_harpooner_t2"), SubResource("Node_harpooner_toxic_barbs"), SubResource("Node_harpooner_festering_wound"), SubResource("Node_harpooner_tight_tether"), SubResource("Node_harpooner_quick_reel"), SubResource("Node_harpooner_grounded_rot"), SubResource("Node_harpooner_skyhook"), SubResource("Node_harpooner_t3"), SubResource("Node_harpooner_leech_chain"), SubResource("Node_hatchery_venom_fed_brood"), SubResource("Node_hatchery_rot_clutch"), SubResource("Node_hatchery_t2"), SubResource("Node_hatchery_venom_claws"), SubResource("Node_hatchery_toxic_blood"), SubResource("Node_hatchery_hardy_brood"), SubResource("Node_hatchery_big_clutch"), SubResource("Node_hatchery_acid_spit"), SubResource("Node_hatchery_fierce_hatchlings"), SubResource("Node_hatchery_t3"), SubResource("Node_hatchery_plague_brood"), SubResource("Node_buffer_spore_aura"), SubResource("Node_buffer_bitter_tonic"), SubResource("Node_buffer_t2"), SubResource("Node_buffer_venom_zeal"), SubResource("Node_buffer_noxious_air"), SubResource("Node_buffer_deep_reserve"), SubResource("Node_buffer_brew_song"), SubResource("Node_buffer_sharp_senses"), SubResource("Node_buffer_mossy_stones"), SubResource("Node_buffer_t3"), SubResource("Node_buffer_heart_of_the_bog")])
 background = Color(0.039, 0.055, 0.024, 1)
 link_lit = Color(0.776, 0.949, 0.42, 1)
 accent = Color(0.651, 0.89, 0.29, 1)

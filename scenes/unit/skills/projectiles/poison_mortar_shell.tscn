@@ -1,0 +1,20 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/unit/skills/projectiles/mortar_shell.gd" id="1_script"]
+[ext_resource type="SpriteFrames" path="res://scenes/unit/evolve_tree/puffe_mortar_evolve/poison_mortar_shell_frames.tres" id="2_shell"]
+[ext_resource type="SpriteFrames" path="res://scenes/unit/evolve_tree/puffe_mortar_evolve/poison_mortar_blast_frames.tres" id="3_blast"]
+
+[node name="PoisonMortarShell" type="Node2D"]
+script = ExtResource("1_script")
+projectile_name = "PoisonMortarShell"
+
+[node name="Shell" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = ExtResource("2_shell")
+animation = &"FLY"
+
+[node name="Blast" type="AnimatedSprite2D" parent="."]
+visible = false
+texture_filter = 1
+sprite_frames = ExtResource("3_blast")
+animation = &"BLAST"

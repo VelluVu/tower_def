@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="BuildingUpgradeData" format=3]
+
+[ext_resource type="Script" path="res://scenes/upgrades/building_upgrade_data.gd" id="1_data"]
+
+[resource]
+script = ExtResource("1_data")
+;the Buffer buys pips instead (Buffer.PIP_COST_RATIOS); these count the pips before each tier
+upgrade_cost_ratios = Array[float]([0.4, 0.5, 0.6, 0.7, 0.8, 1.0, 1.2, 1.4])
+evolve_cost_ratios = Array[float]([1.5, 2.5, 4.0])
+tier_upgrades = Array[int]([2, 5, 8])

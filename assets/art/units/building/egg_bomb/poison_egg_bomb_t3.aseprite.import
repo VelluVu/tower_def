@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bh57hmopimcpd"
+path="res://.godot/imported/poison_egg_bomb_t3.aseprite-e85b7ac2b41bdee8dd785b1195d7ed2a.res"
+
+[deps]
+
+source_file="res://assets/art/units/building/egg_bomb/poison_egg_bomb_t3.aseprite"
+dest_files=["res://.godot/imported/poison_egg_bomb_t3.aseprite-e85b7ac2b41bdee8dd785b1195d7ed2a.res"]
+
+[params]
+

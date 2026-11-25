@@ -63,6 +63,10 @@ static func fits_tower(resource : EvolveResource, skill : Skill, element : Utils
 	if skill == null:
 		return resource.modifier_type != Utils.ModifierType.SkillModifier and resource.skill_type == 0
 
+	#a Buffer never attacks: its own stats do nothing, so no card fits it
+	if skill.skill_type == Utils.SkillType.Support:
+		return false
+
 	#a trap's range is its trigger area, not a reach to grow or shrink
 	if skill.skill_type == Utils.SkillType.Melee and (resource.modify_stat_type == Utils.StatType.AttackRange
 			or (resource.has_drawback and resource.drawback_stat_type == Utils.StatType.AttackRange)):

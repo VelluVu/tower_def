@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://btgma5fhiddv1"
+path="res://.godot/imported/frost_spotter_bolt.aseprite-cb1fde0ec539736e999c945e82b6a5df.res"
+
+[deps]
+
+source_file="res://assets/art/projectile/frost_spotter_bolt.aseprite"
+dest_files=["res://.godot/imported/frost_spotter_bolt.aseprite-cb1fde0ec539736e999c945e82b6a5df.res"]
+
+[params]
+

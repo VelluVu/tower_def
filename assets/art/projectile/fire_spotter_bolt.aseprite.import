@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://buk12d7kccoeq"
+path="res://.godot/imported/fire_spotter_bolt.aseprite-b86386505a9712fcc8ade02b47f5fba7.res"
+
+[deps]
+
+source_file="res://assets/art/projectile/fire_spotter_bolt.aseprite"
+dest_files=["res://.godot/imported/fire_spotter_bolt.aseprite-b86386505a9712fcc8ade02b47f5fba7.res"]
+
+[params]
+

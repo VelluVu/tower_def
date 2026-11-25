@@ -27,13 +27,19 @@ trigger = 3
 wave_number = 4
 text = "Bone riders on the flats. Fast ones. A long maze gives the towers time."
 
+[sub_resource type="Resource" id="PuffeLine_hatchery"]
+script = ExtResource("9_line")
+trigger = 1
+text = "Meet the Hatchery! Its hatchlings are raised on beetle mash and vitamins. Give them a spot on the road and they will hold it, one enemy each."
+mood = 1
+
 [resource]
 script = ExtResource("1_level")
 level_name = "Windscour Flats"
 story_text = "A long run over open salt flats, where the storms blow worst. Nothing stands in the way but what you build."
 starting_gold = 33.0
 waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtResource("w3"), ExtResource("w4"), ExtResource("w5"), ExtResource("w6")])
-puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3")])
+puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_hatchery"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3")])
 first_wave_health = 1.7
 last_wave_health = 10.6
 hard_mode = ExtResource("hard_mode")

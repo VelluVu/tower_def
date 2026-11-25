@@ -99,8 +99,13 @@ var walk_animation : String = GlobalAnimationNames.WALK_ANIMATION
 var gives_reward : bool = true
 #Frostplague: cannot attack buildings while true
 var is_numb : bool = false
+#held where it is (a harpoon's chain on a boss flyer, HarpoonTether): no moving, bosses too
+var is_held : bool = false
 #share of the damage it takes (the Dragonslayer's oath halves it)
 var damage_taken_factor : float = 1.0
+## The Hatchery guard holding it (HatcheryGuard sets and clears it): it stands and fights the guard. Never a boss or a
+## flyer. Untyped: a guard freed with its Hatchery must reach the is_instance_valid checks.
+var held_by = null
 #a freeze from a frost tower: no moving until it runs out
 var freeze_timer : CustomTimer = null
 var is_frozen : bool :
@@ -172,6 +177,12 @@ func take_damage(damage_data : DamageData) -> void:
 		#talents: burning, poisoned, frozen or chilled enemies take more
 		if level != null and level.talents != null:
 			damage_data.damage *= 1.0 + level.talents.get_vulnerability(self, damage_data)
+		#a T2 Buffer's aura weakens the enemies in it
+		if level != null and level.buffer_auras != null and damage_data.source is Building:
+			damage_data.damage *= 1.0 + level.buffer_auras.get_weakness(self)
+		#a Spotter's mark: more of the marked element from every tower
+		if damage_data.source is Building:
+			damage_data.damage *= 1.0 + EnemyMarks.get_bonus(self, damage_data.damage_type)
 
 	var health : Stat = stats.get_stat(Utils.StatType.Health)
 	var maxHealth : Stat = stats.get_stat(Utils.StatType.MaxHealth)
@@ -278,7 +289,7 @@ func move_towards_next_waypoint() -> void:
 	animation_control.play_animation(walk_animation)
 
 	#velocity keeps the old direction, so the turn is not counted twice
-	if not turn_pause_timer.is_stopped() or is_frozen:
+	if not turn_pause_timer.is_stopped() or is_frozen or is_held or is_instance_valid(held_by):
 		linear_velocity = Vector2.ZERO
 		return
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://b07nrseyum0s4"]
+[gd_scene load_steps=18 format=3 uid="uid://b07nrseyum0s4"]
 
 [ext_resource type="Script" uid="uid://cj07gjsp64umb" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/basic_enemy_bt.gd" id="1_ydxbq"]
 [ext_resource type="Script" uid="uid://dblhq2dattubf" path="res://addons/beehave/nodes/composites/selector.gd" id="2_2uw0o"]
@@ -7,6 +7,8 @@
 [ext_resource type="Script" uid="uid://ltfo5147xdty" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/dead.gd" id="5_8mcvb"]
 [ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/follow_path.gd" id="6_fpath"]
 [ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/use_abilities.gd" id="7_abil"]
+[ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/is_held_by_guard.gd" id="8_held"]
+[ext_resource type="Script" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/attack_guard.gd" id="9_guard"]
 [ext_resource type="Script" uid="uid://dprg6v1sv72oi" path="res://addons/beehave/nodes/decorators/inverter.gd" id="10_mrg7q"]
 [ext_resource type="Script" uid="uid://5h71a4jbqugx" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/stop_movement.gd" id="12_j2i8v"]
 [ext_resource type="Script" uid="uid://clmfq3y3rc5xf" path="res://scenes/unit/behaviour_trees/basic_enemy_behaviour_tree/is_colliding_building.gd" id="16_hco3q"]
@@ -36,6 +38,18 @@ script = ExtResource("5_8mcvb")
 
 [node name="UseAbilities" type="Node" parent="MainSelector"]
 script = ExtResource("7_abil")
+
+[node name="HeldByGuard" type="Node" parent="MainSelector"]
+script = ExtResource("3_lrixb")
+
+[node name="IsHeldByGuard" type="Node" parent="MainSelector/HeldByGuard"]
+script = ExtResource("8_held")
+
+[node name="StopHeld" type="Node" parent="MainSelector/HeldByGuard"]
+script = ExtResource("12_j2i8v")
+
+[node name="AttackGuard" type="Node" parent="MainSelector/HeldByGuard"]
+script = ExtResource("9_guard")
 
 [node name="FollowPath" type="Node" parent="MainSelector"]
 script = ExtResource("6_fpath")

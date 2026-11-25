@@ -1,0 +1,19 @@
+[gd_scene format=3]
+
+[ext_resource type="Material" path="res://assets/shaders/shader_materials/building_hit_shader_material.tres" id="1_material"]
+[ext_resource type="Script" path="res://scenes/unit/animation_control.gd" id="2_control"]
+[ext_resource type="SpriteFrames" path="res://scenes/unit/evolve_tree/puffe_mortar_evolve/blue_puffe_mortar_frames.tres" id="3_frames"]
+[ext_resource type="Texture2D" path="res://assets/art/units/building/puffe/blue_tower.png" id="4_base"]
+
+[node name="BluePuffeMortar" type="AnimatedSprite2D"]
+texture_filter = 1
+material = ExtResource("1_material")
+sprite_frames = ExtResource("3_frames")
+animation = &"IDLE"
+script = ExtResource("2_control")
+
+[node name="TowerBaseSprite" type="Sprite2D" parent="."]
+show_behind_parent = true
+texture_filter = 1
+position = Vector2(0, 1)
+texture = ExtResource("4_base")

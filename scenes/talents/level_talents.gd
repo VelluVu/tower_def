@@ -60,7 +60,7 @@ func _sum_level_effects() -> void:
 		var effect : TalentEffect = entry.effect
 		var value : float = effect.value_per_rank * entry.rank
 		match effect.kind:
-			TalentEffect.Kind.Vulnerability, TalentEffect.Kind.Weakness, TalentEffect.Kind.WallArmor:
+			TalentEffect.Kind.Vulnerability, TalentEffect.Kind.Weakness, TalentEffect.Kind.WallArmor, TalentEffect.Kind.BufferStrength, TalentEffect.Kind.BufferBudget:
 				conditional.append([effect, value])
 			TalentEffect.Kind.BuildingStat, TalentEffect.Kind.StartGold, TalentEffect.Kind.UnlockTier, 					TalentEffect.Kind.Strike, TalentEffect.Kind.DeathBurst, TalentEffect.Kind.CastleDragon:
 				pass
@@ -70,6 +70,20 @@ func _sum_level_effects() -> void:
 
 func get_total(kind : TalentEffect.Kind) -> float:
 	return totals.get(kind, 0.0)
+
+
+## A Buffer talent's total for this Buffer (BufferStrength, BufferBudget): effects of no element count for every
+## Buffer, an element's only once the Buffer has taken it.
+func get_buffer_bonus(kind : TalentEffect.Kind, buffer : Buffer) -> float:
+	var bonus : float = 0.0
+	for pair in conditional:
+		var effect : TalentEffect = pair[0]
+		if effect.kind != kind:
+			continue
+		if effect.elements != 0 and (buffer.element == Utils.Element.None or effect.elements & buffer.element == 0):
+			continue
+		bonus += pair[1]
+	return bonus
 
 
 ## The extra damage share an enemy takes from this hit (burning, poisoned, frozen, chilled enemies).

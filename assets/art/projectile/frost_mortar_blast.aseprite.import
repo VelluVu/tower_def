@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://fayidj2bcttb"
+path="res://.godot/imported/frost_mortar_blast.aseprite-3369f049ad227ff3c0e243caa96a8656.res"
+
+[deps]
+
+source_file="res://assets/art/projectile/frost_mortar_blast.aseprite"
+dest_files=["res://.godot/imported/frost_mortar_blast.aseprite-3369f049ad227ff3c0e243caa96a8656.res"]
+
+[params]
+

@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bvtgisf3iuflr"
+path="res://.godot/imported/fire_mortar_shell.aseprite-49307c15df53a55e78165b0cf7f67c23.res"
+
+[deps]
+
+source_file="res://assets/art/projectile/fire_mortar_shell.aseprite"
+dest_files=["res://.godot/imported/fire_mortar_shell.aseprite-49307c15df53a55e78165b0cf7f67c23.res"]
+
+[params]
+

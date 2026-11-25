@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://b8t13x222n0il"
+path="res://.godot/imported/fire_mortar_blast.aseprite-0d08535e76b4de9da38c89bcb41254fd.res"
+
+[deps]
+
+source_file="res://assets/art/projectile/fire_mortar_blast.aseprite"
+dest_files=["res://.godot/imported/fire_mortar_blast.aseprite-0d08535e76b4de9da38c89bcb41254fd.res"]
+
+[params]
+

@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cc77q44yalnjc"
+path="res://.godot/imported/green_puffe_harpooner.aseprite-756557fb2bfc83092c2c0c5c85b6f9da.res"
+
+[deps]
+
+source_file="res://assets/art/units/building/puffe/puffe_harpooner/green_puffe_harpooner.aseprite"
+dest_files=["res://.godot/imported/green_puffe_harpooner.aseprite-756557fb2bfc83092c2c0c5c85b6f9da.res"]
+
+[params]
+

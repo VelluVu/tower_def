@@ -1,7 +1,7 @@
 class_name LandAbility
 extends EnemyAbility
 
-## The Ashen Wyrm comes down (LAND, once, in its health window): it stops being a flyer and walks the maze from where it
+## The Ashen Wyrm comes down (LAND, once, in its health window; `land` also serves a Harpooner's harpoon): it stops being a flyer and walks the maze from where it
 ## landed (GROUND_WALK). Over lava or rock it lands on the nearest cell it can walk on.
 
 const SHADOW_NODE : String = "Shadow"
@@ -25,12 +25,15 @@ static func land(flyer : Enemy) -> void:
 		return
 	flyer.flight_movement.queue_free()
 	flyer.flight_movement = null
-	flyer.freeze = false
+	#deferred: a harpoon lands it from inside a physics callback, where the body's mode cannot change
+	flyer.set_deferred(&"freeze", false)
 	var shadow : Node2D = flyer.get_node_or_null(SHADOW_NODE) as Node2D
 	if shadow != null:
 		shadow.hide()
 	flyer.animation_control.z_index = 0
-	flyer.walk_animation = GlobalAnimationNames.GROUND_WALK_ANIMATION
+	#a flyer dragged down by a harpoon has no ground walk: it keeps flapping along the road
+	if flyer.animation_control.sprite_frames.has_animation(GlobalAnimationNames.GROUND_WALK_ANIMATION):
+		flyer.walk_animation = GlobalAnimationNames.GROUND_WALK_ANIMATION
 	var grid : LevelGrid = flyer.level.grid
 	var cell : Vector2i = flyer.grid_position
 	if not grid.is_cell_walkable(cell):

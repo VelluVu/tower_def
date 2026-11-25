@@ -53,6 +53,14 @@ const STAT_ICONS : Dictionary[Utils.StatType, Texture2D] = {
 	Utils.StatType.PoisonSpread: SPREAD,
 	Utils.StatType.FreezeChance: FREEZE,
 	Utils.StatType.FreezeDuration: FREEZE,
+	Utils.StatType.ConeWidth: SPLASH,
+	Utils.StatType.MarkShare: WEAKEN,
+	Utils.StatType.ExecuteBelow: STRIKE,
+	Utils.StatType.TetherTime: EFFECT,
+	Utils.StatType.TetherSlow: EFFECT,
+	#the Hatchery's guards: their health, and one more of them (the dragon until they have icons of their own)
+	Utils.StatType.GuardHealth: HEALTH,
+	Utils.StatType.GuardCount: DRAGON,
 }
 
 const KIND_ICONS : Dictionary[TalentEffect.Kind, Texture2D] = {
@@ -76,6 +84,9 @@ const KIND_ICONS : Dictionary[TalentEffect.Kind, Texture2D] = {
 	TalentEffect.Kind.Strike: STRIKE,
 	TalentEffect.Kind.DeathBurst: BURST,
 	TalentEffect.Kind.CastleDragon: DRAGON,
+	#a Buffer's buffs grow, and its pips (until it has its own icons)
+	TalentEffect.Kind.BufferStrength: DAMAGE,
+	TalentEffect.Kind.BufferBudget: TIER,
 }
 
 

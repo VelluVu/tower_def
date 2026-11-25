@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cowrut47vxxha"
+path="res://.godot/imported/fire_breath_puff.aseprite-0fe106cdcaced72b67efe4d7302b783c.res"
+
+[deps]
+
+source_file="res://assets/art/projectile/fire_breath_puff.aseprite"
+dest_files=["res://.godot/imported/fire_breath_puff.aseprite-0fe106cdcaced72b67efe4d7302b783c.res"]
+
+[params]
+

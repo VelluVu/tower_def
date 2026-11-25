@@ -26,13 +26,19 @@ trigger = 4
 wave_number = 6
 text = "The roost is quiet. Only the Drowning Deep and the Hydra's mire are left."
 
+[sub_resource type="Resource" id="PuffeLine_breather"]
+script = ExtResource("9_line")
+trigger = 1
+text = "Meet the Breather! Short reach, but its gusts catch every wasp and toad in front of it. Put it where they bunch up."
+mood = 1
+
 [resource]
 script = ExtResource("1_level")
 level_name = "Wasp Hollow"
 story_text = "A wasp roost hangs over a winding fen road. Some of the swamp folk here are bigger and stranger than the rest."
 starting_gold = 27.0
 waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtResource("w3"), ExtResource("w4"), ExtResource("w5"), ExtResource("w6")])
-puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3")])
+puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_breather"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3")])
 first_wave_health = 1.3
 last_wave_health = 3.7
 health_scale = 1.132

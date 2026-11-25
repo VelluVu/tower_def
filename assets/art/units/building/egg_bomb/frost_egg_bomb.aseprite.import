@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://b04jqfk2iyyte"
+path="res://.godot/imported/frost_egg_bomb.aseprite-ef0f07a141a8466d9bd35e1da8d91972.res"
+
+[deps]
+
+source_file="res://assets/art/units/building/egg_bomb/frost_egg_bomb.aseprite"
+dest_files=["res://.godot/imported/frost_egg_bomb.aseprite-ef0f07a141a8466d9bd35e1da8d91972.res"]
+
+[params]
+

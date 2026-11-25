@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BuildingListElement" format=3]
+
+[ext_resource type="Script" path="res://scenes/unit/building/building_list_element.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/art/units/building/egg_bomb/physical_egg_bomb_icon.png" id="2_icon"]
+[ext_resource type="PackedScene" path="res://scenes/unit/building/buildings/egg_bomb.tscn" id="3_scene"]
+
+[resource]
+script = ExtResource("1_script")
+scene = ExtResource("3_scene")
+id = 11
+icon = ExtResource("2_icon")
+unlock_level = 49
+description = "A trap on the path: the first enemy on it lights the fuse, then one big blast hits everything around it, flyers too. It rebuilds itself slowly."

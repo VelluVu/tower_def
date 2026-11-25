@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bnn4g8l21n04b"
+path="res://.godot/imported/frost_breath_puff.aseprite-d12533ee6672bb15fad06d88c299a8e2.res"
+
+[deps]
+
+source_file="res://assets/art/projectile/frost_breath_puff.aseprite"
+dest_files=["res://.godot/imported/frost_breath_puff.aseprite-d12533ee6672bb15fad06d88c299a8e2.res"]
+
+[params]
+

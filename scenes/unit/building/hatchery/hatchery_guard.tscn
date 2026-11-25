@@ -1,0 +1,27 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/unit/building/hatchery/hatchery_guard.gd" id="1_script"]
+[ext_resource type="Script" path="res://scenes/unit/animation_control.gd" id="2_control"]
+[ext_resource type="Material" path="res://assets/shaders/shader_materials/building_hit_shader_material.tres" id="3_material"]
+[ext_resource type="SpriteFrames" path="res://scenes/unit/evolve_tree/puffe_hatchery_evolve/hatchery_guard_frames.tres" id="4_frames"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_guard"]
+radius = 4.0
+
+[node name="HatcheryGuard" type="StaticBody2D"]
+y_sort_enabled = true
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_script")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -2)
+shape = SubResource("CircleShape2D_guard")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+material = ExtResource("3_material")
+position = Vector2(0, -5)
+sprite_frames = ExtResource("4_frames")
+animation = &"IDLE"
+script = ExtResource("2_control")

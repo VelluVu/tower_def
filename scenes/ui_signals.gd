@@ -21,6 +21,10 @@ signal gold_upgrade_pressed(index : int)
 signal target_tactic_selected(tactic : Utils.TargetTactic)
 ## The selected tower's tactic (Utils.TargetTactic); -1 when the selection has none (the menu hides).
 signal target_tactic_changed(tactic : int)
+## Whether the selection is a placed Hatchery, whose card shows the Rally button.
+signal rally_shown(is_shown : bool)
+## The Rally button: the selected Hatchery waits for a click on its new rally cell.
+signal rally_pressed()
 ## A rectangle-selected group of walls (WallGroupSelect): its title (empty = none) and the element options for its plain walls.
 signal wall_group_changed(title : String, options : Array[GoldUpgradeOption])
 ## A button of the wall group: -1 sells them all, 0 and up buys that element option.

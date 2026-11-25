@@ -1,0 +1,13 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/unit/skills/breath.gd" id="1_breath"]
+[ext_resource type="PackedScene" uid="uid://bp7hd4rdex5do" path="res://scenes/unit/skills/skill_state_timers.tscn" id="2_timers"]
+
+[node name="Breath" type="Node2D"]
+script = ExtResource("1_breath")
+skill_type = 64
+skill_name = "Breath"
+base_cast_time = 0.3
+base_cooldown = 2.5
+
+[node name="SkillStateTimers" parent="." instance=ExtResource("2_timers")]

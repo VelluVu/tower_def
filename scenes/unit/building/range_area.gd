@@ -62,5 +62,18 @@ func _draw() -> void:
 	if not draw_range or not _is_shown():
 		return
 	var color : Color = RING_COLOR if _is_valid() else INVALID_RING_COLOR
-	draw_circle(Vector2.ZERO, actor.radius, Color(color, FILL_ALPHA), true, -1.0, false)
+	var min_radius : float = _get_min_radius()
+	if min_radius <= 0.0:
+		draw_circle(Vector2.ZERO, actor.radius, Color(color, FILL_ALPHA), true, -1.0, false)
+	else:
+		#a band: the Mortar's dead zone around it stays clear, with a faint inner ring
+		var band : float = actor.radius - min_radius
+		draw_arc(Vector2.ZERO, min_radius + band * 0.5, 0.0, TAU, RING_POINTS, Color(color, FILL_ALPHA), band, false)
+		draw_arc(Vector2.ZERO, min_radius, 0.0, TAU, RING_POINTS, Color(color, RING_ALPHA * 0.5), 1.0, false)
 	draw_arc(Vector2.ZERO, actor.radius, 0.0, TAU, RING_POINTS, Color(color, RING_ALPHA), 1.0, false)
+
+
+func _get_min_radius() -> float:
+	if not actor is Tower:
+		return 0.0
+	return minf((actor as Tower).min_range_tiles * Utils.TILE_SIZE, actor.radius)

@@ -1,0 +1,37 @@
+# Source of assets/art/units/building/puffe/puffe_hatchery/red_puffe_hatchery_icon.png (python tools/gd.py icon <this> <out.png>); cropped from the sprite's first IDLE frame
+a = a22633
+b = c3303b
+c = 74202e
+d = e43b44
+e = d3353f
+f = f1e0e1
+g = 461a29
+h = 5d1d2c
+i = ca6269
+j = f6757a
+k = 8b2330
+l = b22b37
+m = 8b9bb4
+n = 5a6988
+o = f77622
+p = 3a4466
+q = b86f50
+r = 733e39
+s = e4a672
+---
+.....a...a......
+.....bcccb......
+...ddceddcce....
+....ddfgdfg.....
+....heebdbdc....
+.i...ceejdjc..i.
+.iiiiicaddciiii.
+..ikkkeccceekkk.
+..ideeleddleeed.
+...mnllmndlmn...
+..mmnommnommno..
+..nmnpnmnpnmnp..
+.cqprqrpqrspq...
+.rqsqrsqrqsrsqr.
+rqrqsrqrqsqrqsrq
+.rrqrrsrrqrrqrr.

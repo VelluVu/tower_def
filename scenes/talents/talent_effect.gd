@@ -49,6 +49,9 @@ enum Kind
 	SellRefund,
 	#the first upgrade of each tower and trap costs this share less (Hoard)
 	FirstUpgradeDiscount,
+	#a Buffer's buffs value share stronger, and pips more in its budget (matched to the Buffer's element; 2026-11-24)
+	BufferStrength,
+	BufferBudget,
 }
 
 ## What a Strike does, at its target (radius_tiles around it; 0 = the target only) or around the tower (at_tower:
@@ -75,6 +78,8 @@ enum Condition
 	Frozen,
 	#slowed by Frost stacks, or frozen
 	Chilled,
+	#in the air (Skyhook: more damage against flyers)
+	Flying,
 }
 
 ## Building flags, matched by TalentEffect.get_building_flag.
@@ -83,9 +88,16 @@ const NOVA : int = 1 << 1
 const BEAMER : int = 1 << 2
 const TRAP : int = 1 << 3
 const WALL : int = 1 << 4
+const MORTAR : int = 1 << 5
+const BUFFER : int = 1 << 6
+const BREATHER : int = 1 << 7
+const SPOTTER : int = 1 << 8
+const HARPOONER : int = 1 << 9
+const HATCHERY : int = 1 << 10
+const EGG_BOMB : int = 1 << 11
 
 @export var kind : Kind = Kind.BuildingStat
-@export_flags("Bolter", "Nova", "Beamer", "Trap", "Wall") var buildings : int = 0
+@export_flags("Bolter", "Nova", "Beamer", "Trap", "Wall", "Mortar", "Buffer", "Breather", "Spotter", "Harpooner", "Hatchery", "Egg Bomb") var buildings : int = 0
 ## The element the building must have; none means any element.
 @export_flags("Physical", "Fire", "Frost", "Poison") var elements : int = 0
 @export var stat_type : Utils.StatType = Utils.StatType.Damage
@@ -116,6 +128,8 @@ static func enemy_in(enemy : Enemy, wanted : Condition) -> bool:
 			return enemy.is_frozen
 		Condition.Chilled:
 			return enemy.is_frozen or not enemy.overtime_effect_handler.get_active_stacks(Utils.DamageType.Frost).is_empty()
+		Condition.Flying:
+			return enemy.is_flying
 	return true
 
 
@@ -150,6 +164,10 @@ static func get_building_flag(building : Building) -> int:
 	if building is Wall:
 		return WALL
 
+	#a trap too, but with its own talents
+	if building is EggBomb:
+		return EGG_BOMB
+
 	if building is Trap:
 		return TRAP
 
@@ -163,5 +181,17 @@ static func get_building_flag(building : Building) -> int:
 			return NOVA
 		Utils.SkillType.Beaming:
 			return BEAMER
+		Utils.SkillType.Artillery:
+			return MORTAR
+		Utils.SkillType.Support:
+			return BUFFER
+		Utils.SkillType.Breath:
+			return BREATHER
+		Utils.SkillType.Sniper:
+			return SPOTTER
+		Utils.SkillType.Harpoon:
+			return HARPOONER
+		Utils.SkillType.Guard:
+			return HATCHERY
 
 	return 0

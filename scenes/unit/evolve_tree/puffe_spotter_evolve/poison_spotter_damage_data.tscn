@@ -1,0 +1,16 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/unit/skills/damage_data.gd" id="1_00r03"]
+[ext_resource type="Script" path="res://scenes/unit/skills/overtime_effect_data.gd" id="2_i3owu"]
+
+[node name="PoisonSpotterDamageData" type="Node"]
+script = ExtResource("1_00r03")
+damage_type = 8
+
+[node name="OvertimeEffectData" type="Node" parent="."]
+script = ExtResource("2_i3owu")
+damage_type = 8
+hit_share = 0.15
+effectType = 1
+max_count = 4
+max_stacks = 5

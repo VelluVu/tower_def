@@ -1,0 +1,37 @@
+# Source of assets/art/units/building/puffe/puffe_spotter/green_puffe_spotter_icon.png (python tools/gd.py icon <this> <out.png>); cropped from the sprite's first IDLE frame
+a = 5b893f
+b = 6ca54e
+c = 476331
+d = 7ec15e
+e = 74b355
+f = e7eee3
+g = 333d23
+h = 3d502a
+i = 8cb577
+j = a7dc8f
+k = 507638
+l = 639647
+m = feae34
+n = b86f50
+o = c0cbdc
+p = ead4aa
+q = 68386c
+r = 5a6988
+s = b55088
+---
+......a.a.......
+.....a...a......
+.....bcccb......
+...ddceddcce....
+....ddfgdfgm....
+....heebdbdn....
+.i...ceejdjc..i.
+.iiiiicaddciioi.
+..ikkkeccceeopk.
+..ideennqrrrrrs.
+...ihlleddlcop..
+...chleedjekho..
+..cchcleddlch...
+.cc.hhhhhhhh....
+.c...hhhhhh.....
+................

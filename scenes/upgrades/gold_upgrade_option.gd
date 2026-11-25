@@ -22,6 +22,8 @@ var is_locked : bool = false
 var wall_element : Utils.Element = Utils.Element.None
 #a wall element tier (2 or 3) for every wall of wall_element; 0 for every other option
 var wall_tier : int = 0
+#a Buffer's pip on this track (Utils.StatType); -1 for every other option
+var buffer_stat : int = -1
 
 var is_evolve : bool :
 	get:

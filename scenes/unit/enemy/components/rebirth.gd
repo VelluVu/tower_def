@@ -20,7 +20,7 @@ func _ready() -> void:
 	GameSignals.enemy_destroyed.connect(_on_enemy_destroyed)
 
 
-## Whether a hit puts it out for good: Frost always, a Nova or a trap when put_out_by_area.
+## Whether a hit puts it out for good: Frost always, a Nova, a Mortar or a trap when put_out_by_area.
 func puts_out(damage_data : DamageData) -> bool:
 	if damage_data.damage_type == Utils.DamageType.Frost:
 		return true
@@ -29,7 +29,7 @@ func puts_out(damage_data : DamageData) -> bool:
 	var source : Node = damage_data.source
 	if source is Trap:
 		return true
-	return source is Building and source.skill != null and (source.skill.skill_type & Utils.SkillType.Area) != 0
+	return source is Building and source.skill != null and (source.skill.skill_type & (Utils.SkillType.Area | Utils.SkillType.Artillery | Utils.SkillType.Breath)) != 0
 
 
 func _on_enemy_hit(hit_enemy : Enemy, damage_data : DamageData) -> void:

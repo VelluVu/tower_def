@@ -35,6 +35,9 @@ const UPGRADE_KEY_SUFFIX : String = "  [%s]"
 const ELEMENT_CHOICE_TOOLTIP : String = "
 Pick one element: it stays for this tower."
 const TACTIC_TOOLTIP : String = "Which enemy in range this tower shoots. Change it any time, during a wave too."
+const RALLY_TEXT : String = "Rally"
+const RALLY_TOOLTIP : String = "Rally
+Click a path cell in range: the guards stand there and hold the enemies that pass. Right click cancels."
 
 @onready var unit_info_grid_container : GridContainer = $HBoxContainer/InfoBox/UnitInfoGridContainer
 @onready var unit_icon : TextureRect = $HBoxContainer/UnitIcon
@@ -47,6 +50,8 @@ var resists_row : RichTooltipBox = null
 #a Bolter's or Beamer's targeting tactic: a label and a menu of every tactic
 var tactic_row : HBoxContainer = null
 var tactic_menu : OptionButton = null
+#a Hatchery's Rally button: then a click on the map picks where its guards stand
+var rally_button : Button = null
 #the rectangle-selected walls: a row of buttons, shown instead of a single unit's card
 var wall_group_row : HBoxContainer = null
 #the shown gold upgrades, for the upgrade shortcut
@@ -89,6 +94,14 @@ func _ready() -> void:
 	_create_tactic_menu()
 	resists_row.add_sibling(tactic_row)
 	UISignals.target_tactic_changed.connect(_on_target_tactic_changed)
+	rally_button = Button.new()
+	rally_button.text = RALLY_TEXT
+	rally_button.tooltip_text = RALLY_TOOLTIP
+	rally_button.add_theme_font_size_override(&"font_size", UPGRADE_BUTTON_FONT_SIZE)
+	rally_button.hide()
+	rally_button.pressed.connect(func() -> void: UISignals.rally_pressed.emit())
+	tactic_row.add_sibling(rally_button)
+	UISignals.rally_shown.connect(_on_rally_shown)
 	wall_group_row = HBoxContainer.new()
 	wall_group_row.hide()
 	button_row.add_sibling(wall_group_row)
@@ -179,6 +192,11 @@ func _on_target_tactic_changed(tactic : int) -> void:
 	_fit_to_corner.call_deferred()
 
 
+func _on_rally_shown(is_shown : bool) -> void:
+	rally_button.visible = is_shown
+	_fit_to_corner.call_deferred()
+
+
 func _on_selected_unit_node(unit : Node2D) -> void:
 	#a typed empty list: an untyped [] in a ternary does not fit Array[Array]
 	var parts : Array[Array] = []
@@ -246,6 +264,7 @@ func _on_unit_deselected() -> void:
 	sell_button.visible = false
 	resists_row.hide()
 	tactic_row.hide()
+	rally_button.hide()
 	hide()
 
 

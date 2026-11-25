@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://c5jekvbl470og"
+path="res://.godot/imported/fire_harpoon.aseprite-295a828270d233d5b5a6fabc36bf4115.res"
+
+[deps]
+
+source_file="res://assets/art/projectile/fire_harpoon.aseprite"
+dest_files=["res://.godot/imported/fire_harpoon.aseprite-295a828270d233d5b5a6fabc36bf4115.res"]
+
+[params]
+

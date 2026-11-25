@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://oeglehdeaxcq"
+path="res://.godot/imported/physical_egg_bomb_t2.aseprite-f9900b9c8661776d2e703e10be363056.res"
+
+[deps]
+
+source_file="res://assets/art/units/building/egg_bomb/physical_egg_bomb_t2.aseprite"
+dest_files=["res://.godot/imported/physical_egg_bomb_t2.aseprite-f9900b9c8661776d2e703e10be363056.res"]
+
+[params]
+

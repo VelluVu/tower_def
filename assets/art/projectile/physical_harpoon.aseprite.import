@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://7j4j5axlvoyi"
+path="res://.godot/imported/physical_harpoon.aseprite-6dcff29bf83d9cef4c4319e0ab1d07d1.res"
+
+[deps]
+
+source_file="res://assets/art/projectile/physical_harpoon.aseprite"
+dest_files=["res://.godot/imported/physical_harpoon.aseprite-6dcff29bf83d9cef4c4319e0ab1d07d1.res"]
+
+[params]
+

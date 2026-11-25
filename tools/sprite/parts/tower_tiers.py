@@ -4,7 +4,7 @@ T2: an element crest on the head (it follows the head's bob) and a few element s
 T3: a bigger crown, more sparks and an element ring glowing at the feet.
 Both tiers rim the body's and wings' outer edges in the element's light colour (2026-11-23), so the tier reads at 1x.
 The canvas, frame count, durations and tags stay the T1 sprite's, so the scenes' SpriteFrames regions fit.
-usage: tower_tiers.py <parts dir> <puffe art dir>   (writes <t1 name>_t2.txt and _t3.txt next to each T1 sheet)"""
+usage: tower_tiers.py <parts dir> <puffe art dir> [tower...]   (only the named towers, e.g. mortar; writes <t1 name>_t2.txt and _t3.txt next to each T1 sheet)"""
 import math
 import os
 import re
@@ -20,10 +20,10 @@ Frame.check_margin = lambda self, name: None
 ROOT = sys.argv[2]
 SPRITE = os.path.join(sys.argv[1], '..', 'sprite.py')
 SHEETS = {
-    'physical': ['puffe', 'puffe_nova/puffe_nova', 'puffe_beamer/puffe_beamer'],
-    'fire': ['puffe_bolter/puffe_bolter_red', 'puffe_nova/red_puffe_nova', 'puffe_beamer/red_puffe_beamer'],
-    'frost': ['puffe_bolter/puffe_bolter_blue', 'puffe_nova/blue_puffe_nova', 'puffe_beamer/blue_puffe_beamer'],
-    'poison': ['puffe_bolter/puffe_bolter_green', 'puffe_nova/green_puffe_nova', 'puffe_beamer/green_puffe_beamer'],
+    'physical': ['puffe', 'puffe_nova/puffe_nova', 'puffe_beamer/puffe_beamer', 'puffe_mortar/puffe_mortar', 'puffe_buffer/puffe_buffer', 'puffe_breather/puffe_breather', 'puffe_spotter/puffe_spotter', 'puffe_harpooner/puffe_harpooner', 'puffe_hatchery/puffe_hatchery'],
+    'fire': ['puffe_bolter/puffe_bolter_red', 'puffe_nova/red_puffe_nova', 'puffe_beamer/red_puffe_beamer', 'puffe_mortar/red_puffe_mortar', 'puffe_buffer/red_puffe_buffer', 'puffe_breather/red_puffe_breather', 'puffe_spotter/red_puffe_spotter', 'puffe_harpooner/red_puffe_harpooner', 'puffe_hatchery/red_puffe_hatchery'],
+    'frost': ['puffe_bolter/puffe_bolter_blue', 'puffe_nova/blue_puffe_nova', 'puffe_beamer/blue_puffe_beamer', 'puffe_mortar/blue_puffe_mortar', 'puffe_buffer/blue_puffe_buffer', 'puffe_breather/blue_puffe_breather', 'puffe_spotter/blue_puffe_spotter', 'puffe_harpooner/blue_puffe_harpooner', 'puffe_hatchery/blue_puffe_hatchery'],
+    'poison': ['puffe_bolter/puffe_bolter_green', 'puffe_nova/green_puffe_nova', 'puffe_beamer/green_puffe_beamer', 'puffe_mortar/green_puffe_mortar', 'puffe_buffer/green_puffe_buffer', 'puffe_breather/green_puffe_breather', 'puffe_spotter/green_puffe_spotter', 'puffe_harpooner/green_puffe_harpooner', 'puffe_hatchery/green_puffe_hatchery'],
 }
 # per element: crest T2, crown T3 (rows bottom-up are drawn upwards from the head top), spark colours, ring colours
 ELEMENT = {
@@ -174,7 +174,10 @@ def build(base, element, tier):
     return out
 
 
+ONLY = sys.argv[3:]
 for element, bases in SHEETS.items():
     for base in bases:
+        if ONLY and not any(('puffe_%s/' % tower) in base or (tower == 'bolter' and base == 'puffe') for tower in ONLY):
+            continue
         for tier in (2, 3):
             print(build(base, element, tier))

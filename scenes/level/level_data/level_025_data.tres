@@ -15,6 +15,12 @@ script = ExtResource("9_line")
 text = "Fields! Soft grass, warm hay... I could sleep here. If the humans would stop marching."
 mood = 3
 
+[sub_resource type="Resource" id="PuffeLine_buffer"]
+script = ExtResource("9_line")
+trigger = 1
+text = "Meet the Buffer! It never bites, it drums. Every drakeling near it fights harder. Pick what it drums for."
+mood = 1
+
 [sub_resource type="Resource" id="PuffeLine_2"]
 script = ExtResource("9_line")
 trigger = 3
@@ -33,7 +39,7 @@ level_name = "Wheatfield Road"
 story_text = "Past the northern bridge lie the humans' farms. Their soldiers march down the wheat roads towards the castle, and some of them have brought bows."
 starting_gold = 25.0
 waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtResource("w3"), ExtResource("w4"), ExtResource("w5"), ExtResource("w6")])
-puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3")])
+puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_buffer"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3")])
 first_wave_health = 1.8
 last_wave_health = 4.2
 health_scale = 1.780

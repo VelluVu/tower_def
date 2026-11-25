@@ -20,6 +20,15 @@ static func apply(target : Enemy, damage_data : DamageData, raw_damage : float) 
 		return
 
 	var tower : Building = damage_data.source
+	#a Spotter's mark: the target takes more of this element from every tower for a while
+	var mark_share : float = tower.stats.get_stat_value(Utils.StatType.MarkShare)
+	if mark_share > 0.0 and not target.is_dead:
+		EnemyMarks.mark(target, damage_data.damage_type, mark_share)
+	_execute(target, tower)
+	#a Harpooner's chain: slowed for a while, a flyer dragged to the ground
+	var tether_seconds : float = tower.stats.get_stat_value(Utils.StatType.TetherTime)
+	if tether_seconds > 0.0 and not target.is_dead:
+		HarpoonTether.attach(target, tower, tether_seconds, tower.stats.get_stat_value(Utils.StatType.TetherSlow))
 	var spread : int = roundi(tower.stats.get_stat_value(Utils.StatType.PoisonSpread))
 	if spread > 0 and target.is_dead:
 		_spread_poison(target, tower, spread)
@@ -28,14 +37,37 @@ static func apply(target : Enemy, damage_data : DamageData, raw_damage : float) 
 	if knockback > 0:
 		target.knock_back(knockback)
 	var patch_seconds : float = tower.stats.get_stat_value(Utils.StatType.PatchDuration)
-	if patch_seconds > 0.0 and tower.level != null:
+	#a Breather leaves one patch in its cone per gust instead (Breath)
+	if patch_seconds > 0.0 and tower.level != null and not (tower.skill != null and tower.skill.skill_type == Utils.SkillType.Breath):
 		GroundPatch.make(target.global_position, tower, damage_data.damage_type, raw_damage, tower.stats.get_stat_value(Utils.StatType.PatchShare), patch_seconds)
 	var shards : int = roundi(tower.stats.get_stat_value(Utils.StatType.SplitCount))
 	if shards > 0:
 		_split(target, tower, damage_data, raw_damage * tower.stats.get_stat_value(Utils.StatType.SplitShare), shards)
 	var radius : float = tower.stats.get_stat_value(Utils.StatType.SplashRadius)
-	if radius > 0.0:
+	#a Mortar's and an Egg Bomb's splash radius widens their blast instead (MortarShell, EggBomb)
+	if radius > 0.0 and not (tower.skill != null and tower.skill.skill_type in [Utils.SkillType.Artillery, Utils.SkillType.Blast]):
 		_splash(target, tower, damage_data, raw_damage, radius * Utils.TILE_SIZE)
+	#a Buffer's element rides on the hits of the buildings in its aura
+	if target.level != null and target.level.buffer_auras != null and not target.is_dead:
+		target.level.buffer_auras.on_direct_hit(target, tower, raw_damage)
+
+
+#a Spotter's execute: a non-boss enemy left under the share of its max health dies to the hit
+static func _execute(target : Enemy, tower : Building) -> void:
+	var below : float = tower.stats.get_stat_value(Utils.StatType.ExecuteBelow)
+	if below <= 0.0 or target.is_dead or target.is_boss:
+		return
+	var health : float = target.stats.get_stat_value(Utils.StatType.Health)
+	if health <= 0.0 or health >= target.stats.get_stat_value(Utils.StatType.MaxHealth) * below:
+		return
+	var finisher : DamageData = DamageData.new()
+	finisher.damage_type = Utils.DamageType.Physical
+	#past every resistance and shield: the whole rest of its health, as a splash so no hit effects come again
+	finisher.damage = health / maxf(target.get_resistance_factor(finisher), 0.01) / maxf(target.damage_taken_factor, 0.01) + 1.0
+	finisher.is_splash = true
+	finisher.source = tower
+	target.take_damage(finisher)
+	finisher.free()
 
 
 static func _freeze(target : Enemy, tower : Building) -> void:

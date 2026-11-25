@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://51s42k480il1"
+path="res://.godot/imported/fire_egg_bomb.aseprite-22e0a3f64e026de48e67d167d4e3827c.res"
+
+[deps]
+
+source_file="res://assets/art/units/building/egg_bomb/fire_egg_bomb.aseprite"
+dest_files=["res://.godot/imported/fire_egg_bomb.aseprite-22e0a3f64e026de48e67d167d4e3827c.res"]
+
+[params]
+

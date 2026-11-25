@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/unit/skills/damage_data.gd" id="1_2maij"]
+
+[node name="PhysicalSpotterDamageData" type="Node"]
+script = ExtResource("1_2maij")

@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://ckmo38f785udf"
+path="res://.godot/imported/green_puffe_breather.aseprite-cb5140dac0bf4eb2491683020ca6d63c.res"
+
+[deps]
+
+source_file="res://assets/art/units/building/puffe/puffe_breather/green_puffe_breather.aseprite"
+dest_files=["res://.godot/imported/green_puffe_breather.aseprite-cb5140dac0bf4eb2491683020ca6d63c.res"]
+
+[params]
+

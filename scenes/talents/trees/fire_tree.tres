@@ -4,6 +4,224 @@
 [ext_resource type="Script" uid="uid://dwes3ugk3ahrk" path="res://scenes/talents/talent_node.gd" id="2_node"]
 [ext_resource type="Script" uid="uid://mwbaxqyyxvt2" path="res://scenes/talents/talent_effect.gd" id="3_effect"]
 
+[sub_resource type="Resource" id="Effect_egg_bomb_warm_nest_0"]
+script = ExtResource("3_effect")
+buildings = 2048
+elements = 2
+stat_type = 6
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Effect_egg_bomb_fire_pit_0"]
+script = ExtResource("3_effect")
+buildings = 2048
+elements = 2
+stat_type = 25
+modify_type = 0
+value_per_rank = 1.5
+
+[sub_resource type="Resource" id="Effect_egg_bomb_scalding_shell_0"]
+script = ExtResource("3_effect")
+buildings = 2048
+elements = 2
+stat_type = 10
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Effect_egg_bomb_wide_blast_0"]
+script = ExtResource("3_effect")
+buildings = 2048
+elements = 2
+stat_type = 20
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Effect_egg_bomb_quick_hatch_0"]
+script = ExtResource("3_effect")
+buildings = 2048
+elements = 2
+stat_type = 6
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Effect_egg_bomb_hot_yolk_0"]
+script = ExtResource("3_effect")
+buildings = 2048
+elements = 2
+modify_type = 1
+value_per_rank = 0.08
+
+[sub_resource type="Resource" id="TalentEffect_unlock_trap_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 8
+elements = 2
+
+[sub_resource type="Resource" id="TalentEffect_unlock_trap_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 8
+elements = 2
+
+[sub_resource type="Resource" id="TalentEffect_unlock_spotter_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 256
+elements = 2
+
+[sub_resource type="Resource" id="TalentEffect_unlock_spotter_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 256
+elements = 2
+
+[sub_resource type="Resource" id="TalentEffect_unlock_nova_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 2
+elements = 2
+
+[sub_resource type="Resource" id="TalentEffect_unlock_nova_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 2
+elements = 2
+
+[sub_resource type="Resource" id="TalentEffect_unlock_mortar_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 32
+elements = 2
+
+[sub_resource type="Resource" id="TalentEffect_unlock_mortar_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 32
+elements = 2
+
+[sub_resource type="Resource" id="TalentEffect_unlock_hatchery_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 1024
+elements = 2
+
+[sub_resource type="Resource" id="TalentEffect_unlock_hatchery_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 1024
+elements = 2
+
+[sub_resource type="Resource" id="TalentEffect_unlock_harpooner_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 512
+elements = 2
+
+[sub_resource type="Resource" id="TalentEffect_unlock_harpooner_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 512
+elements = 2
+
+[sub_resource type="Resource" id="TalentEffect_unlock_egg_bomb_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 2048
+elements = 2
+
+[sub_resource type="Resource" id="TalentEffect_unlock_egg_bomb_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 2048
+elements = 2
+
+[sub_resource type="Resource" id="TalentEffect_unlock_buffer_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 64
+elements = 2
+
+[sub_resource type="Resource" id="TalentEffect_unlock_buffer_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 64
+elements = 2
+
+[sub_resource type="Resource" id="TalentEffect_unlock_breather_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 128
+elements = 2
+
+[sub_resource type="Resource" id="TalentEffect_unlock_breather_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 128
+elements = 2
+
+[sub_resource type="Resource" id="TalentEffect_unlock_bolter_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 1
+elements = 2
+
+[sub_resource type="Resource" id="TalentEffect_unlock_bolter_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 1
+elements = 2
+
+[sub_resource type="Resource" id="TalentEffect_unlock_beamer_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 4
+elements = 2
+
+[sub_resource type="Resource" id="TalentEffect_unlock_beamer_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 4
+elements = 2
+
+[sub_resource type="Resource" id="Effect_hatchery_fierce_hatchlings_0"]
+script = ExtResource("3_effect")
+buildings = 1024
+elements = 2
+stat_type = 6
+modify_type = 0
+value_per_rank = 0.04
+
+[sub_resource type="Resource" id="Effect_hatchery_big_clutch_0"]
+script = ExtResource("3_effect")
+buildings = 1024
+elements = 2
+stat_type = 37
+modify_type = 0
+value_per_rank = 1.0
+
+[sub_resource type="Resource" id="Effect_hatchery_thick_scales_0"]
+script = ExtResource("3_effect")
+buildings = 1024
+elements = 2
+stat_type = 36
+modify_type = 1
+value_per_rank = 0.15
+
+[sub_resource type="Resource" id="Effect_hatchery_ember_claws_0"]
+script = ExtResource("3_effect")
+buildings = 1024
+elements = 2
+stat_type = 11
+modify_type = 0
+value_per_rank = 0.05
+
+[sub_resource type="Resource" id="Effect_hatchery_fire_fed_brood_0"]
+script = ExtResource("3_effect")
+buildings = 1024
+elements = 2
+modify_type = 1
+value_per_rank = 0.08
+
 [sub_resource type="Resource" id="Effect_kindling_0"]
 script = ExtResource("3_effect")
 buildings = 15
@@ -19,7 +237,7 @@ description = "Fire damage +5% (every Fire building)"
 max_rank = 3
 position = Vector2(9.391, 19.789)
 color = Color(1, 0.541, 0.239, 1)
-links = Array[StringName]([&"searing_heat", &"blast_furnace", &"hot_bolts", &"hot_beam", &"hot_snare"])
+links = Array[StringName]([&"searing_heat", &"blast_furnace", &"hot_bolts", &"hot_beam", &"hot_snare", &"smouldering_maze"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_kindling_0")])
 
 [sub_resource type="Resource" id="Effect_keep_awakens_level"]
@@ -207,7 +425,7 @@ effects = Array[ExtResource("3_effect")]([SubResource("Effect_funeral_pyre_level
 
 [sub_resource type="Resource" id="Effect_blast_furnace_0"]
 script = ExtResource("3_effect")
-buildings = 2
+buildings = 34
 elements = 2
 modify_type = 1
 value_per_rank = 0.08
@@ -216,11 +434,11 @@ value_per_rank = 0.08
 script = ExtResource("2_node")
 id = &"blast_furnace"
 display_name = "Blast Furnace"
-description = "Fire Nova damage +8%"
+description = "Fire Nova and Mortar damage +8%"
 max_rank = 3
 position = Vector2(6.178, 20)
 color = Color(0.91, 0.314, 0.29, 1)
-links = Array[StringName]([&"wide_blaze"])
+links = Array[StringName]([&"wide_blaze", &"mortar_heavy_shells"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_blast_furnace_0")])
 
 [sub_resource type="Resource" id="Effect_wide_blaze_0"]
@@ -260,12 +478,6 @@ position = Vector2(1.606, 17.263)
 color = Color(0.91, 0.314, 0.29, 1)
 links = Array[StringName]([&"nova_t2", &"fire_wall_t2"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_quick_pulse_0")])
-
-[sub_resource type="Resource" id="TalentEffect_unlock_nova_t2"]
-script = ExtResource("3_effect")
-kind = 2
-buildings = 2
-elements = 2
 
 [sub_resource type="Resource" id="Node_nova_t2"]
 script = ExtResource("2_node")
@@ -398,12 +610,6 @@ color = Color(0.91, 0.314, 0.29, 1)
 links = Array[StringName]([&"nova_t3"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_flashpoint_0")])
 
-[sub_resource type="Resource" id="TalentEffect_unlock_nova_t3"]
-script = ExtResource("3_effect")
-kind = 2
-buildings = 2
-elements = 2
-
 [sub_resource type="Resource" id="Node_nova_t3"]
 script = ExtResource("2_node")
 id = &"nova_t3"
@@ -439,7 +645,7 @@ effects = Array[ExtResource("3_effect")]([SubResource("Effect_supernova_level")]
 
 [sub_resource type="Resource" id="Effect_hot_bolts_0"]
 script = ExtResource("3_effect")
-buildings = 1
+buildings = 257
 elements = 2
 modify_type = 1
 value_per_rank = 0.08
@@ -448,11 +654,11 @@ value_per_rank = 0.08
 script = ExtResource("2_node")
 id = &"hot_bolts"
 display_name = "Hot Bolts"
-description = "Fire Bolter damage +8%"
+description = "Fire Bolter and Spotter damage +8%"
 max_rank = 3
 position = Vector2(7.414, 18.316)
 color = Color(0.949, 0.757, 0.306, 1)
-links = Array[StringName]([&"quick_flame"])
+links = Array[StringName]([&"quick_flame", &"spotter_hawk_s_eye"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_hot_bolts_0")])
 
 [sub_resource type="Resource" id="Effect_quick_flame_0"]
@@ -492,12 +698,6 @@ position = Vector2(5.808, 14.737)
 color = Color(0.949, 0.757, 0.306, 1)
 links = Array[StringName]([&"bolter_t2"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_long_flight_0")])
-
-[sub_resource type="Resource" id="TalentEffect_unlock_bolter_t2"]
-script = ExtResource("3_effect")
-kind = 2
-buildings = 1
-elements = 2
 
 [sub_resource type="Resource" id="Node_bolter_t2"]
 script = ExtResource("2_node")
@@ -621,12 +821,6 @@ color = Color(0.949, 0.757, 0.306, 1)
 links = Array[StringName]([&"bolter_t3"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_sharp_flint_0")])
 
-[sub_resource type="Resource" id="TalentEffect_unlock_bolter_t3"]
-script = ExtResource("3_effect")
-kind = 2
-buildings = 1
-elements = 2
-
 [sub_resource type="Resource" id="Node_bolter_t3"]
 script = ExtResource("2_node")
 id = &"bolter_t3"
@@ -661,7 +855,7 @@ effects = Array[ExtResource("3_effect")]([SubResource("Effect_meteor_level")])
 
 [sub_resource type="Resource" id="Effect_hot_beam_0"]
 script = ExtResource("3_effect")
-buildings = 4
+buildings = 132
 elements = 2
 modify_type = 1
 value_per_rank = 0.08
@@ -670,11 +864,11 @@ value_per_rank = 0.08
 script = ExtResource("2_node")
 id = &"hot_beam"
 display_name = "Hot Beam"
-description = "Fire Beamer damage +8%"
+description = "Fire Beamer and Breather damage +8%"
 max_rank = 3
 position = Vector2(11.368, 18.316)
 color = Color(1, 0.906, 0.69, 1)
-links = Array[StringName]([&"focus_lens"])
+links = Array[StringName]([&"focus_lens", &"breather_bellows"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_hot_beam_0")])
 
 [sub_resource type="Resource" id="Effect_focus_lens_0"]
@@ -714,12 +908,6 @@ position = Vector2(12.975, 14.737)
 color = Color(1, 0.906, 0.69, 1)
 links = Array[StringName]([&"beamer_t2"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_steady_flame_0")])
-
-[sub_resource type="Resource" id="TalentEffect_unlock_beamer_t2"]
-script = ExtResource("3_effect")
-kind = 2
-buildings = 4
-elements = 2
 
 [sub_resource type="Resource" id="Node_beamer_t2"]
 script = ExtResource("2_node")
@@ -827,12 +1015,6 @@ position = Vector2(16.188, 4.421)
 color = Color(1, 0.906, 0.69, 1)
 links = Array[StringName]([&"beamer_t3"])
 
-[sub_resource type="Resource" id="TalentEffect_unlock_beamer_t3"]
-script = ExtResource("3_effect")
-kind = 2
-buildings = 4
-elements = 2
-
 [sub_resource type="Resource" id="Node_beamer_t3"]
 script = ExtResource("2_node")
 id = &"beamer_t3"
@@ -866,7 +1048,7 @@ effects = Array[ExtResource("3_effect")]([SubResource("Effect_solar_lance_level"
 
 [sub_resource type="Resource" id="Effect_hot_snare_0"]
 script = ExtResource("3_effect")
-buildings = 8
+buildings = 3592
 elements = 2
 modify_type = 1
 value_per_rank = 0.08
@@ -875,11 +1057,11 @@ value_per_rank = 0.08
 script = ExtResource("2_node")
 id = &"hot_snare"
 display_name = "Hot Snare"
-description = "Fire trap damage +8%"
+description = "Fire trap, Harpooner, Hatchery and Egg Bomb damage +8%"
 max_rank = 3
 position = Vector2(12.851, 20)
 color = Color(0.788, 0.541, 0.29, 1)
-links = Array[StringName]([&"tinder"])
+links = Array[StringName]([&"tinder", &"egg_bomb_hot_yolk", &"harpooner_barbed_hooks", &"hatchery_fire_fed_brood"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_hot_snare_0")])
 
 [sub_resource type="Resource" id="Effect_tinder_0"]
@@ -919,12 +1101,6 @@ position = Vector2(17.3, 17.789)
 color = Color(0.788, 0.541, 0.29, 1)
 links = Array[StringName]([&"trap_t2", &"fire_wall_t3"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_lasting_coals_level")])
-
-[sub_resource type="Resource" id="TalentEffect_unlock_trap_t2"]
-script = ExtResource("3_effect")
-kind = 2
-buildings = 8
-elements = 2
 
 [sub_resource type="Resource" id="Node_trap_t2"]
 script = ExtResource("2_node")
@@ -1031,12 +1207,6 @@ color = Color(0.788, 0.541, 0.29, 1)
 links = Array[StringName]([&"trap_t3"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_hair_trigger_0")])
 
-[sub_resource type="Resource" id="TalentEffect_unlock_trap_t3"]
-script = ExtResource("3_effect")
-kind = 2
-buildings = 8
-elements = 2
-
 [sub_resource type="Resource" id="Node_trap_t3"]
 script = ExtResource("2_node")
 id = &"trap_t3"
@@ -1094,13 +1264,1162 @@ color = Color(0.604, 0.651, 0.69, 1)
 needs = &"fire_wall_t2"
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_fire_wall_t3_level")])
 
+[sub_resource type="Resource" id="Effect_buffer_maze_entry_fire"]
+script = ExtResource("3_effect")
+kind = 21
+buildings = 64
+elements = 2
+value_per_rank = 0.05
+
+[sub_resource type="Resource" id="Node_smouldering_maze"]
+script = ExtResource("2_node")
+id = &"smouldering_maze"
+display_name = "Smouldering Maze"
+description = "Fire walls burn their attackers 10% harder, and Fire Buffer auras are 5% stronger"
+max_rank = 3
+position = Vector2(-11, 22)
+color = Color(0.604, 0.651, 0.69, 1)
+links = Array[StringName]([&"maze_ember_walls", &"buffer_warm_aura"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_buffer_maze_entry_fire")])
+
+[sub_resource type="Resource" id="Node_maze_ember_walls"]
+script = ExtResource("2_node")
+id = &"maze_ember_walls"
+display_name = "Ember Walls"
+description = "Enemies walking next to a Fire wall get 1 burn tick"
+max_rank = 3
+position = Vector2(-14.5, 21)
+color = Color(0.652, 0.684, 0.745, 1)
+links = Array[StringName]([&"maze_hot_corners"])
+
+[sub_resource type="Resource" id="Node_maze_hot_corners"]
+script = ExtResource("2_node")
+id = &"maze_hot_corners"
+display_name = "Hot Corners"
+description = "Turns next to Fire walls deal 5% of the enemy's max health as Fire damage"
+max_rank = 2
+position = Vector2(-14.5, 19)
+color = Color(0.652, 0.684, 0.745, 1)
+links = Array[StringName]([&"maze_ring_of_fire"])
+
+[sub_resource type="Resource" id="Node_maze_ring_of_fire"]
+script = ExtResource("2_node")
+id = &"maze_ring_of_fire"
+display_name = "Ring of Fire"
+description = "A straight line of 5 or more Fire walls flames up: enemies walking along it burn twice as hard"
+kind = 1
+position = Vector2(-14.5, 17)
+color = Color(0.652, 0.684, 0.745, 1)
+
+[sub_resource type="Resource" id="Effect_spotter_hawk_s_eye_0"]
+script = ExtResource("3_effect")
+buildings = 256
+elements = 2
+modify_type = 1
+value_per_rank = 0.08
+
+[sub_resource type="Resource" id="Node_spotter_hawk_s_eye"]
+script = ExtResource("2_node")
+id = &"spotter_hawk_s_eye"
+display_name = "Hawk's Eye"
+description = "Fire Spotter damage +8%"
+max_rank = 3
+position = Vector2(-7, 19)
+color = Color(1, 0.94, 0.322, 1)
+links = Array[StringName]([&"spotter_still_breath"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_spotter_hawk_s_eye_0")])
+
+[sub_resource type="Resource" id="Effect_spotter_still_breath_0"]
+script = ExtResource("3_effect")
+buildings = 256
+elements = 2
+stat_type = 5
+modify_type = 0
+value_per_rank = 0.2
+
+[sub_resource type="Resource" id="Node_spotter_still_breath"]
+script = ExtResource("2_node")
+id = &"spotter_still_breath"
+display_name = "Still Breath"
+description = "Fire Spotter range +0.2 tiles"
+max_rank = 2
+position = Vector2(-7, 17)
+color = Color(1, 0.94, 0.322, 1)
+links = Array[StringName]([&"spotter_t2"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_spotter_still_breath_0")])
+
+[sub_resource type="Resource" id="Node_spotter_t2"]
+script = ExtResource("2_node")
+id = &"spotter_t2"
+display_name = "Spotter T2"
+description = "Unlocks Fire Spotter T2"
+kind = 2
+position = Vector2(-7, 15)
+color = Color(1, 0.94, 0.322, 1)
+links = Array[StringName]([&"spotter_smouldering_mark", &"spotter_steady_aim"])
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_spotter_t2")])
+
+[sub_resource type="Resource" id="Effect_spotter_smouldering_mark_0"]
+script = ExtResource("3_effect")
+buildings = 256
+elements = 2
+stat_type = 11
+modify_type = 0
+value_per_rank = 0.05
+
+[sub_resource type="Resource" id="Node_spotter_smouldering_mark"]
+script = ExtResource("2_node")
+id = &"spotter_smouldering_mark"
+display_name = "Smouldering Mark"
+description = "Fire Spotter ignite chance +5 points"
+max_rank = 3
+position = Vector2(-7.9, 13)
+color = Color(1, 0.94, 0.322, 1)
+links = Array[StringName]([&"spotter_pyre_mark"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_spotter_smouldering_mark_0")])
+
+[sub_resource type="Resource" id="Effect_spotter_pyre_mark_0"]
+script = ExtResource("3_effect")
+buildings = 256
+elements = 2
+stat_type = 32
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Node_spotter_pyre_mark"]
+script = ExtResource("2_node")
+id = &"spotter_pyre_mark"
+display_name = "Pyre Mark"
+description = "A Spotter hit marks its target: it takes +10% Fire damage from every tower for 3 s"
+max_rank = 2
+position = Vector2(-7.9, 11)
+color = Color(1, 0.94, 0.322, 1)
+links = Array[StringName]([&"spotter_hot_shot"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_spotter_pyre_mark_0")])
+
+[sub_resource type="Resource" id="Effect_spotter_hot_shot_0"]
+script = ExtResource("3_effect")
+buildings = 256
+elements = 2
+stat_type = 10
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Node_spotter_hot_shot"]
+script = ExtResource("2_node")
+id = &"spotter_hot_shot"
+display_name = "Hot Shot"
+description = "Fire Spotter burn potency +10%"
+max_rank = 3
+position = Vector2(-7.9, 9)
+color = Color(1, 0.94, 0.322, 1)
+links = Array[StringName]([&"spotter_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_spotter_hot_shot_0")])
+
+[sub_resource type="Resource" id="Effect_spotter_steady_aim_0"]
+script = ExtResource("3_effect")
+buildings = 256
+elements = 2
+stat_type = 6
+modify_type = 0
+value_per_rank = 0.03
+
+[sub_resource type="Resource" id="Node_spotter_steady_aim"]
+script = ExtResource("2_node")
+id = &"spotter_steady_aim"
+display_name = "Steady Aim"
+description = "Fire Spotter attack speed +0.03"
+max_rank = 3
+position = Vector2(-6.1, 13)
+color = Color(1, 0.94, 0.322, 1)
+links = Array[StringName]([&"spotter_molten_round"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_spotter_steady_aim_0")])
+
+[sub_resource type="Resource" id="Node_spotter_molten_round"]
+script = ExtResource("2_node")
+id = &"spotter_molten_round"
+display_name = "Molten Round"
+description = "Spotter shots also hit enemies within 0.5 tiles of the target for 25% of the hit"
+max_rank = 2
+position = Vector2(-6.1, 11)
+color = Color(1, 0.94, 0.322, 1)
+links = Array[StringName]([&"spotter_weak_spot"])
+
+[sub_resource type="Resource" id="Effect_spotter_weak_spot_0"]
+script = ExtResource("3_effect")
+buildings = 256
+elements = 2
+stat_type = 7
+modify_type = 0
+value_per_rank = 0.04
+
+[sub_resource type="Resource" id="Node_spotter_weak_spot"]
+script = ExtResource("2_node")
+id = &"spotter_weak_spot"
+display_name = "Weak Spot"
+description = "Fire Spotter critical chance +4 points"
+max_rank = 2
+position = Vector2(-6.1, 9)
+color = Color(1, 0.94, 0.322, 1)
+links = Array[StringName]([&"spotter_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_spotter_weak_spot_0")])
+
+[sub_resource type="Resource" id="Node_spotter_t3"]
+script = ExtResource("2_node")
+id = &"spotter_t3"
+display_name = "Spotter T3"
+description = "Unlocks Fire Spotter T3"
+kind = 2
+position = Vector2(-7, 7)
+color = Color(1, 0.94, 0.322, 1)
+links = Array[StringName]([&"spotter_sunspear"])
+one_way_links = Array[StringName]([&"keep_awakens"])
+needs = &"spotter_t2"
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_spotter_t3")])
+
+[sub_resource type="Resource" id="Node_spotter_sunspear"]
+script = ExtResource("2_node")
+id = &"spotter_sunspear"
+display_name = "Sunspear"
+description = "Every 4th shot is a Sunspear: double damage, and it sets every enemy along its line on fire"
+kind = 3
+position = Vector2(-7, 5)
+color = Color(1, 0.94, 0.322, 1)
+
+[sub_resource type="Resource" id="Effect_mortar_heavy_shells_0"]
+script = ExtResource("3_effect")
+buildings = 32
+elements = 2
+modify_type = 1
+value_per_rank = 0.08
+
+[sub_resource type="Resource" id="Node_mortar_heavy_shells"]
+script = ExtResource("2_node")
+id = &"mortar_heavy_shells"
+display_name = "Heavy Shells"
+description = "Fire Mortar damage +8%"
+max_rank = 3
+position = Vector2(-3.5, 18)
+color = Color(0.983, 0.48, 0.313, 1)
+links = Array[StringName]([&"mortar_long_lob"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_mortar_heavy_shells_0")])
+
+[sub_resource type="Resource" id="Effect_mortar_long_lob_0"]
+script = ExtResource("3_effect")
+buildings = 32
+elements = 2
+stat_type = 5
+modify_type = 0
+value_per_rank = 0.2
+
+[sub_resource type="Resource" id="Node_mortar_long_lob"]
+script = ExtResource("2_node")
+id = &"mortar_long_lob"
+display_name = "Long Lob"
+description = "Fire Mortar range +0.2 tiles"
+max_rank = 2
+position = Vector2(-3.5, 16)
+color = Color(0.983, 0.48, 0.313, 1)
+links = Array[StringName]([&"mortar_t2"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_mortar_long_lob_0")])
+
+[sub_resource type="Resource" id="Node_mortar_t2"]
+script = ExtResource("2_node")
+id = &"mortar_t2"
+display_name = "Mortar T2"
+description = "Unlocks Fire Mortar T2"
+kind = 2
+position = Vector2(-3.5, 14)
+color = Color(0.983, 0.48, 0.313, 1)
+links = Array[StringName]([&"mortar_incendiary_fill", &"mortar_quick_loader"])
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_mortar_t2")])
+
+[sub_resource type="Resource" id="Effect_mortar_incendiary_fill_0"]
+script = ExtResource("3_effect")
+buildings = 32
+elements = 2
+stat_type = 11
+modify_type = 0
+value_per_rank = 0.05
+
+[sub_resource type="Resource" id="Node_mortar_incendiary_fill"]
+script = ExtResource("2_node")
+id = &"mortar_incendiary_fill"
+display_name = "Incendiary Fill"
+description = "Fire Mortar ignite chance +5 points"
+max_rank = 3
+position = Vector2(-4.4, 12)
+color = Color(0.983, 0.48, 0.313, 1)
+links = Array[StringName]([&"mortar_napalm"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_mortar_incendiary_fill_0")])
+
+[sub_resource type="Resource" id="Effect_mortar_napalm_0"]
+script = ExtResource("3_effect")
+buildings = 32
+elements = 2
+stat_type = 25
+modify_type = 0
+value_per_rank = 1.0
+
+[sub_resource type="Resource" id="Node_mortar_napalm"]
+script = ExtResource("2_node")
+id = &"mortar_napalm"
+display_name = "Napalm"
+description = "The burning patch a shell leaves lasts 1 s longer"
+max_rank = 2
+position = Vector2(-4.4, 10)
+color = Color(0.983, 0.48, 0.313, 1)
+links = Array[StringName]([&"mortar_wide_shells"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_mortar_napalm_0")])
+
+[sub_resource type="Resource" id="Effect_mortar_wide_shells_0"]
+script = ExtResource("3_effect")
+buildings = 32
+elements = 2
+stat_type = 20
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Node_mortar_wide_shells"]
+script = ExtResource("2_node")
+id = &"mortar_wide_shells"
+display_name = "Wide Shells"
+description = "Fire Mortar splash radius +0.1 tiles"
+max_rank = 2
+position = Vector2(-4.4, 8)
+color = Color(0.983, 0.48, 0.313, 1)
+links = Array[StringName]([&"mortar_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_mortar_wide_shells_0")])
+
+[sub_resource type="Resource" id="Effect_mortar_quick_loader_0"]
+script = ExtResource("3_effect")
+buildings = 32
+elements = 2
+stat_type = 6
+modify_type = 0
+value_per_rank = 0.04
+
+[sub_resource type="Resource" id="Node_mortar_quick_loader"]
+script = ExtResource("2_node")
+id = &"mortar_quick_loader"
+display_name = "Quick Loader"
+description = "Fire Mortar attack speed +0.04"
+max_rank = 3
+position = Vector2(-2.6, 12)
+color = Color(0.983, 0.48, 0.313, 1)
+links = Array[StringName]([&"mortar_shell_shock"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_mortar_quick_loader_0")])
+
+[sub_resource type="Resource" id="Node_mortar_shell_shock"]
+script = ExtResource("2_node")
+id = &"mortar_shell_shock"
+display_name = "Shell Shock"
+description = "Enemies at the centre of the splash are knocked back 0.25 tiles"
+max_rank = 2
+position = Vector2(-2.6, 10)
+color = Color(0.983, 0.48, 0.313, 1)
+links = Array[StringName]([&"mortar_scorch"])
+
+[sub_resource type="Resource" id="Effect_mortar_scorch_0"]
+script = ExtResource("3_effect")
+buildings = 32
+elements = 2
+stat_type = 10
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Node_mortar_scorch"]
+script = ExtResource("2_node")
+id = &"mortar_scorch"
+display_name = "Scorch"
+description = "Fire Mortar burn potency +10%"
+max_rank = 3
+position = Vector2(-2.6, 8)
+color = Color(0.983, 0.48, 0.313, 1)
+links = Array[StringName]([&"mortar_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_mortar_scorch_0")])
+
+[sub_resource type="Resource" id="Node_mortar_t3"]
+script = ExtResource("2_node")
+id = &"mortar_t3"
+display_name = "Mortar T3"
+description = "Unlocks Fire Mortar T3"
+kind = 2
+position = Vector2(-3.5, 6)
+color = Color(0.983, 0.48, 0.313, 1)
+links = Array[StringName]([&"mortar_firestorm"])
+one_way_links = Array[StringName]([&"keep_awakens"])
+needs = &"mortar_t2"
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_mortar_t3")])
+
+[sub_resource type="Resource" id="Node_mortar_firestorm"]
+script = ExtResource("2_node")
+id = &"mortar_firestorm"
+display_name = "Firestorm"
+description = "Every 5th shell bursts into 3 burning bomblets around the landing spot"
+kind = 3
+position = Vector2(-3.5, 4)
+color = Color(0.983, 0.48, 0.313, 1)
+
+[sub_resource type="Resource" id="Effect_breather_bellows_0"]
+script = ExtResource("3_effect")
+buildings = 128
+elements = 2
+modify_type = 1
+value_per_rank = 0.08
+
+[sub_resource type="Resource" id="Node_breather_bellows"]
+script = ExtResource("2_node")
+id = &"breather_bellows"
+display_name = "Bellows"
+description = "Fire Breather damage +8%"
+max_rank = 3
+position = Vector2(23.5, 18)
+color = Color(1, 0.971, 0.69, 1)
+links = Array[StringName]([&"breather_deep_lungs"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_breather_bellows_0")])
+
+[sub_resource type="Resource" id="Effect_breather_deep_lungs_0"]
+script = ExtResource("3_effect")
+buildings = 128
+elements = 2
+stat_type = 5
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Node_breather_deep_lungs"]
+script = ExtResource("2_node")
+id = &"breather_deep_lungs"
+display_name = "Deep Lungs"
+description = "Fire Breather cone length +0.1 tiles"
+max_rank = 2
+position = Vector2(23.5, 16)
+color = Color(1, 0.971, 0.69, 1)
+links = Array[StringName]([&"breather_t2"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_breather_deep_lungs_0")])
+
+[sub_resource type="Resource" id="Node_breather_t2"]
+script = ExtResource("2_node")
+id = &"breather_t2"
+display_name = "Breather T2"
+description = "Unlocks Fire Breather T2"
+kind = 2
+position = Vector2(23.5, 14)
+color = Color(1, 0.971, 0.69, 1)
+links = Array[StringName]([&"breather_fan_of_flame", &"breather_hot_air"])
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_breather_t2")])
+
+[sub_resource type="Resource" id="Effect_breather_fan_of_flame_0"]
+script = ExtResource("3_effect")
+buildings = 128
+elements = 2
+stat_type = 31
+modify_type = 0
+value_per_rank = 10.0
+
+[sub_resource type="Resource" id="Node_breather_fan_of_flame"]
+script = ExtResource("2_node")
+id = &"breather_fan_of_flame"
+display_name = "Fan of Flame"
+description = "Fire Breather cone width +10 degrees"
+max_rank = 2
+position = Vector2(22.6, 12)
+color = Color(1, 0.971, 0.69, 1)
+links = Array[StringName]([&"breather_searing_breath"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_breather_fan_of_flame_0")])
+
+[sub_resource type="Resource" id="Effect_breather_searing_breath_0"]
+script = ExtResource("3_effect")
+buildings = 128
+elements = 2
+stat_type = 11
+modify_type = 0
+value_per_rank = 0.05
+
+[sub_resource type="Resource" id="Node_breather_searing_breath"]
+script = ExtResource("2_node")
+id = &"breather_searing_breath"
+display_name = "Searing Breath"
+description = "Fire Breather ignite chance +5 points"
+max_rank = 3
+position = Vector2(22.6, 10)
+color = Color(1, 0.971, 0.69, 1)
+links = Array[StringName]([&"breather_burning_floor"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_breather_searing_breath_0")])
+
+[sub_resource type="Resource" id="Effect_breather_burning_floor_0"]
+script = ExtResource("3_effect")
+buildings = 128
+elements = 2
+stat_type = 25
+modify_type = 0
+value_per_rank = 1.0
+
+[sub_resource type="Resource" id="Effect_breather_burning_floor_1"]
+script = ExtResource("3_effect")
+buildings = 128
+elements = 2
+stat_type = 26
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Node_breather_burning_floor"]
+script = ExtResource("2_node")
+id = &"breather_burning_floor"
+display_name = "Burning Floor"
+description = "The breath leaves burning ground for 1 s"
+max_rank = 2
+position = Vector2(22.6, 8)
+color = Color(1, 0.971, 0.69, 1)
+links = Array[StringName]([&"breather_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_breather_burning_floor_0"), SubResource("Effect_breather_burning_floor_1")])
+
+[sub_resource type="Resource" id="Effect_breather_hot_air_0"]
+script = ExtResource("3_effect")
+buildings = 128
+elements = 2
+stat_type = 6
+modify_type = 0
+value_per_rank = 0.04
+
+[sub_resource type="Resource" id="Node_breather_hot_air"]
+script = ExtResource("2_node")
+id = &"breather_hot_air"
+display_name = "Hot Air"
+description = "Fire Breather attack speed +0.04"
+max_rank = 3
+position = Vector2(24.4, 12)
+color = Color(1, 0.971, 0.69, 1)
+links = Array[StringName]([&"breather_backdraft"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_breather_hot_air_0")])
+
+[sub_resource type="Resource" id="Effect_breather_backdraft_0"]
+script = ExtResource("3_effect")
+kind = 3
+buildings = 128
+elements = 2
+modify_type = 0
+value_per_rank = 0.1
+condition = 1
+
+[sub_resource type="Resource" id="Node_breather_backdraft"]
+script = ExtResource("2_node")
+id = &"breather_backdraft"
+display_name = "Backdraft"
+description = "The breath deals +10% damage to enemies that are already burning"
+max_rank = 2
+position = Vector2(24.4, 10)
+color = Color(1, 0.971, 0.69, 1)
+links = Array[StringName]([&"breather_cinder_lungs"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_breather_backdraft_0")])
+
+[sub_resource type="Resource" id="Effect_breather_cinder_lungs_0"]
+script = ExtResource("3_effect")
+buildings = 128
+elements = 2
+stat_type = 10
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Node_breather_cinder_lungs"]
+script = ExtResource("2_node")
+id = &"breather_cinder_lungs"
+display_name = "Cinder Lungs"
+description = "Fire Breather burn potency +10%"
+max_rank = 3
+position = Vector2(24.4, 8)
+color = Color(1, 0.971, 0.69, 1)
+links = Array[StringName]([&"breather_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_breather_cinder_lungs_0")])
+
+[sub_resource type="Resource" id="Node_breather_t3"]
+script = ExtResource("2_node")
+id = &"breather_t3"
+display_name = "Breather T3"
+description = "Unlocks Fire Breather T3"
+kind = 2
+position = Vector2(23.5, 6)
+color = Color(1, 0.971, 0.69, 1)
+links = Array[StringName]([&"breather_dragonfire"])
+one_way_links = Array[StringName]([&"keep_awakens"])
+needs = &"breather_t2"
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_breather_t3")])
+
+[sub_resource type="Resource" id="Node_breather_dragonfire"]
+script = ExtResource("2_node")
+id = &"breather_dragonfire"
+display_name = "Dragonfire"
+description = "The breath sweeps across a 120 degree arc and its burns last twice as long"
+kind = 3
+position = Vector2(23.5, 4)
+color = Color(1, 0.971, 0.69, 1)
+
+[sub_resource type="Resource" id="Node_egg_bomb_hot_yolk"]
+script = ExtResource("2_node")
+id = &"egg_bomb_hot_yolk"
+display_name = "Hot Yolk"
+description = "Fire Egg Bomb blast damage +8%"
+max_rank = 3
+position = Vector2(27, 19)
+color = Color(0.851, 0.697, 0.313, 1)
+links = Array[StringName]([&"egg_bomb_quick_hatch"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_egg_bomb_hot_yolk_0")])
+
+[sub_resource type="Resource" id="Node_egg_bomb_quick_hatch"]
+script = ExtResource("2_node")
+id = &"egg_bomb_quick_hatch"
+display_name = "Quick Hatch"
+description = "Fire Egg Bomb rebuilds 10% faster"
+max_rank = 3
+position = Vector2(27, 17)
+color = Color(0.851, 0.697, 0.313, 1)
+links = Array[StringName]([&"egg_bomb_t2"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_egg_bomb_quick_hatch_0")])
+
+[sub_resource type="Resource" id="Node_egg_bomb_t2"]
+script = ExtResource("2_node")
+id = &"egg_bomb_t2"
+display_name = "Egg Bomb T2"
+description = "Unlocks Fire Egg Bomb T2"
+kind = 2
+position = Vector2(27, 15)
+color = Color(0.851, 0.697, 0.313, 1)
+links = Array[StringName]([&"egg_bomb_wide_blast", &"egg_bomb_short_fuse"])
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_egg_bomb_t2")])
+
+[sub_resource type="Resource" id="Node_egg_bomb_wide_blast"]
+script = ExtResource("2_node")
+id = &"egg_bomb_wide_blast"
+display_name = "Wide Blast"
+description = "Fire Egg Bomb blast radius +0.1 tiles"
+max_rank = 2
+position = Vector2(26.1, 13)
+color = Color(0.851, 0.697, 0.313, 1)
+links = Array[StringName]([&"egg_bomb_scalding_shell"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_egg_bomb_wide_blast_0")])
+
+[sub_resource type="Resource" id="Node_egg_bomb_scalding_shell"]
+script = ExtResource("2_node")
+id = &"egg_bomb_scalding_shell"
+display_name = "Scalding Shell"
+description = "Fire Egg Bomb burn potency +10%"
+max_rank = 3
+position = Vector2(26.1, 11)
+color = Color(0.851, 0.697, 0.313, 1)
+links = Array[StringName]([&"egg_bomb_fire_pit"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_egg_bomb_scalding_shell_0")])
+
+[sub_resource type="Resource" id="Node_egg_bomb_fire_pit"]
+script = ExtResource("2_node")
+id = &"egg_bomb_fire_pit"
+display_name = "Fire Pit"
+description = "The blast leaves burning ground for 1.5 s"
+max_rank = 2
+position = Vector2(26.1, 9)
+color = Color(0.851, 0.697, 0.313, 1)
+links = Array[StringName]([&"egg_bomb_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_egg_bomb_fire_pit_0")])
+
+[sub_resource type="Resource" id="Node_egg_bomb_short_fuse"]
+script = ExtResource("2_node")
+id = &"egg_bomb_short_fuse"
+display_name = "Short Fuse"
+description = "The egg goes off 0.1 s sooner"
+max_rank = 2
+position = Vector2(27.9, 13)
+color = Color(0.851, 0.697, 0.313, 1)
+links = Array[StringName]([&"egg_bomb_ember_clutch"])
+
+[sub_resource type="Resource" id="Node_egg_bomb_ember_clutch"]
+script = ExtResource("2_node")
+id = &"egg_bomb_ember_clutch"
+display_name = "Ember Clutch"
+description = "The blast throws 2 embers that ignite enemies within 1 tile of where they land"
+max_rank = 2
+position = Vector2(27.9, 11)
+color = Color(0.851, 0.697, 0.313, 1)
+links = Array[StringName]([&"egg_bomb_warm_nest"])
+
+[sub_resource type="Resource" id="Node_egg_bomb_warm_nest"]
+script = ExtResource("2_node")
+id = &"egg_bomb_warm_nest"
+display_name = "Warm Nest"
+description = "Fire Egg Bomb rebuilds 10% faster"
+max_rank = 3
+position = Vector2(27.9, 9)
+color = Color(0.851, 0.697, 0.313, 1)
+links = Array[StringName]([&"egg_bomb_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_egg_bomb_warm_nest_0")])
+
+[sub_resource type="Resource" id="Node_egg_bomb_t3"]
+script = ExtResource("2_node")
+id = &"egg_bomb_t3"
+display_name = "Egg Bomb T3"
+description = "Unlocks Fire Egg Bomb T3"
+kind = 2
+position = Vector2(27, 7)
+color = Color(0.851, 0.697, 0.313, 1)
+links = Array[StringName]([&"egg_bomb_inferno_egg"])
+one_way_links = Array[StringName]([&"keep_awakens"])
+needs = &"egg_bomb_t2"
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_egg_bomb_t3")])
+
+[sub_resource type="Resource" id="Node_egg_bomb_inferno_egg"]
+script = ExtResource("2_node")
+id = &"egg_bomb_inferno_egg"
+display_name = "Inferno Egg"
+description = "The blast ignites every enemy within 2 tiles, and once per wave the egg rebuilds at once"
+kind = 3
+position = Vector2(27, 5)
+color = Color(0.851, 0.697, 0.313, 1)
+
+[sub_resource type="Resource" id="Effect_harpooner_barbed_hooks_0"]
+script = ExtResource("3_effect")
+buildings = 512
+elements = 2
+modify_type = 1
+value_per_rank = 0.08
+
+[sub_resource type="Resource" id="Node_harpooner_barbed_hooks"]
+script = ExtResource("2_node")
+id = &"harpooner_barbed_hooks"
+display_name = "Barbed Hooks"
+description = "Fire Harpooner damage +8%"
+max_rank = 3
+position = Vector2(30.5, 20)
+color = Color(0.851, 0.81, 0.313, 1)
+links = Array[StringName]([&"harpooner_long_chain"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_harpooner_barbed_hooks_0")])
+
+[sub_resource type="Resource" id="Effect_harpooner_long_chain_0"]
+script = ExtResource("3_effect")
+buildings = 512
+elements = 2
+stat_type = 5
+modify_type = 0
+value_per_rank = 0.2
+
+[sub_resource type="Resource" id="Node_harpooner_long_chain"]
+script = ExtResource("2_node")
+id = &"harpooner_long_chain"
+display_name = "Long Chain"
+description = "Fire Harpooner range +0.2 tiles"
+max_rank = 2
+position = Vector2(30.5, 18)
+color = Color(0.851, 0.81, 0.313, 1)
+links = Array[StringName]([&"harpooner_t2"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_harpooner_long_chain_0")])
+
+[sub_resource type="Resource" id="Node_harpooner_t2"]
+script = ExtResource("2_node")
+id = &"harpooner_t2"
+display_name = "Harpooner T2"
+description = "Unlocks Fire Harpooner T2"
+kind = 2
+position = Vector2(30.5, 16)
+color = Color(0.851, 0.81, 0.313, 1)
+links = Array[StringName]([&"harpooner_red_hot_hook", &"harpooner_quick_reel"])
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_harpooner_t2")])
+
+[sub_resource type="Resource" id="Effect_harpooner_red_hot_hook_0"]
+script = ExtResource("3_effect")
+buildings = 512
+elements = 2
+stat_type = 11
+modify_type = 0
+value_per_rank = 0.05
+
+[sub_resource type="Resource" id="Node_harpooner_red_hot_hook"]
+script = ExtResource("2_node")
+id = &"harpooner_red_hot_hook"
+display_name = "Red-Hot Hook"
+description = "Fire Harpooner ignite chance +5 points"
+max_rank = 3
+position = Vector2(29.6, 14)
+color = Color(0.851, 0.81, 0.313, 1)
+links = Array[StringName]([&"harpooner_searing_chain"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_harpooner_red_hot_hook_0")])
+
+[sub_resource type="Resource" id="Node_harpooner_searing_chain"]
+script = ExtResource("2_node")
+id = &"harpooner_searing_chain"
+display_name = "Searing Chain"
+description = "Burns on a tethered enemy are 15% stronger"
+max_rank = 2
+position = Vector2(29.6, 12)
+color = Color(0.851, 0.81, 0.313, 1)
+links = Array[StringName]([&"harpooner_hot_tether"])
+
+[sub_resource type="Resource" id="Effect_harpooner_hot_tether_0"]
+script = ExtResource("3_effect")
+buildings = 512
+elements = 2
+stat_type = 34
+modify_type = 0
+value_per_rank = 0.25
+
+[sub_resource type="Resource" id="Node_harpooner_hot_tether"]
+script = ExtResource("2_node")
+id = &"harpooner_hot_tether"
+display_name = "Hot Tether"
+description = "The tether lasts 0.25 s longer"
+max_rank = 2
+position = Vector2(29.6, 10)
+color = Color(0.851, 0.81, 0.313, 1)
+links = Array[StringName]([&"harpooner_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_harpooner_hot_tether_0")])
+
+[sub_resource type="Resource" id="Effect_harpooner_quick_reel_0"]
+script = ExtResource("3_effect")
+buildings = 512
+elements = 2
+stat_type = 6
+modify_type = 0
+value_per_rank = 0.04
+
+[sub_resource type="Resource" id="Node_harpooner_quick_reel"]
+script = ExtResource("2_node")
+id = &"harpooner_quick_reel"
+display_name = "Quick Reel"
+description = "Fire Harpooner attack speed +0.04"
+max_rank = 3
+position = Vector2(31.4, 14)
+color = Color(0.851, 0.81, 0.313, 1)
+links = Array[StringName]([&"harpooner_drag_to_the_fire"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_harpooner_quick_reel_0")])
+
+[sub_resource type="Resource" id="Node_harpooner_drag_to_the_fire"]
+script = ExtResource("2_node")
+id = &"harpooner_drag_to_the_fire"
+display_name = "Drag to the Fire"
+description = "A harpooned flyer lands on burning ground that lasts 1.5 s"
+max_rank = 2
+position = Vector2(31.4, 12)
+color = Color(0.851, 0.81, 0.313, 1)
+links = Array[StringName]([&"harpooner_skyhook"])
+
+[sub_resource type="Resource" id="Effect_harpooner_skyhook_0"]
+script = ExtResource("3_effect")
+kind = 3
+buildings = 512
+elements = 2
+modify_type = 1
+value_per_rank = 0.15
+condition = 5
+
+[sub_resource type="Resource" id="Node_harpooner_skyhook"]
+script = ExtResource("2_node")
+id = &"harpooner_skyhook"
+display_name = "Skyhook"
+description = "Fire Harpooner damage +15% against flyers"
+max_rank = 2
+position = Vector2(31.4, 10)
+color = Color(0.851, 0.81, 0.313, 1)
+links = Array[StringName]([&"harpooner_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_harpooner_skyhook_0")])
+
+[sub_resource type="Resource" id="Node_harpooner_t3"]
+script = ExtResource("2_node")
+id = &"harpooner_t3"
+display_name = "Harpooner T3"
+description = "Unlocks Fire Harpooner T3"
+kind = 2
+position = Vector2(30.5, 8)
+color = Color(0.851, 0.81, 0.313, 1)
+links = Array[StringName]([&"harpooner_chain_of_embers"])
+one_way_links = Array[StringName]([&"keep_awakens"])
+needs = &"harpooner_t2"
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_harpooner_t3")])
+
+[sub_resource type="Resource" id="Node_harpooner_chain_of_embers"]
+script = ExtResource("2_node")
+id = &"harpooner_chain_of_embers"
+display_name = "Chain of Embers"
+description = "The harpoon chains on to 2 more enemies within 1.5 tiles, tethering and burning each"
+kind = 3
+position = Vector2(30.5, 6)
+color = Color(0.851, 0.81, 0.313, 1)
+
+[sub_resource type="Resource" id="Node_hatchery_fire_fed_brood"]
+script = ExtResource("2_node")
+id = &"hatchery_fire_fed_brood"
+display_name = "Fire-Fed Brood"
+description = "Fire drakeling damage +8%"
+max_rank = 3
+position = Vector2(34, 21)
+color = Color(0.779, 0.851, 0.313, 1)
+links = Array[StringName]([&"hatchery_warm_clutch"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_hatchery_fire_fed_brood_0")])
+
+[sub_resource type="Resource" id="Node_hatchery_warm_clutch"]
+script = ExtResource("2_node")
+id = &"hatchery_warm_clutch"
+display_name = "Warm Clutch"
+description = "Fire Hatchery hatches 10% faster"
+max_rank = 3
+position = Vector2(34, 19)
+color = Color(0.779, 0.851, 0.313, 1)
+links = Array[StringName]([&"hatchery_t2"])
+
+[sub_resource type="Resource" id="Node_hatchery_t2"]
+script = ExtResource("2_node")
+id = &"hatchery_t2"
+display_name = "Hatchery T2"
+description = "Unlocks Fire Hatchery T2"
+kind = 2
+position = Vector2(34, 17)
+color = Color(0.779, 0.851, 0.313, 1)
+links = Array[StringName]([&"hatchery_ember_claws", &"hatchery_big_clutch"])
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_hatchery_t2")])
+
+[sub_resource type="Resource" id="Node_hatchery_ember_claws"]
+script = ExtResource("2_node")
+id = &"hatchery_ember_claws"
+display_name = "Ember Claws"
+description = "Fire drakeling ignite chance +5 points"
+max_rank = 3
+position = Vector2(33.1, 15)
+color = Color(0.779, 0.851, 0.313, 1)
+links = Array[StringName]([&"hatchery_hot_blood"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_hatchery_ember_claws_0")])
+
+[sub_resource type="Resource" id="Node_hatchery_hot_blood"]
+script = ExtResource("2_node")
+id = &"hatchery_hot_blood"
+display_name = "Hot Blood"
+description = "Fire drakelings burn the enemies that hit them"
+max_rank = 2
+position = Vector2(33.1, 13)
+color = Color(0.779, 0.851, 0.313, 1)
+links = Array[StringName]([&"hatchery_thick_scales"])
+
+[sub_resource type="Resource" id="Node_hatchery_thick_scales"]
+script = ExtResource("2_node")
+id = &"hatchery_thick_scales"
+display_name = "Thick Scales"
+description = "Fire drakeling health +15%"
+max_rank = 2
+position = Vector2(33.1, 11)
+color = Color(0.779, 0.851, 0.313, 1)
+links = Array[StringName]([&"hatchery_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_hatchery_thick_scales_0")])
+
+[sub_resource type="Resource" id="Node_hatchery_big_clutch"]
+script = ExtResource("2_node")
+id = &"hatchery_big_clutch"
+display_name = "Big Clutch"
+description = "One more drakeling at a time"
+position = Vector2(34.9, 15)
+color = Color(0.779, 0.851, 0.313, 1)
+links = Array[StringName]([&"hatchery_fire_spit"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_hatchery_big_clutch_0")])
+
+[sub_resource type="Resource" id="Node_hatchery_fire_spit"]
+script = ExtResource("2_node")
+id = &"hatchery_fire_spit"
+display_name = "Fire Spit"
+description = "Every 4 s a Fire drakeling spits a burning glob at an enemy within 1.5 tiles"
+max_rank = 2
+position = Vector2(34.9, 13)
+color = Color(0.779, 0.851, 0.313, 1)
+links = Array[StringName]([&"hatchery_fierce_hatchlings"])
+
+[sub_resource type="Resource" id="Node_hatchery_fierce_hatchlings"]
+script = ExtResource("2_node")
+id = &"hatchery_fierce_hatchlings"
+display_name = "Fierce Hatchlings"
+description = "Fire drakeling attack speed +0.04"
+max_rank = 3
+position = Vector2(34.9, 11)
+color = Color(0.779, 0.851, 0.313, 1)
+links = Array[StringName]([&"hatchery_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_hatchery_fierce_hatchlings_0")])
+
+[sub_resource type="Resource" id="Node_hatchery_t3"]
+script = ExtResource("2_node")
+id = &"hatchery_t3"
+display_name = "Hatchery T3"
+description = "Unlocks Fire Hatchery T3"
+kind = 2
+position = Vector2(34, 9)
+color = Color(0.779, 0.851, 0.313, 1)
+links = Array[StringName]([&"hatchery_brood_inferno"])
+one_way_links = Array[StringName]([&"keep_awakens"])
+needs = &"hatchery_t2"
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_hatchery_t3")])
+
+[sub_resource type="Resource" id="Node_hatchery_brood_inferno"]
+script = ExtResource("2_node")
+id = &"hatchery_brood_inferno"
+display_name = "Brood Inferno"
+description = "A falling Fire drakeling bursts into flame: 20% of its max health as Fire damage within 1 tile"
+kind = 3
+position = Vector2(34, 7)
+color = Color(0.779, 0.851, 0.313, 1)
+
+[sub_resource type="Resource" id="Effect_buffer_warm_aura_0"]
+script = ExtResource("3_effect")
+buildings = 64
+elements = 2
+stat_type = 5
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Node_buffer_warm_aura"]
+script = ExtResource("2_node")
+id = &"buffer_warm_aura"
+display_name = "Warm Aura"
+description = "Fire Buffer aura radius +0.1 tiles"
+max_rank = 3
+position = Vector2(-11, 20)
+color = Color(0.652, 0.684, 0.745, 1)
+links = Array[StringName]([&"buffer_kindled_hearts"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_buffer_warm_aura_0")])
+
+[sub_resource type="Resource" id="Effect_buffer_kindled_hearts_0"]
+script = ExtResource("3_effect")
+kind = 21
+buildings = 64
+elements = 2
+value_per_rank = 0.05
+
+[sub_resource type="Resource" id="Node_buffer_kindled_hearts"]
+script = ExtResource("2_node")
+id = &"buffer_kindled_hearts"
+display_name = "Kindled Hearts"
+description = "Fire Buffer buffs +5% stronger"
+max_rank = 2
+position = Vector2(-11, 18)
+color = Color(0.652, 0.684, 0.745, 1)
+links = Array[StringName]([&"buffer_t2"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_buffer_kindled_hearts_0")])
+
+[sub_resource type="Resource" id="Node_buffer_t2"]
+script = ExtResource("2_node")
+id = &"buffer_t2"
+display_name = "Buffer T2"
+description = "Unlocks Fire Buffer T2: the aura also weakens enemies in it"
+kind = 2
+position = Vector2(-11, 16)
+color = Color(0.652, 0.684, 0.745, 1)
+links = Array[StringName]([&"buffer_burning_zeal", &"buffer_forge_song"])
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_buffer_t2")])
+
+[sub_resource type="Resource" id="Effect_buffer_burning_zeal_0"]
+script = ExtResource("3_effect")
+buildings = 64
+elements = 2
+stat_type = 11
+modify_type = 0
+value_per_rank = 0.03
+
+[sub_resource type="Resource" id="Node_buffer_burning_zeal"]
+script = ExtResource("2_node")
+id = &"buffer_burning_zeal"
+display_name = "Burning Zeal"
+description = "The burn chance a Fire Buffer gives +3 points"
+max_rank = 3
+position = Vector2(-11.9, 14)
+color = Color(0.652, 0.684, 0.745, 1)
+links = Array[StringName]([&"buffer_heat_shimmer"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_buffer_burning_zeal_0")])
+
+[sub_resource type="Resource" id="Node_buffer_heat_shimmer"]
+script = ExtResource("2_node")
+id = &"buffer_heat_shimmer"
+display_name = "Heat Shimmer"
+description = "Enemies in a Fire Buffer's aura take +5% Fire damage"
+max_rank = 2
+position = Vector2(-11.9, 12)
+color = Color(0.652, 0.684, 0.745, 1)
+links = Array[StringName]([&"buffer_hearth"])
+
+[sub_resource type="Resource" id="Effect_buffer_hearth_0"]
+script = ExtResource("3_effect")
+kind = 22
+buildings = 64
+elements = 2
+value_per_rank = 1.0
+
+[sub_resource type="Resource" id="Node_buffer_hearth"]
+script = ExtResource("2_node")
+id = &"buffer_hearth"
+display_name = "Hearth"
+description = "Fire Buffer pip budget +1"
+max_rank = 2
+position = Vector2(-11.9, 10)
+color = Color(0.652, 0.684, 0.745, 1)
+links = Array[StringName]([&"buffer_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_buffer_hearth_0")])
+
+[sub_resource type="Resource" id="Effect_buffer_forge_song_0"]
+script = ExtResource("3_effect")
+buildings = 64
+elements = 2
+stat_type = 10
+modify_type = 0
+value_per_rank = 0.05
+
+[sub_resource type="Resource" id="Node_buffer_forge_song"]
+script = ExtResource("2_node")
+id = &"buffer_forge_song"
+display_name = "Forge Song"
+description = "Buffed towers' burn potency +5%"
+max_rank = 3
+position = Vector2(-10.1, 14)
+color = Color(0.652, 0.684, 0.745, 1)
+links = Array[StringName]([&"buffer_fire_drill"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_buffer_forge_song_0")])
+
+[sub_resource type="Resource" id="Node_buffer_fire_drill"]
+script = ExtResource("2_node")
+id = &"buffer_fire_drill"
+display_name = "Fire Drill"
+description = "The attack speed buff of a Fire Buffer is 5% stronger"
+max_rank = 2
+position = Vector2(-10.1, 12)
+color = Color(0.652, 0.684, 0.745, 1)
+links = Array[StringName]([&"buffer_warm_stones"])
+
+[sub_resource type="Resource" id="Node_buffer_warm_stones"]
+script = ExtResource("2_node")
+id = &"buffer_warm_stones"
+display_name = "Warm Stones"
+description = "Fire walls in a Fire Buffer's aura heal 1% of their max health per second"
+max_rank = 2
+position = Vector2(-10.1, 10)
+color = Color(0.652, 0.684, 0.745, 1)
+links = Array[StringName]([&"buffer_t3"])
+
+[sub_resource type="Resource" id="Node_buffer_t3"]
+script = ExtResource("2_node")
+id = &"buffer_t3"
+display_name = "Buffer T3"
+description = "Unlocks Fire Buffer T3: Commander's Roar"
+kind = 2
+position = Vector2(-11, 8)
+color = Color(0.652, 0.684, 0.745, 1)
+links = Array[StringName]([&"buffer_heart_of_the_forge"])
+one_way_links = Array[StringName]([&"keep_awakens"])
+needs = &"buffer_t2"
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_buffer_t3")])
+
+[sub_resource type="Resource" id="Node_buffer_heart_of_the_forge"]
+script = ExtResource("2_node")
+id = &"buffer_heart_of_the_forge"
+display_name = "Heart of the Forge"
+description = "Every 10th attack of a buffed tower is a critical hit that ignites"
+kind = 3
+position = Vector2(-11, 6)
+color = Color(0.652, 0.684, 0.745, 1)
+
 [resource]
 script = ExtResource("1_tree")
 id = &"fire"
 display_name = "Fire"
 start_id = &"kindling"
 element = 2
-nodes = Array[ExtResource("2_node")]([SubResource("Node_kindling"), SubResource("Node_keep_awakens"), SubResource("Node_searing_heat"), SubResource("Node_catching_flame"), SubResource("Node_slow_burn"), SubResource("Node_fan_flames"), SubResource("Node_wildfire"), SubResource("Node_heat_haze"), SubResource("Node_everburn"), SubResource("Node_choking_smoke"), SubResource("Node_flash_fire"), SubResource("Node_funeral_pyre"), SubResource("Node_blast_furnace"), SubResource("Node_wide_blaze"), SubResource("Node_quick_pulse"), SubResource("Node_nova_t2"), SubResource("Node_scorching_ring"), SubResource("Node_searing_core"), SubResource("Node_heat_wave"), SubResource("Node_overheat"), SubResource("Node_cinders"), SubResource("Node_flashpoint"), SubResource("Node_nova_t3"), SubResource("Node_supernova"), SubResource("Node_hot_bolts"), SubResource("Node_quick_flame"), SubResource("Node_long_flight"), SubResource("Node_bolter_t2"), SubResource("Node_kindled_tips"), SubResource("Node_blazing_bolts"), SubResource("Node_searing_bolts"), SubResource("Node_twin_sparks"), SubResource("Node_seeking_flame"), SubResource("Node_sharp_flint"), SubResource("Node_bolter_t3"), SubResource("Node_meteor"), SubResource("Node_hot_beam"), SubResource("Node_focus_lens"), SubResource("Node_steady_flame"), SubResource("Node_beamer_t2"), SubResource("Node_kindled_beam"), SubResource("Node_bright_core"), SubResource("Node_scald"), SubResource("Node_melting_point"), SubResource("Node_white_heat"), SubResource("Node_wide_beam"), SubResource("Node_beamer_t3"), SubResource("Node_solar_lance"), SubResource("Node_hot_snare"), SubResource("Node_tinder"), SubResource("Node_lasting_coals"), SubResource("Node_trap_t2"), SubResource("Node_spreading_coals"), SubResource("Node_kiln_heat"), SubResource("Node_searing_ground"), SubResource("Node_flashover"), SubResource("Node_oil_slick"), SubResource("Node_hair_trigger"), SubResource("Node_trap_t3"), SubResource("Node_chain_reaction"), SubResource("Node_fire_wall_t2"), SubResource("Node_fire_wall_t3")])
+nodes = Array[ExtResource("2_node")]([SubResource("Node_kindling"), SubResource("Node_keep_awakens"), SubResource("Node_searing_heat"), SubResource("Node_catching_flame"), SubResource("Node_slow_burn"), SubResource("Node_fan_flames"), SubResource("Node_wildfire"), SubResource("Node_heat_haze"), SubResource("Node_everburn"), SubResource("Node_choking_smoke"), SubResource("Node_flash_fire"), SubResource("Node_funeral_pyre"), SubResource("Node_blast_furnace"), SubResource("Node_wide_blaze"), SubResource("Node_quick_pulse"), SubResource("Node_nova_t2"), SubResource("Node_scorching_ring"), SubResource("Node_searing_core"), SubResource("Node_heat_wave"), SubResource("Node_overheat"), SubResource("Node_cinders"), SubResource("Node_flashpoint"), SubResource("Node_nova_t3"), SubResource("Node_supernova"), SubResource("Node_hot_bolts"), SubResource("Node_quick_flame"), SubResource("Node_long_flight"), SubResource("Node_bolter_t2"), SubResource("Node_kindled_tips"), SubResource("Node_blazing_bolts"), SubResource("Node_searing_bolts"), SubResource("Node_twin_sparks"), SubResource("Node_seeking_flame"), SubResource("Node_sharp_flint"), SubResource("Node_bolter_t3"), SubResource("Node_meteor"), SubResource("Node_hot_beam"), SubResource("Node_focus_lens"), SubResource("Node_steady_flame"), SubResource("Node_beamer_t2"), SubResource("Node_kindled_beam"), SubResource("Node_bright_core"), SubResource("Node_scald"), SubResource("Node_melting_point"), SubResource("Node_white_heat"), SubResource("Node_wide_beam"), SubResource("Node_beamer_t3"), SubResource("Node_solar_lance"), SubResource("Node_hot_snare"), SubResource("Node_tinder"), SubResource("Node_lasting_coals"), SubResource("Node_trap_t2"), SubResource("Node_spreading_coals"), SubResource("Node_kiln_heat"), SubResource("Node_searing_ground"), SubResource("Node_flashover"), SubResource("Node_oil_slick"), SubResource("Node_hair_trigger"), SubResource("Node_trap_t3"), SubResource("Node_chain_reaction"), SubResource("Node_fire_wall_t2"), SubResource("Node_fire_wall_t3"), SubResource("Node_smouldering_maze"), SubResource("Node_maze_ember_walls"), SubResource("Node_maze_hot_corners"), SubResource("Node_maze_ring_of_fire"), SubResource("Node_spotter_hawk_s_eye"), SubResource("Node_spotter_still_breath"), SubResource("Node_spotter_t2"), SubResource("Node_spotter_smouldering_mark"), SubResource("Node_spotter_pyre_mark"), SubResource("Node_spotter_hot_shot"), SubResource("Node_spotter_steady_aim"), SubResource("Node_spotter_molten_round"), SubResource("Node_spotter_weak_spot"), SubResource("Node_spotter_t3"), SubResource("Node_spotter_sunspear"), SubResource("Node_mortar_heavy_shells"), SubResource("Node_mortar_long_lob"), SubResource("Node_mortar_t2"), SubResource("Node_mortar_incendiary_fill"), SubResource("Node_mortar_napalm"), SubResource("Node_mortar_wide_shells"), SubResource("Node_mortar_quick_loader"), SubResource("Node_mortar_shell_shock"), SubResource("Node_mortar_scorch"), SubResource("Node_mortar_t3"), SubResource("Node_mortar_firestorm"), SubResource("Node_breather_bellows"), SubResource("Node_breather_deep_lungs"), SubResource("Node_breather_t2"), SubResource("Node_breather_fan_of_flame"), SubResource("Node_breather_searing_breath"), SubResource("Node_breather_burning_floor"), SubResource("Node_breather_hot_air"), SubResource("Node_breather_backdraft"), SubResource("Node_breather_cinder_lungs"), SubResource("Node_breather_t3"), SubResource("Node_breather_dragonfire"), SubResource("Node_egg_bomb_hot_yolk"), SubResource("Node_egg_bomb_quick_hatch"), SubResource("Node_egg_bomb_t2"), SubResource("Node_egg_bomb_wide_blast"), SubResource("Node_egg_bomb_scalding_shell"), SubResource("Node_egg_bomb_fire_pit"), SubResource("Node_egg_bomb_short_fuse"), SubResource("Node_egg_bomb_ember_clutch"), SubResource("Node_egg_bomb_warm_nest"), SubResource("Node_egg_bomb_t3"), SubResource("Node_egg_bomb_inferno_egg"), SubResource("Node_harpooner_barbed_hooks"), SubResource("Node_harpooner_long_chain"), SubResource("Node_harpooner_t2"), SubResource("Node_harpooner_red_hot_hook"), SubResource("Node_harpooner_searing_chain"), SubResource("Node_harpooner_hot_tether"), SubResource("Node_harpooner_quick_reel"), SubResource("Node_harpooner_drag_to_the_fire"), SubResource("Node_harpooner_skyhook"), SubResource("Node_harpooner_t3"), SubResource("Node_harpooner_chain_of_embers"), SubResource("Node_hatchery_fire_fed_brood"), SubResource("Node_hatchery_warm_clutch"), SubResource("Node_hatchery_t2"), SubResource("Node_hatchery_ember_claws"), SubResource("Node_hatchery_hot_blood"), SubResource("Node_hatchery_thick_scales"), SubResource("Node_hatchery_big_clutch"), SubResource("Node_hatchery_fire_spit"), SubResource("Node_hatchery_fierce_hatchlings"), SubResource("Node_hatchery_t3"), SubResource("Node_hatchery_brood_inferno"), SubResource("Node_buffer_warm_aura"), SubResource("Node_buffer_kindled_hearts"), SubResource("Node_buffer_t2"), SubResource("Node_buffer_burning_zeal"), SubResource("Node_buffer_heat_shimmer"), SubResource("Node_buffer_hearth"), SubResource("Node_buffer_forge_song"), SubResource("Node_buffer_fire_drill"), SubResource("Node_buffer_warm_stones"), SubResource("Node_buffer_t3"), SubResource("Node_buffer_heart_of_the_forge")])
 background = Color(0.071, 0.031, 0.024, 1)
 link_lit = Color(1, 0.702, 0.42, 1)
 accent = Color(1, 0.541, 0.239, 1)

@@ -35,6 +35,8 @@ const MISSING_ELEMENT_LEAF_WARNING : String = " cannot find element leaf "
 const UPGRADE_FLASH_COLOR : Color = Color("fee761")
 const UPGRADE_FLASH_SECONDS : float = 0.3
 const UPGRADE_PIPS_NAME : String = "UpgradePips"
+const BUFFER_TRACK_TITLE : String = "%s %d/%d"
+const BUFFER_TRACK_TEXT : String = "Towers and traps in the aura: %s +%s a pip (now +%s). Several Buffers never stack: each stat takes the strongest. Pips left: %d of %d."
 
 
 class UpgradeState:
@@ -69,18 +71,21 @@ func _ready() -> void:
 	GameSignals.resource_change.connect(_on_resource_change)
 	UISignals.gold_upgrade_pressed.connect(_on_gold_upgrade_pressed)
 	UISignals.target_tactic_selected.connect(_on_target_tactic_selected)
+	UISignals.rally_pressed.connect(_on_rally_pressed)
 
 
 func _on_unit_selected(unit : Node2D) -> void:
 	selected_unit = unit
 	_emit_options()
 	_emit_target_tactic()
+	_emit_rally()
 
 
 func _on_unit_deselected(_unit : Node2D) -> void:
 	selected_unit = null
 	_emit_options()
 	_emit_target_tactic()
+	_emit_rally()
 
 
 #the targeting tactic lives on the tower; this node only knows which tower is selected
@@ -94,6 +99,15 @@ func _on_target_tactic_selected(tactic : Utils.TargetTactic) -> void:
 func _emit_target_tactic() -> void:
 	var has_tactic : bool = is_instance_valid(selected_unit) and selected_unit is Tower and selected_unit.can_choose_target and selected_unit.is_placed
 	UISignals.target_tactic_changed.emit(selected_unit.target_tactic if has_tactic else -1)
+
+
+func _on_rally_pressed() -> void:
+	if is_instance_valid(selected_unit) and selected_unit is Hatchery and selected_unit.is_placed:
+		selected_unit.start_rally_pick()
+
+
+func _emit_rally() -> void:
+	UISignals.rally_shown.emit(is_instance_valid(selected_unit) and selected_unit is Hatchery and selected_unit.is_placed)
 
 
 func _on_building_placed(building : Building) -> void:
@@ -160,6 +174,10 @@ func _on_gold_upgrade_pressed(index : int) -> void:
 		_emit_options()
 		return
 
+	if option.buffer_stat >= 0 and selected_unit is Buffer:
+		_buy_buffer_pip(selected_unit as Buffer, option.buffer_stat)
+		return
+
 	var type_key : String = selected_unit.scene_file_path
 	var state : UpgradeState = _get_state(selected_unit)
 
@@ -217,6 +235,8 @@ func _build_options() -> Array[GoldUpgradeOption]:
 	#the base price: the tower price step makes a late tower dearer, not its upgrades
 	var building_price : float = building.stats.get_stat(Utils.StatType.Price).base_value
 	var new_options : Array[GoldUpgradeOption] = []
+	if building is Buffer:
+		return _build_buffer_options(building as Buffer, data, state, element_leafs, chosen_leaf, tier_count, building_price)
 
 	match UpgradeRules.next_gold_step(state.upgrades_bought, state.tiers_evolved, data.upgrade_cost_ratios.size(), tier_count, data.upgrades_before_tier(state.tiers_evolved)):
 		UpgradeRules.GoldStep.Upgrade:
@@ -257,6 +277,60 @@ func _build_options() -> Array[GoldUpgradeOption]:
 		option.is_affordable = not option.is_locked and level.player_stats.has_enough_gold(option.cost)
 
 	return new_options
+
+
+## A Buffer: one button per track that has room (pips from the budget, the price rising with every pip), and the
+## element (after 2 pips), T2 (after 5) and T3 (after 8) next to them; pips never wait for a tier.
+func _build_buffer_options(buffer : Buffer, data : BuildingUpgradeData, state : UpgradeState, element_leafs : Array[ElementEvolveLeaf],
+		chosen_leaf : ElementEvolveLeaf, tier_count : int, building_price : float) -> Array[GoldUpgradeOption]:
+	var new_options : Array[GoldUpgradeOption] = []
+	var total : int = buffer.total_pips
+	if total < buffer.pip_budget:
+		var pip_price : float = UpgradeRules.gold_price(building_price, Buffer.PIP_COST_RATIOS[mini(total, Buffer.PIP_COST_RATIOS.size() - 1)] * _price_share())
+		for stat in Buffer.TRACKS:
+			if not buffer.can_add_pip(stat):
+				continue
+			var pips : int = buffer.get_pips(stat)
+			var option : GoldUpgradeOption = GoldUpgradeOption.upgrade(BUFFER_TRACK_TITLE % [Buffer.TRACK_NAMES[stat], pips, Buffer.MAX_PIPS],
+				load(Buffer.TRACK_ICONS[stat]), pip_price)
+			option.buffer_stat = stat
+			option.description = BUFFER_TRACK_TEXT % [Buffer.TRACK_NAMES[stat].to_lower(), _buff_text(stat, float(Buffer.PIP_VALUES[stat][1])),
+				_buff_text(stat, buffer.get_buff(stat)), buffer.pip_budget - total, buffer.pip_budget]
+			new_options.append(option)
+	if state.tiers_evolved < tier_count and total >= data.upgrades_before_tier(state.tiers_evolved):
+		var evolve_price : float = UpgradeRules.gold_price(building_price, data.evolve_cost_ratios[state.tiers_evolved] * _price_share())
+		if state.tiers_evolved == 0:
+			for leaf in element_leafs:
+				new_options.append(GoldUpgradeOption.evolve(leaf, buffer, evolve_price))
+		else:
+			new_options.append(GoldUpgradeOption.evolve_tier(chosen_leaf, buffer, state.tiers_evolved - 1, evolve_price))
+	for option in new_options:
+		option.is_affordable = not option.is_locked and level.player_stats.has_enough_gold(option.cost)
+	return new_options
+
+
+#"6%" for a damage pip, "0.04" for attack speed, "0.1 tiles" for range
+static func _buff_text(stat : Utils.StatType, value : float) -> String:
+	match stat:
+		Utils.StatType.Damage, Utils.StatType.EffectPotency:
+			return "%d%%" % roundi(value * 100.0)
+		Utils.StatType.CriticalChance:
+			return "%d points" % roundi(value * 100.0)
+		Utils.StatType.AttackRange:
+			return "%s tiles" % String.num(value, 2)
+	return String.num(value, 2)
+
+
+func _buy_buffer_pip(buffer : Buffer, stat : Utils.StatType) -> void:
+	buffer.add_pip(stat)
+	var state : UpgradeState = _get_state(buffer)
+	state.upgrades_bought += 1
+	_update_pips(buffer, state)
+	buffer.stats_changed.emit()
+	if buffer.animation_control != null:
+		buffer.animation_control.play_flash(UPGRADE_FLASH_COLOR, UPGRADE_FLASH_SECONDS)
+	GameSignals.gold_upgrade_bought.emit(buffer, false)
+	_emit_options()
 
 
 #Hoard (talent): the first upgrade of each tower and trap is cheaper

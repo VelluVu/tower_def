@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bsf7no310o7v5"
+path="res://.godot/imported/green_hatchery_guard.aseprite-38c143cd9679eeb7fd3fb25f60512da9.res"
+
+[deps]
+
+source_file="res://assets/art/units/building/puffe/puffe_hatchery/green_hatchery_guard.aseprite"
+dest_files=["res://.godot/imported/green_hatchery_guard.aseprite-38c143cd9679eeb7fd3fb25f60512da9.res"]
+
+[params]
+

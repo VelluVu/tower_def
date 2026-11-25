@@ -1,0 +1,37 @@
+# Source of blue_puffe_mortar_icon.png (python tools/gd.py icon <this> <out.png>); cropped from the sprite's first IDLE frame
+a = 26a295
+b = 30c3b8
+c = 207466
+d = 3be4db
+e = 35d3c9
+f = e0f1f0
+g = 1a4637
+h = 1d5d4e
+i = 62cac3
+j = 75f6f1
+k = 238b7e
+l = 2bb2a6
+m = c0cbdc
+n = 8b9bb4
+o = 181425
+p = 5a6988
+q = 3a4466
+r = e4a672
+s = b86f50
+---
+.....a.a........
+....a...a.......
+....bcccb.......
+..ddceddcce.....
+...ddfgdfg......
+...heebdbdcmmmn.
+i...ceejdjmooop.
+iiiiicaddcnoooq.
+.ikkkecccerrssq.
+.ideeleddnmppq..
+..ihllednmppq...
+..chleednmpq....
+.cchcledqqqh....
+cc.hhhhhhhh.....
+c...hhhhhh......
+................

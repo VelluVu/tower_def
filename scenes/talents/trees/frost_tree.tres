@@ -4,6 +4,216 @@
 [ext_resource type="Script" uid="uid://dwes3ugk3ahrk" path="res://scenes/talents/talent_node.gd" id="2_node"]
 [ext_resource type="Script" uid="uid://mwbaxqyyxvt2" path="res://scenes/talents/talent_effect.gd" id="3_effect"]
 
+[sub_resource type="Resource" id="Effect_egg_bomb_cold_nest_0"]
+script = ExtResource("3_effect")
+buildings = 2048
+elements = 4
+stat_type = 6
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Effect_egg_bomb_frozen_pit_0"]
+script = ExtResource("3_effect")
+buildings = 2048
+elements = 4
+stat_type = 25
+modify_type = 0
+value_per_rank = 1.5
+
+[sub_resource type="Resource" id="Effect_egg_bomb_rime_shell_0"]
+script = ExtResource("3_effect")
+buildings = 2048
+elements = 4
+stat_type = 10
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Effect_egg_bomb_wide_blast_0"]
+script = ExtResource("3_effect")
+buildings = 2048
+elements = 4
+stat_type = 20
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Effect_egg_bomb_cold_yolk_0"]
+script = ExtResource("3_effect")
+buildings = 2048
+elements = 4
+modify_type = 1
+value_per_rank = 0.08
+
+[sub_resource type="Resource" id="TalentEffect_unlock_trap_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 8
+elements = 4
+
+[sub_resource type="Resource" id="TalentEffect_unlock_trap_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 8
+elements = 4
+
+[sub_resource type="Resource" id="TalentEffect_unlock_spotter_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 256
+elements = 4
+
+[sub_resource type="Resource" id="TalentEffect_unlock_spotter_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 256
+elements = 4
+
+[sub_resource type="Resource" id="TalentEffect_unlock_nova_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 2
+elements = 4
+
+[sub_resource type="Resource" id="TalentEffect_unlock_nova_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 2
+elements = 4
+
+[sub_resource type="Resource" id="TalentEffect_unlock_mortar_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 32
+elements = 4
+
+[sub_resource type="Resource" id="TalentEffect_unlock_mortar_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 32
+elements = 4
+
+[sub_resource type="Resource" id="TalentEffect_unlock_hatchery_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 1024
+elements = 4
+
+[sub_resource type="Resource" id="TalentEffect_unlock_hatchery_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 1024
+elements = 4
+
+[sub_resource type="Resource" id="TalentEffect_unlock_harpooner_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 512
+elements = 4
+
+[sub_resource type="Resource" id="TalentEffect_unlock_harpooner_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 512
+elements = 4
+
+[sub_resource type="Resource" id="TalentEffect_unlock_egg_bomb_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 2048
+elements = 4
+
+[sub_resource type="Resource" id="TalentEffect_unlock_egg_bomb_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 2048
+elements = 4
+
+[sub_resource type="Resource" id="TalentEffect_unlock_buffer_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 64
+elements = 4
+
+[sub_resource type="Resource" id="TalentEffect_unlock_buffer_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 64
+elements = 4
+
+[sub_resource type="Resource" id="TalentEffect_unlock_breather_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 128
+elements = 4
+
+[sub_resource type="Resource" id="TalentEffect_unlock_breather_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 128
+elements = 4
+
+[sub_resource type="Resource" id="TalentEffect_unlock_bolter_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 1
+elements = 4
+
+[sub_resource type="Resource" id="TalentEffect_unlock_bolter_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 1
+elements = 4
+
+[sub_resource type="Resource" id="TalentEffect_unlock_beamer_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 4
+elements = 4
+
+[sub_resource type="Resource" id="TalentEffect_unlock_beamer_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 4
+elements = 4
+
+[sub_resource type="Resource" id="Effect_hatchery_fierce_hatchlings_0"]
+script = ExtResource("3_effect")
+buildings = 1024
+elements = 4
+stat_type = 6
+modify_type = 0
+value_per_rank = 0.04
+
+[sub_resource type="Resource" id="Effect_hatchery_big_clutch_0"]
+script = ExtResource("3_effect")
+buildings = 1024
+elements = 4
+stat_type = 37
+modify_type = 0
+value_per_rank = 1.0
+
+[sub_resource type="Resource" id="Effect_hatchery_hardy_brood_0"]
+script = ExtResource("3_effect")
+buildings = 1024
+elements = 4
+stat_type = 36
+modify_type = 1
+value_per_rank = 0.15
+
+[sub_resource type="Resource" id="Effect_hatchery_frost_claws_0"]
+script = ExtResource("3_effect")
+buildings = 1024
+elements = 4
+stat_type = 10
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Effect_hatchery_frost_fed_brood_0"]
+script = ExtResource("3_effect")
+buildings = 1024
+elements = 4
+modify_type = 1
+value_per_rank = 0.08
+
 [sub_resource type="Resource" id="Effect_cold_snap_0"]
 script = ExtResource("3_effect")
 buildings = 15
@@ -20,7 +230,7 @@ description = "Slow potency +5% (every Frost building)"
 max_rank = 3
 position = Vector2(10, 10)
 color = Color(0.561, 0.827, 1, 1)
-links = Array[StringName]([&"bitter_cold", &"winter_ground", &"hard_frost", &"hold_fast"])
+links = Array[StringName]([&"bitter_cold", &"winter_ground", &"hard_frost", &"hold_fast", &"frozen_maze"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_cold_snap_0")])
 
 [sub_resource type="Resource" id="Effect_absolute_zero_level"]
@@ -106,7 +316,7 @@ effects = Array[ExtResource("3_effect")]([SubResource("Effect_hold_fast_level")]
 
 [sub_resource type="Resource" id="Effect_ice_bolts_0"]
 script = ExtResource("3_effect")
-buildings = 1
+buildings = 257
 elements = 4
 modify_type = 1
 value_per_rank = 0.08
@@ -115,11 +325,11 @@ value_per_rank = 0.08
 script = ExtResource("2_node")
 id = &"ice_bolts"
 display_name = "Ice Bolts"
-description = "Frost Bolter damage +8%"
+description = "Frost Bolter and Spotter damage +8%"
 max_rank = 3
 position = Vector2(8.02, 8.02)
 color = Color(0.847, 0.953, 1, 1)
-links = Array[StringName]([&"quick_draw"])
+links = Array[StringName]([&"quick_draw", &"spotter_cold_eye"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_ice_bolts_0")])
 
 [sub_resource type="Resource" id="Effect_quick_draw_0"]
@@ -140,12 +350,6 @@ position = Vector2(7.242, 7.242)
 color = Color(0.847, 0.953, 1, 1)
 links = Array[StringName]([&"bolter_t2"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_quick_draw_0")])
-
-[sub_resource type="Resource" id="TalentEffect_unlock_bolter_t2"]
-script = ExtResource("3_effect")
-kind = 2
-buildings = 1
-elements = 4
 
 [sub_resource type="Resource" id="Node_bolter_t2"]
 script = ExtResource("2_node")
@@ -260,12 +464,6 @@ color = Color(0.847, 0.953, 1, 1)
 links = Array[StringName]([&"bolter_t3"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_far_flight_0")])
 
-[sub_resource type="Resource" id="TalentEffect_unlock_bolter_t3"]
-script = ExtResource("3_effect")
-kind = 2
-buildings = 1
-elements = 4
-
 [sub_resource type="Resource" id="Node_bolter_t3"]
 script = ExtResource("2_node")
 id = &"bolter_t3"
@@ -299,7 +497,7 @@ effects = Array[ExtResource("3_effect")]([SubResource("Effect_icicle_lance_level
 
 [sub_resource type="Resource" id="Effect_cold_beam_0"]
 script = ExtResource("3_effect")
-buildings = 4
+buildings = 132
 elements = 4
 modify_type = 1
 value_per_rank = 0.08
@@ -308,11 +506,11 @@ value_per_rank = 0.08
 script = ExtResource("2_node")
 id = &"cold_beam"
 display_name = "Cold Beam"
-description = "Frost Beamer damage +8%"
+description = "Frost Beamer and Breather damage +8%"
 max_rank = 3
 position = Vector2(8.02, 11.98)
 color = Color(0.639, 0.612, 0.941, 1)
-links = Array[StringName]([&"clear_lens"])
+links = Array[StringName]([&"clear_lens", &"breather_cold_breath"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_cold_beam_0")])
 
 [sub_resource type="Resource" id="Effect_clear_lens_0"]
@@ -333,12 +531,6 @@ position = Vector2(7.242, 12.758)
 color = Color(0.639, 0.612, 0.941, 1)
 links = Array[StringName]([&"beamer_t2"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_clear_lens_0")])
-
-[sub_resource type="Resource" id="TalentEffect_unlock_beamer_t2"]
-script = ExtResource("3_effect")
-kind = 2
-buildings = 4
-elements = 4
 
 [sub_resource type="Resource" id="Node_beamer_t2"]
 script = ExtResource("2_node")
@@ -427,12 +619,6 @@ color = Color(0.639, 0.612, 0.941, 1)
 links = Array[StringName]([&"beamer_t3"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_steady_beam_0")])
 
-[sub_resource type="Resource" id="TalentEffect_unlock_beamer_t3"]
-script = ExtResource("3_effect")
-kind = 2
-buildings = 4
-elements = 4
-
 [sub_resource type="Resource" id="Node_beamer_t3"]
 script = ExtResource("2_node")
 id = &"beamer_t3"
@@ -457,7 +643,7 @@ color = Color(0.639, 0.612, 0.941, 1)
 
 [sub_resource type="Resource" id="Effect_frost_ring_0"]
 script = ExtResource("3_effect")
-buildings = 2
+buildings = 34
 elements = 4
 modify_type = 1
 value_per_rank = 0.08
@@ -466,11 +652,11 @@ value_per_rank = 0.08
 script = ExtResource("2_node")
 id = &"frost_ring"
 display_name = "Frost Ring"
-description = "Frost Nova damage +8%"
+description = "Frost Nova and Mortar damage +8%"
 max_rank = 3
 position = Vector2(11.98, 8.02)
 color = Color(0.31, 0.608, 0.878, 1)
-links = Array[StringName]([&"wide_frost"])
+links = Array[StringName]([&"wide_frost", &"mortar_ice_shells"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_frost_ring_0")])
 
 [sub_resource type="Resource" id="Effect_wide_frost_0"]
@@ -491,12 +677,6 @@ position = Vector2(12.758, 7.242)
 color = Color(0.31, 0.608, 0.878, 1)
 links = Array[StringName]([&"nova_t2"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_wide_frost_0")])
-
-[sub_resource type="Resource" id="TalentEffect_unlock_nova_t2"]
-script = ExtResource("3_effect")
-kind = 2
-buildings = 2
-elements = 4
 
 [sub_resource type="Resource" id="Node_nova_t2"]
 script = ExtResource("2_node")
@@ -610,12 +790,6 @@ color = Color(0.31, 0.608, 0.878, 1)
 links = Array[StringName]([&"nova_t3"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_quick_chill_0")])
 
-[sub_resource type="Resource" id="TalentEffect_unlock_nova_t3"]
-script = ExtResource("3_effect")
-kind = 2
-buildings = 2
-elements = 4
-
 [sub_resource type="Resource" id="Node_nova_t3"]
 script = ExtResource("2_node")
 id = &"nova_t3"
@@ -651,7 +825,7 @@ effects = Array[ExtResource("3_effect")]([SubResource("Effect_blizzard_level")])
 
 [sub_resource type="Resource" id="Effect_cold_snare_0"]
 script = ExtResource("3_effect")
-buildings = 8
+buildings = 3592
 elements = 4
 modify_type = 1
 value_per_rank = 0.08
@@ -660,11 +834,11 @@ value_per_rank = 0.08
 script = ExtResource("2_node")
 id = &"cold_snare"
 display_name = "Cold Snare"
-description = "Frost trap damage +8%"
+description = "Frost trap, Harpooner, Hatchery and Egg Bomb damage +8%"
 max_rank = 3
 position = Vector2(11.98, 11.98)
 color = Color(0.424, 0.765, 0.69, 1)
-links = Array[StringName]([&"quick_thaw"])
+links = Array[StringName]([&"quick_thaw", &"egg_bomb_cold_yolk", &"harpooner_ice_hooks", &"hatchery_frost_fed_brood"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_cold_snare_0")])
 
 [sub_resource type="Resource" id="Effect_quick_thaw_0"]
@@ -685,12 +859,6 @@ position = Vector2(12.758, 12.758)
 color = Color(0.424, 0.765, 0.69, 1)
 links = Array[StringName]([&"trap_t2"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_quick_thaw_0")])
-
-[sub_resource type="Resource" id="TalentEffect_unlock_trap_t2"]
-script = ExtResource("3_effect")
-kind = 2
-buildings = 8
-elements = 4
 
 [sub_resource type="Resource" id="Node_trap_t2"]
 script = ExtResource("2_node")
@@ -795,12 +963,6 @@ position = Vector2(15.869, 15.869)
 color = Color(0.424, 0.765, 0.69, 1)
 links = Array[StringName]([&"trap_t3"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_frost_aura_level")])
-
-[sub_resource type="Resource" id="TalentEffect_unlock_trap_t3"]
-script = ExtResource("3_effect")
-kind = 2
-buildings = 8
-elements = 4
 
 [sub_resource type="Resource" id="Node_trap_t3"]
 script = ExtResource("2_node")
@@ -1051,13 +1213,1071 @@ color = Color(0.604, 0.651, 0.69, 1)
 needs = &"wall_t2"
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_wall_t3_level")])
 
+[sub_resource type="Resource" id="Effect_buffer_maze_entry_frost"]
+script = ExtResource("3_effect")
+kind = 21
+buildings = 64
+elements = 4
+value_per_rank = 0.05
+
+[sub_resource type="Resource" id="Node_frozen_maze"]
+script = ExtResource("2_node")
+id = &"frozen_maze"
+display_name = "Frozen Maze"
+description = "Frost walls slow 2 points more, and Frost Buffer auras are 5% stronger"
+max_rank = 3
+position = Vector2(7.704, 4.457)
+color = Color(0.604, 0.651, 0.69, 1)
+links = Array[StringName]([&"maze_icy_floor", &"buffer_cold_aura"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_buffer_maze_entry_frost")])
+
+[sub_resource type="Resource" id="Node_maze_icy_floor"]
+script = ExtResource("2_node")
+id = &"maze_icy_floor"
+display_name = "Icy Floor"
+description = "Turns next to Frost walls pause enemies 0.05 s longer"
+max_rank = 3
+position = Vector2(12.774, 3.302)
+color = Color(0.652, 0.684, 0.745, 1)
+links = Array[StringName]([&"maze_frost_corners"])
+
+[sub_resource type="Resource" id="Node_maze_frost_corners"]
+script = ExtResource("2_node")
+id = &"maze_frost_corners"
+display_name = "Frost Corners"
+description = "Turns next to Frost walls add 1 slow stack"
+max_rank = 2
+position = Vector2(13.253, 2.147)
+color = Color(0.652, 0.684, 0.745, 1)
+links = Array[StringName]([&"maze_glacier_maze"])
+
+[sub_resource type="Resource" id="Node_maze_glacier_maze"]
+script = ExtResource("2_node")
+id = &"maze_glacier_maze"
+display_name = "Glacier Maze"
+description = "An enemy that walks 5 cells along Frost walls freezes for 0.5 s"
+kind = 1
+position = Vector2(13.731, 0.992)
+color = Color(0.652, 0.684, 0.745, 1)
+
+[sub_resource type="Resource" id="Effect_spotter_cold_eye_0"]
+script = ExtResource("3_effect")
+buildings = 256
+elements = 4
+modify_type = 1
+value_per_rank = 0.08
+
+[sub_resource type="Resource" id="Node_spotter_cold_eye"]
+script = ExtResource("2_node")
+id = &"spotter_cold_eye"
+display_name = "Cold Eye"
+description = "Frost Spotter damage +8%"
+max_rank = 3
+position = Vector2(5.288, 8.048)
+color = Color(0.847, 0.921, 1, 1)
+links = Array[StringName]([&"spotter_t2"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_spotter_cold_eye_0")])
+
+[sub_resource type="Resource" id="Node_spotter_t2"]
+script = ExtResource("2_node")
+id = &"spotter_t2"
+display_name = "Spotter T2"
+description = "Unlocks Frost Spotter T2"
+kind = 2
+position = Vector2(4.133, 7.57)
+color = Color(0.847, 0.921, 1, 1)
+links = Array[StringName]([&"spotter_chilling_mark", &"spotter_patient_aim"])
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_spotter_t2")])
+
+[sub_resource type="Resource" id="Effect_spotter_chilling_mark_0"]
+script = ExtResource("3_effect")
+buildings = 256
+elements = 4
+stat_type = 10
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Node_spotter_chilling_mark"]
+script = ExtResource("2_node")
+id = &"spotter_chilling_mark"
+display_name = "Chilling Mark"
+description = "Frost Spotter slow potency +10%"
+max_rank = 3
+position = Vector2(2.749, 7.646)
+color = Color(0.847, 0.921, 1, 1)
+links = Array[StringName]([&"spotter_frost_mark"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_spotter_chilling_mark_0")])
+
+[sub_resource type="Resource" id="Effect_spotter_frost_mark_0"]
+script = ExtResource("3_effect")
+buildings = 256
+elements = 4
+stat_type = 32
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Node_spotter_frost_mark"]
+script = ExtResource("2_node")
+id = &"spotter_frost_mark"
+display_name = "Frost Mark"
+description = "A Spotter hit marks its target: it takes +10% Frost damage from every tower for 3 s"
+max_rank = 2
+position = Vector2(1.594, 7.168)
+color = Color(0.847, 0.921, 1, 1)
+links = Array[StringName]([&"spotter_ice_sight"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_spotter_frost_mark_0")])
+
+[sub_resource type="Resource" id="Effect_spotter_ice_sight_0"]
+script = ExtResource("3_effect")
+buildings = 256
+elements = 4
+stat_type = 7
+modify_type = 0
+value_per_rank = 0.04
+
+[sub_resource type="Resource" id="Node_spotter_ice_sight"]
+script = ExtResource("2_node")
+id = &"spotter_ice_sight"
+display_name = "Ice Sight"
+description = "Frost Spotter critical chance +4 points"
+max_rank = 2
+position = Vector2(0.439, 6.689)
+color = Color(0.847, 0.921, 1, 1)
+links = Array[StringName]([&"spotter_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_spotter_ice_sight_0")])
+
+[sub_resource type="Resource" id="Effect_spotter_patient_aim_0"]
+script = ExtResource("3_effect")
+buildings = 256
+elements = 4
+stat_type = 6
+modify_type = 0
+value_per_rank = 0.03
+
+[sub_resource type="Resource" id="Node_spotter_patient_aim"]
+script = ExtResource("2_node")
+id = &"spotter_patient_aim"
+display_name = "Patient Aim"
+description = "Frost Spotter attack speed +0.03"
+max_rank = 3
+position = Vector2(3.208, 6.537)
+color = Color(0.847, 0.921, 1, 1)
+links = Array[StringName]([&"spotter_glacial_round"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_spotter_patient_aim_0")])
+
+[sub_resource type="Resource" id="Effect_spotter_glacial_round_0"]
+script = ExtResource("3_effect")
+buildings = 256
+elements = 4
+stat_type = 21
+modify_type = 0
+value_per_rank = 1.0
+
+[sub_resource type="Resource" id="Effect_spotter_glacial_round_1"]
+script = ExtResource("3_effect")
+buildings = 256
+elements = 4
+stat_type = 22
+modify_type = 0
+value_per_rank = 0.3
+
+[sub_resource type="Resource" id="Node_spotter_glacial_round"]
+script = ExtResource("2_node")
+id = &"spotter_glacial_round"
+display_name = "Glacial Round"
+description = "Spotter hits freeze their target for 0.3 s"
+max_rank = 2
+position = Vector2(2.053, 6.059)
+color = Color(0.847, 0.921, 1, 1)
+links = Array[StringName]([&"spotter_hailstone"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_spotter_glacial_round_0"), SubResource("Effect_spotter_glacial_round_1")])
+
+[sub_resource type="Resource" id="Effect_spotter_hailstone_0"]
+script = ExtResource("3_effect")
+buildings = 256
+elements = 4
+modify_type = 1
+value_per_rank = 0.08
+
+[sub_resource type="Resource" id="Node_spotter_hailstone"]
+script = ExtResource("2_node")
+id = &"spotter_hailstone"
+display_name = "Hailstone"
+description = "Frost Spotter damage +8%"
+max_rank = 3
+position = Vector2(0.898, 5.581)
+color = Color(0.847, 0.921, 1, 1)
+links = Array[StringName]([&"spotter_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_spotter_hailstone_0")])
+
+[sub_resource type="Resource" id="Node_spotter_t3"]
+script = ExtResource("2_node")
+id = &"spotter_t3"
+display_name = "Spotter T3"
+description = "Unlocks Frost Spotter T3"
+kind = 2
+position = Vector2(-0.486, 5.657)
+color = Color(0.847, 0.921, 1, 1)
+links = Array[StringName]([&"spotter_winter_s_needle"])
+one_way_links = Array[StringName]([&"absolute_zero"])
+needs = &"spotter_t2"
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_spotter_t3")])
+
+[sub_resource type="Resource" id="Node_spotter_winter_s_needle"]
+script = ExtResource("2_node")
+id = &"spotter_winter_s_needle"
+display_name = "Winter's Needle"
+description = "Shots pierce every enemy in a line and freeze the first one for 1 s"
+kind = 3
+position = Vector2(-1.641, 5.178)
+color = Color(0.847, 0.921, 1, 1)
+
+[sub_resource type="Resource" id="Effect_mortar_ice_shells_0"]
+script = ExtResource("3_effect")
+buildings = 32
+elements = 4
+modify_type = 1
+value_per_rank = 0.08
+
+[sub_resource type="Resource" id="Node_mortar_ice_shells"]
+script = ExtResource("2_node")
+id = &"mortar_ice_shells"
+display_name = "Ice Shells"
+description = "Frost Mortar damage +8%"
+max_rank = 3
+position = Vector2(14.712, 8.048)
+color = Color(0.335, 0.528, 0.948, 1)
+links = Array[StringName]([&"mortar_t2"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_mortar_ice_shells_0")])
+
+[sub_resource type="Resource" id="Node_mortar_t2"]
+script = ExtResource("2_node")
+id = &"mortar_t2"
+display_name = "Mortar T2"
+description = "Unlocks Frost Mortar T2"
+kind = 2
+position = Vector2(15.867, 7.57)
+color = Color(0.335, 0.528, 0.948, 1)
+links = Array[StringName]([&"mortar_frost_fill", &"mortar_quick_loader"])
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_mortar_t2")])
+
+[sub_resource type="Resource" id="Effect_mortar_frost_fill_0"]
+script = ExtResource("3_effect")
+buildings = 32
+elements = 4
+stat_type = 10
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Node_mortar_frost_fill"]
+script = ExtResource("2_node")
+id = &"mortar_frost_fill"
+display_name = "Frost Fill"
+description = "Frost Mortar slow potency +10%"
+max_rank = 3
+position = Vector2(16.792, 6.537)
+color = Color(0.335, 0.528, 0.948, 1)
+links = Array[StringName]([&"mortar_frozen_crater"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_mortar_frost_fill_0")])
+
+[sub_resource type="Resource" id="Effect_mortar_frozen_crater_0"]
+script = ExtResource("3_effect")
+buildings = 32
+elements = 4
+stat_type = 25
+modify_type = 0
+value_per_rank = 1.5
+
+[sub_resource type="Resource" id="Effect_mortar_frozen_crater_1"]
+script = ExtResource("3_effect")
+buildings = 32
+elements = 4
+stat_type = 26
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Node_mortar_frozen_crater"]
+script = ExtResource("2_node")
+id = &"mortar_frozen_crater"
+display_name = "Frozen Crater"
+description = "A shell leaves chilled ground for 1.5 s"
+max_rank = 2
+position = Vector2(17.947, 6.059)
+color = Color(0.335, 0.528, 0.948, 1)
+links = Array[StringName]([&"mortar_wide_shells"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_mortar_frozen_crater_0"), SubResource("Effect_mortar_frozen_crater_1")])
+
+[sub_resource type="Resource" id="Effect_mortar_wide_shells_0"]
+script = ExtResource("3_effect")
+buildings = 32
+elements = 4
+stat_type = 20
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Node_mortar_wide_shells"]
+script = ExtResource("2_node")
+id = &"mortar_wide_shells"
+display_name = "Wide Shells"
+description = "Frost Mortar splash radius +0.1 tiles"
+max_rank = 2
+position = Vector2(19.102, 5.581)
+color = Color(0.335, 0.528, 0.948, 1)
+links = Array[StringName]([&"mortar_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_mortar_wide_shells_0")])
+
+[sub_resource type="Resource" id="Effect_mortar_quick_loader_0"]
+script = ExtResource("3_effect")
+buildings = 32
+elements = 4
+stat_type = 6
+modify_type = 0
+value_per_rank = 0.04
+
+[sub_resource type="Resource" id="Node_mortar_quick_loader"]
+script = ExtResource("2_node")
+id = &"mortar_quick_loader"
+display_name = "Quick Loader"
+description = "Frost Mortar attack speed +0.04"
+max_rank = 3
+position = Vector2(17.251, 7.646)
+color = Color(0.335, 0.528, 0.948, 1)
+links = Array[StringName]([&"mortar_shatter_shell"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_mortar_quick_loader_0")])
+
+[sub_resource type="Resource" id="Effect_mortar_shatter_shell_0"]
+script = ExtResource("3_effect")
+kind = 3
+buildings = 32
+elements = 4
+modify_type = 0
+value_per_rank = 0.15
+condition = 3
+
+[sub_resource type="Resource" id="Node_mortar_shatter_shell"]
+script = ExtResource("2_node")
+id = &"mortar_shatter_shell"
+display_name = "Shatter Shell"
+description = "Shells deal +15% damage to frozen enemies"
+max_rank = 2
+position = Vector2(18.406, 7.168)
+color = Color(0.335, 0.528, 0.948, 1)
+links = Array[StringName]([&"mortar_hard_ice"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_mortar_shatter_shell_0")])
+
+[sub_resource type="Resource" id="Effect_mortar_hard_ice_0"]
+script = ExtResource("3_effect")
+buildings = 32
+elements = 4
+stat_type = 7
+modify_type = 0
+value_per_rank = 0.03
+
+[sub_resource type="Resource" id="Node_mortar_hard_ice"]
+script = ExtResource("2_node")
+id = &"mortar_hard_ice"
+display_name = "Hard Ice"
+description = "Frost Mortar critical chance +3 points"
+max_rank = 2
+position = Vector2(19.561, 6.689)
+color = Color(0.335, 0.528, 0.948, 1)
+links = Array[StringName]([&"mortar_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_mortar_hard_ice_0")])
+
+[sub_resource type="Resource" id="Node_mortar_t3"]
+script = ExtResource("2_node")
+id = &"mortar_t3"
+display_name = "Mortar T3"
+description = "Unlocks Frost Mortar T3"
+kind = 2
+position = Vector2(20.486, 5.657)
+color = Color(0.335, 0.528, 0.948, 1)
+links = Array[StringName]([&"mortar_hailstorm"])
+one_way_links = Array[StringName]([&"absolute_zero"])
+needs = &"mortar_t2"
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_mortar_t3")])
+
+[sub_resource type="Resource" id="Node_mortar_hailstorm"]
+script = ExtResource("2_node")
+id = &"mortar_hailstorm"
+display_name = "Hailstorm"
+description = "Every 5th shell bursts into 5 hailstones over 2 tiles, each freezing what it hits for 0.5 s"
+kind = 3
+position = Vector2(21.641, 5.178)
+color = Color(0.335, 0.528, 0.948, 1)
+
+[sub_resource type="Resource" id="Effect_breather_cold_breath_0"]
+script = ExtResource("3_effect")
+buildings = 128
+elements = 4
+modify_type = 1
+value_per_rank = 0.08
+
+[sub_resource type="Resource" id="Node_breather_cold_breath"]
+script = ExtResource("2_node")
+id = &"breather_cold_breath"
+display_name = "Cold Breath"
+description = "Frost Breather damage +8%"
+max_rank = 3
+position = Vector2(5.288, 11.952)
+color = Color(0.752, 0.65, 1, 1)
+links = Array[StringName]([&"breather_t2"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_breather_cold_breath_0")])
+
+[sub_resource type="Resource" id="Node_breather_t2"]
+script = ExtResource("2_node")
+id = &"breather_t2"
+display_name = "Breather T2"
+description = "Unlocks Frost Breather T2"
+kind = 2
+position = Vector2(4.133, 12.43)
+color = Color(0.752, 0.65, 1, 1)
+links = Array[StringName]([&"breather_fan_of_frost", &"breather_steady_breath"])
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_breather_t2")])
+
+[sub_resource type="Resource" id="Effect_breather_fan_of_frost_0"]
+script = ExtResource("3_effect")
+buildings = 128
+elements = 4
+stat_type = 31
+modify_type = 0
+value_per_rank = 10.0
+
+[sub_resource type="Resource" id="Node_breather_fan_of_frost"]
+script = ExtResource("2_node")
+id = &"breather_fan_of_frost"
+display_name = "Fan of Frost"
+description = "Frost Breather cone width +10 degrees"
+max_rank = 2
+position = Vector2(3.208, 13.463)
+color = Color(0.752, 0.65, 1, 1)
+links = Array[StringName]([&"breather_rime_breath"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_breather_fan_of_frost_0")])
+
+[sub_resource type="Resource" id="Effect_breather_rime_breath_0"]
+script = ExtResource("3_effect")
+buildings = 128
+elements = 4
+stat_type = 10
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Node_breather_rime_breath"]
+script = ExtResource("2_node")
+id = &"breather_rime_breath"
+display_name = "Rime Breath"
+description = "Frost Breather slow potency +10%"
+max_rank = 3
+position = Vector2(2.053, 13.941)
+color = Color(0.752, 0.65, 1, 1)
+links = Array[StringName]([&"breather_frostbite"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_breather_rime_breath_0")])
+
+[sub_resource type="Resource" id="Node_breather_frostbite"]
+script = ExtResource("2_node")
+id = &"breather_frostbite"
+display_name = "Frostbite"
+description = "Each second in the cone adds 1 more slow stack"
+max_rank = 2
+position = Vector2(0.898, 14.419)
+color = Color(0.752, 0.65, 1, 1)
+links = Array[StringName]([&"breather_t3"])
+
+[sub_resource type="Resource" id="Effect_breather_steady_breath_0"]
+script = ExtResource("3_effect")
+buildings = 128
+elements = 4
+stat_type = 6
+modify_type = 0
+value_per_rank = 0.04
+
+[sub_resource type="Resource" id="Node_breather_steady_breath"]
+script = ExtResource("2_node")
+id = &"breather_steady_breath"
+display_name = "Steady Breath"
+description = "Frost Breather attack speed +0.04"
+max_rank = 3
+position = Vector2(2.749, 12.354)
+color = Color(0.752, 0.65, 1, 1)
+links = Array[StringName]([&"breather_flash_freeze"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_breather_steady_breath_0")])
+
+[sub_resource type="Resource" id="Node_breather_flash_freeze"]
+script = ExtResource("2_node")
+id = &"breather_flash_freeze"
+display_name = "Flash Freeze"
+description = "Enemies at the slow floor in the cone freeze for 0.5 s"
+max_rank = 2
+position = Vector2(1.594, 12.832)
+color = Color(0.752, 0.65, 1, 1)
+links = Array[StringName]([&"breather_icy_lungs"])
+
+[sub_resource type="Resource" id="Effect_breather_icy_lungs_0"]
+script = ExtResource("3_effect")
+buildings = 128
+elements = 4
+modify_type = 1
+value_per_rank = 0.08
+
+[sub_resource type="Resource" id="Node_breather_icy_lungs"]
+script = ExtResource("2_node")
+id = &"breather_icy_lungs"
+display_name = "Icy Lungs"
+description = "Frost Breather damage +8%"
+max_rank = 3
+position = Vector2(0.439, 13.311)
+color = Color(0.752, 0.65, 1, 1)
+links = Array[StringName]([&"breather_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_breather_icy_lungs_0")])
+
+[sub_resource type="Resource" id="Node_breather_t3"]
+script = ExtResource("2_node")
+id = &"breather_t3"
+display_name = "Breather T3"
+description = "Unlocks Frost Breather T3"
+kind = 2
+position = Vector2(-0.486, 14.343)
+color = Color(0.752, 0.65, 1, 1)
+links = Array[StringName]([&"breather_winter_s_breath"])
+one_way_links = Array[StringName]([&"absolute_zero"])
+needs = &"breather_t2"
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_breather_t3")])
+
+[sub_resource type="Resource" id="Node_breather_winter_s_breath"]
+script = ExtResource("2_node")
+id = &"breather_winter_s_breath"
+display_name = "Winter's Breath"
+description = "The breath sweeps across a 120 degree arc and leaves freezing ground behind"
+kind = 3
+position = Vector2(-1.641, 14.822)
+color = Color(0.752, 0.65, 1, 1)
+
+[sub_resource type="Resource" id="Node_egg_bomb_cold_yolk"]
+script = ExtResource("2_node")
+id = &"egg_bomb_cold_yolk"
+display_name = "Cold Yolk"
+description = "Frost Egg Bomb blast damage +8%"
+max_rank = 3
+position = Vector2(14.712, 11.952)
+color = Color(0.458, 0.826, 0.823, 1)
+links = Array[StringName]([&"egg_bomb_t2"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_egg_bomb_cold_yolk_0")])
+
+[sub_resource type="Resource" id="Node_egg_bomb_t2"]
+script = ExtResource("2_node")
+id = &"egg_bomb_t2"
+display_name = "Egg Bomb T2"
+description = "Unlocks Frost Egg Bomb T2"
+kind = 2
+position = Vector2(15.867, 12.43)
+color = Color(0.458, 0.826, 0.823, 1)
+links = Array[StringName]([&"egg_bomb_wide_blast", &"egg_bomb_short_fuse"])
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_egg_bomb_t2")])
+
+[sub_resource type="Resource" id="Node_egg_bomb_wide_blast"]
+script = ExtResource("2_node")
+id = &"egg_bomb_wide_blast"
+display_name = "Wide Blast"
+description = "Frost Egg Bomb blast radius +0.1 tiles"
+max_rank = 2
+position = Vector2(17.251, 12.354)
+color = Color(0.458, 0.826, 0.823, 1)
+links = Array[StringName]([&"egg_bomb_rime_shell"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_egg_bomb_wide_blast_0")])
+
+[sub_resource type="Resource" id="Node_egg_bomb_rime_shell"]
+script = ExtResource("2_node")
+id = &"egg_bomb_rime_shell"
+display_name = "Rime Shell"
+description = "Frost Egg Bomb slow potency +10%"
+max_rank = 3
+position = Vector2(18.406, 12.832)
+color = Color(0.458, 0.826, 0.823, 1)
+links = Array[StringName]([&"egg_bomb_frozen_pit"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_egg_bomb_rime_shell_0")])
+
+[sub_resource type="Resource" id="Node_egg_bomb_frozen_pit"]
+script = ExtResource("2_node")
+id = &"egg_bomb_frozen_pit"
+display_name = "Frozen Pit"
+description = "The blast leaves freezing ground for 1.5 s"
+max_rank = 2
+position = Vector2(19.561, 13.311)
+color = Color(0.458, 0.826, 0.823, 1)
+links = Array[StringName]([&"egg_bomb_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_egg_bomb_frozen_pit_0")])
+
+[sub_resource type="Resource" id="Node_egg_bomb_short_fuse"]
+script = ExtResource("2_node")
+id = &"egg_bomb_short_fuse"
+display_name = "Short Fuse"
+description = "The egg goes off 0.1 s sooner"
+max_rank = 2
+position = Vector2(16.792, 13.463)
+color = Color(0.458, 0.826, 0.823, 1)
+links = Array[StringName]([&"egg_bomb_ice_shrapnel"])
+
+[sub_resource type="Resource" id="Node_egg_bomb_ice_shrapnel"]
+script = ExtResource("2_node")
+id = &"egg_bomb_ice_shrapnel"
+display_name = "Ice Shrapnel"
+description = "The blast deals +20% damage to frozen enemies"
+max_rank = 2
+position = Vector2(17.947, 13.941)
+color = Color(0.458, 0.826, 0.823, 1)
+links = Array[StringName]([&"egg_bomb_cold_nest"])
+
+[sub_resource type="Resource" id="Node_egg_bomb_cold_nest"]
+script = ExtResource("2_node")
+id = &"egg_bomb_cold_nest"
+display_name = "Cold Nest"
+description = "Frost Egg Bomb rebuilds 10% faster"
+max_rank = 3
+position = Vector2(19.102, 14.419)
+color = Color(0.458, 0.826, 0.823, 1)
+links = Array[StringName]([&"egg_bomb_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_egg_bomb_cold_nest_0")])
+
+[sub_resource type="Resource" id="Node_egg_bomb_t3"]
+script = ExtResource("2_node")
+id = &"egg_bomb_t3"
+display_name = "Egg Bomb T3"
+description = "Unlocks Frost Egg Bomb T3"
+kind = 2
+position = Vector2(20.486, 14.343)
+color = Color(0.458, 0.826, 0.823, 1)
+links = Array[StringName]([&"egg_bomb_glacier_egg"])
+one_way_links = Array[StringName]([&"absolute_zero"])
+needs = &"egg_bomb_t2"
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_egg_bomb_t3")])
+
+[sub_resource type="Resource" id="Node_egg_bomb_glacier_egg"]
+script = ExtResource("2_node")
+id = &"egg_bomb_glacier_egg"
+display_name = "Glacier Egg"
+description = "The blast freezes every enemy it hits for 1 s"
+kind = 3
+position = Vector2(21.641, 14.822)
+color = Color(0.458, 0.826, 0.823, 1)
+
+[sub_resource type="Resource" id="Effect_harpooner_ice_hooks_0"]
+script = ExtResource("3_effect")
+buildings = 512
+elements = 4
+modify_type = 1
+value_per_rank = 0.08
+
+[sub_resource type="Resource" id="Node_harpooner_ice_hooks"]
+script = ExtResource("2_node")
+id = &"harpooner_ice_hooks"
+display_name = "Ice Hooks"
+description = "Frost Harpooner damage +8%"
+max_rank = 3
+position = Vector2(11.952, 14.712)
+color = Color(0.458, 0.753, 0.826, 1)
+links = Array[StringName]([&"harpooner_t2"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_harpooner_ice_hooks_0")])
+
+[sub_resource type="Resource" id="Node_harpooner_t2"]
+script = ExtResource("2_node")
+id = &"harpooner_t2"
+display_name = "Harpooner T2"
+description = "Unlocks Frost Harpooner T2"
+kind = 2
+position = Vector2(12.43, 15.867)
+color = Color(0.458, 0.753, 0.826, 1)
+links = Array[StringName]([&"harpooner_frozen_chain", &"harpooner_quick_reel"])
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_harpooner_t2")])
+
+[sub_resource type="Resource" id="Effect_harpooner_frozen_chain_0"]
+script = ExtResource("3_effect")
+buildings = 512
+elements = 4
+stat_type = 34
+modify_type = 0
+value_per_rank = 0.25
+
+[sub_resource type="Resource" id="Node_harpooner_frozen_chain"]
+script = ExtResource("2_node")
+id = &"harpooner_frozen_chain"
+display_name = "Frozen Chain"
+description = "The tether lasts 0.25 s longer"
+max_rank = 2
+position = Vector2(13.463, 16.792)
+color = Color(0.458, 0.753, 0.826, 1)
+links = Array[StringName]([&"harpooner_pin_down"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_harpooner_frozen_chain_0")])
+
+[sub_resource type="Resource" id="Node_harpooner_pin_down"]
+script = ExtResource("2_node")
+id = &"harpooner_pin_down"
+display_name = "Pin Down"
+description = "A tethered enemy freezes for 0.5 s when the tether ends"
+max_rank = 2
+position = Vector2(13.941, 17.947)
+color = Color(0.458, 0.753, 0.826, 1)
+links = Array[StringName]([&"harpooner_cold_barbs"])
+
+[sub_resource type="Resource" id="Effect_harpooner_cold_barbs_0"]
+script = ExtResource("3_effect")
+buildings = 512
+elements = 4
+stat_type = 10
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Node_harpooner_cold_barbs"]
+script = ExtResource("2_node")
+id = &"harpooner_cold_barbs"
+display_name = "Cold Barbs"
+description = "Frost Harpooner slow potency +10%"
+max_rank = 3
+position = Vector2(14.419, 19.102)
+color = Color(0.458, 0.753, 0.826, 1)
+links = Array[StringName]([&"harpooner_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_harpooner_cold_barbs_0")])
+
+[sub_resource type="Resource" id="Effect_harpooner_quick_reel_0"]
+script = ExtResource("3_effect")
+buildings = 512
+elements = 4
+stat_type = 6
+modify_type = 0
+value_per_rank = 0.04
+
+[sub_resource type="Resource" id="Node_harpooner_quick_reel"]
+script = ExtResource("2_node")
+id = &"harpooner_quick_reel"
+display_name = "Quick Reel"
+description = "Frost Harpooner attack speed +0.04"
+max_rank = 3
+position = Vector2(12.354, 17.251)
+color = Color(0.458, 0.753, 0.826, 1)
+links = Array[StringName]([&"harpooner_grounded"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_harpooner_quick_reel_0")])
+
+[sub_resource type="Resource" id="Node_harpooner_grounded"]
+script = ExtResource("2_node")
+id = &"harpooner_grounded"
+display_name = "Grounded"
+description = "Harpooned flyers walk 20% slower once they land"
+max_rank = 2
+position = Vector2(12.832, 18.406)
+color = Color(0.458, 0.753, 0.826, 1)
+links = Array[StringName]([&"harpooner_skyhook"])
+
+[sub_resource type="Resource" id="Effect_harpooner_skyhook_0"]
+script = ExtResource("3_effect")
+kind = 3
+buildings = 512
+elements = 4
+modify_type = 1
+value_per_rank = 0.15
+condition = 5
+
+[sub_resource type="Resource" id="Node_harpooner_skyhook"]
+script = ExtResource("2_node")
+id = &"harpooner_skyhook"
+display_name = "Skyhook"
+description = "Frost Harpooner damage +15% against flyers"
+max_rank = 2
+position = Vector2(13.311, 19.561)
+color = Color(0.458, 0.753, 0.826, 1)
+links = Array[StringName]([&"harpooner_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_harpooner_skyhook_0")])
+
+[sub_resource type="Resource" id="Node_harpooner_t3"]
+script = ExtResource("2_node")
+id = &"harpooner_t3"
+display_name = "Harpooner T3"
+description = "Unlocks Frost Harpooner T3"
+kind = 2
+position = Vector2(14.343, 20.486)
+color = Color(0.458, 0.753, 0.826, 1)
+links = Array[StringName]([&"harpooner_glacial_anchor"])
+one_way_links = Array[StringName]([&"absolute_zero"])
+needs = &"harpooner_t2"
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_harpooner_t3")])
+
+[sub_resource type="Resource" id="Node_harpooner_glacial_anchor"]
+script = ExtResource("2_node")
+id = &"harpooner_glacial_anchor"
+display_name = "Glacial Anchor"
+description = "The tether freezes its target for its whole length; bosses are held at the slow floor instead"
+kind = 3
+position = Vector2(14.822, 21.641)
+color = Color(0.458, 0.753, 0.826, 1)
+
+[sub_resource type="Resource" id="Node_hatchery_frost_fed_brood"]
+script = ExtResource("2_node")
+id = &"hatchery_frost_fed_brood"
+display_name = "Frost-Fed Brood"
+description = "Frost drakeling damage +8%"
+max_rank = 3
+position = Vector2(7.666, 15.636)
+color = Color(0.458, 0.675, 0.826, 1)
+links = Array[StringName]([&"hatchery_t2"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_hatchery_frost_fed_brood_0")])
+
+[sub_resource type="Resource" id="Node_hatchery_t2"]
+script = ExtResource("2_node")
+id = &"hatchery_t2"
+display_name = "Hatchery T2"
+description = "Unlocks Frost Hatchery T2"
+kind = 2
+position = Vector2(7.187, 16.791)
+color = Color(0.458, 0.675, 0.826, 1)
+links = Array[StringName]([&"hatchery_frost_claws", &"hatchery_big_clutch"])
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_hatchery_t2")])
+
+[sub_resource type="Resource" id="Node_hatchery_frost_claws"]
+script = ExtResource("2_node")
+id = &"hatchery_frost_claws"
+display_name = "Frost Claws"
+description = "Frost drakeling slow potency +10%"
+max_rank = 3
+position = Vector2(7.263, 18.175)
+color = Color(0.458, 0.675, 0.826, 1)
+links = Array[StringName]([&"hatchery_ice_scales"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_hatchery_frost_claws_0")])
+
+[sub_resource type="Resource" id="Node_hatchery_ice_scales"]
+script = ExtResource("2_node")
+id = &"hatchery_ice_scales"
+display_name = "Ice Scales"
+description = "Frost drakelings take 10% less damage"
+max_rank = 2
+position = Vector2(6.785, 19.33)
+color = Color(0.458, 0.675, 0.826, 1)
+links = Array[StringName]([&"hatchery_hardy_brood"])
+
+[sub_resource type="Resource" id="Node_hatchery_hardy_brood"]
+script = ExtResource("2_node")
+id = &"hatchery_hardy_brood"
+display_name = "Hardy Brood"
+description = "Frost drakeling health +15%"
+max_rank = 2
+position = Vector2(6.307, 20.485)
+color = Color(0.458, 0.675, 0.826, 1)
+links = Array[StringName]([&"hatchery_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_hatchery_hardy_brood_0")])
+
+[sub_resource type="Resource" id="Node_hatchery_big_clutch"]
+script = ExtResource("2_node")
+id = &"hatchery_big_clutch"
+display_name = "Big Clutch"
+description = "One more drakeling at a time"
+position = Vector2(6.155, 17.716)
+color = Color(0.458, 0.675, 0.826, 1)
+links = Array[StringName]([&"hatchery_frost_spit"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_hatchery_big_clutch_0")])
+
+[sub_resource type="Resource" id="Node_hatchery_frost_spit"]
+script = ExtResource("2_node")
+id = &"hatchery_frost_spit"
+display_name = "Frost Spit"
+description = "Every 5 s a Frost drakeling spits an icy glob that freezes an enemy for 0.5 s"
+max_rank = 2
+position = Vector2(5.676, 18.871)
+color = Color(0.458, 0.675, 0.826, 1)
+links = Array[StringName]([&"hatchery_fierce_hatchlings"])
+
+[sub_resource type="Resource" id="Node_hatchery_fierce_hatchlings"]
+script = ExtResource("2_node")
+id = &"hatchery_fierce_hatchlings"
+display_name = "Fierce Hatchlings"
+description = "Frost drakeling attack speed +0.04"
+max_rank = 3
+position = Vector2(5.198, 20.025)
+color = Color(0.458, 0.675, 0.826, 1)
+links = Array[StringName]([&"hatchery_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_hatchery_fierce_hatchlings_0")])
+
+[sub_resource type="Resource" id="Node_hatchery_t3"]
+script = ExtResource("2_node")
+id = &"hatchery_t3"
+display_name = "Hatchery T3"
+description = "Unlocks Frost Hatchery T3"
+kind = 2
+position = Vector2(5.274, 21.41)
+color = Color(0.458, 0.675, 0.826, 1)
+links = Array[StringName]([&"hatchery_winter_brood"])
+one_way_links = Array[StringName]([&"absolute_zero"])
+needs = &"hatchery_t2"
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_hatchery_t3")])
+
+[sub_resource type="Resource" id="Node_hatchery_winter_brood"]
+script = ExtResource("2_node")
+id = &"hatchery_winter_brood"
+display_name = "Winter Brood"
+description = "Enemies fighting Frost drakelings are slowed to the slow floor"
+kind = 3
+position = Vector2(4.796, 22.565)
+color = Color(0.458, 0.675, 0.826, 1)
+
+[sub_resource type="Resource" id="Effect_buffer_cold_aura_0"]
+script = ExtResource("3_effect")
+buildings = 64
+elements = 4
+stat_type = 5
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Node_buffer_cold_aura"]
+script = ExtResource("2_node")
+id = &"buffer_cold_aura"
+display_name = "Cold Aura"
+description = "Frost Buffer aura radius +0.1 tiles"
+max_rank = 3
+position = Vector2(7.226, 3.302)
+color = Color(0.652, 0.684, 0.745, 1)
+links = Array[StringName]([&"buffer_clear_mind"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_buffer_cold_aura_0")])
+
+[sub_resource type="Resource" id="Effect_buffer_clear_mind_0"]
+script = ExtResource("3_effect")
+kind = 21
+buildings = 64
+elements = 4
+value_per_rank = 0.05
+
+[sub_resource type="Resource" id="Node_buffer_clear_mind"]
+script = ExtResource("2_node")
+id = &"buffer_clear_mind"
+display_name = "Clear Mind"
+description = "Frost Buffer buffs +5% stronger"
+max_rank = 2
+position = Vector2(6.747, 2.147)
+color = Color(0.652, 0.684, 0.745, 1)
+links = Array[StringName]([&"buffer_t2"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_buffer_clear_mind_0")])
+
+[sub_resource type="Resource" id="Node_buffer_t2"]
+script = ExtResource("2_node")
+id = &"buffer_t2"
+display_name = "Buffer T2"
+description = "Unlocks Frost Buffer T2: the aura also weakens enemies in it"
+kind = 2
+position = Vector2(6.269, 0.992)
+color = Color(0.652, 0.684, 0.745, 1)
+links = Array[StringName]([&"buffer_frost_zeal", &"buffer_rime_song"])
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_buffer_t2")])
+
+[sub_resource type="Resource" id="Effect_buffer_frost_zeal_0"]
+script = ExtResource("3_effect")
+buildings = 64
+elements = 4
+stat_type = 11
+modify_type = 0
+value_per_rank = 0.03
+
+[sub_resource type="Resource" id="Node_buffer_frost_zeal"]
+script = ExtResource("2_node")
+id = &"buffer_frost_zeal"
+display_name = "Frost Zeal"
+description = "The slow chance a Frost Buffer gives +3 points"
+max_rank = 3
+position = Vector2(5.236, 0.067)
+color = Color(0.652, 0.684, 0.745, 1)
+links = Array[StringName]([&"buffer_biting_chill"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_buffer_frost_zeal_0")])
+
+[sub_resource type="Resource" id="Node_buffer_biting_chill"]
+script = ExtResource("2_node")
+id = &"buffer_biting_chill"
+display_name = "Biting Chill"
+description = "Enemies in a Frost Buffer's aura move 5% slower"
+max_rank = 2
+position = Vector2(4.758, -1.088)
+color = Color(0.652, 0.684, 0.745, 1)
+links = Array[StringName]([&"buffer_deep_reserve"])
+
+[sub_resource type="Resource" id="Effect_buffer_deep_reserve_0"]
+script = ExtResource("3_effect")
+kind = 22
+buildings = 64
+elements = 4
+value_per_rank = 1.0
+
+[sub_resource type="Resource" id="Node_buffer_deep_reserve"]
+script = ExtResource("2_node")
+id = &"buffer_deep_reserve"
+display_name = "Deep Reserve"
+description = "Frost Buffer pip budget +1"
+max_rank = 2
+position = Vector2(4.279, -2.243)
+color = Color(0.652, 0.684, 0.745, 1)
+links = Array[StringName]([&"buffer_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_buffer_deep_reserve_0")])
+
+[sub_resource type="Resource" id="Effect_buffer_rime_song_0"]
+script = ExtResource("3_effect")
+buildings = 64
+elements = 4
+stat_type = 10
+modify_type = 0
+value_per_rank = 0.05
+
+[sub_resource type="Resource" id="Node_buffer_rime_song"]
+script = ExtResource("2_node")
+id = &"buffer_rime_song"
+display_name = "Rime Song"
+description = "Buffed towers' slow potency +5%"
+max_rank = 3
+position = Vector2(6.345, -0.392)
+color = Color(0.652, 0.684, 0.745, 1)
+links = Array[StringName]([&"buffer_cold_focus"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_buffer_rime_song_0")])
+
+[sub_resource type="Resource" id="Node_buffer_cold_focus"]
+script = ExtResource("2_node")
+id = &"buffer_cold_focus"
+display_name = "Cold Focus"
+description = "The range buff of a Frost Buffer is 5% stronger"
+max_rank = 2
+position = Vector2(5.866, -1.547)
+color = Color(0.652, 0.684, 0.745, 1)
+links = Array[StringName]([&"buffer_glazed_stones"])
+
+[sub_resource type="Resource" id="Node_buffer_glazed_stones"]
+script = ExtResource("2_node")
+id = &"buffer_glazed_stones"
+display_name = "Glazed Stones"
+description = "Frost walls in a Frost Buffer's aura take 5% less damage"
+max_rank = 2
+position = Vector2(5.388, -2.702)
+color = Color(0.652, 0.684, 0.745, 1)
+links = Array[StringName]([&"buffer_t3"])
+
+[sub_resource type="Resource" id="Node_buffer_t3"]
+script = ExtResource("2_node")
+id = &"buffer_t3"
+display_name = "Buffer T3"
+description = "Unlocks Frost Buffer T3: Commander's Roar"
+kind = 2
+position = Vector2(4.355, -3.627)
+color = Color(0.652, 0.684, 0.745, 1)
+links = Array[StringName]([&"buffer_heart_of_winter"])
+one_way_links = Array[StringName]([&"absolute_zero"])
+needs = &"buffer_t2"
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_buffer_t3")])
+
+[sub_resource type="Resource" id="Node_buffer_heart_of_winter"]
+script = ExtResource("2_node")
+id = &"buffer_heart_of_winter"
+display_name = "Heart of Winter"
+description = "Every 10th attack of a buffed tower freezes its target for 0.5 s"
+kind = 3
+position = Vector2(3.877, -4.782)
+color = Color(0.652, 0.684, 0.745, 1)
+
 [resource]
 script = ExtResource("1_tree")
 id = &"frost"
 display_name = "Frost"
 start_id = &"cold_snap"
 element = 4
-nodes = Array[ExtResource("2_node")]([SubResource("Node_cold_snap"), SubResource("Node_absolute_zero"), SubResource("Node_bitter_cold"), SubResource("Node_winter_ground"), SubResource("Node_hard_frost"), SubResource("Node_hold_fast"), SubResource("Node_ice_bolts"), SubResource("Node_quick_draw"), SubResource("Node_bolter_t2"), SubResource("Node_chilling_tips"), SubResource("Node_frozen_bolts"), SubResource("Node_pinning_shot"), SubResource("Node_ice_splinters"), SubResource("Node_far_flight"), SubResource("Node_bolter_t3"), SubResource("Node_icicle_lance"), SubResource("Node_cold_beam"), SubResource("Node_clear_lens"), SubResource("Node_beamer_t2"), SubResource("Node_freezing_ray"), SubResource("Node_glacial_beam"), SubResource("Node_creeping_frost"), SubResource("Node_frost_arc"), SubResource("Node_steady_beam"), SubResource("Node_beamer_t3"), SubResource("Node_ice_mirror"), SubResource("Node_frost_ring"), SubResource("Node_wide_frost"), SubResource("Node_nova_t2"), SubResource("Node_biting_wind"), SubResource("Node_polar_pulse"), SubResource("Node_frost_field"), SubResource("Node_shatterburst"), SubResource("Node_quick_chill"), SubResource("Node_nova_t3"), SubResource("Node_blizzard"), SubResource("Node_cold_snare"), SubResource("Node_quick_thaw"), SubResource("Node_trap_t2"), SubResource("Node_bitter_snap"), SubResource("Node_glacier_jaws"), SubResource("Node_long_root"), SubResource("Node_ice_spikes"), SubResource("Node_frost_aura"), SubResource("Node_trap_t3"), SubResource("Node_ice_shards"), SubResource("Node_lingering_chill"), SubResource("Node_deep_chill"), SubResource("Node_numbing_cold"), SubResource("Node_creeping_winter"), SubResource("Node_snap_freeze"), SubResource("Node_brittle"), SubResource("Node_cold_heart"), SubResource("Node_deep_freeze"), SubResource("Node_wall_t2"), SubResource("Node_bitter_ground"), SubResource("Node_spreading_rime"), SubResource("Node_frozen_paths"), SubResource("Node_hoarfrost"), SubResource("Node_ice_armor"), SubResource("Node_frost_burn"), SubResource("Node_wall_t3")])
+nodes = Array[ExtResource("2_node")]([SubResource("Node_cold_snap"), SubResource("Node_absolute_zero"), SubResource("Node_bitter_cold"), SubResource("Node_winter_ground"), SubResource("Node_hard_frost"), SubResource("Node_hold_fast"), SubResource("Node_ice_bolts"), SubResource("Node_quick_draw"), SubResource("Node_bolter_t2"), SubResource("Node_chilling_tips"), SubResource("Node_frozen_bolts"), SubResource("Node_pinning_shot"), SubResource("Node_ice_splinters"), SubResource("Node_far_flight"), SubResource("Node_bolter_t3"), SubResource("Node_icicle_lance"), SubResource("Node_cold_beam"), SubResource("Node_clear_lens"), SubResource("Node_beamer_t2"), SubResource("Node_freezing_ray"), SubResource("Node_glacial_beam"), SubResource("Node_creeping_frost"), SubResource("Node_frost_arc"), SubResource("Node_steady_beam"), SubResource("Node_beamer_t3"), SubResource("Node_ice_mirror"), SubResource("Node_frost_ring"), SubResource("Node_wide_frost"), SubResource("Node_nova_t2"), SubResource("Node_biting_wind"), SubResource("Node_polar_pulse"), SubResource("Node_frost_field"), SubResource("Node_shatterburst"), SubResource("Node_quick_chill"), SubResource("Node_nova_t3"), SubResource("Node_blizzard"), SubResource("Node_cold_snare"), SubResource("Node_quick_thaw"), SubResource("Node_trap_t2"), SubResource("Node_bitter_snap"), SubResource("Node_glacier_jaws"), SubResource("Node_long_root"), SubResource("Node_ice_spikes"), SubResource("Node_frost_aura"), SubResource("Node_trap_t3"), SubResource("Node_ice_shards"), SubResource("Node_lingering_chill"), SubResource("Node_deep_chill"), SubResource("Node_numbing_cold"), SubResource("Node_creeping_winter"), SubResource("Node_snap_freeze"), SubResource("Node_brittle"), SubResource("Node_cold_heart"), SubResource("Node_deep_freeze"), SubResource("Node_wall_t2"), SubResource("Node_bitter_ground"), SubResource("Node_spreading_rime"), SubResource("Node_frozen_paths"), SubResource("Node_hoarfrost"), SubResource("Node_ice_armor"), SubResource("Node_frost_burn"), SubResource("Node_wall_t3"), SubResource("Node_frozen_maze"), SubResource("Node_maze_icy_floor"), SubResource("Node_maze_frost_corners"), SubResource("Node_maze_glacier_maze"), SubResource("Node_spotter_cold_eye"), SubResource("Node_spotter_t2"), SubResource("Node_spotter_chilling_mark"), SubResource("Node_spotter_frost_mark"), SubResource("Node_spotter_ice_sight"), SubResource("Node_spotter_patient_aim"), SubResource("Node_spotter_glacial_round"), SubResource("Node_spotter_hailstone"), SubResource("Node_spotter_t3"), SubResource("Node_spotter_winter_s_needle"), SubResource("Node_mortar_ice_shells"), SubResource("Node_mortar_t2"), SubResource("Node_mortar_frost_fill"), SubResource("Node_mortar_frozen_crater"), SubResource("Node_mortar_wide_shells"), SubResource("Node_mortar_quick_loader"), SubResource("Node_mortar_shatter_shell"), SubResource("Node_mortar_hard_ice"), SubResource("Node_mortar_t3"), SubResource("Node_mortar_hailstorm"), SubResource("Node_breather_cold_breath"), SubResource("Node_breather_t2"), SubResource("Node_breather_fan_of_frost"), SubResource("Node_breather_rime_breath"), SubResource("Node_breather_frostbite"), SubResource("Node_breather_steady_breath"), SubResource("Node_breather_flash_freeze"), SubResource("Node_breather_icy_lungs"), SubResource("Node_breather_t3"), SubResource("Node_breather_winter_s_breath"), SubResource("Node_egg_bomb_cold_yolk"), SubResource("Node_egg_bomb_t2"), SubResource("Node_egg_bomb_wide_blast"), SubResource("Node_egg_bomb_rime_shell"), SubResource("Node_egg_bomb_frozen_pit"), SubResource("Node_egg_bomb_short_fuse"), SubResource("Node_egg_bomb_ice_shrapnel"), SubResource("Node_egg_bomb_cold_nest"), SubResource("Node_egg_bomb_t3"), SubResource("Node_egg_bomb_glacier_egg"), SubResource("Node_harpooner_ice_hooks"), SubResource("Node_harpooner_t2"), SubResource("Node_harpooner_frozen_chain"), SubResource("Node_harpooner_pin_down"), SubResource("Node_harpooner_cold_barbs"), SubResource("Node_harpooner_quick_reel"), SubResource("Node_harpooner_grounded"), SubResource("Node_harpooner_skyhook"), SubResource("Node_harpooner_t3"), SubResource("Node_harpooner_glacial_anchor"), SubResource("Node_hatchery_frost_fed_brood"), SubResource("Node_hatchery_t2"), SubResource("Node_hatchery_frost_claws"), SubResource("Node_hatchery_ice_scales"), SubResource("Node_hatchery_hardy_brood"), SubResource("Node_hatchery_big_clutch"), SubResource("Node_hatchery_frost_spit"), SubResource("Node_hatchery_fierce_hatchlings"), SubResource("Node_hatchery_t3"), SubResource("Node_hatchery_winter_brood"), SubResource("Node_buffer_cold_aura"), SubResource("Node_buffer_clear_mind"), SubResource("Node_buffer_t2"), SubResource("Node_buffer_frost_zeal"), SubResource("Node_buffer_biting_chill"), SubResource("Node_buffer_deep_reserve"), SubResource("Node_buffer_rime_song"), SubResource("Node_buffer_cold_focus"), SubResource("Node_buffer_glazed_stones"), SubResource("Node_buffer_t3"), SubResource("Node_buffer_heart_of_winter")])
 background = Color(0.027, 0.055, 0.09, 1)
 link_lit = Color(0.847, 0.953, 1, 1)
 accent = Color(0.561, 0.827, 1, 1)

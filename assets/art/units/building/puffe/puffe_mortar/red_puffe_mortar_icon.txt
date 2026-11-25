@@ -1,0 +1,37 @@
+# Source of red_puffe_mortar_icon.png (python tools/gd.py icon <this> <out.png>); cropped from the sprite's first IDLE frame
+a = a22633
+b = c3303b
+c = 74202e
+d = e43b44
+e = d3353f
+f = f1e0e1
+g = 461a29
+h = 5d1d2c
+i = ca6269
+j = f6757a
+k = 8b2330
+l = b22b37
+m = c0cbdc
+n = 8b9bb4
+o = 181425
+p = 5a6988
+q = 3a4466
+r = e4a672
+s = b86f50
+---
+.....a.a........
+....a...a.......
+....bcccb.......
+..ddceddcce.....
+...ddfgdfg......
+...heebdbdcmmmn.
+i...ceejdjmooop.
+iiiiicaddcnoooq.
+.ikkkecccerrssq.
+.ideeleddnmppq..
+..ihllednmppq...
+..chleednmpq....
+.cchcledqqqh....
+cc.hhhhhhhh.....
+c...hhhhhh......
+................

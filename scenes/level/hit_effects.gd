@@ -18,7 +18,7 @@ const DEATH : String = "death"
 ## A skill's own damage data child: its element (Skill.damage_data would make a copy to free).
 const DAMAGE_DATA_NODE : NodePath = ^"DamageData"
 ## The skills whose firing flashes: a beam shows itself, a trap's claws are on the hit.
-const CAST_SKILLS : Array[Utils.SkillType] = [Utils.SkillType.Projectile, Utils.SkillType.Area]
+const CAST_SKILLS : Array[Utils.SkillType] = [Utils.SkillType.Projectile, Utils.SkillType.Area, Utils.SkillType.Artillery, Utils.SkillType.Sniper, Utils.SkillType.Harpoon]
 const ELEMENT_NAMES : Dictionary[Utils.DamageType, String] = {
 	Utils.DamageType.Physical: "physical",
 	Utils.DamageType.Fire: "fire",
@@ -115,11 +115,12 @@ static func get_style(damage_data : DamageData) -> String:
 	var skill : Skill = (damage_data.source as Building).skill
 	var skill_type : Utils.SkillType = skill.skill_type if skill != null else Utils.SkillType.None
 	match skill_type:
-		Utils.SkillType.Projectile:
+		Utils.SkillType.Projectile, Utils.SkillType.Artillery, Utils.SkillType.Sniper, Utils.SkillType.Harpoon, Utils.SkillType.Blast:
 			return BURST
-		Utils.SkillType.Melee:
+		#a guard's claws
+		Utils.SkillType.Melee, Utils.SkillType.Guard:
 			return CLAW
-		Utils.SkillType.Area, Utils.SkillType.Beaming:
+		Utils.SkillType.Area, Utils.SkillType.Beaming, Utils.SkillType.Breath:
 			return SPARK
 	return BURST
 

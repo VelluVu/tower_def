@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bikliqcmfg8y5"
+path="res://.godot/imported/red_puffe_mortar.aseprite-84665712f1c26f7ee804b15f6f0539cb.res"
+
+[deps]
+
+source_file="res://assets/art/units/building/puffe/puffe_mortar/red_puffe_mortar.aseprite"
+dest_files=["res://.godot/imported/red_puffe_mortar.aseprite-84665712f1c26f7ee804b15f6f0539cb.res"]
+
+[params]
+

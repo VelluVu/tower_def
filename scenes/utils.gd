@@ -53,6 +53,20 @@ enum StatType
 	SplitShare,
 	#Flat with base 0, whole number: when a poisoned enemy dies to this tower, its nearest neighbours get half its hit, poison included
 	PoisonSpread,
+	#Flat with base 0, degrees: how much wider a Breather's cone is than its base width
+	ConeWidth,
+	#Flat with base 0: a direct hit marks its target, which takes this share more of the hit's element from every
+	#tower for EnemyMarks.SECONDS (the Spotter)
+	MarkShare,
+	#Flat with base 0: a direct hit kills a non-boss enemy left under this share of its max health (the Spotter)
+	ExecuteBelow,
+	#Flat with base 0: seconds a direct hit tethers its target (HarpoonTether: slowed, flyers dragged down; the Harpooner)
+	TetherTime,
+	#Flat with base 0: how much slower a tethered enemy moves (0.5 = half speed; the slow floor still holds)
+	TetherSlow,
+	#the Hatchery's guards (2026-11-25): a guard's health, and how many guards it keeps (Flat with base 0, whole number)
+	GuardHealth,
+	GuardCount,
 }
 
 enum TileType
@@ -121,6 +135,20 @@ enum SkillType
 	Projectile = 1 << 1,
 	Area = 1 << 2,
 	Beaming = 1 << 3,
+	#the Mortar: a lobbed shell that bursts where it lands
+	Artillery = 1 << 4,
+	#the Buffer: a passive aura, it never attacks
+	Support = 1 << 5,
+	#the Breather: gusts that hit every enemy in a cone
+	Breath = 1 << 6,
+	#the Spotter: slow, heavy, long-range single shots
+	Sniper = 1 << 7,
+	#the Harpooner: a harpoon that tethers its target and drags flyers to the ground
+	Harpoon = 1 << 8,
+	#the Hatchery: guard drakelings that hold enemies on the path and claw them
+	Guard = 1 << 9,
+	#the Egg Bomb: one big blast on everything round it after a short fuse, then it rebuilds
+	Blast = 1 << 10,
 }
 
 ## Each mode of a level earns its own talent points.
@@ -148,6 +176,10 @@ enum TargetTactic
 	Weakest,
 	## Farthest from the castle along its path.
 	Last,
+	## Bosses, then elites, then the most health left (the Spotter's default).
+	Elite,
+	## Flyers first (the closest to the castle among them), then the enemy closest to the castle (the Harpooner's default).
+	Flyers,
 }
 
 func get_damage_type_color(damage_type : DamageType) -> Color:

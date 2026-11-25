@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="EvolveTierData" format=3]
+
+[ext_resource type="Script" path="res://scenes/unit/evolve_tree/evolve_tier_data.gd" id="1_tier"]
+[ext_resource type="Script" path="res://scenes/unit/evolve_tree/evolve_resource.gd" id="2_evolve"]
+[ext_resource type="SpriteFrames" path="res://scenes/unit/evolve_tree/tiers/buffer_frost_t3_frames.tres" id="3_frames"]
+
+[resource]
+script = ExtResource("1_tier")
+title = "T3"
+info = "Commander's Roar: every 12 s the buffed towers attack 0.4 faster for 3 s; the element rides on 30% of hits"
+talent_tree = &"frost"
+talent_node = &"buffer_t3"
+upgrade_resources = Array[ExtResource("2_evolve")]([])
+sprite_frames = ExtResource("3_frames")

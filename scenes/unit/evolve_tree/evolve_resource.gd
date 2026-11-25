@@ -17,7 +17,7 @@ enum Rarity { Common, Rare }
 @export var max_picks : int = 0
 
 @export var modifier_type : Utils.ModifierType
-@export_flags("Melee", "Projectile", "Area", "Beaming") var skill_type : int = 0
+@export_flags("Melee", "Projectile", "Area", "Beaming", "Artillery", "Support", "Breath", "Sniper", "Harpoon", "Guard", "Blast") var skill_type : int = 0
 @export var skill_name : String = "Skill"
 
 @export_flags("Physical", "Fire", "Frost", "Poison") var elements : int = 0

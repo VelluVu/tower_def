@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dh4jw48ffc78j"
+path="res://.godot/imported/red_puffe_hatchery.aseprite-6a6e5e94094e4152d7f4a788bf733ce1.res"
+
+[deps]
+
+source_file="res://assets/art/units/building/puffe/puffe_hatchery/red_puffe_hatchery.aseprite"
+dest_files=["res://.godot/imported/red_puffe_hatchery.aseprite-6a6e5e94094e4152d7f4a788bf733ce1.res"]
+
+[params]
+

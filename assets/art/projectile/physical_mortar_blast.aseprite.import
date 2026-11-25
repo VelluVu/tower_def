@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://c0gnpn0gt2bqt"
+path="res://.godot/imported/physical_mortar_blast.aseprite-6ade087f9e75e6f41e810c6234d810d6.res"
+
+[deps]
+
+source_file="res://assets/art/projectile/physical_mortar_blast.aseprite"
+dest_files=["res://.godot/imported/physical_mortar_blast.aseprite-6ade087f9e75e6f41e810c6234d810d6.res"]
+
+[params]
+

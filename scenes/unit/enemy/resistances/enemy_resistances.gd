@@ -36,9 +36,10 @@ func get_element(damage_type : Utils.DamageType) -> float:
 
 func get_tower(skill_type : Utils.SkillType) -> float:
 	match skill_type:
-		Utils.SkillType.Projectile, Utils.SkillType.Melee:
+		Utils.SkillType.Projectile, Utils.SkillType.Melee, Utils.SkillType.Sniper, Utils.SkillType.Harpoon, Utils.SkillType.Guard:
 			return projectile
-		Utils.SkillType.Area:
+		#a shell's blast and a breath count as area hits
+		Utils.SkillType.Area, Utils.SkillType.Artillery, Utils.SkillType.Breath, Utils.SkillType.Blast:
 			return area
 		Utils.SkillType.Beaming:
 			return beam

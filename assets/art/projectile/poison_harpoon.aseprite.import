@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cxi3jkg8bbjh5"
+path="res://.godot/imported/poison_harpoon.aseprite-02f37d106d90eb66b3759cb446f2c246.res"
+
+[deps]
+
+source_file="res://assets/art/projectile/poison_harpoon.aseprite"
+dest_files=["res://.godot/imported/poison_harpoon.aseprite-02f37d106d90eb66b3759cb446f2c246.res"]
+
+[params]
+

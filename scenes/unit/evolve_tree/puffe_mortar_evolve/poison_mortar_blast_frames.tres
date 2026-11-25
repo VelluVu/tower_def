@@ -1,0 +1,53 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/art/projectile/poison_mortar_blast.png" id="1_sheet"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f00"]
+atlas = ExtResource("1_sheet")
+region = Rect2(0, 0, 36, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f01"]
+atlas = ExtResource("1_sheet")
+region = Rect2(36, 0, 36, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f02"]
+atlas = ExtResource("1_sheet")
+region = Rect2(72, 0, 36, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f03"]
+atlas = ExtResource("1_sheet")
+region = Rect2(0, 36, 36, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f04"]
+atlas = ExtResource("1_sheet")
+region = Rect2(36, 36, 36, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f05"]
+atlas = ExtResource("1_sheet")
+region = Rect2(72, 36, 36, 36)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f00")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f01")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f02")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f03")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f04")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f05")
+}],
+"loop": false,
+"name": &"BLAST",
+"speed": 14.3
+}]

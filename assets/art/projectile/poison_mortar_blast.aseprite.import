@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bs01jqfywdtvn"
+path="res://.godot/imported/poison_mortar_blast.aseprite-2e2b3a9064017bd69fa7a6c2f238b3c4.res"
+
+[deps]
+
+source_file="res://assets/art/projectile/poison_mortar_blast.aseprite"
+dest_files=["res://.godot/imported/poison_mortar_blast.aseprite-2e2b3a9064017bd69fa7a6c2f238b3c4.res"]
+
+[params]
+

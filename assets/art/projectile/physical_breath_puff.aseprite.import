@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://gnoxyvgcfgci"
+path="res://.godot/imported/physical_breath_puff.aseprite-496ad8991fd8fca0dd0dbc209c8a3b6d.res"
+
+[deps]
+
+source_file="res://assets/art/projectile/physical_breath_puff.aseprite"
+dest_files=["res://.godot/imported/physical_breath_puff.aseprite-496ad8991fd8fca0dd0dbc209c8a3b6d.res"]
+
+[params]
+
