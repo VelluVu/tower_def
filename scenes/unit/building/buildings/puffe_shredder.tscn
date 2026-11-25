@@ -43,6 +43,15 @@
 [ext_resource type="Resource" path="res://scenes/upgrades/building_upgrades/shredder_upgrade_data.tres" id="0_upgradedata"]
 
 [ext_resource type="SpriteFrames" path="res://scenes/unit/evolve_tree/puffe_shredder_evolve/puffe_shredder_frames.tres" id="s_frames"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/shredder_physical_t2.tres" id="tier_physical_t2"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/shredder_physical_t3.tres" id="tier_physical_t3"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/shredder_fire_t2.tres" id="tier_fire_t2"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/shredder_fire_t3.tres" id="tier_fire_t3"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/shredder_frost_t2.tres" id="tier_frost_t2"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/shredder_frost_t3.tres" id="tier_frost_t3"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/shredder_poison_t2.tres" id="tier_poison_t2"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/shredder_poison_t3.tres" id="tier_poison_t3"]
+[ext_resource type="Script" path="res://scenes/unit/evolve_tree/evolve_tier_data.gd" id="tier_script"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jxaqe"]
 size = Vector2(16, 16)
@@ -344,6 +353,7 @@ selected_icon = ExtResource("2_amlqn")
 new_damage_data_scene = ExtResource("20_58cmo")
 icon = ExtResource("22_4cpb3")
 info = "Physical: the pulse tears and knocks"
+tiers = Array[ExtResource("tier_script")]([ExtResource("tier_physical_t2"), ExtResource("tier_physical_t3")])
 
 [node name="CriticalChance" type="Node" parent="EvolveTree/EvolveBranch/PhysicalElementEvolveLeaf"]
 script = ExtResource("24_2wu8h")
@@ -371,6 +381,7 @@ new_damage_data_scene = ExtResource("24_yqrbt")
 evolve_glow_color = Color(1, 0.518903, 0.445677, 1)
 icon = ExtResource("27_hmvri")
 info = "Fire: the torn armour burns"
+tiers = Array[ExtResource("tier_script")]([ExtResource("tier_fire_t2"), ExtResource("tier_fire_t3")])
 
 [node name="DamageModifier" type="Node" parent="EvolveTree/EvolveBranch2/FireElementEvolveLeaf"]
 script = ExtResource("24_2wu8h")
@@ -392,6 +403,7 @@ new_damage_data_scene = ExtResource("27_eue1b")
 evolve_glow_color = Color(0.494118, 1, 1, 1)
 icon = ExtResource("32_u1lqf")
 info = "Frost: the pulse chills as it tears"
+tiers = Array[ExtResource("tier_script")]([ExtResource("tier_frost_t2"), ExtResource("tier_frost_t3")])
 
 [node name="DamageModifier" type="Node" parent="EvolveTree/EvolveBranch3/FrostElementEvolveLeaf"]
 script = ExtResource("24_2wu8h")
@@ -413,6 +425,7 @@ new_damage_data_scene = ExtResource("30_jsgjd")
 evolve_glow_color = Color(0.571428, 1, 0.494981, 1)
 icon = ExtResource("37_ywbce")
 info = "Poison: poison seeps through the tears"
+tiers = Array[ExtResource("tier_script")]([ExtResource("tier_poison_t2"), ExtResource("tier_poison_t3")])
 
 [node name="ModifierManager" type="Node" parent="."]
 script = ExtResource("40_wh8uf")

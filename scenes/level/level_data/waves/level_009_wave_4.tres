@@ -1,33 +1,52 @@
-[gd_resource type="Resource" script_class="WaveData" format=3]
+[gd_resource type="Resource" script_class="WaveData" format=3 uid="uid://u8y38hsi7eor"]
 
 [ext_resource type="Script" uid="uid://cpw7ia3ek2yvs" path="res://scenes/level/level_data/wave_data.gd" id="1_wave"]
 [ext_resource type="Script" uid="uid://bbhd3iyjav4h2" path="res://scenes/level/level_data/spawn_group_data.gd" id="2_group"]
-[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/beefling.tscn" id="e_beefling"]
-[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/destroyerling.tscn" id="e_destroyerling"]
-[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/weakling.tscn" id="e_weakling"]
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/batling.tscn" id="e_batling"]
+[ext_resource type="PackedScene" uid="uid://bj8fmaeegual3" path="res://scenes/unit/enemy/enemies/beefling.tscn" id="e_beefling"]
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/swarmling.tscn" id="e_swarmling"]
+[ext_resource type="PackedScene" uid="uid://bljkhytt20h3f" path="res://scenes/unit/enemy/enemies/weakling.tscn" id="e_weakling"]
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/glow_moth.tscn" id="e_u1125_glow_moth"]
 
 [sub_resource type="Resource" id="Resource_group1"]
 script = ExtResource("2_group")
-enemy_scene = ExtResource("e_destroyerling")
-count = 4
-interval = 4.0
+enemy_scene = ExtResource("e_beefling")
+count = 10
+interval = 2.8
 spawner_id = 1
 
 [sub_resource type="Resource" id="Resource_group2"]
 script = ExtResource("2_group")
-enemy_scene = ExtResource("e_beefling")
-count = 8
-interval = 3.0
+enemy_scene = ExtResource("e_weakling")
+count = 22
+interval = 1.4
+delay = 2.0
 
 [sub_resource type="Resource" id="Resource_group3"]
 script = ExtResource("2_group")
-enemy_scene = ExtResource("e_weakling")
-count = 18
-interval = 1.6
-delay = 4.0
-spawner_id = 1
+enemy_scene = ExtResource("e_batling")
+count = 12
+interval = 1.5
+delay = 6.0
+spawner_id = 2
+
+[sub_resource type="Resource" id="Resource_group4"]
+script = ExtResource("2_group")
+enemy_scene = ExtResource("e_swarmling")
+count = 12
+interval = 0.3
+delay = 10.0
+spawner_id = 2
+
+[sub_resource type="Resource" id="Resource_u1125_glow_moth"]
+script = ExtResource("2_group")
+enemy_scene = ExtResource("e_u1125_glow_moth")
+count = 10
+interval = 0.5
+delay = 5.0
+spawner_id = 2
 
 [resource]
 script = ExtResource("1_wave")
-spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_group3")])
+spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_group3"), SubResource("Resource_group4"), SubResource("Resource_u1125_glow_moth")])
 early_start_bonus = 2.0

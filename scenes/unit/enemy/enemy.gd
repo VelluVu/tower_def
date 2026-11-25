@@ -112,8 +112,11 @@ var is_steadfast : bool = false
 var walk_animation : String = GlobalAnimationNames.WALK_ANIMATION
 #false for an enemy gone without a kill (a hatched egg sac): no gold or XP
 var gives_reward : bool = true
-#Frostplague: cannot attack buildings while true
-var is_numb : bool = false
+#Frostplague, steam: cannot attack buildings while true (add_numb, remove_numb)
+var is_numb : bool = false :
+	get = _get_is_numb
+#numbs on it now: two at once end only when both have
+var numb_count : int = 0
 #held where it is (a harpoon's chain on a boss flyer, HarpoonTether): no moving, bosses too
 var is_held : bool = false
 #share of the damage it takes (the Dragonslayer's oath halves it)
@@ -202,6 +205,9 @@ func take_damage(damage_data : DamageData) -> void:
 			damage_data.damage *= 1.0 + EnemyMarks.get_bonus(self, damage_data.damage_type)
 			#a shieldbearer's cover against bolts
 			damage_data.damage *= ShieldAura.get_factor(self, damage_data)
+			#synergies (Pinned: the spikes on an enemy the Leopard holds)
+			if level != null and level.synergies != null:
+				damage_data.damage *= level.synergies.get_damage_factor(self, damage_data)
 
 	var health : Stat = stats.get_stat(Utils.StatType.Health)
 	var maxHealth : Stat = stats.get_stat(Utils.StatType.MaxHealth)
@@ -222,6 +228,19 @@ func take_damage(damage_data : DamageData) -> void:
 		TowerHitEffects.apply(self, damage_data, raw_damage)
 
 
+## Numbs it (cannot attack buildings) until a matching remove_numb.
+func add_numb() -> void:
+	numb_count += 1
+
+
+func remove_numb() -> void:
+	numb_count = maxi(numb_count - 1, 0)
+
+
+func _get_is_numb() -> bool:
+	return numb_count > 0
+
+
 ## Pushes it back along its own path by this many cells (a Physical Nova's burst); bosses, flyers and waders stay.
 func knock_back(cells : int) -> void:
 	if is_boss or is_flying or is_wading or is_dead or is_burrowed or point_path.is_empty():
@@ -230,6 +249,9 @@ func knock_back(cells : int) -> void:
 	global_position = point_path[current_waypoint_index] + lane_offset
 	next_waypoint = global_position
 	linear_velocity = Vector2.ZERO
+	#Pushed onto spikes: a trap where it lands sets off at once
+	if level != null and level.synergies != null:
+		level.synergies.on_knocked_back(self)
 
 
 ## Stops it where it stands for a while (a frost tower's freeze); bosses never freeze. A new freeze restarts it.
@@ -566,7 +588,8 @@ func _on_body_exit(body : Node) -> void:
 
 
 func _on_astar_grid_updated() -> void:
-	if is_dead or is_deactivated or is_flying:
+	#out of the tree: a retried level's old enemy, still waiting to be freed, hears the new level's grid
+	if is_dead or is_deactivated or is_flying or not is_inside_tree():
 		return
 
 	if level == null:

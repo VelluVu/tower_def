@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bkd463tepfjpo"
+path="res://.godot/imported/phoenix_roost.aseprite-0abe5dc250ed0a75303eb5e0c8663219.res"
+
+[deps]
+
+source_file="res://assets/art/ui/map_landmarks/phoenix_roost.aseprite"
+dest_files=["res://.godot/imported/phoenix_roost.aseprite-0abe5dc250ed0a75303eb5e0c8663219.res"]
+
+[params]
+

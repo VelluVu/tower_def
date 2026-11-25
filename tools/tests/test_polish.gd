@@ -23,7 +23,7 @@ func test_wave_banner_texts(kit : TestKit) -> void:
 
 
 func test_flyer_warning_once(kit : TestKit) -> void:
-	await kit.load_level(6)
+	await kit.load_level(7)
 	var banner : WaveBanner = WaveBanner.new()
 	kit.root.add_child(banner)
 	banner.level = kit.level

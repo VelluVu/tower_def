@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://csgf7mq5sd8g6"
+path="res://.godot/imported/mire_gate.aseprite-aafc33b4cdcb07350a7b2ebedc414ce9.res"
+
+[deps]
+
+source_file="res://assets/art/ui/map_landmarks/mire_gate.aseprite"
+dest_files=["res://.godot/imported/mire_gate.aseprite-aafc33b4cdcb07350a7b2ebedc414ce9.res"]
+
+[params]
+

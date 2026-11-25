@@ -6,6 +6,9 @@ extends Node2D
 ## boss flyer is held where it is for BOSS_HOLD_SECONDS instead, at most once every BOSS_HOLD_COOLDOWN. On landing a
 ## Frost harpoon freezes the flyer for a moment and a Poison one marks it for every element (the armour loss).
 ## Made on the enemy by the first harpoon (HarpoonTether.attach); a new harpoon renews the time and keeps the stronger slow.
+## A Frost harpoon's slow goes past the slow floor (ModifierData.ignores_slow_floor), never to a stop; every tether
+## slows enemies immune or resistant to slows too: a standard bearer's banner, bosses at full strength
+## (ModifierData.pierces_slow_immunity; 2026-11-25, the user).
 
 const NODE_NAME : String = "Tether"
 const BOSS_HOLD_SECONDS : float = 3.0
@@ -43,20 +46,25 @@ static func attach(target : Enemy, from_tower : Building, seconds : float, slow_
 		target.add_child(node)
 	node.tower = weakref(from_tower)
 	node.seconds_left = maxf(node.seconds_left, seconds)
-	node._set_slow(slow_share)
+	node._set_slow(slow_share, is_frost(from_tower))
 	if target.is_flying:
 		node._drag_down(from_tower)
 	node.queue_redraw()
 	return node
 
 
+static func is_frost(from_tower : Building) -> bool:
+	return from_tower.evolve_tree != null and from_tower.evolve_tree.is_element_chosen and from_tower.evolve_tree.evolve_element == Utils.Element.Frost
+
+
 func is_tethered() -> bool:
 	return seconds_left > 0.0
 
 
-func _set_slow(share : float) -> void:
+func _set_slow(share : float, is_deep : bool = false) -> void:
 	share = clampf(share, 0.0, 0.95)
-	if slow != null and -slow.value >= share:
+	#a deep (Frost) slow beats a floored one; of the same kind the stronger stays
+	if slow != null and (slow.ignores_slow_floor and not is_deep or slow.ignores_slow_floor == is_deep and -slow.value >= share):
 		return
 	if slow != null:
 		enemy.modifier_manager.remove_modifier(slow)
@@ -67,6 +75,8 @@ func _set_slow(share : float) -> void:
 	slow.stat_type = Utils.StatType.Speed
 	slow.calculate_type = Utils.ModifyType.Multiply
 	slow.value = -share
+	slow.ignores_slow_floor = is_deep
+	slow.pierces_slow_immunity = true
 	enemy.modifier_manager.add_modifier(slow)
 
 
@@ -79,6 +89,9 @@ func _drag_down(from_tower : Building) -> void:
 		enemy.is_held = true
 		return
 	LandAbility.land(enemy)
+	#Grounded on a trap: it comes down on the nearest trap
+	if enemy.level != null and enemy.level.synergies != null:
+		enemy.level.synergies.on_grounded(enemy)
 	var element : Utils.Element = from_tower.evolve_tree.evolve_element if from_tower.evolve_tree != null else Utils.Element.None
 	if element == Utils.Element.Frost:
 		enemy.freeze_for(LANDING_FREEZE_SECONDS)

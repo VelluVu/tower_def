@@ -20,10 +20,10 @@ Frame.check_margin = lambda self, name: None
 ROOT = sys.argv[2]
 SPRITE = os.path.join(sys.argv[1], '..', 'sprite.py')
 SHEETS = {
-    'physical': ['puffe', 'puffe_nova/puffe_nova', 'puffe_beamer/puffe_beamer', 'puffe_mortar/puffe_mortar', 'puffe_buffer/puffe_buffer', 'puffe_breather/puffe_breather', 'puffe_spotter/puffe_spotter', 'puffe_harpooner/puffe_harpooner', 'puffe_hatchery/puffe_hatchery'],
-    'fire': ['puffe_bolter/puffe_bolter_red', 'puffe_nova/red_puffe_nova', 'puffe_beamer/red_puffe_beamer', 'puffe_mortar/red_puffe_mortar', 'puffe_buffer/red_puffe_buffer', 'puffe_breather/red_puffe_breather', 'puffe_spotter/red_puffe_spotter', 'puffe_harpooner/red_puffe_harpooner', 'puffe_hatchery/red_puffe_hatchery'],
-    'frost': ['puffe_bolter/puffe_bolter_blue', 'puffe_nova/blue_puffe_nova', 'puffe_beamer/blue_puffe_beamer', 'puffe_mortar/blue_puffe_mortar', 'puffe_buffer/blue_puffe_buffer', 'puffe_breather/blue_puffe_breather', 'puffe_spotter/blue_puffe_spotter', 'puffe_harpooner/blue_puffe_harpooner', 'puffe_hatchery/blue_puffe_hatchery'],
-    'poison': ['puffe_bolter/puffe_bolter_green', 'puffe_nova/green_puffe_nova', 'puffe_beamer/green_puffe_beamer', 'puffe_mortar/green_puffe_mortar', 'puffe_buffer/green_puffe_buffer', 'puffe_breather/green_puffe_breather', 'puffe_spotter/green_puffe_spotter', 'puffe_harpooner/green_puffe_harpooner', 'puffe_hatchery/green_puffe_hatchery'],
+    'physical': ['puffe', 'puffe_nova/puffe_nova', 'puffe_beamer/puffe_beamer', 'puffe_mortar/puffe_mortar', 'puffe_buffer/puffe_buffer', 'puffe_breather/puffe_breather', 'puffe_spotter/puffe_spotter', 'puffe_harpooner/puffe_harpooner', 'puffe_hatchery/puffe_hatchery', 'puffe_hoard/puffe_hoard', 'puffe_shredder/puffe_shredder', 'puffe_elder/puffe_elder'],
+    'fire': ['puffe_bolter/puffe_bolter_red', 'puffe_nova/red_puffe_nova', 'puffe_beamer/red_puffe_beamer', 'puffe_mortar/red_puffe_mortar', 'puffe_buffer/red_puffe_buffer', 'puffe_breather/red_puffe_breather', 'puffe_spotter/red_puffe_spotter', 'puffe_harpooner/red_puffe_harpooner', 'puffe_hatchery/red_puffe_hatchery', 'puffe_hoard/red_puffe_hoard', 'puffe_shredder/red_puffe_shredder', 'puffe_elder/red_puffe_elder'],
+    'frost': ['puffe_bolter/puffe_bolter_blue', 'puffe_nova/blue_puffe_nova', 'puffe_beamer/blue_puffe_beamer', 'puffe_mortar/blue_puffe_mortar', 'puffe_buffer/blue_puffe_buffer', 'puffe_breather/blue_puffe_breather', 'puffe_spotter/blue_puffe_spotter', 'puffe_harpooner/blue_puffe_harpooner', 'puffe_hatchery/blue_puffe_hatchery', 'puffe_hoard/blue_puffe_hoard', 'puffe_shredder/blue_puffe_shredder', 'puffe_elder/blue_puffe_elder'],
+    'poison': ['puffe_bolter/puffe_bolter_green', 'puffe_nova/green_puffe_nova', 'puffe_beamer/green_puffe_beamer', 'puffe_mortar/green_puffe_mortar', 'puffe_buffer/green_puffe_buffer', 'puffe_breather/green_puffe_breather', 'puffe_spotter/green_puffe_spotter', 'puffe_harpooner/green_puffe_harpooner', 'puffe_hatchery/green_puffe_hatchery', 'puffe_hoard/green_puffe_hoard', 'puffe_shredder/green_puffe_shredder', 'puffe_elder/green_puffe_elder'],
 }
 # per element: crest T2, crown T3 (rows bottom-up are drawn upwards from the head top), spark colours, ring colours
 ELEMENT = {
@@ -141,8 +141,9 @@ def build(base, element, tier):
             # keep the crest on the head: follow the head's bob, not the attack effects above it
             if abs(top - head0) > 2:
                 top = head0
-            crest = el['crown'] if tier == 3 else el['crest']
-            cw = len(crest[0])
+            # the Elder Drake's T1 is already the Bolter's T3 with its crown: no second crest on top
+            crest = [] if 'puffe_elder/' in base else (el['crown'] if tier == 3 else el['crest'])
+            cw = len(crest[0]) if crest else 0
             for r, row in enumerate(reversed(crest)):
                 for c, ch in enumerate(row):
                     if ch != '.':

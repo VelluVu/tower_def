@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dj1cq5q07jbqw"
+path="res://.godot/imported/sunken_village.aseprite-739620824a608ab12e88b7cedda1d660.res"
+
+[deps]
+
+source_file="res://assets/art/ui/map_landmarks/sunken_village.aseprite"
+dest_files=["res://.godot/imported/sunken_village.aseprite-739620824a608ab12e88b7cedda1d660.res"]
+
+[params]
+

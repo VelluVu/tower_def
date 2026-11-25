@@ -6,7 +6,8 @@ painted from the layouts below, the area's ground tile set and props, then the u
     python tools/scorched_levels.py [level numbers...]     (default: all; rewrites their .tscn files)
 
 Layout cells: . the base ground (dune sand, ash), u block 1 (packed dunes, scorched earth), s salt flats / ash
-drifts, r red dust road / hot cinders, h hardpan / dark ember earth (s, r and h slow enemies, like mud), ~ water
+drifts, r red dust road / hot cinders, h hardpan / dark ember earth (s, r and h slow enemies, like mud), e reeds and
+mud round a pool (the desert's oasis and wells, `Grid.reeds()`; plain ground), ~ water
 (an oasis in the desert, lava at the volcano), X rock ridge (rounded by the rock pass), C castle (3x3; several
 blocks = several castles, see SPAWN_CASTLES), S plain
 spawner (ids top to bottom), props (one blocking cell each, per area, see PROPS). The frame keeps level 13's
@@ -34,7 +35,7 @@ PROPS = {
     "desert": {"o": (0, 0), "R": (1, 0), "K": (2, 0), "P": (0, 1), "E": (1, 1), "Y": (2, 1)},
     "volcano": {"B": (0, 0), "V": (1, 0), "O": (2, 0), "Y": (0, 1), "K": (1, 1), "Z": (2, 1)},
 }
-TERRAIN = {"u": 1, "s": 2, "r": 3, "h": 4}
+TERRAIN = {"u": 1, "s": 2, "r": 3, "h": 4, "e": 5}
 BASE = [(0, 0), (0, 1), (0, 4), (0, 5)]
 ROCK_TILE = (lt.ROCK_SOURCE, (0, 0), 0)
 
@@ -72,6 +73,17 @@ class Grid(sw.Grid):
         for c, r in sw.FIXED_WATER:
             if self.h == H or r < 3:
                 self.g[r][c] = "~"
+        return self
+
+    def reeds(self):
+        """a ring of reeds and mud (the ground sheet's bog block, plain ground for building and walking) on the open
+        ground round every pool (2026-11-25: the oasis and the wells, full of reeds)"""
+        # beside the water only, not diagonally off a corner, so the ring rounds the pool's corners
+        ring = [(c, r) for r in range(self.h) for c in range(self.w) if self.g[r][c] == "." and any(
+            0 <= r + dr < self.h and 0 <= c + dc < self.w and self.g[r + dr][c + dc] == "~"
+            for dr, dc in ((-1, 0), (1, 0), (0, -1), (0, 1)))]
+        for c, r in ring:
+            self.g[r][c] = "e"
         return self
 
     def ridge(self, c, r0, r1):
@@ -141,10 +153,10 @@ def level_41():
     """The Last Oasis: the only water for days splits the road in two. The grave callers wait by it."""
     g = Grid()
     g.rect(18, 5, 29, 10, "~").ridge(9, 3, 12).ridge(38, 4, 11)
-    g.rect(16, 4, 31, 4, "u").rect(16, 11, 31, 11, "u").rect(40, 0, 46, 2, "s")
+    g.rect(16, 4, 31, 4, "e").rect(16, 11, 31, 11, "e").rect(40, 0, 46, 2, "s")
     g.props((13, 2, "Y"), (13, 13, "Y"), (34, 7, "o"), (44, 9, "R"), (5, 12, "P"), (5, 3, "K"))
     g.rect(1, 6, 3, 8, "C").rect(47, 2, 47, 2, "S").rect(47, 13, 47, 13, "S")
-    return g.done()
+    return g.reeds().done()
 
 
 # the desert's second half (2026-11-18, the user: twelve levels per area and levels of any size): between the Last
@@ -205,7 +217,7 @@ def level_46():
     g.rect(18, 2, 26, 4, "s").rect(18, 19, 26, 21, "s")
     g.props((4, 3, "Y"), (4, 20, "o"), (22, 7, "R"), (22, 16, "K"), (36, 11, "P"), (41, 2, "o"))
     g.rect(1, 10, 3, 12, "C").rect(43, 2, 43, 2, "S").rect(43, 21, 43, 21, "S")
-    return g.done()
+    return g.reeds().done()
 
 
 def level_47():
@@ -408,6 +420,21 @@ FISSURE_SCRIPT = "res://scenes/level/scorched/fissure.gd"
 SPAWN_CASTLES = {45: [0, 0, 1], 60: [0, 1, 1]}
 
 
+# the ash desert has no water but its oasis (41) and wells (46) (2026-11-25, the user: maps match their stories):
+# level 13's frame ponds and every other pond there become rock, which blocks like water, and its waterfalls dark edge
+DESERT_WATER_LEVELS = {41, 46}
+WATERFALL_SOURCE = 1
+
+
+def dry(area, number, g, c, r, ch):
+    """the cell's character with the desert's stray water turned to rock (on a level kept for its water, only level
+    13's frame ponds, which only a map with that frame has)"""
+    framed = not g.fresh and (c, r) in sw.FIXED_WATER
+    if ch == "~" and area == "desert" and (number not in DESERT_WATER_LEVELS or framed):
+        return "X"
+    return ch
+
+
 def paint(level, g, area):
     ground, water, front = {}, {}, {}
     field = set(sw.cell(c, r) for r in range(g.h) for c in range(g.w))
@@ -418,7 +445,7 @@ def paint(level, g, area):
     props = PROPS[area]
     for r in range(g.h):
         for c in range(g.w):
-            ch, p = g.g[r][c], sw.cell(c, r)
+            ch, p = dry(area, level.number, g, c, r, g.g[r][c]), sw.cell(c, r)
             if ch in TERRAIN:
                 ground[p] = (lt.GROUND_SOURCE, (TERRAIN[ch] * lt.TERRAIN_BLOCK, 0), 0)
             else:
@@ -446,7 +473,9 @@ def paint(level, g, area):
                 if (x, y) not in field:
                     background[(x, y)] = (0, lt.pick(lt.DARK_FILL, (x, y)), 0)
     for k, (source, tile, _) in list(background.items()):
-        if k not in field and source == 0 and tile in pools:
+        if area == "desert" and source == WATERFALL_SOURCE:
+            background[k] = (0, lt.pick(lt.DARK_FILL, k), 0)
+        elif k not in field and source == 0 and tile in pools:
             background[k] = (0, lt.pick(lt.DARK_FILL, k), 0)
         # a taller map covers level 13's bottom frame: under the new ground the old background goes (its rock and
         # river mouths would block those cells); `edge` draws the frame again

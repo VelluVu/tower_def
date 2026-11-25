@@ -23,8 +23,10 @@ func _run() -> void:
 	enemy.animation_control.flip(cursed[0].global_position - enemy.global_position)
 	if not await _play_and_wait(GlobalAnimationNames.ATTACK_ANIMATION):
 		return
+	#a tower sold or destroyed during the cast is freed: a freed object in a typed parameter is a script error
 	for tower in cursed:
-		TowerCurse.give(tower, slow, curse_seconds)
+		if is_instance_valid(tower) and not tower.is_dead:
+			TowerCurse.give(tower, slow, curse_seconds)
 	_finish()
 
 

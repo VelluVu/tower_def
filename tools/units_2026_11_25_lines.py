@@ -18,9 +18,9 @@ NEUTRAL, HAPPY, WORRIED, ANGRY, SMUG = 0, 1, 2, 3, 4
 # unit: (level, wave, mood, text)
 LINES = {
     "spore_carrier": (5, 4, WORRIED, "Mushroom folk! Kill them away from the others, or their spores heal the whole crowd. Fire burns the cloud away."),
-    "glow_moth": (6, 3, WORRIED, "Glow moths, a whole flock on the wind! Bolters and Beamers, look up!"),
-    "cave_shaman": (8, 5, ANGRY, "That old shaman wraps its friends in stone. The first hit just bounces off: hit them twice!"),
-    "wall_crawler": (9, 3, WORRIED, "Crawlers! They climb right over our walls. Only towers stop them."),
+    "glow_moth": (7, 3, WORRIED, "Glow moths, a whole flock on the wind! Bolters and Beamers, look up!"),
+    "cave_shaman": (9, 5, ANGRY, "That old shaman wraps its friends in stone. The first hit just bounces off: hit them twice!"),
+    "wall_crawler": (8, 3, WORRIED, "Crawlers! They climb right over our walls. Only towers stop them."),
     "snapping_turtle": (15, 5, NEUTRAL, "Snapping turtles! A big hit makes them hide in their shells. Many small bites work better."),
     "leech_mother": (16, 4, WORRIED, "That fat leech drops babies as she crawls. Get her before the fen fills up!"),
     "mosquito": (17, 3, ANGRY, "Mosquitoes, a whole cloud of them! A Nova or a Breather swats many at once."),

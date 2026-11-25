@@ -17,7 +17,7 @@ extends RefCounted
 ##   rotation=0-2        which element each tower type takes (Fire, Frost, Poison shifted by rotation)
 ##   order=fixed|shuffle tower types in Bolter, Nova, Beamer order or shuffled
 ##   towers=40 traps=2   most towers and traps the bot builds (12 left hundreds of gold unspent late)
-##   trap=mixed|leopard_trap|egg_bomb  which traps: mixed takes turns once the Egg Bomb is unlocked
+##   trap=mixed|leopard_trap|egg_bomb|spike_field  which traps: mixed takes turns between the unlocked ones
 ##   wall_min_towers=5   no walls before this many towers (a player builds a defence before a maze)
 ##   min_towers=3        towers placed before anything else
 ##   depth=3             purchases every tower gets before the next tower (3 = Up 1, Up 2, element)
@@ -34,13 +34,19 @@ extends RefCounted
 ##                       build break, sells towers the route has left)
 
 const MAIN_SCENE : String = "res://scenes/main.tscn"
-const TOWERS : Array[String] = ["puffe_bolter", "puffe_nova", "puffe_beamer", "puffe_mortar", "puffe_buffer", "puffe_breather", "puffe_spotter", "puffe_harpooner", "puffe_hatchery"]
+const TOWERS : Array[String] = ["puffe_bolter", "puffe_nova", "puffe_beamer", "puffe_mortar", "puffe_buffer", "puffe_breather", "puffe_spotter", "puffe_harpooner", "puffe_hatchery", "puffe_shredder", "puffe_elder", "puffe_hoard"]
 const BUFFER : String = "puffe_buffer"
 ## A Buffer goes down once this many other towers stand, where it reaches the most of them.
 const BUFFER_MIN_TOWERS : int = 3
 const TRAP : String = "leopard_trap"
 const EGG_BOMB : String = "egg_bomb"
+const SPIKE_FIELD : String = "spike_field"
+## The Hoard Keeper covers nothing: it goes on a free cell off the routes.
+const HOARD : String = "puffe_hoard"
 const WALL : String = "wall"
+## Element walls (_buy_wall_step): from this many walls, tried on this share of the spending turns.
+const WALL_ELEMENT_MIN_WALLS : int = 4
+const WALL_ELEMENT_CHANCE : float = 0.15
 const BUILDING_LIST_PATH : String = "res://scenes/unit/building/buildings/%s.tres"
 const LEAVES : Array[String] = ["FireElementEvolveLeaf", "FrostElementEvolveLeaf", "PoisonElementEvolveLeaf"]
 const TALENT_BOOK : TalentBook = preload("res://scenes/talents/talent_book.tres")
@@ -52,23 +58,29 @@ const DIGITS : String = "0123456789"
 const LEAF_META : StringName = &"soak_leaf"
 const RANGE_META : StringName = &"soak_range"
 const WALL_COVER_WEIGHT : int = 1000
+## Synergy habits (design doc Synergies): a partner nearby is worth this many route cells to a tower's cell (at
+## most two partners), a trap of another kind beside a trap cell this many towers reaching it.
+const SYNERGY_CELLS : float = 3.0
+const TRAP_PAIR_SCORE : int = 2
 const TOWER_FLAGS : Dictionary[String, int] = {"puffe_bolter": TalentEffect.BOLTER, "puffe_nova": TalentEffect.NOVA, "puffe_beamer": TalentEffect.BEAMER,
-	"puffe_mortar": TalentEffect.MORTAR, "puffe_buffer": TalentEffect.BUFFER, "puffe_breather": TalentEffect.BREATHER, "puffe_spotter": TalentEffect.SPOTTER, "puffe_harpooner": TalentEffect.HARPOONER, "puffe_hatchery": TalentEffect.HATCHERY, "egg_bomb": TalentEffect.EGG_BOMB}
-## A build: the tower types in build order, their element leaf, its talent tree, its wall share and the card
+	"puffe_mortar": TalentEffect.MORTAR, "puffe_buffer": TalentEffect.BUFFER, "puffe_breather": TalentEffect.BREATHER, "puffe_spotter": TalentEffect.SPOTTER, "puffe_harpooner": TalentEffect.HARPOONER, "puffe_hatchery": TalentEffect.HATCHERY, "egg_bomb": TalentEffect.EGG_BOMB,
+	"spike_field": TalentEffect.SPIKE_FIELD, "puffe_shredder": TalentEffect.SHREDDER, "puffe_elder": TalentEffect.ELDER_DRAKE, "puffe_hoard": TalentEffect.HOARD_KEEPER}
+## A build: the tower types in build order (the towers since 2026-11-24 after the first three, so the opening is the
+## same as before), their element leaf, its talent tree, its wall share and the card
 ## stats it wants most first. A tower type not unlocked yet is skipped (the Bolter always is).
 const BUILDS : Dictionary[String, Dictionary] = {
 	"mixed": {},
-	"fire": {"towers": ["puffe_bolter", "puffe_nova"], "leaf": "FireElementEvolveLeaf", "element": Utils.Element.Fire, "tree": "fire", "walls": 0.3,
+	"fire": {"towers": ["puffe_bolter", "puffe_nova", "puffe_breather", "puffe_mortar", "puffe_elder", "puffe_buffer", "puffe_hoard"], "leaf": "FireElementEvolveLeaf", "element": Utils.Element.Fire, "tree": "fire", "walls": 0.3,
 		"cards": [Utils.StatType.Damage, Utils.StatType.AttackSpeed, Utils.StatType.EffectPotency, Utils.StatType.CriticalChance]},
 	#opens with a Beamer: a Nova first lost wave 1 often and never hits flyers (2026-11-20)
-	"frost": {"towers": ["puffe_beamer", "puffe_nova", "puffe_bolter"], "leaf": "FrostElementEvolveLeaf", "element": Utils.Element.Frost, "tree": "frost", "walls": 0.5,
+	"frost": {"towers": ["puffe_beamer", "puffe_nova", "puffe_bolter", "puffe_harpooner", "puffe_hatchery", "puffe_shredder", "puffe_buffer", "puffe_hoard"], "leaf": "FrostElementEvolveLeaf", "element": Utils.Element.Frost, "tree": "frost", "walls": 0.5,
 		"cards": [Utils.StatType.EffectPotency, Utils.StatType.AttackRange, Utils.StatType.Damage, Utils.StatType.AttackSpeed]},
-	"poison": {"towers": ["puffe_beamer", "puffe_bolter"], "leaf": "PoisonElementEvolveLeaf", "element": Utils.Element.Poison, "tree": "poison", "walls": 0.3,
+	"poison": {"towers": ["puffe_beamer", "puffe_bolter", "puffe_mortar", "puffe_breather", "puffe_spotter", "puffe_buffer", "puffe_hoard"], "leaf": "PoisonElementEvolveLeaf", "element": Utils.Element.Poison, "tree": "poison", "walls": 0.3,
 		"cards": [Utils.StatType.EffectPotency, Utils.StatType.Damage, Utils.StatType.ActiveDuration, Utils.StatType.AttackSpeed]},
 	#a cheese check: Bolters only, no maze (the user won Normal levels with three upgraded Bolters)
 	"bolter": {"towers": ["puffe_bolter"], "leaf": "PhysicalElementEvolveLeaf", "element": Utils.Element.Physical, "tree": "building", "walls": 0.0,
 		"cards": [Utils.StatType.Damage, Utils.StatType.AttackSpeed, Utils.StatType.CriticalChance, Utils.StatType.CriticalMultiplier]},
-	"physical": {"towers": ["puffe_bolter", "puffe_beamer", "puffe_nova"], "leaf": "PhysicalElementEvolveLeaf", "element": Utils.Element.Physical, "tree": "building", "walls": 0.4,
+	"physical": {"towers": ["puffe_bolter", "puffe_beamer", "puffe_nova", "puffe_spotter", "puffe_shredder", "puffe_elder", "puffe_buffer", "puffe_hoard"], "leaf": "PhysicalElementEvolveLeaf", "element": Utils.Element.Physical, "tree": "building", "walls": 0.4,
 		"cards": [Utils.StatType.Damage, Utils.StatType.CriticalChance, Utils.StatType.CriticalMultiplier, Utils.StatType.AttackSpeed]},
 }
 
@@ -185,7 +197,9 @@ func run(kit : TestKit, args : PackedStringArray) -> void:
 			cards += 1
 			var card : int = smart.pick_card(level, level.upgrades.offered_cards) if smart != null else _pick_card(level.upgrades.offered_cards)
 			level.upgrades._on_upgrade_card_selected(card)
-		var is_ready : bool = level.wave_runner.wave_number > 0 or towers.size() >= int(options.min_towers)
+		#or the opening is as built as the gold allows (a player starts the wave rather than wait for gold that never comes)
+		var is_ready : bool = level.wave_runner.wave_number > 0 or towers.size() >= int(options.min_towers) \
+			or (not towers.is_empty() and not _tower_types().any(func(type : String) -> bool: return level.player_stats.has_enough_gold(_placement_price(level, type))))
 		var wants_early : bool = is_early
 		if smart != null:
 			is_ready = level.wave_runner.wave_number > 0 or (smart.is_idle and not towers.is_empty())
@@ -235,6 +249,7 @@ func run(kit : TestKit, args : PackedStringArray) -> void:
 	print("SOAK damage by tower %s" % _rounded(tower_damage))
 	print("SOAK damage by enemy %s" % _rounded(enemy_damage))
 	print("SOAK reactions %s" % reactions)
+	print("SOAK synergies %s" % (level.synergies.counts if level.synergies != null else {}))
 	if chaos_interval > 0.0:
 		print("SOAK chaos sold %d buildings mid-wave" % chaos_sold)
 	main.get_tree().paused = false
@@ -413,10 +428,14 @@ func _spend(kit : TestKit, level : Level) -> void:
 		await _buy_next(level, behind)
 		return
 
+	#element walls, now and then: the shared line to Up 2, then a random element on a random plain wall
+	if walls >= WALL_ELEMENT_MIN_WALLS and randf() < WALL_ELEMENT_CHANCE and _buy_wall_step(level):
+		return
+
 	var trap_name : String = _next_trap()
 	if traps < int(options.traps) and traps * 4 < towers.size() and _is_unlocked(trap_name):
 		if level.player_stats.has_enough_gold(_price_of(trap_name)):
-			var trap_cell : Vector2i = _best_trap_cell(level)
+			var trap_cell : Vector2i = _best_trap_cell(level, trap_name)
 			if trap_cell != Vector2i.MAX:
 				await _place(kit, level, trap_name, trap_cell)
 				traps += 1
@@ -437,6 +456,13 @@ func _place_tower(kit : TestKit, level : Level) -> bool:
 			type_order.append(type)
 		if options.order == "shuffle":
 			type_order.shuffle()
+	#the next type it can afford goes first: waiting for a dear one before the first wave waits forever (no gold comes
+	#in until a wave starts; an Elder Drake first stalled level 1, 2026-11-25)
+	for index in type_order.size():
+		if level.player_stats.has_enough_gold(_placement_price(level, types[type_order[index]])):
+			if index > 0:
+				type_order.push_front(type_order.pop_at(index))
+			break
 	var type : int = type_order[0]
 	var scene_name : String = types[type]
 	if not level.player_stats.has_enough_gold(_placement_price(level, scene_name)):
@@ -448,8 +474,10 @@ func _place_tower(kit : TestKit, level : Level) -> bool:
 		if cell == Vector2i.MAX:
 			type_order.pop_front()
 			return true
+	elif scene_name == HOARD:
+		cell = _keeper_cell(level)
 	else:
-		cell = _best_tower_cell(level, _range_of(scene_name), _min_range_of(scene_name))
+		cell = _best_tower_cell(level, _range_of(scene_name), _min_range_of(scene_name), scene_name)
 	if cell == Vector2i.MAX:
 		return false
 	type_order.pop_front()
@@ -537,8 +565,10 @@ func _best_buffer_cell(level : Level) -> Vector2i:
 
 
 ## The free cell, off the routes, that has the most route cells in range; nearer the castle on a tie.
-#min_range_tiles: route cells closer than this are out of reach (the Mortar)
-func _best_tower_cell(level : Level, range_tiles : float, min_range_tiles : float = 0.0) -> Vector2i:
+#min_range_tiles: route cells closer than this are out of reach (the Mortar); scene_name: the tower, whose synergy
+#partners nearby count as SYNERGY_CELLS route cells each (_synergy_cells)
+func _best_tower_cell(level : Level, range_tiles : float, min_range_tiles : float = 0.0, scene_name : String = "") -> Vector2i:
+	var partners : Array[Dictionary] = _synergy_partners(level, scene_name, range_tiles)
 	var route_cells : Array[Vector2i] = _route_cells(level)
 	var on_route : Dictionary[Vector2i, bool] = {}
 	for cell in route_cells:
@@ -561,27 +591,108 @@ func _best_tower_cell(level : Level, range_tiles : float, min_range_tiles : floa
 				if distance <= reach and distance >= too_near:
 					covered += 1
 			var score : float = covered - Vector2(cell - castle).length() * 0.01
+			if covered > 0:
+				score += _synergy_cells(partners, cell)
 			if covered > 0 and score > best_score:
 				best_score = score
 				best = cell
 	return best
 
 
-## The route cell the most towers reach.
-func _best_trap_cell(level : Level) -> Vector2i:
+## The placed buildings a new tower of this scene works with (design doc Synergies), each with the distance it
+## must be within: Spotter and Harpooner by a Mortar (Spotted shells, Pinned target) and the reverse, an Elder by a
+## Hoard Keeper (Hoard Guardian), a Hatchery over a trap (Hold the line), a Breather by a Fire wall (Firebreath
+## corridor).
+func _synergy_partners(level : Level, scene_name : String, range_tiles : float) -> Array[Dictionary]:
+	var partners : Array[Dictionary] = []
+	for building in level.all_buildings:
+		if not is_instance_valid(building) or not building.is_placed:
+			continue
+		var key : String = _type_of(building)
+		var reach : float = -1.0
+		match scene_name:
+			"puffe_spotter", "puffe_harpooner":
+				if key == "PuffeMortar":
+					reach = range_tiles + _range_of("puffe_mortar")
+			"puffe_mortar":
+				if key in ["PuffeSpotter", "PuffeHarpooner"]:
+					reach = range_tiles + _range_of("puffe_spotter" if key == "PuffeSpotter" else "puffe_harpooner")
+			"puffe_elder":
+				if building is HoardKeeper:
+					reach = Synergies.HOARD_GUARD_TILES
+			"puffe_hatchery":
+				if building is Trap:
+					reach = range_tiles
+			"puffe_breather":
+				if building is Wall and building.element == Utils.Element.Fire:
+					reach = range_tiles
+		if reach >= 0.0:
+			partners.append({"cell": building.grid_position, "reach": reach * 0.5 if key in ["PuffeMortar", "PuffeSpotter", "PuffeHarpooner"] else reach})
+	return partners
+
+
+#Spotter and Mortar count as partners when they stand within half their summed reach: their reaches overlap well
+func _synergy_cells(partners : Array[Dictionary], cell : Vector2i) -> float:
+	var cells : float = 0.0
+	for partner in partners:
+		if Vector2(cell - partner.cell).length() <= partner.reach:
+			cells += SYNERGY_CELLS
+	return minf(cells, SYNERGY_CELLS * 2.0)
+
+
+## The route cell the most towers reach; a trap (trap_name) likes a cell beside a trap of another kind (Trap line
+## and the trap pairs: Pinned, Shrapnel bed, Bait), worth TRAP_PAIR_SCORE towers.
+func _best_trap_cell(level : Level, trap_name : String = "") -> Vector2i:
+	var others : Array[Vector2i] = []
+	if not trap_name.is_empty():
+		for building in level.all_buildings:
+			if is_instance_valid(building) and building is Trap and building.is_placed and building.scene_file_path.get_file().get_basename() != trap_name:
+				others.append(building.grid_position)
 	var best : Vector2i = Vector2i.MAX
 	var best_score : int = 0
 	for cell in _route_cells(level):
 		if not _is_free_to_build(level, cell):
 			continue
-		var score : int = 0
-		for tower in towers:
-			if is_instance_valid(tower) and Vector2(tower.grid_position - cell).length() <= _range_of(TOWERS[0]):
-				score += 1
+		var score : int = _trap_cell_score(cell)
+		if score > 0 and others.any(func(other : Vector2i) -> bool: return maxi(absi(other.x - cell.x), absi(other.y - cell.y)) <= 1):
+			score += TRAP_PAIR_SCORE
 		if score > best_score:
 			best_score = score
 			best = cell
 	return best
+
+
+## How many of the bot's towers reach this cell.
+func _trap_cell_score(cell : Vector2i) -> int:
+	var score : int = 0
+	for tower in towers:
+		if is_instance_valid(tower) and Vector2(tower.grid_position - cell).length() <= _range_of(TOWERS[0]):
+			score += 1
+	return score
+
+
+## A Hoard Keeper's cell: off the routes within reach of an Elder Drake that has room for its bonus (Hoard
+## Guardian), nearest the Elder; else the first free cell off the routes.
+func _keeper_cell(level : Level) -> Vector2i:
+	var on_route : Dictionary[Vector2i, bool] = {}
+	for cell in _route_cells(level):
+		on_route[cell] = true
+	var reach : int = int(Synergies.HOARD_GUARD_TILES)
+	var best : Vector2i = Vector2i.MAX
+	var best_distance : float = INF
+	for elder in level.all_buildings:
+		if not is_instance_valid(elder) or not elder is ElderDrake or not elder.is_placed:
+			continue
+		if level.synergies != null and level.synergies.get_bonus(elder, &"hoard") >= Synergies.HOARD_GUARD_BONUS * Synergies.HOARD_GUARD_MOST - 0.001:
+			continue
+		for x in range(-reach, reach + 1):
+			for y in range(-reach, reach + 1):
+				var cell : Vector2i = elder.grid_position + Vector2i(x, y)
+				var distance : float = Vector2(x, y).length()
+				if distance <= Synergies.HOARD_GUARD_TILES and distance < best_distance and not on_route.has(cell) and _is_free_to_build(level, cell):
+					best = cell
+					best_distance = distance
+	return best if best != Vector2i.MAX else _free_cell_off_route(level)
 
 
 ## The route cell that, as a wall, keeps the most route cells in the towers' reach, then makes the
@@ -686,11 +797,62 @@ func _is_free_to_build(level : Level, cell : Vector2i) -> bool:
 	return level.grid.is_position_buildable(level.grid.grid_position_to_world(cell)) and not level.grid.has_building_in_cell_position(cell)
 
 
-## The trap the bot builds next (option trap): mixed takes turns, Leopard Trap first, once the Egg Bomb is unlocked.
+## One wall step it can afford: an element for a plain wall when the line offers them, else the line's next
+## upgrade up to Up 2; true when it bought one.
+func _buy_wall_step(level : Level) -> bool:
+	var plain : Array[Wall] = []
+	for building in level.all_buildings:
+		if is_instance_valid(building) and building is Wall and building.is_placed and not building.is_dead and building.element == Utils.Element.None:
+			plain.append(building)
+	if plain.is_empty():
+		return false
+	var wall : Wall = plain.pick_random()
+	var upgrades : BuildingTypeUpgrades = level.building_type_upgrades
+	upgrades._on_unit_selected(wall)
+	var choices : Array[int] = []
+	for index in upgrades.options.size():
+		var option : GoldUpgradeOption = upgrades.options[index]
+		if option.wall_element != Utils.Element.None and option.is_affordable:
+			choices.append(index)
+	if choices.is_empty() and upgrades.get_upgrade_steps(wall) < BuildingTypeUpgrades.WALL_ELEMENT_MIN_UPGRADES:
+		for index in upgrades.options.size():
+			var option : GoldUpgradeOption = upgrades.options[index]
+			if option.wall_element == Utils.Element.None and not option.is_evolve and option.is_affordable:
+				choices.append(index)
+				break
+	if choices.is_empty():
+		return false
+	var gold_before : float = level.player_stats.gold
+	upgrades._on_gold_upgrade_pressed(choices.pick_random())
+	var spent : float = gold_before - level.player_stats.gold
+	gold_spent += spent
+	wall_gold += spent
+	return spent > 0.0
+
+
+## The trap the bot builds next (option trap): mixed takes turns between the unlocked traps, Leopard Trap first.
 func _next_trap() -> String:
-	if options.trap == EGG_BOMB or options.trap == TRAP:
+	if options.trap in [TRAP, EGG_BOMB, SPIKE_FIELD]:
 		return options.trap
-	return EGG_BOMB if traps % 2 == 1 and _is_unlocked(EGG_BOMB) else TRAP
+	var unlocked : Array[String] = []
+	for trap_name in [TRAP, EGG_BOMB, SPIKE_FIELD]:
+		if _is_unlocked(trap_name):
+			unlocked.append(trap_name)
+	return unlocked[traps % unlocked.size()] if not unlocked.is_empty() else TRAP
+
+
+## The first free cell off every route (scanning from the castle side is not needed: it covers nothing).
+func _free_cell_off_route(level : Level) -> Vector2i:
+	var on_route : Dictionary[Vector2i, bool] = {}
+	for cell in _route_cells(level):
+		on_route[cell] = true
+	var region : Rect2i = level.grid.astar_grid.region
+	for y in range(region.position.y, region.end.y):
+		for x in range(region.position.x, region.end.x):
+			var cell : Vector2i = Vector2i(x, y)
+			if not on_route.has(cell) and _is_free_to_build(level, cell):
+				return cell
+	return Vector2i.MAX
 
 
 func _price_of(scene_name : String) -> float:

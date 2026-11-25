@@ -25,6 +25,10 @@ const COLOR_TOLERANCE : float = 0.03
 const REVEAL_SECONDS : float = 1.4
 const MAX_REVEAL_SPOTS : int = 32
 const LEVELS_PER_AREA : int = 12
+## Map units: a finished area's fog lifts this far round its level nodes (the map's outer edge stays misty), and its
+## rim against an area still fogged is this thick.
+const AREA_REACH : float = 150.0
+const AREA_RIM : float = 0.5
 
 var trails : MapTrails = null
 var density : Image = null
@@ -153,6 +157,7 @@ func _paint(map_size : Vector2) -> void:
 				stamps.append(Vector3(point.x, point.y, TRAIL_RADIUS))
 	for stamp in stamps:
 		_stamp(Vector2(stamp.x, stamp.y), stamp.z, texels)
+	_clear_finished_areas(texels)
 	_let_lava_through(texels)
 	if density_texture == null:
 		density_texture = ImageTexture.create_from_image(density)
@@ -163,6 +168,53 @@ func _paint(map_size : Vector2) -> void:
 	var spots : Array[Vector4] = _spots_of(revealing_level) if revealing_level > 0 else ([] as Array[Vector4])
 	shader_material.set_shader_parameter(&"reveal_spots", spots)
 	shader_material.set_shader_parameter(&"reveal_count", spots.size())
+
+
+## Whether the area (MapLevelElement.area_of) is finished: its last level, the boss, has been cleared.
+func is_area_finished(area : int) -> bool:
+	return PlayerProgress.level_progress > (area + 1) * LEVELS_PER_AREA
+
+
+#(the user, 2026-11-25: fog was left between the levels) once an area's boss is beaten, the fog lifts from the whole
+#area: every texel whose nearest level node is that area's, up to AREA_REACH from it (the map's edge stays misty),
+#with a soft rim where it meets an area still fogged
+func _clear_finished_areas(texels : Vector2i) -> void:
+	var centres : Array[Vector2] = []
+	var finished : Array[bool] = []
+	for level in trails.elements:
+		var element : MapLevelElement = trails.elements[level]
+		centres.append(element.position + element.size * 0.5)
+		finished.append(is_area_finished(MapLevelElement.area_of(level)))
+	if not finished.has(true):
+		return
+	for y in texels.y:
+		for x in texels.x:
+			var texel_centre : Vector2 = (Vector2(x, y) + Vector2.ONE * 0.5) * CELL
+			var nearest : int = -1
+			var nearest_distance : float = INF
+			for i in centres.size():
+				var distance : float = texel_centre.distance_squared_to(centres[i])
+				if distance < nearest_distance:
+					nearest_distance = distance
+					nearest = i
+			if nearest < 0 or not finished[nearest]:
+				continue
+			var value : float = clampf((sqrt(nearest_distance) - AREA_REACH) / EDGE, 0.0, 1.0)
+			var old : Color = density.get_pixel(x, y)
+			if value < old.r:
+				density.set_pixel(x, y, Color(value, old.g, 0.0))
+	var softened : Image = density.duplicate() as Image
+	for y in texels.y:
+		for x in texels.x:
+			var here : float = density.get_pixel(x, y).r
+			if here <= AREA_RIM:
+				continue
+			for offset in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+				var other : Vector2i = Vector2i(x, y) + offset
+				if other.x >= 0 and other.y >= 0 and other.x < texels.x and other.y < texels.y and density.get_pixelv(other).r == 0.0:
+					softened.set_pixel(x, y, Color(AREA_RIM, density.get_pixel(x, y).g, 0.0))
+					break
+	density = softened
 
 
 #clears round one spot: each texel keeps the thinner of its fog and this clearing's

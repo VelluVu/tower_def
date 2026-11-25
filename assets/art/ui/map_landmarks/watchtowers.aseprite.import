@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://rokx1gmm6mbn"
+path="res://.godot/imported/watchtowers.aseprite-c2f5c3df54632f4435bc9feb862f3109.res"
+
+[deps]
+
+source_file="res://assets/art/ui/map_landmarks/watchtowers.aseprite"
+dest_files=["res://.godot/imported/watchtowers.aseprite-c2f5c3df54632f4435bc9feb862f3109.res"]
+
+[params]
+

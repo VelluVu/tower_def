@@ -136,14 +136,24 @@ func find_auto_rally_cell() -> Vector2i:
 		return Utils.BAD_CELL
 	var best : Vector2i = Utils.BAD_CELL
 	var best_step : int = 1 << 30
+	#Hold the line (synergy): a trap on a route in reach comes first, the enemies' first one
+	var best_trap : Vector2i = Utils.BAD_CELL
+	var best_trap_step : int = 1 << 30
 	for route in level.get_routes():
 		var path : PackedVector2Array = level.grid.find_path(route[0], route[1])
-		for step in mini(path.size(), best_step):
+		for step in path.size():
 			var cell : Vector2i = level.grid.world_position_to_grid(path[step])
-			if is_valid_rally_cell(cell):
+			if not is_valid_rally_cell(cell):
+				continue
+			if step < best_step:
 				best = cell
 				best_step = step
+			if step < best_trap_step and level.grid.get_building_from_cell_position(cell) is Trap:
+				best_trap = cell
+				best_trap_step = step
 				break
+	if best_trap != Utils.BAD_CELL:
+		return best_trap
 	if best != Utils.BAD_CELL:
 		return best
 	var reach_cells : int = ceili(get_rally_reach() / Utils.TILE_SIZE)
@@ -250,7 +260,8 @@ func _get_guard_frames() -> SpriteFrames:
 
 
 func _on_grid_updated() -> void:
-	if is_placed:
+	#out of the tree: a retried level's old Hatchery, still waiting to be freed, hears the new level's grid
+	if is_placed and is_inside_tree():
 		update_rally()
 
 

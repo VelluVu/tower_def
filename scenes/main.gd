@@ -102,6 +102,10 @@ func _on_retry_level_pressed() -> void:
 	#the old level emits game_stop when it leaves the tree, which would unhook the new level's builder
 	if is_instance_valid(old_level) and old_level.is_inside_tree():
 		await old_level.tree_exited
+	#and until it is freed: out of the tree its buildings and enemies still hear the buses, and the new level's
+	#signals reached them (a Hatchery's rally and enemies' repaths ran outside the tree, 2026-11-25)
+	if is_instance_valid(old_level):
+		await get_tree().process_frame
 
 	scene_manager.load_level_by_number(level_number, self, mode)
 

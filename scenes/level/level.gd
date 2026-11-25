@@ -8,6 +8,7 @@ const BUILDING_TYPE_UPGRADES_NAME : String = "BuildingTypeUpgrades"
 const LEVEL_TALENTS_NAME : String = "LevelTalents"
 const ELEMENT_REACTIONS_NAME : String = "ElementReactions"
 const BUFFER_AURAS_NAME : String = "BufferAuras"
+const SYNERGIES_NAME : String = "Synergies"
 const MAZE_ELEMENTS_NAME : String = "MazeElements"
 const DUST_PUFFS_NAME : String = "DustPuffs"
 const HIT_EFFECTS_NAME : String = "HitEffects"
@@ -38,6 +39,8 @@ var building_type_upgrades : BuildingTypeUpgrades
 var talents : LevelTalents
 var reactions : ElementReactions
 var buffer_auras : BufferAuras
+## The synergies between buildings (design doc "Synergies", 2026-11-25).
+var synergies : Synergies
 var wave_runner : WaveRunner
 #waves started while enemies of earlier waves were still alive, for the talent points
 var early_starts : int = 0
@@ -89,6 +92,9 @@ func _ready() -> void:
 	buffer_auras = BufferAuras.new()
 	buffer_auras.name = BUFFER_AURAS_NAME
 	add_child(buffer_auras)
+	synergies = Synergies.new()
+	synergies.name = SYNERGIES_NAME
+	add_child(synergies)
 	var wall_group : WallGroupSelect = WallGroupSelect.new()
 	wall_group.name = WALL_GROUP_NAME
 	add_child(wall_group)

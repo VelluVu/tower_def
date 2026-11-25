@@ -6,6 +6,9 @@ extends Node
 
 const TEST_METHOD_PREFIX : String = "test_"
 const QUIET_AUDIO_FRAMES : int = 3
+#and at least this long in real time: simulated frames can pass before the audio thread mixes again (12 games at once
+#leaked a playing defeat track, 2026-11-25)
+const QUIET_AUDIO_MSEC : int = 250
 ## A test that leaves nodes out of the tree unfreed (they are reported as leaks at exit).
 const ORPHANS_MESSAGE : String = "ORPHANS %s: %d node(s) never freed"
 const SCRIPT_EXTENSION : String = ".gd"
@@ -64,13 +67,19 @@ func _ready() -> void:
 func _quiet_audio() -> void:
 	TestKit.remove_test_saves()
 	AudioManager.stop_all()
-	for i in QUIET_AUDIO_FRAMES:
+	var until_msec : int = Time.get_ticks_msec() + QUIET_AUDIO_MSEC
+	var frames : int = 0
+	while frames < QUIET_AUDIO_FRAMES or Time.get_ticks_msec() < until_msec:
 		await get_tree().process_frame
+		frames += 1
 
 
 func _run_tests(paths : PackedStringArray) -> int:
 	var passed : int = 0
 	var failed : int = 0
+	#engine errors and warnings fail the test they came in (a passing test once hid a retry bug's error)
+	var catcher : ErrorCatcher = ErrorCatcher.new()
+	OS.add_logger(catcher)
 
 	for script_path in _collect_scripts(paths):
 		var script : GDScript = load(script_path)
@@ -94,6 +103,8 @@ func _run_tests(paths : PackedStringArray) -> int:
 			#a script error ends the test early without a failure, so a test that checked nothing failed
 			if kit.checks == 0:
 				kit.failures.append(NO_CHECKS_FAILURE)
+			for message in catcher.take():
+				kit.failures.append(message)
 
 			if kit.failures.is_empty():
 				passed += 1
@@ -103,6 +114,7 @@ func _run_tests(paths : PackedStringArray) -> int:
 				for failure in kit.failures:
 					print("FAIL ", test_name, ": ", failure)
 
+	OS.remove_logger(catcher)
 	print("RESULT %d passed, %d failed" % [passed, failed])
 	return 1 if failed > 0 else 0
 

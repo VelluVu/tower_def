@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dwvy0xpmlb2vx"
+path="res://.godot/imported/war_camp.aseprite-28cc15270a7ec6dea13aa3073ebcdd2b.res"
+
+[deps]
+
+source_file="res://assets/art/ui/map_landmarks/war_camp.aseprite"
+dest_files=["res://.godot/imported/war_camp.aseprite-28cc15270a7ec6dea13aa3073ebcdd2b.res"]
+
+[params]
+

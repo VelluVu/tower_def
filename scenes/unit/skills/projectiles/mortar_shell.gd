@@ -84,6 +84,12 @@ static func get_landing_position(target : Node2D, from : Vector2) -> Vector2:
 	var enemy : Enemy = target as Enemy
 	#a frozen (or parked) body stands still; its velocity is stale through turn pauses and freezes, its linear velocity not
 	if enemy != null and not enemy.freeze and not enemy.is_frozen:
+		#Spotted shells: a marked enemy is read along its real path, with no lead cap
+		if Synergies.is_spotted(enemy) and not enemy.point_path.is_empty():
+			aim = Synergies.predict_on_path(enemy, FLIGHT_SECONDS)
+			if enemy.level != null and enemy.level.synergies != null:
+				enemy.level.synergies.flash(&"spotted", aim)
+			return aim
 		var time_scale : float = maxf(Utils.game_control.time_scale, 0.01) if Utils.game_control != null else 1.0
 		#the enemy's speed already carries the game speed; the flight is in game time
 		var lead : Vector2 = enemy.linear_velocity / time_scale * FLIGHT_SECONDS
@@ -131,11 +137,15 @@ static func get_blast_radius(tower : Node) -> float:
 static func blast(hit : DamageData, at : Vector2, radius : float) -> Array[Enemy]:
 	hit.drop_freed_source()
 	var victims : Array[Enemy] = get_blast_victims(hit.source, at, radius)
+	var synergies : Synergies = (hit.source as Building).level.synergies if not victims.is_empty() else null
 	for i in victims.size():
 		var enemy : Enemy = victims[i]
 		if not is_instance_valid(enemy) or enemy.is_dead:
 			continue
 		var share : float = get_falloff_share(enemy.global_position.distance_to(at), radius)
+		#Pinned target: a harpooned enemy takes the full hit
+		if synergies != null:
+			share = synergies.get_blast_share(enemy, share)
 		var copy : DamageData = copy_hit(hit, share)
 		copy.is_splash = i > 0
 		enemy.take_damage(copy)

@@ -2,10 +2,44 @@
 
 [ext_resource type="Script" uid="uid://cpsqen2wwfffd" path="res://scenes/ui/game_world_map/game_world_map.gd" id="1_mqsag"]
 [ext_resource type="Script" uid="uid://dm5r0d1ovbmdf" path="res://scenes/ui/game_world_map/map_level_element.gd" id="2_uc0yk"]
-[ext_resource type="Texture2D" path="res://assets/art/ui/world_map_big.png" id="2_velws"]
-[ext_resource type="Script" path="res://scenes/ui/game_world_map/map_trails.gd" id="map_trails"]
-[ext_resource type="Script" path="res://scenes/ui/game_world_map/map_ambience.gd" id="map_ambience"]
+[ext_resource type="Texture2D" uid="uid://c8v3ng3qtxue7" path="res://assets/art/ui/world_map_big.png" id="2_velws"]
 [ext_resource type="Texture2D" uid="uid://dvame6v3pp2k8" path="res://assets/art/ui/lock.png" id="4_wvp4h"]
+[ext_resource type="Script" uid="uid://j2x1ispkm357" path="res://scenes/ui/game_world_map/map_ambience.gd" id="map_ambience"]
+[ext_resource type="Script" uid="uid://cyvjbi0vvplio" path="res://scenes/ui/game_world_map/map_trails.gd" id="map_trails"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/wyrm_throne_frames.tres" id="wyrm_throne_frames"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/drowned_chapel_frames.tres" id="lm_drowned_chapel"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/wasp_hive_frames.tres" id="lm_wasp_hive"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/sunken_village_frames.tres" id="lm_sunken_village"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/hydra_heads_frames.tres" id="lm_hydra_heads"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/burned_village_frames.tres" id="lm_burned_village"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/windmill_frames.tres" id="lm_windmill"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/watchtowers_frames.tres" id="lm_watchtowers"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/siege_lines_frames.tres" id="lm_siege_lines"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/war_camp_frames.tres" id="lm_war_camp"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/drake_ribs_frames.tres" id="lm_drake_ribs"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/oasis_palms_frames.tres" id="lm_oasis_palms"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/bone_gate_frames.tres" id="lm_bone_gate"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/fallen_elder_frames.tres" id="lm_fallen_elder"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/monastery_frames.tres" id="lm_monastery"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/cinder_forge_frames.tres" id="lm_cinder_forge"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/phoenix_roost_frames.tres" id="lm_phoenix_roost"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/black_gate_frames.tres" id="lm_black_gate"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/mire_gate_frames.tres" id="lm_mire_gate"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/giant_frog_frames.tres" id="lm_giant_frog"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/causeway_frames.tres" id="lm_causeway"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/drowned_trees_frames.tres" id="lm_drowned_trees"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/scarecrow_frames.tres" id="lm_scarecrow"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/haystack_farm_frames.tres" id="lm_haystack_farm"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/water_mill_frames.tres" id="lm_water_mill"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/orchard_frames.tres" id="lm_orchard"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/banner_road_frames.tres" id="lm_banner_road"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/ballista_wreck_frames.tres" id="lm_ballista_wreck"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/scarab_mound_frames.tres" id="lm_scarab_mound"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/twin_keeps_frames.tres" id="lm_twin_keeps"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/obsidian_spires_frames.tres" id="lm_obsidian_spires"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/lava_falls_frames.tres" id="lm_lava_falls"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/glass_shards_frames.tres" id="lm_glass_shards"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/titan_hand_frames.tres" id="lm_titan_hand"]
 
 [node name="GameWorldMap" type="Control" unique_id=1678737933]
 layout_mode = 3
@@ -34,15 +68,287 @@ mouse_filter = 2
 texture = ExtResource("2_velws")
 expand_mode = 1
 
-[node name="MapAmbience" type="Control" parent="MapView/Map"]
-anchors_preset = 15
+[node name="MapAmbience" type="Control" parent="MapView/Map" unique_id=2127782263]
+anchors_preset = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
 script = ExtResource("map_ambience")
 
-[node name="MapTrails" type="Control" parent="MapView/Map"]
-anchors_preset = 15
+[node name="WyrmThrone" type="AnimatedSprite2D" parent="MapView/Map" unique_id=1065492377]
+position = Vector2(872, 146)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("wyrm_throne_frames")
+animation = &"IDLE"
+autoplay = "IDLE"
+centered = false
+
+[node name="Landmark_DrownedChapel" type="AnimatedSprite2D" parent="MapView/Map"]
+position = Vector2(104, 156)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("lm_drowned_chapel")
+animation = &"IDLE"
+autoplay = "IDLE"
+centered = false
+
+[node name="Landmark_WaspHive" type="AnimatedSprite2D" parent="MapView/Map"]
+position = Vector2(176, 206)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("lm_wasp_hive")
+animation = &"IDLE"
+autoplay = "IDLE"
+centered = false
+
+[node name="Landmark_SunkenVillage" type="AnimatedSprite2D" parent="MapView/Map"]
+position = Vector2(278, 208)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("lm_sunken_village")
+animation = &"IDLE"
+autoplay = "IDLE"
+centered = false
+
+[node name="Landmark_HydraHeads" type="AnimatedSprite2D" parent="MapView/Map"]
+position = Vector2(440, 294)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("lm_hydra_heads")
+animation = &"IDLE"
+autoplay = "IDLE"
+centered = false
+
+[node name="Landmark_BurnedVillage" type="AnimatedSprite2D" parent="MapView/Map"]
+position = Vector2(532, 408)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("lm_burned_village")
+animation = &"IDLE"
+autoplay = "IDLE"
+centered = false
+
+[node name="Landmark_Windmill" type="AnimatedSprite2D" parent="MapView/Map"]
+position = Vector2(592, 588)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("lm_windmill")
+animation = &"IDLE"
+autoplay = "IDLE"
+centered = false
+
+[node name="Landmark_Watchtowers" type="AnimatedSprite2D" parent="MapView/Map"]
+position = Vector2(620, 430)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("lm_watchtowers")
+animation = &"IDLE"
+autoplay = "IDLE"
+centered = false
+
+[node name="Landmark_SiegeLines" type="AnimatedSprite2D" parent="MapView/Map"]
+position = Vector2(544, 354)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("lm_siege_lines")
+animation = &"IDLE"
+autoplay = "IDLE"
+centered = false
+
+[node name="Landmark_WarCamp" type="AnimatedSprite2D" parent="MapView/Map"]
+position = Vector2(476, 238)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("lm_war_camp")
+animation = &"IDLE"
+autoplay = "IDLE"
+centered = false
+
+[node name="Landmark_DrakeRibs" type="AnimatedSprite2D" parent="MapView/Map"]
+position = Vector2(634, 240)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("lm_drake_ribs")
+animation = &"IDLE"
+autoplay = "IDLE"
+centered = false
+
+[node name="Landmark_OasisPalms" type="AnimatedSprite2D" parent="MapView/Map"]
+position = Vector2(580, 290)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("lm_oasis_palms")
+animation = &"IDLE"
+autoplay = "IDLE"
+centered = false
+
+[node name="Landmark_BoneGate" type="AnimatedSprite2D" parent="MapView/Map"]
+position = Vector2(686, 558)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("lm_bone_gate")
+animation = &"IDLE"
+autoplay = "IDLE"
+centered = false
+
+[node name="Landmark_FallenElder" type="AnimatedSprite2D" parent="MapView/Map"]
+position = Vector2(760, 520)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("lm_fallen_elder")
+animation = &"IDLE"
+autoplay = "IDLE"
+centered = false
+
+[node name="Landmark_Monastery" type="AnimatedSprite2D" parent="MapView/Map"]
+position = Vector2(936, 464)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("lm_monastery")
+animation = &"IDLE"
+autoplay = "IDLE"
+centered = false
+
+[node name="Landmark_CinderForge" type="AnimatedSprite2D" parent="MapView/Map"]
+position = Vector2(766, 146)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("lm_cinder_forge")
+animation = &"IDLE"
+autoplay = "IDLE"
+centered = false
+
+[node name="Landmark_PhoenixRoost" type="AnimatedSprite2D" parent="MapView/Map"]
+position = Vector2(748, 206)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("lm_phoenix_roost")
+animation = &"IDLE"
+autoplay = "IDLE"
+centered = false
+
+[node name="Landmark_BlackGate" type="AnimatedSprite2D" parent="MapView/Map"]
+position = Vector2(810, 280)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("lm_black_gate")
+animation = &"IDLE"
+autoplay = "IDLE"
+centered = false
+
+[node name="Landmark_MireGate" type="AnimatedSprite2D" parent="MapView/Map"]
+position = Vector2(100, 272)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("lm_mire_gate")
+animation = &"IDLE"
+autoplay = "IDLE"
+centered = false
+
+[node name="Landmark_GiantFrog" type="AnimatedSprite2D" parent="MapView/Map"]
+position = Vector2(166, 120)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("lm_giant_frog")
+animation = &"IDLE"
+autoplay = "IDLE"
+centered = false
+
+[node name="Landmark_Causeway" type="AnimatedSprite2D" parent="MapView/Map"]
+position = Vector2(260, 132)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("lm_causeway")
+animation = &"IDLE"
+autoplay = "IDLE"
+centered = false
+
+[node name="Landmark_DrownedTrees" type="AnimatedSprite2D" parent="MapView/Map"]
+position = Vector2(374, 198)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("lm_drowned_trees")
+animation = &"IDLE"
+autoplay = "IDLE"
+centered = false
+
+[node name="Landmark_Scarecrow" type="AnimatedSprite2D" parent="MapView/Map"]
+position = Vector2(342, 420)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("lm_scarecrow")
+animation = &"IDLE"
+autoplay = "IDLE"
+centered = false
+
+[node name="Landmark_HaystackFarm" type="AnimatedSprite2D" parent="MapView/Map"]
+position = Vector2(380, 480)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("lm_haystack_farm")
+animation = &"IDLE"
+autoplay = "IDLE"
+centered = false
+
+[node name="Landmark_WaterMill" type="AnimatedSprite2D" parent="MapView/Map"]
+position = Vector2(434, 416)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("lm_water_mill")
+animation = &"IDLE"
+autoplay = "IDLE"
+centered = false
+
+[node name="Landmark_Orchard" type="AnimatedSprite2D" parent="MapView/Map"]
+position = Vector2(608, 528)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("lm_orchard")
+animation = &"IDLE"
+autoplay = "IDLE"
+centered = false
+
+[node name="Landmark_BannerRoad" type="AnimatedSprite2D" parent="MapView/Map"]
+position = Vector2(476, 292)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("lm_banner_road")
+animation = &"IDLE"
+autoplay = "IDLE"
+centered = false
+
+[node name="Landmark_BallistaWreck" type="AnimatedSprite2D" parent="MapView/Map"]
+position = Vector2(560, 212)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("lm_ballista_wreck")
+animation = &"IDLE"
+autoplay = "IDLE"
+centered = false
+
+[node name="Landmark_ScarabMound" type="AnimatedSprite2D" parent="MapView/Map"]
+position = Vector2(666, 358)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("lm_scarab_mound")
+animation = &"IDLE"
+autoplay = "IDLE"
+centered = false
+
+[node name="Landmark_TwinKeeps" type="AnimatedSprite2D" parent="MapView/Map"]
+position = Vector2(728, 460)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("lm_twin_keeps")
+animation = &"IDLE"
+autoplay = "IDLE"
+centered = false
+
+[node name="Landmark_ObsidianSpires" type="AnimatedSprite2D" parent="MapView/Map"]
+position = Vector2(848, 410)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("lm_obsidian_spires")
+animation = &"IDLE"
+autoplay = "IDLE"
+centered = false
+
+[node name="Landmark_LavaFalls" type="AnimatedSprite2D" parent="MapView/Map"]
+position = Vector2(1034, 376)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("lm_lava_falls")
+animation = &"IDLE"
+autoplay = "IDLE"
+centered = false
+
+[node name="Landmark_GlassShards" type="AnimatedSprite2D" parent="MapView/Map"]
+position = Vector2(920, 162)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("lm_glass_shards")
+animation = &"IDLE"
+autoplay = "IDLE"
+centered = false
+
+[node name="Landmark_TitanHand" type="AnimatedSprite2D" parent="MapView/Map"]
+position = Vector2(686, 136)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("lm_titan_hand")
+animation = &"IDLE"
+autoplay = "IDLE"
+centered = false
+
+[node name="MapTrails" type="Control" parent="MapView/Map" unique_id=2061841838]
+anchors_preset = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
@@ -156,10 +462,10 @@ stretch_mode = 5
 [node name="Level_002" type="Panel" parent="MapView/Map" unique_id=2038421782]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 26.0
-offset_top = 576.0
-offset_right = 46.0
-offset_bottom = 596.0
+offset_left = 98.0
+offset_top = 645.0
+offset_right = 118.0
+offset_bottom = 665.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 2
@@ -262,10 +568,10 @@ stretch_mode = 5
 [node name="Level_003" type="Panel" parent="MapView/Map" unique_id=1569955737]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 94.0
-offset_top = 536.0
-offset_right = 114.0
-offset_bottom = 556.0
+offset_left = 162.0
+offset_top = 619.0
+offset_right = 182.0
+offset_bottom = 639.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 3
@@ -368,10 +674,10 @@ stretch_mode = 5
 [node name="Level_004" type="Panel" parent="MapView/Map" unique_id=1381533343]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 146.0
-offset_top = 574.0
-offset_right = 166.0
-offset_bottom = 594.0
+offset_left = 227.0
+offset_top = 640.0
+offset_right = 247.0
+offset_bottom = 660.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 4
@@ -474,10 +780,10 @@ stretch_mode = 5
 [node name="Level_005" type="Panel" parent="MapView/Map" unique_id=75197890]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 198.0
-offset_top = 598.0
-offset_right = 218.0
-offset_bottom = 618.0
+offset_left = 318.0
+offset_top = 644.0
+offset_right = 338.0
+offset_bottom = 664.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 5
@@ -580,10 +886,10 @@ stretch_mode = 5
 [node name="Level_006" type="Panel" parent="MapView/Map" unique_id=275971331]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 260.0
-offset_top = 580.0
-offset_right = 280.0
-offset_bottom = 600.0
+offset_left = 330.0
+offset_top = 543.0
+offset_right = 350.0
+offset_bottom = 563.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 6
@@ -686,10 +992,10 @@ stretch_mode = 5
 [node name="Level_007" type="Panel" parent="MapView/Map" unique_id=2029015237]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 314.0
-offset_top = 550.0
-offset_right = 334.0
-offset_bottom = 570.0
+offset_left = 241.0
+offset_top = 556.0
+offset_right = 261.0
+offset_bottom = 576.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 7
@@ -792,10 +1098,10 @@ stretch_mode = 5
 [node name="Level_008" type="Panel" parent="MapView/Map" unique_id=1721640677]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 302.0
-offset_top = 642.0
-offset_right = 322.0
-offset_bottom = 662.0
+offset_left = 150.0
+offset_top = 567.0
+offset_right = 170.0
+offset_bottom = 587.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 8
@@ -898,13 +1204,14 @@ stretch_mode = 5
 [node name="Level_009" type="Panel" parent="MapView/Map" unique_id=875573078]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 226.0
-offset_top = 538.0
-offset_right = 246.0
-offset_bottom = 558.0
+offset_left = 91.0
+offset_top = 520.0
+offset_right = 111.0
+offset_bottom = 540.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 9
+trail_via = PackedVector2Array(152, 548)
 
 [node name="SelectButton" type="Button" parent="MapView/Map/Level_009" unique_id=2055917658]
 layout_mode = 1
@@ -1001,18 +1308,18 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_010" type="Panel" parent="MapView/Map" unique_id=875573078]
+[node name="Level_010" type="Panel" parent="MapView/Map" unique_id=2025280517]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 180.0
-offset_top = 458.0
-offset_right = 200.0
-offset_bottom = 478.0
+offset_left = 86.0
+offset_top = 456.0
+offset_right = 106.0
+offset_bottom = 476.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 10
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_010" unique_id=2055917658]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_010" unique_id=446549614]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1021,7 +1328,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_010" unique_id=1819353226]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_010" unique_id=906332902]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -1033,7 +1340,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_010/Tooltip" unique_id=380735744]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_010/Tooltip" unique_id=451360451]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -1049,7 +1356,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_010/Tooltip" unique_id=1474191215]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_010/Tooltip" unique_id=225703941]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -1062,7 +1369,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_010/Tooltip" unique_id=1969998863]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_010/Tooltip" unique_id=425998557]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1076,10 +1383,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_010/Tooltip/InfoMarginContainer" unique_id=1382468142]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_010/Tooltip/InfoMarginContainer" unique_id=156434472]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_010/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=530479462]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_010/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=782457173]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -1087,13 +1394,13 @@ text = "Level 009"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_010/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1057775061]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_010/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=60574158]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_010" unique_id=401073855]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_010" unique_id=40636817]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -1110,10 +1417,10 @@ stretch_mode = 5
 [node name="Level_011" type="Panel" parent="MapView/Map" unique_id=1697437668]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 256.0
-offset_top = 340.0
-offset_right = 276.0
-offset_bottom = 360.0
+offset_left = 219.0
+offset_top = 431.0
+offset_right = 239.0
+offset_bottom = 451.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 11
@@ -1217,9 +1524,9 @@ stretch_mode = 5
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 158.0
-offset_top = 404.0
+offset_top = 402.0
 offset_right = 178.0
-offset_bottom = 424.0
+offset_bottom = 422.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 12
@@ -1329,7 +1636,7 @@ offset_bottom = 306.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 13
-trail_via = PackedVector2Array(240, 404, 244, 330)
+trail_underground = true
 
 [node name="SelectButton" type="Button" parent="MapView/Map/Level_013" unique_id=1038156533]
 layout_mode = 1
@@ -1426,7 +1733,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_014" type="Panel" parent="MapView/Map"]
+[node name="Level_014" type="Panel" parent="MapView/Map" unique_id=1044711109]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 114.0
@@ -1437,7 +1744,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 14
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_014"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_014" unique_id=1916257152]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1446,7 +1753,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_014"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_014" unique_id=1685941063]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -1458,7 +1765,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_014/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_014/Tooltip" unique_id=1041670596]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -1474,7 +1781,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_014/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_014/Tooltip" unique_id=585903812]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -1487,7 +1794,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_014/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_014/Tooltip" unique_id=134959811]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1501,10 +1808,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_014/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_014/Tooltip/InfoMarginContainer" unique_id=1884365217]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_014/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_014/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=799620425]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -1512,13 +1819,13 @@ text = "Level 013"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_014/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_014/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=170679706]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_014"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_014" unique_id=1292920870]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -1532,7 +1839,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_015" type="Panel" parent="MapView/Map"]
+[node name="Level_015" type="Panel" parent="MapView/Map" unique_id=1089863422]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 82.0
@@ -1543,7 +1850,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 15
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_015"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_015" unique_id=1661787346]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1552,7 +1859,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_015"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_015" unique_id=159025570]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -1564,7 +1871,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_015/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_015/Tooltip" unique_id=49104205]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -1580,7 +1887,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_015/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_015/Tooltip" unique_id=2032041867]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -1593,7 +1900,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_015/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_015/Tooltip" unique_id=1626468571]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1607,10 +1914,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_015/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_015/Tooltip/InfoMarginContainer" unique_id=839269794]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_015/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_015/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1728816445]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -1618,13 +1925,13 @@ text = "Level 014"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_015/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_015/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=903326780]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_015"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_015" unique_id=1154317208]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -1638,7 +1945,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_016" type="Panel" parent="MapView/Map"]
+[node name="Level_016" type="Panel" parent="MapView/Map" unique_id=741927872]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 126.0
@@ -1649,7 +1956,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 16
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_016"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_016" unique_id=2121104084]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1658,7 +1965,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_016"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_016" unique_id=1430053851]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -1670,7 +1977,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_016/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_016/Tooltip" unique_id=1101522907]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -1686,7 +1993,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_016/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_016/Tooltip" unique_id=405367089]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -1699,7 +2006,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_016/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_016/Tooltip" unique_id=1442350460]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1713,10 +2020,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_016/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_016/Tooltip/InfoMarginContainer" unique_id=432928300]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_016/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_016/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=503315154]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -1724,13 +2031,13 @@ text = "Level 014"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_016/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_016/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1103868854]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_016"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_016" unique_id=669112334]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -1744,7 +2051,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_017" type="Panel" parent="MapView/Map"]
+[node name="Level_017" type="Panel" parent="MapView/Map" unique_id=773245989]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 206.0
@@ -1755,7 +2062,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 17
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_017"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_017" unique_id=1559791837]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1764,7 +2071,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_017"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_017" unique_id=1592547043]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -1776,7 +2083,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_017/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_017/Tooltip" unique_id=1374140970]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -1792,7 +2099,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_017/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_017/Tooltip" unique_id=161095952]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -1805,7 +2112,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_017/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_017/Tooltip" unique_id=381774163]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1819,10 +2126,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_017/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_017/Tooltip/InfoMarginContainer" unique_id=55678627]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_017/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_017/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=944762171]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -1830,13 +2137,13 @@ text = "Level 014"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_017/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_017/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1993174749]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_017"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_017" unique_id=752932399]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -1850,7 +2157,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_018" type="Panel" parent="MapView/Map"]
+[node name="Level_018" type="Panel" parent="MapView/Map" unique_id=16314349]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 290.0
@@ -1860,8 +2167,9 @@ offset_bottom = 134.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 18
+trail_via = PackedVector2Array(264, 116, 280, 132)
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_018"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_018" unique_id=1147990508]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1870,7 +2178,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_018"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_018" unique_id=1105350621]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -1882,7 +2190,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_018/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_018/Tooltip" unique_id=1139421700]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -1898,7 +2206,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_018/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_018/Tooltip" unique_id=41282504]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -1911,7 +2219,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_018/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_018/Tooltip" unique_id=1975015616]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1925,10 +2233,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_018/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_018/Tooltip/InfoMarginContainer" unique_id=1260698435]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_018/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_018/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=753913142]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -1936,13 +2244,13 @@ text = "Level 014"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_018/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_018/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=696443118]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_018"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_018" unique_id=1801056079]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -1956,18 +2264,18 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_019" type="Panel" parent="MapView/Map"]
+[node name="Level_019" type="Panel" parent="MapView/Map" unique_id=92052716]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 282.0
-offset_top = 174.0
-offset_right = 302.0
-offset_bottom = 194.0
+offset_left = 194.0
+offset_top = 183.0
+offset_right = 214.0
+offset_bottom = 203.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 19
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_019"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_019" unique_id=580854082]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1976,7 +2284,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_019"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_019" unique_id=653463680]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -1988,7 +2296,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_019/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_019/Tooltip" unique_id=862022445]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -2004,7 +2312,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_019/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_019/Tooltip" unique_id=846276058]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -2017,7 +2325,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_019/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_019/Tooltip" unique_id=1693142638]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -2031,10 +2339,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_019/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_019/Tooltip/InfoMarginContainer" unique_id=200702785]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_019/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_019/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1504846756]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -2042,13 +2350,13 @@ text = "Level 014"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_019/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_019/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=717732046]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_019"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_019" unique_id=55364124]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -2062,18 +2370,18 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_020" type="Panel" parent="MapView/Map"]
+[node name="Level_020" type="Panel" parent="MapView/Map" unique_id=1770895428]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 270.0
-offset_top = 262.0
-offset_right = 290.0
-offset_bottom = 282.0
+offset_left = 319.0
+offset_top = 183.0
+offset_right = 339.0
+offset_bottom = 203.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 20
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_020"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_020" unique_id=405776121]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -2082,7 +2390,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_020"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_020" unique_id=1563732123]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -2094,7 +2402,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_020/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_020/Tooltip" unique_id=66409690]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -2110,7 +2418,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_020/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_020/Tooltip" unique_id=636381433]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -2123,7 +2431,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_020/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_020/Tooltip" unique_id=1892452471]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -2137,10 +2445,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_020/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_020/Tooltip/InfoMarginContainer" unique_id=785627648]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_020/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_020/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1291017889]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -2148,13 +2456,13 @@ text = "Level 014"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_020/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_020/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=711163680]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_020"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_020" unique_id=187425917]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -2168,7 +2476,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_021" type="Panel" parent="MapView/Map"]
+[node name="Level_021" type="Panel" parent="MapView/Map" unique_id=1616340369]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 418.0
@@ -2178,8 +2486,9 @@ offset_bottom = 190.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 21
+trail_via = PackedVector2Array(308, 240, 308, 220, 344, 184, 412, 176)
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_021"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_021" unique_id=2000874044]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -2188,7 +2497,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_021"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_021" unique_id=301526032]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -2200,7 +2509,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_021/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_021/Tooltip" unique_id=2033336311]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -2216,7 +2525,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_021/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_021/Tooltip" unique_id=1553697889]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -2229,7 +2538,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_021/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_021/Tooltip" unique_id=1905138151]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -2243,10 +2552,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_021/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_021/Tooltip/InfoMarginContainer" unique_id=83459579]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_021/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_021/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=833285269]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -2254,13 +2563,13 @@ text = "Level 014"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_021/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_021/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=2139345535]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_021"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_021" unique_id=272389085]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -2274,7 +2583,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_022" type="Panel" parent="MapView/Map"]
+[node name="Level_022" type="Panel" parent="MapView/Map" unique_id=1758539265]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 386.0
@@ -2284,8 +2593,9 @@ offset_bottom = 254.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 22
+trail_via = PackedVector2Array(436, 200)
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_022"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_022" unique_id=1913200021]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -2294,7 +2604,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_022"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_022" unique_id=96023263]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -2306,7 +2616,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_022/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_022/Tooltip" unique_id=1200764695]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -2322,7 +2632,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_022/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_022/Tooltip" unique_id=420474786]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -2335,7 +2645,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_022/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_022/Tooltip" unique_id=364408653]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -2349,10 +2659,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_022/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_022/Tooltip/InfoMarginContainer" unique_id=2098239446]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_022/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_022/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1121764463]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -2360,13 +2670,13 @@ text = "Level 014"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_022/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_022/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=313529677]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_022"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_022" unique_id=1842392299]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -2380,7 +2690,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_023" type="Panel" parent="MapView/Map"]
+[node name="Level_023" type="Panel" parent="MapView/Map" unique_id=57674500]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 374.0
@@ -2391,7 +2701,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 23
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_023"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_023" unique_id=971831314]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -2400,7 +2710,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_023"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_023" unique_id=1799428966]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -2412,7 +2722,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_023/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_023/Tooltip" unique_id=764718366]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -2428,7 +2738,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_023/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_023/Tooltip" unique_id=901685667]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -2441,7 +2751,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_023/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_023/Tooltip" unique_id=1850042806]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -2455,10 +2765,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_023/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_023/Tooltip/InfoMarginContainer" unique_id=206564452]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_023/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_023/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=2045909735]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -2466,13 +2776,13 @@ text = "Level 014"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_023/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_023/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1374302193]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_023"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_023" unique_id=1865739544]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -2486,7 +2796,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_024" type="Panel" parent="MapView/Map"]
+[node name="Level_024" type="Panel" parent="MapView/Map" unique_id=130829452]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 438.0
@@ -2497,7 +2807,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 24
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_024"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_024" unique_id=2109211001]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -2506,7 +2816,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_024"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_024" unique_id=313100967]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -2518,7 +2828,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_024/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_024/Tooltip" unique_id=2015215042]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -2534,7 +2844,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_024/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_024/Tooltip" unique_id=333545621]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -2547,7 +2857,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_024/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_024/Tooltip" unique_id=682211492]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -2561,10 +2871,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_024/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_024/Tooltip/InfoMarginContainer" unique_id=1495442464]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_024/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_024/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=360011186]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -2572,13 +2882,13 @@ text = "Level 015"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_024/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_024/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=352252968]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_024"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_024" unique_id=1061126994]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -2592,7 +2902,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_025" type="Panel" parent="MapView/Map"]
+[node name="Level_025" type="Panel" parent="MapView/Map" unique_id=2001173489]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 374.0
@@ -2603,7 +2913,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 25
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_025"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_025" unique_id=1338573748]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -2612,7 +2922,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_025"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_025" unique_id=1766799680]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -2624,7 +2934,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_025/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_025/Tooltip" unique_id=965031250]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -2640,7 +2950,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_025/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_025/Tooltip" unique_id=1796457546]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -2653,7 +2963,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_025/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_025/Tooltip" unique_id=1548300095]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -2667,10 +2977,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_025/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_025/Tooltip/InfoMarginContainer" unique_id=348942053]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_025/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_025/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=597443950]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -2678,13 +2988,13 @@ text = "Level 015"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_025/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_025/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1673726310]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_025"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_025" unique_id=1718908383]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -2698,7 +3008,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_026" type="Panel" parent="MapView/Map"]
+[node name="Level_026" type="Panel" parent="MapView/Map" unique_id=1525245845]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 422.0
@@ -2709,7 +3019,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 26
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_026"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_026" unique_id=334631404]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -2718,7 +3028,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_026"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_026" unique_id=1394338119]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -2730,7 +3040,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_026/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_026/Tooltip" unique_id=1926386792]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -2746,7 +3056,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_026/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_026/Tooltip" unique_id=1556828310]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -2759,7 +3069,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_026/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_026/Tooltip" unique_id=1594502998]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -2773,10 +3083,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_026/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_026/Tooltip/InfoMarginContainer" unique_id=1221723697]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_026/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_026/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=317922470]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -2784,13 +3094,13 @@ text = "Level 015"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_026/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_026/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1027834704]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_026"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_026" unique_id=1914007667]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -2804,7 +3114,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_027" type="Panel" parent="MapView/Map"]
+[node name="Level_027" type="Panel" parent="MapView/Map" unique_id=514563881]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 478.0
@@ -2815,7 +3125,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 27
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_027"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_027" unique_id=968099374]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -2824,7 +3134,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_027"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_027" unique_id=231966074]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -2836,7 +3146,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_027/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_027/Tooltip" unique_id=726917999]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -2852,7 +3162,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_027/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_027/Tooltip" unique_id=101631361]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -2865,7 +3175,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_027/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_027/Tooltip" unique_id=1475997792]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -2879,10 +3189,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_027/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_027/Tooltip/InfoMarginContainer" unique_id=54912562]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_027/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_027/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1913780768]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -2890,13 +3200,13 @@ text = "Level 015"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_027/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_027/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=781059857]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_027"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_027" unique_id=695808581]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -2910,7 +3220,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_028" type="Panel" parent="MapView/Map"]
+[node name="Level_028" type="Panel" parent="MapView/Map" unique_id=1982207238]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 538.0
@@ -2921,7 +3231,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 28
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_028"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_028" unique_id=1907486649]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -2930,7 +3240,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_028"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_028" unique_id=2058765124]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -2942,7 +3252,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_028/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_028/Tooltip" unique_id=569093369]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -2958,7 +3268,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_028/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_028/Tooltip" unique_id=611804470]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -2971,7 +3281,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_028/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_028/Tooltip" unique_id=1708598744]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -2985,10 +3295,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_028/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_028/Tooltip/InfoMarginContainer" unique_id=790616527]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_028/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_028/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1774881834]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -2996,13 +3306,13 @@ text = "Level 015"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_028/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_028/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1515877375]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_028"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_028" unique_id=1877703106]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -3016,7 +3326,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_029" type="Panel" parent="MapView/Map"]
+[node name="Level_029" type="Panel" parent="MapView/Map" unique_id=1639624315]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 582.0
@@ -3027,7 +3337,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 29
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_029"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_029" unique_id=1315449215]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -3036,7 +3346,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_029"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_029" unique_id=349706329]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -3048,7 +3358,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_029/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_029/Tooltip" unique_id=343584206]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -3064,7 +3374,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_029/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_029/Tooltip" unique_id=1959275912]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -3077,7 +3387,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_029/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_029/Tooltip" unique_id=2041519437]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -3091,10 +3401,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_029/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_029/Tooltip/InfoMarginContainer" unique_id=1795476374]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_029/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_029/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=150685196]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -3102,13 +3412,13 @@ text = "Level 015"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_029/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_029/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1017528955]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_029"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_029" unique_id=513380052]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -3122,7 +3432,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_030" type="Panel" parent="MapView/Map"]
+[node name="Level_030" type="Panel" parent="MapView/Map" unique_id=364976290]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 614.0
@@ -3133,7 +3443,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 30
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_030"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_030" unique_id=422635864]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -3142,7 +3452,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_030"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_030" unique_id=730331671]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -3154,7 +3464,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_030/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_030/Tooltip" unique_id=427690539]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -3170,7 +3480,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_030/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_030/Tooltip" unique_id=324128418]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -3183,7 +3493,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_030/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_030/Tooltip" unique_id=560841277]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -3197,10 +3507,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_030/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_030/Tooltip/InfoMarginContainer" unique_id=929287520]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_030/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_030/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=583140468]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -3208,13 +3518,13 @@ text = "Level 015"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_030/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_030/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=340545511]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_030"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_030" unique_id=2005102499]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -3228,7 +3538,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_031" type="Panel" parent="MapView/Map"]
+[node name="Level_031" type="Panel" parent="MapView/Map" unique_id=12697147]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 654.0
@@ -3239,7 +3549,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 31
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_031"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_031" unique_id=1750693524]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -3248,7 +3558,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_031"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_031" unique_id=273561180]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -3260,7 +3570,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_031/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_031/Tooltip" unique_id=1017664869]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -3276,7 +3586,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_031/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_031/Tooltip" unique_id=1578658620]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -3289,7 +3599,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_031/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_031/Tooltip" unique_id=794015478]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -3303,10 +3613,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_031/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_031/Tooltip/InfoMarginContainer" unique_id=2094575192]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_031/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_031/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=71966113]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -3314,13 +3624,13 @@ text = "Level 015"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_031/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_031/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=2014562661]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_031"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_031" unique_id=1335455147]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -3334,7 +3644,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_032" type="Panel" parent="MapView/Map"]
+[node name="Level_032" type="Panel" parent="MapView/Map" unique_id=732232885]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 638.0
@@ -3345,7 +3655,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 32
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_032"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_032" unique_id=1417310060]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -3354,7 +3664,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_032"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_032" unique_id=360541153]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -3366,7 +3676,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_032/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_032/Tooltip" unique_id=816916542]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -3382,7 +3692,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_032/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_032/Tooltip" unique_id=172852078]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -3395,7 +3705,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_032/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_032/Tooltip" unique_id=1492273588]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -3409,10 +3719,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_032/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_032/Tooltip/InfoMarginContainer" unique_id=1481247811]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_032/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_032/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1884198419]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -3420,13 +3730,13 @@ text = "Level 015"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_032/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_032/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=729900165]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_032"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_032" unique_id=78467439]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -3440,7 +3750,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_033" type="Panel" parent="MapView/Map"]
+[node name="Level_033" type="Panel" parent="MapView/Map" unique_id=1594717937]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 622.0
@@ -3451,7 +3761,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 33
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_033"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_033" unique_id=1076821321]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -3460,7 +3770,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_033"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_033" unique_id=711374210]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -3472,7 +3782,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_033/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_033/Tooltip" unique_id=1245537752]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -3488,7 +3798,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_033/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_033/Tooltip" unique_id=389760887]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -3501,7 +3811,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_033/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_033/Tooltip" unique_id=98192878]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -3515,10 +3825,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_033/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_033/Tooltip/InfoMarginContainer" unique_id=1771451098]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_033/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_033/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=585945978]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -3526,13 +3836,13 @@ text = "Level 015"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_033/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_033/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1105040968]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_033"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_033" unique_id=2145986024]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -3546,7 +3856,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_034" type="Panel" parent="MapView/Map"]
+[node name="Level_034" type="Panel" parent="MapView/Map" unique_id=460538968]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 586.0
@@ -3557,7 +3867,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 34
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_034"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_034" unique_id=1295942156]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -3566,7 +3876,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_034"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_034" unique_id=1319793157]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -3578,7 +3888,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_034/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_034/Tooltip" unique_id=1740560487]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -3594,7 +3904,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_034/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_034/Tooltip" unique_id=347046568]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -3607,7 +3917,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_034/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_034/Tooltip" unique_id=418571951]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -3621,10 +3931,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_034/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_034/Tooltip/InfoMarginContainer" unique_id=1710662989]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_034/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_034/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=203136598]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -3632,13 +3942,13 @@ text = "Level 015"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_034/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_034/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=154617595]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_034"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_034" unique_id=1451327387]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -3652,7 +3962,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_035" type="Panel" parent="MapView/Map"]
+[node name="Level_035" type="Panel" parent="MapView/Map" unique_id=82252637]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 538.0
@@ -3663,7 +3973,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 35
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_035"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_035" unique_id=802293830]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -3672,7 +3982,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_035"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_035" unique_id=1323189847]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -3684,7 +3994,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_035/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_035/Tooltip" unique_id=420581075]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -3700,7 +4010,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_035/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_035/Tooltip" unique_id=1266123453]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -3713,7 +4023,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_035/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_035/Tooltip" unique_id=181470017]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -3727,10 +4037,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_035/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_035/Tooltip/InfoMarginContainer" unique_id=592197218]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_035/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_035/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=138724609]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -3738,13 +4048,13 @@ text = "Level 015"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_035/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_035/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1079766720]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_035"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_035" unique_id=1142681369]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -3758,7 +4068,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_036" type="Panel" parent="MapView/Map"]
+[node name="Level_036" type="Panel" parent="MapView/Map" unique_id=1192058509]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 494.0
@@ -3769,7 +4079,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 36
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_036"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_036" unique_id=727007248]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -3778,7 +4088,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_036"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_036" unique_id=31691571]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -3790,7 +4100,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_036/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_036/Tooltip" unique_id=1941402447]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -3806,7 +4116,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_036/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_036/Tooltip" unique_id=660563728]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -3819,7 +4129,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_036/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_036/Tooltip" unique_id=1918037016]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -3833,10 +4143,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_036/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_036/Tooltip/InfoMarginContainer" unique_id=46677400]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_036/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_036/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1433217990]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -3844,13 +4154,13 @@ text = "Level 015"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_036/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_036/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=871949119]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_036"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_036" unique_id=1833750154]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -3864,7 +4174,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_037" type="Panel" parent="MapView/Map"]
+[node name="Level_037" type="Panel" parent="MapView/Map" unique_id=1380928376]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 510.0
@@ -3874,8 +4184,9 @@ offset_bottom = 210.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 37
+trail_via = PackedVector2Array(508, 216)
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_037"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_037" unique_id=175183025]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -3884,7 +4195,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_037"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_037" unique_id=1223720003]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -3896,7 +4207,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_037/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_037/Tooltip" unique_id=1482005583]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -3912,7 +4223,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_037/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_037/Tooltip" unique_id=24280997]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -3925,7 +4236,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_037/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_037/Tooltip" unique_id=1870233432]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -3939,10 +4250,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_037/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_037/Tooltip/InfoMarginContainer" unique_id=1925281030]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_037/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_037/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=2028692099]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -3950,13 +4261,13 @@ text = "Level 015"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_037/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_037/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=904195214]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_037"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_037" unique_id=840079331]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -3970,7 +4281,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_038" type="Panel" parent="MapView/Map"]
+[node name="Level_038" type="Panel" parent="MapView/Map" unique_id=137288489]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 562.0
@@ -3981,7 +4292,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 38
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_038"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_038" unique_id=2069462478]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -3990,7 +4301,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_038"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_038" unique_id=153220707]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -4002,7 +4313,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_038/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_038/Tooltip" unique_id=1460564918]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -4018,7 +4329,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_038/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_038/Tooltip" unique_id=799064740]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -4031,7 +4342,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_038/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_038/Tooltip" unique_id=1555486376]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4045,10 +4356,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_038/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_038/Tooltip/InfoMarginContainer" unique_id=1964117129]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_038/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_038/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1124439532]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -4056,13 +4367,13 @@ text = "Level 015"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_038/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_038/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=973978512]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_038"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_038" unique_id=1278272650]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -4076,7 +4387,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_039" type="Panel" parent="MapView/Map"]
+[node name="Level_039" type="Panel" parent="MapView/Map" unique_id=180438021]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 610.0
@@ -4087,7 +4398,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 39
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_039"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_039" unique_id=786991987]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4096,7 +4407,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_039"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_039" unique_id=1647984634]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -4108,7 +4419,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_039/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_039/Tooltip" unique_id=209997103]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -4124,7 +4435,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_039/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_039/Tooltip" unique_id=1608146609]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -4137,7 +4448,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_039/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_039/Tooltip" unique_id=1015790857]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4151,10 +4462,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_039/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_039/Tooltip/InfoMarginContainer" unique_id=1079727180]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_039/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_039/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=322647795]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -4162,13 +4473,13 @@ text = "Level 015"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_039/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_039/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1228216783]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_039"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_039" unique_id=1704547128]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -4182,7 +4493,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_040" type="Panel" parent="MapView/Map"]
+[node name="Level_040" type="Panel" parent="MapView/Map" unique_id=1039280920]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 662.0
@@ -4193,7 +4504,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 40
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_040"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_040" unique_id=2086291684]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4202,7 +4513,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_040"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_040" unique_id=2083002762]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -4214,7 +4525,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_040/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_040/Tooltip" unique_id=1388719888]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -4230,7 +4541,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_040/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_040/Tooltip" unique_id=1095378557]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -4243,7 +4554,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_040/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_040/Tooltip" unique_id=2099328808]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4257,10 +4568,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_040/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_040/Tooltip/InfoMarginContainer" unique_id=1547065874]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_040/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_040/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=789430083]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -4268,13 +4579,13 @@ text = "Level 015"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_040/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_040/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=747611900]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_040"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_040" unique_id=282074209]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -4288,7 +4599,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_041" type="Panel" parent="MapView/Map"]
+[node name="Level_041" type="Panel" parent="MapView/Map" unique_id=1353156292]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 710.0
@@ -4299,7 +4610,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 41
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_041"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_041" unique_id=395724454]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4308,7 +4619,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_041"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_041" unique_id=126541796]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -4320,7 +4631,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_041/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_041/Tooltip" unique_id=1802850129]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -4336,7 +4647,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_041/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_041/Tooltip" unique_id=1821363403]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -4349,7 +4660,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_041/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_041/Tooltip" unique_id=665038377]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4363,10 +4674,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_041/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_041/Tooltip/InfoMarginContainer" unique_id=462256681]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_041/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_041/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=331067464]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -4374,13 +4685,13 @@ text = "Level 015"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_041/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_041/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=856774489]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_041"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_041" unique_id=1471665296]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -4394,7 +4705,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_042" type="Panel" parent="MapView/Map"]
+[node name="Level_042" type="Panel" parent="MapView/Map" unique_id=2145641059]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 682.0
@@ -4405,7 +4716,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 42
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_042"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_042" unique_id=97594588]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4414,7 +4725,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_042"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_042" unique_id=1952105173]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -4426,7 +4737,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_042/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_042/Tooltip" unique_id=1218539137]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -4442,7 +4753,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_042/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_042/Tooltip" unique_id=707833217]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -4455,7 +4766,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_042/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_042/Tooltip" unique_id=1055959047]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4469,10 +4780,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_042/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_042/Tooltip/InfoMarginContainer" unique_id=564615218]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_042/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_042/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=937671042]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -4480,13 +4791,13 @@ text = "Level 015"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_042/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_042/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=614467673]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_042"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_042" unique_id=950765605]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -4500,7 +4811,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_043" type="Panel" parent="MapView/Map"]
+[node name="Level_043" type="Panel" parent="MapView/Map" unique_id=1758648881]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 682.0
@@ -4511,7 +4822,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 43
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_043"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_043" unique_id=734184500]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4520,7 +4831,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_043"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_043" unique_id=1983030372]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -4532,7 +4843,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_043/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_043/Tooltip" unique_id=1260840158]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -4548,7 +4859,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_043/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_043/Tooltip" unique_id=1767239614]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -4561,7 +4872,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_043/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_043/Tooltip" unique_id=1138556230]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4575,10 +4886,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_043/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_043/Tooltip/InfoMarginContainer" unique_id=1475671541]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_043/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_043/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=614057903]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -4586,13 +4897,13 @@ text = "Level 015"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_043/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_043/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1969687557]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_043"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_043" unique_id=1521030234]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -4606,7 +4917,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_044" type="Panel" parent="MapView/Map"]
+[node name="Level_044" type="Panel" parent="MapView/Map" unique_id=829433381]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 738.0
@@ -4617,7 +4928,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 44
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_044"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_044" unique_id=137809935]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4626,7 +4937,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_044"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_044" unique_id=1383479058]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -4638,7 +4949,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_044/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_044/Tooltip" unique_id=2046252211]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -4654,7 +4965,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_044/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_044/Tooltip" unique_id=331811370]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -4667,7 +4978,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_044/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_044/Tooltip" unique_id=26410518]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4681,10 +4992,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_044/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_044/Tooltip/InfoMarginContainer" unique_id=1011842106]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_044/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_044/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1944804490]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -4692,13 +5003,13 @@ text = "Level 015"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_044/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_044/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1140141585]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_044"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_044" unique_id=1529854554]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -4712,7 +5023,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_045" type="Panel" parent="MapView/Map"]
+[node name="Level_045" type="Panel" parent="MapView/Map" unique_id=74166638]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 778.0
@@ -4723,7 +5034,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 45
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_045"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_045" unique_id=736461675]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4732,7 +5043,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_045"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_045" unique_id=1504349513]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -4744,7 +5055,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_045/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_045/Tooltip" unique_id=1356832898]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -4760,7 +5071,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_045/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_045/Tooltip" unique_id=459139526]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -4773,7 +5084,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_045/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_045/Tooltip" unique_id=373905930]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4787,10 +5098,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_045/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_045/Tooltip/InfoMarginContainer" unique_id=352998624]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_045/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_045/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1514023148]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -4798,13 +5109,13 @@ text = "Level 015"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_045/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_045/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1994438689]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_045"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_045" unique_id=522130417]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -4818,7 +5129,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_046" type="Panel" parent="MapView/Map"]
+[node name="Level_046" type="Panel" parent="MapView/Map" unique_id=1861508114]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 750.0
@@ -4829,7 +5140,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 46
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_046"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_046" unique_id=421306909]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4838,7 +5149,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_046"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_046" unique_id=852673974]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -4850,7 +5161,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_046/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_046/Tooltip" unique_id=422618777]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -4866,7 +5177,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_046/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_046/Tooltip" unique_id=1866611323]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -4879,7 +5190,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_046/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_046/Tooltip" unique_id=754361836]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4893,10 +5204,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_046/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_046/Tooltip/InfoMarginContainer" unique_id=199380121]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_046/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_046/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1334902610]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -4904,13 +5215,13 @@ text = "Level 015"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_046/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_046/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=274124846]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_046"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_046" unique_id=1905834165]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -4924,7 +5235,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_047" type="Panel" parent="MapView/Map"]
+[node name="Level_047" type="Panel" parent="MapView/Map" unique_id=1896729996]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 730.0
@@ -4935,7 +5246,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 47
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_047"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_047" unique_id=1108174615]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4944,7 +5255,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_047"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_047" unique_id=805191412]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -4956,7 +5267,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_047/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_047/Tooltip" unique_id=1363181509]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -4972,7 +5283,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_047/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_047/Tooltip" unique_id=608274950]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -4985,7 +5296,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_047/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_047/Tooltip" unique_id=197677428]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4999,10 +5310,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_047/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_047/Tooltip/InfoMarginContainer" unique_id=1187760420]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_047/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_047/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1230176868]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -5010,13 +5321,13 @@ text = "Level 015"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_047/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_047/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=2141644936]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_047"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_047" unique_id=1247244820]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -5030,7 +5341,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_048" type="Panel" parent="MapView/Map"]
+[node name="Level_048" type="Panel" parent="MapView/Map" unique_id=1890275908]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 794.0
@@ -5041,7 +5352,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 48
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_048"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_048" unique_id=1157442983]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -5050,7 +5361,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_048"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_048" unique_id=476361029]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -5062,7 +5373,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_048/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_048/Tooltip" unique_id=965037759]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -5078,7 +5389,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_048/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_048/Tooltip" unique_id=1959932560]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -5091,7 +5402,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_048/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_048/Tooltip" unique_id=721220661]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -5105,10 +5416,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_048/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_048/Tooltip/InfoMarginContainer" unique_id=548695554]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_048/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_048/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=2049908938]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -5116,13 +5427,13 @@ text = "Level 015"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_048/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_048/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1406305489]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_048"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_048" unique_id=1528284200]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -5136,7 +5447,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_049" type="Panel" parent="MapView/Map"]
+[node name="Level_049" type="Panel" parent="MapView/Map" unique_id=604128908]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 918.0
@@ -5147,7 +5458,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 49
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_049"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_049" unique_id=822887040]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -5156,7 +5467,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_049"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_049" unique_id=1778584375]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -5168,7 +5479,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_049/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_049/Tooltip" unique_id=1802102830]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -5184,7 +5495,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_049/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_049/Tooltip" unique_id=297151210]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -5197,7 +5508,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_049/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_049/Tooltip" unique_id=1088706871]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -5211,10 +5522,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_049/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_049/Tooltip/InfoMarginContainer" unique_id=978970723]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_049/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_049/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=556434762]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -5222,13 +5533,13 @@ text = "Level 015"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_049/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_049/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=581110158]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_049"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_049" unique_id=26832334]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -5242,7 +5553,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_050" type="Panel" parent="MapView/Map"]
+[node name="Level_050" type="Panel" parent="MapView/Map" unique_id=2058115306]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 866.0
@@ -5253,7 +5564,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 50
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_050"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_050" unique_id=193320952]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -5262,7 +5573,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_050"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_050" unique_id=460041039]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -5274,7 +5585,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_050/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_050/Tooltip" unique_id=489466344]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -5290,7 +5601,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_050/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_050/Tooltip" unique_id=753126582]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -5303,7 +5614,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_050/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_050/Tooltip" unique_id=2097979085]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -5317,10 +5628,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_050/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_050/Tooltip/InfoMarginContainer" unique_id=2122053810]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_050/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_050/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=126533484]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -5328,13 +5639,13 @@ text = "Level 015"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_050/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_050/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=359466473]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_050"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_050" unique_id=325122825]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -5348,7 +5659,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_051" type="Panel" parent="MapView/Map"]
+[node name="Level_051" type="Panel" parent="MapView/Map" unique_id=1810272875]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 962.0
@@ -5359,7 +5670,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 51
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_051"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_051" unique_id=274164716]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -5368,7 +5679,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_051"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_051" unique_id=1156463210]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -5380,7 +5691,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_051/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_051/Tooltip" unique_id=191666552]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -5396,7 +5707,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_051/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_051/Tooltip" unique_id=1267345496]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -5409,7 +5720,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_051/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_051/Tooltip" unique_id=651564005]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -5423,10 +5734,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_051/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_051/Tooltip/InfoMarginContainer" unique_id=1940832926]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_051/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_051/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=691803802]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -5434,13 +5745,13 @@ text = "Level 015"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_051/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_051/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1292106565]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_051"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_051" unique_id=1286492304]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -5454,7 +5765,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_052" type="Panel" parent="MapView/Map"]
+[node name="Level_052" type="Panel" parent="MapView/Map" unique_id=1531433866]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 1046.0
@@ -5465,7 +5776,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 52
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_052"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_052" unique_id=1848490145]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -5474,7 +5785,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_052"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_052" unique_id=71442844]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -5486,7 +5797,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_052/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_052/Tooltip" unique_id=1367080388]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -5502,7 +5813,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_052/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_052/Tooltip" unique_id=1695721267]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -5515,7 +5826,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_052/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_052/Tooltip" unique_id=2051390991]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -5529,10 +5840,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_052/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_052/Tooltip/InfoMarginContainer" unique_id=996197732]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_052/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_052/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1592380287]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -5540,13 +5851,13 @@ text = "Level 015"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_052/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_052/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=978096641]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_052"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_052" unique_id=871506525]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -5560,7 +5871,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_053" type="Panel" parent="MapView/Map"]
+[node name="Level_053" type="Panel" parent="MapView/Map" unique_id=2054060220]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 1050.0
@@ -5571,7 +5882,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 53
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_053"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_053" unique_id=975416515]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -5580,7 +5891,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_053"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_053" unique_id=697927974]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -5592,7 +5903,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_053/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_053/Tooltip" unique_id=1403880352]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -5608,7 +5919,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_053/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_053/Tooltip" unique_id=1323862309]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -5621,7 +5932,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_053/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_053/Tooltip" unique_id=2097679007]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -5635,10 +5946,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_053/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_053/Tooltip/InfoMarginContainer" unique_id=56220118]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_053/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_053/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1203792496]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -5646,13 +5957,13 @@ text = "Level 015"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_053/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_053/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=340999030]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_053"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_053" unique_id=1240679963]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -5666,7 +5977,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_054" type="Panel" parent="MapView/Map"]
+[node name="Level_054" type="Panel" parent="MapView/Map" unique_id=1425179493]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 1006.0
@@ -5677,7 +5988,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 54
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_054"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_054" unique_id=1882381149]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -5686,7 +5997,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_054"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_054" unique_id=111877603]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -5698,7 +6009,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_054/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_054/Tooltip" unique_id=755861680]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -5714,7 +6025,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_054/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_054/Tooltip" unique_id=601150899]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -5727,7 +6038,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_054/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_054/Tooltip" unique_id=386723382]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -5741,10 +6052,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_054/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_054/Tooltip/InfoMarginContainer" unique_id=1181581157]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_054/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_054/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=924889688]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -5752,13 +6063,13 @@ text = "Level 015"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_054/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_054/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=914154270]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_054"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_054" unique_id=1843752157]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -5772,7 +6083,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_055" type="Panel" parent="MapView/Map"]
+[node name="Level_055" type="Panel" parent="MapView/Map" unique_id=1903813164]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 934.0
@@ -5783,7 +6094,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 55
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_055"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_055" unique_id=314304354]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -5792,7 +6103,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_055"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_055" unique_id=1001971093]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -5804,7 +6115,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_055/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_055/Tooltip" unique_id=710422212]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -5820,7 +6131,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_055/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_055/Tooltip" unique_id=34038195]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -5833,7 +6144,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_055/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_055/Tooltip" unique_id=1575715048]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -5847,10 +6158,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_055/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_055/Tooltip/InfoMarginContainer" unique_id=1752711192]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_055/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_055/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1312794496]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -5858,13 +6169,13 @@ text = "Level 015"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_055/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_055/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1621939495]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_055"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_055" unique_id=729158823]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -5878,7 +6189,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_056" type="Panel" parent="MapView/Map"]
+[node name="Level_056" type="Panel" parent="MapView/Map" unique_id=83782886]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 838.0
@@ -5889,7 +6200,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 56
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_056"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_056" unique_id=462909191]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -5898,7 +6209,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_056"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_056" unique_id=1315961490]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -5910,7 +6221,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_056/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_056/Tooltip" unique_id=1014390345]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -5926,7 +6237,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_056/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_056/Tooltip" unique_id=488941281]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -5939,7 +6250,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_056/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_056/Tooltip" unique_id=372299689]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -5953,10 +6264,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_056/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_056/Tooltip/InfoMarginContainer" unique_id=48756068]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_056/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_056/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1387120888]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -5964,13 +6275,13 @@ text = "Level 015"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_056/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_056/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1434151408]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_056"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_056" unique_id=1677482519]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -5984,7 +6295,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_057" type="Panel" parent="MapView/Map"]
+[node name="Level_057" type="Panel" parent="MapView/Map" unique_id=666597914]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 738.0
@@ -5995,7 +6306,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 57
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_057"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_057" unique_id=1666953695]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -6004,7 +6315,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_057"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_057" unique_id=336630674]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -6016,7 +6327,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_057/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_057/Tooltip" unique_id=1819256373]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -6032,7 +6343,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_057/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_057/Tooltip" unique_id=1642345550]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -6045,7 +6356,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_057/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_057/Tooltip" unique_id=213517378]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -6059,10 +6370,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_057/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_057/Tooltip/InfoMarginContainer" unique_id=157591]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_057/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_057/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1207764818]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -6070,13 +6381,13 @@ text = "Level 015"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_057/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_057/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=656799628]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_057"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_057" unique_id=1586980394]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -6090,7 +6401,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_058" type="Panel" parent="MapView/Map"]
+[node name="Level_058" type="Panel" parent="MapView/Map" unique_id=847386606]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 754.0
@@ -6101,7 +6412,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 58
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_058"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_058" unique_id=864551299]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -6110,7 +6421,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_058"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_058" unique_id=1875823699]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -6122,7 +6433,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_058/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_058/Tooltip" unique_id=53785820]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -6138,7 +6449,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_058/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_058/Tooltip" unique_id=403503168]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -6151,7 +6462,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_058/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_058/Tooltip" unique_id=1506674707]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -6165,10 +6476,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_058/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_058/Tooltip/InfoMarginContainer" unique_id=1428495337]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_058/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_058/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1091712904]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -6176,13 +6487,13 @@ text = "Level 015"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_058/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_058/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1006744044]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_058"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_058" unique_id=1136806294]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -6196,7 +6507,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_059" type="Panel" parent="MapView/Map"]
+[node name="Level_059" type="Panel" parent="MapView/Map" unique_id=1505838779]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 822.0
@@ -6207,7 +6518,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 59
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_059"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_059" unique_id=2074841749]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -6216,7 +6527,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_059"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_059" unique_id=1289497806]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -6228,7 +6539,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_059/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_059/Tooltip" unique_id=81765670]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -6244,7 +6555,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_059/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_059/Tooltip" unique_id=77121972]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -6257,7 +6568,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_059/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_059/Tooltip" unique_id=1660218795]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -6271,10 +6582,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_059/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_059/Tooltip/InfoMarginContainer" unique_id=1796316534]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_059/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_059/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=141733569]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -6282,13 +6593,13 @@ text = "Level 015"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_059/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_059/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=158289544]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_059"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_059" unique_id=527183744]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -6302,7 +6613,7 @@ texture = ExtResource("4_wvp4h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Level_060" type="Panel" parent="MapView/Map"]
+[node name="Level_060" type="Panel" parent="MapView/Map" unique_id=1727515897]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 918.0
@@ -6313,7 +6624,7 @@ theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 60
 
-[node name="SelectButton" type="Button" parent="MapView/Map/Level_060"]
+[node name="SelectButton" type="Button" parent="MapView/Map/Level_060" unique_id=277945950]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -6322,7 +6633,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
 
-[node name="Tooltip" type="Panel" parent="MapView/Map/Level_060"]
+[node name="Tooltip" type="Panel" parent="MapView/Map/Level_060" unique_id=495813608]
 visible = false
 z_index = 1
 custom_minimum_size = Vector2(180, 170)
@@ -6334,7 +6645,7 @@ offset_bottom = 20.0
 mouse_filter = 2
 theme_type_variation = &"HornPanel"
 
-[node name="StartButton" type="Button" parent="MapView/Map/Level_060/Tooltip"]
+[node name="StartButton" type="Button" parent="MapView/Map/Level_060/Tooltip" unique_id=1326798672]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 1
 anchors_preset = 3
@@ -6350,7 +6661,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "start"
 
-[node name="CloseButton" type="Button" parent="MapView/Map/Level_060/Tooltip"]
+[node name="CloseButton" type="Button" parent="MapView/Map/Level_060/Tooltip" unique_id=1089182900]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 1
@@ -6363,7 +6674,7 @@ offset_bottom = 5.0
 grow_horizontal = 0
 text = "x"
 
-[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_060/Tooltip"]
+[node name="InfoMarginContainer" type="MarginContainer" parent="MapView/Map/Level_060/Tooltip" unique_id=1085571312]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -6377,10 +6688,10 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 26
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_060/Tooltip/InfoMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapView/Map/Level_060/Tooltip/InfoMarginContainer" unique_id=1975140911]
 layout_mode = 2
 
-[node name="LevelName" type="Label" parent="MapView/Map/Level_060/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelName" type="Label" parent="MapView/Map/Level_060/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=743844461]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"TitleLabel"
@@ -6388,13 +6699,13 @@ text = "Level 015"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelInfo" type="Label" parent="MapView/Map/Level_060/Tooltip/InfoMarginContainer/VBoxContainer"]
+[node name="LevelInfo" type="Label" parent="MapView/Map/Level_060/Tooltip/InfoMarginContainer/VBoxContainer" unique_id=1204648701]
 custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
 size_flags_vertical = 1
 autowrap_mode = 3
 
-[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_060"]
+[node name="LockTexture" type="TextureRect" parent="MapView/Map/Level_060" unique_id=1243333632]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0

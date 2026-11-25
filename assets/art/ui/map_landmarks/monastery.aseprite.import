@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dlyghcfq5gc0f"
+path="res://.godot/imported/monastery.aseprite-1e1c773b540d238c8749b8955c6889a5.res"
+
+[deps]
+
+source_file="res://assets/art/ui/map_landmarks/monastery.aseprite"
+dest_files=["res://.godot/imported/monastery.aseprite-1e1c773b540d238c8749b8955c6889a5.res"]
+
+[params]
+

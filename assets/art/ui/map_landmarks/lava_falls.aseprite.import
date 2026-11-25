@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://wyrpxyeyejut"
+path="res://.godot/imported/lava_falls.aseprite-9e2c24260a386d3f85cc40b415ffa634.res"
+
+[deps]
+
+source_file="res://assets/art/ui/map_landmarks/lava_falls.aseprite"
+dest_files=["res://.godot/imported/lava_falls.aseprite-9e2c24260a386d3f85cc40b415ffa634.res"]
+
+[params]
+

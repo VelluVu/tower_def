@@ -122,9 +122,15 @@ func _best_buffs(building : Building) -> Dictionary:
 
 func _best_pass_on(building : Building) -> Dictionary:
 	var best : Dictionary = {}
+	#Harmony (synergy): a tower of the Buffer's own element gets twice its chance
+	var own_element : Utils.Element = Utils.Element.None
+	if building.evolve_tree != null and building.evolve_tree.is_element_chosen:
+		own_element = building.evolve_tree.evolve_element
 	for buffer in buffers:
 		var chance : float = buffer.get_pass_chance()
 		if chance > 0.0 and buffer.covers(building.global_position):
+			if own_element == buffer.element:
+				chance = minf(chance * 2.0, 1.0)
 			best[buffer.element] = maxf(chance, best.get(buffer.element, 0.0))
 	return best
 
@@ -222,6 +228,9 @@ func _on_roar() -> void:
 	for buffer in buffers:
 		if is_instance_valid(buffer) and buffer.tier >= 3:
 			buffer.play_roar()
+			#War cry (synergy): the roar readies the Elder Drakes' breath
+			if level.synergies != null:
+				level.synergies.on_roar(buffer)
 	roar_end_timer.start()
 	queue_refresh()
 

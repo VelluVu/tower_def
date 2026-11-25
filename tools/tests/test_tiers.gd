@@ -60,6 +60,41 @@ func test_physical_beamer_t2_chains(kit : TestKit) -> void:
 	_set_ranks(saved)
 
 
+## Every tower's T2 and T3 name a talent node that is in its tree (tools/tier_data.py skips the unlock effect of a
+## missing node, which would leave the tier locked for good), and carry their tier sprite where the tower has art.
+func test_every_tier_has_its_talent_node(kit : TestKit) -> void:
+	var trees : Dictionary[StringName, TalentTree] = {}
+	for tree_id : StringName in [&"building", &"fire", &"frost", &"poison"]:
+		trees[tree_id] = load("res://scenes/talents/trees/%s_tree.tres" % tree_id)
+	var dir : String = "res://scenes/unit/building/buildings/"
+	var counted : int = 0
+	for file in DirAccess.get_files_at(dir):
+		if not file.ends_with(".tscn"):
+			continue
+		var building : Node = (load(dir + file) as PackedScene).instantiate()
+		for leaf in building.find_children("*", "ElementEvolveLeaf", true, false):
+			for tier : EvolveTierData in leaf.tiers:
+				var tree : TalentTree = trees.get(tier.talent_tree)
+				var talent : TalentNode = tree.get_node_by_id(tier.talent_node) if tree != null else null
+				kit.check(talent != null, "%s %s: talent node %s/%s exists" % [file, leaf.name, tier.talent_tree, tier.talent_node])
+				counted += 1
+		building.free()
+	kit.check(counted >= 14 * 4 * 2, "every tower with elements has its tiers (%d)" % counted)
+
+
+## The Hoard Keeper's tiers live in the Building tree for every element; each one pays a gold more a wave.
+func test_hoard_keeper_tiers_pay_more(kit : TestKit) -> void:
+	var saved : Dictionary[StringName, Dictionary] = _set_ranks({&"building": {&"hoard_keeper_t2": 1, &"hoard_keeper_t3": 1}})
+	await kit.load_level(10)
+	var keeper : HoardKeeper = await _to_up_3(kit, "puffe_hoard", FIRE_LEAF_NAME)
+	var pay : float = keeper.get_pay()
+	_buy(kit, 0)
+	kit.check(keeper.evolve_tree.tier == 2 and keeper.get_pay() == pay + 1.0, "Fire T2 opens from the Building tree and pays one more")
+	_buy(kit, 0)
+	kit.check(keeper.evolve_tree.tier == 3 and keeper.get_pay() == pay + 2.0, "T3 pays one more again")
+	_set_ranks(saved)
+
+
 ## Places a tower and buys Up 1-2, the element and Up 3 with free gold.
 func _to_up_3(kit : TestKit, building_name : String, leaf_name : String) -> Building:
 	var cell : Vector2i = kit.find_cell(func(c : Vector2i) -> bool: return kit.level.grid.is_position_buildable(kit.level.grid.grid_position_to_world(c)))

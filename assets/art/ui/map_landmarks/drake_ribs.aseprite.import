@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://4d3m2oy2vhta"
+path="res://.godot/imported/drake_ribs.aseprite-889a36d423f9a0549db39b823e1b9cce.res"
+
+[deps]
+
+source_file="res://assets/art/ui/map_landmarks/drake_ribs.aseprite"
+dest_files=["res://.godot/imported/drake_ribs.aseprite-889a36d423f9a0549db39b823e1b9cce.res"]
+
+[params]
+

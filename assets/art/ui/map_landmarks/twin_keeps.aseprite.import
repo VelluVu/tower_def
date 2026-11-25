@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dbr3osnlmgcjh"
+path="res://.godot/imported/twin_keeps.aseprite-e0b46617a878db69052106406d6512a2.res"
+
+[deps]
+
+source_file="res://assets/art/ui/map_landmarks/twin_keeps.aseprite"
+dest_files=["res://.godot/imported/twin_keeps.aseprite-e0b46617a878db69052106406d6512a2.res"]
+
+[params]
+

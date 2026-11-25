@@ -28,6 +28,55 @@ func test_slow_floor(kit : TestKit) -> void:
 	kit.check_near(ModifierManager.floor_slows(18.0, 20.0, [], [], [_multiply(-0.1)]), 18.0, "a small slow is not changed")
 
 
+## A Frost Harpooner's tether slows past the floor, but never to a stop (2026-11-25).
+func test_deep_slow_goes_past_the_floor(kit : TestKit) -> void:
+	var slow : ModifierData = _multiply(-0.5)
+	var tether : ModifierData = _multiply(-0.8)
+	tether.ignores_slow_floor = true
+	var floored_only : Array[ModifierData] = [slow, slow]
+	kit.check_near(ModifierManager.floor_slows(ModifierManager.combine(20.0, [], [], floored_only), 20.0, [], [], floored_only), 8.0, "two 50% slows stop at the floor")
+	var with_tether : Array[ModifierData] = [slow, tether]
+	kit.check_near(ModifierManager.floor_slows(ModifierManager.combine(20.0, [], [], with_tether), 20.0, [], [], with_tether), 2.0,
+		"the tether works on the floored speed: 10 x 0.2")
+	var all : Array[ModifierData] = [slow, slow, tether]
+	kit.check_near(ModifierManager.floor_slows(ModifierManager.combine(20.0, [], [], all), 20.0, [], [], all), 2.0,
+		"floored slows hold at 8, the tether takes that to 1.6, the deep floor keeps 2 (10%)")
+	var floor : float = ModifierManager.SLOW_FLOOR
+	var deep : float = ModifierManager.DEEP_SLOW_FLOOR
+	kit.check_near(ModifierManager.floor_slows(0.0, 20.0, [], [], [slow], floor, 1.0, deep, true), 20.0, "a standard bearer stops a slow")
+	var piercing : ModifierData = _multiply(-0.8)
+	piercing.ignores_slow_floor = true
+	piercing.pierces_slow_immunity = true
+	var under_banner : Array[ModifierData] = [slow, piercing]
+	kit.check_near(ModifierManager.floor_slows(0.0, 20.0, [], [], under_banner, floor, 1.0, deep, true), 4.0,
+		"but not a harpoon's tether: 20 x 0.2 (the other slow does nothing)")
+	var plain_tether : ModifierData = _multiply(-0.5)
+	plain_tether.pierces_slow_immunity = true
+	var plain : Array[ModifierData] = [plain_tether]
+	kit.check_near(ModifierManager.floor_slows(0.0, 20.0, [], [], plain, floor, 1.0, deep, true), 10.0, "a Physical tether slows a bannered enemy too")
+
+
+## On a boss every slow counts at 75%, and the Frost tether stops at 20% (still the deepest slow there).
+func test_bosses_take_weaker_slows(kit : TestKit) -> void:
+	var share : float = ModifierManager.BOSS_SLOW_SHARE
+	var deep_floor : float = ModifierManager.BOSS_DEEP_SLOW_FLOOR
+	var slow : ModifierData = _multiply(-0.4)
+	var one : Array[ModifierData] = [slow]
+	kit.check_near(ModifierManager.floor_slows(12.0, 20.0, [], [], one, ModifierManager.SLOW_FLOOR, share, deep_floor), 14.0,
+		"a 40% slow is a 30% slow on a boss")
+	var tether : ModifierData = _multiply(-0.8)
+	tether.ignores_slow_floor = true
+	tether.pierces_slow_immunity = true
+	var both : Array[ModifierData] = [slow, slow, tether]
+	kit.check_near(ModifierManager.floor_slows(0.0, 20.0, [], [], both, ModifierManager.SLOW_FLOOR, share, deep_floor), 4.0,
+		"slows held at 9.8, the tether's full 80% takes it to 2, the boss floor keeps 4 (20%)")
+	var plain_tether : ModifierData = _multiply(-0.5)
+	plain_tether.pierces_slow_immunity = true
+	var plain : Array[ModifierData] = [plain_tether]
+	kit.check_near(ModifierManager.floor_slows(0.0, 20.0, [], [], plain, ModifierManager.SLOW_FLOOR, share, deep_floor), 10.0,
+		"a tether is not weakened on a boss: 50% stays 50%")
+
+
 func test_upgrades_after_the_element_add_potency(kit : TestKit) -> void:
 	await kit.load_level(1)
 	var bolter : Building = await _frost_bolter(kit)

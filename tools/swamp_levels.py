@@ -254,7 +254,7 @@ def level_23():
 
 GREEN_LAND = {"tile_set": None, "surround": "crossroads"}
 LEVELS = {
-    9: (level_10, [], GREEN_LAND),  # Crystal Deep: level 10 until the Broodmother moved to 12 (2026-11-24)
+    8: (level_10, [], GREEN_LAND),  # Crystal Deep: 10 until the Broodmother moved to 12 (2026-11-24), 9 until 2026-11-25
     16: (level_16, [(360, 8), (136, 24), (136, 72), (-56, 72), (-56, -72), (-216, -72), (-216, 72), (-344, 8)]),
     17: (level_17, [(360, -56), (264, -56), (200, 72), (104, 72), (104, -88), (-24, -88), (-56, 72), (-344, 104)]),
     18: (level_18, []),

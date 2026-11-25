@@ -28,6 +28,8 @@
 [ext_resource type="AudioStream" uid="uid://5pcbwijw2fh4" path="res://assets/audio/sfx/retro/upgrade_bought.ogg" id="s_upgrade"]
 [ext_resource type="AudioStream" uid="uid://be678emcltkic" path="res://assets/audio/sfx/kenney/wave_cleared.ogg" id="s_wave_cleared"]
 [ext_resource type="AudioStream" uid="uid://dtroiws7ubcbg" path="res://assets/audio/sfx/retro/wave_start.ogg" id="s_wave_start"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/kenney/early_start_ready.ogg" id="s_early_ready"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/kenney/early_start_coins.ogg" id="s_early_coins"]
 
 [resource]
 script = ExtResource("1_bank")
@@ -46,6 +48,8 @@ not_enough_gold = ExtResource("s_no_gold")
 card_hover = ExtResource("s_card_hover")
 wave_start = ExtResource("s_wave_start")
 wave_cleared = ExtResource("s_wave_cleared")
+early_start_ready = ExtResource("s_early_ready")
+early_start_coins = ExtResource("s_early_coins")
 castle_hit = ExtResource("s_castle")
 boss_arrives = ExtResource("s_boss")
 building_placed = ExtResource("s_placed")

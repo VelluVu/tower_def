@@ -5,7 +5,7 @@ extends RefCounted
 ## Prints measured damage per second (hits and effects apart), the average hit, the crit share,
 ## and how many hits kill the enemy at its real health.
 
-const TOWERS : PackedStringArray = ["puffe_bolter", "puffe_nova", "puffe_beamer", "puffe_mortar", "puffe_breather", "puffe_spotter", "puffe_harpooner", "puffe_hatchery", "leopard_trap", "egg_bomb"]
+const TOWERS : PackedStringArray = ["puffe_bolter", "puffe_nova", "puffe_beamer", "puffe_mortar", "puffe_breather", "puffe_spotter", "puffe_harpooner", "puffe_hatchery", "puffe_shredder", "puffe_elder", "leopard_trap", "egg_bomb", "spike_field"]
 const LEAF_NAMES : PackedStringArray = ["PhysicalElementEvolveLeaf", "FireElementEvolveLeaf", "FrostElementEvolveLeaf", "PoisonElementEvolveLeaf"]
 const MAIN_SCENE : String = "res://scenes/main.tscn"
 const TOWER_CELL : Vector2i = Vector2i(12, 6)
@@ -145,6 +145,9 @@ func _parse(args : PackedStringArray) -> Dictionary:
 
 #a Mortar cannot fire at its feet: the enemy stands just past its minimum range
 func _enemy_offset(building : Building) -> Vector2:
+	#a trap only fires on enemies standing on it
+	if building is Trap:
+		return Vector2.ZERO
 	if building is Tower and (building as Tower).min_range_tiles > 0.0:
 		return Vector2((building as Tower).min_range_tiles * Utils.TILE_SIZE + 8.0, 0.0)
 	return ENEMY_OFFSET

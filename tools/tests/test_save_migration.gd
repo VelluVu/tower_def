@@ -89,7 +89,7 @@ func test_v5_twelve_per_area(kit : TestKit) -> void:
 	data.level_talent_points = {9: 5, 10: 4, 15: 3, 16: 2, 19: 1}
 	wiring._migrate(data, 5)
 	kit.check(data.level_progress == 25, "Hydra's Mire (15) cleared: the first field level (25) is next")
-	kit.check(data.level_talent_points.get(8, 0) == 5, "Collapsed Tunnels stays 9, then 8 (version 8)")
+	kit.check(data.level_talent_points.get(9, 0) == 5, "Collapsed Tunnels stays 9, then 8 (version 8), then 9 again (version 9)")
 	kit.check(data.level_talent_points.get(10, 0) == 4, "Lakeshore Watch moves to 11, then 10 (version 8)")
 	kit.check(data.level_talent_points.get(24, 0) == 3, "Hydra's Mire moves to 24")
 	kit.check(data.level_talent_points.get(25, 0) == 2, "Wheatfield Road moves to 25")
@@ -108,8 +108,8 @@ func test_v7_moves_the_lair_to_12(kit : TestKit) -> void:
 	wiring._migrate(data, 7)
 	kit.check(data.level_progress == 20, "past the Caves: progress stays")
 	kit.check(data.level_talent_points.get(12, 0) == 5, "the lair's points move to 12")
-	kit.check(data.level_talent_points.get(8, 0) == 2 and data.level_talent_points.get(11, 0) == 4, "9-12 close up to 8-11")
-	kit.check(data.level_talent_points.get(7, 0) == 1 and data.level_talent_points.get(13, 0) == 3, "levels outside keep theirs")
+	kit.check(data.level_talent_points.get(9, 0) == 2 and data.level_talent_points.get(11, 0) == 4, "9-12 close up to 8-11 (8 swaps on to 9 in version 9)")
+	kit.check(data.level_talent_points.get(6, 0) == 1 and data.level_talent_points.get(13, 0) == 3, "levels outside keep theirs (7 swaps to 6 in version 9)")
 	kit.check((data.mode_talent_points[Utils.LevelMode.Hard] as Dictionary).get(12, 0) == 5, "Hard points move with the lair")
 	kit.check(data.survival_best_waves.get(12, 0) == 17, "and the Survival record")
 	wiring.free()
@@ -128,4 +128,21 @@ func test_v7_part_way_through_the_caves(kit : TestKit) -> void:
 	data.map_revealed_level = 8
 	wiring._migrate(data, 7)
 	kit.check(data.level_progress == 8, "the lair was next: now Collapsed Tunnels is, at the same number")
+	wiring.free()
+
+
+#(2026-11-25): the caves' new route swaps Bat Roost and Echo Crossing (6, 7), Collapsed Tunnels and Crystal Deep (8, 9)
+func test_v8_swaps_the_cave_levels(kit : TestKit) -> void:
+	var wiring : SaveWiring = SaveWiring.new()
+	var data : ProgressData = ProgressData.new()
+	data.level_progress = 8
+	data.map_revealed_level = 8
+	data.level_talent_points = {5: 3, 6: 5, 7: 2, 8: 4, 9: 1, 10: 3}
+	data.mode_talent_points = {Utils.LevelMode.Hard: {6: 4}}
+	wiring._migrate(data, 8)
+	kit.check(data.level_talent_points.get(7, 0) == 5 and data.level_talent_points.get(6, 0) == 2, "6 and 7 swap their points")
+	kit.check(data.level_talent_points.get(9, 0) == 4 and data.level_talent_points.get(8, 0) == 1, "so do 8 and 9")
+	kit.check(data.level_talent_points.get(5, 0) == 3 and data.level_talent_points.get(10, 0) == 3, "the rest keep theirs")
+	kit.check((data.mode_talent_points[Utils.LevelMode.Hard] as Dictionary).get(7, 0) == 4, "Hard points swap too")
+	kit.check(data.level_progress == 8 and data.map_revealed_level == 8, "6 and 7 cleared, 8 next: the same numbers")
 	wiring.free()

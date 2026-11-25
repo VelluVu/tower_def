@@ -34,6 +34,15 @@
 [ext_resource type="SpriteFrames" path="res://scenes/unit/evolve_tree/puffe_hoard_evolve/puffe_hoard_frames.tres" id="m_frames"]
 [ext_resource type="Script" path="res://scenes/unit/skills/skill.gd" id="b_skill"]
 [ext_resource type="PackedScene" path="res://scenes/unit/skills/skill_state_timers.tscn" id="b_timers"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/hoard_physical_t2.tres" id="tier_physical_t2"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/hoard_physical_t3.tres" id="tier_physical_t3"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/hoard_fire_t2.tres" id="tier_fire_t2"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/hoard_fire_t3.tres" id="tier_fire_t3"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/hoard_frost_t2.tres" id="tier_frost_t2"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/hoard_frost_t3.tres" id="tier_frost_t3"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/hoard_poison_t2.tres" id="tier_poison_t2"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/hoard_poison_t3.tres" id="tier_poison_t3"]
+[ext_resource type="Script" path="res://scenes/unit/evolve_tree/evolve_tier_data.gd" id="tier_script"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jxaqe"]
 size = Vector2(16, 16)
@@ -337,6 +346,7 @@ script = ExtResource("19_wcrsl")
 selected_icon = ExtResource("19_tlf38")
 icon = ExtResource("21_eqv60")
 info = "Silver: the pile shines, +1 gold a wave"
+tiers = Array[ExtResource("tier_script")]([ExtResource("tier_physical_t2"), ExtResource("tier_physical_t3")])
 
 [node name="EvolveBranch2" type="Node" parent="EvolveTree"]
 script = ExtResource("17_bv0np")
@@ -349,6 +359,7 @@ selected_icon = ExtResource("20_qaoyh")
 new_animated_sprite_scene = ExtResource("22_ll5c1")
 icon = ExtResource("19_ubw0q")
 info = "Fire: red gold, +1 gold a wave"
+tiers = Array[ExtResource("tier_script")]([ExtResource("tier_fire_t2"), ExtResource("tier_fire_t3")])
 
 [node name="EvolveBranch3" type="Node" parent="EvolveTree"]
 script = ExtResource("17_bv0np")
@@ -361,6 +372,7 @@ selected_icon = ExtResource("26_nwa4t")
 new_animated_sprite_scene = ExtResource("26_alotc")
 icon = ExtResource("31_t8h32")
 info = "Frost: ice-cold coins, +1 gold a wave"
+tiers = Array[ExtResource("tier_script")]([ExtResource("tier_frost_t2"), ExtResource("tier_frost_t3")])
 
 [node name="EvolveBranch4" type="Node" parent="EvolveTree"]
 script = ExtResource("17_bv0np")
@@ -373,6 +385,7 @@ selected_icon = ExtResource("29_pjst3")
 new_animated_sprite_scene = ExtResource("28_4x4pp")
 icon = ExtResource("36_5eit6")
 info = "Poison: a cursed hoard, +1 gold a wave"
+tiers = Array[ExtResource("tier_script")]([ExtResource("tier_poison_t2"), ExtResource("tier_poison_t3")])
 
 [node name="ModifierManager" type="Node" parent="."]
 script = ExtResource("40_o7aqn")

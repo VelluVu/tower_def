@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://c1enjneaho3e1"
+path="res://.godot/imported/banner_road.aseprite-5a35b97ad7bf79429361098bcb71e3db.res"
+
+[deps]
+
+source_file="res://assets/art/ui/map_landmarks/banner_road.aseprite"
+dest_files=["res://.godot/imported/banner_road.aseprite-5a35b97ad7bf79429361098bcb71e3db.res"]
+
+[params]
+

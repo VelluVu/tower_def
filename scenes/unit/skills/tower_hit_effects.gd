@@ -60,9 +60,14 @@ static func _execute(target : Enemy, tower : Building) -> void:
 	var below : float = tower.stats.get_stat_value(Utils.StatType.ExecuteBelow)
 	if below <= 0.0 or target.is_dead or target.is_boss:
 		return
+	#Torn and marked: the execute reaches higher on a shredded enemy
+	var torn : float = Synergies.get_execute_bonus(target)
 	var health : float = target.stats.get_stat_value(Utils.StatType.Health)
-	if health <= 0.0 or health >= target.stats.get_stat_value(Utils.StatType.MaxHealth) * below:
+	if health <= 0.0 or health >= target.stats.get_stat_value(Utils.StatType.MaxHealth) * (below + torn):
 		return
+	var is_torn_kill : bool = torn > 0.0 and health >= target.stats.get_stat_value(Utils.StatType.MaxHealth) * below
+	if is_torn_kill and target.level != null and target.level.synergies != null:
+		target.level.synergies.flash(&"torn", tower.global_position, target.global_position)
 	var finisher : DamageData = DamageData.new()
 	finisher.damage_type = Utils.DamageType.Physical
 	#past every resistance and shield: the whole rest of its health, as a splash so no hit effects come again

@@ -175,3 +175,32 @@ func test_fog_lifts_as_levels_are_revealed(kit : TestKit) -> void:
 	map.queue_free()
 	await kit.frames(1)
 	PlayerProgress._save.progress = saved
+
+
+#(the user, 2026-11-25: fog was left in the middle of the map) once an area's boss is beaten, the fog lifts from the
+#whole area, the gaps between its levels too; areas not finished keep theirs
+func test_finished_area_clears_its_fog(kit : TestKit) -> void:
+	var saved : ProgressData = PlayerProgress._save.progress
+	var progress : ProgressData = ProgressData.new()
+	progress.level_progress = 13
+	progress.map_revealed_level = 13
+	PlayerProgress._save.progress = progress
+	var started : int = Time.get_ticks_msec()
+	var map : GameWorldMap = load(MAP_SCENE).instantiate()
+	kit.root.add_child(map)
+	await kit.frames(3)
+	var opened_in : int = Time.get_ticks_msec() - started
+	var centres : Dictionary[int, Vector2] = {}
+	for element in map.map_level_elements:
+		centres[element.level_number] = element.position + element.size * 0.5
+	kit.check(map.fog.is_area_finished(0) and not map.fog.is_area_finished(1), "the Caves are finished, the Swamp is not")
+	#a spot among the cave levels but far from every node and trail: between levels 9, 10 and the lake
+	var between : Vector2 = (centres[7] + centres[9] + centres[11]) / 3.0
+	kit.check(map.fog.density_at(between) == 0.0, "the ground between the cave levels clears (%.2f)" % map.fog.density_at(between))
+	var swamp_middle : Vector2 = (centres[16] + centres[17] + centres[19]) / 3.0
+	kit.check(map.fog.density_at(swamp_middle) > 0.5, "the Swamp's middle stays fogged (%.2f)" % map.fog.density_at(swamp_middle))
+	kit.check(map.fog.density_at(Vector2(4, 4)) > 0.9, "the map's far corner stays misty")
+	kit.check(opened_in < 1500, "the map still opens quickly (%d ms)" % opened_in)
+	map.queue_free()
+	await kit.frames(1)
+	PlayerProgress._save.progress = saved

@@ -9,7 +9,8 @@
 
 Every run is muted (tools/mute_audio.flag), uses simulated time (--fixed-fps, so a 60 s walk
 takes a few seconds), has a timeout, and prints only the useful lines of Godot's output.
-Options: --timeout <s> (default 300), --raw (unfiltered output).
+Options: --timeout <s> (default 300), --raw (unfiltered output), --verbose (Godot's verbose log: names the objects
+leaked at exit; with --raw to see them).
 """
 import os
 import re
@@ -71,10 +72,14 @@ def filter_output(text):
     return "\n".join(l + (" (x%d)" % counts[l] if counts.get(l, 1) > 1 else "") for l in shown)
 
 
+# set by --verbose: every Godot run of this call logs verbosely
+VERBOSE = []
+
+
 def godot(args, timeout, raw=False, quiet_ok=False, silent=False):
     open(MUTE_FLAG, "w").close()
     try:
-        result = subprocess.run([GODOT, "--headless", "--path", PROJECT] + args,
+        result = subprocess.run([GODOT, "--headless", "--path", PROJECT] + VERBOSE + args,
                                 capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=timeout)
         output, code = result.stdout + result.stderr, result.returncode
     except subprocess.TimeoutExpired as e:
@@ -133,6 +138,9 @@ def main():
     if "--raw" in args:
         args.remove("--raw")
         raw = True
+    if "--verbose" in args:
+        args.remove("--verbose")
+        VERBOSE.append("--verbose")
     if not args:
         print(__doc__)
         return 1

@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://1fmlw4j52sex"
+path="res://.godot/imported/oasis_palms.aseprite-cad6d2dd090097f751c6cfa1ba091a0a.res"
+
+[deps]
+
+source_file="res://assets/art/ui/map_landmarks/oasis_palms.aseprite"
+dest_files=["res://.godot/imported/oasis_palms.aseprite-cad6d2dd090097f751c6cfa1ba091a0a.res"]
+
+[params]
+

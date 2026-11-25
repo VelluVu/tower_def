@@ -10,6 +10,10 @@ signal revealed
 ## Dot fill per area (MapLevelElement.area_of): Caves, Swamp, Wasted Lands, Ash Desert, Volcano.
 const AREA_COLORS : Array[Color] = [Color("ead4aa"), Color("63c74d"), Color("feae34"), Color("f77622"), Color("ffffff")]
 const OUTLINE_COLOR : Color = Color("3e2731")
+## An underground trail (MapLevelElement.trail_underground): dark dots with a faint rim, further apart.
+const TUNNEL_FILL : Color = Color("181425")
+const TUNNEL_OUTLINE : Color = Color(0.55, 0.61, 0.71, 0.55)
+const TUNNEL_SPACING : float = 16.0
 ## Map units (2 per art pixel): the dot's fill, its outline ring, the gap between dots, the room left round a node.
 const DOT_SIZE : float = 4.0
 const OUTLINE_WIDTH : float = 2.0
@@ -59,7 +63,7 @@ func _draw() -> void:
 		if previous == null or not element.visible or not previous.visible:
 			continue
 		var share : float = reveal_progress if level == revealing_level else 1.0
-		_draw_trail(_centre(previous), _centre(element), element.trail_via, AREA_COLORS[MapLevelElement.area_of(level)], share, level)
+		_draw_trail(_centre(previous), _centre(element), element, share, level)
 
 
 ## The path of the trail into `level` (from the previous level's node to this one's), in map units; empty when it has
@@ -78,10 +82,15 @@ func _centre(element : MapLevelElement) -> Vector2:
 	return element.position + element.size * 0.5
 
 
-func _draw_trail(from : Vector2, to : Vector2, via : PackedVector2Array, fill : Color, share : float, level : int) -> void:
+func _draw_trail(from : Vector2, to : Vector2, element : MapLevelElement, share : float, level : int) -> void:
 	var length : float = from.distance_to(to)
 	if length <= NODE_CLEARANCE * 2.0:
 		return
+	var via : PackedVector2Array = element.trail_via
+	var underground : bool = element.trail_underground
+	var fill : Color = TUNNEL_FILL if underground else AREA_COLORS[MapLevelElement.area_of(level)]
+	var outline : Color = TUNNEL_OUTLINE if underground else OUTLINE_COLOR
+	var spacing : float = TUNNEL_SPACING if underground else DOT_SPACING
 	var points : PackedVector2Array = _bowed(from, to, level) if via.is_empty() else _through(from, via, to)
 	var travelled : float = 0.0
 	var next_dot : float = NODE_CLEARANCE
@@ -91,8 +100,8 @@ func _draw_trail(from : Vector2, to : Vector2, via : PackedVector2Array, fill : 
 		var segment : float = points[i - 1].distance_to(points[i])
 		while next_dot <= travelled + segment and next_dot <= last:
 			var at : Vector2 = points[i - 1].lerp(points[i], (next_dot - travelled) / maxf(segment, 0.001))
-			_draw_dot(at, fill)
-			next_dot += DOT_SPACING
+			_draw_dot(at, fill, outline)
+			next_dot += spacing
 		travelled += segment
 
 
@@ -132,7 +141,7 @@ func _polyline_length(points : PackedVector2Array) -> float:
 
 
 #on whole art pixels (2 map units), so the dots sit on the map's pixel grid
-func _draw_dot(at : Vector2, fill : Color) -> void:
+func _draw_dot(at : Vector2, fill : Color, outline : Color) -> void:
 	var corner : Vector2 = (at / 2.0).floor() * 2.0 - Vector2.ONE * DOT_SIZE * 0.5
-	draw_rect(Rect2(corner - Vector2.ONE * OUTLINE_WIDTH, Vector2.ONE * (DOT_SIZE + OUTLINE_WIDTH * 2.0)), OUTLINE_COLOR)
+	draw_rect(Rect2(corner - Vector2.ONE * OUTLINE_WIDTH, Vector2.ONE * (DOT_SIZE + OUTLINE_WIDTH * 2.0)), outline)
 	draw_rect(Rect2(corner, Vector2.ONE * DOT_SIZE), fill)

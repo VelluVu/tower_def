@@ -118,7 +118,8 @@ func test_bosses_and_flyers(kit : TestKit) -> void:
 	guard._engage(guard._find_enemy())
 	kit.check(guard.enemy == boss, "a guard claws at a boss")
 	kit.check(not is_instance_valid(boss.held_by), "but never holds it")
-	kit.check_near(boss.stats.get_stat_value(Utils.StatType.Speed), speed * (1.0 - HatcheryGuard.BOSS_SLOW), "only slows it")
+	#slows count at BOSS_SLOW_SHARE on a boss (2026-11-25)
+	kit.check_near(boss.stats.get_stat_value(Utils.StatType.Speed), speed * (1.0 - HatcheryGuard.BOSS_SLOW * ModifierManager.BOSS_SLOW_SHARE), "only slows it")
 	guard._release()
 	kit.check_near(boss.stats.get_stat_value(Utils.StatType.Speed), speed, "and the slow goes when it lets go")
 	for enemy in [flyer, boss]:

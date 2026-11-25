@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://ch5deklpgl5ni"
+path="res://.godot/imported/hydra_heads.aseprite-4310bee12c70d5afd81df1bae0676c37.res"
+
+[deps]
+
+source_file="res://assets/art/ui/map_landmarks/hydra_heads.aseprite"
+dest_files=["res://.godot/imported/hydra_heads.aseprite-4310bee12c70d5afd81df1bae0676c37.res"]
+
+[params]
+

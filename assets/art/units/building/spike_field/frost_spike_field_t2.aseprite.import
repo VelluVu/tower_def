@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://ewe0a1g00gj4"
+path="res://.godot/imported/frost_spike_field_t2.aseprite-7c11ae3d23c8a631e1cd3b11aaa7a3c4.res"
+
+[deps]
+
+source_file="res://assets/art/units/building/spike_field/frost_spike_field_t2.aseprite"
+dest_files=["res://.godot/imported/frost_spike_field_t2.aseprite-7c11ae3d23c8a631e1cd3b11aaa7a3c4.res"]
+
+[params]
+

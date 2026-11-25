@@ -22,7 +22,7 @@ effects = Array[ExtResource("3_effect")]([SubResource("Effect_war_chest_0")])
 
 [sub_resource type="Resource" id="Effect_hardened_shots_0"]
 script = ExtResource("3_effect")
-buildings = 423
+buildings = 49575
 elements = 1
 modify_type = 1
 value_per_rank = 0.08
@@ -35,7 +35,7 @@ description = "Physical tower damage +8%"
 max_rank = 3
 position = Vector2(5.2, 27)
 color = Color(0.91, 0.933, 0.949, 1)
-links = Array[StringName]([&"keen_eye", &"spotter_keen_sight", &"mortar_stone_shells", &"breather_mighty_roar"])
+links = Array[StringName]([&"keen_eye", &"spotter_keen_sight", &"mortar_stone_shells", &"breather_mighty_roar", &"elder_drake_ancient_might", &"shredder_iron_rasp"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_hardened_shots_0")])
 
 [sub_resource type="Resource" id="Effect_keen_eye_0"]
@@ -397,7 +397,7 @@ effects = Array[ExtResource("3_effect")]([SubResource("Effect_dragons_maze_level
 
 [sub_resource type="Resource" id="Effect_sharp_teeth_0"]
 script = ExtResource("3_effect")
-buildings = 3592
+buildings = 7688
 elements = 1
 modify_type = 1
 value_per_rank = 0.1
@@ -406,11 +406,11 @@ value_per_rank = 0.1
 script = ExtResource("2_node")
 id = &"sharp_teeth"
 display_name = "Sharp Teeth"
-description = "Trap, Harpooner, Hatchery and Egg Bomb damage +10%"
+description = "Trap, Spike Field, Harpooner, Hatchery and Egg Bomb damage +10%"
 max_rank = 3
 position = Vector2(8.5, 25.6)
 color = Color(0.878, 0.541, 0.235, 1)
-links = Array[StringName]([&"cheap_snares", &"quick_springs", &"egg_bomb_hard_shell", &"harpooner_barbed_hooks", &"hatchery_vitamin_feed"])
+links = Array[StringName]([&"cheap_snares", &"quick_springs", &"egg_bomb_hard_shell", &"harpooner_barbed_hooks", &"hatchery_vitamin_feed", &"spike_field_iron_spikes"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_sharp_teeth_0")])
 
 [sub_resource type="Resource" id="Node_cheap_snares"]
@@ -603,7 +603,7 @@ description = "+1 gold when a wave is cleared"
 max_rank = 3
 position = Vector2(11.6, 25.6)
 color = Color(0.949, 0.757, 0.306, 1)
-links = Array[StringName]([&"haggling", &"narrow_ways"])
+links = Array[StringName]([&"haggling", &"narrow_ways", &"hoard_keeper_bigger_pile"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_spoils_level")])
 
 [sub_resource type="Resource" id="Effect_haggling_level"]
@@ -2250,9 +2250,619 @@ kind = 3
 position = Vector2(34, 11.4)
 color = Color(0.652, 0.684, 0.745, 1)
 
+[sub_resource type="Resource" id="Effect_elder_drake_ancient_might_0"]
+script = ExtResource("3_effect")
+buildings = 32768
+elements = 1
+modify_type = 1
+value_per_rank = 0.08
+
+[sub_resource type="Resource" id="Node_elder_drake_ancient_might"]
+script = ExtResource("2_node")
+id = &"elder_drake_ancient_might"
+display_name = "Ancient Might"
+description = "Physical Elder Drake damage +8%"
+max_rank = 3
+position = Vector2(-14, 24.8)
+color = Color(0.969, 0.959, 1, 1)
+links = Array[StringName]([&"elder_drake_long_neck"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_elder_drake_ancient_might_0")])
+
+[sub_resource type="Resource" id="Effect_elder_drake_long_neck_0"]
+script = ExtResource("3_effect")
+buildings = 32768
+elements = 1
+stat_type = 5
+modify_type = 0
+value_per_rank = 0.2
+
+[sub_resource type="Resource" id="Node_elder_drake_long_neck"]
+script = ExtResource("2_node")
+id = &"elder_drake_long_neck"
+display_name = "Long Neck"
+description = "Physical Elder Drake range +0.2 tiles"
+max_rank = 2
+position = Vector2(-14, 22.6)
+color = Color(0.969, 0.959, 1, 1)
+links = Array[StringName]([&"elder_drake_t2"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_elder_drake_long_neck_0")])
+
+[sub_resource type="Resource" id="TalentEffect_unlock_elder_drake_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 32768
+elements = 1
+
+[sub_resource type="Resource" id="Node_elder_drake_t2"]
+script = ExtResource("2_node")
+id = &"elder_drake_t2"
+display_name = "Elder Drake T2"
+description = "Unlocks Physical Elder Drake T2"
+kind = 2
+position = Vector2(-14, 20.4)
+color = Color(0.969, 0.959, 1, 1)
+links = Array[StringName]([&"elder_drake_old_scales", &"elder_drake_old_fury"])
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_elder_drake_t2")])
+
+[sub_resource type="Resource" id="Node_elder_drake_old_scales"]
+script = ExtResource("2_node")
+id = &"elder_drake_old_scales"
+display_name = "Old Scales"
+description = "Elder Drake health +15%"
+max_rank = 3
+position = Vector2(-14.9, 18.2)
+color = Color(0.969, 0.959, 1, 1)
+links = Array[StringName]([&"elder_drake_wide_breath"])
+
+[sub_resource type="Resource" id="Node_elder_drake_wide_breath"]
+script = ExtResource("2_node")
+id = &"elder_drake_wide_breath"
+display_name = "Wide Breath"
+description = "The Elder Drake's breath line is 3 px wider on each side"
+max_rank = 2
+position = Vector2(-14.9, 16)
+color = Color(0.969, 0.959, 1, 1)
+links = Array[StringName]([&"elder_drake_crushing_jaws"])
+
+[sub_resource type="Resource" id="Effect_elder_drake_crushing_jaws_0"]
+script = ExtResource("3_effect")
+buildings = 32768
+elements = 1
+stat_type = 8
+modify_type = 0
+value_per_rank = 0.25
+
+[sub_resource type="Resource" id="Node_elder_drake_crushing_jaws"]
+script = ExtResource("2_node")
+id = &"elder_drake_crushing_jaws"
+display_name = "Crushing Jaws"
+description = "Physical Elder Drake critical multiplier +0.25"
+max_rank = 2
+position = Vector2(-14.9, 13.8)
+color = Color(0.969, 0.959, 1, 1)
+links = Array[StringName]([&"elder_drake_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_elder_drake_crushing_jaws_0")])
+
+[sub_resource type="Resource" id="Effect_elder_drake_old_fury_0"]
+script = ExtResource("3_effect")
+buildings = 32768
+elements = 1
+stat_type = 6
+modify_type = 0
+value_per_rank = 0.03
+
+[sub_resource type="Resource" id="Node_elder_drake_old_fury"]
+script = ExtResource("2_node")
+id = &"elder_drake_old_fury"
+display_name = "Old Fury"
+description = "Physical Elder Drake attack speed +0.03"
+max_rank = 3
+position = Vector2(-13.1, 18.2)
+color = Color(0.969, 0.959, 1, 1)
+links = Array[StringName]([&"elder_drake_second_wind"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_elder_drake_old_fury_0")])
+
+[sub_resource type="Resource" id="Node_elder_drake_second_wind"]
+script = ExtResource("2_node")
+id = &"elder_drake_second_wind"
+display_name = "Second Wind"
+description = "The breath is ready again 20 s into a wave"
+max_rank = 2
+position = Vector2(-13.1, 16)
+color = Color(0.969, 0.959, 1, 1)
+links = Array[StringName]([&"elder_drake_armour_biter"])
+
+[sub_resource type="Resource" id="Effect_elder_drake_armour_biter_0"]
+script = ExtResource("3_effect")
+buildings = 32768
+elements = 1
+stat_type = 18
+modify_type = 0
+value_per_rank = 0.05
+
+[sub_resource type="Resource" id="Node_elder_drake_armour_biter"]
+script = ExtResource("2_node")
+id = &"elder_drake_armour_biter"
+display_name = "Armour Biter"
+description = "Physical Elder Drake resistance penetration +5%"
+max_rank = 2
+position = Vector2(-13.1, 13.8)
+color = Color(0.969, 0.959, 1, 1)
+links = Array[StringName]([&"elder_drake_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_elder_drake_armour_biter_0")])
+
+[sub_resource type="Resource" id="TalentEffect_unlock_elder_drake_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 32768
+elements = 1
+
+[sub_resource type="Resource" id="Node_elder_drake_t3"]
+script = ExtResource("2_node")
+id = &"elder_drake_t3"
+display_name = "Elder Drake T3"
+description = "Unlocks Physical Elder Drake T3"
+kind = 2
+position = Vector2(-14, 11.6)
+color = Color(0.969, 0.959, 1, 1)
+links = Array[StringName]([&"elder_drake_elder_s_roar"])
+one_way_links = Array[StringName]([&"dragons_keep"])
+needs = &"elder_drake_t2"
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_elder_drake_t3")])
+
+[sub_resource type="Resource" id="Node_elder_drake_elder_s_roar"]
+script = ExtResource("2_node")
+id = &"elder_drake_elder_s_roar"
+display_name = "Elder's Roar"
+description = "The breath knocks every enemy it hits 2 cells back (not bosses)"
+kind = 3
+position = Vector2(-14, 9.4)
+color = Color(0.969, 0.959, 1, 1)
+
+[sub_resource type="Resource" id="Effect_shredder_iron_rasp_0"]
+script = ExtResource("3_effect")
+buildings = 16384
+elements = 1
+modify_type = 1
+value_per_rank = 0.08
+
+[sub_resource type="Resource" id="Node_shredder_iron_rasp"]
+script = ExtResource("2_node")
+id = &"shredder_iron_rasp"
+display_name = "Iron Rasp"
+description = "Physical Shredder damage +8%"
+max_rank = 3
+position = Vector2(-17.5, 24.8)
+color = Color(0.978, 0.959, 1, 1)
+links = Array[StringName]([&"shredder_wide_rasp"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_shredder_iron_rasp_0")])
+
+[sub_resource type="Resource" id="Effect_shredder_wide_rasp_0"]
+script = ExtResource("3_effect")
+buildings = 16384
+elements = 1
+stat_type = 5
+modify_type = 0
+value_per_rank = 0.2
+
+[sub_resource type="Resource" id="Node_shredder_wide_rasp"]
+script = ExtResource("2_node")
+id = &"shredder_wide_rasp"
+display_name = "Wide Rasp"
+description = "Physical Shredder range +0.2 tiles"
+max_rank = 2
+position = Vector2(-17.5, 22.6)
+color = Color(0.978, 0.959, 1, 1)
+links = Array[StringName]([&"shredder_t2"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_shredder_wide_rasp_0")])
+
+[sub_resource type="Resource" id="TalentEffect_unlock_shredder_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 16384
+elements = 1
+
+[sub_resource type="Resource" id="Node_shredder_t2"]
+script = ExtResource("2_node")
+id = &"shredder_t2"
+display_name = "Shredder T2"
+description = "Unlocks Physical Shredder T2"
+kind = 2
+position = Vector2(-17.5, 20.4)
+color = Color(0.978, 0.959, 1, 1)
+links = Array[StringName]([&"shredder_sawteeth", &"shredder_fast_rasp"])
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_shredder_t2")])
+
+[sub_resource type="Resource" id="Node_shredder_sawteeth"]
+script = ExtResource("2_node")
+id = &"shredder_sawteeth"
+display_name = "Sawteeth"
+description = "Shredded enemies take 5% more Physical damage for each shred stack"
+max_rank = 2
+position = Vector2(-18.4, 18.2)
+color = Color(0.978, 0.959, 1, 1)
+links = Array[StringName]([&"shredder_deep_cuts"])
+
+[sub_resource type="Resource" id="Node_shredder_deep_cuts"]
+script = ExtResource("2_node")
+id = &"shredder_deep_cuts"
+display_name = "Deep Cuts"
+description = "Shred stacks last 1 s longer"
+max_rank = 2
+position = Vector2(-18.4, 16)
+color = Color(0.978, 0.959, 1, 1)
+links = Array[StringName]([&"shredder_ripping"])
+
+[sub_resource type="Resource" id="Effect_shredder_ripping_0"]
+script = ExtResource("3_effect")
+buildings = 16384
+elements = 1
+stat_type = 18
+modify_type = 0
+value_per_rank = 0.05
+
+[sub_resource type="Resource" id="Node_shredder_ripping"]
+script = ExtResource("2_node")
+id = &"shredder_ripping"
+display_name = "Ripping"
+description = "Physical Shredder resistance penetration +5%"
+max_rank = 2
+position = Vector2(-18.4, 13.8)
+color = Color(0.978, 0.959, 1, 1)
+links = Array[StringName]([&"shredder_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_shredder_ripping_0")])
+
+[sub_resource type="Resource" id="Effect_shredder_fast_rasp_0"]
+script = ExtResource("3_effect")
+buildings = 16384
+elements = 1
+stat_type = 6
+modify_type = 0
+value_per_rank = 0.04
+
+[sub_resource type="Resource" id="Node_shredder_fast_rasp"]
+script = ExtResource("2_node")
+id = &"shredder_fast_rasp"
+display_name = "Fast Rasp"
+description = "Physical Shredder attack speed +0.04"
+max_rank = 3
+position = Vector2(-16.6, 18.2)
+color = Color(0.978, 0.959, 1, 1)
+links = Array[StringName]([&"shredder_fourth_stack"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_shredder_fast_rasp_0")])
+
+[sub_resource type="Resource" id="Node_shredder_fourth_stack"]
+script = ExtResource("2_node")
+id = &"shredder_fourth_stack"
+display_name = "Fourth Stack"
+description = "Shred stacks up to 4 times"
+position = Vector2(-16.6, 16)
+color = Color(0.978, 0.959, 1, 1)
+links = Array[StringName]([&"shredder_steel_collar"])
+
+[sub_resource type="Resource" id="Node_shredder_steel_collar"]
+script = ExtResource("2_node")
+id = &"shredder_steel_collar"
+display_name = "Steel Collar"
+description = "Shredder health +15%"
+max_rank = 3
+position = Vector2(-16.6, 13.8)
+color = Color(0.978, 0.959, 1, 1)
+links = Array[StringName]([&"shredder_t3"])
+
+[sub_resource type="Resource" id="TalentEffect_unlock_shredder_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 16384
+elements = 1
+
+[sub_resource type="Resource" id="Node_shredder_t3"]
+script = ExtResource("2_node")
+id = &"shredder_t3"
+display_name = "Shredder T3"
+description = "Unlocks Physical Shredder T3"
+kind = 2
+position = Vector2(-17.5, 11.6)
+color = Color(0.978, 0.959, 1, 1)
+links = Array[StringName]([&"shredder_flay"])
+one_way_links = Array[StringName]([&"dragons_keep"])
+needs = &"shredder_t2"
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_shredder_t3")])
+
+[sub_resource type="Resource" id="Node_shredder_flay"]
+script = ExtResource("2_node")
+id = &"shredder_flay"
+display_name = "Flay"
+description = "Shredded enemies lose their elite affix's armour: Shielded elites lose their shield at three stacks"
+kind = 3
+position = Vector2(-17.5, 9.4)
+color = Color(0.978, 0.959, 1, 1)
+
+[sub_resource type="Resource" id="Effect_spike_field_iron_spikes_0"]
+script = ExtResource("3_effect")
+buildings = 4096
+elements = 1
+modify_type = 1
+value_per_rank = 0.08
+
+[sub_resource type="Resource" id="Node_spike_field_iron_spikes"]
+script = ExtResource("2_node")
+id = &"spike_field_iron_spikes"
+display_name = "Iron Spikes"
+description = "Physical Spike Field damage +8%"
+max_rank = 3
+position = Vector2(41, 24.8)
+color = Color(0.729, 0.948, 0.254, 1)
+links = Array[StringName]([&"spike_field_quick_spikes"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_spike_field_iron_spikes_0")])
+
+[sub_resource type="Resource" id="Effect_spike_field_quick_spikes_0"]
+script = ExtResource("3_effect")
+buildings = 4096
+elements = 1
+stat_type = 6
+modify_type = 0
+value_per_rank = 0.04
+
+[sub_resource type="Resource" id="Node_spike_field_quick_spikes"]
+script = ExtResource("2_node")
+id = &"spike_field_quick_spikes"
+display_name = "Quick Spikes"
+description = "Physical Spike Field attack speed +0.04"
+max_rank = 3
+position = Vector2(41, 22.6)
+color = Color(0.729, 0.948, 0.254, 1)
+links = Array[StringName]([&"spike_field_t2"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_spike_field_quick_spikes_0")])
+
+[sub_resource type="Resource" id="TalentEffect_unlock_spike_field_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 4096
+elements = 1
+
+[sub_resource type="Resource" id="Node_spike_field_t2"]
+script = ExtResource("2_node")
+id = &"spike_field_t2"
+display_name = "Spike Field T2"
+description = "Unlocks Physical Spike Field T2"
+kind = 2
+position = Vector2(41, 20.4)
+color = Color(0.729, 0.948, 0.254, 1)
+links = Array[StringName]([&"spike_field_barbs", &"spike_field_cheap_planks"])
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_spike_field_t2")])
+
+[sub_resource type="Resource" id="Node_spike_field_barbs"]
+script = ExtResource("2_node")
+id = &"spike_field_barbs"
+display_name = "Barbs"
+description = "Spike Field slow +5 points"
+max_rank = 2
+position = Vector2(40.1, 18.2)
+color = Color(0.729, 0.948, 0.254, 1)
+links = Array[StringName]([&"spike_field_lingering_wounds"])
+
+[sub_resource type="Resource" id="Node_spike_field_lingering_wounds"]
+script = ExtResource("2_node")
+id = &"spike_field_lingering_wounds"
+display_name = "Lingering Wounds"
+description = "Struck enemies stay slowed 0.5 s longer"
+max_rank = 2
+position = Vector2(40.1, 16)
+color = Color(0.729, 0.948, 0.254, 1)
+links = Array[StringName]([&"spike_field_serrated"])
+
+[sub_resource type="Resource" id="Effect_spike_field_serrated_0"]
+script = ExtResource("3_effect")
+buildings = 4096
+elements = 1
+stat_type = 7
+modify_type = 0
+value_per_rank = 0.04
+
+[sub_resource type="Resource" id="Node_spike_field_serrated"]
+script = ExtResource("2_node")
+id = &"spike_field_serrated"
+display_name = "Serrated"
+description = "Physical Spike Field critical chance +4 points"
+max_rank = 2
+position = Vector2(40.1, 13.8)
+color = Color(0.729, 0.948, 0.254, 1)
+links = Array[StringName]([&"spike_field_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_spike_field_serrated_0")])
+
+[sub_resource type="Resource" id="Node_spike_field_cheap_planks"]
+script = ExtResource("2_node")
+id = &"spike_field_cheap_planks"
+display_name = "Cheap Planks"
+description = "Spike Fields cost 1 gold less"
+max_rank = 2
+position = Vector2(41.9, 18.2)
+color = Color(0.729, 0.948, 0.254, 1)
+links = Array[StringName]([&"spike_field_sharpened"])
+
+[sub_resource type="Resource" id="Effect_spike_field_sharpened_0"]
+script = ExtResource("3_effect")
+buildings = 4096
+elements = 1
+stat_type = 18
+modify_type = 0
+value_per_rank = 0.05
+
+[sub_resource type="Resource" id="Node_spike_field_sharpened"]
+script = ExtResource("2_node")
+id = &"spike_field_sharpened"
+display_name = "Sharpened"
+description = "Physical Spike Field resistance penetration +5%"
+max_rank = 2
+position = Vector2(41.9, 16)
+color = Color(0.729, 0.948, 0.254, 1)
+links = Array[StringName]([&"spike_field_bleeding_feet"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_spike_field_sharpened_0")])
+
+[sub_resource type="Resource" id="Node_spike_field_bleeding_feet"]
+script = ExtResource("2_node")
+id = &"spike_field_bleeding_feet"
+display_name = "Bleeding Feet"
+description = "Struck enemies bleed for 20% of the hit over 2 s"
+max_rank = 2
+position = Vector2(41.9, 13.8)
+color = Color(0.729, 0.948, 0.254, 1)
+links = Array[StringName]([&"spike_field_t3"])
+
+[sub_resource type="Resource" id="TalentEffect_unlock_spike_field_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 4096
+elements = 1
+
+[sub_resource type="Resource" id="Node_spike_field_t3"]
+script = ExtResource("2_node")
+id = &"spike_field_t3"
+display_name = "Spike Field T3"
+description = "Unlocks Physical Spike Field T3"
+kind = 2
+position = Vector2(41, 11.6)
+color = Color(0.729, 0.948, 0.254, 1)
+links = Array[StringName]([&"spike_field_caltrops"])
+one_way_links = Array[StringName]([&"dragons_keep"])
+needs = &"spike_field_t2"
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_spike_field_t3")])
+
+[sub_resource type="Resource" id="Node_spike_field_caltrops"]
+script = ExtResource("2_node")
+id = &"spike_field_caltrops"
+display_name = "Caltrops"
+description = "Spike Fields can be built on the road next to each other: each one adds 5% to the others' damage"
+kind = 3
+position = Vector2(41, 9.4)
+color = Color(0.729, 0.948, 0.254, 1)
+
+[sub_resource type="Resource" id="Node_hoard_keeper_bigger_pile"]
+script = ExtResource("2_node")
+id = &"hoard_keeper_bigger_pile"
+display_name = "Bigger Pile"
+description = "The first Hoard Keeper pays +1 gold a wave per rank"
+max_rank = 2
+position = Vector2(44.5, 24.8)
+color = Color(0.918, 1, 0.322, 1)
+links = Array[StringName]([&"hoard_keeper_gilded_scales"])
+
+[sub_resource type="Resource" id="Node_hoard_keeper_gilded_scales"]
+script = ExtResource("2_node")
+id = &"hoard_keeper_gilded_scales"
+display_name = "Gilded Scales"
+description = "Hoard Keeper health +25%"
+max_rank = 2
+position = Vector2(44.5, 22.6)
+color = Color(0.918, 1, 0.322, 1)
+links = Array[StringName]([&"hoard_keeper_t2"])
+
+[sub_resource type="Resource" id="TalentEffect_unlock_hoard_keeper_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 8192
+elements = 15
+
+[sub_resource type="Resource" id="Node_hoard_keeper_t2"]
+script = ExtResource("2_node")
+id = &"hoard_keeper_t2"
+display_name = "Hoard Keeper T2"
+description = "Unlocks Hoard Keeper T2 for every element"
+kind = 2
+position = Vector2(44.5, 20.4)
+color = Color(0.918, 1, 0.322, 1)
+links = Array[StringName]([&"hoard_keeper_coin_counter", &"hoard_keeper_third_purse"])
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_hoard_keeper_t2")])
+
+[sub_resource type="Resource" id="Node_hoard_keeper_coin_counter"]
+script = ExtResource("2_node")
+id = &"hoard_keeper_coin_counter"
+display_name = "Coin Counter"
+description = "Hoard Keeper upgrades cost 10% less"
+max_rank = 2
+position = Vector2(43.6, 18.2)
+color = Color(0.918, 1, 0.322, 1)
+links = Array[StringName]([&"hoard_keeper_interest"])
+
+[sub_resource type="Resource" id="Node_hoard_keeper_interest"]
+script = ExtResource("2_node")
+id = &"hoard_keeper_interest"
+display_name = "Interest"
+description = "Each Keeper pays +1 gold at a cleared wave while you hold 30 gold or more"
+max_rank = 2
+position = Vector2(43.6, 16)
+color = Color(0.918, 1, 0.322, 1)
+links = Array[StringName]([&"hoard_keeper_tithe"])
+
+[sub_resource type="Resource" id="Node_hoard_keeper_tithe"]
+script = ExtResource("2_node")
+id = &"hoard_keeper_tithe"
+display_name = "Tithe"
+description = "Keepers pay +1 gold at a wave cleared without losing a life"
+position = Vector2(43.6, 13.8)
+color = Color(0.918, 1, 0.322, 1)
+links = Array[StringName]([&"hoard_keeper_t3"])
+
+[sub_resource type="Resource" id="Node_hoard_keeper_third_purse"]
+script = ExtResource("2_node")
+id = &"hoard_keeper_third_purse"
+display_name = "Third Purse"
+description = "A third Hoard Keeper pays in full"
+position = Vector2(45.4, 18.2)
+color = Color(0.918, 1, 0.322, 1)
+links = Array[StringName]([&"hoard_keeper_lucky_coin"])
+
+[sub_resource type="Resource" id="Node_hoard_keeper_lucky_coin"]
+script = ExtResource("2_node")
+id = &"hoard_keeper_lucky_coin"
+display_name = "Lucky Coin"
+description = "Every 3rd cleared wave a Keeper pays +2 gold"
+max_rank = 2
+position = Vector2(45.4, 16)
+color = Color(0.918, 1, 0.322, 1)
+links = Array[StringName]([&"hoard_keeper_hoard_sense"])
+
+[sub_resource type="Resource" id="Node_hoard_keeper_hoard_sense"]
+script = ExtResource("2_node")
+id = &"hoard_keeper_hoard_sense"
+display_name = "Hoard Sense"
+description = "A Keeper's pay shows above it while you build"
+position = Vector2(45.4, 13.8)
+color = Color(0.918, 1, 0.322, 1)
+links = Array[StringName]([&"hoard_keeper_t3"])
+
+[sub_resource type="Resource" id="TalentEffect_unlock_hoard_keeper_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 8192
+elements = 15
+
+[sub_resource type="Resource" id="Node_hoard_keeper_t3"]
+script = ExtResource("2_node")
+id = &"hoard_keeper_t3"
+display_name = "Hoard Keeper T3"
+description = "Unlocks Hoard Keeper T3 for every element"
+kind = 2
+position = Vector2(44.5, 11.6)
+color = Color(0.918, 1, 0.322, 1)
+links = Array[StringName]([&"hoard_keeper_dragon_s_hoard"])
+one_way_links = Array[StringName]([&"dragons_keep"])
+needs = &"hoard_keeper_t2"
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_hoard_keeper_t3")])
+
+[sub_resource type="Resource" id="Node_hoard_keeper_dragon_s_hoard"]
+script = ExtResource("2_node")
+id = &"hoard_keeper_dragon_s_hoard"
+display_name = "Dragon's Hoard"
+description = "Each Keeper's pay grows by 1 gold for every 4 waves cleared"
+kind = 3
+position = Vector2(44.5, 9.4)
+color = Color(0.918, 1, 0.322, 1)
+
 [resource]
 script = ExtResource("1_tree")
 id = &"building"
 display_name = "Building"
 start_id = &"war_chest"
-nodes = Array[ExtResource("2_node")]([SubResource("Node_war_chest"), SubResource("Node_hardened_shots"), SubResource("Node_keen_eye"), SubResource("Node_heavy_hits"), SubResource("Node_long_sight"), SubResource("Node_phys_t2"), SubResource("Node_piercing"), SubResource("Node_swift_wings"), SubResource("Node_phys_t3"), SubResource("Node_shatter"), SubResource("Node_thick_walls"), SubResource("Node_stone_blocks"), SubResource("Node_fortress_t1"), SubResource("Node_masonry"), SubResource("Node_reinforced_core"), SubResource("Node_fortress_t2"), SubResource("Node_fortress_t3"), SubResource("Node_mending"), SubResource("Node_iron_bands"), SubResource("Node_warded_stones"), SubResource("Node_rebuild"), SubResource("Node_dragons_keep"), SubResource("Node_dragons_maze"), SubResource("Node_sharp_teeth"), SubResource("Node_cheap_snares"), SubResource("Node_leopard_t1"), SubResource("Node_hidden_jaws"), SubResource("Node_quick_springs"), SubResource("Node_big_game"), SubResource("Node_titan_claws"), SubResource("Node_rend"), SubResource("Node_leopard_t2"), SubResource("Node_deep_wounds"), SubResource("Node_lingering_wounds"), SubResource("Node_open_wounds"), SubResource("Node_leopard_t3"), SubResource("Node_pack_hunt"), SubResource("Node_spoils"), SubResource("Node_haggling"), SubResource("Node_salvage"), SubResource("Node_narrow_ways"), SubResource("Node_sharp_corners"), SubResource("Node_labyrinth"), SubResource("Node_scholar"), SubResource("Node_bold_start"), SubResource("Node_second_thoughts"), SubResource("Node_hoard"), SubResource("Node_honed_claws"), SubResource("Node_quick_talons"), SubResource("Node_deadeye"), SubResource("Node_stalker"), SubResource("Node_spring_steel"), SubResource("Node_savage_bite"), SubResource("Node_apex_hunter"), SubResource("Node_ambush"), SubResource("Node_pride_leader"), SubResource("Node_buttress"), SubResource("Node_spiked_stones"), SubResource("Node_stubborn_stone"), SubResource("Node_bastion"), SubResource("Node_deep_foundations"), SubResource("Node_fortress_t4"), SubResource("Node_maze_switchbacks"), SubResource("Node_maze_dead_ends"), SubResource("Node_maze_long_way_round"), SubResource("Node_maze_killing_corridor"), SubResource("Node_spotter_keen_sight"), SubResource("Node_spotter_spotter_s_perch"), SubResource("Node_spotter_t2"), SubResource("Node_spotter_armour_piercer"), SubResource("Node_spotter_called_shot"), SubResource("Node_spotter_weak_spot"), SubResource("Node_spotter_steady_aim"), SubResource("Node_spotter_headhunter"), SubResource("Node_spotter_heavy_bolt"), SubResource("Node_spotter_t3"), SubResource("Node_spotter_execution"), SubResource("Node_mortar_stone_shells"), SubResource("Node_mortar_long_lob"), SubResource("Node_mortar_t2"), SubResource("Node_mortar_wide_shells"), SubResource("Node_mortar_concussion"), SubResource("Node_mortar_rubble"), SubResource("Node_mortar_quick_loader"), SubResource("Node_mortar_big_charge"), SubResource("Node_mortar_heavy_shells"), SubResource("Node_mortar_t3"), SubResource("Node_mortar_earthshaker"), SubResource("Node_breather_mighty_roar"), SubResource("Node_breather_deep_lungs"), SubResource("Node_breather_t2"), SubResource("Node_breather_wide_roar"), SubResource("Node_breather_deafening_roar"), SubResource("Node_breather_shove"), SubResource("Node_breather_steady_breath"), SubResource("Node_breather_terrify"), SubResource("Node_breather_rending_roar"), SubResource("Node_breather_t3"), SubResource("Node_breather_dragon_s_roar"), SubResource("Node_egg_bomb_hard_shell"), SubResource("Node_egg_bomb_quick_hatch"), SubResource("Node_egg_bomb_t2"), SubResource("Node_egg_bomb_wide_blast"), SubResource("Node_egg_bomb_shrapnel_shell"), SubResource("Node_egg_bomb_big_egg"), SubResource("Node_egg_bomb_short_fuse"), SubResource("Node_egg_bomb_stunning_blast"), SubResource("Node_egg_bomb_nesting_instinct"), SubResource("Node_egg_bomb_t3"), SubResource("Node_egg_bomb_clutch_bomb"), SubResource("Node_harpooner_barbed_hooks"), SubResource("Node_harpooner_long_chain"), SubResource("Node_harpooner_t2"), SubResource("Node_harpooner_strong_chain"), SubResource("Node_harpooner_yank"), SubResource("Node_harpooner_hooked_barbs"), SubResource("Node_harpooner_quick_reel"), SubResource("Node_harpooner_skyhook"), SubResource("Node_harpooner_heavy_harpoon"), SubResource("Node_harpooner_t3"), SubResource("Node_harpooner_reel_in"), SubResource("Node_hatchery_vitamin_feed"), SubResource("Node_hatchery_warm_clutch"), SubResource("Node_hatchery_t2"), SubResource("Node_hatchery_thick_scales"), SubResource("Node_hatchery_guard_post"), SubResource("Node_hatchery_pumped_up"), SubResource("Node_hatchery_big_clutch"), SubResource("Node_hatchery_pack_tactics"), SubResource("Node_hatchery_sharp_claws"), SubResource("Node_hatchery_t3"), SubResource("Node_hatchery_brood_champion"), SubResource("Node_buffer_drill_sergeant"), SubResource("Node_buffer_t2"), SubResource("Node_buffer_rallying_cry"), SubResource("Node_buffer_sharp_orders"), SubResource("Node_buffer_deep_reserve"), SubResource("Node_buffer_wide_command"), SubResource("Node_buffer_maze_master"), SubResource("Node_buffer_stone_ward"), SubResource("Node_buffer_t3"), SubResource("Node_buffer_war_drums")])
+nodes = Array[ExtResource("2_node")]([SubResource("Node_war_chest"), SubResource("Node_hardened_shots"), SubResource("Node_keen_eye"), SubResource("Node_heavy_hits"), SubResource("Node_long_sight"), SubResource("Node_phys_t2"), SubResource("Node_piercing"), SubResource("Node_swift_wings"), SubResource("Node_phys_t3"), SubResource("Node_shatter"), SubResource("Node_thick_walls"), SubResource("Node_stone_blocks"), SubResource("Node_fortress_t1"), SubResource("Node_masonry"), SubResource("Node_reinforced_core"), SubResource("Node_fortress_t2"), SubResource("Node_fortress_t3"), SubResource("Node_mending"), SubResource("Node_iron_bands"), SubResource("Node_warded_stones"), SubResource("Node_rebuild"), SubResource("Node_dragons_keep"), SubResource("Node_dragons_maze"), SubResource("Node_sharp_teeth"), SubResource("Node_cheap_snares"), SubResource("Node_leopard_t1"), SubResource("Node_hidden_jaws"), SubResource("Node_quick_springs"), SubResource("Node_big_game"), SubResource("Node_titan_claws"), SubResource("Node_rend"), SubResource("Node_leopard_t2"), SubResource("Node_deep_wounds"), SubResource("Node_lingering_wounds"), SubResource("Node_open_wounds"), SubResource("Node_leopard_t3"), SubResource("Node_pack_hunt"), SubResource("Node_spoils"), SubResource("Node_haggling"), SubResource("Node_salvage"), SubResource("Node_narrow_ways"), SubResource("Node_sharp_corners"), SubResource("Node_labyrinth"), SubResource("Node_scholar"), SubResource("Node_bold_start"), SubResource("Node_second_thoughts"), SubResource("Node_hoard"), SubResource("Node_honed_claws"), SubResource("Node_quick_talons"), SubResource("Node_deadeye"), SubResource("Node_stalker"), SubResource("Node_spring_steel"), SubResource("Node_savage_bite"), SubResource("Node_apex_hunter"), SubResource("Node_ambush"), SubResource("Node_pride_leader"), SubResource("Node_buttress"), SubResource("Node_spiked_stones"), SubResource("Node_stubborn_stone"), SubResource("Node_bastion"), SubResource("Node_deep_foundations"), SubResource("Node_fortress_t4"), SubResource("Node_maze_switchbacks"), SubResource("Node_maze_dead_ends"), SubResource("Node_maze_long_way_round"), SubResource("Node_maze_killing_corridor"), SubResource("Node_spotter_keen_sight"), SubResource("Node_spotter_spotter_s_perch"), SubResource("Node_spotter_t2"), SubResource("Node_spotter_armour_piercer"), SubResource("Node_spotter_called_shot"), SubResource("Node_spotter_weak_spot"), SubResource("Node_spotter_steady_aim"), SubResource("Node_spotter_headhunter"), SubResource("Node_spotter_heavy_bolt"), SubResource("Node_spotter_t3"), SubResource("Node_spotter_execution"), SubResource("Node_mortar_stone_shells"), SubResource("Node_mortar_long_lob"), SubResource("Node_mortar_t2"), SubResource("Node_mortar_wide_shells"), SubResource("Node_mortar_concussion"), SubResource("Node_mortar_rubble"), SubResource("Node_mortar_quick_loader"), SubResource("Node_mortar_big_charge"), SubResource("Node_mortar_heavy_shells"), SubResource("Node_mortar_t3"), SubResource("Node_mortar_earthshaker"), SubResource("Node_breather_mighty_roar"), SubResource("Node_breather_deep_lungs"), SubResource("Node_breather_t2"), SubResource("Node_breather_wide_roar"), SubResource("Node_breather_deafening_roar"), SubResource("Node_breather_shove"), SubResource("Node_breather_steady_breath"), SubResource("Node_breather_terrify"), SubResource("Node_breather_rending_roar"), SubResource("Node_breather_t3"), SubResource("Node_breather_dragon_s_roar"), SubResource("Node_egg_bomb_hard_shell"), SubResource("Node_egg_bomb_quick_hatch"), SubResource("Node_egg_bomb_t2"), SubResource("Node_egg_bomb_wide_blast"), SubResource("Node_egg_bomb_shrapnel_shell"), SubResource("Node_egg_bomb_big_egg"), SubResource("Node_egg_bomb_short_fuse"), SubResource("Node_egg_bomb_stunning_blast"), SubResource("Node_egg_bomb_nesting_instinct"), SubResource("Node_egg_bomb_t3"), SubResource("Node_egg_bomb_clutch_bomb"), SubResource("Node_harpooner_barbed_hooks"), SubResource("Node_harpooner_long_chain"), SubResource("Node_harpooner_t2"), SubResource("Node_harpooner_strong_chain"), SubResource("Node_harpooner_yank"), SubResource("Node_harpooner_hooked_barbs"), SubResource("Node_harpooner_quick_reel"), SubResource("Node_harpooner_skyhook"), SubResource("Node_harpooner_heavy_harpoon"), SubResource("Node_harpooner_t3"), SubResource("Node_harpooner_reel_in"), SubResource("Node_hatchery_vitamin_feed"), SubResource("Node_hatchery_warm_clutch"), SubResource("Node_hatchery_t2"), SubResource("Node_hatchery_thick_scales"), SubResource("Node_hatchery_guard_post"), SubResource("Node_hatchery_pumped_up"), SubResource("Node_hatchery_big_clutch"), SubResource("Node_hatchery_pack_tactics"), SubResource("Node_hatchery_sharp_claws"), SubResource("Node_hatchery_t3"), SubResource("Node_hatchery_brood_champion"), SubResource("Node_buffer_drill_sergeant"), SubResource("Node_buffer_t2"), SubResource("Node_buffer_rallying_cry"), SubResource("Node_buffer_sharp_orders"), SubResource("Node_buffer_deep_reserve"), SubResource("Node_buffer_wide_command"), SubResource("Node_buffer_maze_master"), SubResource("Node_buffer_stone_ward"), SubResource("Node_buffer_t3"), SubResource("Node_buffer_war_drums"), SubResource("Node_elder_drake_ancient_might"), SubResource("Node_elder_drake_long_neck"), SubResource("Node_elder_drake_t2"), SubResource("Node_elder_drake_old_scales"), SubResource("Node_elder_drake_wide_breath"), SubResource("Node_elder_drake_crushing_jaws"), SubResource("Node_elder_drake_old_fury"), SubResource("Node_elder_drake_second_wind"), SubResource("Node_elder_drake_armour_biter"), SubResource("Node_elder_drake_t3"), SubResource("Node_elder_drake_elder_s_roar"), SubResource("Node_shredder_iron_rasp"), SubResource("Node_shredder_wide_rasp"), SubResource("Node_shredder_t2"), SubResource("Node_shredder_sawteeth"), SubResource("Node_shredder_deep_cuts"), SubResource("Node_shredder_ripping"), SubResource("Node_shredder_fast_rasp"), SubResource("Node_shredder_fourth_stack"), SubResource("Node_shredder_steel_collar"), SubResource("Node_shredder_t3"), SubResource("Node_shredder_flay"), SubResource("Node_spike_field_iron_spikes"), SubResource("Node_spike_field_quick_spikes"), SubResource("Node_spike_field_t2"), SubResource("Node_spike_field_barbs"), SubResource("Node_spike_field_lingering_wounds"), SubResource("Node_spike_field_serrated"), SubResource("Node_spike_field_cheap_planks"), SubResource("Node_spike_field_sharpened"), SubResource("Node_spike_field_bleeding_feet"), SubResource("Node_spike_field_t3"), SubResource("Node_spike_field_caltrops"), SubResource("Node_hoard_keeper_bigger_pile"), SubResource("Node_hoard_keeper_gilded_scales"), SubResource("Node_hoard_keeper_t2"), SubResource("Node_hoard_keeper_coin_counter"), SubResource("Node_hoard_keeper_interest"), SubResource("Node_hoard_keeper_tithe"), SubResource("Node_hoard_keeper_third_purse"), SubResource("Node_hoard_keeper_lucky_coin"), SubResource("Node_hoard_keeper_hoard_sense"), SubResource("Node_hoard_keeper_t3"), SubResource("Node_hoard_keeper_dragon_s_hoard")])

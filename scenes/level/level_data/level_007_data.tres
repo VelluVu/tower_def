@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://dgapjatafq0oo"]
+[gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://bdnrarpov765k"]
 
 [ext_resource type="Script" uid="uid://cpw7ia3ek2yvs" path="res://scenes/level/level_data/wave_data.gd" id="0_wave"]
 [ext_resource type="Script" uid="uid://c0cehaxum4b45" path="res://scenes/level/level_data/level_data.gd" id="1_level"]
@@ -8,43 +8,50 @@
 [ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_007_wave_3.tres" id="w3"]
 [ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_007_wave_4.tres" id="w4"]
 [ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_007_wave_5.tres" id="w5"]
-[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_007_wave_6.tres" id="w6"]
 
 [sub_resource type="Resource" id="PuffeLine_1"]
 script = ExtResource("9_line")
 trigger = 0
-text = "The southern bridge is gone, smashed into the river. So it is the cave road for us, past tunnels on every side."
+text = "Hear that squeaking? A batling roost. Something deep below has woken them."
 mood = 2
-
-[sub_resource type="Resource" id="PuffeLine_2"]
-script = ExtResource("9_line")
-trigger = 3
-wave_number = 2
-text = "Batlings again, with a swarm behind them. Towers on the flight route, Nova for the swarm."
-
-[sub_resource type="Resource" id="PuffeLine_3"]
-script = ExtResource("9_line")
-trigger = 3
-wave_number = 5
-text = "A new tunnel in the north-east! They are digging their way closer."
-
-[sub_resource type="Resource" id="PuffeLine_4"]
-script = ExtResource("9_line")
-trigger = 7
-text = "They found a gap. Close it!"
-mood = 2
-
-[sub_resource type="Resource" id="PuffeLine_5"]
-script = ExtResource("9_line")
-trigger = 3
-wave_number = 6
-text = "Hold the crossing, and we can face whatever is down there."
 
 [sub_resource type="Resource" id="PuffeLine_egg_bomb"]
 script = ExtResource("9_line")
 trigger = 1
 text = "Meet the Egg Bomb! Not every egg is meant to hatch. Set it on the road, let the first one step on it, and stand well back."
 mood = 4
+
+[sub_resource type="Resource" id="PuffeLine_2"]
+script = ExtResource("9_line")
+trigger = 3
+wave_number = 2
+text = "Batlings again, a whole roost of them. Bolters and Beamers along the violet route."
+
+[sub_resource type="Resource" id="PuffeLine_3"]
+script = ExtResource("9_line")
+trigger = 7
+text = "Over the walls they come. Cover the flight route!"
+mood = 2
+
+[sub_resource type="Resource" id="PuffeLine_4"]
+script = ExtResource("9_line")
+trigger = 3
+wave_number = 4
+text = "Beeflings on the ground, batlings in the air. Watch both."
+
+[sub_resource type="Resource" id="PuffeLine_5"]
+script = ExtResource("9_line")
+trigger = 3
+wave_number = 5
+text = "Last wave. Hold the gate!"
+mood = 3
+
+[sub_resource type="Resource" id="PuffeLine_u1125_glow_moth"]
+script = ExtResource("9_line")
+trigger = 3
+wave_number = 3
+text = "Glow moths, a whole flock on the wind! Bolters and Beamers, look up!"
+mood = 2
 
 [sub_resource type="Resource" id="PuffeLine_u1125_tunnel_rat"]
 script = ExtResource("9_line")
@@ -55,12 +62,12 @@ mood = 2
 
 [resource]
 script = ExtResource("1_level")
-level_name = "Echo Crossing"
-story_text = "The southern bridge lies smashed in the river, so the only way on runs past the miners' tunnels. Tunnels open on every side of this old crossing, and each of them echoes with something big moving below."
-starting_gold = 27.0
-waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtResource("w3"), ExtResource("w4"), ExtResource("w5"), ExtResource("w6")])
-puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_egg_bomb"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_4"), SubResource("PuffeLine_u1125_tunnel_rat"), SubResource("PuffeLine_5")])
+level_name = "Bat Roost"
+story_text = "A castle on the lake road, under the rock ridges where the batlings nest among old bones. Whatever is waking in the deep caves has stirred them up."
+starting_gold = 23.0
+waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtResource("w3"), ExtResource("w4"), ExtResource("w5")])
+puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_egg_bomb"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_u1125_glow_moth"), SubResource("PuffeLine_4"), SubResource("PuffeLine_5"), SubResource("PuffeLine_u1125_tunnel_rat")])
 first_wave_health = 1.8
 last_wave_health = 3.4
-health_scale = 1.71
-hard_health_scale = 1.069
+health_scale = 1.11
+hard_health_scale = 1.057

@@ -26,6 +26,8 @@ var ticks_left : int = 0
 var is_breathing : bool = false
 #enemy instance id -> true: who had this gust's direct hit
 var hit_this_gust : Dictionary = {}
+#Firebreath corridor (synergy): this gust passes a Fire wall, so it sets what it hits burning
+var is_fire_corridor : bool = false
 var tick_timer : CustomTimer = null
 var puff_timer : CustomTimer = null
 var puff_pool : Array[BreathPuff] = []
@@ -65,6 +67,7 @@ func activate() -> void:
 		return
 	_aim()
 	hit_this_gust.clear()
+	is_fire_corridor = actor.level != null and actor.level.synergies != null and actor.level.synergies.is_fire_corridor(self)
 	ticks_left = GUST_TICKS
 	is_breathing = true
 	actor.animation_control.play_animation(GlobalAnimationNames.ATTACK_ANIMATION)
@@ -106,6 +109,14 @@ func is_in_cone(enemy) -> bool:
 	return absf(direction.angle_to(to)) <= deg_to_rad(get_cone_degrees()) * 0.5
 
 
+## True when a point (a wall, say) lies inside the cone.
+func is_point_in_cone(point : Vector2) -> bool:
+	var to : Vector2 = point - actor.global_position
+	if to.length() > get_reach() + Utils.TILE_SIZE * 0.5:
+		return false
+	return to.length() < Utils.TILE_SIZE * 0.5 or absf(direction.angle_to(to)) <= deg_to_rad(get_cone_degrees()) * 0.5
+
+
 func _aim() -> void:
 	if not is_valid_target:
 		return
@@ -134,8 +145,12 @@ func _tick() -> void:
 		#the gust's later hits on the same enemy bring no knockback, stun or patch again
 		hit.is_splash = hit_this_gust.has(id)
 		hit_this_gust[id] = true
+		var is_first : bool = not hit.is_splash
+		var raw : float = hit.damage
 		enemy.take_damage(hit)
 		hit.queue_free()
+		if is_first and is_fire_corridor and is_instance_valid(enemy):
+			actor.level.synergies.corridor_burn(enemy, actor as Building, raw)
 
 
 func _drop_patch() -> void:

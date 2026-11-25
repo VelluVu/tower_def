@@ -39,6 +39,15 @@
 
 [ext_resource type="SpriteFrames" path="res://scenes/unit/evolve_tree/spike_field_evolve/spike_field_frames.tres" id="s_frames"]
 [ext_resource type="Script" path="res://scenes/unit/building/spike_field/spike_strike.gd" id="s_strike"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/spike_field_physical_t2.tres" id="tier_physical_t2"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/spike_field_physical_t3.tres" id="tier_physical_t3"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/spike_field_fire_t2.tres" id="tier_fire_t2"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/spike_field_fire_t3.tres" id="tier_fire_t3"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/spike_field_frost_t2.tres" id="tier_frost_t2"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/spike_field_frost_t3.tres" id="tier_frost_t3"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/spike_field_poison_t2.tres" id="tier_poison_t2"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/spike_field_poison_t3.tres" id="tier_poison_t3"]
+[ext_resource type="Script" path="res://scenes/unit/evolve_tree/evolve_tier_data.gd" id="tier_script"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_4ih23"]
 
@@ -276,6 +285,7 @@ script = ExtResource("trap_leaf_script")
 selected_icon = ExtResource("trap_selected_icon")
 icon = ExtResource("trap_icon_normal")
 info = "Iron: harder spikes (+20% damage)"
+tiers = Array[ExtResource("tier_script")]([ExtResource("tier_physical_t2"), ExtResource("tier_physical_t3")])
 
 [node name="DamageModifier" type="Node" parent="EvolveTree/EvolveBranch/PhysicalElementEvolveLeaf"]
 script = ExtResource("trap_modifier_script")
@@ -296,6 +306,7 @@ new_damage_data_scene = ExtResource("trap_damage_red")
 evolve_glow_color = Color(1, 0.518903, 0.445677, 1)
 icon = ExtResource("trap_icon_fire")
 info = "Fire: red-hot spikes set the feet burning"
+tiers = Array[ExtResource("tier_script")]([ExtResource("tier_fire_t2"), ExtResource("tier_fire_t3")])
 
 [node name="DamageModifier" type="Node" parent="EvolveTree/EvolveBranch2/FireElementEvolveLeaf"]
 script = ExtResource("trap_modifier_script")
@@ -316,6 +327,7 @@ new_damage_data_scene = ExtResource("trap_damage_blue")
 evolve_glow_color = Color(0.494118, 1, 1, 1)
 icon = ExtResource("trap_icon_frost")
 info = "Frost: ice spikes chill, the slow stacks"
+tiers = Array[ExtResource("tier_script")]([ExtResource("tier_frost_t2"), ExtResource("tier_frost_t3")])
 
 [node name="SpeedModifier" type="Node" parent="EvolveTree/EvolveBranch3/FrostElementEvolveLeaf"]
 script = ExtResource("trap_modifier_script")
@@ -336,6 +348,7 @@ new_damage_data_scene = ExtResource("trap_damage_green")
 evolve_glow_color = Color(0.571428, 1, 0.494981, 1)
 icon = ExtResource("trap_icon_poison")
 info = "Poison: venom on the spikes poisons all on the field"
+tiers = Array[ExtResource("tier_script")]([ExtResource("tier_poison_t2"), ExtResource("tier_poison_t3")])
 
 [node name="SpeedModifier" type="Node" parent="EvolveTree/EvolveBranch4/PoisonElementEvolveLeaf"]
 script = ExtResource("trap_modifier_script")

@@ -132,6 +132,23 @@ func test_bog_witch_curses_towers(kit : TestKit) -> void:
 	kit.check_near(tower.skill.stats.get_stat_value(Utils.StatType.AttackSpeed), before, "the curse wears off")
 
 
+## A tower sold while the witch casts at it is freed before the hex lands: the hex skips it (bug round 1).
+func test_bog_witch_hex_skips_a_tower_sold_mid_cast(kit : TestKit) -> void:
+	await kit.load_level(14)
+	var tower : Building = await kit.place("puffe_bolter", _buildable_cell(kit))
+	var witch : Enemy = kit.spawn_enemy("bog_witch")
+	var hex : EnemyAbility = witch.abilities.get_node("Hex")
+	await kit.frames(1)
+	hex.cooldown_timer.stop()
+	witch.global_position = tower.global_position + Vector2(Utils.TILE_SIZE, 0)
+	await kit.run_until(func() -> bool: return hex.is_active, 6.0)
+	kit.check(hex.is_active, "the witch is casting")
+	GameSignals.sell_building.emit(tower)
+	await kit.run_until(func() -> bool: return hex.use_count > 0 and not hex.is_active, 6.0)
+	kit.check(not hex.is_active, "the cast ends without a script error")
+	witch.remove_without_reward()
+
+
 func test_leech_mother_drops_leechlings(kit : TestKit) -> void:
 	await kit.load_level(14)
 	var mother : Enemy = kit.spawn_enemy("leech_mother")

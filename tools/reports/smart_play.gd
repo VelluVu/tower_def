@@ -9,15 +9,62 @@ extends RefCounted
 ## It also reads the coming wave (flyers, swarms, resistances), picks the card with the biggest gain and
 ## starts waves early only while the last one never got halfway.
 
-## Measured single-target dps at Base against a weakling (tower_sheet.gd, 2026-11-20).
-const SHEET_BASE_DPS : Dictionary[String, float] = {"PuffeBolter": 4.0, "PuffeNova": 2.7, "PuffeBeamer": 3.3, "LeopardTrap": 3.0}
+## Measured single-target dps at Base against a weakling (tower_sheet.gd, 2026-11-25; traps on their own cell).
+## The Hoard Keeper and the Buffer deal none: their worth is gold and the buffed towers (_hoard_gain, _buffer_gain).
+const SHEET_BASE_DPS : Dictionary[String, float] = {"PuffeBolter": 3.9, "PuffeNova": 2.8, "PuffeBeamer": 3.3, "PuffeMortar": 2.9,
+	"PuffeBreather": 3.7, "PuffeSpotter": 3.5, "PuffeHarpooner": 2.2, "PuffeHatchery": 4.6, "PuffeShredder": 0.7, "PuffeElderDrake": 9.3,
+	#the Egg Bomb: one 162 blast per 20 s rebuild (the sheet's parked enemy sets it off only once)
+	"LeopardTrap": 3.1, "EggBomb": 7.9, "SpikeField": 6.6, "PuffeHoardKeeper": 0.0, "PuffeBuffer": 0.0}
 ## Each element's T1 dps over Up 2 (tower_sheet.gd); Frost's slow is not in it (FROST_SLOW_VALUE).
 const ELEMENT_GAIN : Dictionary[String, Dictionary] = {
-	"PuffeBolter": {"Physical": 1.07, "Fire": 1.34, "Frost": 0.99, "Poison": 1.33},
-	"PuffeNova": {"Physical": 1.47, "Fire": 1.28, "Frost": 1.09, "Poison": 1.53},
-	"PuffeBeamer": {"Physical": 1.32, "Fire": 1.43, "Frost": 1.11, "Poison": 1.57},
-	"LeopardTrap": {"Physical": 1.3, "Fire": 1.3, "Frost": 1.1, "Poison": 1.3},
+	"PuffeBolter": {"Physical": 1.53, "Fire": 1.4, "Frost": 1.24, "Poison": 1.67},
+	"PuffeNova": {"Physical": 1.29, "Fire": 1.29, "Frost": 1.07, "Poison": 1.63},
+	"PuffeBeamer": {"Physical": 1.45, "Fire": 1.49, "Frost": 1.11, "Poison": 1.58},
+	"PuffeMortar": {"Physical": 1.11, "Fire": 1.51, "Frost": 0.96, "Poison": 1.8},
+	"PuffeBreather": {"Physical": 1.17, "Fire": 1.51, "Frost": 1.07, "Poison": 1.45},
+	"PuffeSpotter": {"Physical": 1.07, "Fire": 1.33, "Frost": 1.0, "Poison": 1.84},
+	"PuffeHarpooner": {"Physical": 1.07, "Fire": 1.2, "Frost": 0.89, "Poison": 1.51},
+	"PuffeHatchery": {"Physical": 1.17, "Fire": 1.29, "Frost": 1.01, "Poison": 1.62},
+	"PuffeShredder": {"Physical": 1.33, "Fire": 1.33, "Frost": 1.17, "Poison": 1.5},
+	"PuffeElderDrake": {"Physical": 1.48, "Fire": 1.47, "Frost": 1.02, "Poison": 1.57},
+	"LeopardTrap": {"Physical": 1.34, "Fire": 2.12, "Frost": 0.9, "Poison": 1.68},
+	"SpikeField": {"Physical": 1.25, "Fire": 1.07, "Frost": 0.81, "Poison": 1.32},
 }
+## What a tower type is good at, for _fit: reaches flyers (false: never, "tier2": from its T2), extra hits on a
+## swarm (how many more enemies a hit lands on, roughly), and bonuses against flyers and elites.
+const TRAITS : Dictionary[String, Dictionary] = {
+	#the Mortar's shells take time to land: against walking enemies it hits about this share of what the sheet's
+	#parked enemy takes
+	"PuffeNova": {"air": "tier2", "swarm": 1.5}, "PuffeMortar": {"air": false, "swarm": 1.5, "accuracy": 0.6},
+	"PuffeBreather": {"swarm": 1.5}, "PuffeShredder": {"swarm": 1.0}, "PuffeElderDrake": {"swarm": 0.5},
+	"PuffeHatchery": {"air": false}, "PuffeHarpooner": {"flyers": 1.0}, "PuffeSpotter": {"elites": 1.0},
+	"LeopardTrap": {"air": "tier2"}, "SpikeField": {"air": false, "swarm": 1.0}, "EggBomb": {"swarm": 2.0},
+}
+## Route cells in reach count fully up to about this many, then less and less (_covered).
+const REACH_CELLS : float = 15.0
+## Economy (the Hoard Keeper) only once this many damage towers stand and the last wave leaked nothing.
+const ECONOMY_MIN_TOWERS : int = 3
+## Gold to come is worth this share of gold now (it arrives wave by wave).
+const GOLD_LATER : float = 0.5
+## A Buffer's element and tiers: this share of the covered towers' worth (a chance of the element, T2 weakening,
+## T3 roar).
+const BUFFER_EVOLVE_SHARE : float = 0.08
+## The three traps, the order the smart player looks at them.
+const TRAP_SCENES : Array[String] = ["leopard_trap", "egg_bomb", "spike_field"]
+## Scenes whose root node is named other than their file (keys are root names).
+const SCENE_KEYS : Dictionary[String, String] = {"puffe_elder": "PuffeElderDrake", "puffe_hoard": "PuffeHoardKeeper"}
+## A Shredder's three stacks take this much off every resistance (Shredder.SHRED_PER_STACK x MAX_STACKS).
+const SHRED_MOST : float = 0.45
+## The share of the other towers' work on the rally cells that held enemies add (guards stop them there).
+const HOLD_VALUE : float = 0.15
+## Waves a Survival run counts ahead for gold (it has no end).
+const SURVIVAL_WAVES_AHEAD : int = 8
+## An element wall's maze effect: Frost slows enemies beside it (LevelGrid), Fire and Poison hurt them a second
+## (MazeElements); Physical (Fortress) slows a little.
+const WALL_SLOW : Dictionary[String, float] = {"Frost": 0.12, "Physical": 0.06}
+const WALL_DPS : Dictionary[String, float] = {"Fire": 2.0, "Poison": 1.0}
+## The wall line's Up 1 and Up 2 open the elements: their worth is a share of what an element wall would add.
+const WALL_LINE_SHARE : float = 0.5
 const DEFAULT_ELEMENT_GAIN : float = 1.25
 #the slow keeps every other tower on the enemies longer
 const FROST_SLOW_VALUE : float = 0.2
@@ -26,9 +73,8 @@ const TIER_GAINS : Array[float] = [1.3, 1.45]
 const ELEMENT_NAMES : Array[String] = ["Physical", "Fire", "Frost", "Poison"]
 const ELEMENTS : Dictionary[String, Utils.Element] = {"Physical": Utils.Element.Physical, "Fire": Utils.Element.Fire, "Frost": Utils.Element.Frost, "Poison": Utils.Element.Poison}
 const DAMAGE_TYPES : Dictionary[String, Utils.DamageType] = {"Physical": Utils.DamageType.Physical, "Fire": Utils.DamageType.Fire, "Frost": Utils.DamageType.Frost, "Poison": Utils.DamageType.Poison}
-#a group this big is a swarm (Nova pulses hit many of it)
+#a group this big is a swarm (area towers hit many of it, TRAITS)
 const SWARM_COUNT : int = 8
-const NOVA_SWARM_HITS : float = 1.5
 #a trap reaches its own cell and the enemies stepping on and off it
 const TRAP_CELLS : float = 2.0
 #save for the best action when it is worth this much more per gold than the best affordable one
@@ -44,6 +90,12 @@ const LEARN_MAX : float = 4.0
 const EARLY_PROGRESS : float = 0.5
 #a wall's route length counts a little, so ties go to the longer maze
 const WALL_LENGTH_VALUE : float = 0.02
+## The synergies' worth (Synergies, 2026-11-25).
+const SYNERGY = preload("res://tools/reports/smart_synergies.gd")
+## A trap cell beside another trap is a candidate while at least this share of the best cell's towers reach it.
+const TRAP_SIDE_REACH : float = 0.5
+## Hold the line: a trap cell is worth this many towers more as a rally cell.
+const RALLY_TRAP_WORKERS : int = 3
 
 enum Kind { Tower, Upgrade, Wall, Trap }
 
@@ -109,6 +161,7 @@ func wants_early(level : Level) -> bool:
 ## One action a frame at most: replans when something changed, buys the best action when it can.
 func step(kit : TestKit, level : Level) -> void:
 	if is_dirty or plan_age >= REPLAN_SECONDS:
+		_set_tactics(level)
 		plan = _make_plan(level)
 		plan_age = 0.0
 		is_dirty = false
@@ -157,24 +210,74 @@ func _actions(level : Level) -> Array[Dictionary]:
 	if bot.towers.size() < int(bot.options.towers):
 		for scene_name in bot._tower_types():
 			var range_tiles : float = bot._range_of(scene_name)
-			var cell : Vector2i = bot._best_tower_cell(level, range_tiles)
+			var key : String = _key_of_scene(scene_name)
+			var cell : Vector2i = Vector2i.MAX
+			var gain : float = 0.0
+			var gold : float = -1.0
+			if scene_name == bot.BUFFER:
+				cell = bot._best_buffer_cell(level)
+				if cell != Vector2i.MAX:
+					gain = _buffer_gain(level, cell, routes, {Utils.StatType.Damage: 1})
+			elif scene_name == bot.HOARD:
+				cell = bot._keeper_cell(level)
+				if cell != Vector2i.MAX:
+					gold = _hoard_gold(level, HoardKeeper.BASE_PAY * (1.0 if _hoard_count() < HoardKeeper.FULL_PAY_KEEPERS else HoardKeeper.PARTIAL_SHARE))
+			else:
+				cell = bot._best_tower_cell(level, range_tiles, bot._min_range_of(scene_name), scene_name)
+				if cell != Vector2i.MAX:
+					var covered : float = _covered(routes, cell, range_tiles)
+					gain = _new_unit_dps(level, scene_name) * _fit(key, threat) * covered
+					if key == "PuffeShredder":
+						gain += _shred_gain(cell, range_tiles, routes, threat)
+					elif key == "PuffeHatchery":
+						gain += _hold_gain(cell, range_tiles, routes, threat)
+					gain += SYNERGY.tower_gain(self, level, scene_name, cell, range_tiles, routes, threat)
 			if cell == Vector2i.MAX:
 				continue
-			var covered : float = _covered(routes, cell, range_tiles)
-			var gain : float = _new_unit_dps(level, scene_name) * _fit(_key_of_scene(scene_name), threat) * covered
-			actions.append({"kind": Kind.Tower, "scene": scene_name, "cell": cell, "cost": bot._placement_price(level, scene_name), "gain": gain})
+			var action : Dictionary = {"kind": Kind.Tower, "scene": scene_name, "cell": cell, "cost": bot._placement_price(level, scene_name), "gain": gain}
+			if gold >= 0.0:
+				action.gold = gold
+				#Hoard Guardian: the Elders it stands by bite harder, worth as much now as later
+				action.synergy = SYNERGY.keeper_gain(self, routes, cell)
+			actions.append(action)
 
-	if bot.traps < int(bot.options.traps) and bot._is_unlocked(bot.TRAP):
-		var trap_cell : Vector2i = bot._best_trap_cell(level)
-		if trap_cell != Vector2i.MAX:
-			var gain : float = _new_unit_dps(level, bot.TRAP) * _fit("LeopardTrap", threat) * TRAP_CELLS
-			actions.append({"kind": Kind.Trap, "scene": bot.TRAP, "cell": trap_cell, "cost": bot._placement_price(level, bot.TRAP), "gain": gain})
+	if bot.traps < int(bot.options.traps):
+		var trap_cells : Array[Vector2i] = _trap_cells(level)
+		for trap_scene in TRAP_SCENES:
+			if trap_cells.is_empty() or not bot._is_unlocked(trap_scene):
+				continue
+			var trap_key : String = _key_of_scene(trap_scene)
+			var base_gain : float = _new_unit_dps(level, trap_scene) * _fit(trap_key, threat) * TRAP_CELLS
+			#the cell where its synergies add the most (the first is the cell the most towers reach)
+			var best_cell : Vector2i = trap_cells[0]
+			var best_extra : float = -1.0
+			for trap_cell in trap_cells:
+				var extra : float = SYNERGY.trap_gain(self, level, trap_scene, trap_cell, threat)
+				if extra > best_extra:
+					best_extra = extra
+					best_cell = trap_cell
+			actions.append({"kind": Kind.Trap, "scene": trap_scene, "cell": best_cell, "cost": bot._placement_price(level, trap_scene), "gain": base_gain + best_extra})
 
 	for unit in units:
 		if is_instance_valid(unit):
 			var upgrade : Dictionary = _upgrade_action(level, unit, routes, threat)
 			if not upgrade.is_empty():
 				actions.append(upgrade)
+	#the walls' line and elements (bought per wall once the line has its Up 2)
+	if bot.walls > 0:
+		var wall_upgrade : Dictionary = _wall_upgrade_action(level, routes)
+		if not wall_upgrade.is_empty():
+			actions.append(wall_upgrade)
+	#gold (the Hoard Keeper) is worth what the best damage buy does with it, a little less since it comes later
+	var damage_ratio : float = 0.0
+	for action in actions:
+		if not action.has("gold"):
+			damage_ratio = maxf(damage_ratio, action.gain / maxf(action.cost, 0.5))
+	#economy waits for a defence that holds: some damage towers and a last wave without leaks
+	var is_safe : bool = _damage_tower_count() >= ECONOMY_MIN_TOWERS and last_wave_leaks == 0 and level.wave_runner.wave_number > 0
+	for action in actions:
+		if action.has("gold"):
+			action.gain = (action.gold * damage_ratio * GOLD_LATER if is_safe else 0.0) + action.get("synergy", 0.0)
 
 	if float(bot.options.walls) > 0.0 and not bot.is_wall_exhausted and _tower_count() > 0:
 		var wall : Dictionary = _wall_action(level)
@@ -200,7 +303,30 @@ func _upgrade_action(level : Level, unit : Building, routes : Array[Vector2i], t
 		var option : GoldUpgradeOption = options[index]
 		if option.is_locked:
 			continue
+		#the towers that deal no damage: every Hoard Keeper step pays a gold more a wave; a Buffer pip lifts its
+		#track on every tower in the aura, its element and tiers a little of everything there
+		if unit is HoardKeeper or unit is Buffer:
+			if bot.build.has("leaf") and not option.element_leaf_path.is_empty() and not unit.evolve_tree.is_element_chosen \
+					and not str(option.element_leaf_path).ends_with(bot.build.leaf):
+				continue
+			var special : float = 0.0
+			if unit is HoardKeeper:
+				special = _hoard_gold(level, HoardKeeper.PAY_PER_STEP * (1.0 if unit.get_rank(level) < HoardKeeper.FULL_PAY_KEEPERS else HoardKeeper.PARTIAL_SHARE))
+			elif option.buffer_stat >= 0:
+				special = _buffer_gain(level, unit.grid_position, routes, {option.buffer_stat: 1}, unit)
+			else:
+				special = _buffer_covered_value(level, unit.grid_position, routes) * BUFFER_EVOLVE_SHARE
+				#Harmony with the covered towers of its element, War cry over Elders at T3
+				if option.tier == 0:
+					special += SYNERGY.buffer_element_gain(self, unit, _leaf_element(option.element_leaf_path), routes)
+				else:
+					special += SYNERGY.tier_gain(self, unit, option, routes)
+			if best_index < 0 or special > best_gain:
+				best_index = index
+				best_gain = special
+			continue
 		var factor : float = 1.0
+		var synergy : float = 0.0
 		if not option.is_evolve:
 			factor = _power(unit, _upgrade_modifiers(unit)) / maxf(_power(unit), 0.001)
 		elif not option.element_leaf_path.is_empty() and not unit.evolve_tree.is_element_chosen:
@@ -208,15 +334,21 @@ func _upgrade_action(level : Level, unit : Building, routes : Array[Vector2i], t
 			if bot.build.has("leaf") and not str(option.element_leaf_path).ends_with(bot.build.leaf):
 				continue
 			factor = _element_factor(_key_of(unit), element_name, threat)
+			synergy = SYNERGY.element_gain(self, level, unit, element_name, routes)
 		else:
-			factor = TIER_GAINS[clampi(option.tier, 0, TIER_GAINS.size() - 1)]
-		var gain : float = value * (factor - 1.0)
+			#option.tier: 1 = T2, 2 = T3
+			factor = TIER_GAINS[clampi(option.tier - 1, 0, TIER_GAINS.size() - 1)]
+			synergy = SYNERGY.tier_gain(self, unit, option, routes)
+		var gain : float = value * (factor - 1.0) + synergy
 		if best_index < 0 or gain > best_gain:
 			best_index = index
 			best_gain = gain
 	if best_index < 0:
 		return {}
-	return {"kind": Kind.Upgrade, "unit": unit, "index": best_index, "title": options[best_index].title, "cost": options[best_index].cost, "gain": best_gain}
+	var upgrade : Dictionary = {"kind": Kind.Upgrade, "unit": unit, "index": best_index, "title": options[best_index].title, "cost": options[best_index].cost, "gain": best_gain}
+	if unit is HoardKeeper:
+		upgrade.gold = best_gain
+	return upgrade
 
 
 ## The route cell that adds the most tower damage on the routes as a wall, without closing a route.
@@ -343,6 +475,247 @@ func pick_card(level : Level, offered : Array[UpgradeCard]) -> int:
 	return best
 
 
+## The trap cells worth a look: the route cell the most towers reach first, then the free route cells beside the
+## placed traps that enough towers reach (Trap line and the trap pairs, SYNERGY.trap_gain).
+func _trap_cells(level : Level) -> Array[Vector2i]:
+	var cells : Array[Vector2i] = []
+	var best : Vector2i = bot._best_trap_cell(level)
+	if best == Vector2i.MAX:
+		return cells
+	cells.append(best)
+	var least : float = bot._trap_cell_score(best) * TRAP_SIDE_REACH
+	var on_route : Dictionary[Vector2i, bool] = {}
+	for route_cell in bot._route_cells(level):
+		on_route[route_cell] = true
+	for unit in units:
+		if not is_instance_valid(unit) or not unit is Trap:
+			continue
+		for x in range(-1, 2):
+			for y in range(-1, 2):
+				var cell : Vector2i = unit.grid_position + Vector2i(x, y)
+				if on_route.has(cell) and not cells.has(cell) and bot._is_free_to_build(level, cell) and bot._trap_cell_score(cell) >= least:
+					cells.append(cell)
+	return cells
+
+
+# --- a player's other choices ---
+
+## The Target setting and the Hatchery rally, as a player sets them for the coming wave: against a boss the
+## Bolter and Beamer go for the Strongest (the boss), otherwise First; the Spotter (Elite) and the Harpooner
+## (Flyers) keep their own defaults. A Hatchery rallies its guards on the cell in reach the most towers work on.
+func _set_tactics(level : Level) -> void:
+	var threat : Dictionary = _threat(level)
+	var routes : Array[Vector2i] = []
+	for unit in units:
+		if not is_instance_valid(unit) or not unit.is_placed:
+			continue
+		if unit is Tower and unit.can_choose_target and _key_of(unit) in ["PuffeBolter", "PuffeBeamer"]:
+			unit.target_tactic = Utils.TargetTactic.Strongest if threat.get("boss", false) else Utils.TargetTactic.First
+		elif unit is Hatchery and is_dirty:
+			if routes.is_empty():
+				routes = bot._route_cells(level)
+			_set_rally(unit, routes)
+
+
+func _set_rally(hatchery : Hatchery, routes : Array[Vector2i]) -> void:
+	#how many towers work on each route cell
+	var workers : Dictionary[Vector2i, int] = {}
+	for unit in units:
+		if not is_instance_valid(unit) or unit == hatchery or unit is Buffer or unit is HoardKeeper:
+			continue
+		#a literal {} is an untyped Dictionary: fill a typed one instead
+		var reached : Dictionary[Vector2i, bool] = {}
+		if unit is Trap:
+			reached[unit.grid_position] = true
+		else:
+			reached = _cells_in_reach(routes, unit.grid_position, _stat(unit, Utils.StatType.AttackRange))
+		for route_cell in reached:
+			workers[route_cell] = workers.get(route_cell, 0) + 1
+	#Hold the line: a held enemy stands on the trap, so a trap's cell counts as RALLY_TRAP_WORKERS more towers
+	for unit in units:
+		if is_instance_valid(unit) and unit is Trap and workers.has(unit.grid_position):
+			workers[unit.grid_position] += RALLY_TRAP_WORKERS
+	var best : Vector2i = Utils.BAD_CELL
+	var best_count : int = 0
+	for route_cell in workers:
+		if workers[route_cell] > best_count and hatchery.is_valid_rally_cell(route_cell):
+			best = route_cell
+			best_count = workers[route_cell]
+	if best != Utils.BAD_CELL and best != hatchery.rally_cell:
+		hatchery.set_manual_rally(best)
+
+
+# --- the towers that do more than damage ---
+
+## Gold a pay of this much a cleared wave brings over the waves still to clear (the last clear ends the level).
+func _hoard_gold(level : Level, pay_per_wave : float) -> float:
+	var runner : WaveRunner = level.wave_runner
+	var waves_left : int = SURVIVAL_WAVES_AHEAD if runner.is_endless else maxi(runner.waves.size() - runner.wave_number - 1, 0)
+	return pay_per_wave * waves_left
+
+
+func _damage_tower_count() -> int:
+	return units.filter(func(unit) -> bool: return is_instance_valid(unit) and not unit is Trap and not unit is HoardKeeper and not unit is Buffer).size()
+
+
+func _hoard_count() -> int:
+	return units.filter(func(unit) -> bool: return is_instance_valid(unit) and unit is HoardKeeper).size()
+
+
+## The towers and traps a Buffer on this cell would cover (Buffer.covers: its aura reach).
+func _buffer_covered(cell : Vector2i, buffer : Building = null) -> Array[Building]:
+	var covered : Array[Building] = []
+	var reach : float = bot._range_of(bot.BUFFER) + 0.25
+	for unit in units:
+		if not is_instance_valid(unit) or unit == buffer or unit is Buffer or unit is HoardKeeper:
+			continue
+		if Vector2(unit.grid_position - cell).length() <= reach:
+			covered.append(unit)
+	return covered
+
+
+func _buffer_covered_value(_level : Level, cell : Vector2i, routes : Array[Vector2i]) -> float:
+	var value : float = 0.0
+	for unit in _buffer_covered(cell):
+		value += _unit_dps(unit) * _unit_cells(unit, routes)
+	return value
+
+
+## What these pips (stat -> how many) add to every tower the Buffer covers, by the same what-if as the cards.
+func _buffer_gain(_level : Level, cell : Vector2i, routes : Array[Vector2i], pips : Dictionary, buffer : Building = null) -> float:
+	var modifiers : Array[ModifierData] = []
+	for stat in pips:
+		var modifier : ModifierData = ModifierData.new()
+		modifier.stat_type = stat
+		modifier.calculate_type = Buffer.PIP_VALUES[stat][0]
+		modifier.value = float(Buffer.PIP_VALUES[stat][1]) * pips[stat]
+		modifiers.append(modifier)
+	var gain : float = 0.0
+	for unit in _buffer_covered(cell, buffer):
+		var cells : float = _unit_cells(unit, routes)
+		var after_cells : float = cells
+		if pips.has(Utils.StatType.AttackRange) and not unit is Trap:
+			after_cells = _covered(routes, unit.grid_position, _stat(unit, Utils.StatType.AttackRange, modifiers))
+		gain += _unit_dps(unit) * (_power(unit, modifiers) / maxf(_power(unit), 0.001) * after_cells - cells)
+	return gain
+
+
+## A Shredder's torn armour: every tower working the same route cells hits harder through the resistances of the
+## coming wave (up to SHRED_MOST off each), in its own element.
+func _shred_gain(cell : Vector2i, range_tiles : float, routes : Array[Vector2i], threat : Dictionary) -> float:
+	var shred_cells : Dictionary[Vector2i, bool] = _cells_in_reach(routes, cell, range_tiles)
+	var gain : float = 0.0
+	for unit in units:
+		if not is_instance_valid(unit) or unit is Shredder or unit is Buffer or unit is HoardKeeper:
+			continue
+		var through : float = clampf(threat.through.get(_element_name(unit), 1.0), 0.25, 1.0)
+		var shred : float = minf(1.0 - through, SHRED_MOST)
+		gain += _unit_dps(unit) * _overlap(unit, shred_cells, routes) * shred / through
+	return gain
+
+
+## A Hatchery's guards hold ground enemies at the start of its reach: the towers working those cells get them
+## longer.
+func _hold_gain(cell : Vector2i, range_tiles : float, routes : Array[Vector2i], threat : Dictionary) -> float:
+	var hold_cells : Dictionary[Vector2i, bool] = _cells_in_reach(routes, cell, range_tiles)
+	var gain : float = 0.0
+	for unit in units:
+		if is_instance_valid(unit) and not unit is Buffer and not unit is HoardKeeper:
+			gain += _unit_dps(unit) * _overlap(unit, hold_cells, routes)
+	return gain * HOLD_VALUE * (1.0 - threat.flyers)
+
+
+func _cells_in_reach(routes : Array[Vector2i], cell : Vector2i, range_tiles : float) -> Dictionary[Vector2i, bool]:
+	var found : Dictionary[Vector2i, bool] = {}
+	var reach : float = range_tiles * range_tiles
+	for route_cell in routes:
+		if Vector2(route_cell - cell).length_squared() <= reach:
+			found[route_cell] = true
+	return found
+
+
+## How many of these cells the unit works on (a trap only its own).
+func _overlap(unit : Building, cells : Dictionary[Vector2i, bool], routes : Array[Vector2i]) -> float:
+	if unit is Trap:
+		return 1.0 if cells.has(unit.grid_position) else 0.0
+	var count : int = 0
+	for route_cell in _cells_in_reach(routes, unit.grid_position, _stat(unit, Utils.StatType.AttackRange)):
+		if cells.has(route_cell):
+			count += 1
+	return float(count)
+
+
+func _element_name(unit : Building) -> String:
+	if unit.evolve_tree == null or not unit.evolve_tree.is_element_chosen:
+		return "Physical"
+	for element_name in ELEMENTS:
+		if ELEMENTS[element_name] == unit.evolve_tree.evolve_element:
+			return element_name
+	return "Physical"
+
+
+## The walls: the shared line's Up 1-2 (they open the elements), then an element for the plain wall it does the
+## most on: Frost (and Fortress) slow the enemies beside it for the towers working there, Fire and Poison hurt them.
+func _wall_upgrade_action(level : Level, routes : Array[Vector2i]) -> Dictionary:
+	var upgrades : BuildingTypeUpgrades = level.building_type_upgrades
+	var route_set : Dictionary[Vector2i, bool] = {}
+	for route_cell in routes:
+		route_set[route_cell] = true
+	var best : Dictionary = {}
+	var line_option : Dictionary = {}
+	for building in level.all_buildings:
+		if not is_instance_valid(building) or not building is Wall or not building.is_placed or building.is_dead:
+			continue
+		var wall : Wall = building
+		upgrades._on_unit_selected(wall)
+		var options : Array[GoldUpgradeOption] = upgrades.options
+		for index in options.size():
+			var option : GoldUpgradeOption = options[index]
+			if option.is_locked:
+				continue
+			if option.wall_element != Utils.Element.None:
+				var gain : float = _wall_element_gain(wall, option.wall_element, route_set, routes)
+				if best.is_empty() or gain > best.gain:
+					best = {"kind": Kind.Upgrade, "unit": wall, "index": index, "title": option.title, "cost": option.cost, "gain": gain}
+			elif line_option.is_empty() and not option.is_evolve and upgrades.get_upgrade_steps(wall) < BuildingTypeUpgrades.WALL_ELEMENT_MIN_UPGRADES:
+				line_option = {"kind": Kind.Upgrade, "unit": wall, "index": index, "title": option.title, "cost": option.cost}
+		#the line's options are the same on every wall: one look is enough while no element is on offer yet
+		if not line_option.is_empty() and best.is_empty():
+			break
+	if not best.is_empty():
+		return best
+	if line_option.is_empty():
+		return {}
+	#the line opens the elements: worth a share of the best element on the best wall
+	var best_element : float = 0.0
+	for building in level.all_buildings:
+		if is_instance_valid(building) and building is Wall and building.is_placed and building.element == Utils.Element.None:
+			best_element = maxf(best_element, _wall_element_gain(building, Utils.Element.Frost, route_set, routes))
+	line_option.gain = best_element * WALL_LINE_SHARE
+	return line_option
+
+
+func _wall_element_gain(wall : Wall, element : Utils.Element, route_set : Dictionary[Vector2i, bool], routes : Array[Vector2i]) -> float:
+	var beside : Dictionary[Vector2i, bool] = {}
+	for offset in [Vector2i.LEFT, Vector2i.RIGHT, Vector2i.UP, Vector2i.DOWN]:
+		var cell : Vector2i = wall.grid_position + offset
+		if route_set.has(cell):
+			beside[cell] = true
+	if beside.is_empty():
+		return 0.0
+	var element_name : String = ELEMENT_NAMES[ELEMENTS.values().find(element)] if ELEMENTS.values().has(element) else "Physical"
+	#Cold feet and Firebreath corridor
+	var synergy : float = SYNERGY.wall_element_gain(self, wall.level, routes, wall, element_name)
+	if WALL_DPS.has(element_name):
+		return WALL_DPS[element_name] * beside.size() + synergy
+	var slow : float = WALL_SLOW.get(element_name, 0.0)
+	var gain : float = 0.0
+	for unit in units:
+		if is_instance_valid(unit) and not unit is Buffer and not unit is HoardKeeper:
+			gain += _unit_dps(unit) * _overlap(unit, beside, routes)
+	return gain * slow / (1.0 - slow) + synergy
+
+
 # --- value model ---
 
 ## The stats' damage per second with a target, corrected by what the unit really dealt.
@@ -383,14 +756,18 @@ func _new_unit_dps(level : Level, scene_name : String) -> float:
 	return SHEET_BASE_DPS.get(key, 3.0) * _bases_power(_scene_bases(scene_name), modifiers) / maxf(_base_power(key, null, scene_name), 0.001) * learned
 
 
-## How well a tower type fits the coming wave: Nova and traps never hit flyers, Nova pulses hit swarms.
+## How well a new tower of the type fits the coming wave (TRAITS): the share it cannot reach (flyers, for the
+## ground-only ones; a T1 Nova or Leopard Trap too), more hits on swarms, and the Harpooner's and the Spotter's
+## favourite targets.
 func _fit(key : String, threat : Dictionary) -> float:
+	var traits : Dictionary = TRAITS.get(key, {})
 	var fit : float = 1.0
-	if key == "PuffeNova" or key == "LeopardTrap":
+	if traits.has("air"):
 		fit *= 1.0 - threat.flyers
-	if key == "PuffeNova":
-		fit *= 1.0 + NOVA_SWARM_HITS * threat.swarm
-	return fit
+	fit *= 1.0 + float(traits.get("swarm", 0.0)) * threat.swarm
+	fit *= 1.0 + float(traits.get("flyers", 0.0)) * threat.flyers
+	fit *= 1.0 + float(traits.get("elites", 0.0)) * threat.get("elites", 0.0)
+	return fit * float(traits.get("accuracy", 1.0))
 
 
 func _element_factor(key : String, element_name : String, threat : Dictionary) -> float:
@@ -410,9 +787,11 @@ func _threat(level : Level) -> Dictionary:
 	var health : float = 0.0
 	var flyers : float = 0.0
 	var swarm : float = 0.0
+	var elites : float = 0.0
+	var has_boss : bool = false
 	var through : Dictionary[String, float] = {}
 	if runner.waves.is_empty():
-		return {"flyers": 0.0, "swarm": 0.0, "through": through}
+		return {"flyers": 0.0, "swarm": 0.0, "elites": 0.0, "boss": false, "through": through}
 	for group in runner.waves[index].spawn_groups:
 		if group.enemy_scene == null:
 			continue
@@ -423,13 +802,19 @@ func _threat(level : Level) -> Dictionary:
 			flyers += group_health
 		if group.count >= SWARM_COUNT:
 			swarm += group_health
+		#bosses and elites: the Spotter's targets
+		if info.boss:
+			has_boss = true
+			elites += group_health
+		elif group.elites > 0:
+			elites += info.health * mini(group.elites, group.count)
 		for element_name in ELEMENT_NAMES:
 			through[element_name] = through.get(element_name, 0.0) + group_health * (1.0 - info.resist.get(element_name, 0.0))
 	if health <= 0.0:
-		return {"flyers": 0.0, "swarm": 0.0, "through": through}
+		return {"flyers": 0.0, "swarm": 0.0, "elites": 0.0, "boss": false, "through": through}
 	for element_name in through:
 		through[element_name] /= health
-	return {"flyers": flyers / health, "swarm": swarm / health, "through": through}
+	return {"flyers": flyers / health, "swarm": swarm / health, "elites": elites / health, "boss": has_boss, "through": through}
 
 
 func _enemy_info(scene : PackedScene) -> Dictionary:
@@ -445,7 +830,8 @@ func _enemy_info(scene : PackedScene) -> Dictionary:
 	if resistances != null:
 		for element_name in ELEMENT_NAMES:
 			resist[element_name] = resistances.get_element(DAMAGE_TYPES[element_name])
-	var info : Dictionary = {"health": maxf(health, 1.0), "flying": not instance.find_children("*", "FlightMovement", true, false).is_empty(), "resist": resist}
+	var info : Dictionary = {"health": maxf(health, 1.0), "flying": not instance.find_children("*", "FlightMovement", true, false).is_empty(), "resist": resist,
+		"boss": instance is Enemy and instance.is_boss}
 	instance.free()
 	enemy_info[scene.resource_path] = info
 	return info
@@ -554,13 +940,15 @@ func _scene_bases(scene_name : String) -> Dictionary:
 
 # --- cells ---
 
+## The route cells in reach, as worth: a single-target tower shoots one enemy at a time, so past REACH_CELLS more
+## reach adds less and less (a 6-tile Spotter no longer looks three times a 3.5-tile Bolter, 2026-11-25).
 func _covered(routes : Array[Vector2i], cell : Vector2i, range_tiles : float) -> float:
 	var reach : float = range_tiles * range_tiles
 	var covered : int = 0
 	for route_cell in routes:
 		if Vector2(route_cell - cell).length_squared() <= reach:
 			covered += 1
-	return float(covered)
+	return REACH_CELLS * (1.0 - exp(-covered / REACH_CELLS))
 
 
 func _unit_cells(unit : Building, routes : Array[Vector2i]) -> float:
@@ -584,7 +972,7 @@ func _key_of(unit : Node) -> String:
 
 
 func _key_of_scene(scene_name : String) -> String:
-	return scene_name.to_pascal_case()
+	return SCENE_KEYS.get(scene_name, scene_name.to_pascal_case())
 
 
 func _leaf_element(leaf_path : NodePath) -> String:

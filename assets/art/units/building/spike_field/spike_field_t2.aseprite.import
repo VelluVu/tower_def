@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://ccpd2nxegahb6"
+path="res://.godot/imported/spike_field_t2.aseprite-bb9b3caf8a975caccf6a6c78b72561bd.res"
+
+[deps]
+
+source_file="res://assets/art/units/building/spike_field/spike_field_t2.aseprite"
+dest_files=["res://.godot/imported/spike_field_t2.aseprite-bb9b3caf8a975caccf6a6c78b72561bd.res"]
+
+[params]
+

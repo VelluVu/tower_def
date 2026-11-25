@@ -209,7 +209,7 @@ effects = Array[ExtResource("3_effect")]([SubResource("Effect_plague_level")])
 
 [sub_resource type="Resource" id="Effect_toxic_burst_0"]
 script = ExtResource("3_effect")
-buildings = 34
+buildings = 16418
 elements = 8
 modify_type = 1
 value_per_rank = 0.08
@@ -218,11 +218,11 @@ value_per_rank = 0.08
 script = ExtResource("2_node")
 id = &"toxic_burst"
 display_name = "Toxic Burst"
-description = "Poison Nova and Mortar damage +8%"
+description = "Poison Nova, Mortar and Shredder damage +8%"
 max_rank = 3
 position = Vector2(2.564, 1.538)
 color = Color(0.784, 0.42, 0.847, 1)
-links = Array[StringName]([&"wide_cloud", &"mortar_rot_shells"])
+links = Array[StringName]([&"wide_cloud", &"mortar_rot_shells", &"shredder_acid_rasp"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_toxic_burst_0")])
 
 [sub_resource type="Resource" id="Effect_wide_cloud_0"]
@@ -423,7 +423,7 @@ effects = Array[ExtResource("3_effect")]([SubResource("Effect_toxic_bloom_level"
 
 [sub_resource type="Resource" id="Effect_venom_bolts_0"]
 script = ExtResource("3_effect")
-buildings = 257
+buildings = 33025
 elements = 8
 modify_type = 1
 value_per_rank = 0.08
@@ -432,11 +432,11 @@ value_per_rank = 0.08
 script = ExtResource("2_node")
 id = &"venom_bolts"
 display_name = "Venom Bolts"
-description = "Poison Bolter and Spotter damage +8%"
+description = "Poison Bolter, Spotter and Elder Drake damage +8%"
 max_rank = 3
 position = Vector2(5.846, 2.359)
 color = Color(0.902, 0.949, 0.627, 1)
-links = Array[StringName]([&"quick_draw_p", &"spotter_viper_eye"])
+links = Array[StringName]([&"quick_draw_p", &"spotter_viper_eye", &"elder_drake_ancient_venom"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_venom_bolts_0")])
 
 [sub_resource type="Resource" id="Effect_quick_draw_p_0"]
@@ -794,7 +794,7 @@ effects = Array[ExtResource("3_effect")]([SubResource("Effect_acid_splash_level"
 
 [sub_resource type="Resource" id="Effect_venom_snare_0"]
 script = ExtResource("3_effect")
-buildings = 3592
+buildings = 7688
 elements = 8
 modify_type = 1
 value_per_rank = 0.08
@@ -803,11 +803,11 @@ value_per_rank = 0.08
 script = ExtResource("2_node")
 id = &"venom_snare"
 display_name = "Venom Snare"
-description = "Poison trap, Harpooner, Hatchery and Egg Bomb damage +8%"
+description = "Poison trap, Spike Field, Harpooner, Hatchery and Egg Bomb damage +8%"
 max_rank = 3
 position = Vector2(15.282, 2.154)
 color = Color(0.722, 0.604, 0.29, 1)
-links = Array[StringName]([&"quick_reset", &"egg_bomb_rotten_yolk", &"harpooner_venom_hooks", &"hatchery_venom_fed_brood"])
+links = Array[StringName]([&"quick_reset", &"egg_bomb_rotten_yolk", &"harpooner_venom_hooks", &"hatchery_venom_fed_brood", &"spike_field_venom_spikes"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_venom_snare_0")])
 
 [sub_resource type="Resource" id="Effect_quick_reset_0"]
@@ -2371,13 +2371,547 @@ kind = 3
 position = Vector2(-11, 14)
 color = Color(0.652, 0.684, 0.745, 1)
 
+[sub_resource type="Resource" id="Effect_elder_drake_ancient_venom_0"]
+script = ExtResource("3_effect")
+buildings = 32768
+elements = 8
+modify_type = 1
+value_per_rank = 0.08
+
+[sub_resource type="Resource" id="Node_elder_drake_ancient_venom"]
+script = ExtResource("2_node")
+id = &"elder_drake_ancient_venom"
+display_name = "Ancient Venom"
+description = "Poison Elder Drake damage +8%"
+max_rank = 3
+position = Vector2(-18, 1.5)
+color = Color(0.808, 1, 0.661, 1)
+links = Array[StringName]([&"elder_drake_long_neck"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_elder_drake_ancient_venom_0")])
+
+[sub_resource type="Resource" id="Effect_elder_drake_long_neck_0"]
+script = ExtResource("3_effect")
+buildings = 32768
+elements = 8
+stat_type = 5
+modify_type = 0
+value_per_rank = 0.2
+
+[sub_resource type="Resource" id="Node_elder_drake_long_neck"]
+script = ExtResource("2_node")
+id = &"elder_drake_long_neck"
+display_name = "Long Neck"
+description = "Poison Elder Drake range +0.2 tiles"
+max_rank = 2
+position = Vector2(-18, 3.5)
+color = Color(0.808, 1, 0.661, 1)
+links = Array[StringName]([&"elder_drake_t2"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_elder_drake_long_neck_0")])
+
+[sub_resource type="Resource" id="TalentEffect_unlock_elder_drake_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 32768
+elements = 8
+
+[sub_resource type="Resource" id="Node_elder_drake_t2"]
+script = ExtResource("2_node")
+id = &"elder_drake_t2"
+display_name = "Elder Drake T2"
+description = "Unlocks Poison Elder Drake T2"
+kind = 2
+position = Vector2(-18, 5.5)
+color = Color(0.808, 1, 0.661, 1)
+links = Array[StringName]([&"elder_drake_venom_bite", &"elder_drake_old_fury"])
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_elder_drake_t2")])
+
+[sub_resource type="Resource" id="Effect_elder_drake_venom_bite_0"]
+script = ExtResource("3_effect")
+buildings = 32768
+elements = 8
+stat_type = 11
+modify_type = 0
+value_per_rank = 0.05
+
+[sub_resource type="Resource" id="Node_elder_drake_venom_bite"]
+script = ExtResource("2_node")
+id = &"elder_drake_venom_bite"
+display_name = "Venom Bite"
+description = "Poison Elder Drake poison chance +5 points"
+max_rank = 3
+position = Vector2(-18.9, 7.5)
+color = Color(0.808, 1, 0.661, 1)
+links = Array[StringName]([&"elder_drake_wide_breath"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_elder_drake_venom_bite_0")])
+
+[sub_resource type="Resource" id="Node_elder_drake_wide_breath"]
+script = ExtResource("2_node")
+id = &"elder_drake_wide_breath"
+display_name = "Wide Breath"
+description = "The Elder Drake's breath line is 3 px wider on each side"
+max_rank = 2
+position = Vector2(-18.9, 9.5)
+color = Color(0.808, 1, 0.661, 1)
+links = Array[StringName]([&"elder_drake_old_rot"])
+
+[sub_resource type="Resource" id="Effect_elder_drake_old_rot_0"]
+script = ExtResource("3_effect")
+buildings = 32768
+elements = 8
+stat_type = 10
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Node_elder_drake_old_rot"]
+script = ExtResource("2_node")
+id = &"elder_drake_old_rot"
+display_name = "Old Rot"
+description = "Poison Elder Drake poison potency +10%"
+max_rank = 3
+position = Vector2(-18.9, 11.5)
+color = Color(0.808, 1, 0.661, 1)
+links = Array[StringName]([&"elder_drake_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_elder_drake_old_rot_0")])
+
+[sub_resource type="Resource" id="Effect_elder_drake_old_fury_0"]
+script = ExtResource("3_effect")
+buildings = 32768
+elements = 8
+stat_type = 6
+modify_type = 0
+value_per_rank = 0.03
+
+[sub_resource type="Resource" id="Node_elder_drake_old_fury"]
+script = ExtResource("2_node")
+id = &"elder_drake_old_fury"
+display_name = "Old Fury"
+description = "Poison Elder Drake attack speed +0.03"
+max_rank = 3
+position = Vector2(-17.1, 7.5)
+color = Color(0.808, 1, 0.661, 1)
+links = Array[StringName]([&"elder_drake_second_wind"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_elder_drake_old_fury_0")])
+
+[sub_resource type="Resource" id="Node_elder_drake_second_wind"]
+script = ExtResource("2_node")
+id = &"elder_drake_second_wind"
+display_name = "Second Wind"
+description = "The breath is ready again 20 s into a wave"
+max_rank = 2
+position = Vector2(-17.1, 9.5)
+color = Color(0.808, 1, 0.661, 1)
+links = Array[StringName]([&"elder_drake_deep_fangs"])
+
+[sub_resource type="Resource" id="Effect_elder_drake_deep_fangs_0"]
+script = ExtResource("3_effect")
+buildings = 32768
+elements = 8
+stat_type = 13
+modify_type = 0
+value_per_rank = 1.0
+
+[sub_resource type="Resource" id="Node_elder_drake_deep_fangs"]
+script = ExtResource("2_node")
+id = &"elder_drake_deep_fangs"
+display_name = "Deep Fangs"
+description = "Poison Elder Drake bites add 1 more poison stack"
+max_rank = 2
+position = Vector2(-17.1, 11.5)
+color = Color(0.808, 1, 0.661, 1)
+links = Array[StringName]([&"elder_drake_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_elder_drake_deep_fangs_0")])
+
+[sub_resource type="Resource" id="TalentEffect_unlock_elder_drake_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 32768
+elements = 8
+
+[sub_resource type="Resource" id="Node_elder_drake_t3"]
+script = ExtResource("2_node")
+id = &"elder_drake_t3"
+display_name = "Elder Drake T3"
+description = "Unlocks Poison Elder Drake T3"
+kind = 2
+position = Vector2(-18, 13.5)
+color = Color(0.808, 1, 0.661, 1)
+links = Array[StringName]([&"elder_drake_blight_breath"])
+one_way_links = Array[StringName]([&"black_venom"])
+needs = &"elder_drake_t2"
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_elder_drake_t3")])
+
+[sub_resource type="Resource" id="Node_elder_drake_blight_breath"]
+script = ExtResource("2_node")
+id = &"elder_drake_blight_breath"
+display_name = "Blight Breath"
+description = "The breath leaves a poison cloud along its whole line for 4 s"
+kind = 3
+position = Vector2(-18, 15.5)
+color = Color(0.808, 1, 0.661, 1)
+
+[sub_resource type="Resource" id="Effect_shredder_acid_rasp_0"]
+script = ExtResource("3_effect")
+buildings = 16384
+elements = 8
+modify_type = 1
+value_per_rank = 0.08
+
+[sub_resource type="Resource" id="Node_shredder_acid_rasp"]
+script = ExtResource("2_node")
+id = &"shredder_acid_rasp"
+display_name = "Acid Rasp"
+description = "Poison Shredder damage +8%"
+max_rank = 3
+position = Vector2(-21.5, 1.5)
+color = Color(0.915, 0.454, 0.789, 1)
+links = Array[StringName]([&"shredder_wide_rasp"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_shredder_acid_rasp_0")])
+
+[sub_resource type="Resource" id="Effect_shredder_wide_rasp_0"]
+script = ExtResource("3_effect")
+buildings = 16384
+elements = 8
+stat_type = 5
+modify_type = 0
+value_per_rank = 0.2
+
+[sub_resource type="Resource" id="Node_shredder_wide_rasp"]
+script = ExtResource("2_node")
+id = &"shredder_wide_rasp"
+display_name = "Wide Rasp"
+description = "Poison Shredder range +0.2 tiles"
+max_rank = 2
+position = Vector2(-21.5, 3.5)
+color = Color(0.915, 0.454, 0.789, 1)
+links = Array[StringName]([&"shredder_t2"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_shredder_wide_rasp_0")])
+
+[sub_resource type="Resource" id="TalentEffect_unlock_shredder_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 16384
+elements = 8
+
+[sub_resource type="Resource" id="Node_shredder_t2"]
+script = ExtResource("2_node")
+id = &"shredder_t2"
+display_name = "Shredder T2"
+description = "Unlocks Poison Shredder T2"
+kind = 2
+position = Vector2(-21.5, 5.5)
+color = Color(0.915, 0.454, 0.789, 1)
+links = Array[StringName]([&"shredder_corrode", &"shredder_fast_rasp"])
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_shredder_t2")])
+
+[sub_resource type="Resource" id="Node_shredder_corrode"]
+script = ExtResource("2_node")
+id = &"shredder_corrode"
+display_name = "Corrode"
+description = "Shredded enemies take 5% more Poison damage for each shred stack"
+max_rank = 2
+position = Vector2(-22.4, 7.5)
+color = Color(0.915, 0.454, 0.789, 1)
+links = Array[StringName]([&"shredder_caustic"])
+
+[sub_resource type="Resource" id="Effect_shredder_caustic_0"]
+script = ExtResource("3_effect")
+buildings = 16384
+elements = 8
+stat_type = 10
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Node_shredder_caustic"]
+script = ExtResource("2_node")
+id = &"shredder_caustic"
+display_name = "Caustic"
+description = "Poison Shredder poison potency +10%"
+max_rank = 3
+position = Vector2(-22.4, 9.5)
+color = Color(0.915, 0.454, 0.789, 1)
+links = Array[StringName]([&"shredder_deep_cuts"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_shredder_caustic_0")])
+
+[sub_resource type="Resource" id="Node_shredder_deep_cuts"]
+script = ExtResource("2_node")
+id = &"shredder_deep_cuts"
+display_name = "Deep Cuts"
+description = "Shred stacks last 1 s longer"
+max_rank = 2
+position = Vector2(-22.4, 11.5)
+color = Color(0.915, 0.454, 0.789, 1)
+links = Array[StringName]([&"shredder_t3"])
+
+[sub_resource type="Resource" id="Effect_shredder_fast_rasp_0"]
+script = ExtResource("3_effect")
+buildings = 16384
+elements = 8
+stat_type = 6
+modify_type = 0
+value_per_rank = 0.04
+
+[sub_resource type="Resource" id="Node_shredder_fast_rasp"]
+script = ExtResource("2_node")
+id = &"shredder_fast_rasp"
+display_name = "Fast Rasp"
+description = "Poison Shredder attack speed +0.04"
+max_rank = 3
+position = Vector2(-20.6, 7.5)
+color = Color(0.915, 0.454, 0.789, 1)
+links = Array[StringName]([&"shredder_seeping"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_shredder_fast_rasp_0")])
+
+[sub_resource type="Resource" id="Effect_shredder_seeping_0"]
+script = ExtResource("3_effect")
+buildings = 16384
+elements = 8
+stat_type = 11
+modify_type = 0
+value_per_rank = 0.05
+
+[sub_resource type="Resource" id="Node_shredder_seeping"]
+script = ExtResource("2_node")
+id = &"shredder_seeping"
+display_name = "Seeping"
+description = "Poison Shredder poison chance +5 points"
+max_rank = 3
+position = Vector2(-20.6, 9.5)
+color = Color(0.915, 0.454, 0.789, 1)
+links = Array[StringName]([&"shredder_acid_iron"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_shredder_seeping_0")])
+
+[sub_resource type="Resource" id="Effect_shredder_acid_iron_0"]
+script = ExtResource("3_effect")
+buildings = 16384
+elements = 8
+stat_type = 18
+modify_type = 0
+value_per_rank = 0.05
+
+[sub_resource type="Resource" id="Node_shredder_acid_iron"]
+script = ExtResource("2_node")
+id = &"shredder_acid_iron"
+display_name = "Acid Iron"
+description = "Poison Shredder resistance penetration +5%"
+max_rank = 2
+position = Vector2(-20.6, 11.5)
+color = Color(0.915, 0.454, 0.789, 1)
+links = Array[StringName]([&"shredder_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_shredder_acid_iron_0")])
+
+[sub_resource type="Resource" id="TalentEffect_unlock_shredder_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 16384
+elements = 8
+
+[sub_resource type="Resource" id="Node_shredder_t3"]
+script = ExtResource("2_node")
+id = &"shredder_t3"
+display_name = "Shredder T3"
+description = "Unlocks Poison Shredder T3"
+kind = 2
+position = Vector2(-21.5, 13.5)
+color = Color(0.915, 0.454, 0.789, 1)
+links = Array[StringName]([&"shredder_dissolve"])
+one_way_links = Array[StringName]([&"black_venom"])
+needs = &"shredder_t2"
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_shredder_t3")])
+
+[sub_resource type="Resource" id="Node_shredder_dissolve"]
+script = ExtResource("2_node")
+id = &"shredder_dissolve"
+display_name = "Dissolve"
+description = "Poison stacks on an enemy with three shred stacks tick twice as fast"
+kind = 3
+position = Vector2(-21.5, 15.5)
+color = Color(0.915, 0.454, 0.789, 1)
+
+[sub_resource type="Resource" id="Effect_spike_field_venom_spikes_0"]
+script = ExtResource("3_effect")
+buildings = 4096
+elements = 8
+modify_type = 1
+value_per_rank = 0.08
+
+[sub_resource type="Resource" id="Node_spike_field_venom_spikes"]
+script = ExtResource("2_node")
+id = &"spike_field_venom_spikes"
+display_name = "Venom Spikes"
+description = "Poison Spike Field damage +8%"
+max_rank = 3
+position = Vector2(36.5, 1.5)
+color = Color(0.515, 0.78, 0.313, 1)
+links = Array[StringName]([&"spike_field_quick_spikes"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_spike_field_venom_spikes_0")])
+
+[sub_resource type="Resource" id="Effect_spike_field_quick_spikes_0"]
+script = ExtResource("3_effect")
+buildings = 4096
+elements = 8
+stat_type = 6
+modify_type = 0
+value_per_rank = 0.04
+
+[sub_resource type="Resource" id="Node_spike_field_quick_spikes"]
+script = ExtResource("2_node")
+id = &"spike_field_quick_spikes"
+display_name = "Quick Spikes"
+description = "Poison Spike Field attack speed +0.04"
+max_rank = 3
+position = Vector2(36.5, 3.5)
+color = Color(0.515, 0.78, 0.313, 1)
+links = Array[StringName]([&"spike_field_t2"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_spike_field_quick_spikes_0")])
+
+[sub_resource type="Resource" id="TalentEffect_unlock_spike_field_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 4096
+elements = 8
+
+[sub_resource type="Resource" id="Node_spike_field_t2"]
+script = ExtResource("2_node")
+id = &"spike_field_t2"
+display_name = "Spike Field T2"
+description = "Unlocks Poison Spike Field T2"
+kind = 2
+position = Vector2(36.5, 5.5)
+color = Color(0.515, 0.78, 0.313, 1)
+links = Array[StringName]([&"spike_field_dripping_tips", &"spike_field_barbs"])
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_spike_field_t2")])
+
+[sub_resource type="Resource" id="Effect_spike_field_dripping_tips_0"]
+script = ExtResource("3_effect")
+buildings = 4096
+elements = 8
+stat_type = 11
+modify_type = 0
+value_per_rank = 0.05
+
+[sub_resource type="Resource" id="Node_spike_field_dripping_tips"]
+script = ExtResource("2_node")
+id = &"spike_field_dripping_tips"
+display_name = "Dripping Tips"
+description = "Poison Spike Field poison chance +5 points"
+max_rank = 3
+position = Vector2(35.6, 7.5)
+color = Color(0.515, 0.78, 0.313, 1)
+links = Array[StringName]([&"spike_field_festering"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_spike_field_dripping_tips_0")])
+
+[sub_resource type="Resource" id="Effect_spike_field_festering_0"]
+script = ExtResource("3_effect")
+buildings = 4096
+elements = 8
+stat_type = 10
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Node_spike_field_festering"]
+script = ExtResource("2_node")
+id = &"spike_field_festering"
+display_name = "Festering"
+description = "Poison Spike Field poison potency +10%"
+max_rank = 3
+position = Vector2(35.6, 9.5)
+color = Color(0.515, 0.78, 0.313, 1)
+links = Array[StringName]([&"spike_field_deep_prick"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_spike_field_festering_0")])
+
+[sub_resource type="Resource" id="Effect_spike_field_deep_prick_0"]
+script = ExtResource("3_effect")
+buildings = 4096
+elements = 8
+stat_type = 13
+modify_type = 0
+value_per_rank = 1.0
+
+[sub_resource type="Resource" id="Node_spike_field_deep_prick"]
+script = ExtResource("2_node")
+id = &"spike_field_deep_prick"
+display_name = "Deep Prick"
+description = "Poison Spike Field strikes add 1 more poison stack"
+max_rank = 2
+position = Vector2(35.6, 11.5)
+color = Color(0.515, 0.78, 0.313, 1)
+links = Array[StringName]([&"spike_field_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_spike_field_deep_prick_0")])
+
+[sub_resource type="Resource" id="Node_spike_field_barbs"]
+script = ExtResource("2_node")
+id = &"spike_field_barbs"
+display_name = "Barbs"
+description = "Poison Spike Field slow +5 points"
+max_rank = 2
+position = Vector2(37.4, 7.5)
+color = Color(0.515, 0.78, 0.313, 1)
+links = Array[StringName]([&"spike_field_lingering_sting"])
+
+[sub_resource type="Resource" id="Node_spike_field_lingering_sting"]
+script = ExtResource("2_node")
+id = &"spike_field_lingering_sting"
+display_name = "Lingering Sting"
+description = "Struck enemies stay slowed 0.5 s longer"
+max_rank = 2
+position = Vector2(37.4, 9.5)
+color = Color(0.515, 0.78, 0.313, 1)
+links = Array[StringName]([&"spike_field_venom_points"])
+
+[sub_resource type="Resource" id="Effect_spike_field_venom_points_0"]
+script = ExtResource("3_effect")
+buildings = 4096
+elements = 8
+stat_type = 7
+modify_type = 0
+value_per_rank = 0.04
+
+[sub_resource type="Resource" id="Node_spike_field_venom_points"]
+script = ExtResource("2_node")
+id = &"spike_field_venom_points"
+display_name = "Venom Points"
+description = "Poison Spike Field critical chance +4 points"
+max_rank = 2
+position = Vector2(37.4, 11.5)
+color = Color(0.515, 0.78, 0.313, 1)
+links = Array[StringName]([&"spike_field_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_spike_field_venom_points_0")])
+
+[sub_resource type="Resource" id="TalentEffect_unlock_spike_field_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 4096
+elements = 8
+
+[sub_resource type="Resource" id="Node_spike_field_t3"]
+script = ExtResource("2_node")
+id = &"spike_field_t3"
+display_name = "Spike Field T3"
+description = "Unlocks Poison Spike Field T3"
+kind = 2
+position = Vector2(36.5, 13.5)
+color = Color(0.515, 0.78, 0.313, 1)
+links = Array[StringName]([&"spike_field_nest_of_vipers"])
+one_way_links = Array[StringName]([&"black_venom"])
+needs = &"spike_field_t2"
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_spike_field_t3")])
+
+[sub_resource type="Resource" id="Node_spike_field_nest_of_vipers"]
+script = ExtResource("2_node")
+id = &"spike_field_nest_of_vipers"
+display_name = "Nest of Vipers"
+description = "An enemy that dies on the field leaves a poison cloud for 3 s"
+kind = 3
+position = Vector2(36.5, 15.5)
+color = Color(0.515, 0.78, 0.313, 1)
+
 [resource]
 script = ExtResource("1_tree")
 id = &"poison"
 display_name = "Poison"
 start_id = &"toxic_ooze"
 element = 8
-nodes = Array[ExtResource("2_node")]([SubResource("Node_toxic_ooze"), SubResource("Node_black_venom"), SubResource("Node_virulence"), SubResource("Node_lingering_toxins"), SubResource("Node_thick_venom"), SubResource("Node_seeping"), SubResource("Node_weakening"), SubResource("Node_corrosion"), SubResource("Node_potent_brew"), SubResource("Node_contagion"), SubResource("Node_necrosis"), SubResource("Node_plague"), SubResource("Node_toxic_burst"), SubResource("Node_wide_cloud"), SubResource("Node_quick_pulse_p"), SubResource("Node_nova_t2"), SubResource("Node_noxious_burst"), SubResource("Node_caustic_pulse"), SubResource("Node_lingering_cloud"), SubResource("Node_overdose"), SubResource("Node_spreading_fumes"), SubResource("Node_nova_t3"), SubResource("Node_toxic_bloom"), SubResource("Node_venom_bolts"), SubResource("Node_quick_draw_p"), SubResource("Node_long_flight_p"), SubResource("Node_bolter_t2"), SubResource("Node_envenomed_tips"), SubResource("Node_piercing_fangs"), SubResource("Node_barbed_bolts"), SubResource("Node_opportunist"), SubResource("Node_viper_strike"), SubResource("Node_bolter_t3"), SubResource("Node_hydra_bolts"), SubResource("Node_acid_beam"), SubResource("Node_clear_lens_p"), SubResource("Node_steady_beam_p"), SubResource("Node_beamer_t2"), SubResource("Node_toxic_stream"), SubResource("Node_searing_acid"), SubResource("Node_saturation"), SubResource("Node_dissolve"), SubResource("Node_concentrated"), SubResource("Node_beamer_t3"), SubResource("Node_acid_splash"), SubResource("Node_venom_snare"), SubResource("Node_quick_reset"), SubResource("Node_thick_cloud"), SubResource("Node_trap_t2"), SubResource("Node_choking_gas"), SubResource("Node_barbed_jaws"), SubResource("Node_wide_fog"), SubResource("Node_sickening_snap"), SubResource("Node_venom_sacs"), SubResource("Node_trap_t3"), SubResource("Node_creeping_fog"), SubResource("Node_toxic_mortar"), SubResource("Node_wall_t2"), SubResource("Node_spiked_moss"), SubResource("Node_wall_t3"), SubResource("Node_clinging_venom"), SubResource("Node_thornbark"), SubResource("Node_toxic_maze"), SubResource("Node_maze_thorn_walls"), SubResource("Node_maze_rotting_corners"), SubResource("Node_maze_bog_maze"), SubResource("Node_spotter_viper_eye"), SubResource("Node_spotter_still_fangs"), SubResource("Node_spotter_t2"), SubResource("Node_spotter_venom_mark"), SubResource("Node_spotter_toxic_mark"), SubResource("Node_spotter_deep_dose"), SubResource("Node_spotter_patient_aim"), SubResource("Node_spotter_rot_round"), SubResource("Node_spotter_weak_spot"), SubResource("Node_spotter_t3"), SubResource("Node_spotter_death_sentence"), SubResource("Node_mortar_rot_shells"), SubResource("Node_mortar_long_lob"), SubResource("Node_mortar_t2"), SubResource("Node_mortar_toxic_fill"), SubResource("Node_mortar_gas_shells"), SubResource("Node_mortar_wide_shells"), SubResource("Node_mortar_quick_loader"), SubResource("Node_mortar_corroding_splash"), SubResource("Node_mortar_heavy_dose"), SubResource("Node_mortar_t3"), SubResource("Node_mortar_plague_barrage"), SubResource("Node_breather_acid_breath"), SubResource("Node_breather_deep_lungs"), SubResource("Node_breather_t2"), SubResource("Node_breather_wide_fumes"), SubResource("Node_breather_choking_breath"), SubResource("Node_breather_lingering_breath"), SubResource("Node_breather_steady_breath"), SubResource("Node_breather_corrosive_breath"), SubResource("Node_breather_thick_fumes"), SubResource("Node_breather_t3"), SubResource("Node_breather_miasma"), SubResource("Node_egg_bomb_rotten_yolk"), SubResource("Node_egg_bomb_quick_hatch"), SubResource("Node_egg_bomb_t2"), SubResource("Node_egg_bomb_wide_blast"), SubResource("Node_egg_bomb_spore_shell"), SubResource("Node_egg_bomb_gas_pit"), SubResource("Node_egg_bomb_short_fuse"), SubResource("Node_egg_bomb_sticky_yolk"), SubResource("Node_egg_bomb_fetid_nest"), SubResource("Node_egg_bomb_t3"), SubResource("Node_egg_bomb_plague_egg"), SubResource("Node_harpooner_venom_hooks"), SubResource("Node_harpooner_long_chain"), SubResource("Node_harpooner_t2"), SubResource("Node_harpooner_toxic_barbs"), SubResource("Node_harpooner_festering_wound"), SubResource("Node_harpooner_tight_tether"), SubResource("Node_harpooner_quick_reel"), SubResource("Node_harpooner_grounded_rot"), SubResource("Node_harpooner_skyhook"), SubResource("Node_harpooner_t3"), SubResource("Node_harpooner_leech_chain"), SubResource("Node_hatchery_venom_fed_brood"), SubResource("Node_hatchery_rot_clutch"), SubResource("Node_hatchery_t2"), SubResource("Node_hatchery_venom_claws"), SubResource("Node_hatchery_toxic_blood"), SubResource("Node_hatchery_hardy_brood"), SubResource("Node_hatchery_big_clutch"), SubResource("Node_hatchery_acid_spit"), SubResource("Node_hatchery_fierce_hatchlings"), SubResource("Node_hatchery_t3"), SubResource("Node_hatchery_plague_brood"), SubResource("Node_buffer_spore_aura"), SubResource("Node_buffer_bitter_tonic"), SubResource("Node_buffer_t2"), SubResource("Node_buffer_venom_zeal"), SubResource("Node_buffer_noxious_air"), SubResource("Node_buffer_deep_reserve"), SubResource("Node_buffer_brew_song"), SubResource("Node_buffer_sharp_senses"), SubResource("Node_buffer_mossy_stones"), SubResource("Node_buffer_t3"), SubResource("Node_buffer_heart_of_the_bog")])
+nodes = Array[ExtResource("2_node")]([SubResource("Node_toxic_ooze"), SubResource("Node_black_venom"), SubResource("Node_virulence"), SubResource("Node_lingering_toxins"), SubResource("Node_thick_venom"), SubResource("Node_seeping"), SubResource("Node_weakening"), SubResource("Node_corrosion"), SubResource("Node_potent_brew"), SubResource("Node_contagion"), SubResource("Node_necrosis"), SubResource("Node_plague"), SubResource("Node_toxic_burst"), SubResource("Node_wide_cloud"), SubResource("Node_quick_pulse_p"), SubResource("Node_nova_t2"), SubResource("Node_noxious_burst"), SubResource("Node_caustic_pulse"), SubResource("Node_lingering_cloud"), SubResource("Node_overdose"), SubResource("Node_spreading_fumes"), SubResource("Node_nova_t3"), SubResource("Node_toxic_bloom"), SubResource("Node_venom_bolts"), SubResource("Node_quick_draw_p"), SubResource("Node_long_flight_p"), SubResource("Node_bolter_t2"), SubResource("Node_envenomed_tips"), SubResource("Node_piercing_fangs"), SubResource("Node_barbed_bolts"), SubResource("Node_opportunist"), SubResource("Node_viper_strike"), SubResource("Node_bolter_t3"), SubResource("Node_hydra_bolts"), SubResource("Node_acid_beam"), SubResource("Node_clear_lens_p"), SubResource("Node_steady_beam_p"), SubResource("Node_beamer_t2"), SubResource("Node_toxic_stream"), SubResource("Node_searing_acid"), SubResource("Node_saturation"), SubResource("Node_dissolve"), SubResource("Node_concentrated"), SubResource("Node_beamer_t3"), SubResource("Node_acid_splash"), SubResource("Node_venom_snare"), SubResource("Node_quick_reset"), SubResource("Node_thick_cloud"), SubResource("Node_trap_t2"), SubResource("Node_choking_gas"), SubResource("Node_barbed_jaws"), SubResource("Node_wide_fog"), SubResource("Node_sickening_snap"), SubResource("Node_venom_sacs"), SubResource("Node_trap_t3"), SubResource("Node_creeping_fog"), SubResource("Node_toxic_mortar"), SubResource("Node_wall_t2"), SubResource("Node_spiked_moss"), SubResource("Node_wall_t3"), SubResource("Node_clinging_venom"), SubResource("Node_thornbark"), SubResource("Node_toxic_maze"), SubResource("Node_maze_thorn_walls"), SubResource("Node_maze_rotting_corners"), SubResource("Node_maze_bog_maze"), SubResource("Node_spotter_viper_eye"), SubResource("Node_spotter_still_fangs"), SubResource("Node_spotter_t2"), SubResource("Node_spotter_venom_mark"), SubResource("Node_spotter_toxic_mark"), SubResource("Node_spotter_deep_dose"), SubResource("Node_spotter_patient_aim"), SubResource("Node_spotter_rot_round"), SubResource("Node_spotter_weak_spot"), SubResource("Node_spotter_t3"), SubResource("Node_spotter_death_sentence"), SubResource("Node_mortar_rot_shells"), SubResource("Node_mortar_long_lob"), SubResource("Node_mortar_t2"), SubResource("Node_mortar_toxic_fill"), SubResource("Node_mortar_gas_shells"), SubResource("Node_mortar_wide_shells"), SubResource("Node_mortar_quick_loader"), SubResource("Node_mortar_corroding_splash"), SubResource("Node_mortar_heavy_dose"), SubResource("Node_mortar_t3"), SubResource("Node_mortar_plague_barrage"), SubResource("Node_breather_acid_breath"), SubResource("Node_breather_deep_lungs"), SubResource("Node_breather_t2"), SubResource("Node_breather_wide_fumes"), SubResource("Node_breather_choking_breath"), SubResource("Node_breather_lingering_breath"), SubResource("Node_breather_steady_breath"), SubResource("Node_breather_corrosive_breath"), SubResource("Node_breather_thick_fumes"), SubResource("Node_breather_t3"), SubResource("Node_breather_miasma"), SubResource("Node_egg_bomb_rotten_yolk"), SubResource("Node_egg_bomb_quick_hatch"), SubResource("Node_egg_bomb_t2"), SubResource("Node_egg_bomb_wide_blast"), SubResource("Node_egg_bomb_spore_shell"), SubResource("Node_egg_bomb_gas_pit"), SubResource("Node_egg_bomb_short_fuse"), SubResource("Node_egg_bomb_sticky_yolk"), SubResource("Node_egg_bomb_fetid_nest"), SubResource("Node_egg_bomb_t3"), SubResource("Node_egg_bomb_plague_egg"), SubResource("Node_harpooner_venom_hooks"), SubResource("Node_harpooner_long_chain"), SubResource("Node_harpooner_t2"), SubResource("Node_harpooner_toxic_barbs"), SubResource("Node_harpooner_festering_wound"), SubResource("Node_harpooner_tight_tether"), SubResource("Node_harpooner_quick_reel"), SubResource("Node_harpooner_grounded_rot"), SubResource("Node_harpooner_skyhook"), SubResource("Node_harpooner_t3"), SubResource("Node_harpooner_leech_chain"), SubResource("Node_hatchery_venom_fed_brood"), SubResource("Node_hatchery_rot_clutch"), SubResource("Node_hatchery_t2"), SubResource("Node_hatchery_venom_claws"), SubResource("Node_hatchery_toxic_blood"), SubResource("Node_hatchery_hardy_brood"), SubResource("Node_hatchery_big_clutch"), SubResource("Node_hatchery_acid_spit"), SubResource("Node_hatchery_fierce_hatchlings"), SubResource("Node_hatchery_t3"), SubResource("Node_hatchery_plague_brood"), SubResource("Node_buffer_spore_aura"), SubResource("Node_buffer_bitter_tonic"), SubResource("Node_buffer_t2"), SubResource("Node_buffer_venom_zeal"), SubResource("Node_buffer_noxious_air"), SubResource("Node_buffer_deep_reserve"), SubResource("Node_buffer_brew_song"), SubResource("Node_buffer_sharp_senses"), SubResource("Node_buffer_mossy_stones"), SubResource("Node_buffer_t3"), SubResource("Node_buffer_heart_of_the_bog"), SubResource("Node_elder_drake_ancient_venom"), SubResource("Node_elder_drake_long_neck"), SubResource("Node_elder_drake_t2"), SubResource("Node_elder_drake_venom_bite"), SubResource("Node_elder_drake_wide_breath"), SubResource("Node_elder_drake_old_rot"), SubResource("Node_elder_drake_old_fury"), SubResource("Node_elder_drake_second_wind"), SubResource("Node_elder_drake_deep_fangs"), SubResource("Node_elder_drake_t3"), SubResource("Node_elder_drake_blight_breath"), SubResource("Node_shredder_acid_rasp"), SubResource("Node_shredder_wide_rasp"), SubResource("Node_shredder_t2"), SubResource("Node_shredder_corrode"), SubResource("Node_shredder_caustic"), SubResource("Node_shredder_deep_cuts"), SubResource("Node_shredder_fast_rasp"), SubResource("Node_shredder_seeping"), SubResource("Node_shredder_acid_iron"), SubResource("Node_shredder_t3"), SubResource("Node_shredder_dissolve"), SubResource("Node_spike_field_venom_spikes"), SubResource("Node_spike_field_quick_spikes"), SubResource("Node_spike_field_t2"), SubResource("Node_spike_field_dripping_tips"), SubResource("Node_spike_field_festering"), SubResource("Node_spike_field_deep_prick"), SubResource("Node_spike_field_barbs"), SubResource("Node_spike_field_lingering_sting"), SubResource("Node_spike_field_venom_points"), SubResource("Node_spike_field_t3"), SubResource("Node_spike_field_nest_of_vipers")])
 background = Color(0.039, 0.055, 0.024, 1)
 link_lit = Color(0.776, 0.949, 0.42, 1)
 accent = Color(0.651, 0.89, 0.29, 1)

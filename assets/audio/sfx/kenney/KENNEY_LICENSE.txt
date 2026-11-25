@@ -12,3 +12,5 @@ card_picked.ogg       Interface Sounds, confirmation_001.ogg       https://kenne
 boss_arrives.ogg      Music Jingles, Hit jingles/jingles_HIT00.ogg https://kenney.nl/assets/music-jingles
 not_enough_gold.ogg   Interface Sounds, error_004.ogg              https://kenney.nl/assets/interface-sounds
 card_hover.ogg        Interface Sounds, select_002.ogg             https://kenney.nl/assets/interface-sounds
+early_start_ready.ogg Interface Sounds, glass_002.ogg              https://kenney.nl/assets/interface-sounds
+early_start_coins.ogg RPG Audio, handleCoins.ogg                   https://kenney.nl/assets/rpg-audio

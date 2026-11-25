@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://db6b10umgod5y"
+path="res://.godot/imported/haystack_farm.aseprite-1c5b9a1a5b3818aef20b731705e2c664.res"
+
+[deps]
+
+source_file="res://assets/art/ui/map_landmarks/haystack_farm.aseprite"
+dest_files=["res://.godot/imported/haystack_farm.aseprite-1c5b9a1a5b3818aef20b731705e2c664.res"]
+
+[params]
+

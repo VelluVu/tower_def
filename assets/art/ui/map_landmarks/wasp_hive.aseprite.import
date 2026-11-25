@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cqjdgyr7057k3"
+path="res://.godot/imported/wasp_hive.aseprite-75a05f41b7d4f22263120bc03f0ac2f1.res"
+
+[deps]
+
+source_file="res://assets/art/ui/map_landmarks/wasp_hive.aseprite"
+dest_files=["res://.godot/imported/wasp_hive.aseprite-75a05f41b7d4f22263120bc03f0ac2f1.res"]
+
+[params]
+

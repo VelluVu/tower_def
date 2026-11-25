@@ -4,6 +4,12 @@ extends Node
 
 ## Slows (negative Multiply on Speed) never take a unit below this share of its unslowed speed.
 const SLOW_FLOOR : float = 0.4
+## The deepest a slow that ignores the floor takes an enemy (ModifierData.ignores_slow_floor): it never stops.
+const DEEP_SLOW_FLOOR : float = 0.1
+## Bosses (2026-11-25, the user: "all slows are nerfed a bit against the boss, but the Frost harpoon should be the best
+## slow on single targets"): every slow counts at this share on a boss, and a deep slow stops at BOSS_DEEP_SLOW_FLOOR.
+const BOSS_SLOW_SHARE : float = 0.75
+const BOSS_DEEP_SLOW_FLOOR : float = 0.2
 
 @onready var actor : Node = get_parent()
 
@@ -83,8 +89,10 @@ func calculate_modifier(stat_type : Utils.StatType) -> void:
 
 	if stat_type == Utils.StatType.Speed:
 		#a standard bearer's banner: slows do nothing (SteadfastAura)
-		var floor_share : float = 1.0 if actor is Enemy and actor.is_steadfast else slow_floor
-		modified_value = floor_slows(modified_value, base, flat, additive, multiply, floor_share)
+		var is_boss : bool = actor is Enemy and actor.is_boss
+		var is_immune : bool = actor is Enemy and actor.is_steadfast
+		modified_value = floor_slows(modified_value, base, flat, additive, multiply, slow_floor,
+			BOSS_SLOW_SHARE if is_boss else 1.0, BOSS_DEEP_SLOW_FLOOR if is_boss else DEEP_SLOW_FLOOR, is_immune)
 
 	if skill_stat != null:
 		skill_stat.value = modified_value
@@ -112,12 +120,31 @@ static func combine(base : float, flat : Array[ModifierData], additive : Array[M
 	return value
 
 
-## The slowed value, but at least floor_share of the value without the slows. Static so it can be tested.
-static func floor_slows(slowed_value : float, base : float, flat : Array[ModifierData], additive : Array[ModifierData], multiply : Array[ModifierData], floor_share : float = SLOW_FLOOR) -> float:
+## The slowed value, but at least floor_share of the value without the slows. Slows that ignore the floor
+## (a Frost Harpooner's tether, 2026-11-25, the user: past the cap but never to 0) work on top of the floored value,
+## down to deep_floor. slow_scale weakens every slow (bosses) and is_immune stops them (a standard bearer's banner),
+## except the slows that pierce that (every harpoon's tether). Static so it can be tested.
+static func floor_slows(_slowed_value : float, base : float, flat : Array[ModifierData], additive : Array[ModifierData], multiply : Array[ModifierData],
+		floor_share : float = SLOW_FLOOR, slow_scale : float = 1.0, deep_floor : float = DEEP_SLOW_FLOOR, is_immune : bool = false) -> float:
 	var boosts : Array[ModifierData] = []
+	var floored : Array[ModifierData] = []
+	var deep_factor : float = 1.0
+	var has_deep : bool = false
 
 	for modifier in multiply:
 		if modifier.value >= 0.0:
 			boosts.append(modifier)
+			floored.append(modifier)
+		elif modifier.ignores_slow_floor:
+			deep_factor *= 1.0 + modifier.value * (1.0 if modifier.pierces_slow_immunity else slow_scale)
+			has_deep = true
+		elif modifier.pierces_slow_immunity:
+			floored.append(modifier)
+		elif not is_immune:
+			floored.append(modifier if is_equal_approx(slow_scale, 1.0) else modifier.scaled(slow_scale))
 
-	return maxf(slowed_value, combine(base, flat, additive, boosts) * floor_share)
+	var unslowed : float = combine(base, flat, additive, boosts)
+	var held : float = maxf(combine(base, flat, additive, floored), unslowed * floor_share)
+	if not has_deep:
+		return held
+	return maxf(held * deep_factor, unslowed * deep_floor)

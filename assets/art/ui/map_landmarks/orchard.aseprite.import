@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://35bfde7d14sl"
+path="res://.godot/imported/orchard.aseprite-a7e71580d57e71c2624846157dcab283.res"
+
+[deps]
+
+source_file="res://assets/art/ui/map_landmarks/orchard.aseprite"
+dest_files=["res://.godot/imported/orchard.aseprite-a7e71580d57e71c2624846157dcab283.res"]
+
+[params]
+

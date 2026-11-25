@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://c68f3ymbj6jm4"
+path="res://.godot/imported/windmill.aseprite-6fdb76b4f803c0199e152d461eec0fde.res"
+
+[deps]
+
+source_file="res://assets/art/ui/map_landmarks/windmill.aseprite"
+dest_files=["res://.godot/imported/windmill.aseprite-6fdb76b4f803c0199e152d461eec0fde.res"]
+
+[params]
+

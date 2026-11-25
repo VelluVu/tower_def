@@ -12,7 +12,7 @@
 [sub_resource type="Resource" id="PuffeLine_1"]
 script = ExtResource("9_line")
 trigger = 0
-text = "Humans! They hold the bridge, our only way north. Fortify this castle and hold them back."
+text = "Humans! They have barricaded the bridge, and now they are coming over it. The great cave is right behind us: hold this castle, or they reach the eggs behind our backs."
 mood = 3
 
 [sub_resource type="Resource" id="PuffeLine_2"]
@@ -37,7 +37,7 @@ mood = 2
 script = ExtResource("9_line")
 trigger = 3
 wave_number = 5
-text = "One last push. Hold, and the road north to the great cave is ours."
+text = "One last push. Hold the bridge, and we can go down into the great cave."
 mood = 1
 
 [sub_resource type="Resource" id="PuffeLine_hatchery"]
@@ -49,7 +49,7 @@ mood = 1
 [resource]
 script = ExtResource("1_level")
 level_name = "Barricade Bridge"
-story_text = "The humans have barricaded the middle bridge, the only way north to the swamp. The castle on this bank is all that stands between them and the eggs."
+story_text = "The humans have taken the middle bridge and barricaded it, their banner planted on the stakes. The great cave with the hidden eggs lies just behind this bank: hold the castle here first, or they will be at the eggs while the drakelings face what waits below."
 starting_gold = 23.0
 waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtResource("w3"), ExtResource("w4"), ExtResource("w5")])
 puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_hatchery"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_4"), SubResource("PuffeLine_5")])

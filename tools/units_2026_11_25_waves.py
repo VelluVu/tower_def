@@ -11,13 +11,14 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 WAVES = os.path.join(ROOT, "scenes", "level", "level_data", "waves")
 MARK = "u1125"
 
-# unit: [(level, wave, count, interval, delay)]
+# unit: [(level, wave, count, interval, delay)]; levels 6/7 and 8/9 swapped places on 2026-11-25 (the caves' new
+# route), these follow their level, the tunnel rats stay at 7 with the Egg Bomb
 PLACES = {
     # Caves
-    "spore_carrier": [(5, 4, 4, 2.5, 4.0), (7, 5, 5, 2.5, 6.0)],
-    "glow_moth": [(6, 3, 8, 0.5, 6.0), (8, 4, 10, 0.5, 5.0)],
-    "cave_shaman": [(8, 5, 2, 6.0, 6.0), (10, 4, 2, 6.0, 4.0), (12, 4, 3, 5.0, 5.0)],
-    "wall_crawler": [(9, 3, 5, 2.0, 5.0), (12, 5, 6, 1.8, 4.0)],
+    "spore_carrier": [(5, 4, 4, 2.5, 4.0), (6, 5, 5, 2.5, 6.0)],
+    "glow_moth": [(7, 3, 8, 0.5, 6.0), (9, 4, 10, 0.5, 5.0)],
+    "cave_shaman": [(9, 5, 2, 6.0, 6.0), (10, 4, 2, 6.0, 4.0), (12, 4, 3, 5.0, 5.0)],
+    "wall_crawler": [(8, 3, 5, 2.0, 5.0), (12, 5, 6, 1.8, 4.0)],
     # Swamp
     "snapping_turtle": [(15, 5, 3, 4.0, 6.0), (22, 5, 4, 4.0, 5.0), (24, 5, 4, 4.0, 4.0)],
     "leech_mother": [(16, 4, 2, 8.0, 5.0), (20, 5, 3, 7.0, 4.0)],

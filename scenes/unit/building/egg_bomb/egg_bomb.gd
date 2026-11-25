@@ -54,13 +54,20 @@ func detonate() -> void:
 		var enemy : Enemy = victims[i]
 		if not is_instance_valid(enemy) or enemy.is_dead:
 			continue
-		var copy : DamageData = MortarShell.copy_hit(hit, MortarShell.get_falloff_share(enemy.global_position.distance_to(global_position), blast_radius))
+		var share : float = MortarShell.get_falloff_share(enemy.global_position.distance_to(global_position), blast_radius)
+		#Pinned target: a harpooned enemy takes the full hit
+		if level.synergies != null:
+			share = level.synergies.get_blast_share(enemy, share)
+		var copy : DamageData = MortarShell.copy_hit(hit, share)
 		copy.is_splash = i > 0
 		enemy.take_damage(copy)
 		copy.free()
 	hit.queue_free()
 	targets.clear()
 	_show_blast()
+	#Shrapnel bed: the blast fires the Spike Fields beside it
+	if level.synergies != null:
+		level.synergies.on_egg_blast(self)
 	is_rebuilding = true
 	animation_control.play_animation(GlobalAnimationNames.ATTACK_ANIMATION)
 

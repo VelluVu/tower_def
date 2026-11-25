@@ -43,6 +43,15 @@
 [ext_resource type="Resource" path="res://scenes/upgrades/building_upgrades/elder_drake_upgrade_data.tres" id="0_upgradedata"]
 
 [ext_resource type="SpriteFrames" path="res://scenes/unit/evolve_tree/puffe_elder_evolve/puffe_elder_frames.tres" id="s_frames"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/elder_drake_physical_t2.tres" id="tier_physical_t2"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/elder_drake_physical_t3.tres" id="tier_physical_t3"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/elder_drake_fire_t2.tres" id="tier_fire_t2"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/elder_drake_fire_t3.tres" id="tier_fire_t3"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/elder_drake_frost_t2.tres" id="tier_frost_t2"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/elder_drake_frost_t3.tres" id="tier_frost_t3"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/elder_drake_poison_t2.tres" id="tier_poison_t2"]
+[ext_resource type="Resource" path="res://scenes/unit/evolve_tree/tiers/elder_drake_poison_t3.tres" id="tier_poison_t3"]
+[ext_resource type="Script" path="res://scenes/unit/evolve_tree/evolve_tier_data.gd" id="tier_script"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jxaqe"]
 size = Vector2(16, 16)
@@ -349,6 +358,7 @@ selected_icon = ExtResource("19_tlf38")
 new_damage_data_scene = ExtResource("20_ccteo")
 icon = ExtResource("21_eqv60")
 info = "Physical: a breath of grinding wind"
+tiers = Array[ExtResource("tier_script")]([ExtResource("tier_physical_t2"), ExtResource("tier_physical_t3")])
 
 [node name="DamageModifier" type="Node" parent="EvolveTree/EvolveBranch/PhysicalElementEvolveLeaf"]
 script = ExtResource("24_v32av")
@@ -374,6 +384,7 @@ new_animated_sprite_scene = ExtResource("22_ll5c1")
 new_damage_data_scene = ExtResource("23_pbrrj")
 icon = ExtResource("19_ubw0q")
 info = "Fire: a breath of flame that sets the road burning"
+tiers = Array[ExtResource("tier_script")]([ExtResource("tier_fire_t2"), ExtResource("tier_fire_t3")])
 
 [node name="DamageModifier" type="Node" parent="EvolveTree/EvolveBranch2/FireElementEvolveLeaf"]
 script = ExtResource("24_v32av")
@@ -394,6 +405,7 @@ new_animated_sprite_scene = ExtResource("26_alotc")
 new_damage_data_scene = ExtResource("27_pf0qb")
 icon = ExtResource("31_t8h32")
 info = "Frost: a breath of frost that slows everything in it"
+tiers = Array[ExtResource("tier_script")]([ExtResource("tier_frost_t2"), ExtResource("tier_frost_t3")])
 
 [node name="DamageModifier" type="Node" parent="EvolveTree/EvolveBranch3/FrostElementEvolveLeaf"]
 script = ExtResource("24_v32av")
@@ -414,6 +426,7 @@ new_animated_sprite_scene = ExtResource("28_4x4pp")
 new_damage_data_scene = ExtResource("29_ajupy")
 icon = ExtResource("36_5eit6")
 info = "Poison: a breath of venom that poisons everything in it"
+tiers = Array[ExtResource("tier_script")]([ExtResource("tier_poison_t2"), ExtResource("tier_poison_t3")])
 
 [node name="ModifierManager" type="Node" parent="."]
 script = ExtResource("40_o7aqn")

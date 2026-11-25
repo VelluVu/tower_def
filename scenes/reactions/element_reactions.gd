@@ -135,8 +135,8 @@ func _thermal_shock(reaction : ElementReaction, enemy : Enemy, duration : float)
 
 
 func _frostplague(enemy : Enemy, duration : float) -> void:
-	enemy.is_numb = true
-	_add_timed(enemy, duration, func() -> void: enemy.is_numb = false)
+	enemy.add_numb()
+	_add_timed(enemy, duration, func() -> void: enemy.remove_numb())
 
 
 func _add_timed(enemy : Enemy, duration : float, finish : Callable) -> void:

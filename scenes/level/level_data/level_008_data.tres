@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://btk4fnjwwadp4"]
+[gd_resource type="Resource" script_class="LevelData" format=3]
 
 [ext_resource type="Script" uid="uid://cpw7ia3ek2yvs" path="res://scenes/level/level_data/wave_data.gd" id="0_wave"]
 [ext_resource type="Script" uid="uid://c0cehaxum4b45" path="res://scenes/level/level_data/level_data.gd" id="1_level"]
@@ -12,49 +12,35 @@
 
 [sub_resource type="Resource" id="PuffeLine_1"]
 script = ExtResource("9_line")
-trigger = 0
-text = "The old tunnels are caving in, and the cave folk are pouring out of them. Right through here."
+text = "Crystals everywhere. Pretty, but the folk wearing them are hard to crack."
 
 [sub_resource type="Resource" id="PuffeLine_2"]
 script = ExtResource("9_line")
 trigger = 3
 wave_number = 2
-text = "Batlings from the old roost. Mind the flight route."
+text = "Burrowers! They dig under the maze and come up further on. Keep towers along the whole road."
 
 [sub_resource type="Resource" id="PuffeLine_3"]
 script = ExtResource("9_line")
 trigger = 3
-wave_number = 4
-text = "The ground caved in, a tunnel in the middle of the field!"
-mood = 3
+wave_number = 3
+text = "Crystal brutes. Plain hits glance off; fire, frost and poison bite better."
 
-[sub_resource type="Resource" id="PuffeLine_4"]
+[sub_resource type="Resource" id="PuffeLine_u1125_wall_crawler"]
 script = ExtResource("9_line")
-trigger = 7
-text = "They are not even fighting, just running from something. But not into our castle!"
+trigger = 3
+wave_number = 3
+text = "Crawlers! They climb right over our walls. Only towers stop them."
 mood = 2
-
-[sub_resource type="Resource" id="PuffeLine_5"]
-script = ExtResource("9_line")
-trigger = 3
-wave_number = 6
-text = "The last of them. Whatever woke down there is heading north, and so are we."
-
-[sub_resource type="Resource" id="PuffeLine_u1125_cave_shaman"]
-script = ExtResource("9_line")
-trigger = 3
-wave_number = 5
-text = "That old shaman wraps its friends in stone. The first hit just bounces off: hit them twice!"
-mood = 3
 
 [resource]
 script = ExtResource("1_level")
-level_name = "Collapsed Tunnels"
-story_text = "The miners' old tunnels under the southern mountain are falling in. Something woke deep below, and the cave folk are fleeing north ahead of it, straight through this castle's fields."
-starting_gold = 23.0
+level_name = "Crystal Deep"
+story_text = "The crystal pond glows blue in a hollow on the way north. The cave folk here dig under walls, and some have grown crystal shells."
+starting_gold = 26.0
 waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtResource("w3"), ExtResource("w4"), ExtResource("w5"), ExtResource("w6")])
-puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_4"), SubResource("PuffeLine_u1125_cave_shaman"), SubResource("PuffeLine_5")])
+puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_u1125_wall_crawler")])
 first_wave_health = 1.8
 last_wave_health = 2.9
-health_scale = 1.404
-hard_health_scale = 1.200
+health_scale = 1.000
+hard_health_scale = 1.614

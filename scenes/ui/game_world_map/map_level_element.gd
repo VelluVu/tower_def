@@ -87,6 +87,9 @@ const AREA_BANNER_SCALE : int = 2
 ## Points the trail into this level passes on the way from the level before, in Map units (2026-11-24: round
 ## the great cave's mountain). Empty: a gentle bow.
 @export var trail_via : PackedVector2Array = PackedVector2Array()
+## The trail into this level runs underground (2026-11-25: through the miners' tunnels, through the great cave), so
+## it may pass under water and rock; MapTrails draws it as dark tunnel dots.
+@export var trail_underground : bool = false
 
 var is_locked : bool = false :
 	set = _set_is_locked

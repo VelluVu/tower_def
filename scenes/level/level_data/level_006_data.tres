@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://bdnrarpov765k"]
+[gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://dgapjatafq0oo"]
 
 [ext_resource type="Script" uid="uid://cpw7ia3ek2yvs" path="res://scenes/level/level_data/wave_data.gd" id="0_wave"]
 [ext_resource type="Script" uid="uid://c0cehaxum4b45" path="res://scenes/level/level_data/level_data.gd" id="1_level"]
@@ -8,53 +8,46 @@
 [ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_006_wave_3.tres" id="w3"]
 [ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_006_wave_4.tres" id="w4"]
 [ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_006_wave_5.tres" id="w5"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_006_wave_6.tres" id="w6"]
 
 [sub_resource type="Resource" id="PuffeLine_1"]
 script = ExtResource("9_line")
 trigger = 0
-text = "Hear that squeaking? A batling roost. Something deep below has woken them."
+text = "The southern bridge is gone, smashed into the river. No wading for us: the lake road west it is, past tunnels on every side."
 mood = 2
 
 [sub_resource type="Resource" id="PuffeLine_2"]
 script = ExtResource("9_line")
 trigger = 3
 wave_number = 2
-text = "Batlings! They fly over the maze. The violet dots show their route: Bolters and Beamers along it. A Nova only reaches them from its T2."
+text = "Batlings, with a swarm behind them! They fly over the maze. The violet dots show their route: Bolters and Beamers along it, a Nova for the swarm (it reaches flyers from its T2)."
 
 [sub_resource type="Resource" id="PuffeLine_3"]
 script = ExtResource("9_line")
-trigger = 7
-text = "Over the walls they come. Cover the flight route!"
-mood = 2
+trigger = 3
+wave_number = 5
+text = "A new tunnel in the north-east! They are digging their way closer."
 
 [sub_resource type="Resource" id="PuffeLine_4"]
 script = ExtResource("9_line")
-trigger = 3
-wave_number = 4
-text = "Beeflings on the ground, batlings in the air. Watch both."
+trigger = 7
+text = "They found a gap. Close it!"
+mood = 2
 
 [sub_resource type="Resource" id="PuffeLine_5"]
 script = ExtResource("9_line")
 trigger = 3
-wave_number = 5
-text = "Last wave. Hold the gate!"
-mood = 3
-
-[sub_resource type="Resource" id="PuffeLine_u1125_glow_moth"]
-script = ExtResource("9_line")
-trigger = 3
-wave_number = 3
-text = "Glow moths, a whole flock on the wind! Bolters and Beamers, look up!"
-mood = 2
+wave_number = 6
+text = "Hold the crossing, and we can face whatever is down there."
 
 [resource]
 script = ExtResource("1_level")
-level_name = "Bat Roost"
-story_text = "A castle under the cliffs where the batlings nest. Whatever is waking in the deep caves has stirred them up."
-starting_gold = 23.0
-waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtResource("w3"), ExtResource("w4"), ExtResource("w5")])
-puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_u1125_glow_moth"), SubResource("PuffeLine_4"), SubResource("PuffeLine_5")])
+level_name = "Echo Crossing"
+story_text = "The southern bridge lies smashed in the river, and the drakelings will not carry their loads through water. The way on turns back west along the lake, and the tunnels round this old crossing echo with something big moving below."
+starting_gold = 27.0
+waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtResource("w3"), ExtResource("w4"), ExtResource("w5"), ExtResource("w6")])
+puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_4"), SubResource("PuffeLine_5")])
 first_wave_health = 1.8
 last_wave_health = 3.4
-health_scale = 1.11
-hard_health_scale = 1.057
+health_scale = 1.71
+hard_health_scale = 1.069

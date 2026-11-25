@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cu28hifun8njd"
+path="res://.godot/imported/glass_shards.aseprite-ba2c3c449211d6c8b75aa5d0df6a0918.res"
+
+[deps]
+
+source_file="res://assets/art/ui/map_landmarks/glass_shards.aseprite"
+dest_files=["res://.godot/imported/glass_shards.aseprite-ba2c3c449211d6c8b75aa5d0df6a0918.res"]
+
+[params]
+

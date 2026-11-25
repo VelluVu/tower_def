@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://lm0kvc2fw4nw"
+path="res://.godot/imported/bone_gate.aseprite-dfa6b116a7e2b2c104fa238fe33cac4a.res"
+
+[deps]
+
+source_file="res://assets/art/ui/map_landmarks/bone_gate.aseprite"
+dest_files=["res://.godot/imported/bone_gate.aseprite-dfa6b116a7e2b2c104fa238fe33cac4a.res"]
+
+[params]
+

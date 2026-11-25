@@ -106,7 +106,7 @@ effects = Array[ExtResource("3_effect")]([SubResource("Effect_hold_fast_level")]
 
 [sub_resource type="Resource" id="Effect_ice_bolts_0"]
 script = ExtResource("3_effect")
-buildings = 257
+buildings = 33025
 elements = 4
 modify_type = 1
 value_per_rank = 0.08
@@ -115,11 +115,11 @@ value_per_rank = 0.08
 script = ExtResource("2_node")
 id = &"ice_bolts"
 display_name = "Ice Bolts"
-description = "Frost Bolter and Spotter damage +8%"
+description = "Frost Bolter, Spotter and Elder Drake damage +8%"
 max_rank = 3
 position = Vector2(8.02, 8.02)
 color = Color(0.847, 0.953, 1, 1)
-links = Array[StringName]([&"quick_draw", &"spotter_cold_eye"])
+links = Array[StringName]([&"quick_draw", &"spotter_cold_eye", &"elder_drake_ancient_frost"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_ice_bolts_0")])
 
 [sub_resource type="Resource" id="Effect_quick_draw_0"]
@@ -457,7 +457,7 @@ color = Color(0.639, 0.612, 0.941, 1)
 
 [sub_resource type="Resource" id="Effect_frost_ring_0"]
 script = ExtResource("3_effect")
-buildings = 34
+buildings = 16418
 elements = 4
 modify_type = 1
 value_per_rank = 0.08
@@ -466,11 +466,11 @@ value_per_rank = 0.08
 script = ExtResource("2_node")
 id = &"frost_ring"
 display_name = "Frost Ring"
-description = "Frost Nova and Mortar damage +8%"
+description = "Frost Nova, Mortar and Shredder damage +8%"
 max_rank = 3
 position = Vector2(11.98, 8.02)
 color = Color(0.31, 0.608, 0.878, 1)
-links = Array[StringName]([&"wide_frost", &"mortar_ice_shells"])
+links = Array[StringName]([&"wide_frost", &"mortar_ice_shells", &"shredder_frost_rasp"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_frost_ring_0")])
 
 [sub_resource type="Resource" id="Effect_wide_frost_0"]
@@ -651,7 +651,7 @@ effects = Array[ExtResource("3_effect")]([SubResource("Effect_blizzard_level")])
 
 [sub_resource type="Resource" id="Effect_cold_snare_0"]
 script = ExtResource("3_effect")
-buildings = 3592
+buildings = 7688
 elements = 4
 modify_type = 1
 value_per_rank = 0.08
@@ -660,11 +660,11 @@ value_per_rank = 0.08
 script = ExtResource("2_node")
 id = &"cold_snare"
 display_name = "Cold Snare"
-description = "Frost trap, Harpooner, Hatchery and Egg Bomb damage +8%"
+description = "Frost trap, Spike Field, Harpooner, Hatchery and Egg Bomb damage +8%"
 max_rank = 3
 position = Vector2(11.98, 11.98)
 color = Color(0.424, 0.765, 0.69, 1)
-links = Array[StringName]([&"quick_thaw", &"egg_bomb_cold_yolk", &"harpooner_ice_hooks", &"hatchery_frost_fed_brood"])
+links = Array[StringName]([&"quick_thaw", &"egg_bomb_cold_yolk", &"harpooner_ice_hooks", &"hatchery_frost_fed_brood", &"spike_field_ice_spikes"])
 effects = Array[ExtResource("3_effect")]([SubResource("Effect_cold_snare_0")])
 
 [sub_resource type="Resource" id="Effect_quick_thaw_0"]
@@ -2271,13 +2271,481 @@ kind = 3
 position = Vector2(3.877, -4.782)
 color = Color(0.652, 0.684, 0.745, 1)
 
+[sub_resource type="Resource" id="Effect_elder_drake_ancient_frost_0"]
+script = ExtResource("3_effect")
+buildings = 32768
+elements = 4
+modify_type = 1
+value_per_rank = 0.08
+
+[sub_resource type="Resource" id="Node_elder_drake_ancient_frost"]
+script = ExtResource("2_node")
+id = &"elder_drake_ancient_frost"
+display_name = "Ancient Frost"
+description = "Frost Elder Drake damage +8%"
+max_rank = 3
+position = Vector2(2.517, 5)
+color = Color(0.847, 0.889, 1, 1)
+links = Array[StringName]([&"elder_drake_t2"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_elder_drake_ancient_frost_0")])
+
+[sub_resource type="Resource" id="TalentEffect_unlock_elder_drake_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 32768
+elements = 4
+
+[sub_resource type="Resource" id="Node_elder_drake_t2"]
+script = ExtResource("2_node")
+id = &"elder_drake_t2"
+display_name = "Elder Drake T2"
+description = "Unlocks Frost Elder Drake T2"
+kind = 2
+position = Vector2(1.477, 4.305)
+color = Color(0.847, 0.889, 1, 1)
+links = Array[StringName]([&"elder_drake_rime_bite", &"elder_drake_old_fury"])
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_elder_drake_t2")])
+
+[sub_resource type="Resource" id="Effect_elder_drake_rime_bite_0"]
+script = ExtResource("3_effect")
+buildings = 32768
+elements = 4
+stat_type = 12
+modify_type = 0
+value_per_rank = 1.0
+
+[sub_resource type="Resource" id="Node_elder_drake_rime_bite"]
+script = ExtResource("2_node")
+id = &"elder_drake_rime_bite"
+display_name = "Rime Bite"
+description = "Frost Elder Drake slows last 1 tick longer"
+max_rank = 3
+position = Vector2(0.105, 4.11)
+color = Color(0.847, 0.889, 1, 1)
+links = Array[StringName]([&"elder_drake_wide_breath"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_elder_drake_rime_bite_0")])
+
+[sub_resource type="Resource" id="Node_elder_drake_wide_breath"]
+script = ExtResource("2_node")
+id = &"elder_drake_wide_breath"
+display_name = "Wide Breath"
+description = "The Elder Drake's breath line is 3 px wider on each side"
+max_rank = 2
+position = Vector2(-0.935, 3.415)
+color = Color(0.847, 0.889, 1, 1)
+links = Array[StringName]([&"elder_drake_glacial"])
+
+[sub_resource type="Resource" id="Effect_elder_drake_glacial_0"]
+script = ExtResource("3_effect")
+buildings = 32768
+elements = 4
+stat_type = 10
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Node_elder_drake_glacial"]
+script = ExtResource("2_node")
+id = &"elder_drake_glacial"
+display_name = "Glacial"
+description = "Frost Elder Drake slow potency +10%"
+max_rank = 3
+position = Vector2(-1.974, 2.721)
+color = Color(0.847, 0.889, 1, 1)
+links = Array[StringName]([&"elder_drake_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_elder_drake_glacial_0")])
+
+[sub_resource type="Resource" id="Effect_elder_drake_old_fury_0"]
+script = ExtResource("3_effect")
+buildings = 32768
+elements = 4
+stat_type = 6
+modify_type = 0
+value_per_rank = 0.03
+
+[sub_resource type="Resource" id="Node_elder_drake_old_fury"]
+script = ExtResource("2_node")
+id = &"elder_drake_old_fury"
+display_name = "Old Fury"
+description = "Frost Elder Drake attack speed +0.03"
+max_rank = 3
+position = Vector2(0.771, 3.112)
+color = Color(0.847, 0.889, 1, 1)
+links = Array[StringName]([&"elder_drake_second_wind"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_elder_drake_old_fury_0")])
+
+[sub_resource type="Resource" id="Node_elder_drake_second_wind"]
+script = ExtResource("2_node")
+id = &"elder_drake_second_wind"
+display_name = "Second Wind"
+description = "The breath is ready again 20 s into a wave"
+max_rank = 2
+position = Vector2(-0.268, 2.418)
+color = Color(0.847, 0.889, 1, 1)
+links = Array[StringName]([&"elder_drake_frost_glint"])
+
+[sub_resource type="Resource" id="Effect_elder_drake_frost_glint_0"]
+script = ExtResource("3_effect")
+buildings = 32768
+elements = 4
+stat_type = 7
+modify_type = 0
+value_per_rank = 0.04
+
+[sub_resource type="Resource" id="Node_elder_drake_frost_glint"]
+script = ExtResource("2_node")
+id = &"elder_drake_frost_glint"
+display_name = "Frost Glint"
+description = "Frost Elder Drake critical chance +4 points"
+max_rank = 2
+position = Vector2(-1.307, 1.723)
+color = Color(0.847, 0.889, 1, 1)
+links = Array[StringName]([&"elder_drake_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_elder_drake_frost_glint_0")])
+
+[sub_resource type="Resource" id="TalentEffect_unlock_elder_drake_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 32768
+elements = 4
+
+[sub_resource type="Resource" id="Node_elder_drake_t3"]
+script = ExtResource("2_node")
+id = &"elder_drake_t3"
+display_name = "Elder Drake T3"
+description = "Unlocks Frost Elder Drake T3"
+kind = 2
+position = Vector2(-2.68, 1.528)
+color = Color(0.847, 0.889, 1, 1)
+links = Array[StringName]([&"elder_drake_ice_age"])
+one_way_links = Array[StringName]([&"absolute_zero"])
+needs = &"elder_drake_t2"
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_elder_drake_t3")])
+
+[sub_resource type="Resource" id="Node_elder_drake_ice_age"]
+script = ExtResource("2_node")
+id = &"elder_drake_ice_age"
+display_name = "Ice Age"
+description = "The breath freezes every enemy it hits for 1.5 s (bosses 0.5 s)"
+kind = 3
+position = Vector2(-3.719, 0.833)
+color = Color(0.847, 0.889, 1, 1)
+
+[sub_resource type="Resource" id="Effect_shredder_frost_rasp_0"]
+script = ExtResource("3_effect")
+buildings = 16384
+elements = 4
+modify_type = 1
+value_per_rank = 0.08
+
+[sub_resource type="Resource" id="Node_shredder_frost_rasp"]
+script = ExtResource("2_node")
+id = &"shredder_frost_rasp"
+display_name = "Frost Rasp"
+description = "Frost Shredder damage +8%"
+max_rank = 3
+position = Vector2(17.483, 5)
+color = Color(0.335, 0.399, 0.948, 1)
+links = Array[StringName]([&"shredder_t2"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_shredder_frost_rasp_0")])
+
+[sub_resource type="Resource" id="TalentEffect_unlock_shredder_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 16384
+elements = 4
+
+[sub_resource type="Resource" id="Node_shredder_t2"]
+script = ExtResource("2_node")
+id = &"shredder_t2"
+display_name = "Shredder T2"
+description = "Unlocks Frost Shredder T2"
+kind = 2
+position = Vector2(18.523, 4.305)
+color = Color(0.335, 0.399, 0.948, 1)
+links = Array[StringName]([&"shredder_brittle_plate", &"shredder_fast_rasp"])
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_shredder_t2")])
+
+[sub_resource type="Resource" id="Node_shredder_brittle_plate"]
+script = ExtResource("2_node")
+id = &"shredder_brittle_plate"
+display_name = "Brittle Plate"
+description = "Shredded enemies take 5% more Frost damage for each shred stack"
+max_rank = 2
+position = Vector2(19.229, 3.112)
+color = Color(0.335, 0.399, 0.948, 1)
+links = Array[StringName]([&"shredder_cold_teeth"])
+
+[sub_resource type="Resource" id="Effect_shredder_cold_teeth_0"]
+script = ExtResource("3_effect")
+buildings = 16384
+elements = 4
+stat_type = 10
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Node_shredder_cold_teeth"]
+script = ExtResource("2_node")
+id = &"shredder_cold_teeth"
+display_name = "Cold Teeth"
+description = "Frost Shredder slow potency +10%"
+max_rank = 3
+position = Vector2(20.268, 2.418)
+color = Color(0.335, 0.399, 0.948, 1)
+links = Array[StringName]([&"shredder_deep_cuts"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_shredder_cold_teeth_0")])
+
+[sub_resource type="Resource" id="Node_shredder_deep_cuts"]
+script = ExtResource("2_node")
+id = &"shredder_deep_cuts"
+display_name = "Deep Cuts"
+description = "Shred stacks last 1 s longer"
+max_rank = 2
+position = Vector2(21.307, 1.723)
+color = Color(0.335, 0.399, 0.948, 1)
+links = Array[StringName]([&"shredder_t3"])
+
+[sub_resource type="Resource" id="Effect_shredder_fast_rasp_0"]
+script = ExtResource("3_effect")
+buildings = 16384
+elements = 4
+stat_type = 6
+modify_type = 0
+value_per_rank = 0.04
+
+[sub_resource type="Resource" id="Node_shredder_fast_rasp"]
+script = ExtResource("2_node")
+id = &"shredder_fast_rasp"
+display_name = "Fast Rasp"
+description = "Frost Shredder attack speed +0.04"
+max_rank = 3
+position = Vector2(19.895, 4.11)
+color = Color(0.335, 0.399, 0.948, 1)
+links = Array[StringName]([&"shredder_numbing"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_shredder_fast_rasp_0")])
+
+[sub_resource type="Resource" id="Effect_shredder_numbing_0"]
+script = ExtResource("3_effect")
+buildings = 16384
+elements = 4
+stat_type = 12
+modify_type = 0
+value_per_rank = 1.0
+
+[sub_resource type="Resource" id="Node_shredder_numbing"]
+script = ExtResource("2_node")
+id = &"shredder_numbing"
+display_name = "Numbing"
+description = "Frost Shredder slows last 1 tick longer"
+max_rank = 3
+position = Vector2(20.935, 3.415)
+color = Color(0.335, 0.399, 0.948, 1)
+links = Array[StringName]([&"shredder_cold_iron"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_shredder_numbing_0")])
+
+[sub_resource type="Resource" id="Effect_shredder_cold_iron_0"]
+script = ExtResource("3_effect")
+buildings = 16384
+elements = 4
+stat_type = 18
+modify_type = 0
+value_per_rank = 0.05
+
+[sub_resource type="Resource" id="Node_shredder_cold_iron"]
+script = ExtResource("2_node")
+id = &"shredder_cold_iron"
+display_name = "Cold Iron"
+description = "Frost Shredder resistance penetration +5%"
+max_rank = 2
+position = Vector2(21.974, 2.721)
+color = Color(0.335, 0.399, 0.948, 1)
+links = Array[StringName]([&"shredder_t3"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_shredder_cold_iron_0")])
+
+[sub_resource type="Resource" id="TalentEffect_unlock_shredder_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 16384
+elements = 4
+
+[sub_resource type="Resource" id="Node_shredder_t3"]
+script = ExtResource("2_node")
+id = &"shredder_t3"
+display_name = "Shredder T3"
+description = "Unlocks Frost Shredder T3"
+kind = 2
+position = Vector2(22.68, 1.528)
+color = Color(0.335, 0.399, 0.948, 1)
+links = Array[StringName]([&"shredder_shatterpoint"])
+one_way_links = Array[StringName]([&"absolute_zero"])
+needs = &"shredder_t2"
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_shredder_t3")])
+
+[sub_resource type="Resource" id="Node_shredder_shatterpoint"]
+script = ExtResource("2_node")
+id = &"shredder_shatterpoint"
+display_name = "Shatterpoint"
+description = "An enemy with three shred stacks that is frozen takes 30% more damage from every tower"
+kind = 3
+position = Vector2(23.719, 0.833)
+color = Color(0.335, 0.399, 0.948, 1)
+
+[sub_resource type="Resource" id="Effect_spike_field_ice_spikes_0"]
+script = ExtResource("3_effect")
+buildings = 4096
+elements = 4
+modify_type = 1
+value_per_rank = 0.08
+
+[sub_resource type="Resource" id="Node_spike_field_ice_spikes"]
+script = ExtResource("2_node")
+id = &"spike_field_ice_spikes"
+display_name = "Ice Spikes"
+description = "Frost Spike Field damage +8%"
+max_rank = 3
+position = Vector2(17.483, 15)
+color = Color(0.458, 0.598, 0.826, 1)
+links = Array[StringName]([&"spike_field_t2"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_spike_field_ice_spikes_0")])
+
+[sub_resource type="Resource" id="TalentEffect_unlock_spike_field_t2"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 4096
+elements = 4
+
+[sub_resource type="Resource" id="Node_spike_field_t2"]
+script = ExtResource("2_node")
+id = &"spike_field_t2"
+display_name = "Spike Field T2"
+description = "Unlocks Frost Spike Field T2"
+kind = 2
+position = Vector2(18.523, 15.695)
+color = Color(0.458, 0.598, 0.826, 1)
+links = Array[StringName]([&"spike_field_frost_barbs", &"spike_field_frozen_points"])
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_spike_field_t2")])
+
+[sub_resource type="Resource" id="Node_spike_field_frost_barbs"]
+script = ExtResource("2_node")
+id = &"spike_field_frost_barbs"
+display_name = "Frost Barbs"
+description = "Frost Spike Field slow +5 points"
+max_rank = 2
+position = Vector2(19.895, 15.89)
+color = Color(0.458, 0.598, 0.826, 1)
+links = Array[StringName]([&"spike_field_black_ice"])
+
+[sub_resource type="Resource" id="Effect_spike_field_black_ice_0"]
+script = ExtResource("3_effect")
+buildings = 4096
+elements = 4
+stat_type = 10
+modify_type = 0
+value_per_rank = 0.1
+
+[sub_resource type="Resource" id="Node_spike_field_black_ice"]
+script = ExtResource("2_node")
+id = &"spike_field_black_ice"
+display_name = "Black Ice"
+description = "Frost Spike Field slow potency +10%"
+max_rank = 3
+position = Vector2(20.935, 16.585)
+color = Color(0.458, 0.598, 0.826, 1)
+links = Array[StringName]([&"spike_field_lingering_cold"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_spike_field_black_ice_0")])
+
+[sub_resource type="Resource" id="Node_spike_field_lingering_cold"]
+script = ExtResource("2_node")
+id = &"spike_field_lingering_cold"
+display_name = "Lingering Cold"
+description = "Struck enemies stay slowed 0.5 s longer"
+max_rank = 2
+position = Vector2(21.974, 17.279)
+color = Color(0.458, 0.598, 0.826, 1)
+links = Array[StringName]([&"spike_field_t3"])
+
+[sub_resource type="Resource" id="Effect_spike_field_frozen_points_0"]
+script = ExtResource("3_effect")
+buildings = 4096
+elements = 4
+stat_type = 7
+modify_type = 0
+value_per_rank = 0.04
+
+[sub_resource type="Resource" id="Node_spike_field_frozen_points"]
+script = ExtResource("2_node")
+id = &"spike_field_frozen_points"
+display_name = "Frozen Points"
+description = "Frost Spike Field critical chance +4 points"
+max_rank = 2
+position = Vector2(19.229, 16.888)
+color = Color(0.458, 0.598, 0.826, 1)
+links = Array[StringName]([&"spike_field_rime"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_spike_field_frozen_points_0")])
+
+[sub_resource type="Resource" id="Effect_spike_field_rime_0"]
+script = ExtResource("3_effect")
+buildings = 4096
+elements = 4
+stat_type = 12
+modify_type = 0
+value_per_rank = 1.0
+
+[sub_resource type="Resource" id="Node_spike_field_rime"]
+script = ExtResource("2_node")
+id = &"spike_field_rime"
+display_name = "Rime"
+description = "Frost Spike Field slows last 1 tick longer"
+max_rank = 3
+position = Vector2(20.268, 17.582)
+color = Color(0.458, 0.598, 0.826, 1)
+links = Array[StringName]([&"spike_field_ice_floor"])
+effects = Array[ExtResource("3_effect")]([SubResource("Effect_spike_field_rime_0")])
+
+[sub_resource type="Resource" id="Node_spike_field_ice_floor"]
+script = ExtResource("2_node")
+id = &"spike_field_ice_floor"
+display_name = "Ice Floor"
+description = "Turns on a Frost Spike Field pause enemies 0.1 s longer"
+max_rank = 2
+position = Vector2(21.307, 18.277)
+color = Color(0.458, 0.598, 0.826, 1)
+links = Array[StringName]([&"spike_field_t3"])
+
+[sub_resource type="Resource" id="TalentEffect_unlock_spike_field_t3"]
+script = ExtResource("3_effect")
+kind = 2
+buildings = 4096
+elements = 4
+
+[sub_resource type="Resource" id="Node_spike_field_t3"]
+script = ExtResource("2_node")
+id = &"spike_field_t3"
+display_name = "Spike Field T3"
+description = "Unlocks Frost Spike Field T3"
+kind = 2
+position = Vector2(22.68, 18.472)
+color = Color(0.458, 0.598, 0.826, 1)
+links = Array[StringName]([&"spike_field_permafrost"])
+one_way_links = Array[StringName]([&"absolute_zero"])
+needs = &"spike_field_t2"
+effects = Array[ExtResource("3_effect")]([SubResource("TalentEffect_unlock_spike_field_t3")])
+
+[sub_resource type="Resource" id="Node_spike_field_permafrost"]
+script = ExtResource("2_node")
+id = &"spike_field_permafrost"
+display_name = "Permafrost"
+description = "The first enemy each wave that steps on the field freezes for 2 s"
+kind = 3
+position = Vector2(23.719, 19.167)
+color = Color(0.458, 0.598, 0.826, 1)
+
 [resource]
 script = ExtResource("1_tree")
 id = &"frost"
 display_name = "Frost"
 start_id = &"cold_snap"
 element = 4
-nodes = Array[ExtResource("2_node")]([SubResource("Node_cold_snap"), SubResource("Node_absolute_zero"), SubResource("Node_bitter_cold"), SubResource("Node_winter_ground"), SubResource("Node_hard_frost"), SubResource("Node_hold_fast"), SubResource("Node_ice_bolts"), SubResource("Node_quick_draw"), SubResource("Node_bolter_t2"), SubResource("Node_chilling_tips"), SubResource("Node_frozen_bolts"), SubResource("Node_pinning_shot"), SubResource("Node_ice_splinters"), SubResource("Node_far_flight"), SubResource("Node_bolter_t3"), SubResource("Node_icicle_lance"), SubResource("Node_cold_beam"), SubResource("Node_clear_lens"), SubResource("Node_beamer_t2"), SubResource("Node_freezing_ray"), SubResource("Node_glacial_beam"), SubResource("Node_creeping_frost"), SubResource("Node_frost_arc"), SubResource("Node_steady_beam"), SubResource("Node_beamer_t3"), SubResource("Node_ice_mirror"), SubResource("Node_frost_ring"), SubResource("Node_wide_frost"), SubResource("Node_nova_t2"), SubResource("Node_biting_wind"), SubResource("Node_polar_pulse"), SubResource("Node_frost_field"), SubResource("Node_shatterburst"), SubResource("Node_quick_chill"), SubResource("Node_nova_t3"), SubResource("Node_blizzard"), SubResource("Node_cold_snare"), SubResource("Node_quick_thaw"), SubResource("Node_trap_t2"), SubResource("Node_bitter_snap"), SubResource("Node_glacier_jaws"), SubResource("Node_long_root"), SubResource("Node_ice_spikes"), SubResource("Node_frost_aura"), SubResource("Node_trap_t3"), SubResource("Node_ice_shards"), SubResource("Node_lingering_chill"), SubResource("Node_deep_chill"), SubResource("Node_numbing_cold"), SubResource("Node_creeping_winter"), SubResource("Node_snap_freeze"), SubResource("Node_brittle"), SubResource("Node_cold_heart"), SubResource("Node_deep_freeze"), SubResource("Node_wall_t2"), SubResource("Node_bitter_ground"), SubResource("Node_spreading_rime"), SubResource("Node_frozen_paths"), SubResource("Node_hoarfrost"), SubResource("Node_ice_armor"), SubResource("Node_frost_burn"), SubResource("Node_wall_t3"), SubResource("Node_frozen_maze"), SubResource("Node_maze_icy_floor"), SubResource("Node_maze_frost_corners"), SubResource("Node_maze_glacier_maze"), SubResource("Node_spotter_cold_eye"), SubResource("Node_spotter_t2"), SubResource("Node_spotter_chilling_mark"), SubResource("Node_spotter_frost_mark"), SubResource("Node_spotter_ice_sight"), SubResource("Node_spotter_patient_aim"), SubResource("Node_spotter_glacial_round"), SubResource("Node_spotter_hailstone"), SubResource("Node_spotter_t3"), SubResource("Node_spotter_winter_s_needle"), SubResource("Node_mortar_ice_shells"), SubResource("Node_mortar_t2"), SubResource("Node_mortar_frost_fill"), SubResource("Node_mortar_frozen_crater"), SubResource("Node_mortar_wide_shells"), SubResource("Node_mortar_quick_loader"), SubResource("Node_mortar_shatter_shell"), SubResource("Node_mortar_hard_ice"), SubResource("Node_mortar_t3"), SubResource("Node_mortar_hailstorm"), SubResource("Node_breather_cold_breath"), SubResource("Node_breather_t2"), SubResource("Node_breather_fan_of_frost"), SubResource("Node_breather_rime_breath"), SubResource("Node_breather_frostbite"), SubResource("Node_breather_steady_breath"), SubResource("Node_breather_flash_freeze"), SubResource("Node_breather_icy_lungs"), SubResource("Node_breather_t3"), SubResource("Node_breather_winter_s_breath"), SubResource("Node_egg_bomb_cold_yolk"), SubResource("Node_egg_bomb_t2"), SubResource("Node_egg_bomb_wide_blast"), SubResource("Node_egg_bomb_rime_shell"), SubResource("Node_egg_bomb_frozen_pit"), SubResource("Node_egg_bomb_short_fuse"), SubResource("Node_egg_bomb_ice_shrapnel"), SubResource("Node_egg_bomb_cold_nest"), SubResource("Node_egg_bomb_t3"), SubResource("Node_egg_bomb_glacier_egg"), SubResource("Node_harpooner_ice_hooks"), SubResource("Node_harpooner_t2"), SubResource("Node_harpooner_frozen_chain"), SubResource("Node_harpooner_pin_down"), SubResource("Node_harpooner_cold_barbs"), SubResource("Node_harpooner_quick_reel"), SubResource("Node_harpooner_grounded"), SubResource("Node_harpooner_skyhook"), SubResource("Node_harpooner_t3"), SubResource("Node_harpooner_glacial_anchor"), SubResource("Node_hatchery_frost_fed_brood"), SubResource("Node_hatchery_t2"), SubResource("Node_hatchery_frost_claws"), SubResource("Node_hatchery_ice_scales"), SubResource("Node_hatchery_hardy_brood"), SubResource("Node_hatchery_big_clutch"), SubResource("Node_hatchery_frost_spit"), SubResource("Node_hatchery_fierce_hatchlings"), SubResource("Node_hatchery_t3"), SubResource("Node_hatchery_winter_brood"), SubResource("Node_buffer_cold_aura"), SubResource("Node_buffer_clear_mind"), SubResource("Node_buffer_t2"), SubResource("Node_buffer_frost_zeal"), SubResource("Node_buffer_biting_chill"), SubResource("Node_buffer_deep_reserve"), SubResource("Node_buffer_rime_song"), SubResource("Node_buffer_cold_focus"), SubResource("Node_buffer_glazed_stones"), SubResource("Node_buffer_t3"), SubResource("Node_buffer_heart_of_winter")])
+nodes = Array[ExtResource("2_node")]([SubResource("Node_cold_snap"), SubResource("Node_absolute_zero"), SubResource("Node_bitter_cold"), SubResource("Node_winter_ground"), SubResource("Node_hard_frost"), SubResource("Node_hold_fast"), SubResource("Node_ice_bolts"), SubResource("Node_quick_draw"), SubResource("Node_bolter_t2"), SubResource("Node_chilling_tips"), SubResource("Node_frozen_bolts"), SubResource("Node_pinning_shot"), SubResource("Node_ice_splinters"), SubResource("Node_far_flight"), SubResource("Node_bolter_t3"), SubResource("Node_icicle_lance"), SubResource("Node_cold_beam"), SubResource("Node_clear_lens"), SubResource("Node_beamer_t2"), SubResource("Node_freezing_ray"), SubResource("Node_glacial_beam"), SubResource("Node_creeping_frost"), SubResource("Node_frost_arc"), SubResource("Node_steady_beam"), SubResource("Node_beamer_t3"), SubResource("Node_ice_mirror"), SubResource("Node_frost_ring"), SubResource("Node_wide_frost"), SubResource("Node_nova_t2"), SubResource("Node_biting_wind"), SubResource("Node_polar_pulse"), SubResource("Node_frost_field"), SubResource("Node_shatterburst"), SubResource("Node_quick_chill"), SubResource("Node_nova_t3"), SubResource("Node_blizzard"), SubResource("Node_cold_snare"), SubResource("Node_quick_thaw"), SubResource("Node_trap_t2"), SubResource("Node_bitter_snap"), SubResource("Node_glacier_jaws"), SubResource("Node_long_root"), SubResource("Node_ice_spikes"), SubResource("Node_frost_aura"), SubResource("Node_trap_t3"), SubResource("Node_ice_shards"), SubResource("Node_lingering_chill"), SubResource("Node_deep_chill"), SubResource("Node_numbing_cold"), SubResource("Node_creeping_winter"), SubResource("Node_snap_freeze"), SubResource("Node_brittle"), SubResource("Node_cold_heart"), SubResource("Node_deep_freeze"), SubResource("Node_wall_t2"), SubResource("Node_bitter_ground"), SubResource("Node_spreading_rime"), SubResource("Node_frozen_paths"), SubResource("Node_hoarfrost"), SubResource("Node_ice_armor"), SubResource("Node_frost_burn"), SubResource("Node_wall_t3"), SubResource("Node_frozen_maze"), SubResource("Node_maze_icy_floor"), SubResource("Node_maze_frost_corners"), SubResource("Node_maze_glacier_maze"), SubResource("Node_spotter_cold_eye"), SubResource("Node_spotter_t2"), SubResource("Node_spotter_chilling_mark"), SubResource("Node_spotter_frost_mark"), SubResource("Node_spotter_ice_sight"), SubResource("Node_spotter_patient_aim"), SubResource("Node_spotter_glacial_round"), SubResource("Node_spotter_hailstone"), SubResource("Node_spotter_t3"), SubResource("Node_spotter_winter_s_needle"), SubResource("Node_mortar_ice_shells"), SubResource("Node_mortar_t2"), SubResource("Node_mortar_frost_fill"), SubResource("Node_mortar_frozen_crater"), SubResource("Node_mortar_wide_shells"), SubResource("Node_mortar_quick_loader"), SubResource("Node_mortar_shatter_shell"), SubResource("Node_mortar_hard_ice"), SubResource("Node_mortar_t3"), SubResource("Node_mortar_hailstorm"), SubResource("Node_breather_cold_breath"), SubResource("Node_breather_t2"), SubResource("Node_breather_fan_of_frost"), SubResource("Node_breather_rime_breath"), SubResource("Node_breather_frostbite"), SubResource("Node_breather_steady_breath"), SubResource("Node_breather_flash_freeze"), SubResource("Node_breather_icy_lungs"), SubResource("Node_breather_t3"), SubResource("Node_breather_winter_s_breath"), SubResource("Node_egg_bomb_cold_yolk"), SubResource("Node_egg_bomb_t2"), SubResource("Node_egg_bomb_wide_blast"), SubResource("Node_egg_bomb_rime_shell"), SubResource("Node_egg_bomb_frozen_pit"), SubResource("Node_egg_bomb_short_fuse"), SubResource("Node_egg_bomb_ice_shrapnel"), SubResource("Node_egg_bomb_cold_nest"), SubResource("Node_egg_bomb_t3"), SubResource("Node_egg_bomb_glacier_egg"), SubResource("Node_harpooner_ice_hooks"), SubResource("Node_harpooner_t2"), SubResource("Node_harpooner_frozen_chain"), SubResource("Node_harpooner_pin_down"), SubResource("Node_harpooner_cold_barbs"), SubResource("Node_harpooner_quick_reel"), SubResource("Node_harpooner_grounded"), SubResource("Node_harpooner_skyhook"), SubResource("Node_harpooner_t3"), SubResource("Node_harpooner_glacial_anchor"), SubResource("Node_hatchery_frost_fed_brood"), SubResource("Node_hatchery_t2"), SubResource("Node_hatchery_frost_claws"), SubResource("Node_hatchery_ice_scales"), SubResource("Node_hatchery_hardy_brood"), SubResource("Node_hatchery_big_clutch"), SubResource("Node_hatchery_frost_spit"), SubResource("Node_hatchery_fierce_hatchlings"), SubResource("Node_hatchery_t3"), SubResource("Node_hatchery_winter_brood"), SubResource("Node_buffer_cold_aura"), SubResource("Node_buffer_clear_mind"), SubResource("Node_buffer_t2"), SubResource("Node_buffer_frost_zeal"), SubResource("Node_buffer_biting_chill"), SubResource("Node_buffer_deep_reserve"), SubResource("Node_buffer_rime_song"), SubResource("Node_buffer_cold_focus"), SubResource("Node_buffer_glazed_stones"), SubResource("Node_buffer_t3"), SubResource("Node_buffer_heart_of_winter"), SubResource("Node_elder_drake_ancient_frost"), SubResource("Node_elder_drake_t2"), SubResource("Node_elder_drake_rime_bite"), SubResource("Node_elder_drake_wide_breath"), SubResource("Node_elder_drake_glacial"), SubResource("Node_elder_drake_old_fury"), SubResource("Node_elder_drake_second_wind"), SubResource("Node_elder_drake_frost_glint"), SubResource("Node_elder_drake_t3"), SubResource("Node_elder_drake_ice_age"), SubResource("Node_shredder_frost_rasp"), SubResource("Node_shredder_t2"), SubResource("Node_shredder_brittle_plate"), SubResource("Node_shredder_cold_teeth"), SubResource("Node_shredder_deep_cuts"), SubResource("Node_shredder_fast_rasp"), SubResource("Node_shredder_numbing"), SubResource("Node_shredder_cold_iron"), SubResource("Node_shredder_t3"), SubResource("Node_shredder_shatterpoint"), SubResource("Node_spike_field_ice_spikes"), SubResource("Node_spike_field_t2"), SubResource("Node_spike_field_frost_barbs"), SubResource("Node_spike_field_black_ice"), SubResource("Node_spike_field_lingering_cold"), SubResource("Node_spike_field_frozen_points"), SubResource("Node_spike_field_rime"), SubResource("Node_spike_field_ice_floor"), SubResource("Node_spike_field_t3"), SubResource("Node_spike_field_permafrost")])
 background = Color(0.027, 0.055, 0.09, 1)
 link_lit = Color(0.847, 0.953, 1, 1)
 accent = Color(0.561, 0.827, 1, 1)

@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://camw0x2xckxf5"
+path="res://.godot/imported/scarecrow.aseprite-6034d45f0e0343d0baf4488cc6f5b5f1.res"
+
+[deps]
+
+source_file="res://assets/art/ui/map_landmarks/scarecrow.aseprite"
+dest_files=["res://.godot/imported/scarecrow.aseprite-6034d45f0e0343d0baf4488cc6f5b5f1.res"]
+
+[params]
+

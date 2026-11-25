@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://b6qdtbdl8lac8"
+path="res://.godot/imported/giant_frog.aseprite-15210c95a8553cd5c0a0ad779c252dfd.res"
+
+[deps]
+
+source_file="res://assets/art/ui/map_landmarks/giant_frog.aseprite"
+dest_files=["res://.godot/imported/giant_frog.aseprite-15210c95a8553cd5c0a0ad779c252dfd.res"]
+
+[params]
+

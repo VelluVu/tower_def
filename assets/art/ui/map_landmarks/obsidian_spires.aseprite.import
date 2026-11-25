@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://1wu5h5vkin0p"
+path="res://.godot/imported/obsidian_spires.aseprite-85b1f3963bda4a04ffb44c1fff1c59dd.res"
+
+[deps]
+
+source_file="res://assets/art/ui/map_landmarks/obsidian_spires.aseprite"
+dest_files=["res://.godot/imported/obsidian_spires.aseprite-85b1f3963bda4a04ffb44c1fff1c59dd.res"]
+
+[params]
+

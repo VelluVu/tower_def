@@ -48,7 +48,7 @@ func test_pause_menu_shows_the_level(kit : TestKit) -> void:
 	for label : Node in pause.find_children("*", "Label", true, false):
 		labels.append((label as Label).text)
 	var text : String = " | ".join(labels)
-	kit.check(text.contains("Bat Roost") and text.contains("Wave 1/5"), "the level and the wave being built for (not a wave 0): %s" % text)
+	kit.check(text.contains("Echo Crossing") and text.contains("Wave 1/6"), "the level and the wave being built for (not a wave 0): %s" % text)
 	kit.check(text.contains(PauseMenu.SO_FAR_TEXT) and text.contains(TalentRules.CLEAR_CONDITION_TEXT), "the point checklist")
 	pause.queue_free()
 	main.queue_free()

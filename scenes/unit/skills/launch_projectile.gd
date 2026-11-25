@@ -118,9 +118,12 @@ func clear_all_particles() -> void:
 func _get_projectile() -> Node2D:
 	var projectile : Node2D = null
 	
-	if not projectile_pool.is_empty():
-		projectile = projectile_pool.pop_back()
-	
+	#a pooled one can be freed under it (Main's projectiles go first when the game quits): skip those
+	while projectile == null and not projectile_pool.is_empty():
+		var pooled = projectile_pool.pop_back()
+		if is_instance_valid(pooled) and not pooled.is_queued_for_deletion():
+			projectile = pooled
+
 	if projectile == null:
 		projectile = projectile_scene.instantiate()
 		count += 1

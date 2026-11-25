@@ -8,6 +8,11 @@ var skill_type : int = 0
 var calculate_type : Utils.ModifyType = Utils.ModifyType.Multiply
 var stat_type : Utils.StatType = Utils.StatType.Speed
 var value : float = 0.1
+## A slow that goes past ModifierManager's slow floor, down to its deep floor (a Frost Harpooner's tether).
+var ignores_slow_floor : bool = false
+## A slow that works on enemies immune or resistant to slows (a standard bearer's banner, bosses): every harpoon's
+## tether (2026-11-25, the user).
+var pierces_slow_immunity : bool = false
 #need skill type flags?
 
 func _init(modifier : Modifier = null) -> void:
@@ -31,4 +36,6 @@ func scaled(factor : float) -> ModifierData:
 	copy.calculate_type = calculate_type
 	copy.stat_type = stat_type
 	copy.value = value * factor
+	copy.ignores_slow_floor = ignores_slow_floor
+	copy.pierces_slow_immunity = pierces_slow_immunity
 	return copy

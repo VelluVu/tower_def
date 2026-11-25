@@ -27,6 +27,9 @@ var bank: AudioBank = preload("res://scenes/audio/audio_bank.tres")
 
 var _mood: Mood = Mood.NONE
 var _wave_number: int = 0
+## Whether the early start (bonus gold) was open at the last wave state: the chime plays as it opens, the coins
+## when a wave starts while it was.
+var _early_open: bool = false
 ## AudioStream -> Time.get_ticks_msec() it last played.
 var _last_played_msec: Dictionary = {}
 
@@ -95,16 +98,23 @@ func _on_screen_added(node: Node) -> void:
 
 func _on_level_loaded(_level: Level) -> void:
 	_wave_number = 0
+	_early_open = false
 	# A retry loads the level again while the mood is still BUILD or BATTLE.
 	_mood = Mood.NONE
 	_set_mood(Mood.BUILD)
 
 
-func _on_wave_state_changed(wave_number: int, _wave_count: int, _can_start_next: bool, _early_start_bonus: float) -> void:
+func _on_wave_state_changed(wave_number: int, _wave_count: int, can_start_next: bool, early_start_bonus: float) -> void:
+	var was_early_open: bool = _early_open
+	_early_open = can_start_next and early_start_bonus > 0.0
 	if wave_number <= _wave_number:
+		if _early_open and not was_early_open:
+			play_sfx(bank.early_start_ready)
 		return
 	_wave_number = wave_number
 	play_sfx(bank.wave_start)
+	if was_early_open:
+		play_sfx(bank.early_start_coins)
 	_set_mood(Mood.BATTLE)
 
 

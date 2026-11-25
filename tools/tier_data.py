@@ -24,9 +24,17 @@ import enemy_scene as es
 ROOT = es.ROOT
 OUT = "scenes/unit/evolve_tree/tiers"
 ART = "assets/art/units/building/puffe/puffe_%s/%s_t%d"
-TOWERS = ("bolter", "nova", "beamer", "mortar", "buffer", "breather", "spotter", "harpooner", "hatchery", "egg_bomb")
-# the Buffer never attacks: its tiers have no stat steps, their effects live in BufferAuras (2026-11-24)
-NO_STEP_TOWERS = ("buffer",)
+TOWERS = ("bolter", "nova", "beamer", "mortar", "buffer", "breather", "spotter", "harpooner", "hatchery", "egg_bomb",
+          "spike_field", "hoard", "shredder", "elder_drake")
+# the towers whose talent nodes are named after them (<tower>_t2, <tower>_t3), in the tree of their element
+OWN_NODE_TOWERS = ("mortar", "buffer", "breather", "spotter", "harpooner", "hatchery", "egg_bomb",
+                   "spike_field", "hoard", "shredder", "elder_drake")
+# the Buffer never attacks: its tiers have no stat steps, their effects live in BufferAuras (2026-11-24); the Hoard
+# Keeper neither: every tier is one more upgrade step, so one more gold a wave (HoardKeeper.get_pay)
+NO_STEP_TOWERS = ("buffer", "hoard")
+# scene file and art folder names where they differ from puffe_<tower>
+SCENE = {"egg_bomb": "egg_bomb", "leopard_trap": "leopard_trap", "spike_field": "spike_field", "elder_drake": "puffe_elder"}
+ART_TOWER = {"elder_drake": "elder"}
 # the Leopard Trap's elements (tools/trap_elements.py, 2026-11-16): no tier art, its own scene and talent nodes
 TRAP = "leopard_trap"
 ELEMENTS = ("physical", "fire", "frost", "poison")
@@ -199,6 +207,53 @@ TIERS = {
                                 "Poison stacks higher and more surely"),
     ("egg_bomb", "poison", 3): ([("Plague Egg", POISON_SPREAD, FLAT, 2.0, False), ("Thick Gas", PATCH_DURATION, FLAT, 2.0, False)],
                                 "The gas cloud lasts 2 s longer; poison jumps to 2 enemies when the centre enemy dies"),
+    # the second round (2026-11-25): Spike Field, Hoard Keeper (no steps: a tier is one more gold a wave), Shredder,
+    # Elder Drake; every strike, pulse or bite is a direct hit, so TowerHitEffects fire on each enemy it lands on
+    ("spike_field", "physical", 2): ([("Quick Springs", ATTACK_SPEED, FLAT, 0.25, True)], "The spikes strike 25% more often"),
+    ("spike_field", "physical", 3): ([("Impale", FREEZE_CHANCE, FLAT, 0.2, False), ("Impale Time", FREEZE_DURATION, FLAT, 0.5, False)],
+                                     "20% of the enemies struck are pinned for 0.5 s"),
+    ("spike_field", "fire", 2): ([("Red-Hot Spikes", EFFECT_CHANCE, FLAT, 1.0, False)], "Every strike ignites"),
+    ("spike_field", "fire", 3): ([("Forge Heat", EFFECT_TICK_RATE, FLAT, 0.5, True), ("Deep Burns", EFFECT_STACKS, FLAT, 1.0, False)],
+                                 "Burns tick 50% faster and stack once more"),
+    ("spike_field", "frost", 2): ([("Ice Barbs", EFFECT_STACKS, FLAT, 2.0, False)], "Slow stacks build higher"),
+    ("spike_field", "frost", 3): ([("Frozen Field", FREEZE_CHANCE, FLAT, 0.15, False), ("Freeze Time", FREEZE_DURATION, FLAT, 0.8, False)],
+                                  "15% of the enemies struck freeze for 0.8 s"),
+    ("spike_field", "poison", 2): ([("Venom Tips", EFFECT_STACKS, FLAT, 2.0, False), ("Sure Venom", EFFECT_CHANCE, FLAT, 0.3, False)],
+                                   "Poison stacks higher and more surely"),
+    ("spike_field", "poison", 3): ([("Spreading Venom", POISON_SPREAD, FLAT, 2.0, False)], "Poison jumps to 2 enemies when a poisoned enemy dies"),
+    ("hoard", "physical", 2): ([], "+1 gold a wave"), ("hoard", "physical", 3): ([], "+1 gold a wave"),
+    ("hoard", "fire", 2): ([], "+1 gold a wave"), ("hoard", "fire", 3): ([], "+1 gold a wave"),
+    ("hoard", "frost", 2): ([], "+1 gold a wave"), ("hoard", "frost", 3): ([], "+1 gold a wave"),
+    ("hoard", "poison", 2): ([], "+1 gold a wave"), ("hoard", "poison", 3): ([], "+1 gold a wave"),
+    ("shredder", "physical", 2): ([("Shove", KNOCKBACK, FLAT, 1.0, False)], "Pulses push enemies a cell back"),
+    ("shredder", "physical", 3): ([("Twin Pulse", EXTRA_SHOTS, FLAT, 1.0, False)], "Two pulses per cast: the shred stacks twice as fast"),
+    ("shredder", "fire", 2): ([("Scorched Ground", PATCH_DURATION, FLAT, 1.5, False), ("Ground Heat", PATCH_SHARE, FLAT, 0.2, False)],
+                              "Pulses leave burning ground for 1.5 s"),
+    ("shredder", "fire", 3): ([("Always Ignites", EFFECT_CHANCE, FLAT, 1.0, False), ("Twin Pulse", EXTRA_SHOTS, FLAT, 1.0, False)],
+                              "Pulses always ignite; two pulses per cast"),
+    ("shredder", "frost", 2): ([("Brittle", FREEZE_CHANCE, FLAT, 0.2, False), ("Freeze Time", FREEZE_DURATION, FLAT, 0.5, False)],
+                               "20% of the enemies a pulse hits freeze for 0.5 s"),
+    ("shredder", "frost", 3): ([("Twin Pulse", EXTRA_SHOTS, FLAT, 1.0, False), ("Deep Cold", EFFECT_STACKS, FLAT, 1.0, False)],
+                               "Two pulses per cast; slow stacks once more"),
+    ("shredder", "poison", 2): ([("Corroding Dose", EFFECT_STACKS, FLAT, 2.0, False), ("Sure Dose", EFFECT_CHANCE, FLAT, 0.3, False)],
+                                "Poison stacks higher and more surely"),
+    ("shredder", "poison", 3): ([("Twin Pulse", EXTRA_SHOTS, FLAT, 1.0, False), ("Spreading Rot", POISON_SPREAD, FLAT, 2.0, False)],
+                                "Two pulses per cast; poison jumps to 2 enemies when a poisoned enemy dies"),
+    ("elder_drake", "physical", 2): ([("Piercing Bite", PIERCE, FLAT, 1.0, False)], "Bites fly on through their target to the enemy behind"),
+    ("elder_drake", "physical", 3): ([("Crushing Bite", SPLASH_RADIUS, FLAT, 1.0, False), ("Throw", KNOCKBACK, FLAT, 1.0, False)],
+                                     "Bites crush: half damage within 1 tile, the target thrown a cell back"),
+    ("elder_drake", "fire", 2): ([("Explosive Bite", SPLASH_RADIUS, FLAT, 0.75, False)], "Bites explode: half damage to enemies within 0.75 tiles"),
+    ("elder_drake", "fire", 3): ([("Scorched Earth", PATCH_DURATION, FLAT, 3.0, False), ("Ground Heat", PATCH_SHARE, FLAT, 0.25, False)],
+                                 "Hits leave burning ground for 3 s"),
+    ("elder_drake", "frost", 2): ([("Freezing Bite", FREEZE_CHANCE, FLAT, 0.25, False), ("Freeze Time", FREEZE_DURATION, FLAT, 0.8, False)],
+                                  "25% of hits freeze for 0.8 s"),
+    ("elder_drake", "frost", 3): ([("Shattering Bite", SPLIT_COUNT, FLAT, 2.0, False), ("Shard Edge", SPLIT_SHARE, FLAT, 0.4, False)],
+                                  "Shards split to the 2 nearest enemies, 40% of the hit each"),
+    ("elder_drake", "poison", 2): ([("Deep Venom", EFFECT_STACKS, FLAT, 2.0, False), ("Sure Venom", EFFECT_CHANCE, FLAT, 0.3, False)],
+                                   "Poison stacks higher and more surely"),
+    ("elder_drake", "poison", 3): ([("Plague Breath", POISON_SPREAD, FLAT, 2.0, False), ("Poison Cloud", PATCH_DURATION, FLAT, 3.0, False),
+                                    ("Cloud Venom", PATCH_SHARE, FLAT, 0.2, False)],
+                                   "Hits leave a poison cloud for 3 s; poison jumps to 2 enemies when a poisoned enemy dies"),
     ("hatchery", "poison", 3): ([("Plague Brood", POISON_SPREAD, FLAT, 2.0, False), ("Fourth Guard", GUARD_COUNT, FLAT, 1.0, False)],
                                 "Poison jumps to 2 enemies when a held enemy dies; a fourth guard"),
 }
@@ -213,10 +268,11 @@ def art_name(tower, element):
 def talent(tower, element, tier):
     if tower == TRAP:
         return ("building", "leopard_t%d" % tier) if element == "physical" else (element, "trap_t%d" % tier)
-    if tower in ("mortar", "buffer", "breather", "spotter", "harpooner", "hatchery", "egg_bomb"):
+    # the Hoard Keeper's branch is only in the Building tree (the user, 2026-11-25): its nodes unlock every element
+    if tower == "hoard":
+        return "building", "hoard_keeper_t%d" % tier
+    if tower in OWN_NODE_TOWERS:
         return ("building" if element == "physical" else element), "%s_t%d" % (tower, tier)
-    if tower == "mortar":
-        return ("building" if element == "physical" else element), "mortar_t%d" % tier
     if element == "physical":
         return "building", "phys_t%d" % tier
     return element, "%s_t%d" % (tower, tier)
@@ -230,10 +286,13 @@ def write(path, text):
 def frames(tower, element, tier):
     if tower == TRAP:
         return None
-    base = ART % (tower, art_name(tower, element), tier)
+    art_tower = ART_TOWER.get(tower, tower)
+    base = ART % (art_tower, art_name(art_tower, element), tier)
     #the Egg Bomb's sheets are its own, not a drakeling's
     if tower == "egg_bomb":
         base = "assets/art/units/building/egg_bomb/%s_egg_bomb_t%d" % (element, tier)
+    if tower == "spike_field":
+        base = "assets/art/units/building/spike_field/%sspike_field_t%d" % ("" if element == "physical" else element + "_", tier)
     aseprite, png = os.path.join(ROOT, base + ".aseprite"), os.path.join(ROOT, base + ".png")
     w, h, durs, tags = es.info(aseprite)
     where = es.regions(aseprite, png, w, h, len(durs))
@@ -281,7 +340,7 @@ def tier_data(tower, element, tier, frames_path):
 
 
 def wire_leaves(tower, paths):
-    scene = "scenes/unit/building/buildings/%s.tscn" % (tower if tower in (TRAP, "egg_bomb") else "puffe_" + tower)
+    scene = "scenes/unit/building/buildings/%s.tscn" % SCENE.get(tower, "puffe_" + tower)
     text = open(os.path.join(ROOT, scene), encoding="utf8").read()
     for element in ELEMENTS:
         ids = []
@@ -312,15 +371,16 @@ def rhythm(tower):
 
 def unlock_effects():
     # TalentEffect flags: buildings Bolter 1, Nova 2, Beamer 4, Trap 8, Mortar 32; elements Physical 1, Fire 2, Frost 4, Poison 8
-    tower_flag = {"bolter": 1, "nova": 2, "beamer": 4, TRAP: 8, "mortar": 32, "buffer": 64, "breather": 128, "spotter": 256, "harpooner": 512, "hatchery": 1024, "egg_bomb": 2048}
+    tower_flag = {"bolter": 1, "nova": 2, "beamer": 4, TRAP: 8, "mortar": 32, "buffer": 64, "breather": 128, "spotter": 256, "harpooner": 512, "hatchery": 1024, "egg_bomb": 2048,
+                  "spike_field": 4096, "hoard": 8192, "shredder": 16384, "elder_drake": 32768}
     element_flag = {"physical": 1, "fire": 2, "frost": 4, "poison": 8}
     unlocks = {}
     for t in TOWERS + (TRAP,):
         for e in ELEMENTS:
             for n in (2, 3):
                 key = talent(t, e, n)
-                flags = unlocks.get(key, (0, element_flag[e]))
-                unlocks[key] = (flags[0] | tower_flag[t], flags[1])
+                flags = unlocks.get(key, (0, 0))
+                unlocks[key] = (flags[0] | tower_flag[t], flags[1] | element_flag[e])
     for tree in ("building", "fire", "frost", "poison"):
         path = "scenes/talents/trees/%s_tree.tres" % tree
         text = open(os.path.join(ROOT, path), encoding="utf8").read()
@@ -335,6 +395,12 @@ def unlock_effects():
             text = text[:first] + ('[sub_resource type="Resource" id="%s"]\nscript = ExtResource("%s")\nkind = 2\nbuildings = %d\nelements = %d\n\n'
                                    % (effect_id, effect_script, buildings, elements)) + text[first:]
             m = re.search(r'\[sub_resource type="Resource" id="[^"]+"\]\n(?:[^\[\n][^\n]*\n)*?id = &"%s"\n(?:[^\[\n][^\n]*\n)*' % node, text)
+            # a tower whose talent branch is not in the tree yet: its tiers stay locked, no effect to hang
+            if m is None:
+                print("  no talent node %s in the %s tree yet" % (node, tree))
+                text = text.replace(('[sub_resource type="Resource" id="%s"]\nscript = ExtResource("%s")\nkind = 2\nbuildings = %d\nelements = %d\n\n'
+                                     % (effect_id, effect_script, buildings, elements)), "")
+                continue
             block = re.sub(r'effects = [^\n]*\n', '', m.group(0))
             block = block.rstrip("\n") + '\neffects = Array[ExtResource("%s")]([SubResource("%s")])\n' % (effect_script, effect_id)
             text = text[:m.start()] + block + text[m.end():]

@@ -49,7 +49,7 @@
   "hard_runs": "3/3 won at 85%, 8.3 lives",
   "normal_failed": 1.535
  },
- "6": {
+ "7": {
   "scale": 0.738,
   "hard": 1.057,
   "normal_ok": true,
@@ -58,7 +58,7 @@
   "hard_runs": "3/3 won at 85%, 10.0 lives",
   "normal_failed": 0.802
  },
- "7": {
+ "6": {
   "scale": 0.719,
   "hard": 1.069,
   "normal_ok": true,
@@ -74,7 +74,7 @@
   "normal_runs": "3/3 won, 8.7 lives",
   "hard_runs": "3/3 won at 85%, 9.7 lives"
  },
- "8": {
+ "9": {
   "scale": 1.404,
   "hard": 1.2,
   "normal_ok": true,
@@ -82,7 +82,7 @@
   "normal_runs": "3/3 won, 9.3 lives",
   "hard_runs": "3/3 won at 85%, 9.3 lives"
  },
- "9": {
+ "8": {
   "scale": 1.0,
   "hard": 1.614,
   "normal_ok": true,

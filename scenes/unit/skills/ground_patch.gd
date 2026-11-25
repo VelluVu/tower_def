@@ -31,10 +31,14 @@ static func make(at : Vector2, source : Building, element : Utils.DamageType, hi
 	patch.z_index = -1
 	source.level.add_child(patch)
 	patch.global_position = at
+	#Ground reactions: a patch meeting another of a partner element
+	if source.level.synergies != null:
+		source.level.synergies.on_patch(patch)
 	return patch
 
 
 func _ready() -> void:
+	add_to_group(GroupNames.GROUND_PATCHES)
 	tick_timer = CustomTimer.new()
 	add_child(tick_timer)
 	tick_timer.unscaled_base_value = TICK_SECONDS

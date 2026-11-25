@@ -31,6 +31,10 @@ extends Resource
 @export_group("Waves")
 @export var wave_start : AudioStream
 @export var wave_cleared : AudioStream
+## The next wave can be started early for bonus gold (a soft chime, once per wave).
+@export var early_start_ready : AudioStream
+## A wave was started early: the bonus gold comes in.
+@export var early_start_coins : AudioStream
 ## An enemy reaching the castle costs life.
 @export var castle_hit : AudioStream
 ## A boss enters the level.

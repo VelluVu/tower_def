@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="EvolveTierData" format=3]
+
+[ext_resource type="Script" path="res://scenes/unit/evolve_tree/evolve_tier_data.gd" id="1_tier"]
+[ext_resource type="Script" path="res://scenes/unit/evolve_tree/evolve_resource.gd" id="2_evolve"]
+[ext_resource type="SpriteFrames" path="res://scenes/unit/evolve_tree/tiers/hoard_physical_t2_frames.tres" id="3_frames"]
+
+[resource]
+script = ExtResource("1_tier")
+title = "T2"
+info = "+1 gold a wave"
+talent_tree = &"building"
+talent_node = &"hoard_keeper_t2"
+upgrade_resources = Array[ExtResource("2_evolve")]([])
+sprite_frames = ExtResource("3_frames")

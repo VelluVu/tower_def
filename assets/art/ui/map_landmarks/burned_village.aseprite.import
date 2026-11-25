@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://d1aw8giqq8ph1"
+path="res://.godot/imported/burned_village.aseprite-9fe517244808b713748fdfa64cca8f9d.res"
+
+[deps]
+
+source_file="res://assets/art/ui/map_landmarks/burned_village.aseprite"
+dest_files=["res://.godot/imported/burned_village.aseprite-9fe517244808b713748fdfa64cca8f9d.res"]
+
+[params]
+

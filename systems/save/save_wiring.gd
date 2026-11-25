@@ -4,7 +4,7 @@ extends SaveSlot
 ## This game's progress save: the file to edit after copying the system. Saves a
 ## ProgressData; PlayerProgress owns this node and keeps the game's API to it.
 
-const SAVE_VERSION: int = 8
+const SAVE_VERSION: int = 9
 ## Versions 2 and 3 put new levels in; the level at the number and every later
 ## one moved up. 2: the Broodmother's Lair at 6. 3: two cave levels before it
 ## (at 6) and the human bridge after it (at 9). 4: two levels between the lair
@@ -14,6 +14,8 @@ const SAVE_VERSION: int = 8
 ## 7: 60 levels: six desert levels before the Bone Colossus (at 42), then six
 ## volcano levels before the Throne of Embers (at 54, after the first shift).
 ## 8: the Broodmother's Lair moves from 8 to 12, the Caves' end; 9-12 close up to 8-11.
+## 9: the caves' new route: Bat Roost and Echo Crossing swap (6, 7), so do Collapsed
+## Tunnels and Crystal Deep (8, 9).
 const INSERTED_LEVEL: int = 6
 const INSERTED_COUNT_V3: int = 2
 const BRIDGE_LEVEL_V3: int = 9
@@ -31,6 +33,7 @@ const BEFORE_THRONE_LEVEL_V7: int = 54
 const AREA_HALF_COUNT_V7: int = 6
 const LAIR_FROM_V8: int = 8
 const LAIR_TO_V8: int = 12
+const SWAPS_V9: Array[Vector2i] = [Vector2i(6, 7), Vector2i(8, 9)]
 const SAVE_PATH: String = "user://player_progress.tres"
 
 ## The JSON save from before this system. Imported once, then renamed to
@@ -95,6 +98,9 @@ func _migrate(resource: Resource, from_version: int) -> void:
 		_shift_levels(data, BEFORE_THRONE_LEVEL_V7, AREA_HALF_COUNT_V7)
 	if from_version < 8:
 		_move_level(data, LAIR_FROM_V8, LAIR_TO_V8)
+	if from_version < 9:
+		for swap: Vector2i in SWAPS_V9:
+			_move_level(data, swap.x, swap.y)
 
 
 ## Moves the progress of level `inserted` and later up by `count`. A player who
