@@ -82,7 +82,9 @@ func calculate_modifier(stat_type : Utils.StatType) -> void:
 	var modified_value : float = combine(base, flat, additive, multiply)
 
 	if stat_type == Utils.StatType.Speed:
-		modified_value = floor_slows(modified_value, base, flat, additive, multiply, slow_floor)
+		#a standard bearer's banner: slows do nothing (SteadfastAura)
+		var floor_share : float = 1.0 if actor is Enemy and actor.is_steadfast else slow_floor
+		modified_value = floor_slows(modified_value, base, flat, additive, multiply, floor_share)
 
 	if skill_stat != null:
 		skill_stat.value = modified_value

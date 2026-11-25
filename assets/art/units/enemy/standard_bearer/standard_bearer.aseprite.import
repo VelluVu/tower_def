@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dbrmlflrtyn1b"
+path="res://.godot/imported/standard_bearer.aseprite-046a804b81961a5e9dddce6a3d912f4b.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/standard_bearer/standard_bearer.aseprite"
+dest_files=["res://.godot/imported/standard_bearer.aseprite-046a804b81961a5e9dddce6a3d912f4b.res"]
+
+[params]
+

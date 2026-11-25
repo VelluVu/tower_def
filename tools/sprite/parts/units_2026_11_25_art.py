@@ -462,7 +462,68 @@ def ash_harpy():
 # giant_eagle.aseprite.''')
 
 
+# ----------------------------------------------------------------------------------------- the second round
+def banner(body, size=(18, 18)):
+    """a standard on a pole behind the body (its left side), a red flag with a gold drake at the top"""
+    def apply(base, px, i):
+        box = bbox(base, body)
+        if box is None:
+            return
+        if box[3] - box[1] < 6:  # lying down: the pole lies along the ground
+            for x in range(1, size[0] - 1):
+                clamp_put(px, size, (x, box[3] + 1 if box[3] + 1 < size[1] - 1 else box[3]), '733e39' if x % 4 else 'feae34')
+            return
+        pole = max(5, box[0] - 1)
+        for y in range(1, box[3] + 1):
+            clamp_put(px, size, (pole, y), '733e39' if y > 1 else 'feae34')
+        for y in range(2, 6):
+            for x in range(pole - 4, pole):
+                colour = 'a22633' if (x + y) % 5 else 'e43b44'
+                if y == 3 and x == pole - 2:
+                    colour = 'feae34'
+                if y == 5 and (x - pole) % 2:
+                    continue
+                clamp_put(px, size, (x, y), colour)
+    return apply
+
+
+def tunnel_rat():
+    derive('tunnel_rat', ('swarmling', 'swarmling'), {
+        'ecd8b1': '9a8e80', 'd5bf9b': '7a6e64', 'b59e85': '5a4e48', 'b86f50': 'c28569', '733e39': '8a5a50',
+        '3e2731': '2a2228', 'a22633': '3e3038'}, [], '''
+# Tunnel rat: a grey-brown cave rat 2a2228..9a8e80 with a pink tail c28569 and red eyes; comes in swarms and runs under
+# traps. Drawn by tools/sprite/parts/units_2026_11_25_art.py over swarmling.aseprite.''')
+
+
+def bog_lurker():
+    derive('bog_lurker', ('fastswampling', 'fastswampling'), {
+        '2a1a33': '122218', '45254f': '1b3424', '68386c': '264a30', '8e4f7a': '33603a', 'b55088': '4a7a44',
+        'b6d53c': '7a8a3a', 'e6f07a': 'a0a860', 'f6757a': 'c8b070', 'fee761': 'fee761'}, [], '''
+# Bog lurker: a long murky-green swamp reptile 122218..4a7a44 with a mossy back 7a8a3a and yellow eyes; swims
+# submerged (the game draws it see-through) until it nears the castle. Drawn by
+# tools/sprite/parts/units_2026_11_25_art.py over fastswampling.aseprite.''')
+
+
+def standard_bearer():
+    body = ['0099db', '124e89', 'e8b796', 'c28569', 'c0cbdc', '8b9bb4', '5a6988', '3a4466']
+    derive('standard_bearer', ('soldier', 'soldier'), {'0099db': 'a22633', '124e89': '5d1d2c'}, [banner(body)], '''
+# Standard bearer: a human soldier in a red tabard a22633/5d1d2c carrying the invaders' standard, a red flag with a gold
+# drake on a tall pole; troops near it shrug off slows and freezes. Drawn by tools/sprite/parts/units_2026_11_25_art.py
+# over soldier.aseprite.''')
+
+
+def ash_wraith():
+    derive('ash_wraith', ('wizard', 'wizard'), {
+        '68386c': ASH[1], 'b55088': ASH[2], '3e2731': ASH[0], 'e8b796': '3e3038', 'b86f50': '2a2028',
+        '2ce8f5': EMBER, '0099db': 'a22633', 'feae34': ASH[3], 'fee761': ASH[4], 'a22633': ASH[0], 'ffffff': ASH[4]},
+        [se.eyes('181425', ['e8b796', 'b86f50'], GLOW)], '''
+# Ash wraith: a hooded shade of ash 2a2028..a89ea4 with a dark face, glowing eyes fee761 and an ember lantern on its
+# staff; fades out of the world for a moment now and then. Drawn by tools/sprite/parts/units_2026_11_25_art.py over
+# wizard.aseprite.''')
+
+
 ALL = {
+    'tunnel_rat': tunnel_rat, 'bog_lurker': bog_lurker, 'standard_bearer': standard_bearer, 'ash_wraith': ash_wraith,
     'cave_shaman': cave_shaman, 'wall_crawler': wall_crawler, 'spore_carrier': spore_carrier, 'glow_moth': glow_moth,
     'bog_witch': bog_witch, 'snapping_turtle': snapping_turtle, 'mosquito': mosquito, 'leech_mother': leech_mother,
     'shieldbearer': shieldbearer, 'battering_ram': battering_ram, 'war_drummer': war_drummer,

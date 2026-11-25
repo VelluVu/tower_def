@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/bone_thrall.tscn" id="e_bone_thrall"]
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/revenant_knight.tscn" id="e_revenant_knight"]
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/rusted_ballista.tscn" id="e_rusted_ballista"]
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/ash_wraith.tscn" id="e_u1125_ash_wraith"]
 
 [sub_resource type="Resource" id="Resource_group1"]
 script = ExtResource("2_group")
@@ -42,7 +43,14 @@ count = 6
 interval = 1.8
 spawner_id = 1
 
+[sub_resource type="Resource" id="Resource_u1125_ash_wraith"]
+script = ExtResource("2_group")
+enemy_scene = ExtResource("e_u1125_ash_wraith")
+count = 4
+interval = 3.0
+delay = 5.0
+
 [resource]
 script = ExtResource("1_wave")
-spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_group3"), SubResource("Resource_group4"), SubResource("Resource_group5")])
+spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_group3"), SubResource("Resource_group4"), SubResource("Resource_group5"), SubResource("Resource_u1125_ash_wraith")])
 early_start_bonus = 2.0

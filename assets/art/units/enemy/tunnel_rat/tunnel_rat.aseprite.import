@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bfwr3evpuxn81"
+path="res://.godot/imported/tunnel_rat.aseprite-9e35c17b6861351c7f6a05d8e98bbaf5.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/tunnel_rat/tunnel_rat.aseprite"
+dest_files=["res://.godot/imported/tunnel_rat.aseprite-9e35c17b6861351c7f6a05d8e98bbaf5.res"]
+
+[params]
+

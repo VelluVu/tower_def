@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/giant_eagle.tscn" id="5_giant_eagle"]
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/soldier.tscn" id="6_soldier"]
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/wizard.tscn" id="7_wizard"]
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/standard_bearer.tscn" id="e_u1125_standard_bearer"]
 
 [sub_resource type="Resource" id="Resource_group1"]
 script = ExtResource("2_group")
@@ -43,7 +44,14 @@ count = 10
 interval = 1.4
 delay = 20.0
 
+[sub_resource type="Resource" id="Resource_u1125_standard_bearer"]
+script = ExtResource("2_group")
+enemy_scene = ExtResource("e_u1125_standard_bearer")
+count = 3
+interval = 6.0
+delay = 5.0
+
 [resource]
 script = ExtResource("1_wave")
-spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_group3"), SubResource("Resource_group4"), SubResource("Resource_group5")])
+spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_group3"), SubResource("Resource_group4"), SubResource("Resource_group5"), SubResource("Resource_u1125_standard_bearer")])
 early_start_bonus = 3.0

@@ -33,6 +33,10 @@ LINES = {
     "bone_vulture": (40, 3, NEUTRAL, "Bone vultures! Shoot one down and its bones keep walking. Frost keeps them down for good."),
     "mummy_priest": (41, 4, WORRIED, "Careful with the wrapped priests: when one falls, its curse silences every tower nearby."),
     "ash_harpy": (50, 4, ANGRY, "Ash harpies! They dive at our towers with burning talons. Shoot them out of the sky!"),
+    "tunnel_rat": (7, 5, WORRIED, "Rats! They scurry under our traps and eggs. Towers have to catch these ones."),
+    "bog_lurker": (20, 4, WORRIED, "Something swims under the water... Bolts and beams can't reach it. Bursts and breath can!"),
+    "standard_bearer": (27, 5, ANGRY, "Their standard! Near that banner no frost slows them down. Bring down the bearer first."),
+    "ash_wraith": (39, 4, WORRIED, "Wraiths of ash: they fade away now and then and our beams lose them. Bursts catch them when they're back."),
 }
 
 

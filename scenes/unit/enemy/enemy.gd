@@ -57,6 +57,8 @@ const TURN_DOT_LIMIT : float = 0.5
 ## What a wall's cell costs on its path instead of the building weight (0 = the same as every building): the ram
 ## would rather break through a wall than walk the maze, the wall crawler climbs them (WallClimber).
 @export var wall_path_weight : float = 0.0
+## Runs under traps: the Leopard Trap and the Egg Bomb never fire on it, nor catch it in their blast (tunnel rats).
+@export var ignores_traps : bool = false
 
 @export var skill : Skill :
 	get:
@@ -100,6 +102,12 @@ var is_concealed : bool = false
 var fire_ward : FireWard = null
 #walks over walls instead of attacking them (WallClimber sets it)
 var climbs_walls : bool = false
+#under the water (Submerged): only area towers reach it (Nova, Mortar, Breather; traps)
+var is_submerged : bool = false
+#faded out (PhaseShift): no tower picks it and no direct hit lands; damage over time still ticks
+var is_phased : bool = false
+#near a standard bearer (SteadfastAura): no freezes, and slows do nothing
+var is_steadfast : bool = false
 #played while it moves; the Ashen Wyrm walks differently once it has landed
 var walk_animation : String = GlobalAnimationNames.WALK_ANIMATION
 #false for an enemy gone without a kill (a hatched egg sac): no gold or XP
@@ -171,6 +179,8 @@ signal selected(is_selected : bool)
 func take_damage(damage_data : DamageData) -> void:
 	if is_dead:
 		return
+	if is_phased and not damage_data.is_overtime:
+		return
 	damage_data.drop_freed_source()
 	if damage_data.damage > 0.0 and fire_ward != null and fire_ward.absorb(damage_data):
 		return
@@ -224,7 +234,7 @@ func knock_back(cells : int) -> void:
 
 ## Stops it where it stands for a while (a frost tower's freeze); bosses never freeze. A new freeze restarts it.
 func freeze_for(seconds : float) -> void:
-	if is_boss or seconds <= 0.0 or is_dead:
+	if is_boss or seconds <= 0.0 or is_dead or is_steadfast:
 		return
 	#Absolute Zero and Snap Freeze (talents)
 	if level != null and level.talents != null:

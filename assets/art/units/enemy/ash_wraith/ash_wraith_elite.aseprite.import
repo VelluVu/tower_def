@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://b17i0wml064cq"
+path="res://.godot/imported/ash_wraith_elite.aseprite-482a2e8ae596b5af120ac970e9196cae.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/ash_wraith/ash_wraith_elite.aseprite"
+dest_files=["res://.godot/imported/ash_wraith_elite.aseprite-482a2e8ae596b5af120ac970e9196cae.res"]
+
+[params]
+

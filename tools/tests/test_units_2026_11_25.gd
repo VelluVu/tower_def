@@ -7,6 +7,7 @@ const NAMES : PackedStringArray = [
 	"bog_witch", "snapping_turtle", "mosquito", "leech_mother",
 	"shieldbearer", "battering_ram", "war_drummer", "crossbow_sniper",
 	"sand_wurm", "bone_vulture", "mummy_priest", "ash_harpy",
+	"tunnel_rat", "bog_lurker", "standard_bearer", "ash_wraith",
 ]
 
 
@@ -119,7 +120,11 @@ func test_bog_witch_curses_towers(kit : TestKit) -> void:
 	var before : float = tower.skill.stats.get_stat_value(Utils.StatType.AttackSpeed)
 	var witch : Enemy = kit.spawn_enemy("bog_witch")
 	var hex : EnemyAbility = witch.abilities.get_node("Hex")
-	await kit.run_until(func() -> bool: return hex.use_count > 0 and not hex.is_active, 12.0)
+	await kit.frames(1)
+	#she may walk out of reach before her first hex is ready: bring her back with it ready
+	hex.cooldown_timer.stop()
+	witch.global_position = tower.global_position + Vector2(Utils.TILE_SIZE, 0)
+	await kit.run_until(func() -> bool: return hex.use_count > 0 and not hex.is_active, 6.0)
 	kit.check(tower.has_node(TowerCurse.NAME), "the tower is cursed")
 	kit.check(tower.skill.stats.get_stat_value(Utils.StatType.AttackSpeed) < before, "and attacks slower")
 	witch.remove_without_reward()
@@ -225,6 +230,64 @@ func test_sand_wurm_dives_far_ahead(kit : TestKit) -> void:
 	var dive : EnemyAbility = wurm.abilities.get_node("Dive")
 	await kit.run_until(func() -> bool: return dive.use_count > 0 and not dive.is_active, 16.0)
 	kit.check(dive.use_count > 0 and not wurm.is_burrowed, "it dives and comes up again")
+
+
+func test_tunnel_rats_run_under_traps(kit : TestKit) -> void:
+	await kit.load_level(14)
+	var trap : Building = await kit.place("leopard_trap", _buildable_cell(kit))
+	var rat : Enemy = kit.spawn_enemy("tunnel_rat")
+	await kit.frames(1)
+	kit.check(rat.ignores_traps, "a tunnel rat ignores traps")
+	trap._on_range_area_body_entered(rat)
+	kit.check(not trap.targets.has(rat), "the trap never takes it as a target")
+
+
+func test_bog_lurker_is_out_of_reach_of_bolts(kit : TestKit) -> void:
+	await kit.load_level(14)
+	var lurker : Enemy = kit.spawn_enemy("bog_lurker")
+	await kit.frames(2)
+	kit.check(lurker.is_submerged, "it swims submerged")
+	var candidates : Array[Node2D] = [lurker]
+	kit.check(TargetPicker.pick(Utils.TargetTactic.First, candidates, Vector2.ZERO, false) == null, "a bolt tower cannot pick it")
+	kit.check(TargetPicker.pick(Utils.TargetTactic.First, candidates, Vector2.ZERO, true) == lurker, "an area tower can")
+	kit.check(EnemyQuery.closest_enemy(kit.level.get_tree(), lurker.body_center, 64.0, []) != lurker, "ricochets pass it by")
+
+
+func test_standard_bearer_stops_slows_and_freezes(kit : TestKit) -> void:
+	await kit.load_level(14)
+	var bearer : Enemy = kit.spawn_enemy("standard_bearer")
+	var soldier : Enemy = kit.spawn_enemy("soldier")
+	await kit.frames(1)
+	soldier.global_position = bearer.global_position
+	var base_speed : float = soldier.stats.get_stat_value(Utils.StatType.Speed)
+	await kit.run_until(func() -> bool: return soldier.is_steadfast, 2.0)
+	kit.check(soldier.is_steadfast, "the banner covers the soldier")
+	var slow : ModifierData = Elite.multiply(Utils.StatType.Speed, 0.5)
+	soldier.modifier_manager.add_modifier(slow)
+	kit.check_near(soldier.stats.get_stat_value(Utils.StatType.Speed), base_speed, "a slow does nothing", 0.01)
+	soldier.freeze_for(2.0)
+	kit.check(not soldier.is_frozen, "nor does a freeze")
+	_kill(bearer)
+	await kit.frames(2)
+	kit.check(not soldier.is_steadfast, "without the bearer it is plain again")
+	kit.check_near(soldier.stats.get_stat_value(Utils.StatType.Speed), base_speed * 0.5, "and the slow bites", 0.01)
+
+
+func test_ash_wraith_fades_out(kit : TestKit) -> void:
+	await kit.load_level(14)
+	var wraith : Enemy = kit.spawn_enemy("ash_wraith")
+	await kit.run_until(func() -> bool: return wraith.is_phased, 6.0)
+	kit.check(wraith.is_phased, "it fades out")
+	var health : float = wraith.stats.get_stat_value(Utils.StatType.Health)
+	var hit : DamageData = DamageData.new()
+	hit.damage = 5.0
+	wraith.take_damage(hit)
+	hit.free()
+	kit.check_near(wraith.stats.get_stat_value(Utils.StatType.Health), health, "a hit passes through it")
+	var candidates : Array[Node2D] = [wraith]
+	kit.check(TargetPicker.pick(Utils.TargetTactic.First, candidates, Vector2.ZERO) == null, "no tower picks it")
+	await kit.run_until(func() -> bool: return not wraith.is_phased, 2.0)
+	kit.check(not wraith.is_phased, "and comes back")
 
 
 func _kill(enemy : Enemy) -> void:

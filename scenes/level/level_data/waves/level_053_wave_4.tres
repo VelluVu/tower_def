@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/grave_caller.tscn" id="e_grave_caller"]
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/phoenix.tscn" id="e_phoenix"]
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/ember_wisp.tscn" id="e_push_ember_wisp"]
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/ash_wraith.tscn" id="e_u1125_ash_wraith"]
 
 [sub_resource type="Resource" id="Resource_group1"]
 script = ExtResource("2_group")
@@ -46,7 +47,14 @@ count = 12
 interval = 0.3
 delay = 4.0
 
+[sub_resource type="Resource" id="Resource_u1125_ash_wraith"]
+script = ExtResource("2_group")
+enemy_scene = ExtResource("e_u1125_ash_wraith")
+count = 5
+interval = 3.0
+delay = 5.0
+
 [resource]
 script = ExtResource("1_wave")
-spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_group3"), SubResource("Resource_group4"), SubResource("Resource_push1")])
+spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_group3"), SubResource("Resource_group4"), SubResource("Resource_push1"), SubResource("Resource_u1125_ash_wraith")])
 early_start_bonus = 2.0

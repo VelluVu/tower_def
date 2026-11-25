@@ -1,0 +1,31 @@
+# Source of assets/art/units/enemy/standard_bearer/standard_bearer_icon.png (python tools/gd.py icon <this> <out.png>); cropped from the sprite's first IDLE frame
+a = c0cbdc
+b = 8b9bb4
+c = 5a6988
+d = b86f50
+e = e8b796
+f = 181425
+g = c28569
+h = 733e39
+i = 5d1d2c
+j = a22633
+k = feae34
+l = 3e2731
+m = e43b44
+---
+......k.........
+..jjmjh..aab.a..
+..jmkjh.aabbcb..
+..mjjjhbaacccd..
+..j.j.h..efefd..
+......h..eeegd..
+......hijjjabd..
+......hijjji.d..
+......hijjjigd..
+......hhhkhh.d..
+......hijji..d..
+........l.h..d..
+........l.h..d..
+.......l...h.d..
+.......ll..ll...
+................

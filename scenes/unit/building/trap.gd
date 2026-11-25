@@ -62,7 +62,7 @@ func _on_enemy_destroyed(enemy : Enemy) -> void:
 
 
 func _on_range_area_body_entered(body: Node2D) -> void:
-	if body is Enemy and body.is_flying and not can_hit_air:
+	if body is Enemy and ((body.is_flying and not can_hit_air) or body.ignores_traps):
 		return
 
 	if not targets.has(body):

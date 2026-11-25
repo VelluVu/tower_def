@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bmvq1hs1wul6r"
+path="res://.godot/imported/bog_lurker.aseprite-eb5d50ee3f54c190ded5a3e1876a1861.res"
+
+[deps]
+
+source_file="res://assets/art/units/enemy/bog_lurker/bog_lurker.aseprite"
+dest_files=["res://.godot/imported/bog_lurker.aseprite-eb5d50ee3f54c190ded5a3e1876a1861.res"]
+
+[params]
+

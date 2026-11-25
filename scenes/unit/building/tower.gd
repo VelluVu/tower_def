@@ -31,6 +31,10 @@ var target : Node2D = null
 var can_choose_target : bool :
 	get:
 		return skill != null and skill.skill_type in [Utils.SkillType.Projectile, Utils.SkillType.Beaming, Utils.SkillType.Artillery, Utils.SkillType.Breath, Utils.SkillType.Sniper, Utils.SkillType.Harpoon]
+## Area towers reach a submerged bog lurker (Submerged); bolts, beams and harpoons do not.
+var reaches_submerged : bool :
+	get:
+		return skill != null and (skill.skill_type & (Utils.SkillType.Area | Utils.SkillType.Artillery | Utils.SkillType.Breath | Utils.SkillType.Blast)) != 0
 #a screech: the tower sees no targets until the timer ends
 var silence_timer : CustomTimer = null
 
@@ -142,7 +146,7 @@ func get_tactic_target() -> Node2D:
 	if not has_target:
 		return null
 	var candidates : Array[Node2D] = targets if min_range_tiles <= 0.0 else get_targets_beyond_min_range()
-	return TargetPicker.pick(target_tactic if can_choose_target else Utils.TargetTactic.First, candidates, global_position)
+	return TargetPicker.pick(target_tactic if can_choose_target else Utils.TargetTactic.First, candidates, global_position, reaches_submerged)
 
 
 ## The targets in range that are not too close to fire at.

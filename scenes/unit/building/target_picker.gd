@@ -34,7 +34,8 @@ const MENU_ORDER : Array[Utils.TargetTactic] = [Utils.TargetTactic.First, Utils.
 	Utils.TargetTactic.Fastest, Utils.TargetTactic.Elite, Utils.TargetTactic.Flyers]
 
 
-static func pick(tactic : Utils.TargetTactic, candidates : Array[Node2D], from_position : Vector2) -> Node2D:
+## reaches_submerged: an area tower (Nova, Mortar, Breather) may pick a submerged bog lurker, the others may not.
+static func pick(tactic : Utils.TargetTactic, candidates : Array[Node2D], from_position : Vector2, reaches_submerged : bool = true) -> Node2D:
 	var best : Node2D = null
 	var best_score : float = -INF
 
@@ -42,7 +43,9 @@ static func pick(tactic : Utils.TargetTactic, candidates : Array[Node2D], from_p
 		if not is_instance_valid(candidate) or candidate is not Enemy:
 			continue
 		var enemy : Enemy = candidate
-		if enemy.is_dead or enemy.is_deactivated or enemy.is_burrowed or enemy.is_concealed:
+		if enemy.is_dead or enemy.is_deactivated or enemy.is_burrowed or enemy.is_concealed or enemy.is_phased:
+			continue
+		if enemy.is_submerged and not reaches_submerged:
 			continue
 		var score : float = _score(tactic, enemy, from_position)
 		if score > best_score:

@@ -109,6 +109,10 @@ ELITES = {
     'bone_vulture': dict(ornament=CROWN, anchor=['ece6d8'], side='right', span=5, climb=True),
     'mummy_priest': dict(ornament=HALO, anchor=['ddd0b0', '8a7a60'], climb=True, gap=1),
     'ash_harpy': dict(ornament=CROWN, anchor=['e0caa3'], side='right', span=5, climb=True),
+    'tunnel_rat': dict(ornament=CROWN_SMALL, anchor=['9a8e80'], climb=True),
+    'bog_lurker': dict(swap={'7a8a3a': 'feae34', 'a0a860': 'fee761'}, sheen=['7a8a3a', 'a0a860']),
+    'standard_bearer': dict(swap=STEEL_TO_GOLD, sheen=list(STEEL_TO_GOLD), ornament=PLUME, anchor=SKIN, climb=True),
+    'ash_wraith': dict(ornament=STAR, anchor=['3e3038'], climb=True, gap=-2),
 }
 
 SHEEN_PERIOD = 12

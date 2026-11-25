@@ -79,6 +79,14 @@ UNITS = {
         ("ability", "Dive", "Node", ABILITIES + "multi_strike_ability.gd", [
             "cooldown = 7.0", "starts_on_cooldown = true", "strike_range = 2.5", "targets = 1", "damage = 3.0",
             "damage_type = %d" % FIRE])]),
+    # the second round (the user's picks 2026-11-25): each answers a tower that is strong today
+    "tunnel_rat": ("swarmling", ["health=5", "speed=30", "price=1", "xp=0.4"], None, ["ignores_traps = true"], []),
+    "bog_lurker": ("fastswampling", ["health=40", "speed=16", "price=4"], "swamp", [], [
+        ("component", "Submerged", "Node", COMPONENTS + "submerged.gd", ["surface_cells = 8"])]),
+    "standard_bearer": ("soldier", ["health=30", "speed=16", "price=4"], None, [], [
+        ("component", "SteadfastAura", "Node", COMPONENTS + "steadfast_aura.gd", ["radius = 2.5"])]),
+    "ash_wraith": ("wizard", ["health=30", "speed=17", "price=4"], "undead_caster", [], [
+        ("component", "PhaseShift", "Node", COMPONENTS + "phase_shift.gd", ["period = 4.0", "phase_seconds = 1.0"])]),
 }
 # the ram's blow on buildings (its MeleeAttack's own Damage; the unit's Damage stays the life it costs)
 MELEE_DAMAGE = {"battering_ram": 6.0}

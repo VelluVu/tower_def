@@ -11,7 +11,8 @@ static func closest_enemy(tree : SceneTree, from : Vector2, max_distance : float
 
 	for node in tree.get_nodes_in_group(GroupNames.ENEMIES):
 		var enemy : Enemy = node as Enemy
-		if not is_hittable(enemy) or exclude.has(enemy):
+		#ricochets and beam chains: a submerged lurker is out of their reach
+		if not is_hittable(enemy) or enemy.is_submerged or exclude.has(enemy):
 			continue
 
 		var distance : float = from.distance_squared_to(enemy.body_center)
@@ -23,4 +24,4 @@ static func closest_enemy(tree : SceneTree, from : Vector2, max_distance : float
 
 
 static func is_hittable(enemy : Enemy) -> bool:
-	return is_instance_valid(enemy) and not enemy.is_dead and not enemy.is_deactivated and not enemy.is_burrowed
+	return is_instance_valid(enemy) and not enemy.is_dead and not enemy.is_deactivated and not enemy.is_burrowed and not enemy.is_phased

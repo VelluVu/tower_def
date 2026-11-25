@@ -38,7 +38,7 @@ func get_victims() -> Array[Enemy]:
 		return victims
 	var blast_radius : float = get_blast_radius()
 	for enemy in level.existing_enemies:
-		if EnemyQuery.is_hittable(enemy) and enemy.global_position.distance_to(global_position) <= blast_radius:
+		if EnemyQuery.is_hittable(enemy) and not enemy.ignores_traps and enemy.global_position.distance_to(global_position) <= blast_radius:
 			victims.append(enemy)
 	victims.sort_custom(func(a : Enemy, b : Enemy) -> bool:
 		return a.global_position.distance_squared_to(global_position) < b.global_position.distance_squared_to(global_position))
