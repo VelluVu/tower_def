@@ -56,7 +56,7 @@ func test_normal_wave_health_ramp(kit : TestKit) -> void:
 	kit.check_near(data.get_wave_health(4, 5), 2.0, "the last wave at the last health")
 	var weakling : Enemy = kit.spawn_enemy("weakling")
 	await kit.frames(1)
-	kit.check_near(weakling.stats.get_stat_value(Utils.StatType.MaxHealth), 15.0 * kit.level.level_data.first_wave_health, "a wave 1 weakling gets the level's first wave health")
+	kit.check_near(weakling.stats.get_stat_value(Utils.StatType.MaxHealth), 1.875 * kit.level.level_data.first_wave_health, "a wave 1 weakling gets the level's first wave health")
 
 
 func test_boss_skips_the_wave_ramp(kit : TestKit) -> void:
@@ -78,7 +78,7 @@ func test_kill_xp_ignores_health_scaling(kit : TestKit) -> void:
 	var xp : float = kit.level.upgrades.xp
 	weakling.die()
 	await kit.frames(2)
-	kit.check_near(kit.level.upgrades.xp - xp, UpgradeRules.kill_xp(15.0, 1.0), "XP from the base health, not the scaled one")
+	kit.check_near(kit.level.upgrades.xp - xp, UpgradeRules.kill_xp(1.875, 1.0), "XP from the base health, not the scaled one")
 
 
 func test_points_per_mode(kit : TestKit) -> void:

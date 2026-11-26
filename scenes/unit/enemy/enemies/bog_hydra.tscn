@@ -436,7 +436,7 @@ script = ExtResource("16_nm5r2")
 [node name="PermanentHealingOvertimeEffectData" type="Node" parent="OvertimeEffectHandler"]
 script = ExtResource("13_ntgc7")
 max_count = 0
-tick_damage = -25.0
+tick_damage = -3.125
 tick_interval = 5.0
 is_healing = true
 
@@ -445,14 +445,14 @@ script = ExtResource("14_x7u3f")
 
 [node name="MaxHealth" type="Node" parent="Stats"]
 script = ExtResource("15_rofak")
-base_value = 5000.0
-value = 5000.0
+base_value = 625.0
+value = 625.0
 type = 1
 
 [node name="Health" type="Node" parent="Stats"]
 script = ExtResource("15_rofak")
-base_value = 5000.0
-value = 5000.0
+base_value = 625.0
+value = 625.0
 
 [node name="Damage" type="Node" parent="Stats"]
 script = ExtResource("15_rofak")

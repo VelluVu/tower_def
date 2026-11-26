@@ -28,9 +28,9 @@ func test_frost_talents(kit : TestKit) -> void:
 	var enemy : Enemy = kit.spawn_enemy("beefling")
 	await kit.frames(1)
 	enemy.resistances = null
-	kit.check_near(_hit(enemy, 10.0), 10.0, "a plain hit in full")
+	kit.check_near(_hit(enemy, 1.0), 1.0, "a plain hit in full")
 	enemy.freeze_for(1.0)
-	kit.check_near(_hit(enemy, 10.0), 10.6, "Cold Heart: a frozen enemy takes 6% more")
+	kit.check_near(_hit(enemy, 1.0), 1.06, "Cold Heart: a frozen enemy takes 6% more")
 	kit.check_near(enemy.freeze_timer.unscaled_base_value, 1.0 * 1.5 + 0.5, "Absolute Zero and Snap Freeze make a 1 s freeze 2 s")
 	PlayerProgress._save.progress.talent_ranks = saved
 

@@ -74,7 +74,7 @@ func test_small_hits_hidden_and_beam_numbers_add_up(kit : TestKit) -> void:
 	var manager : DamageNumberManager = DamageNumberManager.new()
 	kit.root.add_child(manager)
 	var hit : DamageData = DamageData.new()
-	hit.damage = 0.6
+	hit.damage = 0.9
 	manager._on_damage_taken(Vector2.ZERO, hit)
 	kit.check(manager.spawned_count == 0, "a hit under 1 shows no number")
 
@@ -87,7 +87,7 @@ func test_small_hits_hidden_and_beam_numbers_add_up(kit : TestKit) -> void:
 		manager._on_enemy_hit(enemy, hit)
 	kit.check(manager.spawned_count == 1, "three beam ticks make one number")
 	var number : DamageNumber = manager.running_numbers.get(enemy.get_instance_id())
-	kit.check(number != null and number.number_label.text == "7", "it shows their total")
+	kit.check(number != null and number.number_label.text == "7", "it shows their total as a whole number: %s" % number.number_label.text)
 	number.running_since_hit = DamageNumberManager.RUNNING_HOLD_TIME + 0.1
 	manager._process(0.0)
 	kit.check(not number.is_running() and manager.running_numbers.is_empty(), "it floats off once the beam stops")

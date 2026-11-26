@@ -263,8 +263,8 @@ value = 100.0
 
 [node name="Damage" type="Node" parent="Stats"]
 script = ExtResource("12_l0gwn")
-base_value = 1.0
-value = 1.0
+base_value = 0.0
+value = 0.0
 type = 2
 
 [node name="Price" type="Node" parent="Stats"]
@@ -504,8 +504,8 @@ script = ExtResource("11_5kva3")
 
 [node name="Damage" type="Node" parent="LeopardClaws/Stats"]
 script = ExtResource("12_l0gwn")
-base_value = 12.0
-value = 12.0
+base_value = 1.6
+value = 1.6
 type = 2
 
 [node name="AttackRange" type="Node" parent="LeopardClaws/Stats"]

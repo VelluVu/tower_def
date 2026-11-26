@@ -18,7 +18,8 @@ const CURSOR_OFFSET : Vector2 = Vector2(10, 10)
 const PANEL_THEME_TYPE : StringName = &"TooltipPanel"
 #the UI's layer (Main's UI CanvasLayer is layer 1); the card hides itself whenever a menu pauses the game
 const LAYER : int = 1
-const HEALTH_FORMAT : String = "Health %d / %d"
+#one decimal since the small numbers (2026-11-26): a weakling has 1.9
+const HEALTH_FORMAT : String = "Health %s / %s"
 const FLYING_TEXT : String = "Flying"
 const ELITE_TEXT : String = "Elite"
 const BOSS_TEXT : String = "Boss"
@@ -90,7 +91,7 @@ static func build_text(enemy : Enemy) -> String:
 	var title : String = enemy.selectable.get_display_name() if enemy.selectable != null else String(enemy.name)
 	var health : float = maxf(0.0, enemy.stats.get_stat_value(Utils.StatType.Health))
 	var max_health : float = enemy.stats.get_stat_value(Utils.StatType.MaxHealth)
-	var lines : PackedStringArray = [title, HEALTH_FORMAT % [ceili(health), ceili(max_health)]]
+	var lines : PackedStringArray = [title, HEALTH_FORMAT % [DamageNumber.format(health), DamageNumber.format(max_health)]]
 	var tags : PackedStringArray = []
 	if enemy.is_boss:
 		tags.append(BOSS_TEXT)

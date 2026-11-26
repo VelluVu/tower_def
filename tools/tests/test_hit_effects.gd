@@ -46,10 +46,10 @@ func test_splash_reaches_flyers_only_from_air_towers(kit : TestKit) -> void:
 	await kit.frames(1)
 	flyer.global_position = target.global_position + Vector2(8, 0)
 	var before : float = flyer.stats.get_stat_value(Utils.StatType.Health)
-	_hit(target, nova, 2.0)
+	_hit(target, nova, 0.2)
 	kit.check_near(flyer.stats.get_stat_value(Utils.StatType.Health), before, "the Nova's splash passes under the flyer")
-	_hit(target, bolter, 2.0)
-	kit.check_near(flyer.stats.get_stat_value(Utils.StatType.Health), before - 1.0, "the Bolter's splash hits it")
+	_hit(target, bolter, 0.2)
+	kit.check_near(flyer.stats.get_stat_value(Utils.StatType.Health), before - 0.1, "the Bolter's splash hits it")
 
 
 func test_freeze_stops_and_bosses_never_freeze(kit : TestKit) -> void:

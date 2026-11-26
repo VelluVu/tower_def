@@ -216,8 +216,8 @@ value = 10.0
 
 [node name="Damage" type="Node" parent="Stats"]
 script = ExtResource("17_m7bv2")
-base_value = 1.0
-value = 1.0
+base_value = 0.0
+value = 0.0
 type = 2
 
 [node name="Price" type="Node" parent="Stats"]

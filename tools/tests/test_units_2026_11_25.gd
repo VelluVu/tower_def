@@ -60,10 +60,10 @@ func test_spore_carrier_leaves_a_healing_cloud(kit : TestKit) -> void:
 	var soldier : Enemy = kit.spawn_enemy("soldier")
 	await kit.frames(1)
 	soldier.global_position = carrier.global_position
-	soldier.stats.get_stat(Utils.StatType.Health).value = 5.0
+	soldier.stats.get_stat(Utils.StatType.Health).value = 1.0
 	_kill(carrier)
-	await kit.run_until(func() -> bool: return soldier.stats.get_stat_value(Utils.StatType.Health) > 5.0, 2.0)
-	kit.check(soldier.stats.get_stat_value(Utils.StatType.Health) > 5.0, "the spores heal the soldier")
+	await kit.run_until(func() -> bool: return soldier.stats.get_stat_value(Utils.StatType.Health) > 1.0, 2.0)
+	kit.check(soldier.stats.get_stat_value(Utils.StatType.Health) > 1.0, "the spores heal the soldier")
 
 
 func test_wall_crawler_paths_over_walls(kit : TestKit) -> void:
@@ -102,10 +102,10 @@ func test_snapping_turtle_shells_after_a_big_hit(kit : TestKit) -> void:
 	var turtle : Enemy = kit.spawn_enemy("snapping_turtle")
 	await kit.frames(1)
 	var hit : DamageData = DamageData.new()
-	hit.damage = 2.0
+	hit.damage = 0.2
 	turtle.take_damage(hit)
 	kit.check_near(turtle.damage_taken_factor, 1.0, "a small hit does not close the shell")
-	hit.damage = 20.0
+	hit.damage = 2.0
 	turtle.take_damage(hit)
 	hit.free()
 	kit.check_near(turtle.damage_taken_factor, 0.3, "a big hit does")

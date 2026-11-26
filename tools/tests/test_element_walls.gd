@@ -48,7 +48,7 @@ func test_frost_ground_and_thorns(kit : TestKit) -> void:
 	hit.source = attacker
 	fortress.take_damage(hit)
 	hit.free()
-	kit.check_near(before - attacker.stats.get_stat_value(Utils.StatType.Health), 2.0, "thorns: half the damage back")
+	kit.check_near(before - attacker.stats.get_stat_value(Utils.StatType.Health), 4.0 * Wall.THORNS_SHARE, "thorns: a share of the damage back")
 
 
 func test_wall_tiers(kit : TestKit) -> void:

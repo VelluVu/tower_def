@@ -41,7 +41,7 @@ func activate(_position : Vector2, _damage_data : DamageData) -> void:
 	lift = 0.0
 	screen_lift = critical_screen_lift if _damage_data.is_critical else 0.0
 	_update_screen_position()
-	number_label.text = ("+" + str(int(_damage_data.rounded_damage * -1))) if _damage_data.is_healing else str(int(_damage_data.rounded_damage))
+	number_label.text = ("+" + str(int(-_damage_data.rounded_damage))) if _damage_data.is_healing else str(int(_damage_data.rounded_damage))
 	var font_color : Color = Color.GREEN if _damage_data.is_healing else Utils.get_damage_type_color(_damage_data.damage_type)
 	font_color = font_color if not _damage_data.is_critical else font_color.lightened(critical_color_lightener_value)
 	number_label.add_theme_color_override(FONT_COLOR_PROPERTY_NAME, font_color)
@@ -86,8 +86,8 @@ func add_running(_damage_data : DamageData) -> void:
 	number_label.text = str(roundi(running_total))
 	number_label.add_theme_color_override(FONT_COLOR_PROPERTY_NAME, Utils.get_damage_type_color(_damage_data.damage_type))
 	_follow_running_enemy()
-	#shown once the total reaches 1, like a single hit
-	if not visible and running_total >= 1.0:
+	#shown once the total is big enough to show, like a single hit
+	if not visible and running_total >= DamageNumberManager.MIN_SHOWN_DAMAGE:
 		visible = true
 		_update_screen_position()
 
@@ -96,10 +96,10 @@ func is_running() -> bool:
 	return running_enemy != null
 
 
-## The beam let go or the enemy is gone: the total floats off like a hit (or vanishes if it never reached 1).
+## The beam let go or the enemy is gone: the total floats off like a hit (or vanishes if it stayed too small).
 func release() -> void:
 	running_enemy = null
-	if running_total < 1.0:
+	if running_total < DamageNumberManager.MIN_SHOWN_DAMAGE:
 		visible = false
 		deactivated.emit(self)
 		return
@@ -110,6 +110,11 @@ func _follow_running_enemy() -> void:
 	if is_instance_valid(running_enemy):
 		var enemy : Enemy = running_enemy
 		world_position = enemy.pop_up_spot.global_position + running_offset
+
+
+## A number as the player reads it: one decimal, a whole number without its ".0" (0.3, 1, 12.5).
+static func format(value : float) -> String:
+	return String.num(snappedf(value, 0.1), 1)
 
 
 func _show() -> void:

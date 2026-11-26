@@ -4,7 +4,7 @@ extends RefCounted
 
 const TOWER_CELL : Vector2i = Vector2i(12, 6)
 const WALL_CELL : Vector2i = Vector2i(12, 6)
-const HIT_DAMAGE : float = 10.0
+const HIT_DAMAGE : float = 0.5
 
 
 func test_overcharge_trades_range_for_damage(kit : TestKit) -> void:

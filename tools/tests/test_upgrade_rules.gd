@@ -23,8 +23,8 @@ func test_xp_curve(kit : TestKit) -> void:
 
 
 func test_kill_xp(kit : TestKit) -> void:
-	kit.check_near(UpgradeRules.kill_xp(15.0, 1.0), 30.0, "weakling: 2 xp per max health")
-	kit.check_near(UpgradeRules.kill_xp(5.0, 0.4), 4.0, "swarmling: multiplier 0.4")
+	kit.check_near(UpgradeRules.kill_xp(1.875, 1.0), 30.0, "weakling: 16 xp per max health")
+	kit.check_near(UpgradeRules.kill_xp(0.625, 0.4), 4.0, "swarmling: multiplier 0.4")
 	var swarmling : Enemy = load("res://scenes/unit/enemy/enemies/swarmling.tscn").instantiate()
 	kit.check_near(swarmling.xp_multiplier, 0.4, "the swarmling scene sets its multiplier")
 	swarmling.free()

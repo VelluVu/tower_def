@@ -6,7 +6,8 @@ extends Node
 ## Starting numbers, to tune with the bot.
 
 const TICK_SECONDS : float = 1.0
-const GROUND_DAMAGE : Dictionary[Utils.Element, float] = {Utils.Element.Fire: 2.0, Utils.Element.Poison: 1.0}
+#on the small enemy-health scale (2026-11-26, 1/8 of the old 2 and 1)
+const GROUND_DAMAGE : Dictionary[Utils.Element, float] = {Utils.Element.Fire: 0.25, Utils.Element.Poison: 0.125}
 const DAMAGE_TYPES : Dictionary[Utils.Element, Utils.DamageType] = {
 	Utils.Element.Fire: Utils.DamageType.Fire,
 	Utils.Element.Poison: Utils.DamageType.Poison,

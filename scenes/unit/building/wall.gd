@@ -32,13 +32,15 @@ const ELEMENT_OVERLAYS : Dictionary[Utils.Element, String] = {
 	Utils.Element.Poison: "res://scenes/unit/building/wall_stages/wall_poison_overlay_frames.tres",
 	Utils.Element.Physical: "res://scenes/unit/building/wall_stages/wall_fortress_overlay_frames.tres",
 }
-#the blocking side: what an enemy hitting the wall gets back (starting numbers, tune with the bot)
-const FIRE_BURN_BACK : float = 2.0
-const POISON_BACK : float = 1.0
+#the blocking side: what an enemy hitting the wall gets back (starting numbers, tune with the bot); on the small
+#enemy-health scale since 2026-11-26 (1/8 of the old numbers)
+const FIRE_BURN_BACK : float = 0.25
+const POISON_BACK : float = 0.125
 const FROST_FREEZE_SECONDS : float = 0.5
-const THORNS_SHARE : float = 0.5
+#a share of the attacker's melee hit, which stays on the building scale: 0.5 of it, times 1/8 for enemy health
+const THORNS_SHARE : float = 0.0625
 #element tiers (bought for every wall of the element): T2 and T3 strengthen both sides
-const FIRE_EXPLOSION_DAMAGE : float = 8.0
+const FIRE_EXPLOSION_DAMAGE : float = 1.0
 const FIRE_EXPLOSION_TILES : float = 1.5
 const FROST_T3_FREEZE_SECONDS : float = 1.0
 const POISON_T2_ATTACK_FACTOR : float = 0.75

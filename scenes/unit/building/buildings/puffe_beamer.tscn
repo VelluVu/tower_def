@@ -326,8 +326,8 @@ script = ExtResource("15_yqf0r")
 
 [node name="Damage" type="Node" parent="Beam/Stats"]
 script = ExtResource("16_mlf80")
-base_value = 4.0
-value = 4.0
+base_value = 0.625
+value = 0.625
 type = 2
 
 [node name="AttackRange" type="Node" parent="Beam/Stats"]
@@ -384,8 +384,8 @@ value = 10.0
 
 [node name="Damage" type="Node" parent="Stats"]
 script = ExtResource("16_mlf80")
-base_value = 1.0
-value = 1.0
+base_value = 0.0
+value = 0.0
 type = 2
 
 [node name="Price" type="Node" parent="Stats"]

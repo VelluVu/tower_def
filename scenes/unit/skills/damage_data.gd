@@ -22,7 +22,8 @@ var damage : float = 0.0 :
 	set(value):
 		if damage == value:
 			return
-		damage = snappedf(value, 0.01)
+		#fine enough for the small numbers (2026-11-26: a Nova hits 0.25, a burn tick can be 0.004)
+		damage = snappedf(value, 0.0001)
 		rounded_damage = damage
 
 var rounded_damage : float = 0.0 :
@@ -30,6 +31,7 @@ var rounded_damage : float = 0.0 :
 		if rounded_damage == value:
 			return
 		
+		#whole numbers on screen; hits under 1 are not shown at all (DamageNumberManager.MIN_SHOWN_DAMAGE)
 		rounded_damage = round(value)
 
 var source : Node = null :

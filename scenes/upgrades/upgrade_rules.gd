@@ -9,8 +9,9 @@ const EPIC_ROLL_CHANCE : float = 0.2
 const RARE_ROLL_CHANCE : float = 0.5
 const EPIC_MULTIPLIER : float = 3.0
 const RARE_MULTIPLIER : float = 2.0
-const XP_PER_MAX_HEALTH : float = 2.0
-#about 7 Weakling kills (max health 15, 2 XP per max health)
+#16 since enemy health went to 1/8 (2026-11-26), so a kill gives the same XP and the cards come as before
+const XP_PER_MAX_HEALTH : float = 16.0
+#about 7 Weakling kills (max health 1.875, 16 XP per max health)
 const FIRST_LEVEL_XP : float = 150.0
 #each level-up needs this much more XP than the one before, times the level: 150, 170, 210, 270, ...
 const XP_STEP : float = 20.0
@@ -25,7 +26,7 @@ const DAMAGE_OFFER_WEIGHT : float = 0.6
 const LATE_SELL_SHARE : float = 0.75
 
 
-## XP for one kill before the XP cards: 2 per max health, times the enemy's own multiplier
+## XP for one kill before the XP cards: 16 per max health, times the enemy's own multiplier
 ## (swarm enemies come in big groups, so each one gives less).
 static func kill_xp(max_health : float, xp_multiplier : float) -> float:
 	return max_health * XP_PER_MAX_HEALTH * xp_multiplier

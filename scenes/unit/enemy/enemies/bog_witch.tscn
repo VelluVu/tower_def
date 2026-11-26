@@ -277,14 +277,14 @@ script = ExtResource("14_b0f66")
 
 [node name="MaxHealth" type="Node" parent="Stats"]
 script = ExtResource("15_lcy8c")
-base_value = 24.0
-value = 24.0
+base_value = 3.0
+value = 3.0
 type = 1
 
 [node name="Health" type="Node" parent="Stats"]
 script = ExtResource("15_lcy8c")
-base_value = 24.0
-value = 24.0
+base_value = 3.0
+value = 3.0
 
 [node name="Damage" type="Node" parent="Stats"]
 script = ExtResource("15_lcy8c")

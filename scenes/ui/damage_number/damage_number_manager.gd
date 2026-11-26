@@ -23,7 +23,8 @@ const EVOLVED_TEXT : String = "Evolved!"
 #Endesga 32 light gold, the upgrade flash's colour
 const UPGRADED_COLOR : Color = Color("fee761")
 const UPGRADED_OFFSET : Vector2 = Vector2(0, -14)
-#hits under this are not shown: the small burn and poison ticks were clutter (the user, 2026-11-26)
+#hits under this are not shown, the rest as whole numbers (the user, 2026-11-26: a basic Beamer or Nova hit stays
+#unseen until upgrades lift it past 1; a beam's running total shows once it reaches 1)
 const MIN_SHOWN_DAMAGE : float = 1.0
 #game seconds a beam's running number waits for its next tick before it floats off (the Beamer ticks every 1.5 s
 #at base attack speed)

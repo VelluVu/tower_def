@@ -264,7 +264,7 @@ func run(kit : TestKit, args : PackedStringArray) -> void:
 	var hit_texts : PackedStringArray = []
 	for wave in wave_hits:
 		var hits : Array = wave_hits[wave]
-		hit_texts.append("w%d avg %.0f max %.0f" % [wave, hits[1] / maxf(hits[0], 1.0), hits[2]])
+		hit_texts.append("w%d avg %.2f max %.2f" % [wave, hits[1] / maxf(hits[0], 1.0), hits[2]])
 	print("SOAK direct hits %s" % ", ".join(hit_texts))
 	print("SOAK reactions %s" % reactions)
 	print("SOAK synergies %s" % (level.synergies.counts if level.synergies != null else {}))
