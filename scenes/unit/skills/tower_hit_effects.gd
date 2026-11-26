@@ -22,7 +22,11 @@ static func apply(target : Enemy, damage_data : DamageData, raw_damage : float) 
 	var tower : Building = damage_data.source
 	#a Shredder's pulse tears the target's armour
 	if tower is Shredder and not target.is_dead:
-		ResistanceShred.give(target, Shredder.SHRED_PER_STACK, Shredder.MAX_STACKS, Shredder.SHRED_SECONDS)
+		#its niche (2026-11-26): double stacks on a pinned or slowed enemy, twice as long on elites and bosses
+		var is_tough : bool = target.is_boss or target.get_node_or_null(NodePath(Elite.NAME)) != null
+		var seconds : float = Shredder.SHRED_SECONDS * (TowerNiches.SHRED_TOUGH_SECONDS_FACTOR if is_tough else 1.0)
+		for stack in (TowerNiches.SHRED_PINNED_STACKS if TowerNiches.is_pinned(target) else 1):
+			ResistanceShred.give(target, Shredder.SHRED_PER_STACK, Shredder.MAX_STACKS, seconds)
 	#a Spotter's mark: the target takes more of this element from every tower for a while
 	var mark_share : float = tower.stats.get_stat_value(Utils.StatType.MarkShare)
 	if mark_share > 0.0 and not target.is_dead:
@@ -31,7 +35,12 @@ static func apply(target : Enemy, damage_data : DamageData, raw_damage : float) 
 	#a Harpooner's chain: slowed for a while, a flyer dragged to the ground
 	var tether_seconds : float = tower.stats.get_stat_value(Utils.StatType.TetherTime)
 	if tether_seconds > 0.0 and not target.is_dead:
+		#a fast runner stays leashed longer (the Harpooner's niche, 2026-11-26)
+		if TowerNiches.is_fast(target):
+			tether_seconds *= TowerNiches.FAST_TETHER_FACTOR
 		HarpoonTether.attach(target, tower, tether_seconds, tower.stats.get_stat_value(Utils.StatType.TetherSlow))
+		#the harpoon tears: a bleed (the user, 2026-11-26), and the tethered enemy bleeds harder from everything
+		HarpoonTether.bleed(target, tower, raw_damage)
 	var spread : int = roundi(tower.stats.get_stat_value(Utils.StatType.PoisonSpread))
 	if spread > 0 and target.is_dead:
 		_spread_poison(target, tower, spread)

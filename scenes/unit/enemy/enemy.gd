@@ -194,6 +194,8 @@ func take_damage(damage_data : DamageData) -> void:
 		damage_data.damage *= 1.0 + level.upgrades.get_maze_damage_bonus(grid_position)
 	if damage_data.damage > 0.0:
 		damage_data.damage *= damage_taken_factor * get_resistance_factor(damage_data)
+		#a harpoon's tear: bleeds hurt more while tethered and a moment after
+		damage_data.damage *= HarpoonTether.get_bleed_factor(self, damage_data)
 		#talents: burning, poisoned, frozen or chilled enemies take more
 		if level != null and level.talents != null:
 			damage_data.damage *= 1.0 + level.talents.get_vulnerability(self, damage_data)
@@ -208,6 +210,8 @@ func take_damage(damage_data : DamageData) -> void:
 			#synergies (Pinned: the spikes on an enemy the Leopard holds)
 			if level != null and level.synergies != null:
 				damage_data.damage *= level.synergies.get_damage_factor(self, damage_data)
+			#where the newer towers shine: Spotter in the maze, Breather in corridors, Mortar on pinned enemies, traps in the maze
+			damage_data.damage *= TowerNiches.get_factor(self, damage_data)
 
 	var health : Stat = stats.get_stat(Utils.StatType.Health)
 	var maxHealth : Stat = stats.get_stat(Utils.StatType.MaxHealth)

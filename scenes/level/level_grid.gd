@@ -318,6 +318,27 @@ func is_maze_cell(cell : Vector2i) -> bool:
 	return false
 
 
+## A tight corridor (the Breather's niche, 2026-11-26): blocked on both sides, left and right or above and below, by
+## ground no one walks or a building (not a trap).
+func is_corridor_cell(cell : Vector2i) -> bool:
+	return (_is_side_blocked(cell + Vector2i.LEFT) and _is_side_blocked(cell + Vector2i.RIGHT)) 		or (_is_side_blocked(cell + Vector2i.UP) and _is_side_blocked(cell + Vector2i.DOWN))
+
+
+## An inside corner of the maze (the Nova's niche, 2026-11-26): blocked on one side and above or below it, so the
+## route turns here.
+func is_corner_cell(cell : Vector2i) -> bool:
+	var horizontal : bool = _is_side_blocked(cell + Vector2i.LEFT) or _is_side_blocked(cell + Vector2i.RIGHT)
+	var vertical : bool = _is_side_blocked(cell + Vector2i.UP) or _is_side_blocked(cell + Vector2i.DOWN)
+	return horizontal and vertical and not is_corridor_cell(cell)
+
+
+func _is_side_blocked(cell : Vector2i) -> bool:
+	if not is_cell_walkable(cell):
+		return true
+	var building : Building = get_building_from_cell_position(cell)
+	return building != null and building is not Trap
+
+
 func _touches_wall(building_cell : Vector2i) -> bool:
 	for touching in get_surrounding_cells(building_cell):
 		if get_building_from_cell_position(touching) is Wall:

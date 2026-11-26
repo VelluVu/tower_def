@@ -18,6 +18,15 @@ const LANDING_FREEZE_SECONDS : float = 1.0
 ## Poison: a grounded flyer takes this share more of every element for ROT_SECONDS (EnemyMarks).
 const ROT_SHARE : float = 0.15
 const ROT_SECONDS : float = 5.0
+## The harpoon's bleed (the user, 2026-11-26): every harpoon hit starts a Physical bleed stack of BLEED_TICKS ticks, each
+## BLEED_SHARE of the hit; and while the tether holds and BLEED_AFTER_SECONDS after, every bleed on the enemy (any
+## tower's: a Physical effect tick) hurts BLEED_VULNERABILITY more.
+const BLEED_NAME : String = "HarpoonBleed"
+const BLEED_SHARE : float = 0.25
+const BLEED_TICKS : int = 3
+const BLEED_STACKS : int = 3
+const BLEED_VULNERABILITY : float = 0.5
+const BLEED_AFTER_SECONDS : float = 3.0
 ## The chain: a link every LINK_STEP pixels, drawn LINK_SIZE wide in the chain colours.
 const LINK_STEP : float = 3.0
 const LINK_SIZE : float = 2.0
@@ -31,6 +40,8 @@ var hold_left : float = 0.0
 #counts down from BOSS_HOLD_COOLDOWN after a boss hold; a new hold waits for 0
 var hold_cooldown : float = 0.0
 var slow : ModifierData = null
+#counts down while the enemy bleeds harder: the tether's time plus BLEED_AFTER_SECONDS
+var vulnerable_left : float = 0.0
 
 
 ## Tethers the target to the tower for seconds, slowing it by slow (0.5 = half speed); returns its tether node.
@@ -46,6 +57,7 @@ static func attach(target : Enemy, from_tower : Building, seconds : float, slow_
 		target.add_child(node)
 	node.tower = weakref(from_tower)
 	node.seconds_left = maxf(node.seconds_left, seconds)
+	node.vulnerable_left = maxf(node.vulnerable_left, node.seconds_left + BLEED_AFTER_SECONDS)
 	node._set_slow(slow_share, is_frost(from_tower))
 	if target.is_flying:
 		node._drag_down(from_tower)
@@ -55,6 +67,31 @@ static func attach(target : Enemy, from_tower : Building, seconds : float, slow_
 
 static func is_frost(from_tower : Building) -> bool:
 	return from_tower.evolve_tree != null and from_tower.evolve_tree.is_element_chosen and from_tower.evolve_tree.evolve_element == Utils.Element.Frost
+
+
+## Starts the harpoon's bleed on the target: one OvertimeEffectData per Harpooner, made on first use and freed with it.
+static func bleed(target : Enemy, from_tower : Building, hit_damage : float) -> void:
+	if target.is_dead or hit_damage <= 0.0 or target.overtime_effect_handler == null:
+		return
+	var data : OvertimeEffectData = from_tower.get_node_or_null(NodePath(BLEED_NAME)) as OvertimeEffectData
+	if data == null:
+		data = OvertimeEffectData.new()
+		data.name = BLEED_NAME
+		data.damage_type = Utils.DamageType.Physical
+		data.effectType = Utils.OvertimeEffectType.Stack
+		data.hit_share = BLEED_SHARE
+		data.max_count = BLEED_TICKS
+		data.max_stacks = BLEED_STACKS
+		from_tower.add_child(data)
+	target.overtime_effect_handler.add_overtime_effect(data, hit_damage)
+
+
+## A bleed tick (a Physical effect tick) on an enemy a harpoon tore lately: 1 + BLEED_VULNERABILITY, else 1.
+static func get_bleed_factor(target : Enemy, hit : DamageData) -> float:
+	if not hit.is_overtime or hit.damage_type != Utils.DamageType.Physical:
+		return 1.0
+	var node : HarpoonTether = target.get_node_or_null(NodePath(NODE_NAME)) as HarpoonTether
+	return 1.0 + BLEED_VULNERABILITY if node != null and node.vulnerable_left > 0.0 else 1.0
 
 
 func is_tethered() -> bool:
@@ -104,6 +141,7 @@ func _process(delta : float) -> void:
 	var time_scale : float = Utils.game_control.time_scale if Utils.game_control != null else 1.0
 	var step : float = delta * time_scale
 	hold_cooldown = maxf(hold_cooldown - step, 0.0)
+	vulnerable_left = maxf(vulnerable_left - step, 0.0)
 	if hold_left > 0.0:
 		hold_left -= step
 		if hold_left <= 0.0 or enemy.is_dead:

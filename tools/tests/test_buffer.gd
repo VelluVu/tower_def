@@ -67,6 +67,8 @@ func test_aura_buffs_towers_in_reach_and_takes_the_strongest(kit : TestKit) -> v
 	var base_near : float = _damage_additive(near)
 	buffer.add_pip(Utils.StatType.Damage)
 	buffer.add_pip(Utils.StatType.Damage)
+	#a Buffer throws its buffs (2026-11-26): one throw reaches the one tower in reach
+	buffer.throw_buff()
 	await _settle(kit)
 	kit.check_near(_damage_additive(near) - base_near, 0.12, "two damage pips on the tower in reach")
 	kit.check_near(_damage_additive(far), 0.0, "nothing on the tower out of reach")
@@ -75,6 +77,7 @@ func test_aura_buffs_towers_in_reach_and_takes_the_strongest(kit : TestKit) -> v
 	taken.append(second_cell)
 	var second : Buffer = await kit.place("puffe_buffer", second_cell)
 	second.add_pip(Utils.StatType.Damage)
+	second.throw_buff()
 	await _settle(kit)
 	kit.check_near(_damage_additive(near) - base_near, 0.12, "a weaker second Buffer adds nothing")
 	for i in 3:
@@ -154,3 +157,35 @@ func test_talents_grow_the_budget_and_the_buffs(kit : TestKit) -> void:
 	buffer.evolve_tree.choose_element(Utils.Element.Fire)
 	kit.check_near(buffer.get_buff(Utils.StatType.Damage), 0.09, "and makes a Fire Buffer's buffs stronger")
 	kit.level.talents.conditional.clear()
+
+
+## The throws (2026-11-26): a throw holds for BUFF_SECONDS, the next goes to the tower with the least time left, and a
+## radius pip reaches further.
+func test_buffer_throws_timed_buffs(kit : TestKit) -> void:
+	await kit.load_level(1)
+	var taken : Array[Vector2i] = []
+	var buffer_cell : Vector2i = _buildable(kit, taken)
+	taken.append(buffer_cell)
+	var buffer : Buffer = await kit.place("puffe_buffer", buffer_cell)
+	var first_cell : Vector2i = _cell_beside(kit, buffer_cell, 2, 1, taken)
+	taken.append(first_cell)
+	var first : Building = await kit.place("puffe_bolter", first_cell)
+	var second_cell : Vector2i = _cell_beside(kit, buffer_cell, 2, 1, taken)
+	kit.check(first_cell != Vector2i.MAX and second_cell != Vector2i.MAX, "two cells in reach")
+	taken.append(second_cell)
+	var second : Building = await kit.place("puffe_bolter", second_cell)
+	var auras : BufferAuras = kit.level.buffer_auras
+	buffer.add_pip(Utils.StatType.Damage)
+	buffer.throw_buff()
+	buffer.throw_buff()
+	kit.check(auras.get_hold(first, buffer) > 0.0 and auras.get_hold(second, buffer) > 0.0, "two throws, two towers: the least held goes next")
+	await _settle(kit)
+	kit.check_near(_damage_additive(first) - _damage_additive(second), 0.0, "both buffed alike")
+	auras._process(Buffer.BUFF_SECONDS + 0.1)
+	await _settle(kit)
+	kit.check(auras.get_hold(first, buffer) == 0.0, "the buff runs out")
+	kit.check(auras.get_buffs(first).is_empty(), "and its modifiers come off")
+	var radius : float = buffer.radius
+	buffer.add_pip(Utils.StatType.AuraRadius)
+	kit.check_near(buffer.radius - radius, 0.5 * Utils.TILE_SIZE, "a radius pip reaches half a tile further")
+	kit.check_near(buffer.get_buff(Utils.StatType.AuraRadius), 0.0, "radius is no buff on the towers")

@@ -1,20 +1,21 @@
 {
  "3": {
-  "scale": 1.154,
+  "scale": 1.0,
   "hard": 1.023,
   "normal_ok": true,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 9.3 lives",
+  "normal_runs": "3/3 won, 8.3 lives",
   "hard_runs": "3/3 won at 85%, 8.7 lives"
  },
  "20": {
-  "scale": 1.761,
+  "scale": 1.272,
   "hard": 1.408,
-  "normal_ok": true,
+  "normal_ok": false,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 7.0 lives",
+  "normal_runs": "1/3 won, 3.3 lives",
   "hard_runs": "2/3 won at 85%, 4.7 lives, 0/2 at 60%",
-  "hard_failed": 1.514
+  "hard_failed": 1.514,
+  "normal_failed": 1.497
  },
  "1": {
   "scale": 1.0,
@@ -33,337 +34,348 @@
   "hard_runs": "3/3 won at 85%, 7.7 lives"
  },
  "4": {
-  "scale": 1.404,
+  "scale": 1.0,
   "hard": 1.034,
   "normal_ok": true,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 9.3 lives",
+  "normal_runs": "3/3 won, 6.7 lives",
   "hard_runs": "3/3 won at 85%, 9.0 lives"
  },
  "5": {
-  "scale": 1.489,
+  "scale": 1.12,
   "hard": 1.046,
   "normal_ok": true,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 10.0 lives",
-  "hard_runs": "3/3 won at 85%, 8.3 lives",
-  "normal_failed": 1.535
+  "normal_runs": "3/3 won, 9.3 lives",
+  "hard_runs": "3/3 won at 85%, 8.3 lives"
  },
  "7": {
-  "scale": 0.738,
+  "scale": 0.92,
   "hard": 1.057,
   "normal_ok": true,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 9.0 lives",
+  "normal_runs": "3/3 won, 8.3 lives",
   "hard_runs": "3/3 won at 85%, 10.0 lives",
-  "normal_failed": 0.802
+  "normal_failed": 1.0
  },
  "6": {
-  "scale": 0.719,
+  "scale": 0.846,
   "hard": 1.069,
-  "normal_ok": true,
+  "normal_ok": false,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 7.0 lives",
-  "hard_runs": "2/3 won at 85%, 6.7 lives"
+  "normal_runs": "3/3 won, 7.3 lives, 0 talents lost",
+  "hard_runs": "2/3 won at 85%, 6.7 lives",
+  "normal_failed": 0.92
  },
  "12": {
-  "scale": 0.856,
+  "scale": 0.722,
   "hard": 1.188,
-  "normal_ok": true,
+  "normal_ok": false,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 8.7 lives",
-  "hard_runs": "3/3 won at 85%, 9.7 lives"
+  "normal_runs": "0/3 won, 0.0 lives",
+  "hard_runs": "3/3 won at 85%, 9.7 lives",
+  "normal_failed": 0.85
  },
  "9": {
-  "scale": 1.404,
+  "scale": 0.782,
   "hard": 1.2,
-  "normal_ok": true,
+  "normal_ok": false,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 9.3 lives",
-  "hard_runs": "3/3 won at 85%, 9.3 lives"
+  "normal_runs": "1/3 won, 1.0 lives",
+  "hard_runs": "3/3 won at 85%, 9.3 lives",
+  "normal_failed": 0.92
  },
  "8": {
-  "scale": 1.0,
+  "scale": 0.97,
   "hard": 1.614,
-  "normal_ok": true,
+  "normal_ok": false,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 7.0 lives",
-  "hard_runs": "3/3 won at 85%, 9.3 lives"
+  "normal_runs": "3/3 won, 10.0 lives",
+  "hard_runs": "3/3 won at 85%, 9.3 lives",
+  "normal_failed": 1.0
  },
  "10": {
   "scale": 1.0,
   "hard": 1.261,
   "normal_ok": true,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 6.7 lives",
+  "normal_runs": "3/3 won, 7.7 lives",
   "hard_runs": "3/3 won at 85%, 9.7 lives"
  },
  "11": {
-  "scale": 1.972,
+  "scale": 0.92,
   "hard": 1.311,
   "normal_ok": true,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 9.7 lives",
-  "hard_runs": "3/3 won at 85%, 9.3 lives"
+  "normal_runs": "3/3 won, 7.7 lives",
+  "hard_runs": "3/3 won at 85%, 9.3 lives",
+  "normal_failed": 1.0
  },
  "13": {
-  "scale": 1.572,
+  "scale": 1.33,
   "hard": 1.514,
-  "normal_ok": true,
+  "normal_ok": false,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 9.0 lives",
-  "hard_runs": "2/3 won at 85%, 5.3 lives"
+  "normal_runs": "2/3 won, 6.7 lives",
+  "hard_runs": "2/3 won at 85%, 5.3 lives",
+  "normal_failed": 1.446
  },
  "14": {
   "scale": 0.999,
   "hard": 1.893,
   "normal_ok": true,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 8.0 lives",
+  "normal_runs": "3/3 won, 5.3 lives",
   "hard_runs": "3/3 won at 85%, 9.3 lives"
  },
  "15": {
-  "scale": 1.161,
+  "scale": 0.908,
   "hard": 1.737,
-  "normal_ok": true,
+  "normal_ok": false,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 9.0 lives",
+  "normal_runs": "2/3 won, 6.0 lives",
   "hard_runs": "3/3 won at 85%, 9.3 lives",
-  "normal_failed": 1.262
+  "normal_failed": 0.987
  },
  "16": {
   "scale": 1.166,
   "hard": 2.284,
   "normal_ok": true,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 9.3 lives",
+  "normal_runs": "3/3 won, 8.0 lives",
   "hard_runs": "2/3 won at 85%, 3.0 lives"
  },
  "17": {
-  "scale": 1.558,
+  "scale": 1.218,
   "hard": 1.295,
-  "normal_ok": true,
+  "normal_ok": false,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 8.0 lives",
+  "normal_runs": "1/3 won, 3.3 lives",
   "hard_runs": "3/3 won at 85%, 4.3 lives",
-  "hard_failed": 1.392
+  "hard_failed": 1.392,
+  "normal_failed": 1.433
  },
  "18": {
-  "scale": 1.331,
+  "scale": 1.67,
   "hard": 1.477,
-  "normal_ok": true,
+  "normal_ok": false,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 8.0 lives",
-  "hard_runs": "3/3 won at 85%, 8.7 lives",
-  "normal_failed": 1.447
+  "normal_runs": "3/3 won, 10.0 lives",
+  "hard_runs": "3/3 won at 85%, 8.7 lives"
  },
  "19": {
   "scale": 1.132,
   "hard": 1.088,
   "normal_ok": true,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 8.7 lives",
+  "normal_runs": "3/3 won, 8.0 lives",
   "hard_runs": "3/3 won at 85%, 10.0 lives",
-  "normal_failed": 1.23,
   "hard_failed": 1.122
  },
  "21": {
-  "scale": 0.857,
+  "scale": 0.831,
   "hard": 2.5,
-  "normal_ok": true,
-  "hard_ok": true,
-  "normal_runs": "3/3 won, 7.0 lives",
-  "hard_runs": "3/3 won at 85%, 10.0 lives, 2/2 at 60%"
- },
- "22": {
-  "scale": 1.224,
-  "hard": 1.907,
-  "normal_ok": true,
+  "normal_ok": false,
   "hard_ok": true,
   "normal_runs": "3/3 won, 10.0 lives",
+  "hard_runs": "3/3 won at 85%, 10.0 lives, 2/2 at 60%",
+  "normal_failed": 0.857
+ },
+ "22": {
+  "scale": 0.957,
+  "hard": 1.907,
+  "normal_ok": false,
+  "hard_ok": true,
+  "normal_runs": "2/3 won, 4.3 lives",
   "hard_runs": "3/3 won at 85%, 3.7 lives, 1/2 at 60%",
-  "normal_failed": 1.262
+  "normal_failed": 1.04
  },
  "23": {
-  "scale": 1.03,
+  "scale": 0.999,
   "hard": 1.938,
-  "normal_ok": true,
+  "normal_ok": false,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 8.0 lives",
-  "hard_runs": "3/3 won at 85%, 7.0 lives, 1/2 at 60%"
+  "normal_runs": "3/3 won, 10.0 lives",
+  "hard_runs": "3/3 won at 85%, 7.0 lives, 1/2 at 60%",
+  "normal_failed": 1.03
  },
  "24": {
-  "scale": 1.253,
+  "scale": 0.98,
   "hard": 1.305,
-  "normal_ok": true,
+  "normal_ok": false,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 7.0 lives",
+  "normal_runs": "2/3 won, 4.3 lives",
   "hard_runs": "3/3 won at 85%, 6.0 lives, 1/2 at 60%",
-  "normal_failed": 1.292,
-  "hard_failed": 1.403
+  "hard_failed": 1.403,
+  "normal_failed": 1.065
  },
  "25": {
   "scale": 1.78,
   "hard": 1.371,
   "normal_ok": true,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 8.0 lives",
+  "normal_runs": "3/3 won, 8.3 lives",
   "hard_runs": "3/3 won at 85%, 10.0 lives, 1/2 at 60%"
  },
  "26": {
-  "scale": 1.184,
+  "scale": 0.926,
   "hard": 1.328,
   "normal_ok": false,
   "hard_ok": true,
-  "normal_runs": "1/3 won, 3.3 lives",
+  "normal_runs": "2/3 won, 6.7 lives",
   "hard_runs": "2/3 won at 85%, 6.7 lives, 0/2 at 60%",
-  "normal_failed": 1.393
+  "normal_failed": 1.006
  },
  "27": {
-  "scale": 1.954,
+  "scale": 1.412,
   "hard": 1.428,
-  "normal_ok": true,
+  "normal_ok": false,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 9.3 lives",
+  "normal_runs": "0/3 won, 0.0 lives",
   "hard_runs": "2/3 won at 85%, 6.3 lives, 1/2 at 60%",
-  "hard_failed": 1.535
+  "hard_failed": 1.535,
+  "normal_failed": 1.661
  },
  "28": {
-  "scale": 1.123,
+  "scale": 0.879,
   "hard": 1.55,
-  "normal_ok": true,
+  "normal_ok": false,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 9.3 lives",
-  "hard_runs": "2/3 won at 85%, 6.7 lives, 0/2 at 60%"
+  "normal_runs": "2/3 won, 5.7 lives",
+  "hard_runs": "2/3 won at 85%, 6.7 lives, 0/2 at 60%",
+  "normal_failed": 0.955
  },
  "29": {
-  "scale": 0.953,
+  "scale": 1.195,
   "hard": 1.854,
-  "normal_ok": true,
+  "normal_ok": false,
   "hard_ok": true,
   "normal_runs": "3/3 won, 10.0 lives",
-  "hard_runs": "3/3 won at 85%, 10.0 lives, 1/2 at 60%",
-  "normal_failed": 0.982
+  "hard_runs": "3/3 won at 85%, 10.0 lives, 1/2 at 60%"
  },
  "30": {
-  "scale": 1.572,
+  "scale": 1.136,
   "hard": 1.351,
-  "normal_ok": true,
+  "normal_ok": false,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 10.0 lives",
+  "normal_runs": "1/3 won, 0.7 lives",
   "hard_runs": "2/3 won at 85%, 6.7 lives, 1/2 at 60%",
-  "normal_failed": 1.621
+  "normal_failed": 1.336
  },
  "31": {
-  "scale": 1.376,
+  "scale": 1.541,
   "hard": 1.68,
   "normal_ok": true,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 8.3 lives",
+  "normal_runs": "3/3 won, 9.3 lives",
   "hard_runs": "2/3 won at 85%, 5.7 lives, 0/2 at 60%"
  },
  "32": {
-  "scale": 1.135,
+  "scale": 1.271,
   "hard": 1.095,
   "normal_ok": true,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 10.0 lives",
-  "hard_runs": "3/3 won at 85%, 10.0 lives, 1/2 at 60%",
-  "normal_failed": 1.17
+  "normal_runs": "3/3 won, 8.7 lives",
+  "hard_runs": "3/3 won at 85%, 10.0 lives, 1/2 at 60%"
  },
  "33": {
-  "scale": 1.364,
+  "scale": 1.155,
   "hard": 1.462,
-  "normal_ok": true,
+  "normal_ok": false,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 9.3 lives",
+  "normal_runs": "2/3 won, 2.3 lives",
   "hard_runs": "3/3 won at 85%, 6.0 lives, 1/2 at 60%",
-  "normal_failed": 1.483
+  "normal_failed": 1.255
  },
  "34": {
-  "scale": 1.158,
+  "scale": 0.836,
   "hard": 1.838,
-  "normal_ok": true,
+  "normal_ok": false,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 8.7 lives",
-  "hard_runs": "3/3 won at 85%, 3.7 lives, 0/2 at 60%"
+  "normal_runs": "1/3 won, 3.3 lives",
+  "hard_runs": "3/3 won at 85%, 3.7 lives, 0/2 at 60%",
+  "normal_failed": 0.984
  },
  "35": {
-  "scale": 1.154,
+  "scale": 1.062,
   "hard": 1.523,
   "normal_ok": true,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 9.3 lives",
-  "hard_runs": "3/3 won at 85%, 7.7 lives, 1/2 at 60%"
+  "normal_runs": "3/3 won, 8.3 lives",
+  "hard_runs": "3/3 won at 85%, 7.7 lives, 1/2 at 60%",
+  "normal_failed": 1.154
  },
  "36": {
-  "scale": 2.0,
+  "scale": 0.903,
   "hard": 1.728,
-  "normal_ok": true,
+  "normal_ok": false,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 8.3 lives",
-  "hard_runs": "2/3 won at 85%, 6.7 lives, 1/2 at 60%"
+  "normal_runs": "1/3 won, 1.7 lives",
+  "hard_runs": "2/3 won at 85%, 6.7 lives, 1/2 at 60%",
+  "normal_failed": 1.062
  },
  "37": {
-  "scale": 1.557,
+  "scale": 1.125,
   "hard": 2.04,
   "normal_ok": false,
   "hard_ok": false,
-  "normal_runs": "3/3 won, 10.0 lives",
+  "normal_runs": "1/3 won, 2.3 lives",
   "hard_runs": "1/3 won at 85%, 2.0 lives, 1/2 at 60%",
-  "normal_failed": 1.605,
-  "hard_failed": 2.194
+  "hard_failed": 2.194,
+  "normal_failed": 1.323
  },
  "38": {
-  "scale": 1.358,
+  "scale": 0.981,
   "hard": 2.5,
-  "normal_ok": true,
+  "normal_ok": false,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 9.3 lives",
+  "normal_runs": "1/3 won, 3.3 lives",
   "hard_runs": "2/3 won at 85%, 5.3 lives, 1/2 at 60%",
-  "normal_failed": 1.476
+  "normal_failed": 1.154
  },
  "39": {
-  "scale": 1.172,
+  "scale": 0.992,
   "hard": 2.5,
-  "normal_ok": true,
+  "normal_ok": false,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 9.3 lives",
+  "normal_runs": "2/3 won, 2.0 lives",
   "hard_runs": "3/3 won at 85%, 8.3 lives, 2/2 at 60%",
-  "normal_failed": 1.274
+  "normal_failed": 1.078
  },
  "40": {
-  "scale": 1.051,
+  "scale": 0.759,
   "hard": 2.125,
-  "normal_ok": true,
+  "normal_ok": false,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 9.3 lives",
+  "normal_runs": "0/3 won, 0.0 lives",
   "hard_runs": "2/3 won at 85%, 3.0 lives, 0/2 at 60%",
-  "normal_failed": 1.142
+  "normal_failed": 0.893
  },
  "41": {
-  "scale": 0.97,
+  "scale": 0.759,
   "hard": 1.562,
-  "normal_ok": true,
+  "normal_ok": false,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 9.0 lives",
-  "hard_runs": "2/3 won at 85%, 3.7 lives, 1/2 at 60%"
+  "normal_runs": "2/3 won, 2.3 lives",
+  "hard_runs": "2/3 won at 85%, 3.7 lives, 1/2 at 60%",
+  "normal_failed": 0.825
  },
  "48": {
-  "scale": 1.115,
+  "scale": 1.399,
   "hard": 2.5,
-  "normal_ok": true,
+  "normal_ok": false,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 9.3 lives",
+  "normal_runs": "3/3 won, 10.0 lives",
   "hard_runs": "3/3 won at 85%, 10.0 lives, 2/2 at 60%"
  },
  "49": {
-  "scale": 1.379,
+  "scale": 1.313,
   "hard": 2.5,
-  "normal_ok": true,
+  "normal_ok": false,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 8.0 lives",
-  "hard_runs": "3/3 won at 85%, 9.0 lives, 2/2 at 60%"
+  "normal_runs": "3/3 won, 10.0 lives",
+  "hard_runs": "3/3 won at 85%, 9.0 lives, 2/2 at 60%",
+  "normal_failed": 1.379
  },
  "50": {
   "scale": 1.678,
@@ -375,59 +387,60 @@
   "hard_failed": 2.5
  },
  "51": {
-  "scale": 0.875,
+  "scale": 0.632,
   "hard": 1.045,
-  "normal_ok": true,
+  "normal_ok": false,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 8.0 lives",
+  "normal_runs": "1/3 won, 3.3 lives",
   "hard_runs": "2/3 won at 85%, 6.7 lives, 1/2 at 60%",
   "hard_failed": 1.124,
-  "normal_failed": 0.951
+  "normal_failed": 0.744
  },
  "52": {
-  "scale": 0.437,
+  "scale": 0.402,
   "hard": 0.864,
   "normal_ok": true,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 9.0 lives",
+  "normal_runs": "3/3 won, 7.3 lives",
   "hard_runs": "2/3 won at 85%, 6.7 lives, 1/2 at 60%",
-  "normal_failed": 0.475,
-  "hard_failed": 1.017
+  "hard_failed": 1.017,
+  "normal_failed": 0.437
  },
  "53": {
   "scale": 0.4,
   "hard": 2.5,
   "normal_ok": true,
   "hard_ok": true,
-  "normal_runs": "2/3 won, 3.3 lives",
+  "normal_runs": "0/3 won, 0.0 lives",
   "hard_runs": "2/3 won at 85%, 5.0 lives, 2/2 at 60%",
-  "normal_failed": 0.404
+  "normal_failed": 0.4
  },
  "60": {
-  "scale": 0.627,
+  "scale": 0.597,
   "hard": 1.296,
-  "normal_ok": true,
+  "normal_ok": false,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 9.3 lives",
+  "normal_runs": "3/3 won, 10.0 lives",
   "hard_runs": "2/3 won at 85%, 10.0 lives, 1/2 at 60%",
-  "normal_failed": 0.682
+  "normal_failed": 0.627
  },
  "42": {
   "scale": 1.254,
   "hard": 1.593,
   "normal_ok": true,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 9.3 lives",
+  "normal_runs": "3/3 won, 7.7 lives",
   "hard_runs": "2/3 won at 85%, 6.7 lives, 1/2 at 60%",
   "hard_failed": 1.713
  },
  "43": {
-  "scale": 0.805,
+  "scale": 0.682,
   "hard": 2.5,
-  "normal_ok": true,
+  "normal_ok": false,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 7.3 lives",
-  "hard_runs": "3/3 won at 85%, 4.0 lives, 2/2 at 60%"
+  "normal_runs": "2/3 won, 6.3 lives",
+  "hard_runs": "3/3 won at 85%, 4.0 lives, 2/2 at 60%",
+  "normal_failed": 0.741
  },
  "44": {
   "scale": 1.0,
@@ -438,59 +451,59 @@
   "hard_runs": "3/3 won at 85%, 5.7 lives, 1/2 at 60%"
  },
  "45": {
-  "scale": 0.562,
+  "scale": 0.406,
   "hard": 2.325,
-  "normal_ok": true,
+  "normal_ok": false,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 9.3 lives",
+  "normal_runs": "0/3 won, 0.0 lives",
   "hard_runs": "2/3 won at 85%, 6.7 lives, 1/2 at 60%",
-  "hard_failed": 2.5
+  "hard_failed": 2.5,
+  "normal_failed": 0.478
  },
  "46": {
-  "scale": 1.291,
+  "scale": 1.009,
   "hard": 1.321,
   "normal_ok": false,
   "hard_ok": true,
-  "normal_runs": "2/3 won, 6.3 lives",
+  "normal_runs": "2/3 won, 3.7 lives",
   "hard_runs": "3/3 won at 85%, 6.7 lives, 2/2 at 60%",
-  "normal_failed": 1.403,
-  "hard_failed": 1.362
+  "hard_failed": 1.362,
+  "normal_failed": 1.097
  },
  "47": {
-  "scale": 1.098,
+  "scale": 0.858,
   "hard": 2.5,
   "normal_ok": false,
   "hard_ok": true,
-  "normal_runs": "2/3 won, 6.0 lives",
+  "normal_runs": "2/3 won, 5.0 lives",
   "hard_runs": "3/3 won at 85%, 7.3 lives, 1/2 at 60%",
-  "normal_failed": 1.193
+  "normal_failed": 0.933
  },
  "54": {
-  "scale": 0.826,
+  "scale": 0.699,
   "hard": 1.449,
-  "normal_ok": true,
+  "normal_ok": false,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 8.3 lives",
+  "normal_runs": "2/3 won, 6.0 lives",
   "hard_runs": "3/3 won at 85%, 10.0 lives, 0/2 at 60%",
-  "normal_failed": 0.898
+  "normal_failed": 0.76
  },
  "55": {
-  "scale": 0.531,
+  "scale": 0.415,
   "hard": 1.603,
   "normal_ok": false,
   "hard_ok": true,
   "normal_runs": "2/3 won, 6.7 lives",
   "hard_runs": "2/3 won at 85%, 4.7 lives, 0/2 at 60%",
-  "normal_failed": 0.577
+  "normal_failed": 0.451
  },
  "56": {
   "scale": 0.489,
   "hard": 1.162,
-  "normal_ok": false,
+  "normal_ok": true,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 10.0 lives",
+  "normal_runs": "3/3 won, 8.3 lives",
   "hard_runs": "3/3 won at 85%, 8.7 lives, 1/2 at 60%",
-  "normal_failed": 0.504,
   "hard_failed": 1.249
  },
  "57": {
@@ -498,26 +511,27 @@
   "hard": 2.5,
   "normal_ok": true,
   "hard_ok": true,
-  "normal_runs": "2/3 won, 6.7 lives",
+  "normal_runs": "2/3 won, 3.7 lives",
   "hard_runs": "2/3 won at 85%, 6.7 lives, 2/2 at 60%",
   "normal_failed": 0.4
  },
  "58": {
-  "scale": 0.639,
+  "scale": 0.543,
   "hard": 2.5,
   "normal_ok": true,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 7.7 lives",
+  "normal_runs": "3/3 won, 7.0 lives",
   "hard_runs": "3/3 won at 85%, 10.0 lives, 2/2 at 60%",
-  "normal_failed": 0.695
+  "normal_failed": 0.639
  },
  "59": {
-  "scale": 0.538,
+  "scale": 0.421,
   "hard": 1.425,
-  "normal_ok": true,
+  "normal_ok": false,
   "hard_ok": true,
-  "normal_runs": "3/3 won, 9.0 lives",
+  "normal_runs": "1/3 won, 3.3 lives",
   "hard_runs": "2/3 won at 85%, 6.7 lives, 1/2 at 60%",
-  "hard_failed": 1.532
+  "hard_failed": 1.532,
+  "normal_failed": 0.495
  }
 }

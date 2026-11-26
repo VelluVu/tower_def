@@ -112,4 +112,6 @@ func test_gust_runs_and_ends(kit : TestKit) -> void:
 	kit.check(breath.is_breathing, "the gust starts")
 	await kit.run_until(func() -> bool: return not breath.is_breathing, 3.0)
 	kit.check(not breath.is_breathing, "the gust ends by itself")
-	kit.check_near(_lost(enemy), breath.stats.get_stat_value(Utils.StatType.Damage) * Breath.GUST_TICKS, "four hits a gust", 0.5 * Breath.GUST_TICKS * breath.stats.get_stat_value(Utils.StatType.Damage))
+	#a corridor where it stands (the Breather beside it can make one) adds the Breather's niche bonus (TowerNiches)
+	var niche : float = 1.0 + TowerNiches.BREATHER_CORRIDOR_BONUS if kit.level.grid.is_corridor_cell(enemy.grid_position) else 1.0
+	kit.check_near(_lost(enemy), breath.stats.get_stat_value(Utils.StatType.Damage) * Breath.GUST_TICKS * niche, "four hits a gust", 0.5 * Breath.GUST_TICKS * breath.stats.get_stat_value(Utils.StatType.Damage))

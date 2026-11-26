@@ -29,7 +29,9 @@ func test_shredder_tears_armour(kit : TestKit) -> void:
 		knight.take_damage(burst)
 		burst.free()
 		if pulse == 0:
-			kit.check_near(ResistanceShred.get_share(knight), Shredder.SHRED_PER_STACK, "a pulse tears a stack")
+			#a pinned or slowed knight (parked, or on slow ground) takes the niche's double stacks (TowerNiches, 2026-11-26)
+			var stacks : int = TowerNiches.SHRED_PINNED_STACKS if TowerNiches.is_pinned(knight) else 1
+			kit.check_near(ResistanceShred.get_share(knight), Shredder.SHRED_PER_STACK * stacks, "a pulse tears its stacks")
 			kit.check(knight.get_resistance_factor(hit) > before, "so a physical hit gets through better (%.2f > %.2f)" % [knight.get_resistance_factor(hit), before])
 	kit.check_near(ResistanceShred.get_share(knight), Shredder.SHRED_PER_STACK * Shredder.MAX_STACKS, "up to three stacks")
 	await kit.run_until(func() -> bool: return ResistanceShred.get_share(knight) == 0.0, Shredder.SHRED_SECONDS + 1.0)

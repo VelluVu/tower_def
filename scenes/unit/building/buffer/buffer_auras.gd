@@ -1,7 +1,9 @@
 class_name BufferAuras
 extends Node
 
-## Made by Level. Gives every tower and trap inside a Buffer's aura that Buffer's tracks: one modifier per stat, the
+## Made by Level. Since 2026-11-26 a Buffer throws its buffs (Buffer.throw_buff -> throw_from): a building holds a
+## Buffer's values for BUFF_SECONDS after a throw from it, and only the Buffers whose throw still holds count for it.
+## Gives every tower and trap a Buffer's throw holds that Buffer's tracks: one modifier per stat, the
 ## strongest Buffer's value (several Buffers never stack). Also the element a Buffer passes on (a chance on a direct
 ## hit to add its element's stack; Physical: resistance penetration), the T2 weakening of enemies in the aura and the
 ## T3 Commander's Roar. Recomputed whenever a building comes, goes or a Buffer changes.
@@ -34,6 +36,8 @@ var is_refresh_queued : bool = false
 var roar_timer : CustomTimer = null
 var roar_end_timer : CustomTimer = null
 var is_roaring : bool = false
+#building instance id -> {buffer instance id: seconds its last throw still holds}
+var held : Dictionary = {}
 
 
 func _ready() -> void:
@@ -49,6 +53,51 @@ func _ready() -> void:
 	add_child(roar_end_timer)
 	roar_end_timer.unscaled_base_value = Buffer.ROAR_SECONDS
 	roar_end_timer.timeout.connect(_on_roar_end)
+
+
+func _process(delta : float) -> void:
+	if held.is_empty():
+		return
+	var step : float = delta * (Utils.game_control.time_scale if Utils.game_control != null else 1.0)
+	var expired : bool = false
+	for building_id in held.keys():
+		var holds : Dictionary = held[building_id]
+		for buffer_id in holds.keys():
+			holds[buffer_id] -= step
+			if holds[buffer_id] <= 0.0:
+				holds.erase(buffer_id)
+				expired = true
+		if holds.is_empty():
+			held.erase(building_id)
+	if expired:
+		queue_refresh()
+
+
+## A Buffer's throw: the covered building with the least time left from it gets its values for BUFF_SECONDS.
+func throw_from(buffer : Buffer) -> void:
+	var target : Building = null
+	var least : float = INF
+	for building in level.all_buildings:
+		if not _can_be_buffed(building) or not buffer.covers(building.global_position):
+			continue
+		var left : float = get_hold(building, buffer)
+		if left < least:
+			least = left
+			target = building
+	if target == null:
+		return
+	held.get_or_add(target.get_instance_id(), {})[buffer.get_instance_id()] = Buffer.BUFF_SECONDS
+	BufferOrb.fly(buffer, target)
+	queue_refresh()
+
+
+## Seconds the Buffer's last throw still holds on the building (0 when none).
+func get_hold(building : Building, buffer : Buffer) -> float:
+	return float(held.get(building.get_instance_id(), {}).get(buffer.get_instance_id(), 0.0))
+
+
+func _holds(building : Building, buffer : Buffer) -> bool:
+	return get_hold(building, buffer) > 0.0
 
 
 func _on_building_changed(building : Building) -> void:
@@ -104,7 +153,7 @@ func _can_be_buffed(building) -> bool:
 func _best_buffs(building : Building) -> Dictionary:
 	var best : Dictionary = {}
 	for buffer in buffers:
-		if not buffer.covers(building.global_position):
+		if not buffer.covers(building.global_position) or not _holds(building, buffer):
 			continue
 		for stat in Buffer.TRACKS:
 			var value : float = buffer.get_buff(stat)
@@ -128,7 +177,7 @@ func _best_pass_on(building : Building) -> Dictionary:
 		own_element = building.evolve_tree.evolve_element
 	for buffer in buffers:
 		var chance : float = buffer.get_pass_chance()
-		if chance > 0.0 and buffer.covers(building.global_position):
+		if chance > 0.0 and buffer.covers(building.global_position) and _holds(building, buffer):
 			if own_element == buffer.element:
 				chance = minf(chance * 2.0, 1.0)
 			best[buffer.element] = maxf(chance, best.get(buffer.element, 0.0))
@@ -176,6 +225,7 @@ func _drop(id : int) -> void:
 		return
 	var entry : Dictionary = applied[id]
 	applied.erase(id)
+	held.erase(id)
 	pass_on.erase(id)
 	var building = entry["building"]
 	if not is_instance_valid(building):

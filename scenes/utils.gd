@@ -67,6 +67,8 @@ enum StatType
 	#the Hatchery's guards (2026-11-25): a guard's health, and how many guards it keeps (Flat with base 0, whole number)
 	GuardHealth,
 	GuardCount,
+	#the Buffer's radius track (2026-11-26): tiles its throws reach past its own range (a pip key, no tower has it)
+	AuraRadius,
 }
 
 enum TileType

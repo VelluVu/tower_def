@@ -7,6 +7,8 @@ const STOP_ATTACK_DELAY : float = 1.0
 const EXTRA_SHOT_DELAY : float = 0.4
 #an extra shot hits for this share of the attack's damage
 const EXTRA_SHOT_DAMAGE_SHARE : float = 0.5
+#the Harpooner throws one more harpoon per tier (the user, 2026-11-26: 1 / 2 / 3 / 4), each at another enemy, full strength
+const HARPOONS_PER_TIER : int = 1
 
 @export var projectile_scene : PackedScene
 
@@ -47,6 +49,7 @@ func _ready() -> void:
 func activate() -> void:
 	super()
 	_launch()
+	_launch_extra_harpoons()
 	#the ExtraShots stat (mechanic card): the same attack again a moment later, no extra cooldown
 	extra_shots_left = roundi(actor.stats.get_stat_value(Utils.StatType.ExtraShots))
 	if extra_shots_left > 0:
@@ -61,17 +64,37 @@ func activate() -> void:
 	_play_stop_attack_animation()
 
 
-func _launch(damage_share : float = 1.0) -> void:
+func _launch(damage_share : float = 1.0, at : Node2D = null) -> void:
 	var projectile : Node2D = _get_projectile()
 	var skill_data = SkillData.new()
 	skill_data.damage_data = damage_data
 	skill_data.damage_data.damage *= damage_share
-	skill_data.target = target
+	skill_data.target = at if at != null else target
 	skill_data.active_time = active_timer.wait_time
 	skill_data.max_range = stats.get_range_in_tiles()
 	skill_data.ricochets = roundi(actor.stats.get_stat_value(Utils.StatType.Ricochet))
 	skill_data.pierces = roundi(actor.stats.get_stat_value(Utils.StatType.Pierce))
 	projectile.launch(skill_data)
+
+
+## A Harpooner's extra harpoons: one per tier, each at another enemy in range, picked by the tower's tactic.
+func _launch_extra_harpoons() -> void:
+	if not (skill_type & Utils.SkillType.Harpoon) or not actor is Tower or actor.evolve_tree == null:
+		return
+	var extra : int = actor.evolve_tree.tier * HARPOONS_PER_TIER
+	if extra <= 0:
+		return
+	var tower : Tower = actor
+	var others : Array[Node2D] = []
+	for candidate in tower.targets:
+		if is_instance_valid(candidate) and candidate != target:
+			others.append(candidate)
+	for i in extra:
+		var other : Node2D = TargetPicker.pick(tower.target_tactic, others, tower.global_position, tower.reaches_submerged)
+		if other == null:
+			return
+		others.erase(other)
+		_launch(1.0, other)
 
 
 func _on_extra_shot_timer_timeout() -> void:

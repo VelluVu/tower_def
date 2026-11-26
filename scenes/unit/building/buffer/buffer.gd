@@ -1,8 +1,10 @@
 class_name Buffer
 extends Building
 
-## The Buffer (2026-11-24, design doc New Towers): a support drakeling that never attacks. Every tower and trap within its
-## aura (its skill's AttackRange) gets the Buffer's tracks: pips bought one at a time from a budget, at most
+## The Buffer (2026-11-24, design doc New Towers): a support drakeling that never attacks. Since 2026-11-26 (the user) it
+## throws its buffs: every THROW_SECONDS one throw at the tower in its radius with the least buff time left from it, and
+## that tower holds the Buffer's values for BUFF_SECONDS (BufferAuras.throw), so it keeps a handful of towers buffed and
+## its radius and the throws' rhythm decide how many. The towers in reach get the Buffer's tracks: pips bought one at a time from a budget, at most
 ## MAX_PIPS per track, so a focused or a broad buff is the player's choice. Several Buffers never stack: a building
 ## takes the strongest value per stat (BufferAuras). Its element passes on as a chance on hit; T2 weakens the enemies
 ## in the aura, T3 roars now and then (Commander's Roar).
@@ -10,10 +12,12 @@ extends Building
 signal aura_changed
 
 const PIP_BUDGET : int = 8
+const THROW_SECONDS : float = 1.0
+const BUFF_SECONDS : float = 6.0
 const MAX_PIPS : int = 5
 ## The tracks in the selection card's order.
 const TRACKS : Array[Utils.StatType] = [Utils.StatType.Damage, Utils.StatType.AttackSpeed, Utils.StatType.AttackRange,
-	Utils.StatType.CriticalChance, Utils.StatType.EffectPotency]
+	Utils.StatType.CriticalChance, Utils.StatType.EffectPotency, Utils.StatType.AuraRadius]
 ## What one pip gives a buffed building: [modify type, value]. Damage is Additive like cards and upgrades, the rest
 ## Flat like the tower stats whose base is 0 (attack speed, crit, potency) or a reach in tiles (range).
 const PIP_VALUES : Dictionary[Utils.StatType, Array] = {
@@ -22,6 +26,8 @@ const PIP_VALUES : Dictionary[Utils.StatType, Array] = {
 	Utils.StatType.AttackRange: [Utils.ModifyType.Flat, 0.1],
 	Utils.StatType.CriticalChance: [Utils.ModifyType.Flat, 0.02],
 	Utils.StatType.EffectPotency: [Utils.ModifyType.Flat, 0.06],
+	#its own reach in tiles, not a buff on the towers
+	Utils.StatType.AuraRadius: [Utils.ModifyType.Flat, 0.5],
 }
 const TRACK_NAMES : Dictionary[Utils.StatType, String] = {
 	Utils.StatType.Damage: "Damage",
@@ -29,6 +35,7 @@ const TRACK_NAMES : Dictionary[Utils.StatType, String] = {
 	Utils.StatType.AttackRange: "Range",
 	Utils.StatType.CriticalChance: "Critical Chance",
 	Utils.StatType.EffectPotency: "Effect Potency",
+	Utils.StatType.AuraRadius: "Radius",
 }
 const TRACK_ICONS : Dictionary[Utils.StatType, String] = {
 	Utils.StatType.Damage: "res://assets/art/ui/card_icons/damage_icon.png",
@@ -36,6 +43,7 @@ const TRACK_ICONS : Dictionary[Utils.StatType, String] = {
 	Utils.StatType.AttackRange: "res://assets/art/ui/card_icons/attack_range_icon.png",
 	Utils.StatType.CriticalChance: "res://assets/art/ui/card_icons/critical_chance_icon.png",
 	Utils.StatType.EffectPotency: "res://assets/art/ui/card_icons/effect_potency_icon.png",
+	Utils.StatType.AuraRadius: "res://assets/art/ui/card_icons/long_sight_icon.png",
 }
 ## Each pip's price as a share of the Buffer's price, by how many pips it already has.
 const PIP_COST_RATIOS : Array[float] = [0.4, 0.5, 0.6, 0.7, 0.8, 1.0, 1.2, 1.4]
@@ -52,6 +60,7 @@ const ROAR_ATTACK_SPEED : float = 0.4
 const ROAR_ANIMATION : StringName = &"ROAR"
 
 var pips : Dictionary[Utils.StatType, int] = {}
+var throw_timer : CustomTimer = null
 
 var total_pips : int :
 	get:
@@ -79,6 +88,10 @@ var element : Utils.Element :
 
 func _ready() -> void:
 	super()
+	throw_timer = CustomTimer.new()
+	add_child(throw_timer)
+	throw_timer.unscaled_base_value = THROW_SECONDS
+	throw_timer.timeout.connect(throw_buff)
 	if evolve_tree != null:
 		evolve_tree.element_changed.connect(func(_element : Utils.Element) -> void: aura_changed.emit())
 		evolve_tree.tier_changed.connect(func(_tier : int) -> void: aura_changed.emit())
@@ -102,7 +115,7 @@ func add_pip(stat : Utils.StatType) -> void:
 ## What this Buffer gives a building in its aura for the stat (0 with no pips): its pips, made stronger by the
 ## Rallying Cry talents; potency also takes the Buffer's own EffectPotency (the Song talents).
 func get_buff(stat : Utils.StatType) -> float:
-	if not PIP_VALUES.has(stat):
+	if not PIP_VALUES.has(stat) or stat == Utils.StatType.AuraRadius:
 		return 0.0
 	var value : float = get_pips(stat) * float(PIP_VALUES[stat][1]) * (1.0 + _talent_bonus(TalentEffect.Kind.BufferStrength))
 	if stat == Utils.StatType.EffectPotency:
@@ -129,6 +142,18 @@ func get_pass_chance() -> float:
 	return PASS_CHANCE_BY_TIER[clampi(tier, 0, PASS_CHANCE_BY_TIER.size() - 1)] + stats.get_stat_value(Utils.StatType.EffectChance)
 
 
+## One throw: the tower in its radius with the least buff time left from it gets its values for BUFF_SECONDS.
+func throw_buff() -> void:
+	if not is_placed or is_dead or level == null or level.buffer_auras == null:
+		return
+	level.buffer_auras.throw_from(self)
+
+
+## Its range plus the radius pips.
+func _get_radius() -> float:
+	return super() + get_pips(Utils.StatType.AuraRadius) * float(PIP_VALUES[Utils.StatType.AuraRadius][1]) * Utils.TILE_SIZE
+
+
 func covers(position_to_check : Vector2) -> bool:
 	return global_position.distance_to(position_to_check) <= radius
 
@@ -150,5 +175,8 @@ func _on_roar_finished() -> void:
 
 func _enable_tower() -> void:
 	super()
+	#the first throw at once, then one every THROW_SECONDS
+	throw_buff.call_deferred()
+	throw_timer.start()
 	if animation_control != null and animation_control.sprite_frames.has_animation(GlobalAnimationNames.IDLE_ANIMATION):
 		animation_control.play_animation(GlobalAnimationNames.IDLE_ANIMATION)

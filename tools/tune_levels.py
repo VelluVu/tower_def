@@ -14,7 +14,10 @@ Targets, with the soak bot playing a simple build (few walls):
     Hard at 85% of the thorough budget:  won on at least 2 of 3 seeds, with the area's fitting build (great builds count)
     Hard at 60% of it, levels 20+:       lost on at least 1 of 2 seeds
 
-    python tools/tune_levels.py [levels...] [--passes 4] [--report] [--retune normal|hard|all]   (--retune: judge that side again)
+    python tools/tune_levels.py [levels...] [--passes 4] [--report] [--retune normal|hard|all] [--player smart] [--workers 6]
+    (--retune: judge that side again; --player smart: Normal is judged by the smart player with fitting cards and up to
+    25 towers, the user 2026-11-26: "if smart bot has no trouble winning, we should make it a bit harder"; Hard stays
+    with the rule bot)
 
 Writes the knobs into scenes/level/level_data/level_0NN_data.tres after every pass and the table to
 tools/reports/tune_levels.json (resumable: a rerun starts from the written knobs). --report prints the table only.
@@ -38,6 +41,11 @@ ZERO_SEEDS = (21, 22)
 HARD_SEEDS = (31, 32, 33)
 HARD_LOW_SEEDS = (41, 42)
 WORKERS = 6
+#extra soak options for the Normal runs (--player smart)
+NORMAL_PLAYER_ARGS = []
+SMART_ARGS = ["play=smart", "cards=fit", "towers=25"]
+#--normal-only: no Hard runs, its knob stays (the user, 2026-11-26: Hard has to be very hard)
+NORMAL_ONLY = False
 SCALE_RANGE = (0.4, 2.0)
 HARD_RANGE = (0.6, 2.5)
 
@@ -80,7 +88,7 @@ def write_knobs(level, scale, hard):
 def play(level, mode, talents, seed, build):
     args = [sys.executable, os.path.join(ROOT, "tools", "gd.py"), "--timeout", "590", "run", "tools/reports/soak_level.gd",
             "level=%d" % level, "mode=%s" % mode, "build=%s" % build, "talents=%s" % talents,
-            "walls=0.1", "seed=%d" % seed, "--raw"]
+            "walls=0.1", "seed=%d" % seed, "--raw"] + (NORMAL_PLAYER_ARGS if mode == "normal" else [])
     out = subprocess.run(args, cwd=ROOT, capture_output=True, text=True, encoding="utf-8", errors="replace").stdout
     m = re.search(r"SOAK result (\w+): wave (\d+)/(\d+), life (\d+)/(\d+)", out)
     if not m:
@@ -94,7 +102,7 @@ def jobs_for(level, state):
         jobs += [(level, "normal", "budget:%d" % normal_budget(level), s, b, "normal") for s, b in NORMAL_RUNS]
         if level <= 6:
             jobs += [(level, "normal", "none", s, build_for(level), "zero") for s in ZERO_SEEDS]
-    if not state["hard_ok"]:
+    if not state["hard_ok"] and not NORMAL_ONLY:
         jobs += [(level, "hard", "budget:%d" % hard_budget(level, 0.85), s, build_for(level), "hard") for s in HARD_SEEDS]
         if level >= 20:
             jobs += [(level, "hard", "budget:%d" % hard_budget(level, 0.6), s, build_for(level), "hard_low") for s in HARD_LOW_SEEDS]
@@ -181,7 +189,19 @@ def report(table):
 
 
 def main(argv):
+    global WORKERS, NORMAL_PLAYER_ARGS, NORMAL_ONLY
     passes = 4
+    if "--normal-only" in argv:
+        NORMAL_ONLY = True
+        argv.remove("--normal-only")
+    for flag in ("--player", "--workers"):
+        if flag in argv:
+            value = argv[argv.index(flag) + 1]
+            del argv[argv.index(flag):argv.index(flag) + 2]
+            if flag == "--player" and value == "smart":
+                NORMAL_PLAYER_ARGS = SMART_ARGS
+            elif flag == "--workers":
+                WORKERS = int(value)
     if "--passes" in argv:
         passes = int(argv[argv.index("--passes") + 1])
         del argv[argv.index("--passes"):argv.index("--passes") + 2]
@@ -198,7 +218,7 @@ def main(argv):
         report(table)
         return
     for number in range(passes):
-        work = [(level, table[str(level)]) for level in levels if not (table[str(level)]["normal_ok"] and table[str(level)]["hard_ok"])]
+        work = [(level, table[str(level)]) for level in levels if not (table[str(level)]["normal_ok"] and (table[str(level)]["hard_ok"] or NORMAL_ONLY))]
         if not work:
             break
         for level, state in work:
