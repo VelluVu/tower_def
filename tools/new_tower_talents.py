@@ -298,7 +298,7 @@ BUILDING = [
            [("Quick Reel", 3, "Physical Harpooner attack speed +0.04"),
             ("Skyhook", 2, "Physical Harpooner damage +15% against flyers"),
             ("Heavy Harpoon", 2, "Physical Harpooner critical multiplier +0.1")],
-           ("Reel In", "A harpooned enemy is dragged onto the nearest trap within 2 tiles, which snaps it at once")),
+           ("Twin Harpoons", "Every Harpooner throws twice as many harpoons")),
     branch("Hatchery", "sharp_teeth",
            [("Vitamin Feed", 3, "Drakeling damage +8%"), ("Warm Clutch", 3, "Hatcheries hatch 10% faster")],
            [("Thick Scales", 3, "Drakeling health +15%"),

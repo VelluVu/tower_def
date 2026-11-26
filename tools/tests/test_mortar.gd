@@ -40,6 +40,11 @@ func test_falloff(kit : TestKit) -> void:
 	kit.check_near(MortarShell.get_falloff_share(16.0, 16.0), MortarShell.MIN_EDGE_SHARE, "the edge share at the edge")
 	kit.check_near(MortarShell.get_falloff_share(8.0, 16.0), lerpf(1.0, MortarShell.MIN_EDGE_SHARE, 0.5), "halfway between")
 	kit.check_near(MortarShell.get_falloff_share(40.0, 16.0), MortarShell.MIN_EDGE_SHARE, "never less than the edge share")
+	#area bonuses (the user, 2026-11-26): a full-damage core and a slightly higher edge
+	kit.check_near(MortarShell.get_falloff_share(7.0, 48.0, 2.0), 1.0, "two area tiles: full damage half a tile out")
+	kit.check_near(MortarShell.get_falloff_share(48.0, 48.0, 2.0), MortarShell.MIN_EDGE_SHARE + 2.0 * MortarShell.EDGE_PER_AREA_TILE, "and a higher edge")
+	kit.check(MortarShell.get_falloff_share(30.0, 48.0, 2.0) > MortarShell.get_falloff_share(30.0, 48.0), "every ring hits harder")
+	kit.check_near(MortarShell.get_falloff_share(48.0, 48.0, 20.0), MortarShell.MAX_EDGE_SHARE, "never past the cap")
 
 
 func test_blast_hits_ground_enemies_around_it(kit : TestKit) -> void:

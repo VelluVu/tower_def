@@ -70,6 +70,8 @@ func _ready() -> void:
 	for child in get_children():
 		if child is BogCrossing:
 			grid.bog_crossings.append(child)
+			#a building on the far shore left waders on the stones standing at the entry for good (2026-11-26)
+			grid.unbuildable_cells[grid.world_position_to_grid(child.exit_position)] = true
 	GameSignals.astar_grid_updated.emit()
 	GameSignals.building_placed.connect(_on_building_placed)
 	GameSignals.building_destroyed.connect(_on_building_erase)

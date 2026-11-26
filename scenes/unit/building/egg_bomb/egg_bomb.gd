@@ -54,7 +54,7 @@ func detonate() -> void:
 		var enemy : Enemy = victims[i]
 		if not is_instance_valid(enemy) or enemy.is_dead:
 			continue
-		var share : float = MortarShell.get_falloff_share(enemy.global_position.distance_to(global_position), blast_radius)
+		var share : float = MortarShell.get_falloff_share(enemy.global_position.distance_to(global_position), blast_radius, MortarShell.get_area_tiles(self))
 		#Pinned target: a harpooned enemy takes the full hit
 		if level.synergies != null:
 			share = level.synergies.get_blast_share(enemy, share)

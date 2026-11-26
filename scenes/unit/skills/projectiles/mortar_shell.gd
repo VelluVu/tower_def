@@ -17,6 +17,12 @@ const MIN_ARC_HEIGHT : float = 12.0
 const BLAST_RADIUS_TILES : float = 1.0
 ## The share of the hit an enemy at the blast's edge takes.
 const MIN_EDGE_SHARE : float = 0.5
+## Area bonuses (the tower's SplashRadius, in tiles) also soften the falloff a little (the user, 2026-11-26): a core of
+## full damage CORE_PER_AREA_TILE tiles wide per area tile, and the edge share EDGE_PER_AREA_TILE higher per area tile,
+## up to MAX_EDGE_SHARE.
+const CORE_PER_AREA_TILE : float = 0.25
+const EDGE_PER_AREA_TILE : float = 0.05
+const MAX_EDGE_SHARE : float = 0.7
 ## The shell aims where its target will be, but never further ahead than this.
 const MAX_LEAD_TILES : float = 2.0
 const SHADOW_COLOR : Color = Color(0.09, 0.08, 0.15, 0.35)
@@ -142,7 +148,7 @@ static func blast(hit : DamageData, at : Vector2, radius : float) -> Array[Enemy
 		var enemy : Enemy = victims[i]
 		if not is_instance_valid(enemy) or enemy.is_dead:
 			continue
-		var share : float = get_falloff_share(enemy.global_position.distance_to(at), radius)
+		var share : float = get_falloff_share(enemy.global_position.distance_to(at), radius, get_area_tiles(hit.source))
 		#Pinned target: a harpooned enemy takes the full hit
 		if synergies != null:
 			share = synergies.get_blast_share(enemy, share)
@@ -170,11 +176,23 @@ static func get_blast_victims(source : Node, at : Vector2, radius : float) -> Ar
 	return victims
 
 
-## 1 at the centre down to MIN_EDGE_SHARE at the edge.
-static func get_falloff_share(distance : float, radius : float) -> float:
+## 1 at the centre down to MIN_EDGE_SHARE at the edge; area_tiles (the tower's SplashRadius) widens a full-damage core
+## and lifts the edge share a little.
+static func get_falloff_share(distance : float, radius : float, area_tiles : float = 0.0) -> float:
 	if radius <= 0.0:
 		return 1.0
-	return lerpf(1.0, MIN_EDGE_SHARE, clampf(distance / radius, 0.0, 1.0))
+	var core : float = minf(maxf(area_tiles, 0.0) * CORE_PER_AREA_TILE * Utils.TILE_SIZE, radius * 0.5)
+	var edge : float = minf(MIN_EDGE_SHARE + maxf(area_tiles, 0.0) * EDGE_PER_AREA_TILE, MAX_EDGE_SHARE)
+	if distance <= core:
+		return 1.0
+	return lerpf(1.0, edge, clampf((distance - core) / (radius - core), 0.0, 1.0))
+
+
+## The tower's area stat in tiles (0 for anything else).
+static func get_area_tiles(source : Node) -> float:
+	if is_instance_valid(source) and source is Building:
+		return (source as Building).stats.get_stat_value(Utils.StatType.SplashRadius)
+	return 0.0
 
 
 ## A copy of the shell's hit at share of its damage, with the same crit and the tower's effect stats.

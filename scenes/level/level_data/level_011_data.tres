@@ -3,11 +3,11 @@
 [ext_resource type="Script" uid="uid://cpw7ia3ek2yvs" path="res://scenes/level/level_data/wave_data.gd" id="0_wave"]
 [ext_resource type="Script" uid="uid://c0cehaxum4b45" path="res://scenes/level/level_data/level_data.gd" id="1_level"]
 [ext_resource type="Script" uid="uid://bu8xwv71c6bbj" path="res://scenes/level/level_data/puffe_line.gd" id="9_line"]
-[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_011_wave_1.tres" id="w1"]
-[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_011_wave_2.tres" id="w2"]
-[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_011_wave_3.tres" id="w3"]
-[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_011_wave_4.tres" id="w4"]
-[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_011_wave_5.tres" id="w5"]
+[ext_resource type="Resource" uid="uid://cxcp5amg7ts1p" path="res://scenes/level/level_data/waves/level_011_wave_1.tres" id="w1"]
+[ext_resource type="Resource" uid="uid://cqyytoucegsul" path="res://scenes/level/level_data/waves/level_011_wave_2.tres" id="w2"]
+[ext_resource type="Resource" uid="uid://4b33v8p420f3" path="res://scenes/level/level_data/waves/level_011_wave_3.tres" id="w3"]
+[ext_resource type="Resource" uid="uid://si3rwr07jv6m" path="res://scenes/level/level_data/waves/level_011_wave_4.tres" id="w4"]
+[ext_resource type="Resource" uid="uid://bqi4vsskn005i" path="res://scenes/level/level_data/waves/level_011_wave_5.tres" id="w5"]
 
 [sub_resource type="Resource" id="PuffeLine_1"]
 script = ExtResource("9_line")
@@ -54,5 +54,5 @@ waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtR
 puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_hatchery"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_4"), SubResource("PuffeLine_5")])
 first_wave_health = 2.4
 last_wave_health = 5.4
-health_scale = 0.920
+health_scale = 0.92
 hard_health_scale = 1.311

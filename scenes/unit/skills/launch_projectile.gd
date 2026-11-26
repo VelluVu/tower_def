@@ -75,25 +75,34 @@ func _launch(damage_share : float = 1.0, at : Node2D = null) -> void:
 	skill_data.ricochets = roundi(actor.stats.get_stat_value(Utils.StatType.Ricochet))
 	skill_data.pierces = roundi(actor.stats.get_stat_value(Utils.StatType.Pierce))
 	projectile.launch(skill_data)
+	#other Harpooners look for an enemy no harpoon is flying at
+	if skill_type & Utils.SkillType.Harpoon:
+		HarpoonTether.claim(skill_data.target, projectile)
 
 
-## A Harpooner's extra harpoons: one per tier, each at another enemy in range, picked by the tower's tactic.
+## A Harpooner's extra harpoons: one per tier (Twin Harpoons doubles the throw), each at another enemy in range, spread
+## clustered round the main target (TargetPicker.pick_cluster).
 func _launch_extra_harpoons() -> void:
 	if not (skill_type & Utils.SkillType.Harpoon) or not actor is Tower or actor.evolve_tree == null:
 		return
-	var extra : int = actor.evolve_tree.tier * HARPOONS_PER_TIER
+	#Twin Harpoons (a Building capstone) doubles the whole throw
+	var multiplier : float = 1.0
+	var level : Level = actor.level
+	if level != null and level.talents != null:
+		multiplier += level.talents.get_total(TalentEffect.Kind.HarpoonMultiplier)
+	var extra : int = roundi((1 + actor.evolve_tree.tier * HARPOONS_PER_TIER) * multiplier) - 1
 	if extra <= 0:
 		return
 	var tower : Tower = actor
-	var others : Array[Node2D] = []
-	for candidate in tower.targets:
-		if is_instance_valid(candidate) and candidate != target:
-			others.append(candidate)
+	#clustered round the main target: each one at the enemy nearest it, in an area its upgrades and area stat widen
+	var steps : int = level.building_type_upgrades.get_upgrade_steps(tower) if level != null and level.building_type_upgrades != null else 0
+	var cluster_tiles : float = TargetPicker.CLUSTER_TILES + steps * TargetPicker.CLUSTER_STEP_TILES + tower.stats.get_stat_value(Utils.StatType.SplashRadius)
+	var aimed : Array[Node2D] = [target]
 	for i in extra:
-		var other : Node2D = TargetPicker.pick(tower.target_tactic, others, tower.global_position, tower.reaches_submerged)
+		var other : Node2D = TargetPicker.pick_cluster(tower.targets, aimed, tower.reaches_submerged, cluster_tiles)
 		if other == null:
 			return
-		others.erase(other)
+		aimed.append(other)
 		_launch(1.0, other)
 
 

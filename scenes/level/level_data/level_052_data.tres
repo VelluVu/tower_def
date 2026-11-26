@@ -4,12 +4,12 @@
 [ext_resource type="Script" uid="uid://c0cehaxum4b45" path="res://scenes/level/level_data/level_data.gd" id="1_level"]
 [ext_resource type="Script" uid="uid://bu8xwv71c6bbj" path="res://scenes/level/level_data/puffe_line.gd" id="9_line"]
 [ext_resource type="Resource" path="res://scenes/level/level_data/modes/level_052_hard.tres" id="hard_mode"]
-[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_052_wave_1.tres" id="w1"]
-[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_052_wave_2.tres" id="w2"]
-[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_052_wave_3.tres" id="w3"]
-[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_052_wave_4.tres" id="w4"]
-[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_052_wave_5.tres" id="w5"]
-[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_052_wave_6.tres" id="w6"]
+[ext_resource type="Resource" uid="uid://coyamwb8q71ov" path="res://scenes/level/level_data/waves/level_052_wave_1.tres" id="w1"]
+[ext_resource type="Resource" uid="uid://copd6bva4lu4a" path="res://scenes/level/level_data/waves/level_052_wave_2.tres" id="w2"]
+[ext_resource type="Resource" uid="uid://eh45fsi40qgv" path="res://scenes/level/level_data/waves/level_052_wave_3.tres" id="w3"]
+[ext_resource type="Resource" uid="uid://rt64cifygbyv" path="res://scenes/level/level_data/waves/level_052_wave_4.tres" id="w4"]
+[ext_resource type="Resource" uid="uid://ct276hym5vrfd" path="res://scenes/level/level_data/waves/level_052_wave_5.tres" id="w5"]
+[ext_resource type="Resource" uid="uid://bcy0byjgpk06m" path="res://scenes/level/level_data/waves/level_052_wave_6.tres" id="w6"]
 
 [sub_resource type="Resource" id="PuffeLine_1"]
 script = ExtResource("9_line")

@@ -9,7 +9,7 @@
 - the entry node each branch shares with the trap path (Hot Snare, Cold Snare, Venom Snare; Sharp Teeth in the
   Building tree) counts for the Harpooner too: its effects get the Harpooner flag and its text names the Harpooner
 The rest (Yank as a half-tile pull, Searing Chain, Pin Down, Festering Wound, the landing effects of Drag to the Fire,
-Grounded and Grounded Rot, and the capstones Reel In, Chain of Embers, Glacial Anchor, Leech Chain) stays without
+Grounded and Grounded Rot, and the capstones Chain of Embers, Glacial Anchor, Leech Chain) stays without
 effects until their mechanics exist.
 """
 import os

@@ -146,7 +146,8 @@ func get_tactic_target() -> Node2D:
 	if not has_target:
 		return null
 	var candidates : Array[Node2D] = targets if min_range_tiles <= 0.0 else get_targets_beyond_min_range()
-	return TargetPicker.pick(target_tactic if can_choose_target else Utils.TargetTactic.First, candidates, global_position, reaches_submerged)
+	var avoids_harpooned : bool = skill != null and skill.skill_type & Utils.SkillType.Harpoon != 0
+	return TargetPicker.pick(target_tactic if can_choose_target else Utils.TargetTactic.First, candidates, global_position, reaches_submerged, avoids_harpooned)
 
 
 ## The targets in range that are not too close to fire at.

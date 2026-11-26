@@ -11,9 +11,15 @@ extends Node2D
 ## (ModifierData.pierces_slow_immunity; 2026-11-25, the user).
 
 const NODE_NAME : String = "Tether"
+## The harpoons on their way to an enemy (weak refs to the HomingBolts), so Harpooners pick another (2026-11-26).
+const INCOMING_META : StringName = &"harpoons_incoming"
 const BOSS_HOLD_SECONDS : float = 3.0
 const BOSS_HOLD_COOLDOWN : float = 10.0
-## Frost: a grounded flyer freezes this long where it lands.
+## A flyer the harpoon drags down crashes (the user, 2026-11-26): stunned this long where it lands, then it walks the
+## maze at GROUNDED_SPEED_SHARE of its speed for good, a flyer slow on its feet.
+const GROUNDED_STUN_SECONDS : float = 2.0
+const GROUNDED_SPEED_SHARE : float = 0.6
+## Frost: a grounded flyer lies frozen this much longer.
 const LANDING_FREEZE_SECONDS : float = 1.0
 ## Poison: a grounded flyer takes this share more of every element for ROT_SECONDS (EnemyMarks).
 const ROT_SHARE : float = 0.15
@@ -63,6 +69,34 @@ static func attach(target : Enemy, from_tower : Building, seconds : float, slow_
 		node._drag_down(from_tower)
 	node.queue_redraw()
 	return node
+
+
+## A harpoon is on its way to the enemy (claim) until it hits or loses it; Harpooners rank such an enemy, and a chained
+## one, below the rest (the user, 2026-11-26: several Harpooners on one target were wasted throws).
+static func claim(target : Node2D, harpoon : Node2D) -> void:
+	if target is Enemy:
+		var incoming : Array = target.get_meta(INCOMING_META, [])
+		incoming.append(weakref(harpoon))
+		target.set_meta(INCOMING_META, incoming)
+
+
+## Chained now or a harpoon on its way (claim).
+static func is_taken(target : Enemy) -> bool:
+	var node : HarpoonTether = target.get_node_or_null(NodePath(NODE_NAME)) as HarpoonTether
+	if node != null and node.is_tethered():
+		return true
+	if not target.has_meta(INCOMING_META):
+		return false
+	var still : Array = []
+	for ref : WeakRef in target.get_meta(INCOMING_META):
+		var harpoon : Object = ref.get_ref()
+		if is_instance_valid(harpoon) and harpoon is HomingBolt and not harpoon.is_hit and harpoon.skill_data != null and harpoon.skill_data.target == target:
+			still.append(ref)
+	if still.is_empty():
+		target.remove_meta(INCOMING_META)
+		return false
+	target.set_meta(INCOMING_META, still)
+	return true
 
 
 static func is_frost(from_tower : Building) -> bool:
@@ -130,9 +164,17 @@ func _drag_down(from_tower : Building) -> void:
 	if enemy.level != null and enemy.level.synergies != null:
 		enemy.level.synergies.on_grounded(enemy)
 	var element : Utils.Element = from_tower.evolve_tree.evolve_element if from_tower.evolve_tree != null else Utils.Element.None
+	#the crash: stunned (Frost: frozen, a moment longer), then slow on its feet for good
 	if element == Utils.Element.Frost:
-		enemy.freeze_for(LANDING_FREEZE_SECONDS)
-	elif element == Utils.Element.Poison:
+		enemy.freeze_for(GROUNDED_STUN_SECONDS + LANDING_FREEZE_SECONDS)
+	else:
+		enemy.freeze_for(GROUNDED_STUN_SECONDS, false)
+	var on_foot : ModifierData = ModifierData.new()
+	on_foot.stat_type = Utils.StatType.Speed
+	on_foot.calculate_type = Utils.ModifyType.Multiply
+	on_foot.value = GROUNDED_SPEED_SHARE - 1.0
+	enemy.modifier_manager.add_modifier(on_foot)
+	if element == Utils.Element.Poison:
 		for damage_type in [Utils.DamageType.Physical, Utils.DamageType.Fire, Utils.DamageType.Frost, Utils.DamageType.Poison]:
 			EnemyMarks.mark(enemy, damage_type, ROT_SHARE, ROT_SECONDS)
 

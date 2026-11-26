@@ -87,6 +87,7 @@ const KIND_ICONS : Dictionary[TalentEffect.Kind, Texture2D] = {
 	#a Buffer's buffs grow, and its pips (until it has its own icons)
 	TalentEffect.Kind.BufferStrength: DAMAGE,
 	TalentEffect.Kind.BufferBudget: TIER,
+	TalentEffect.Kind.HarpoonMultiplier: SPLIT,
 }
 
 

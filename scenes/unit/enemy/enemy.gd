@@ -11,6 +11,9 @@ const CORPSE_FADE_TIME : float = 1.0
 const NO_FREE_POSITION_WARNING : String = " unable to find free position, destroying building in the way."
 #a short stop after every turn, so twisting mazes cost time
 const TURN_PAUSE_TIME : float = 0.1
+## Game seconds after a knockback before the next one lands: Physical Novas knocking back on every hit held a slow
+## Revenant Knight at the start of its path for good, so the wave never ended (bot check, 2026-11-26).
+const KNOCKBACK_COOLDOWN : float = 2.0
 #directions closer than this (cosine) count as straight on: about 60 degrees
 const TURN_DOT_LIMIT : float = 0.5
 
@@ -126,6 +129,7 @@ var damage_taken_factor : float = 1.0
 var held_by = null
 #a freeze from a frost tower: no moving until it runs out
 var freeze_timer : CustomTimer = null
+var knockback_timer : CustomTimer = null
 var is_frozen : bool :
 	get:
 		return freeze_timer != null and not freeze_timer.is_stopped()
@@ -249,6 +253,14 @@ func _get_is_numb() -> bool:
 func knock_back(cells : int) -> void:
 	if is_boss or is_flying or is_wading or is_dead or is_burrowed or point_path.is_empty():
 		return
+	if knockback_timer == null:
+		knockback_timer = CustomTimer.new()
+		knockback_timer.one_shot = true
+		knockback_timer.unscaled_base_value = KNOCKBACK_COOLDOWN
+		add_child(knockback_timer)
+	elif not knockback_timer.is_stopped():
+		return
+	knockback_timer.start()
 	current_waypoint_index = maxi(current_waypoint_index - cells, 0)
 	global_position = point_path[current_waypoint_index] + lane_offset
 	next_waypoint = global_position
@@ -259,7 +271,8 @@ func knock_back(cells : int) -> void:
 
 
 ## Stops it where it stands for a while (a frost tower's freeze); bosses never freeze. A new freeze restarts it.
-func freeze_for(seconds : float) -> void:
+## is_cold false: a stun, the same stop without the ice tint (a harpooned flyer's crash).
+func freeze_for(seconds : float, is_cold : bool = true) -> void:
 	if is_boss or seconds <= 0.0 or is_dead or is_steadfast:
 		return
 	#Absolute Zero and Snap Freeze (talents)
@@ -272,7 +285,8 @@ func freeze_for(seconds : float) -> void:
 		freeze_timer.timeout.connect(func() -> void: animation_control.self_modulate = Color.WHITE)
 	freeze_timer.unscaled_base_value = seconds
 	freeze_timer.start()
-	animation_control.self_modulate = FROZEN_TINT
+	if is_cold:
+		animation_control.self_modulate = FROZEN_TINT
 	linear_velocity = Vector2.ZERO
 
 

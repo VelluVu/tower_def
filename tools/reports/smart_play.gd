@@ -9,12 +9,36 @@ extends RefCounted
 ## It also reads the coming wave (flyers, swarms, resistances), picks the card with the biggest gain and
 ## starts waves early only while the last one never got halfway.
 
-## Measured single-target dps at Base against a weakling (tower_sheet.gd, 2026-11-25; traps on their own cell).
+## Dps at Base in real games: tower_sheet.gd's single-target dps against a parked weakling (2026-11-25, before the
+## small numbers) times the median of what each kind really dealt over that promise in 48 bot games (SOAK smart
+## learned, 2026-11-26: Bolter 0.11, Nova 0.47 (a burst hits many walkers), Beamer 0.18, Breather 0.17, Spotter 0.15,
+## Mortar 0.13 (its shells miss walkers), Elder 0.19, Shredder 0.57; traps 0.01-0.02, since a trap counts as busy
+## all wave but hits only when stepped on). Hatchery: no data, half the Bolter. Harpooner 0.3: it dealt 1.0-1.4 times
+## a first guess of 0.24 in six frost games once the bot knew its tether (2026-11-26); 0.19 since it throws as
+## slowly as the Spotter (4.5 s a throw, was 2.9 s).
+## A second round of 48 games set them closer (their medians: Nova 1.0, Breather 0.63, Mortar 0.33, Elder 1.83,
+## Spotter 0.65, Bolter 0.42, Beamer 0.51, Leopard 0.1). These are averages over crowds: _fit moves a kind up or
+## down from a usual crowd (TYPICAL_SWARM), so the crowds are not counted twice.
 ## The Hoard Keeper and the Buffer deal none: their worth is gold and the buffed towers (_hoard_gain, _buffer_gain).
-const SHEET_BASE_DPS : Dictionary[String, float] = {"PuffeBolter": 3.9, "PuffeNova": 2.8, "PuffeBeamer": 3.3, "PuffeMortar": 2.9,
-	"PuffeBreather": 3.7, "PuffeSpotter": 3.5, "PuffeHarpooner": 2.2, "PuffeHatchery": 4.6, "PuffeShredder": 0.7, "PuffeElderDrake": 9.3,
-	#the Egg Bomb: one 162 blast per 20 s rebuild (the sheet's parked enemy sets it off only once)
-	"LeopardTrap": 3.1, "EggBomb": 7.9, "SpikeField": 6.6, "PuffeHoardKeeper": 0.0, "PuffeBuffer": 0.0}
+const SHEET_BASE_DPS : Dictionary[String, float] = {"PuffeBolter": 0.42, "PuffeNova": 1.0, "PuffeBeamer": 0.51, "PuffeMortar": 0.33,
+	"PuffeBreather": 0.63, "PuffeSpotter": 0.65, "PuffeHarpooner": 0.19, "PuffeHatchery": 0.25, "PuffeShredder": 0.14, "PuffeElderDrake": 1.83,
+	"LeopardTrap": 0.1, "EggBomb": 0.12, "SpikeField": 0.06, "PuffeHoardKeeper": 0.0, "PuffeBuffer": 0.0}
+## The swarm share of an average wave's health, which the measured SHEET_BASE_DPS already has in.
+const TYPICAL_SWARM : float = 0.5
+## A tower that cannot reach flyers weighs the flyers of the waves still to come at this share (a level of Novas
+## lost its flyer waves, 2026-11-26).
+const LATER_FLYERS_SHARE : float = 0.75
+## A wall's niche worth for one unit stops growing past about this many route cells' worth (the maze value counts every
+## cell in reach: a 6-tile Spotter made 30 walls beat a third tower on level 26, 2026-11-26).
+const NICHE_CELLS : float = 7.5
+## A Harpooner's tether (HarpoonTether): the share of the enemies in its reach that one harpoon keeps chained at a time
+## (2 s chains against a usual crowd), how much of a boss's time a tether slows it (a land boss is slowed at full
+## strength, the chain pierces the boss nerf; a flying one is held 3 s in 10), and how much of a grounded flyer's
+## worth the ground-only towers in its reach get (it walks the maze from where it lands).
+const TETHER_SHARE : float = 0.25
+const TETHER_BOSS_SHARE : float = 0.5
+#(0.8 since grounded flyers crash: 2 s stunned, then 60% speed for good, HarpoonTether.GROUNDED_STUN_SECONDS)
+const GROUNDED_SHARE : float = 0.8
 ## Each element's T1 dps over Up 2 (tower_sheet.gd); Frost's slow is not in it (FROST_SLOW_VALUE).
 const ELEMENT_GAIN : Dictionary[String, Dictionary] = {
 	"PuffeBolter": {"Physical": 1.53, "Fire": 1.4, "Frost": 1.24, "Poison": 1.67},
@@ -33,11 +57,10 @@ const ELEMENT_GAIN : Dictionary[String, Dictionary] = {
 ## What a tower type is good at, for _fit: reaches flyers (false: never, "tier2": from its T2), extra hits on a
 ## swarm (how many more enemies a hit lands on, roughly), and bonuses against flyers and elites.
 const TRAITS : Dictionary[String, Dictionary] = {
-	#the Mortar's shells take time to land: against walking enemies it hits about this share of what the sheet's
-	#parked enemy takes
-	"PuffeNova": {"air": "tier2", "swarm": 1.5}, "PuffeMortar": {"air": false, "swarm": 1.5, "accuracy": 0.6},
+	#the Mortar's misses on walking enemies are in its SHEET_BASE_DPS now (measured in games)
+	"PuffeNova": {"air": "tier2", "swarm": 1.5}, "PuffeMortar": {"air": false, "swarm": 1.5},
 	"PuffeBreather": {"swarm": 1.5}, "PuffeShredder": {"swarm": 1.0}, "PuffeElderDrake": {"swarm": 0.5},
-	"PuffeHatchery": {"air": false}, "PuffeHarpooner": {"flyers": 1.0}, "PuffeSpotter": {"elites": 1.0},
+	"PuffeHatchery": {"air": false}, "PuffeHarpooner": {"flyers": 1.0, "fast": TowerNiches.HARPOON_HUNT_BONUS}, "PuffeSpotter": {"elites": 1.0},
 	"LeopardTrap": {"air": "tier2"}, "SpikeField": {"air": false, "swarm": 1.0}, "EggBomb": {"swarm": 2.0},
 }
 ## Route cells in reach count fully up to about this many, then less and less (_covered).
@@ -62,7 +85,8 @@ const SURVIVAL_WAVES_AHEAD : int = 8
 ## An element wall's maze effect: Frost slows enemies beside it (LevelGrid), Fire and Poison hurt them a second
 ## (MazeElements); Physical (Fortress) slows a little.
 const WALL_SLOW : Dictionary[String, float] = {"Frost": 0.12, "Physical": 0.06}
-const WALL_DPS : Dictionary[String, float] = {"Fire": 2.0, "Poison": 1.0}
+#MazeElements.GROUND_DAMAGE a second (2.0 and 1.0 before the small numbers)
+const WALL_DPS : Dictionary[String, float] = {"Fire": 0.25, "Poison": 0.125}
 ## The wall line's Up 1 and Up 2 open the elements: their worth is a share of what an element wall would add.
 const WALL_LINE_SHARE : float = 0.5
 const DEFAULT_ELEMENT_GAIN : float = 1.25
@@ -92,6 +116,12 @@ const EARLY_PROGRESS : float = 0.5
 const WALL_LENGTH_VALUE : float = 0.02
 ## The synergies' worth (Synergies, 2026-11-25).
 const SYNERGY = preload("res://tools/reports/smart_synergies.gd")
+## The towers' niches (TowerNiches): corridors, corners, the maze, slow cells, by tower kind.
+const NICHES = preload("res://tools/reports/bot_niches.gd")
+## A Shredder's stacks double on pinned enemies and its shred lasts longer on elites and bosses: worth this much more
+## per share of its cells where enemies go slow, and per share of the wave's health in elites.
+const SHRED_PINNED_VALUE : float = 0.5
+const SHRED_TOUGH_VALUE : float = 0.5
 ## A trap cell beside another trap is a candidate while at least this share of the best cell's towers reach it.
 const TRAP_SIDE_REACH : float = 0.5
 ## Hold the line: a trap cell is worth this many towers more as a rally cell.
@@ -117,6 +147,8 @@ var last_wave_leaks : int = 0
 var wave_leaks : int = 0
 var tracked_wave : int = 0
 var bought : Dictionary[String, int] = {}
+#Twin Harpoons: the Harpooner's throws times this (1 + TalentEffect.Kind.HarpoonMultiplier), read every tick
+var harpoon_multiplier : float = 1.0
 
 
 func _init(soak : RefCounted) -> void:
@@ -128,6 +160,7 @@ func _init(soak : RefCounted) -> void:
 ## Every frame: game seconds pass, the measured damage is weighed against what the stats promise.
 func tick(level : Level, seconds : float) -> void:
 	plan_age += seconds
+	harpoon_multiplier = 1.0 + (level.talents.get_total(TalentEffect.Kind.HarpoonMultiplier) if level.talents != null else 0.0)
 	for unit in units:
 		if not is_instance_valid(unit):
 			continue
@@ -225,12 +258,14 @@ func _actions(level : Level) -> Array[Dictionary]:
 			else:
 				cell = bot._best_tower_cell(level, range_tiles, bot._min_range_of(scene_name), scene_name)
 				if cell != Vector2i.MAX:
-					var covered : float = _covered(routes, cell, range_tiles)
-					gain = _new_unit_dps(level, scene_name) * _fit(key, threat) * covered
+					var covered : float = _covered(routes, cell, range_tiles, _niches_for(level, key, bot._build_element_name(), routes))
+					gain = _new_unit_dps(level, scene_name, routes) * _fit(key, threat) * covered
 					if key == "PuffeShredder":
-						gain += _shred_gain(cell, range_tiles, routes, threat)
+						gain += _shred_gain(cell, range_tiles, routes, threat, level)
 					elif key == "PuffeHatchery":
 						gain += _hold_gain(cell, range_tiles, routes, threat)
+					elif key == "PuffeHarpooner":
+						gain += _tether_gain(cell, range_tiles, routes, threat, 1)
 					gain += SYNERGY.tower_gain(self, level, scene_name, cell, range_tiles, routes, threat)
 			if cell == Vector2i.MAX:
 				continue
@@ -247,16 +282,17 @@ func _actions(level : Level) -> Array[Dictionary]:
 			if trap_cells.is_empty() or not bot._is_unlocked(trap_scene):
 				continue
 			var trap_key : String = _key_of_scene(trap_scene)
-			var base_gain : float = _new_unit_dps(level, trap_scene) * _fit(trap_key, threat) * TRAP_CELLS
-			#the cell where its synergies add the most (the first is the cell the most towers reach)
+			var base_gain : float = _new_unit_dps(level, trap_scene, routes) * _fit(trap_key, threat) * TRAP_CELLS
+			#the cell where its synergies and the maze (TowerNiches) add the most (the first is the cell the most towers reach)
+			var maze : Dictionary[Vector2i, bool] = bot._maze_cells(level)
 			var best_cell : Vector2i = trap_cells[0]
-			var best_extra : float = -1.0
+			var best_total : float = -1.0
 			for trap_cell in trap_cells:
-				var extra : float = SYNERGY.trap_gain(self, level, trap_scene, trap_cell, threat)
-				if extra > best_extra:
-					best_extra = extra
+				var total : float = base_gain * NICHES.cell_factor(level.grid, trap_key, trap_cell, maze) + SYNERGY.trap_gain(self, level, trap_scene, trap_cell, threat)
+				if total > best_total:
+					best_total = total
 					best_cell = trap_cell
-			actions.append({"kind": Kind.Trap, "scene": trap_scene, "cell": best_cell, "cost": bot._placement_price(level, trap_scene), "gain": base_gain + best_extra})
+			actions.append({"kind": Kind.Trap, "scene": trap_scene, "cell": best_cell, "cost": bot._placement_price(level, trap_scene), "gain": best_total})
 
 	for unit in units:
 		if is_instance_valid(unit):
@@ -315,7 +351,7 @@ func _upgrade_action(level : Level, unit : Building, routes : Array[Vector2i], t
 			elif option.buffer_stat >= 0:
 				special = _buffer_gain(level, unit.grid_position, routes, {option.buffer_stat: 1}, unit)
 			else:
-				special = _buffer_covered_value(level, unit.grid_position, routes) * BUFFER_EVOLVE_SHARE
+				special = _buffer_covered_value(level, unit.grid_position, routes, unit) * BUFFER_EVOLVE_SHARE
 				#Harmony with the covered towers of its element, War cry over Elders at T3
 				if option.tier == 0:
 					special += SYNERGY.buffer_element_gain(self, unit, _leaf_element(option.element_leaf_path), routes)
@@ -335,10 +371,20 @@ func _upgrade_action(level : Level, unit : Building, routes : Array[Vector2i], t
 				continue
 			factor = _element_factor(_key_of(unit), element_name, threat)
 			synergy = SYNERGY.element_gain(self, level, unit, element_name, routes)
+			#the element brings the Harpooner its second harpoon; a Frost Nova or Mortar chills its own targets (TowerNiches)
+			factor *= _evolve_niche_factor(level, unit, element_name, 1, routes)
+			if _key_of(unit) == "PuffeHarpooner":
+				synergy += _tether_gain(unit.grid_position, _stat(unit, Utils.StatType.AttackRange), routes, threat, 2, unit) \
+					- _tether_gain(unit.grid_position, _stat(unit, Utils.StatType.AttackRange), routes, threat, 1, unit)
 		else:
 			#option.tier: 1 = T2, 2 = T3
 			factor = TIER_GAINS[clampi(option.tier - 1, 0, TIER_GAINS.size() - 1)]
 			synergy = SYNERGY.tier_gain(self, unit, option, routes)
+			factor *= _evolve_niche_factor(level, unit, _element_name(unit), option.tier + 1, routes)
+			if _key_of(unit) == "PuffeHarpooner":
+				var tier : int = option.tier + 1
+				synergy += _tether_gain(unit.grid_position, _stat(unit, Utils.StatType.AttackRange), routes, threat, tier + 1, unit) \
+					- _tether_gain(unit.grid_position, _stat(unit, Utils.StatType.AttackRange), routes, threat, tier, unit)
 		var gain : float = value * (factor - 1.0) + synergy
 		if best_index < 0 or gain > best_gain:
 			best_index = index
@@ -353,7 +399,8 @@ func _upgrade_action(level : Level, unit : Building, routes : Array[Vector2i], t
 
 ## The route cell that adds the most tower damage on the routes as a wall, without closing a route.
 func _wall_action(level : Level) -> Dictionary:
-	var before : float = _maze_value(bot._open_routes(level), bot._maze_cells(level), bot._maze_hold(level))
+	var niche_cache : Dictionary = {}
+	var before : float = _maze_value(bot._open_routes(level), bot._maze_cells(level), bot._maze_hold(level), level, Vector2i.MAX, niche_cache)
 	var ends : Dictionary[Vector2i, bool] = {}
 	for spawner in level.get_spawners():
 		ends[level.grid.world_position_to_grid(spawner.global_position)] = true
@@ -368,7 +415,7 @@ func _wall_action(level : Level) -> Dictionary:
 		level.grid.set_cell_weight(cell, 1.0)
 		if routes.is_empty():
 			continue
-		var value : float = _maze_value(routes, bot._maze_cells(level, [cell]), bot._maze_hold(level))
+		var value : float = _maze_value(routes, bot._maze_cells(level, [cell]), bot._maze_hold(level), level, cell, niche_cache)
 		if value > best_value:
 			best_value = value
 			best_cell = cell
@@ -379,19 +426,38 @@ func _wall_action(level : Level) -> Dictionary:
 
 #every unit's damage per second times the route cells it reaches, plus a little for the length; a maze cell
 #(slowed: beside a wall or a tower touching one) counts hold times, the enemies stay that much longer
-func _maze_value(routes : Array[Array], maze : Dictionary[Vector2i, bool] = {}, hold : float = 1.0) -> float:
+#
+#the niches too (TowerNiches): a wall that makes a corridor for a Breather or a corner for a Nova, or brings a Spotter's
+#cells or a trap into the maze, is worth what that tower gains there. Only cells near the weighed wall can change, so
+#the rest come from niche_cache.
+func _maze_value(routes : Array[Array], maze : Dictionary[Vector2i, bool] = {}, hold : float = 1.0, level : Level = null,
+		wall_cell : Vector2i = Vector2i.MAX, niche_cache : Dictionary = {}) -> float:
 	var value : float = 0.0
 	var total_dps : float = 0.0
 	var length : int = 0
 	for unit in units:
-		if is_instance_valid(unit) and not unit is Trap:
-			var dps : float = _unit_dps(unit)
-			var reach : float = _stat(unit, Utils.StatType.AttackRange) ** 2
-			total_dps += dps
-			for route in routes:
-				for cell in route:
-					if Vector2(unit.grid_position - cell).length_squared() <= reach:
-						value += dps * (hold if maze.has(cell) else 1.0)
+		if not is_instance_valid(unit):
+			continue
+		var key : String = _key_of(unit)
+		var has_niche : bool = level != null and NICHES.has_cell_niche(key)
+		var element : String = _chosen_element(unit)
+		if unit is Trap:
+			if has_niche:
+				value += _unit_dps(unit) * TRAP_CELLS * _niche_at(level, key, element, unit.grid_position, maze, wall_cell, niche_cache)
+			continue
+		var dps : float = _unit_dps(unit)
+		var reach : float = _stat(unit, Utils.StatType.AttackRange) ** 2
+		total_dps += dps
+		var excess : float = 0.0
+		for route in routes:
+			for cell in route:
+				if Vector2(unit.grid_position - cell).length_squared() <= reach:
+					var cell_hold : float = hold if maze.has(cell) else 1.0
+					value += dps * cell_hold
+					if has_niche:
+						excess += cell_hold * (_niche_at(level, key, element, cell, maze, wall_cell, niche_cache) - 1.0)
+		#the niche part grows less and less (NICHE_CELLS)
+		value += dps * NICHE_CELLS * (1.0 - exp(-excess / NICHE_CELLS))
 	for route in routes:
 		length += route.size()
 	return value + length * total_dps * WALL_LENGTH_VALUE
@@ -512,6 +578,9 @@ func _set_tactics(level : Level) -> void:
 			continue
 		if unit is Tower and unit.can_choose_target and _key_of(unit) in ["PuffeBolter", "PuffeBeamer"]:
 			unit.target_tactic = Utils.TargetTactic.Strongest if threat.get("boss", false) else Utils.TargetTactic.First
+		elif unit is Tower and _key_of(unit) == "PuffeHarpooner":
+			#flyers when the wave has them (it drags them down), else it slows the ground
+			unit.target_tactic = Utils.TargetTactic.Flyers if threat.flyers > 0.0 else Utils.TargetTactic.Ground
 		elif unit is Hatchery and is_dirty:
 			if routes.is_empty():
 				routes = bot._route_cells(level)
@@ -563,10 +632,11 @@ func _hoard_count() -> int:
 	return units.filter(func(unit) -> bool: return is_instance_valid(unit) and unit is HoardKeeper).size()
 
 
-## The towers and traps a Buffer on this cell would cover (Buffer.covers: its aura reach).
-func _buffer_covered(cell : Vector2i, buffer : Building = null) -> Array[Building]:
+## The towers and traps a Buffer on this cell would cover (Buffer.covers: its aura reach, its Radius pips in, plus
+## extra_tiles).
+func _buffer_covered(cell : Vector2i, buffer : Building = null, extra_tiles : float = 0.0) -> Array[Building]:
 	var covered : Array[Building] = []
-	var reach : float = bot._range_of(bot.BUFFER) + 0.25
+	var reach : float = (buffer.radius / Utils.TILE_SIZE if buffer is Buffer else bot._range_of(bot.BUFFER)) + 0.25 + extra_tiles
 	for unit in units:
 		if not is_instance_valid(unit) or unit == buffer or unit is Buffer or unit is HoardKeeper:
 			continue
@@ -575,15 +645,35 @@ func _buffer_covered(cell : Vector2i, buffer : Building = null) -> Array[Buildin
 	return covered
 
 
-func _buffer_covered_value(_level : Level, cell : Vector2i, routes : Array[Vector2i]) -> float:
+func _buffer_covered_value(_level : Level, cell : Vector2i, routes : Array[Vector2i], buffer : Building = null) -> float:
 	var value : float = 0.0
-	for unit in _buffer_covered(cell):
+	var covered : Array[Building] = _buffer_covered(cell, buffer)
+	for unit in covered:
 		value += _unit_dps(unit) * _unit_cells(unit, routes)
-	return value
+	return value * NICHES.buffer_uptime(covered.size())
 
 
 ## What these pips (stat -> how many) add to every tower the Buffer covers, by the same what-if as the cards.
+#
+#its throws go round the covered buildings (BufferAuras.throw_from): past BUFFER_HELD of them each is buffed only part
+#of the time. A Radius pip is worth the Buffer's present pips on the buildings it brings in, less the thinner spread.
 func _buffer_gain(_level : Level, cell : Vector2i, routes : Array[Vector2i], pips : Dictionary, buffer : Building = null) -> float:
+	if pips.has(Utils.StatType.AuraRadius):
+		if not buffer is Buffer:
+			return 0.0
+		var present : Dictionary = {}
+		for stat in buffer.pips:
+			if stat != Utils.StatType.AuraRadius and buffer.pips[stat] > 0:
+				present[stat] = buffer.pips[stat]
+		if present.is_empty():
+			return 0.0
+		var extra_tiles : float = float(Buffer.PIP_VALUES[Utils.StatType.AuraRadius][1]) * pips[Utils.StatType.AuraRadius]
+		return _buffer_pips_value(_buffer_covered(cell, buffer, extra_tiles), routes, present) - _buffer_pips_value(_buffer_covered(cell, buffer), routes, present)
+	return _buffer_pips_value(_buffer_covered(cell, buffer), routes, pips)
+
+
+## What these pips add on these buildings, times the share of the time each is buffed.
+func _buffer_pips_value(covered : Array[Building], routes : Array[Vector2i], pips : Dictionary) -> float:
 	var modifiers : Array[ModifierData] = []
 	for stat in pips:
 		var modifier : ModifierData = ModifierData.new()
@@ -592,18 +682,18 @@ func _buffer_gain(_level : Level, cell : Vector2i, routes : Array[Vector2i], pip
 		modifier.value = float(Buffer.PIP_VALUES[stat][1]) * pips[stat]
 		modifiers.append(modifier)
 	var gain : float = 0.0
-	for unit in _buffer_covered(cell, buffer):
+	for unit in covered:
 		var cells : float = _unit_cells(unit, routes)
 		var after_cells : float = cells
 		if pips.has(Utils.StatType.AttackRange) and not unit is Trap:
 			after_cells = _covered(routes, unit.grid_position, _stat(unit, Utils.StatType.AttackRange, modifiers))
 		gain += _unit_dps(unit) * (_power(unit, modifiers) / maxf(_power(unit), 0.001) * after_cells - cells)
-	return gain
+	return gain * NICHES.buffer_uptime(covered.size())
 
 
 ## A Shredder's torn armour: every tower working the same route cells hits harder through the resistances of the
 ## coming wave (up to SHRED_MOST off each), in its own element.
-func _shred_gain(cell : Vector2i, range_tiles : float, routes : Array[Vector2i], threat : Dictionary) -> float:
+func _shred_gain(cell : Vector2i, range_tiles : float, routes : Array[Vector2i], threat : Dictionary, level : Level = null) -> float:
 	var shred_cells : Dictionary[Vector2i, bool] = _cells_in_reach(routes, cell, range_tiles)
 	var gain : float = 0.0
 	for unit in units:
@@ -612,7 +702,15 @@ func _shred_gain(cell : Vector2i, range_tiles : float, routes : Array[Vector2i],
 		var through : float = clampf(threat.through.get(_element_name(unit), 1.0), 0.25, 1.0)
 		var shred : float = minf(1.0 - through, SHRED_MOST)
 		gain += _unit_dps(unit) * _overlap(unit, shred_cells, routes) * shred / through
-	return gain
+	#its stacks double on pinned enemies, its shred lasts on elites and bosses (TowerHitEffects, TowerNiches)
+	if level != null and not shred_cells.is_empty():
+		var maze : Dictionary[Vector2i, bool] = bot._maze_cells(level)
+		var pinned : int = 0
+		for shred_cell in shred_cells:
+			if NICHES.is_slowed(level.grid, shred_cell, maze):
+				pinned += 1
+		gain *= 1.0 + SHRED_PINNED_VALUE * pinned / shred_cells.size()
+	return gain * (1.0 + SHRED_TOUGH_VALUE * threat.get("elites", 0.0))
 
 
 ## A Hatchery's guards hold ground enemies at the start of its reach: the towers working those cells get them
@@ -622,8 +720,50 @@ func _hold_gain(cell : Vector2i, range_tiles : float, routes : Array[Vector2i], 
 	var gain : float = 0.0
 	for unit in units:
 		if is_instance_valid(unit) and not unit is Buffer and not unit is HoardKeeper:
-			gain += _unit_dps(unit) * _overlap(unit, hold_cells, routes)
+			#a held enemy is pinned: the Mortar's niche (TowerNiches.is_pinned)
+			var is_mortar : bool = unit is Tower and unit.skill != null and unit.skill.skill_type & Utils.SkillType.Artillery != 0
+			var pinned : float = TowerNiches.MORTAR_PINNED_BONUS / HOLD_VALUE if is_mortar else 0.0
+			gain += _unit_dps(unit) * _overlap(unit, hold_cells, routes) * (1.0 + pinned)
 	return gain * HOLD_VALUE * (1.0 - threat.flyers)
+
+
+## A Harpooner's chains (HarpoonTether) at an evolve tier (harpoons = NICHES.harpoon_hits): every tower working its
+## cells gets the slowed enemies longer (half speed: twice the time), a boss slowed or held, and the ground-only towers
+## get the flyers it drags down. Its own damage and bleeds are in its measured dps.
+func _tether_gain(cell : Vector2i, range_tiles : float, routes : Array[Vector2i], threat : Dictionary, tier : int, harpooner : Building = null) -> float:
+	var cells : Dictionary[Vector2i, bool] = _cells_in_reach(routes, cell, range_tiles)
+	if cells.is_empty():
+		return 0.0
+	var slow : float = 0.5
+	if harpooner != null:
+		slow = clampf(_stat(harpooner, Utils.StatType.TetherSlow), 0.0, 0.9)
+	var hits : float = NICHES.harpoon_hits(tier, harpoon_multiplier)
+	var chained : float = minf(TETHER_SHARE * hits, 1.0)
+	#on the ground; a boss is chained more of the time (it is what the tower aims at while it lives)
+	var ground : float = (1.0 - threat.flyers) * (chained + (TETHER_BOSS_SHARE if threat.get("boss", false) else 0.0))
+	var gain : float = 0.0
+	for unit in units:
+		if not is_instance_valid(unit) or unit == harpooner or unit is Buffer or unit is HoardKeeper:
+			continue
+		var overlap : float = _overlap(unit, cells, routes)
+		if overlap <= 0.0:
+			continue
+		var dps : float = _unit_dps(unit)
+		gain += dps * overlap * ground * slow / (1.0 - slow)
+		#a ground-only tower: the grounded flyers walk into it
+		if TRAITS.get(_key_of(unit), {}).has("air"):
+			gain += dps * overlap * threat.flyers * minf(hits * GROUNDED_SHARE, 1.0)
+	return gain
+
+
+## A tower within a placed Harpooner's reach of its own cells (they share route cells).
+func _is_by_harpooner(unit : Building) -> bool:
+	for other in units:
+		if is_instance_valid(other) and other != unit and _key_of(other) == "PuffeHarpooner":
+			var reach : float = _stat(other, Utils.StatType.AttackRange) + _stat(unit, Utils.StatType.AttackRange)
+			if Vector2(other.grid_position - unit.grid_position).length() <= reach:
+				return true
+	return false
 
 
 func _cells_in_reach(routes : Array[Vector2i], cell : Vector2i, range_tiles : float) -> Dictionary[Vector2i, bool]:
@@ -726,7 +866,7 @@ func _unit_dps(unit : Building) -> float:
 
 func _stat_dps(unit : Building) -> float:
 	var key : String = _key_of(unit)
-	return _power(unit) * SHEET_BASE_DPS.get(key, 3.0) / maxf(_base_power(key, unit), 0.001)
+	return _power(unit) * SHEET_BASE_DPS.get(key, 0.4) / maxf(_base_power(key, unit), 0.001)
 
 
 #measured over expected, trusted more the longer the unit has had a target
@@ -741,20 +881,23 @@ func _learned(unit : Building) -> float:
 
 ## A new unit of the type: its scene's power with the card and talent modifiers a placed unit of the
 ## same type carries (any type when none is placed), times what that type has been learned to do.
-func _new_unit_dps(level : Level, scene_name : String) -> float:
+func _new_unit_dps(level : Level, scene_name : String, routes : Array[Vector2i] = []) -> float:
 	var key : String = _key_of_scene(scene_name)
 	var model : Building = null
 	for unit in units:
 		if is_instance_valid(unit) and (model == null or _key_of(unit) == key):
 			model = unit
 	if model == null:
-		return SHEET_BASE_DPS.get(key, 3.0)
+		return SHEET_BASE_DPS.get(key, 0.4)
 	var modifiers : Array[ModifierData] = []
 	for source in [level.upgrades.applied_modifiers, level.talents.applied_modifiers if level.talents != null else {}]:
 		for modifier in source.get(model, []):
 			modifiers.append(modifier)
 	var learned : float = _learned(model) if _key_of(model) == key else 1.0
-	return SHEET_BASE_DPS.get(key, 3.0) * _bases_power(_scene_bases(scene_name), modifiers) / maxf(_base_power(key, null, scene_name), 0.001) * learned
+	#what the model really dealt has its niche in: the new tower's niche is counted at its own cell
+	if _key_of(model) == key and not routes.is_empty():
+		learned /= _niche_share(level, model, routes)
+	return SHEET_BASE_DPS.get(key, 0.4) * _bases_power(_scene_bases(scene_name), modifiers) / maxf(_base_power(key, null, scene_name), 0.001) * learned
 
 
 ## How well a new tower of the type fits the coming wave (TRAITS): the share it cannot reach (flyers, for the
@@ -764,10 +907,14 @@ func _fit(key : String, threat : Dictionary) -> float:
 	var traits : Dictionary = TRAITS.get(key, {})
 	var fit : float = 1.0
 	if traits.has("air"):
-		fit *= 1.0 - threat.flyers
-	fit *= 1.0 + float(traits.get("swarm", 0.0)) * threat.swarm
+		fit *= 1.0 - maxf(threat.flyers, threat.get("later_flyers", 0.0) * LATER_FLYERS_SHARE)
+	else:
+		#a flyer wave still to come that the towers placed cannot meet: what reaches the air is worth more
+		fit *= 1.0 + threat.get("air_gap", 0.0)
+	fit *= (1.0 + float(traits.get("swarm", 0.0)) * threat.swarm) / (1.0 + float(traits.get("swarm", 0.0)) * TYPICAL_SWARM)
 	fit *= 1.0 + float(traits.get("flyers", 0.0)) * threat.flyers
 	fit *= 1.0 + float(traits.get("elites", 0.0)) * threat.get("elites", 0.0)
+	fit *= 1.0 + float(traits.get("fast", 0.0)) * threat.get("fast", 0.0)
 	return fit * float(traits.get("accuracy", 1.0))
 
 
@@ -787,8 +934,10 @@ func _threat(level : Level) -> Dictionary:
 	index = clampi(index, 0, runner.waves.size() - 1)
 	var health : float = 0.0
 	var flyers : float = 0.0
+	var later : Vector2 = _later_flyers(runner, index) if not runner.waves.is_empty() else Vector2.ZERO
 	var swarm : float = 0.0
 	var elites : float = 0.0
+	var fast : float = 0.0
 	var has_boss : bool = false
 	var through : Dictionary[String, float] = {}
 	if runner.waves.is_empty():
@@ -803,6 +952,9 @@ func _threat(level : Level) -> Dictionary:
 			flyers += group_health
 		if group.count >= SWARM_COUNT:
 			swarm += group_health
+		#the Harpooner's prey on foot (TowerNiches.is_fast)
+		if not info.flying and info.speed >= TowerNiches.FAST_SPEED:
+			fast += group_health
 		#bosses and elites: the Spotter's targets
 		if info.boss:
 			has_boss = true
@@ -815,7 +967,48 @@ func _threat(level : Level) -> Dictionary:
 		return {"flyers": 0.0, "swarm": 0.0, "elites": 0.0, "boss": false, "through": through}
 	for element_name in through:
 		through[element_name] /= health
-	return {"flyers": flyers / health, "swarm": swarm / health, "elites": elites / health, "boss": has_boss, "through": through}
+	return {"flyers": flyers / health, "swarm": swarm / health, "elites": elites / health, "fast": fast / health, "boss": has_boss, "through": through,
+		"later_flyers": later.x, "air_gap": maxf(maxf(later.y, flyers / health) - _anti_air_share(), 0.0)}
+
+
+## The flyer share of the health of the waves after this one (x: over all of them, y: the most in one wave).
+func _later_flyers(runner : WaveRunner, index : int) -> Vector2:
+	var health : float = 0.0
+	var flyers : float = 0.0
+	var peak : float = 0.0
+	for later in range(index + 1, runner.waves.size()):
+		var wave_health : float = 0.0
+		var wave_flyers : float = 0.0
+		for group in runner.waves[later].spawn_groups:
+			if group.enemy_scene == null:
+				continue
+			var info : Dictionary = _enemy_info(group.enemy_scene)
+			wave_health += info.health * group.count
+			if info.flying:
+				wave_flyers += info.health * group.count
+		health += wave_health
+		flyers += wave_flyers
+		if wave_health > 0.0:
+			peak = maxf(peak, wave_flyers / wave_health)
+	return Vector2(flyers / health if health > 0.0 else 0.0, peak)
+
+
+## The share of the placed units' damage that reaches flyers (TRAITS air: never, or from T2).
+func _anti_air_share() -> float:
+	var total : float = 0.0
+	var air : float = 0.0
+	for unit in units:
+		if not is_instance_valid(unit) or unit is Buffer or unit is HoardKeeper:
+			continue
+		var dps : float = _unit_dps(unit)
+		total += dps
+		var reach : Variant = TRAITS.get(_key_of(unit), {}).get("air", true)
+		if reach is bool and reach or reach is String and unit.evolve_tree != null and unit.evolve_tree.tier >= 2:
+			air += dps
+		elif _is_by_harpooner(unit):
+			#a Harpooner drags the flyers down into its reach (HarpoonTether)
+			air += dps * GROUNDED_SHARE
+	return air / total if total > 0.0 else 0.0
 
 
 func _enemy_info(scene : PackedScene) -> Dictionary:
@@ -823,15 +1016,18 @@ func _enemy_info(scene : PackedScene) -> Dictionary:
 		return enemy_info[scene.resource_path]
 	var instance : Node = scene.instantiate()
 	var health : float = 0.0
+	var speed : float = 0.0
 	for stat in instance.find_children("*", "Stat", true, false):
 		if stat.type == Utils.StatType.MaxHealth:
 			health = maxf(health, stat.base_value)
+		elif stat.type == Utils.StatType.Speed:
+			speed = maxf(speed, stat.base_value)
 	var resist : Dictionary[String, float] = {}
 	var resistances : EnemyResistances = instance.get("resistances")
 	if resistances != null:
 		for element_name in ELEMENT_NAMES:
 			resist[element_name] = resistances.get_element(DAMAGE_TYPES[element_name])
-	var info : Dictionary = {"health": maxf(health, 1.0), "flying": not instance.find_children("*", "FlightMovement", true, false).is_empty(), "resist": resist,
+	var info : Dictionary = {"health": maxf(health, 1.0), "speed": speed, "flying": not instance.find_children("*", "FlightMovement", true, false).is_empty(), "resist": resist,
 		"boss": instance is Enemy and instance.is_boss}
 	instance.free()
 	enemy_info[scene.resource_path] = info
@@ -939,17 +1135,97 @@ func _scene_bases(scene_name : String) -> Dictionary:
 	return bases
 
 
+# --- niches (TowerNiches) ---
+
+## The route cells' niche factors for a new tower of this kind with this element (NICHES.route_factors).
+func _niches_for(level : Level, key : String, element : String, routes : Array[Vector2i]) -> Dictionary[Vector2i, float]:
+	return NICHES.route_factors(level.grid, key, routes, bot._maze_cells(level), element)
+
+
+## A placed unit's niche: its covered route cells' average factor (1 for a kind without cell niches).
+func _niche_share(level : Level, unit : Building, routes : Array[Vector2i]) -> float:
+	var key : String = _key_of(unit)
+	if not NICHES.has_cell_niche(key):
+		return 1.0
+	var maze : Dictionary[Vector2i, bool] = bot._maze_cells(level)
+	var element : String = _chosen_element(unit)
+	if unit is Trap:
+		return NICHES.cell_factor(level.grid, key, unit.grid_position, maze, {}, element)
+	var cells : Dictionary[Vector2i, bool] = _cells_in_reach(routes, unit.grid_position, _stat(unit, Utils.StatType.AttackRange))
+	if cells.is_empty():
+		return 1.0
+	var total : float = 0.0
+	for cell in cells:
+		total += NICHES.cell_factor(level.grid, key, cell, maze, {}, element)
+	return total / cells.size()
+
+
+## A route cell's niche factor while a wall on wall_cell is weighed: cells near it are looked at with it, the rest
+## once per wall search (cache).
+func _niche_at(level : Level, key : String, element : String, cell : Vector2i, maze : Dictionary[Vector2i, bool], wall_cell : Vector2i, cache : Dictionary) -> float:
+	if wall_cell != Vector2i.MAX and maxi(absi(cell.x - wall_cell.x), absi(cell.y - wall_cell.y)) <= 2:
+		return NICHES.cell_factor(level.grid, key, cell, maze, {wall_cell: true}, element)
+	var cache_key : String = key + element
+	var cells : Dictionary = cache.get_or_add(cache_key, {})
+	if not cells.has(cell):
+		cells[cell] = NICHES.cell_factor(level.grid, key, cell, maze, {}, element)
+	return cells[cell]
+
+
+## How much an evolve (the element: tier 1, then 2 and 3) does through the niches: the Harpooner's harpoon more, and
+## a Frost Nova's or Mortar's own chill making every target its niche.
+func _evolve_niche_factor(level : Level, unit : Building, element_name : String, to_tier : int, routes : Array[Vector2i]) -> float:
+	var key : String = _key_of(unit)
+	if key == "PuffeHarpooner":
+		return NICHES.harpoon_hits(to_tier, harpoon_multiplier) / NICHES.harpoon_hits(to_tier - 1, harpoon_multiplier)
+	if to_tier == 1 and element_name == "Frost" and key in ["PuffeNova", "PuffeMortar"]:
+		var bonus : float = TowerNiches.NOVA_CORNER_BONUS if key == "PuffeNova" else TowerNiches.MORTAR_PINNED_BONUS
+		return (1.0 + bonus) / maxf(_niche_share(level, unit, routes), 1.0)
+	return 1.0
+
+
+## The unit's element by name once it has one, else "" (the niches read Frost only from a chosen element).
+func _chosen_element(unit : Building) -> String:
+	if unit.evolve_tree == null or not unit.evolve_tree.is_element_chosen:
+		return ""
+	return _element_name(unit)
+
+
+## Each tower kind's measured damage over what its stats promised, over all its units (calibrates SHEET_BASE_DPS
+## against walking enemies; printed by soak_level as SOAK smart learned).
+func learned_report() -> Dictionary[String, float]:
+	var dealt : Dictionary[String, float] = {}
+	var promised : Dictionary[String, float] = {}
+	#units, not damage's keys: a typed Dictionary errors on stepping onto a sold (freed) key
+	for unit in units:
+		if not is_instance_valid(unit) or not damage.has(unit):
+			continue
+		var key : String = _key_of(unit)
+		dealt[key] = dealt.get(key, 0.0) + damage[unit]
+		promised[key] = promised.get(key, 0.0) + expected.get(unit, 0.0)
+	var report : Dictionary[String, float] = {}
+	for key in dealt:
+		if promised[key] > 0.0:
+			report[key] = snappedf(dealt[key] / promised[key], 0.01)
+	return report
+
+
 # --- cells ---
 
 ## The route cells in reach, as worth: a single-target tower shoots one enemy at a time, so past REACH_CELLS more
 ## reach adds less and less (a 6-tile Spotter no longer looks three times a 3.5-tile Bolter, 2026-11-25).
-func _covered(routes : Array[Vector2i], cell : Vector2i, range_tiles : float) -> float:
+#niches: route cell -> factor (NICHES.route_factors); the worth of the count is scaled by their average
+func _covered(routes : Array[Vector2i], cell : Vector2i, range_tiles : float, niches : Dictionary[Vector2i, float] = {}) -> float:
 	var reach : float = range_tiles * range_tiles
 	var covered : int = 0
+	var weighted : float = 0.0
 	for route_cell in routes:
 		if Vector2(route_cell - cell).length_squared() <= reach:
 			covered += 1
-	return REACH_CELLS * (1.0 - exp(-covered / REACH_CELLS))
+			weighted += niches.get(route_cell, 1.0)
+	if covered == 0:
+		return 0.0
+	return REACH_CELLS * (1.0 - exp(-covered / REACH_CELLS)) * weighted / covered
 
 
 func _unit_cells(unit : Building, routes : Array[Vector2i]) -> float:

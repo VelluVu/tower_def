@@ -80,6 +80,16 @@ func test_knockback_pushes_back_along_the_path(kit : TestKit) -> void:
 	var index : int = enemy.current_waypoint_index
 	_hit(enemy, nova, 1.0)
 	kit.check(enemy.current_waypoint_index == index - 2, "two cells back (%d -> %d)" % [index, enemy.current_waypoint_index])
+	#a knockback a hit held slow enemies at their start for good: the next one waits KNOCKBACK_COOLDOWN
+	#(enough health to outlive the Nova's own bursts meanwhile)
+	enemy.stats.get_stat(Utils.StatType.MaxHealth).value = 9999.0
+	enemy.stats.get_stat(Utils.StatType.Health).value = 9999.0
+	_hit(enemy, nova, 1.0)
+	kit.check(enemy.current_waypoint_index == index - 2, "a second hit at once does not push it again")
+	await kit.run_until(func() -> bool: return false, Enemy.KNOCKBACK_COOLDOWN + 0.2)
+	var later : int = enemy.current_waypoint_index
+	_hit(enemy, nova, 1.0)
+	kit.check(enemy.current_waypoint_index == maxi(later - 2, 0), "after the cooldown it does (%d -> %d)" % [later, enemy.current_waypoint_index])
 
 
 func test_ground_patch_hurts_those_inside(kit : TestKit) -> void:

@@ -52,6 +52,8 @@ enum Kind
 	#a Buffer's buffs value share stronger, and pips more in its budget (matched to the Buffer's element; 2026-11-24)
 	BufferStrength,
 	BufferBudget,
+	#a Harpooner's harpoons a throw, times 1 + value (Twin Harpoons, the Building capstone; 2026-11-26, the user)
+	HarpoonMultiplier,
 }
 
 ## What a Strike does, at its target (radius_tiles around it; 0 = the target only) or around the tower (at_tower:

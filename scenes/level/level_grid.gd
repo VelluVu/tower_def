@@ -29,6 +29,8 @@ var astar_grid : AStarGrid2D = null
 var buildings : Array[Building] = []
 #cells taken by level objects drawn over the ground (spawn point caves): no walking, no building
 var reserved_cells : Dictionary[Vector2i, bool] = {}
+#walkable cells nothing may be built on (a bog crossing's far shore: a wader on the stones cannot reach a wall there)
+var unbuildable_cells : Dictionary[Vector2i, bool] = {}
 #MAZE_SPEED_FACTOR, lowered by the maze slow card (LevelUpgrades)
 var maze_speed_factor : float = MAZE_SPEED_FACTOR
 #maze slow points from the talents (Narrow Ways, Dragon's Maze), on top of maze_speed_factor
@@ -218,10 +220,11 @@ func is_position_in_bounds(_pos : Vector2) -> bool:
 
 
 func is_position_buildable(_pos : Vector2) -> bool:
-	if reserved_cells.has(world_position_to_grid(_pos)):
+	var cell : Vector2i = world_position_to_grid(_pos)
+	if reserved_cells.has(cell) or unbuildable_cells.has(cell):
 		return false
 
-	var flags : int = _get_cell_flags(world_position_to_grid(_pos))
+	var flags : int = _get_cell_flags(cell)
 
 	if has_flag(flags, Utils.TileType.OnlyBuildable):
 		return true
@@ -432,6 +435,22 @@ func _get_cell_flags(cell : Vector2i, data_name : String = TILE_TYPE_CUSTOM_DATA
 			flags |= tile_type_data
 
 	return flags
+
+
+## Walkable ground with no building on it (a trap is walked over).
+func is_cell_free_to_walk(cell : Vector2i) -> bool:
+	return _is_cell_free_to_walk(cell)
+
+
+## A walk from cell reaches to without going through a building (a pocket the maze walls in has none).
+func has_clear_route(cell : Vector2i, to : Vector2) -> bool:
+	var path : PackedVector2Array = find_path(grid_position_to_world(cell), to)
+	if path.is_empty() or world_position_to_grid(path[path.size() - 1]) != world_position_to_grid(to):
+		return false
+	for point in path:
+		if not _is_cell_free_to_walk(world_position_to_grid(point)):
+			return false
+	return true
 
 
 func _is_cell_free_to_walk(cell : Vector2i) -> bool:

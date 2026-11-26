@@ -3,12 +3,12 @@
 [ext_resource type="Script" uid="uid://cpw7ia3ek2yvs" path="res://scenes/level/level_data/wave_data.gd" id="0_wave"]
 [ext_resource type="Script" uid="uid://c0cehaxum4b45" path="res://scenes/level/level_data/level_data.gd" id="1_level"]
 [ext_resource type="Script" uid="uid://bu8xwv71c6bbj" path="res://scenes/level/level_data/puffe_line.gd" id="9_line"]
-[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_018_wave_1.tres" id="w1"]
-[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_018_wave_2.tres" id="w2"]
-[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_018_wave_3.tres" id="w3"]
-[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_018_wave_4.tres" id="w4"]
-[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_018_wave_5.tres" id="w5"]
-[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_018_wave_6.tres" id="w6"]
+[ext_resource type="Resource" uid="uid://h55lmshr2ni" path="res://scenes/level/level_data/waves/level_018_wave_1.tres" id="w1"]
+[ext_resource type="Resource" uid="uid://s5513up3xgqe" path="res://scenes/level/level_data/waves/level_018_wave_2.tres" id="w2"]
+[ext_resource type="Resource" uid="uid://cjb6dw6j4f5l1" path="res://scenes/level/level_data/waves/level_018_wave_3.tres" id="w3"]
+[ext_resource type="Resource" uid="uid://1cojops1x1q3" path="res://scenes/level/level_data/waves/level_018_wave_4.tres" id="w4"]
+[ext_resource type="Resource" uid="uid://dicu2ylk7imax" path="res://scenes/level/level_data/waves/level_018_wave_5.tres" id="w5"]
+[ext_resource type="Resource" uid="uid://bsysre6i8j5a8" path="res://scenes/level/level_data/waves/level_018_wave_6.tres" id="w6"]
 
 [sub_resource type="Resource" id="PuffeLine_1"]
 script = ExtResource("9_line")
@@ -36,5 +36,5 @@ waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtR
 puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_u1125_bog_witch")])
 first_wave_health = 1.3
 last_wave_health = 3.7
-health_scale = 1.670
+health_scale = 1.67
 hard_health_scale = 1.477

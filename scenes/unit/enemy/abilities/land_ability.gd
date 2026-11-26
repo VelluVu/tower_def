@@ -36,22 +36,32 @@ static func land(flyer : Enemy) -> void:
 		flyer.walk_animation = GlobalAnimationNames.GROUND_WALK_ANIMATION
 	var grid : LevelGrid = flyer.level.grid
 	var cell : Vector2i = flyer.grid_position
-	if not grid.is_cell_walkable(cell):
-		cell = nearest_walkable(grid, cell)
+	#not into a wall or a tower, nor a pocket the maze walls in: a flyer dragged down over the maze landed inside a wall,
+	#or shut in, and broke a wall to get out (bot checks, 2026-11-26)
+	var castle : Vector2 = flyer.end_point.global_position
+	if not grid.is_cell_free_to_walk(cell) or not grid.has_clear_route(cell, castle):
+		cell = nearest_walkable(grid, cell, castle)
 		flyer.global_position = grid.grid_position_to_world(cell)
 	flyer.path_to(flyer.global_position, flyer.end_point.global_position)
 
 
-static func nearest_walkable(grid : LevelGrid, from : Vector2i) -> Vector2i:
+## The nearest free cell, ring by ring; with castle, the nearest whose walk there needs no building broken (else the
+## nearest free one).
+static func nearest_walkable(grid : LevelGrid, from : Vector2i, castle : Variant = null) -> Vector2i:
+	var fallback : Vector2i = from
+	var has_fallback : bool = false
 	for radius in range(1, SEARCH_CELLS + 1):
-		var best : Vector2i = from
-		var found : bool = false
+		var ring : Array[Vector2i] = []
 		for dx in range(-radius, radius + 1):
 			for dy in range(-radius, radius + 1):
 				var cell : Vector2i = from + Vector2i(dx, dy)
-				if grid.is_cell_walkable(cell) and (not found or Vector2(dx, dy).length() < Vector2(best - from).length()):
-					best = cell
-					found = true
-		if found:
-			return best
-	return from
+				if maxi(absi(dx), absi(dy)) == radius and grid.is_cell_free_to_walk(cell):
+					ring.append(cell)
+		ring.sort_custom(func(a : Vector2i, b : Vector2i) -> bool: return Vector2(a - from).length_squared() < Vector2(b - from).length_squared())
+		for cell in ring:
+			if castle == null or grid.has_clear_route(cell, castle):
+				return cell
+		if not has_fallback and not ring.is_empty():
+			fallback = ring[0]
+			has_fallback = true
+	return fallback

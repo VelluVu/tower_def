@@ -120,6 +120,73 @@ func test_harpooner_throws_one_more_per_tier(kit : TestKit) -> void:
 	FakeProjectile.launched_damage.clear()
 
 
+## Twin Harpoons (the Building capstone, the user 2026-11-26): every throw doubles, 2 harpoons at Base, 4 at T1.
+func test_twin_harpoons_double_the_throw(kit : TestKit) -> void:
+	await kit.load_level(3)
+	var centre : Vector2i = _open_block(kit)
+	var harpooner : Tower = await kit.place("puffe_harpooner", centre)
+	var skill : LaunchProjectile = harpooner.skill
+	skill.projectile_scene = FakeProjectile.packed()
+	var enemies : Array[Enemy] = []
+	for i in 6:
+		enemies.append(kit.spawn_enemy("weakling"))
+	await kit.frames(1)
+	for enemy in enemies:
+		harpooner.targets.append(enemy)
+	skill.target = enemies[0]
+	kit.check(kit.level.talents != null, "the level has its talents")
+	if kit.level.talents == null:
+		return
+	kit.level.talents.totals[TalentEffect.Kind.HarpoonMultiplier] = 1.0
+	for tier in [0, 1]:
+		harpooner.evolve_tree.tier = tier
+		FakeProjectile.launched_damage.clear()
+		skill._launch_extra_harpoons()
+		var expected : int = (1 + tier) * 2 - 1
+		kit.check(FakeProjectile.launched_damage.size() == expected, "tier %d: %d extra harpoons, got %d" % [tier, expected, FakeProjectile.launched_damage.size()])
+	kit.level.talents.totals.erase(TalentEffect.Kind.HarpoonMultiplier)
+	FakeProjectile.launched_damage.clear()
+	var tree : TalentTree = load("res://scenes/talents/trees/building_tree.tres")
+	var node : TalentNode = null
+	for candidate in tree.nodes:
+		if candidate.id == &"harpooner_twin_harpoons":
+			node = candidate
+	kit.check(node != null and not node.effects.is_empty() and node.effects[0].kind == TalentEffect.Kind.HarpoonMultiplier, "the capstone carries it")
+
+
+## The extra harpoons land clustered round the main target (the user, 2026-11-26): its neighbour first, an enemy far
+## from it never.
+func test_extra_harpoons_cluster_round_the_target(kit : TestKit) -> void:
+	await kit.load_level(3)
+	var centre : Vector2i = _open_block(kit)
+	var harpooner : Tower = await kit.place("puffe_harpooner", centre)
+	var skill : LaunchProjectile = harpooner.skill
+	skill.projectile_scene = FakeProjectile.packed()
+	var main : Enemy = kit.spawn_enemy("weakling")
+	var neighbour : Enemy = kit.spawn_enemy("weakling")
+	var far : Enemy = kit.spawn_enemy("weakling")
+	await kit.frames(1)
+	var at : Vector2 = harpooner.global_position
+	for pair in [[main, Vector2(-30, 0)], [neighbour, Vector2(-26, 4)], [far, Vector2(30, 0)]]:
+		pair[0].freeze_mode = RigidBody2D.FREEZE_MODE_KINEMATIC
+		pair[0].freeze = true
+		pair[0].global_position = at + pair[1]
+		harpooner.targets.append(pair[0])
+	skill.target = main
+	var aimed : Array[Node2D] = [main]
+	kit.check(TargetPicker.pick_cluster(harpooner.targets, aimed) == neighbour, "the second harpoon goes to the main target's neighbour")
+	harpooner.evolve_tree.tier = 2
+	FakeProjectile.launched_damage.clear()
+	skill._launch_extra_harpoons()
+	kit.check(FakeProjectile.launched_damage.size() == 1, "and none to the enemy far from it (%d)" % FakeProjectile.launched_damage.size())
+	#the area grows with the area stat (and the gold steps): 60 px off is reached at 1.5 + 2.5 tiles
+	harpooner.stats.get_stat(Utils.StatType.SplashRadius).value = 2.5
+	FakeProjectile.launched_damage.clear()
+	skill._launch_extra_harpoons()
+	kit.check(FakeProjectile.launched_damage.size() == 2, "a wider area reaches it too (%d)" % FakeProjectile.launched_damage.size())
+	FakeProjectile.launched_damage.clear()
+
+
 ## Every harpoon makes its target bleed, and a tethered enemy bleeds harder from every tower.
 func test_harpoon_bleeds_and_tears(kit : TestKit) -> void:
 	await kit.load_level(3)

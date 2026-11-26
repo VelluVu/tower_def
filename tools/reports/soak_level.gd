@@ -16,7 +16,8 @@ extends RefCounted
 ##   health=1.0 speed=1.0 life=N             extra enemy multipliers and starting life, on top of the mode
 ##   rotation=0-2        which element each tower type takes (Fire, Frost, Poison shifted by rotation)
 ##   order=fixed|shuffle tower types in Bolter, Nova, Beamer order or shuffled
-##   towers=40 traps=2   most towers and traps the bot builds (12 left hundreds of gold unspent late)
+##   towers=40 traps=5   most towers and traps the bot builds (12 left hundreds of gold unspent late; 2 traps left
+##                       the maze traps untested, 2026-11-26)
 ##   trap=mixed|leopard_trap|egg_bomb|spike_field  which traps: mixed takes turns between the unlocked ones
 ##   wall_min_towers=5   no walls before this many towers (a player builds a defence before a maze)
 ##   min_towers=3        towers placed before anything else
@@ -70,6 +71,8 @@ const WALL_COVER_WEIGHT : int = 1000
 ## Synergy habits (design doc Synergies): a partner nearby is worth this many route cells to a tower's cell (at
 ## most two partners), a trap of another kind beside a trap cell this many towers reaching it.
 const SYNERGY_CELLS : float = 3.0
+## The towers' niches (TowerNiches): route cells worth more to the tower kind that shines there.
+const NICHES = preload("res://tools/reports/bot_niches.gd")
 const TRAP_PAIR_SCORE : int = 2
 const TOWER_FLAGS : Dictionary[String, int] = {"puffe_bolter": TalentEffect.BOLTER, "puffe_nova": TalentEffect.NOVA, "puffe_beamer": TalentEffect.BEAMER,
 	"puffe_mortar": TalentEffect.MORTAR, "puffe_buffer": TalentEffect.BUFFER, "puffe_breather": TalentEffect.BREATHER, "puffe_spotter": TalentEffect.SPOTTER, "puffe_harpooner": TalentEffect.HARPOONER, "puffe_hatchery": TalentEffect.HATCHERY, "egg_bomb": TalentEffect.EGG_BOMB,
@@ -95,7 +98,7 @@ const BUILDS : Dictionary[String, Dictionary] = {
 
 var options : Dictionary[String, String] = {
 	"level": "1", "mode": "normal", "build": "mixed", "cards": "random", "economy": "real", "talents": "none", "health": "1.0", "speed": "1.0", "life": "",
-	"rotation": "0", "order": "fixed", "towers": "40", "traps": "2", "min_towers": "3", "depth": "3", "wall_min_towers": "5",
+	"rotation": "0", "order": "fixed", "towers": "40", "traps": "5", "min_towers": "3", "depth": "3", "wall_min_towers": "5",
 	"walls": "0.3", "early": "0", "unlocked": "level", "seed": "1", "speed_up": "3.0", "play": "rules", "types": "",
 	"smart": "smart_play", "chaos": "0", "trap": "mixed",
 }
@@ -258,6 +261,8 @@ func run(kit : TestKit, args : PackedStringArray) -> void:
 		towers.size(), traps, walls, wall_gold, gold_spent, start_length, _route_length(level), bought, elements])
 	if smart != null:
 		print("SOAK smart bought %s" % smart.bought)
+		#each kind's real damage over its stats' promise: SHEET_BASE_DPS against walking enemies
+		print("SOAK smart learned %s" % smart.learned_report())
 	print("SOAK enemies spawned %s, killed %s, leaked %s" % [spawned, killed, leaked])
 	print("SOAK damage by tower %s" % _rounded(tower_damage))
 	print("SOAK damage by enemy %s" % _rounded(enemy_damage))
@@ -647,6 +652,8 @@ func _best_tower_cell(level : Level, range_tiles : float, min_range_tiles : floa
 	for building in level.all_buildings:
 		if is_instance_valid(building) and building.is_placed and building is Wall:
 			walls[building.grid_position] = true
+	#the tower's niche: corridors for a Breather, corners for a Nova, the maze for a Spotter, slow cells for a Mortar
+	var niches : Dictionary[Vector2i, float] = NICHES.route_factors(level.grid, NICHES.key_of_scene(scene_name), route_cells, maze, _build_element_name())
 
 	for y in range(region.position.y, region.end.y):
 		for x in range(region.position.x, region.end.x):
@@ -658,7 +665,7 @@ func _best_tower_cell(level : Level, range_tiles : float, min_range_tiles : floa
 			for route_cell in route_cells:
 				var distance : float = Vector2(route_cell - cell).length_squared()
 				if distance <= reach and distance >= too_near:
-					covered += hold if maze.has(route_cell) or (touches_wall and distance <= 1.0) else 1.0
+					covered += (hold if maze.has(route_cell) or (touches_wall and distance <= 1.0) else 1.0) * niches.get(route_cell, 1.0)
 			var score : float = covered - Vector2(cell - castle).length() * 0.01
 			if covered > 0:
 				score += _synergy_cells(partners, cell)
@@ -718,13 +725,16 @@ func _best_trap_cell(level : Level, trap_name : String = "") -> Vector2i:
 			if is_instance_valid(building) and building is Trap and building.is_placed and building.scene_file_path.get_file().get_basename() != trap_name:
 				others.append(building.grid_position)
 	var best : Vector2i = Vector2i.MAX
-	var best_score : int = 0
+	var best_score : float = 0.0
+	#a trap in the maze hits harder (TowerNiches.TRAP_MAZE_BONUS)
+	var maze : Dictionary[Vector2i, bool] = _maze_cells(level)
 	for cell in _route_cells(level):
 		if not _is_free_to_build(level, cell):
 			continue
-		var score : int = _trap_cell_score(cell)
+		var score : float = _trap_cell_score(cell)
 		if score > 0 and others.any(func(other : Vector2i) -> bool: return maxi(absi(other.x - cell.x), absi(other.y - cell.y)) <= 1):
 			score += TRAP_PAIR_SCORE
+		score *= NICHES.cell_factor(level.grid, NICHES.TRAPS[0], cell, maze)
 		if score > best_score:
 			best_score = score
 			best = cell
@@ -1033,6 +1043,13 @@ func _on_enemy_hit(enemy : Enemy, hit : DamageData) -> void:
 	_add(enemy_damage, _type_of(enemy), hit.damage)
 	if smart != null:
 		smart.on_hit(hit)
+
+
+## The build's element by name ("" for the mixed bot, whose towers take turns), for the niches a Frost tower makes.
+func _build_element_name() -> String:
+	if not build.has("element"):
+		return ""
+	return str(Utils.Element.find_key(build.element))
 
 
 func _type_of(node : Node) -> String:

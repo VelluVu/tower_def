@@ -3,13 +3,13 @@
 [ext_resource type="Script" uid="uid://cpw7ia3ek2yvs" path="res://scenes/level/level_data/wave_data.gd" id="0_wave"]
 [ext_resource type="Script" uid="uid://c0cehaxum4b45" path="res://scenes/level/level_data/level_data.gd" id="1_level"]
 [ext_resource type="Script" uid="uid://bu8xwv71c6bbj" path="res://scenes/level/level_data/puffe_line.gd" id="9_line"]
-[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_028_wave_1.tres" id="w1"]
-[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_028_wave_2.tres" id="w2"]
-[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_028_wave_3.tres" id="w3"]
-[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_028_wave_4.tres" id="w4"]
-[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_028_wave_5.tres" id="w5"]
-[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_028_wave_6.tres" id="w6"]
-[ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_028_wave_7.tres" id="w7"]
+[ext_resource type="Resource" uid="uid://sica6lt66ks0" path="res://scenes/level/level_data/waves/level_028_wave_1.tres" id="w1"]
+[ext_resource type="Resource" uid="uid://bunxnweqlw42" path="res://scenes/level/level_data/waves/level_028_wave_2.tres" id="w2"]
+[ext_resource type="Resource" uid="uid://bi3whd0u87uu2" path="res://scenes/level/level_data/waves/level_028_wave_3.tres" id="w3"]
+[ext_resource type="Resource" uid="uid://jopfw3q0e2p7" path="res://scenes/level/level_data/waves/level_028_wave_4.tres" id="w4"]
+[ext_resource type="Resource" uid="uid://ct5l46r88rech" path="res://scenes/level/level_data/waves/level_028_wave_5.tres" id="w5"]
+[ext_resource type="Resource" uid="uid://bsxmhvi6ocd6" path="res://scenes/level/level_data/waves/level_028_wave_6.tres" id="w6"]
+[ext_resource type="Resource" uid="uid://1gc6dtkwb476" path="res://scenes/level/level_data/waves/level_028_wave_7.tres" id="w7"]
 
 [sub_resource type="Resource" id="PuffeLine_1"]
 script = ExtResource("9_line")
@@ -43,4 +43,4 @@ puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResou
 first_wave_health = 1.6
 last_wave_health = 4.6
 health_scale = 0.879
-hard_health_scale = 1.550
+hard_health_scale = 1.55

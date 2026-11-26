@@ -182,6 +182,9 @@ enum TargetTactic
 	Elite,
 	## Flyers first (the closest to the castle among them), then the enemy closest to the castle (the Harpooner's default).
 	Flyers,
+	## Enemies on foot first (the closest to the castle among them), then flyers: a Harpooner slowing the ground
+	## (2026-11-26, the user).
+	Ground,
 }
 
 func get_damage_type_color(damage_type : DamageType) -> Color:

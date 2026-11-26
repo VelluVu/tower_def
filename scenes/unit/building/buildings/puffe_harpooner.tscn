@@ -158,8 +158,8 @@ projectile_scene = ExtResource("9_elqq4")
 skill_name = "Harpoon"
 activate_sound = ExtResource("snd_activate")
 skill_type = 256
-base_cast_time = 0.4
-base_cooldown = 2.5
+base_cast_time = 0.5
+base_cooldown = 4.0
 
 [node name="DamageData" type="Node" parent="LaunchProjectile"]
 script = ExtResource("10_mch2d")

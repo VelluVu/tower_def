@@ -77,3 +77,14 @@ func test_preview_shows_the_wading_route(kit : TestKit) -> void:
 			child.wade_speed_factor = 100.0
 	preview._update_paths()
 	kit.check(not preview.wade_paths.is_empty(), "once the crossing is cheaper the preview shows it (%d)" % preview.wade_paths.size())
+
+
+#a wall on a crossing's far shore left waders standing at the entry for good, out of reach of it (level 20, found by
+#the 2026-11-26 bot check): the far shore stays free to build on
+func test_nothing_is_built_on_a_crossings_far_shore(kit : TestKit) -> void:
+	await kit.load_level(20)
+	var grid : LevelGrid = kit.level.grid
+	kit.check(not grid.bog_crossings.is_empty(), "level 20 has crossings")
+	for crossing in grid.bog_crossings:
+		kit.check(not grid.is_position_buildable(crossing.exit_position), "the far shore of %s takes no building" % crossing.name)
+		kit.check(grid.is_position_walkable(crossing.exit_position), "and is still walked on")
