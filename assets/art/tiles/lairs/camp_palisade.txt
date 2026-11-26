@@ -1,0 +1,130 @@
+# Source of camp_palisade.aseprite and camp_palisade.png: the camp's palisade, 16x32 runs of sharpened stakes (three).
+# Drawn by tools/sprite/parts/lair_camp_art.py.
+size = 16x32
+H = 181425
+k = 3e2731
+l = 733e39
+L = b86f50
+c = c28569
+C = e4a672
+U = ead4aa
+B = e8b796
+r = a22633
+R = e43b44
+o = f77622
+O = feae34
+Y = fee761
+z = ffffff
+i = 262b44
+I = 3a4466
+j = 5a6988
+J = 8b9bb4
+w = c0cbdc
+m = 193c3e
+M = 265c42
+n = 3e8948
+N = 63c74d
+e = 0099db
+E = 2ce8f5
+---
+@STAKES_0 100
+................
+................
+................
+..........U.....
+.........CLl....
+......U..Llk....
+.....CLl.Llk....
+..U..Llk.Llk..U.
+.CLl.Llk.Llk.CL.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.CCcCCcCCcCCcCC.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+................
+................
+
+@STAKES_1 100
+................
+................
+................
+......U.........
+.....CLl........
+..U..Llk......U.
+.CLl.Llk.....CL.
+.Llk.Llk..U..Ll.
+.Llk.Llk.CLl.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Lkk.Llk.Ll.
+.Lkk.Llk.Llk.Lk.
+.CCcCCcCCcCCcCC.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+................
+................
+
+@STAKES_2 100
+................
+................
+................
+..U...........U.
+.CLl.........CL.
+.Llk......U..Ll.
+.Llk.....CLl.Ll.
+.Llk..U..Llk.Ll.
+.Llk.CLl.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Lkk.Llk.Llk.Lk.
+.Llk.Llk.Llk.Ll.
+.CCcCCcCCcCCcCC.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+.Llk.Llk.Llk.Ll.
+................
+................

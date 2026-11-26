@@ -64,3 +64,34 @@ func test_crits_only_damage_numbers(kit : TestKit) -> void:
 	manager.queue_free()
 	_set_option(SettingsManager.OPTION_DAMAGE_NUMBERS, old_on)
 	_set_option(SettingsManager.OPTION_DAMAGE_NUMBERS_CRITS_ONLY, old_crits)
+
+
+#hits under 1 damage show nothing; a beam's ticks add up in one number on the enemy until the beam lets go
+func test_small_hits_hidden_and_beam_numbers_add_up(kit : TestKit) -> void:
+	await kit.load_level(1)
+	var old_on : Variant = _set_option(SettingsManager.OPTION_DAMAGE_NUMBERS, true)
+	var old_crits : Variant = _set_option(SettingsManager.OPTION_DAMAGE_NUMBERS_CRITS_ONLY, false)
+	var manager : DamageNumberManager = DamageNumberManager.new()
+	kit.root.add_child(manager)
+	var hit : DamageData = DamageData.new()
+	hit.damage = 0.6
+	manager._on_damage_taken(Vector2.ZERO, hit)
+	kit.check(manager.spawned_count == 0, "a hit under 1 shows no number")
+
+	var enemy : Enemy = kit.spawn_enemy("weakling")
+	await kit.frames(2)
+	hit.is_continuous = true
+	for tick in 3:
+		hit.damage = 2.4
+		manager._on_damage_taken(Vector2.ZERO, hit)
+		manager._on_enemy_hit(enemy, hit)
+	kit.check(manager.spawned_count == 1, "three beam ticks make one number")
+	var number : DamageNumber = manager.running_numbers.get(enemy.get_instance_id())
+	kit.check(number != null and number.number_label.text == "7", "it shows their total")
+	number.running_since_hit = DamageNumberManager.RUNNING_HOLD_TIME + 0.1
+	manager._process(0.0)
+	kit.check(not number.is_running() and manager.running_numbers.is_empty(), "it floats off once the beam stops")
+	hit.free()
+	manager.queue_free()
+	_set_option(SettingsManager.OPTION_DAMAGE_NUMBERS, old_on)
+	_set_option(SettingsManager.OPTION_DAMAGE_NUMBERS_CRITS_ONLY, old_crits)

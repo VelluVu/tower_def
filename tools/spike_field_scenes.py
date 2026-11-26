@@ -24,7 +24,7 @@ LIST_ID = 5
 PREFIX = {"physical": "", "fire": "fire_", "frost": "frost_", "poison": "poison_"}
 
 # placeholders until playtests: cheap, quick, weak per hit; it never breaks and hits every enemy on it
-PRICE = 3.0
+PRICE = 6.0  # 3 until 2026-11-26: 2.3 dps per gold, twice the Bolter
 DAMAGE = 3.0
 COOLDOWN_SECONDS = 0.9
 CRIT_CHANCE = 0.05

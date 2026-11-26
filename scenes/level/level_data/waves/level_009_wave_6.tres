@@ -3,58 +3,75 @@
 [ext_resource type="Script" uid="uid://cpw7ia3ek2yvs" path="res://scenes/level/level_data/wave_data.gd" id="1_wave"]
 [ext_resource type="Script" uid="uid://bbhd3iyjav4h2" path="res://scenes/level/level_data/spawn_group_data.gd" id="2_group"]
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/batling.tscn" id="e_batling"]
-[ext_resource type="PackedScene" uid="uid://bj8fmaeegual3" path="res://scenes/unit/enemy/enemies/beefling.tscn" id="e_beefling"]
-[ext_resource type="PackedScene" uid="uid://dla7not0kpg61" path="res://scenes/unit/enemy/enemies/fastling.tscn" id="e_fastling"]
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/beefling.tscn" id="e_beefling"]
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/cave_shaman.tscn" id="e_cave_shaman"]
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/crystal_brute.tscn" id="e_crystal_brute"]
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/fastling.tscn" id="e_fastling"]
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/swarmling.tscn" id="e_swarmling"]
-[ext_resource type="PackedScene" uid="uid://bljkhytt20h3f" path="res://scenes/unit/enemy/enemies/weakling.tscn" id="e_weakling"]
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/weakling.tscn" id="e_weakling"]
 
 [sub_resource type="Resource" id="Resource_group1"]
 script = ExtResource("2_group")
 enemy_scene = ExtResource("e_beefling")
-count = 16
-interval = 2.2
+count = 18
+interval = 2.0
 spawner_id = 1
 
 [sub_resource type="Resource" id="Resource_group2"]
 script = ExtResource("2_group")
 enemy_scene = ExtResource("e_fastling")
-count = 26
-interval = 1.0
-delay = 2.0
+count = 28
+interval = 0.9
 
 [sub_resource type="Resource" id="Resource_group3"]
 script = ExtResource("2_group")
-enemy_scene = ExtResource("e_weakling")
-count = 24
-interval = 1.4
+enemy_scene = ExtResource("e_swarmling")
+count = 16
+interval = 0.3
 delay = 4.0
-spawner_id = 3
+spawner_id = 2
 
 [sub_resource type="Resource" id="Resource_group4"]
 script = ExtResource("2_group")
-enemy_scene = ExtResource("e_batling")
-count = 18
+enemy_scene = ExtResource("e_weakling")
+count = 26
 interval = 1.2
 delay = 6.0
-spawner_id = 2
+spawner_id = 3
 
 [sub_resource type="Resource" id="Resource_group5"]
 script = ExtResource("2_group")
-enemy_scene = ExtResource("e_swarmling")
-count = 14
-interval = 0.3
-delay = 12.0
+enemy_scene = ExtResource("e_batling")
+count = 20
+interval = 1.0
+delay = 8.0
 spawner_id = 2
 
 [sub_resource type="Resource" id="Resource_group6"]
 script = ExtResource("2_group")
+enemy_scene = ExtResource("e_cave_shaman")
+count = 3
+interval = 4.0
+delay = 18.0
+spawner_id = 3
+
+[sub_resource type="Resource" id="Resource_group7"]
+script = ExtResource("2_group")
 enemy_scene = ExtResource("e_swarmling")
-count = 14
+count = 16
 interval = 0.3
-delay = 32.0
+delay = 26.0
 spawner_id = 2
+
+[sub_resource type="Resource" id="Resource_group8"]
+script = ExtResource("2_group")
+enemy_scene = ExtResource("e_crystal_brute")
+count = 4
+interval = 3.4
+delay = 30.0
+spawner_id = 1
 
 [resource]
 script = ExtResource("1_wave")
-spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_group3"), SubResource("Resource_group4"), SubResource("Resource_group5"), SubResource("Resource_group6")])
+spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_group3"), SubResource("Resource_group4"), SubResource("Resource_group5"), SubResource("Resource_group6"), SubResource("Resource_group7"), SubResource("Resource_group8")])
 early_start_bonus = 3.0

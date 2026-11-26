@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://p8sbd3ardqwy"
+path="res://.godot/imported/camp_watchtower.aseprite-fa6d374f0453bea6390dd990b3366d6c.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/lairs/camp_watchtower.aseprite"
+dest_files=["res://.godot/imported/camp_watchtower.aseprite-fa6d374f0453bea6390dd990b3366d6c.res"]
+
+[params]
+

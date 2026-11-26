@@ -23,6 +23,11 @@ const EVOLVED_TEXT : String = "Evolved!"
 #Endesga 32 light gold, the upgrade flash's colour
 const UPGRADED_COLOR : Color = Color("fee761")
 const UPGRADED_OFFSET : Vector2 = Vector2(0, -14)
+#hits under this are not shown: the small burn and poison ticks were clutter (the user, 2026-11-26)
+const MIN_SHOWN_DAMAGE : float = 1.0
+#game seconds a beam's running number waits for its next tick before it floats off (the Beamer ticks every 1.5 s
+#at base attack speed)
+const RUNNING_HOLD_TIME : float = 1.6
 
 var damage_number_pool : Array[DamageNumber]
 #screen space, so the numbers stay crisp at any camera zoom; drawn under the UI layer that follows in Main
@@ -30,6 +35,9 @@ var number_layer : CanvasLayer = null
 var spawned_count : int = 0
 #the parts of one sell (price, Salvage) that arrive in the same frame, shown as one "+N" at the end of it
 var pending_refunds : Dictionary[Vector2, float] = {}
+#the beam's running numbers by enemy instance id (an id, so a freed enemy never sits in a typed key)
+var running_numbers : Dictionary[int, DamageNumber] = {}
+var time_scale : float = 1.0
 
 
 func _ready() -> void:
@@ -37,6 +45,8 @@ func _ready() -> void:
 	number_layer.name = NUMBER_LAYER_NAME
 	add_child(number_layer)
 	GameSignals.damage_taken.connect(_on_damage_taken)
+	GameSignals.enemy_hit.connect(_on_enemy_hit)
+	GameSignals.time_scale_change.connect(func(new_time_scale : float) -> void: time_scale = new_time_scale)
 	GameSignals.element_reaction.connect(_on_element_reaction)
 	GameSignals.life_lost.connect(_on_life_lost)
 	GameSignals.gold_earned.connect(_on_gold_earned)
@@ -46,13 +56,45 @@ func _ready() -> void:
 
 
 func _on_damage_taken(_position : Vector2, _damage_data : DamageData) -> void:
-	if _damage_data.rounded_damage == 0.0 or not SettingsManager.get_option(SettingsManager.OPTION_DAMAGE_NUMBERS):
+	if absf(_damage_data.damage) < MIN_SHOWN_DAMAGE or not SettingsManager.get_option(SettingsManager.OPTION_DAMAGE_NUMBERS):
 		return
 	#crits only: the big hits and heals still show, the stream of small ones does not
 	if SettingsManager.get_option(SettingsManager.OPTION_DAMAGE_NUMBERS_CRITS_ONLY) and not _damage_data.is_critical and not _damage_data.is_healing:
 		return
+	#a beam tick adds to the enemy's running number instead (_on_enemy_hit)
+	if _damage_data.is_continuous and not _damage_data.is_healing and not SettingsManager.get_option(SettingsManager.OPTION_DAMAGE_NUMBERS_CRITS_ONLY):
+		return
 	var damage_number : DamageNumber = _get_damage_number()
 	damage_number.activate(_position + _clearance(), _damage_data)
+
+
+## A beam tick: one number per enemy counts up while the beam keeps hitting, so a beam reads as one growing
+## total, not a stream of small pops (the user, 2026-11-26). With crits only, crit ticks pop on their own instead.
+func _on_enemy_hit(enemy : Enemy, _damage_data : DamageData) -> void:
+	if not _damage_data.is_continuous or _damage_data.damage <= 0.0 or not SettingsManager.get_option(SettingsManager.OPTION_DAMAGE_NUMBERS):
+		return
+	if SettingsManager.get_option(SettingsManager.OPTION_DAMAGE_NUMBERS_CRITS_ONLY):
+		return
+	var id : int = enemy.get_instance_id()
+	var number : DamageNumber = running_numbers.get(id)
+	if number != null and number.is_running():
+		number.add_running(_damage_data)
+		return
+	number = _get_damage_number()
+	running_numbers[id] = number
+	number.activate_running(enemy, _clearance(), _damage_data)
+
+
+func _process(_delta : float) -> void:
+	if running_numbers.is_empty():
+		return
+	for id : int in running_numbers.keys():
+		var number : DamageNumber = running_numbers[id]
+		if not number.is_running():
+			running_numbers.erase(id)
+		elif not is_instance_valid(instance_from_id(id)) or number.running_since_hit * time_scale > RUNNING_HOLD_TIME:
+			number.release()
+			running_numbers.erase(id)
 
 
 func _clearance() -> Vector2:

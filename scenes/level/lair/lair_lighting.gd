@@ -20,6 +20,7 @@ const TOO_MANY_LIGHTS_WARNING : String = "LairLighting: more than %d lights, the
 const FOG_COLOR_PARAMETER : StringName = &"fog_color"
 const FOG_DEPTH_PARAMETER : StringName = &"fog_depth"
 const FOG_GREY_DIM_PARAMETER : StringName = &"grey_dim"
+const FOG_GREY_STRENGTH_PARAMETER : StringName = &"grey_strength"
 
 @export var ambient : Color = Color(0.56, 0.54, 0.6)
 @export var tile_lights : Array[LairTileLight] = []
@@ -32,6 +33,8 @@ const FOG_GREY_DIM_PARAMETER : StringName = &"grey_dim"
 @export var fog_depth : float = 64.0
 ## How dark what lies past the edge turns before the fog (0 keeps its colours).
 @export_range(0.0, 1.0) var fog_grey_dim : float = 0.45
+## How much colour the edge takes away from what lies past it (1 = all grey, as on every level; the camp keeps more).
+@export_range(0.0, 1.0) var fog_grey_strength : float = 1.0
 
 var level : Level = null
 var lit_material : ShaderMaterial = null
@@ -82,6 +85,7 @@ func _apply_fog() -> void:
 	fog_material.set_shader_parameter(FOG_COLOR_PARAMETER, fog_color)
 	fog_material.set_shader_parameter(FOG_DEPTH_PARAMETER, fog_depth)
 	fog_material.set_shader_parameter(FOG_GREY_DIM_PARAMETER, fog_grey_dim)
+	fog_material.set_shader_parameter(FOG_GREY_STRENGTH_PARAMETER, fog_grey_strength)
 
 
 func _find_tile_lights(tiles : Node) -> void:

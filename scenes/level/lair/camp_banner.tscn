@@ -1,0 +1,9 @@
+[gd_scene format=3]
+
+[ext_resource type="SpriteFrames" path="res://scenes/level/lair/frames/camp_banner_frames.tres" id="1_frames"]
+
+[node name="CampBanner" type="AnimatedSprite2D" groups=["lair_lit"]]
+sprite_frames = ExtResource("1_frames")
+animation = &"IDLE"
+autoplay = "IDLE"
+offset = Vector2(0, -14)

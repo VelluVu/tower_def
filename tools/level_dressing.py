@@ -23,17 +23,22 @@ ROOT = lt.ROOT
 # (the Wasted Lands since 2026-11-18) take their landmarks in turn from the timber-and-quarry sheet (14) and the farm
 # sheet (13): two of the first to one of the second.
 # Hydra's Mire (24) mixes its own landmarks (object_tile_set_swamp source 16, lair_mire_art.py) with the swamp's
-LANDMARK_SOURCES = {"swamp": [12], "fields": [14, 13, 14], "brood": [16], "mire": [16, 12, 16]}
-AREAS = {"swamp": range(13, 24), "fields": range(25, 37), "brood": [12], "mire": [24]}
+# Dragonslayer's Camp (36) mixes its own (object_tile_set_humans source 16, lair_camp_art.py) with the timber-and-quarry
+# sheet, two to one; it clears the farm sheet (13) it had before
+LANDMARK_SOURCES = {"swamp": [12], "fields": [14, 13, 14], "brood": [16], "mire": [16, 12, 16], "camp": [16, 14, 16], "grave": [16, 10, 16], "throne": [16, 11, 16]}
+AREAS = {"swamp": range(13, 24), "fields": range(25, 36), "brood": [12], "mire": [24], "camp": [36], "grave": [48], "throne": [60]}
+# sources a rerun clears besides the area's own
+CLEARED_SOURCES = {"camp": [13]}  # the Fallen Elder (48) mixes object_tile_set_desert source 16 (lair_grave_art.py) with the desert's own (10), Throne of Embers (60)
+# object_tile_set_volcano source 16 (lair_throne_art.py) with the volcano's own (11)
 # a sheet's landmark count and columns when it is not four, two by two (the boss lairs, tools/sprite/parts/lair_art.py;
 # the Brood Cavern is level 12)
-LANDMARK_LAYOUT = {("brood", 16): (5, 3)}  # by area: source 16 of the swamp set is the mire's sheet, four two by two
-LANDMARK_COUNT = {"brood": 5, "mire": 5}
+LANDMARK_LAYOUT = {("brood", 16): (5, 3), ("camp", 16): (6, 3), ("grave", 16): (6, 3), ("throne", 16): (6, 3)}  # by area: source 16 of the swamp set is the mire's sheet, four two by two
+LANDMARK_COUNT = {"brood": 5, "mire": 5, "camp": 5, "grave": 5, "throne": 5}
 # ground decor (decor_tile_set source 3, twelve pieces four by three: stumps, chips, ruts, gravel...), on about one open
 # cell in DECOR_ONE_IN of the Wasted Lands; a rerun replaces it
-DECOR_SOURCE = {"fields": 3, "brood": 4}
+DECOR_SOURCE = {"fields": 3, "brood": 4, "camp": 3}
 DECOR_PIECES = {3: (12, 4), 4: (6, 3)}  # pieces and columns per decor source
-DECOR_ONE_IN = {"fields": 7, "brood": 9}
+DECOR_ONE_IN = {"fields": 7, "brood": 9, "camp": 7}
 # areas whose level loses the meadow decor (decor_tile_set source 0) under its own: the cave lair has no grass
 DECOR_REPLACES_MEADOW = {"brood"}
 WATER_LAYER = "WaterTileMapLayer"
@@ -61,7 +66,7 @@ def dress(number, cells):
     sources = LANDMARK_SOURCES[area]
     level = lt.Level(number)
     front = level.cells("FrontTileMapLayer")
-    for k in [k for k, v in front.items() if v[0] in sources]:
+    for k in [k for k, v in front.items() if v[0] in sources + CLEARED_SOURCES.get(area, [])]:
         del front[k]
     # a level's landmarks are different kinds, starting from a kind picked per level
     for i, (x, y) in enumerate(cells):

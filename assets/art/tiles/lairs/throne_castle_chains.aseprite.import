@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dpti0jnble713"
+path="res://.godot/imported/throne_castle_chains.aseprite-ac4ba8c48a0ab83d9c016e7246beea89.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/lairs/throne_castle_chains.aseprite"
+dest_files=["res://.godot/imported/throne_castle_chains.aseprite-ac4ba8c48a0ab83d9c016e7246beea89.res"]
+
+[params]
+

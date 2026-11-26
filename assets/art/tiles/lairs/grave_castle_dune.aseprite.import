@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dos2j1hf4q3k5"
+path="res://.godot/imported/grave_castle_dune.aseprite-ee29a5faa95da310898c5d08bd7ec69c.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/lairs/grave_castle_dune.aseprite"
+dest_files=["res://.godot/imported/grave_castle_dune.aseprite-ee29a5faa95da310898c5d08bd7ec69c.res"]
+
+[params]
+

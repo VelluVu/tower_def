@@ -44,6 +44,8 @@ var synergies : Synergies
 var wave_runner : WaveRunner
 #waves started while enemies of earlier waves were still alive, for the talent points
 var early_starts : int = 0
+#counts every wave start and every cleared wave, so each wave and each build break is its own round (full sell refunds)
+var build_round : int = 0
 #an end of wave check waits for the end of the frame (_queue_end_check)
 var is_end_check_queued : bool = false
 #Survival only: the break between a cleared wave and the next
@@ -51,6 +53,8 @@ var survival_break_timer : CustomTimer = null
 var all_buildings : Array[Building]
 var all_enemies : Array[Enemy]
 var existing_enemies : Array[Enemy]
+#the living enemies by cell, for each enemy's spacing
+var enemy_neighbours : EnemyNeighbours = EnemyNeighbours.new()
 #enemies that reached each castle (its end point): a castle with fewer has more of its eggs left
 var castle_leaks : Dictionary[Marker2D, int] = {}
 
@@ -269,6 +273,7 @@ func _check_level_end_conditions() -> void:
 		GameSignals.level_completed.emit(self)
 		return
 	
+	build_round += 1
 	GameSignals.wave_cleared.emit(wave_runner.wave_number)
 	_emit_wave_state()
 	if survival_break_timer != null:
@@ -342,6 +347,7 @@ func _on_start_wave_pressed() -> void:
 	#read before starting, the bonus depends on the wave that comes next
 	var bonus : float = early_start_bonus
 	var is_early : bool = not existing_enemies.is_empty()
+	build_round += 1
 	wave_runner.start_next_wave()
 	
 	if bonus > 0.0:

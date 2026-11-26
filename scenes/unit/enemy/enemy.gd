@@ -514,10 +514,10 @@ func get_first_nearby_free_position() -> Vector2:
 
 func get_spacing_speed_factor(move_direction : Vector2) -> float:
 	var neighbour_positions : Array[Vector2] = []
-	for enemy in level.existing_enemies:
-		if enemy != self and not enemy.is_deactivated and enemy.is_flying == is_flying:
-			neighbour_positions.append(enemy.global_position)
-	return EnemySpacing.get_speed_factor(global_position, move_direction, neighbour_positions)
+	var neighbour_speeds : Array[float] = []
+	level.enemy_neighbours.collect(level.existing_enemies, self, neighbour_positions, neighbour_speeds)
+	return EnemySpacing.get_speed_factor(global_position, move_direction, neighbour_positions,
+		neighbour_speeds, stats.get_stat_value(Utils.StatType.Speed))
 
 
 func get_remaining_path_waypoint_count() -> int:

@@ -23,6 +23,11 @@ var tween : Tween = null
 var world_position : Vector2 = Vector2.ZERO
 var lift : float = 0.0
 var screen_lift : float = 0.0
+#a running total (the beam's ticks on one enemy): untyped, since the enemy may be freed while the number runs
+var running_enemy : Object = null
+var running_offset : Vector2 = Vector2.ZERO
+var running_total : float = 0.0
+var running_since_hit : float = 0.0
 
 signal deactivated(damage_number : DamageNumber)
 
@@ -59,6 +64,54 @@ func activate_text(_position : Vector2, text : String, color : Color) -> void:
 	_show()
 
 
+## Starts a running total on the enemy: it follows the enemy and counts up with add_running until release.
+func activate_running(enemy : Enemy, offset : Vector2, _damage_data : DamageData) -> void:
+	if tween:
+		tween.kill()
+	live_timer.stop()
+	running_enemy = enemy
+	running_offset = offset
+	running_total = 0.0
+	lift = 0.0
+	screen_lift = 0.0
+	current_font_size = font_size
+	number_label.add_theme_font_size_override(FONT_SIZE_PROPERTY_NAME, round(current_font_size))
+	visible = false
+	add_running(_damage_data)
+
+
+func add_running(_damage_data : DamageData) -> void:
+	running_total += _damage_data.damage
+	running_since_hit = 0.0
+	number_label.text = str(roundi(running_total))
+	number_label.add_theme_color_override(FONT_COLOR_PROPERTY_NAME, Utils.get_damage_type_color(_damage_data.damage_type))
+	_follow_running_enemy()
+	#shown once the total reaches 1, like a single hit
+	if not visible and running_total >= 1.0:
+		visible = true
+		_update_screen_position()
+
+
+func is_running() -> bool:
+	return running_enemy != null
+
+
+## The beam let go or the enemy is gone: the total floats off like a hit (or vanishes if it never reached 1).
+func release() -> void:
+	running_enemy = null
+	if running_total < 1.0:
+		visible = false
+		deactivated.emit(self)
+		return
+	_show()
+
+
+func _follow_running_enemy() -> void:
+	if is_instance_valid(running_enemy):
+		var enemy : Enemy = running_enemy
+		world_position = enemy.pop_up_spot.global_position + running_offset
+
+
 func _show() -> void:
 	live_timer.start()
 	visible = true
@@ -76,6 +129,9 @@ func _animate_damage_text() -> void:
 
 
 func _process(_delta : float) -> void:
+	if running_enemy != null:
+		running_since_hit += _delta
+		_follow_running_enemy()
 	if visible:
 		_update_screen_position()
 

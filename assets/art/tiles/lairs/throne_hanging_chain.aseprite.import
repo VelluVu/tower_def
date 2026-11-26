@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bpo25r0xcwu8e"
+path="res://.godot/imported/throne_hanging_chain.aseprite-f5fe854882170d256b4e204f1bbd4bb5.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/lairs/throne_hanging_chain.aseprite"
+dest_files=["res://.godot/imported/throne_hanging_chain.aseprite-f5fe854882170d256b4e204f1bbd4bb5.res"]
+
+[params]
+

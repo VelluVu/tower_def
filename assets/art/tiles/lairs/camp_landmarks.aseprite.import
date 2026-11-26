@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cdb7llk0alut2"
+path="res://.godot/imported/camp_landmarks.aseprite-66aa7ce28676aaef484c1e38b189c8de.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/lairs/camp_landmarks.aseprite"
+dest_files=["res://.godot/imported/camp_landmarks.aseprite-66aa7ce28676aaef484c1e38b189c8de.res"]
+
+[params]
+

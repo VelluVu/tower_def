@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bfirce4mhwirv"
+path="res://.godot/imported/camp_castle_siege.aseprite-675e053773614d7a7f3ac9a77b8882b6.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/lairs/camp_castle_siege.aseprite"
+dest_files=["res://.godot/imported/camp_castle_siege.aseprite-675e053773614d7a7f3ac9a77b8882b6.res"]
+
+[params]
+

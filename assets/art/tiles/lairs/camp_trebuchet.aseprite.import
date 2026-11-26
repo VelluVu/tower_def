@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://ce2bq5pkahr7n"
+path="res://.godot/imported/camp_trebuchet.aseprite-bfc896e95de561c3636c0cd886fc465d.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/lairs/camp_trebuchet.aseprite"
+dest_files=["res://.godot/imported/camp_trebuchet.aseprite-bfc896e95de561c3636c0cd886fc465d.res"]
+
+[params]
+

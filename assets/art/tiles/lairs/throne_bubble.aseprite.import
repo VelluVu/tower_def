@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://b5kqs6hg3yno0"
+path="res://.godot/imported/throne_bubble.aseprite-348f530d9222794848afd735b55678ff.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/lairs/throne_bubble.aseprite"
+dest_files=["res://.godot/imported/throne_bubble.aseprite-348f530d9222794848afd735b55678ff.res"]
+
+[params]
+

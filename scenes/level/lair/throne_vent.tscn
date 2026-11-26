@@ -1,0 +1,20 @@
+[gd_scene format=3]
+
+[ext_resource type="SpriteFrames" path="res://scenes/level/lair/frames/throne_vent_frames.tres" id="1_frames"]
+[ext_resource type="Script" path="res://scenes/level/lair/boss_spawn_art.gd" id="2_art"]
+[ext_resource type="Script" path="res://scenes/level/lair/lair_light.gd" id="3_light"]
+
+[node name="ThroneVent" type="AnimatedSprite2D"]
+sprite_frames = ExtResource("1_frames")
+animation = &"IDLE"
+autoplay = "IDLE"
+offset = Vector2(0, -8)
+script = ExtResource("2_art")
+
+[node name="VentGlow" type="Node2D" parent="."]
+position = Vector2(0, -2)
+script = ExtResource("3_light")
+color = Color(1, 0.5, 0.2, 1)
+radius_tiles = 4.0
+strength = 0.8
+flicker = 0.25

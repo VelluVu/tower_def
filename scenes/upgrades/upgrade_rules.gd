@@ -18,6 +18,8 @@ const XP_STEP : float = 20.0
 const SOFT_CAP_EFFICIENCY : float = 0.5
 #a rare card's chance to be drawn into an offer, against 1.0 for a common one
 const RARE_OFFER_WEIGHT : float = 0.35
+#a building sold after the wave or build break it was placed in gets this share of its price back
+const LATE_SELL_SHARE : float = 0.75
 
 
 ## XP for one kill before the XP cards: 2 per max health, times the enemy's own multiplier
@@ -109,6 +111,14 @@ static func price_step_extra(step : float, buildings_on_map : int) -> float:
 ## Whole gold, rounded up so a cheap building never gets a free step.
 static func gold_price(building_price : float, ratio : float) -> float:
 	return ceilf(building_price * ratio)
+
+
+## Gold back for selling a building that cost this price: all of it in the round it was
+## placed in (a misplacement can be undone), LATE_SELL_SHARE of it later, rounded up.
+static func sell_refund(price : float, is_same_round : bool) -> float:
+	if is_same_round:
+		return price
+	return ceilf(price * LATE_SELL_SHARE)
 
 
 static func has_any_flag(a : int, b : int) -> bool:

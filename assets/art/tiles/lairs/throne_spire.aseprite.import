@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cdsknywqk2dw7"
+path="res://.godot/imported/throne_spire.aseprite-d87219b67755d572aa4fc05c8d12841a.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/lairs/throne_spire.aseprite"
+dest_files=["res://.godot/imported/throne_spire.aseprite-d87219b67755d572aa4fc05c8d12841a.res"]
+
+[params]
+

@@ -305,13 +305,23 @@ func get_maze_walls(cell : Vector2i) -> Array[Wall]:
 	return walls
 
 
-## A cell next to a player building (traps don't count): the maze.
+## The maze: a cell next to a wall, or next to a building (not a trap) that touches a wall (the user, 2026-11-26:
+## towers alone bend the route but do not slow it, so walls have a job only they can do).
 func is_maze_cell(cell : Vector2i) -> bool:
 	for neighbour in get_surrounding_cells(cell):
 		var building : Building = get_building_from_cell_position(neighbour)
-		if building != null and building is not Trap:
+		if building == null or building is Trap:
+			continue
+		if building is Wall or _touches_wall(neighbour):
 			return true
 
+	return false
+
+
+func _touches_wall(building_cell : Vector2i) -> bool:
+	for touching in get_surrounding_cells(building_cell):
+		if get_building_from_cell_position(touching) is Wall:
+			return true
 	return false
 
 

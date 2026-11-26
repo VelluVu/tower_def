@@ -185,7 +185,8 @@ func _wall_action(level : Level) -> Dictionary:
 	var single : Dictionary = super(level)
 	if not single.is_empty() or not use_pairs:
 		return single
-	var before : float = _maze_value(bot._open_routes(level))
+	var hold : float = bot._maze_hold(level)
+	var before : float = _maze_value(bot._open_routes(level), bot._maze_cells(level), hold)
 	var candidates : Array[Vector2i] = _pair_candidates(level)
 	var best_pair : Array[Vector2i] = []
 	var best_value : float = before
@@ -200,7 +201,7 @@ func _wall_action(level : Level) -> Dictionary:
 			level.grid.set_cell_weight(candidates[b], 1.0)
 			if routes.is_empty():
 				continue
-			var value : float = _maze_value(routes)
+			var value : float = _maze_value(routes, bot._maze_cells(level, [candidates[a], candidates[b]]), hold)
 			if value > best_value:
 				best_value = value
 				best_pair = [candidates[a], candidates[b]]

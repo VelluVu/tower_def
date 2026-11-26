@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="SpriteFrames" path="res://scenes/level/lair/frames/grave_stone_frames.tres" id="1_frames"]
+[ext_resource type="Script" path="res://scenes/level/lair/lair_light.gd" id="2_light"]
+
+[node name="GraveStone" type="AnimatedSprite2D" groups=["lair_lit"]]
+sprite_frames = ExtResource("1_frames")
+animation = &"IDLE"
+autoplay = "IDLE"
+offset = Vector2(0, -14)
+
+[node name="RuneGlow" type="Node2D" parent="."]
+position = Vector2(0, -16)
+script = ExtResource("2_light")
+color = Color(0.4, 0.95, 0.5, 1)
+radius_tiles = 2.0
+strength = 0.45
+flicker = 0.2

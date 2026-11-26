@@ -43,6 +43,7 @@ const EGG_BOMB : String = "egg_bomb"
 const SPIKE_FIELD : String = "spike_field"
 ## The Hoard Keeper covers nothing: it goes on a free cell off the routes.
 const HOARD : String = "puffe_hoard"
+const HOARD_MIN_TOWERS : int = 4
 const WALL : String = "wall"
 ## Element walls (_buy_wall_step): from this many walls, tried on this share of the spending turns.
 const WALL_ELEMENT_MIN_WALLS : int = 4
@@ -111,6 +112,9 @@ var is_wall_exhausted : bool = false
 
 var reactions : Dictionary[String, int] = {}
 var tower_damage : Dictionary[String, float] = {}
+#direct hits per wave (the damage numbers a player sees): [count, sum, biggest]
+var wave_hits : Dictionary[int, Array] = {}
+var current_wave : int = 0
 var enemy_damage : Dictionary[String, float] = {}
 var spawned : Dictionary[String, int] = {}
 var killed : Dictionary[String, int] = {}
@@ -161,6 +165,7 @@ func run(kit : TestKit, args : PackedStringArray) -> void:
 	GameSignals.element_reaction.connect(func(_p : Vector2, reaction : ElementReaction) -> void: _add(reactions, reaction.display_name, 1))
 	GameSignals.enemy_spawned.connect(_on_enemy_spawned)
 	GameSignals.enemy_hit.connect(_on_enemy_hit)
+	GameSignals.wave_started.connect(func(wave : int) -> void: current_wave = wave)
 	GameSignals.enemy_destroyed.connect(func(enemy : Enemy) -> void: _add(killed, _type_of(enemy), 1))
 	GameSignals.enemy_reached_end_point.connect(func(enemy : Enemy) -> void: _add(leaked, _type_of(enemy), 1))
 	GameSignals.level_completed.connect(func(_l : Level) -> void: result = "won")
@@ -199,7 +204,7 @@ func run(kit : TestKit, args : PackedStringArray) -> void:
 			level.upgrades._on_upgrade_card_selected(card)
 		#or the opening is as built as the gold allows (a player starts the wave rather than wait for gold that never comes)
 		var is_ready : bool = level.wave_runner.wave_number > 0 or towers.size() >= int(options.min_towers) \
-			or (not towers.is_empty() and not _tower_types().any(func(type : String) -> bool: return level.player_stats.has_enough_gold(_placement_price(level, type))))
+			or (not towers.is_empty() and not _tower_types().any(func(type : String) -> bool: return _is_wanted_now(type) and level.player_stats.has_enough_gold(_placement_price(level, type))))
 		var wants_early : bool = is_early
 		if smart != null:
 			is_ready = level.wave_runner.wave_number > 0 or (smart.is_idle and not towers.is_empty())
@@ -248,6 +253,11 @@ func run(kit : TestKit, args : PackedStringArray) -> void:
 	print("SOAK enemies spawned %s, killed %s, leaked %s" % [spawned, killed, leaked])
 	print("SOAK damage by tower %s" % _rounded(tower_damage))
 	print("SOAK damage by enemy %s" % _rounded(enemy_damage))
+	var hit_texts : PackedStringArray = []
+	for wave in wave_hits:
+		var hits : Array = wave_hits[wave]
+		hit_texts.append("w%d avg %.0f max %.0f" % [wave, hits[1] / maxf(hits[0], 1.0), hits[2]])
+	print("SOAK direct hits %s" % ", ".join(hit_texts))
 	print("SOAK reactions %s" % reactions)
 	print("SOAK synergies %s" % (level.synergies.counts if level.synergies != null else {}))
 	if chaos_interval > 0.0:
@@ -456,9 +466,15 @@ func _place_tower(kit : TestKit, level : Level) -> bool:
 			type_order.append(type)
 		if options.order == "shuffle":
 			type_order.shuffle()
+	#only a waiting Keeper left in this round of types: start the next round (it would rotate on its own forever)
+	if not type_order.any(func(order : int) -> bool: return _is_wanted_now(types[order])):
+		for order in types.size():
+			type_order.append(order)
 	#the next type it can afford goes first: waiting for a dear one before the first wave waits forever (no gold comes
 	#in until a wave starts; an Elder Drake first stalled level 1, 2026-11-25)
 	for index in type_order.size():
+		if not _is_wanted_now(types[type_order[index]]):
+			continue
 		if level.player_stats.has_enough_gold(_placement_price(level, types[type_order[index]])):
 			if index > 0:
 				type_order.push_front(type_order.pop_at(index))
@@ -475,6 +491,11 @@ func _place_tower(kit : TestKit, level : Level) -> bool:
 			type_order.pop_front()
 			return true
 	elif scene_name == HOARD:
+		#gold before guns lost wave 1 on 10 and 12 (2026-11-26): a Keeper waits for HOARD_MIN_TOWERS shooting towers
+		#(false: the gold goes to upgrades; true would wait for nothing before wave 1, no gold comes in then)
+		if towers.size() < HOARD_MIN_TOWERS:
+			type_order.push_back(type_order.pop_front())
+			return false
 		cell = _keeper_cell(level)
 	else:
 		cell = _best_tower_cell(level, _range_of(scene_name), _min_range_of(scene_name), scene_name)
@@ -488,6 +509,11 @@ func _place_tower(kit : TestKit, level : Level) -> bool:
 	towers.append(tower)
 	purchases[tower] = 0
 	return true
+
+
+## False for a Hoard Keeper before HOARD_MIN_TOWERS shooting towers stand (gold before guns).
+func _is_wanted_now(scene_name : String) -> bool:
+	return scene_name != HOARD or towers.size() >= HOARD_MIN_TOWERS
 
 
 #PlayerStats takes the price itself when the building is placed
@@ -579,17 +605,25 @@ func _best_tower_cell(level : Level, range_tiles : float, min_range_tiles : floa
 	var region : Rect2i = level.grid.astar_grid.region
 	var reach : float = range_tiles * range_tiles
 	var too_near : float = min_range_tiles * min_range_tiles
+	#a tower touching a wall makes the route cells beside it maze: worth a spot by the walls
+	var hold : float = _maze_hold(level)
+	var maze : Dictionary[Vector2i, bool] = _maze_cells(level)
+	var walls : Dictionary[Vector2i, bool] = {}
+	for building in level.all_buildings:
+		if is_instance_valid(building) and building.is_placed and building is Wall:
+			walls[building.grid_position] = true
 
 	for y in range(region.position.y, region.end.y):
 		for x in range(region.position.x, region.end.x):
 			var cell : Vector2i = Vector2i(x, y)
 			if on_route.has(cell) or not _is_free_to_build(level, cell):
 				continue
-			var covered : int = 0
+			var covered : float = 0.0
+			var touches_wall : bool = _touches_any(level, cell, walls)
 			for route_cell in route_cells:
 				var distance : float = Vector2(route_cell - cell).length_squared()
 				if distance <= reach and distance >= too_near:
-					covered += 1
+					covered += hold if maze.has(route_cell) or (touches_wall and distance <= 1.0) else 1.0
 			var score : float = covered - Vector2(cell - castle).length() * 0.01
 			if covered > 0:
 				score += _synergy_cells(partners, cell)
@@ -699,7 +733,8 @@ func _keeper_cell(level : Level) -> Vector2i:
 ## routes longest, without closing any route. A wall never pulls the route away from the towers.
 func _best_wall_cell(level : Level) -> Vector2i:
 	var best : Vector2i = Vector2i.MAX
-	var best_score : int = _wall_score(_open_routes(level))
+	var hold : float = _maze_hold(level)
+	var best_score : float = _wall_score(_open_routes(level), _maze_cells(level), hold)
 	var ends : Dictionary[Vector2i, bool] = {}
 	for spawner in level.get_spawners():
 		ends[level.grid.world_position_to_grid(spawner.global_position)] = true
@@ -713,7 +748,7 @@ func _best_wall_cell(level : Level) -> Vector2i:
 		level.grid.set_cell_weight(cell, 1.0)
 		if routes.is_empty():
 			continue
-		var score : int = _wall_score(routes)
+		var score : float = _wall_score(routes, _maze_cells(level, [cell]), hold)
 		if score > best_score:
 			best_score = score
 			best = cell
@@ -721,17 +756,56 @@ func _best_wall_cell(level : Level) -> Vector2i:
 
 
 #route cells in each tower's reach (a cell two towers reach counts twice) count far more than the
-#route's length, so a wall never trades one tower's time on the enemies for another's
-func _wall_score(routes : Array[Array]) -> int:
-	var covered : int = 0
+#route's length, so a wall never trades one tower's time on the enemies for another's; a maze cell (slowed)
+#counts hold times, since the enemies stay that much longer in reach
+func _wall_score(routes : Array[Array], maze : Dictionary[Vector2i, bool], hold : float) -> float:
+	var covered : float = 0.0
 	var length : int = 0
 	for route in routes:
 		length += route.size()
 		for cell in route:
+			var weight : float = hold if maze.has(cell) else 1.0
 			for tower in towers:
 				if is_instance_valid(tower) and Vector2(tower.grid_position - cell).length_squared() <= tower.get_meta(RANGE_META, 0.0) ** 2:
-					covered += 1
+					covered += weight
 	return covered * WALL_COVER_WEIGHT + length
+
+
+## The maze cells (LevelGrid.is_maze_cell, 2026-11-26): beside a wall, or beside a building (not a trap) that
+## touches a wall; extra_walls are walls the bot is weighing, counted as placed.
+func _maze_cells(level : Level, extra_walls : Array = []) -> Dictionary[Vector2i, bool]:
+	var walls : Dictionary[Vector2i, bool] = {}
+	for cell : Vector2i in extra_walls:
+		walls[cell] = true
+	var others : Array[Vector2i] = []
+	for building in level.all_buildings:
+		if not is_instance_valid(building) or not building.is_placed or building is Trap:
+			continue
+		if building is Wall:
+			walls[building.grid_position] = true
+		else:
+			others.append(building.grid_position)
+	var maze : Dictionary[Vector2i, bool] = {}
+	for cell in walls:
+		for neighbour in level.grid.get_surrounding_cells(cell):
+			maze[neighbour] = true
+	for cell in others:
+		if _touches_any(level, cell, walls):
+			for neighbour in level.grid.get_surrounding_cells(cell):
+				maze[neighbour] = true
+	return maze
+
+
+func _touches_any(level : Level, cell : Vector2i, cells : Dictionary[Vector2i, bool]) -> bool:
+	for neighbour in level.grid.get_surrounding_cells(cell):
+		if cells.has(neighbour):
+			return true
+	return false
+
+
+## How much longer an enemy stays on a maze cell (the maze slow, cards and talents in).
+func _maze_hold(level : Level) -> float:
+	return 1.0 / maxf(level.grid.maze_speed_factor - level.grid.talent_maze_slow, 0.4)
 
 
 #every route's cells, or none when one has to go through a building
@@ -916,6 +990,11 @@ func _on_enemy_hit(enemy : Enemy, hit : DamageData) -> void:
 	elif hit.is_overtime:
 		source += " effects"
 	_add(tower_damage, source, hit.damage)
+	if not hit.is_reaction and not hit.is_overtime:
+		var hits : Array = wave_hits.get_or_add(current_wave, [0, 0.0, 0.0])
+		hits[0] += 1
+		hits[1] += hit.damage
+		hits[2] = maxf(hits[2], hit.damage)
 	_add(enemy_damage, _type_of(enemy), hit.damage)
 	if smart != null:
 		smart.on_hit(hit)

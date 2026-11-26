@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://deufwssq4a6d3"
+path="res://.godot/imported/throne_columns.aseprite-c9ac54a9b23c91595b186d77441a7af1.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/lairs/throne_columns.aseprite"
+dest_files=["res://.godot/imported/throne_columns.aseprite-c9ac54a9b23c91595b186d77441a7af1.res"]
+
+[params]
+

@@ -11,6 +11,8 @@ var is_shielding : bool = false
 #a splash from another hit, which splashes no further
 var is_splash : bool = false
 var is_critical : bool = false
+#a tick of a continuous attack (the beam): its damage numbers add up on the enemy instead of popping one by one
+var is_continuous : bool = false
 
 var is_healing : bool = false :
 	get:

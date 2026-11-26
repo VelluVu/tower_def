@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dei12lewhk5og"
+path="res://.godot/imported/camp_fire.aseprite-3de018ce54e74fbda65e077604349bbb.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/lairs/camp_fire.aseprite"
+dest_files=["res://.godot/imported/camp_fire.aseprite-3de018ce54e74fbda65e077604349bbb.res"]
+
+[params]
+

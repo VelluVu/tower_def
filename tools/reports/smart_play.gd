@@ -353,7 +353,7 @@ func _upgrade_action(level : Level, unit : Building, routes : Array[Vector2i], t
 
 ## The route cell that adds the most tower damage on the routes as a wall, without closing a route.
 func _wall_action(level : Level) -> Dictionary:
-	var before : float = _maze_value(bot._open_routes(level))
+	var before : float = _maze_value(bot._open_routes(level), bot._maze_cells(level), bot._maze_hold(level))
 	var ends : Dictionary[Vector2i, bool] = {}
 	for spawner in level.get_spawners():
 		ends[level.grid.world_position_to_grid(spawner.global_position)] = true
@@ -368,7 +368,7 @@ func _wall_action(level : Level) -> Dictionary:
 		level.grid.set_cell_weight(cell, 1.0)
 		if routes.is_empty():
 			continue
-		var value : float = _maze_value(routes)
+		var value : float = _maze_value(routes, bot._maze_cells(level, [cell]), bot._maze_hold(level))
 		if value > best_value:
 			best_value = value
 			best_cell = cell
@@ -377,8 +377,9 @@ func _wall_action(level : Level) -> Dictionary:
 	return {"kind": Kind.Wall, "scene": bot.WALL, "cell": best_cell, "cost": bot._placement_price(level, bot.WALL), "gain": best_value - before}
 
 
-#every unit's damage per second times the route cells it reaches, plus a little for the length
-func _maze_value(routes : Array[Array]) -> float:
+#every unit's damage per second times the route cells it reaches, plus a little for the length; a maze cell
+#(slowed: beside a wall or a tower touching one) counts hold times, the enemies stay that much longer
+func _maze_value(routes : Array[Array], maze : Dictionary[Vector2i, bool] = {}, hold : float = 1.0) -> float:
 	var value : float = 0.0
 	var total_dps : float = 0.0
 	var length : int = 0
@@ -390,7 +391,7 @@ func _maze_value(routes : Array[Array]) -> float:
 			for route in routes:
 				for cell in route:
 					if Vector2(unit.grid_position - cell).length_squared() <= reach:
-						value += dps
+						value += dps * (hold if maze.has(cell) else 1.0)
 	for route in routes:
 		length += route.size()
 	return value + length * total_dps * WALL_LENGTH_VALUE

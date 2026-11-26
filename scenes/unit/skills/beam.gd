@@ -97,6 +97,7 @@ func _on_timer_tick() -> void:
 #damage_data is a new copy per call, nothing keeps it after the hit
 func _hit_target() -> void:
 	var hit : DamageData = damage_data
+	hit.is_continuous = true
 	target.take_damage(hit)
 	hit.queue_free()
 
@@ -107,6 +108,7 @@ func _hit_target() -> void:
 		if not EnemyQuery.is_hittable(enemy):
 			continue
 		var chain_hit : DamageData = damage_data
+		chain_hit.is_continuous = true
 		chain_hit.damage *= CHAIN_DAMAGE_SHARE
 		enemy.take_damage(chain_hit)
 		chain_hit.queue_free()
@@ -123,6 +125,7 @@ func _hit_line() -> void:
 		if closest.distance_to(enemy.body_center) > LINE_WIDTH:
 			continue
 		var line_hit : DamageData = damage_data
+		line_hit.is_continuous = true
 		line_hit.damage *= LINE_DAMAGE_SHARE
 		enemy.take_damage(line_hit)
 		line_hit.queue_free()

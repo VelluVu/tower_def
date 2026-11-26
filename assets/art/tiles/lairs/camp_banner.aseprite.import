@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dr5pk47g4hd3"
+path="res://.godot/imported/camp_banner.aseprite-8f65eb86c15feec5984fc0cb8b83a84b.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/lairs/camp_banner.aseprite"
+dest_files=["res://.godot/imported/camp_banner.aseprite-8f65eb86c15feec5984fc0cb8b83a84b.res"]
+
+[params]
+

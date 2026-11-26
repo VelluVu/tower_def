@@ -28,6 +28,25 @@ func test_trap_does_not_slow(kit : TestKit) -> void:
 	kit.check_near(grid.get_move_speed_factor(cell), 1.0, "traps are not part of the maze")
 
 
+#a tower alone bends the route but does not slow it; a tower touching a wall is part of the maze
+func test_tower_slows_only_with_a_wall(kit : TestKit) -> void:
+	await kit.load_level(3)
+	var grid : LevelGrid = kit.level.grid
+	var row_is_free : Callable = func(c : Vector2i) -> bool:
+		for x in range(-1, 4):
+			var other : Vector2i = c + Vector2i(x, 0)
+			if grid.get_move_speed_factor(other) != 1.0 or not grid.is_cell_walkable(other) or not grid.is_position_buildable(grid.grid_position_to_world(other)):
+				return false
+		return true
+	var cell : Vector2i = kit.find_cell(row_is_free)
+	kit.check(cell != Vector2i.MAX, "found a free row")
+	await kit.place("puffe_bolter", cell + Vector2i.RIGHT)
+	kit.check_near(grid.get_move_speed_factor(cell), 1.0, "a tower alone does not slow")
+	kit.check(not grid.is_maze_cell(cell), "a tower alone is not the maze")
+	await kit.place("wall", cell + Vector2i(2, 0))
+	kit.check_near(grid.get_move_speed_factor(cell), LevelGrid.MAZE_SPEED_FACTOR, "a tower touching a wall slows")
+
+
 func test_turn_pause_on_route(kit : TestKit) -> void:
 	await kit.load_level(1)
 	var enemy : Enemy = kit.spawn_enemy("weakling")

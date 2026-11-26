@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bmquym1avuhof"
+path="res://.godot/imported/camp_palisade.aseprite-4b021c4174e88b9cce6bba25ccd510e6.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/lairs/camp_palisade.aseprite"
+dest_files=["res://.godot/imported/camp_palisade.aseprite-4b021c4174e88b9cce6bba25ccd510e6.res"]
+
+[params]
+

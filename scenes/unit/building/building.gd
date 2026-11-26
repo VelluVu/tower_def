@@ -61,6 +61,8 @@ var is_overlapping_area : bool = false
 var is_overlapping_body : bool = false
 var id : int = 0
 var grid_position : Vector2i = Vector2i(0,0)
+#the level's build round when it was placed: a sell in that round refunds in full
+var placed_round : int = -1
 
 var level : Level :
 	get :
@@ -95,8 +97,18 @@ func place(value : Vector2) -> void:
 	global_position = value
 	grid_position = level.grid.world_position_to_grid(global_position)
 	level.grid.set_cell_weight(grid_position, astar_weight)
+	placed_round = level.build_round
 	is_placed = true
 	GameSignals.building_placed.emit(self)
+
+
+## Gold a sell gives back now: the price paid, all of it in the round it was placed in.
+func get_sell_refund() -> float:
+	return UpgradeRules.sell_refund(stats.get_stat_value(Utils.StatType.Price), is_sold_in_placed_round())
+
+
+func is_sold_in_placed_round() -> bool:
+	return level != null and placed_round == level.build_round
 
 
 func take_damage(damage_data : DamageData) -> void:

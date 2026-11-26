@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://7ehoeukatyhn"
+path="res://.godot/imported/camp_command_tent.aseprite-9984e89db0af2bb2bc2a1083f8b47d60.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/lairs/camp_command_tent.aseprite"
+dest_files=["res://.godot/imported/camp_command_tent.aseprite-9984e89db0af2bb2bc2a1083f8b47d60.res"]
+
+[params]
+

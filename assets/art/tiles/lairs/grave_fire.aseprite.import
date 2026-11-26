@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://d0kbuy147fgya"
+path="res://.godot/imported/grave_fire.aseprite-35db2c6e202fec644efbcc74aa9790ad.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/lairs/grave_fire.aseprite"
+dest_files=["res://.godot/imported/grave_fire.aseprite-35db2c6e202fec644efbcc74aa9790ad.res"]
+
+[params]
+

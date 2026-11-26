@@ -30,7 +30,9 @@ const RESIST_PART_SEPARATION : int = 1
 const RESISTS_COLOR : Color = Color("86b8a0")
 const TACTIC_LABEL_TEXT : String = "Target"
 const SELL_TOOLTIP : String = "Sell  [%s]
-Refunds its price; gold spent on its upgrades is lost."
+Refunds %d gold: its full price in the wave or build break it was placed in, %d%% after that. Gold spent on its upgrades is lost."
+const SELL_TEXT : String = "Sell"
+const SELL_VALUE_TEXT : String = "Sell %d"
 const UPGRADE_KEY_SUFFIX : String = "  [%s]"
 const ELEMENT_CHOICE_TOOLTIP : String = "
 Pick one element: it stays for this tower."
@@ -56,6 +58,8 @@ var rally_button : Button = null
 var wall_group_row : HBoxContainer = null
 #the shown gold upgrades, for the upgrade shortcut
 var upgrade_options : Array[GoldUpgradeOption] = []
+#the selected building, for its sell refund (it drops to a share once the round it was placed in ends)
+var selected_building : Building = null
 
 var horizontal_stat_fields : Array[HorizontalStatField] :
 	get:
@@ -91,6 +95,8 @@ func _ready() -> void:
 	resists_row.hide()
 	unit_info_grid_container.add_sibling(resists_row)
 	GameSignals.selected_unit.connect(_on_selected_unit_node)
+	GameSignals.wave_started.connect(func(_wave : int) -> void: _update_sell())
+	GameSignals.wave_cleared.connect(func(_wave : int) -> void: _update_sell())
 	_create_tactic_menu()
 	resists_row.add_sibling(tactic_row)
 	UISignals.target_tactic_changed.connect(_on_target_tactic_changed)
@@ -203,6 +209,18 @@ func _on_selected_unit_node(unit : Node2D) -> void:
 	if unit is Enemy and unit.resistances != null:
 		parts = unit.resistances.get_parts()
 	_show_resists(parts)
+	selected_building = unit as Building if is_instance_valid(unit) else null
+	_update_sell()
+
+
+func _update_sell() -> void:
+	var key : String = InputManager.get_binding_text(InputManager.ACTION_SELL_SELECTED)
+	if not is_instance_valid(selected_building):
+		sell_button.text = SELL_TEXT
+		return
+	var refund : float = selected_building.get_sell_refund()
+	sell_button.text = SELL_VALUE_TEXT % roundi(refund)
+	sell_button.tooltip_text = SELL_TOOLTIP % [key, roundi(refund), roundi(UpgradeRules.LATE_SELL_SHARE * 100.0)]
 
 
 ## "Resists" then an icon (or a tower kind's name) and the share for each resistance.
@@ -283,7 +301,7 @@ func _on_gold_upgrades_changed(options : Array[GoldUpgradeOption]) -> void:
 		var button : Button = _create_upgrade_button(options[index], index)
 		button.tooltip_text = get_upgrade_tooltip(options[index], index == shortcut_index)
 		upgrade_option_container.add_child(button)
-	sell_button.tooltip_text = SELL_TOOLTIP % InputManager.get_binding_text(InputManager.ACTION_SELL_SELECTED)
+	_update_sell()
 
 	_update_button_row()
 

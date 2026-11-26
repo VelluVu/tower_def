@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cwqcg3qlot708"
+path="res://.godot/imported/throne_brazier.aseprite-6a80d81c20b308e4ab0ab69267f3888d.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/lairs/throne_brazier.aseprite"
+dest_files=["res://.godot/imported/throne_brazier.aseprite-6a80d81c20b308e4ab0ab69267f3888d.res"]
+
+[params]
+

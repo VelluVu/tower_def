@@ -10,10 +10,12 @@ uniform vec4 fog_color : source_color = vec4(0.122, 0.078, 0.098, 1.0);
 // the playfield in world pixels: x, y, width, height
 uniform vec4 playfield = vec4(0.0, 0.0, 768.0, 256.0);
 uniform float fog_start : hint_range(0.0, 32.0) = 2.0;
-uniform float fog_depth : hint_range(8.0, 160.0) = 64.0;
+uniform float fog_depth : hint_range(8.0, 320.0) = 64.0;
 // how far past the edge the colours are fully greyed, and how dark that grey gets
 uniform float grey_depth : hint_range(1.0, 32.0) = 8.0;
 uniform float grey_dim : hint_range(0.0, 1.0) = 0.45;
+// how much colour the grey takes away (1 = full grey; a lair whose camp should keep its colours lowers it)
+uniform float grey_strength : hint_range(0.0, 1.0) = 1.0;
 uniform float drift_amount : hint_range(0.0, 1.0) = 0.35;
 uniform float drift_scale : hint_range(4.0, 96.0) = 28.0;
 uniform float drift_speed : hint_range(0.0, 16.0) = 4.0;
@@ -69,7 +71,7 @@ void fragment()
 	float grey = floor(clamp(distance_out / grey_depth, 0.0, 1.0) * 3.0 + 0.999) / 3.0;
 	vec3 under = texture(screen_texture, SCREEN_UV).rgb;
 	vec3 greyed = mix(vec3(dot(under, vec3(0.299, 0.587, 0.114))), fog_color.rgb, grey_dim * grey);
-	vec3 out_of_play = mix(under, greyed, grey);
+	vec3 out_of_play = mix(under, greyed, grey * grey_strength);
 
 	float fogged = step(bayer(pixel) + 0.001, amount);
 	COLOR = vec4(mix(out_of_play, fog_color.rgb, fogged), step(0.001, distance_out));

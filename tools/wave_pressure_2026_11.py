@@ -46,7 +46,8 @@ PUSH_NORMAL = {
 # enemy walking it): the roomiest maps (`gd.py levels`, "maze room": 7+ open cells per route cell) get a swarm of their
 # area's group unit from wave 2, growing each wave; the retune then lowers their health, so the waves end up with more,
 # weaker enemies. Spawners are fixed afterwards by tools/match_spawns.py --fix (swarms come from roosts and hollows).
-MAZE_LEVELS = {6: "swarmling", 14: "leechling", 15: "leechling", 16: "leechling", 25: "assault_dog", 31: "assault_dog",
+# 6 left out since 2026-11-26: tools/caves_pass_2026_11_26.py writes the Caves' waves whole
+MAZE_LEVELS = {14: "leechling", 15: "leechling", 16: "leechling", 25: "assault_dog", 31: "assault_dog",
                37: "scarab", 46: "scarab", 47: "scarab", 52: "ember_wisp", 53: "ember_wisp", 55: "ember_wisp", 59: "ember_wisp"}
 SWARM_BASE, SWARM_GROWTH, SWARM_INTERVAL, SWARM_DELAY = 6, 3, 0.3, 4.0
 

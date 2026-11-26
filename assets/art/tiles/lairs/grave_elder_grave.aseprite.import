@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cn0lrsmogj0oc"
+path="res://.godot/imported/grave_elder_grave.aseprite-70bbe02657330ae4dd0bf93f81d92407.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/lairs/grave_elder_grave.aseprite"
+dest_files=["res://.godot/imported/grave_elder_grave.aseprite-70bbe02657330ae4dd0bf93f81d92407.res"]
+
+[params]
+

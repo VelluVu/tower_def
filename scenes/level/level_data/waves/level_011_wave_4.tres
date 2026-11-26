@@ -10,33 +10,33 @@
 [sub_resource type="Resource" id="Resource_group1"]
 script = ExtResource("2_group")
 enemy_scene = ExtResource("e_soldier")
-count = 16
-interval = 2.0
+count = 18
+interval = 1.8
 
 [sub_resource type="Resource" id="Resource_group2"]
 script = ExtResource("2_group")
 enemy_scene = ExtResource("e_scout")
-count = 14
-interval = 1.4
-delay = 3.0
+count = 16
+interval = 1.3
+delay = 4.0
 spawner_id = 1
 
 [sub_resource type="Resource" id="Resource_group3"]
 script = ExtResource("2_group")
 enemy_scene = ExtResource("e_assault_dog")
-count = 12
+count = 14
 interval = 0.3
-delay = 18.0
+delay = 12.0
 spawner_id = 1
 
-[sub_resource type="Resource" id="Resource_eagles"]
+[sub_resource type="Resource" id="Resource_group4"]
 script = ExtResource("2_group")
 enemy_scene = ExtResource("e_giant_eagle")
-count = 6
-interval = 1.4
-delay = 8.0
+count = 5
+interval = 1.6
+delay = 18.0
 
 [resource]
 script = ExtResource("1_wave")
-spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_group3"), SubResource("Resource_eagles")])
+spawn_groups = Array[ExtResource("2_group")]([SubResource("Resource_group1"), SubResource("Resource_group2"), SubResource("Resource_group3"), SubResource("Resource_group4")])
 early_start_bonus = 2.0

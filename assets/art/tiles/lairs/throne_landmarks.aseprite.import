@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://prtld8ldtdwl"
+path="res://.godot/imported/throne_landmarks.aseprite-e4bfbb27c070a2aded23ba0c2a50c3ff.res"
+
+[deps]
+
+source_file="res://assets/art/tiles/lairs/throne_landmarks.aseprite"
+dest_files=["res://.godot/imported/throne_landmarks.aseprite-e4bfbb27c070a2aded23ba0c2a50c3ff.res"]
+
+[params]
+
