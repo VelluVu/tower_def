@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="LevelData" format=3]
+[gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://8mda1vvmd0l6"]
 
 [ext_resource type="Script" uid="uid://cpw7ia3ek2yvs" path="res://scenes/level/level_data/wave_data.gd" id="0_wave"]
 [ext_resource type="Script" uid="uid://c0cehaxum4b45" path="res://scenes/level/level_data/level_data.gd" id="1_level"]
 [ext_resource type="Script" uid="uid://bu8xwv71c6bbj" path="res://scenes/level/level_data/puffe_line.gd" id="9_line"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/modes/level_027_hard.tres" id="hard_mode"]
 [ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_027_wave_1.tres" id="w1"]
 [ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_027_wave_2.tres" id="w2"]
 [ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_027_wave_3.tres" id="w3"]
@@ -10,11 +11,15 @@
 [ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_027_wave_5.tres" id="w5"]
 [ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_027_wave_6.tres" id="w6"]
 [ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_027_wave_7.tres" id="w7"]
-[ext_resource type="Resource" path="res://scenes/level/level_data/modes/level_027_hard.tres" id="hard_mode"]
 
 [sub_resource type="Resource" id="PuffeLine_1"]
 script = ExtResource("9_line")
 text = "A mill stream with two fords. Every human has to cross at one of them."
+
+[sub_resource type="Resource" id="PuffeLine_buffer"]
+script = ExtResource("9_line")
+text = "Meet the Buffer! It never bites, it drums. Every drakeling near it fights harder, and its Physical drum cracks the knights' armour."
+mood = 1
 
 [sub_resource type="Resource" id="PuffeLine_2"]
 script = ExtResource("9_line")
@@ -28,19 +33,6 @@ trigger = 3
 wave_number = 3
 text = "Armored knights shrug off the small hits. Slow them at the fords."
 
-[sub_resource type="Resource" id="PuffeLine_4"]
-script = ExtResource("9_line")
-trigger = 4
-wave_number = 7
-text = "The ford is ours. Their camp cannot be far now."
-mood = 1
-
-[sub_resource type="Resource" id="PuffeLine_buffer"]
-script = ExtResource("9_line")
-trigger = 1
-text = "Meet the Buffer! It never bites, it drums. Every drakeling near it fights harder, and its Physical drum cracks the knights' armour."
-mood = 1
-
 [sub_resource type="Resource" id="PuffeLine_u1125_standard_bearer"]
 script = ExtResource("9_line")
 trigger = 3
@@ -48,9 +40,15 @@ wave_number = 5
 text = "Their standard! Near that banner no frost slows them down. Bring down the bearer first."
 mood = 3
 
+[sub_resource type="Resource" id="PuffeLine_4"]
+script = ExtResource("9_line")
+trigger = 4
+wave_number = 7
+text = "The ford is ours. Their camp cannot be far now."
+mood = 1
+
 [resource]
 script = ExtResource("1_level")
-hard_mode = ExtResource("hard_mode")
 level_name = "Millstream Ford"
 story_text = "A mill stream runs across the fields, and the humans must cross it at one of its two fords. Their cavalry rides out for the first time."
 starting_gold = 27.0
@@ -58,5 +56,6 @@ waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtR
 puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_buffer"), SubResource("PuffeLine_2"), SubResource("PuffeLine_3"), SubResource("PuffeLine_u1125_standard_bearer"), SubResource("PuffeLine_4")])
 first_wave_health = 1.9
 last_wave_health = 4.6
+hard_mode = ExtResource("hard_mode")
 health_scale = 1.954
 hard_health_scale = 1.428

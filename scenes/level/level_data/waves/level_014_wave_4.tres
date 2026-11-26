@@ -1,10 +1,10 @@
-[gd_resource type="Resource" script_class="WaveData" format=3]
+[gd_resource type="Resource" script_class="WaveData" format=3 uid="uid://drwqatb61wpru"]
 
 [ext_resource type="Script" uid="uid://cpw7ia3ek2yvs" path="res://scenes/level/level_data/wave_data.gd" id="1_wave"]
 [ext_resource type="Script" uid="uid://bbhd3iyjav4h2" path="res://scenes/level/level_data/spawn_group_data.gd" id="2_group"]
-[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/fastswampling.tscn" id="3_fastswampling"]
+[ext_resource type="PackedScene" uid="uid://bsgwxemtlicy4" path="res://scenes/unit/enemy/enemies/fastswampling.tscn" id="3_fastswampling"]
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/giant_wasp.tscn" id="4_giant_wasp"]
-[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/swampling.tscn" id="5_swampling"]
+[ext_resource type="PackedScene" uid="uid://ddq4tsy8ik5n5" path="res://scenes/unit/enemy/enemies/swampling.tscn" id="5_swampling"]
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/leechling.tscn" id="e_push_leechling"]
 
 [sub_resource type="Resource" id="Resource_group1"]

@@ -1,17 +1,16 @@
-[gd_resource type="Resource" script_class="WaveData" format=3]
+[gd_resource type="Resource" script_class="WaveData" format=3 uid="uid://ccbqh7cnojx1p"]
 
 [ext_resource type="Script" uid="uid://cpw7ia3ek2yvs" path="res://scenes/level/level_data/wave_data.gd" id="1_wave"]
 [ext_resource type="Script" uid="uid://bbhd3iyjav4h2" path="res://scenes/level/level_data/spawn_group_data.gd" id="2_group"]
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/bone_rider.tscn" id="e_bone_rider"]
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/bone_thrall.tscn" id="e_bone_thrall"]
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/grave_caller.tscn" id="e_grave_caller"]
-[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/rusted_ballista.tscn" id="e_rusted_ballista"]
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/scarab.tscn" id="e_push_scarab"]
+[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/rusted_ballista.tscn" id="e_rusted_ballista"]
 
 [sub_resource type="Resource" id="Resource_group1"]
 script = ExtResource("2_group")
 enemy_scene = ExtResource("e_bone_rider")
-count = 5
 interval = 2.6
 
 [sub_resource type="Resource" id="Resource_group2"]

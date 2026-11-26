@@ -1,6 +1,6 @@
-[gd_resource type="SpriteFrames" load_steps=8 format=3]
+[gd_resource type="SpriteFrames" format=3 uid="uid://c5g4tww26silj"]
 
-[ext_resource type="Texture2D" path="res://assets/art/ui/map_landmarks/hydra_heads.png" id="1_sheet"]
+[ext_resource type="Texture2D" uid="uid://brsb7ue2scro6" path="res://assets/art/ui/map_landmarks/hydra_heads.png" id="1_sheet"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0"]
 atlas = ExtResource("1_sheet")
@@ -47,7 +47,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5")
 }],
-"loop": true,
+"loop": 1,
 "name": &"IDLE",
 "speed": 5.556
 }]

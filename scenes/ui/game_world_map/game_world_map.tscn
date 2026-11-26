@@ -4,42 +4,42 @@
 [ext_resource type="Script" uid="uid://dm5r0d1ovbmdf" path="res://scenes/ui/game_world_map/map_level_element.gd" id="2_uc0yk"]
 [ext_resource type="Texture2D" uid="uid://c8v3ng3qtxue7" path="res://assets/art/ui/world_map_big.png" id="2_velws"]
 [ext_resource type="Texture2D" uid="uid://dvame6v3pp2k8" path="res://assets/art/ui/lock.png" id="4_wvp4h"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/ballista_wreck_frames.tres" id="lm_ballista_wreck"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/banner_road_frames.tres" id="lm_banner_road"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/black_gate_frames.tres" id="lm_black_gate"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/bone_gate_frames.tres" id="lm_bone_gate"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/burned_village_frames.tres" id="lm_burned_village"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/causeway_frames.tres" id="lm_causeway"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/cinder_forge_frames.tres" id="lm_cinder_forge"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/drake_ribs_frames.tres" id="lm_drake_ribs"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/drowned_chapel_frames.tres" id="lm_drowned_chapel"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/drowned_trees_frames.tres" id="lm_drowned_trees"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/fallen_elder_frames.tres" id="lm_fallen_elder"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/giant_frog_frames.tres" id="lm_giant_frog"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/glass_shards_frames.tres" id="lm_glass_shards"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/haystack_farm_frames.tres" id="lm_haystack_farm"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/hydra_heads_frames.tres" id="lm_hydra_heads"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/lava_falls_frames.tres" id="lm_lava_falls"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/mire_gate_frames.tres" id="lm_mire_gate"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/monastery_frames.tres" id="lm_monastery"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/oasis_palms_frames.tres" id="lm_oasis_palms"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/obsidian_spires_frames.tres" id="lm_obsidian_spires"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/orchard_frames.tres" id="lm_orchard"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/phoenix_roost_frames.tres" id="lm_phoenix_roost"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/scarab_mound_frames.tres" id="lm_scarab_mound"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/scarecrow_frames.tres" id="lm_scarecrow"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/siege_lines_frames.tres" id="lm_siege_lines"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/sunken_village_frames.tres" id="lm_sunken_village"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/titan_hand_frames.tres" id="lm_titan_hand"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/twin_keeps_frames.tres" id="lm_twin_keeps"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/war_camp_frames.tres" id="lm_war_camp"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/wasp_hive_frames.tres" id="lm_wasp_hive"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/watchtowers_frames.tres" id="lm_watchtowers"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/water_mill_frames.tres" id="lm_water_mill"]
+[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/windmill_frames.tres" id="lm_windmill"]
 [ext_resource type="Script" uid="uid://j2x1ispkm357" path="res://scenes/ui/game_world_map/map_ambience.gd" id="map_ambience"]
 [ext_resource type="Script" uid="uid://cyvjbi0vvplio" path="res://scenes/ui/game_world_map/map_trails.gd" id="map_trails"]
-[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/wyrm_throne_frames.tres" id="wyrm_throne_frames"]
-[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/drowned_chapel_frames.tres" id="lm_drowned_chapel"]
-[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/wasp_hive_frames.tres" id="lm_wasp_hive"]
-[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/sunken_village_frames.tres" id="lm_sunken_village"]
-[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/hydra_heads_frames.tres" id="lm_hydra_heads"]
-[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/burned_village_frames.tres" id="lm_burned_village"]
-[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/windmill_frames.tres" id="lm_windmill"]
-[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/watchtowers_frames.tres" id="lm_watchtowers"]
-[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/siege_lines_frames.tres" id="lm_siege_lines"]
-[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/war_camp_frames.tres" id="lm_war_camp"]
-[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/drake_ribs_frames.tres" id="lm_drake_ribs"]
-[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/oasis_palms_frames.tres" id="lm_oasis_palms"]
-[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/bone_gate_frames.tres" id="lm_bone_gate"]
-[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/fallen_elder_frames.tres" id="lm_fallen_elder"]
-[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/monastery_frames.tres" id="lm_monastery"]
-[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/cinder_forge_frames.tres" id="lm_cinder_forge"]
-[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/phoenix_roost_frames.tres" id="lm_phoenix_roost"]
-[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/black_gate_frames.tres" id="lm_black_gate"]
-[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/mire_gate_frames.tres" id="lm_mire_gate"]
-[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/giant_frog_frames.tres" id="lm_giant_frog"]
-[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/causeway_frames.tres" id="lm_causeway"]
-[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/drowned_trees_frames.tres" id="lm_drowned_trees"]
-[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/scarecrow_frames.tres" id="lm_scarecrow"]
-[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/haystack_farm_frames.tres" id="lm_haystack_farm"]
-[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/water_mill_frames.tres" id="lm_water_mill"]
-[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/orchard_frames.tres" id="lm_orchard"]
-[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/banner_road_frames.tres" id="lm_banner_road"]
-[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/ballista_wreck_frames.tres" id="lm_ballista_wreck"]
-[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/scarab_mound_frames.tres" id="lm_scarab_mound"]
-[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/twin_keeps_frames.tres" id="lm_twin_keeps"]
-[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/obsidian_spires_frames.tres" id="lm_obsidian_spires"]
-[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/lava_falls_frames.tres" id="lm_lava_falls"]
-[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/glass_shards_frames.tres" id="lm_glass_shards"]
-[ext_resource type="SpriteFrames" path="res://scenes/ui/game_world_map/frames/titan_hand_frames.tres" id="lm_titan_hand"]
+[ext_resource type="SpriteFrames" uid="uid://w1jdqykhh37w" path="res://scenes/ui/game_world_map/frames/wyrm_throne_frames.tres" id="wyrm_throne_frames"]
 
 [node name="GameWorldMap" type="Control" unique_id=1678737933]
 layout_mode = 3
@@ -83,31 +83,31 @@ animation = &"IDLE"
 autoplay = "IDLE"
 centered = false
 
-[node name="Landmark_DrownedChapel" type="AnimatedSprite2D" parent="MapView/Map"]
-position = Vector2(104, 156)
+[node name="Landmark_DrownedChapel" type="AnimatedSprite2D" parent="MapView/Map" unique_id=1807973890]
+position = Vector2(87, 148)
 scale = Vector2(2, 2)
 sprite_frames = ExtResource("lm_drowned_chapel")
 animation = &"IDLE"
 autoplay = "IDLE"
 centered = false
 
-[node name="Landmark_WaspHive" type="AnimatedSprite2D" parent="MapView/Map"]
-position = Vector2(176, 206)
+[node name="Landmark_WaspHive" type="AnimatedSprite2D" parent="MapView/Map" unique_id=382014623]
+position = Vector2(202, 141)
 scale = Vector2(2, 2)
 sprite_frames = ExtResource("lm_wasp_hive")
 animation = &"IDLE"
 autoplay = "IDLE"
 centered = false
 
-[node name="Landmark_SunkenVillage" type="AnimatedSprite2D" parent="MapView/Map"]
-position = Vector2(278, 208)
+[node name="Landmark_SunkenVillage" type="AnimatedSprite2D" parent="MapView/Map" unique_id=1484390515]
+position = Vector2(266, 147)
 scale = Vector2(2, 2)
 sprite_frames = ExtResource("lm_sunken_village")
 animation = &"IDLE"
 autoplay = "IDLE"
 centered = false
 
-[node name="Landmark_HydraHeads" type="AnimatedSprite2D" parent="MapView/Map"]
+[node name="Landmark_HydraHeads" type="AnimatedSprite2D" parent="MapView/Map" unique_id=715550657]
 position = Vector2(440, 294)
 scale = Vector2(2, 2)
 sprite_frames = ExtResource("lm_hydra_heads")
@@ -115,23 +115,23 @@ animation = &"IDLE"
 autoplay = "IDLE"
 centered = false
 
-[node name="Landmark_BurnedVillage" type="AnimatedSprite2D" parent="MapView/Map"]
-position = Vector2(532, 408)
+[node name="Landmark_BurnedVillage" type="AnimatedSprite2D" parent="MapView/Map" unique_id=1415844240]
+position = Vector2(532, 436)
 scale = Vector2(2, 2)
 sprite_frames = ExtResource("lm_burned_village")
 animation = &"IDLE"
 autoplay = "IDLE"
 centered = false
 
-[node name="Landmark_Windmill" type="AnimatedSprite2D" parent="MapView/Map"]
-position = Vector2(592, 588)
+[node name="Landmark_Windmill" type="AnimatedSprite2D" parent="MapView/Map" unique_id=1449315352]
+position = Vector2(580, 522)
 scale = Vector2(2, 2)
 sprite_frames = ExtResource("lm_windmill")
 animation = &"IDLE"
 autoplay = "IDLE"
 centered = false
 
-[node name="Landmark_Watchtowers" type="AnimatedSprite2D" parent="MapView/Map"]
+[node name="Landmark_Watchtowers" type="AnimatedSprite2D" parent="MapView/Map" unique_id=208394882]
 position = Vector2(620, 430)
 scale = Vector2(2, 2)
 sprite_frames = ExtResource("lm_watchtowers")
@@ -139,7 +139,7 @@ animation = &"IDLE"
 autoplay = "IDLE"
 centered = false
 
-[node name="Landmark_SiegeLines" type="AnimatedSprite2D" parent="MapView/Map"]
+[node name="Landmark_SiegeLines" type="AnimatedSprite2D" parent="MapView/Map" unique_id=830667976]
 position = Vector2(544, 354)
 scale = Vector2(2, 2)
 sprite_frames = ExtResource("lm_siege_lines")
@@ -147,7 +147,7 @@ animation = &"IDLE"
 autoplay = "IDLE"
 centered = false
 
-[node name="Landmark_WarCamp" type="AnimatedSprite2D" parent="MapView/Map"]
+[node name="Landmark_WarCamp" type="AnimatedSprite2D" parent="MapView/Map" unique_id=1422793664]
 position = Vector2(476, 238)
 scale = Vector2(2, 2)
 sprite_frames = ExtResource("lm_war_camp")
@@ -155,7 +155,7 @@ animation = &"IDLE"
 autoplay = "IDLE"
 centered = false
 
-[node name="Landmark_DrakeRibs" type="AnimatedSprite2D" parent="MapView/Map"]
+[node name="Landmark_DrakeRibs" type="AnimatedSprite2D" parent="MapView/Map" unique_id=47764210]
 position = Vector2(634, 240)
 scale = Vector2(2, 2)
 sprite_frames = ExtResource("lm_drake_ribs")
@@ -163,47 +163,47 @@ animation = &"IDLE"
 autoplay = "IDLE"
 centered = false
 
-[node name="Landmark_OasisPalms" type="AnimatedSprite2D" parent="MapView/Map"]
-position = Vector2(580, 290)
+[node name="Landmark_OasisPalms" type="AnimatedSprite2D" parent="MapView/Map" unique_id=601328592]
+position = Vector2(592, 275)
 scale = Vector2(2, 2)
 sprite_frames = ExtResource("lm_oasis_palms")
 animation = &"IDLE"
 autoplay = "IDLE"
 centered = false
 
-[node name="Landmark_BoneGate" type="AnimatedSprite2D" parent="MapView/Map"]
-position = Vector2(686, 558)
+[node name="Landmark_BoneGate" type="AnimatedSprite2D" parent="MapView/Map" unique_id=460270749]
+position = Vector2(701, 524)
 scale = Vector2(2, 2)
 sprite_frames = ExtResource("lm_bone_gate")
 animation = &"IDLE"
 autoplay = "IDLE"
 centered = false
 
-[node name="Landmark_FallenElder" type="AnimatedSprite2D" parent="MapView/Map"]
-position = Vector2(760, 520)
+[node name="Landmark_FallenElder" type="AnimatedSprite2D" parent="MapView/Map" unique_id=1519151299]
+position = Vector2(760, 506)
 scale = Vector2(2, 2)
 sprite_frames = ExtResource("lm_fallen_elder")
 animation = &"IDLE"
 autoplay = "IDLE"
 centered = false
 
-[node name="Landmark_Monastery" type="AnimatedSprite2D" parent="MapView/Map"]
-position = Vector2(936, 464)
+[node name="Landmark_Monastery" type="AnimatedSprite2D" parent="MapView/Map" unique_id=2055991758]
+position = Vector2(976, 429)
 scale = Vector2(2, 2)
 sprite_frames = ExtResource("lm_monastery")
 animation = &"IDLE"
 autoplay = "IDLE"
 centered = false
 
-[node name="Landmark_CinderForge" type="AnimatedSprite2D" parent="MapView/Map"]
-position = Vector2(766, 146)
+[node name="Landmark_CinderForge" type="AnimatedSprite2D" parent="MapView/Map" unique_id=1088116045]
+position = Vector2(827, 92)
 scale = Vector2(2, 2)
 sprite_frames = ExtResource("lm_cinder_forge")
 animation = &"IDLE"
 autoplay = "IDLE"
 centered = false
 
-[node name="Landmark_PhoenixRoost" type="AnimatedSprite2D" parent="MapView/Map"]
+[node name="Landmark_PhoenixRoost" type="AnimatedSprite2D" parent="MapView/Map" unique_id=72466928]
 position = Vector2(748, 206)
 scale = Vector2(2, 2)
 sprite_frames = ExtResource("lm_phoenix_roost")
@@ -211,7 +211,7 @@ animation = &"IDLE"
 autoplay = "IDLE"
 centered = false
 
-[node name="Landmark_BlackGate" type="AnimatedSprite2D" parent="MapView/Map"]
+[node name="Landmark_BlackGate" type="AnimatedSprite2D" parent="MapView/Map" unique_id=1588416197]
 position = Vector2(810, 280)
 scale = Vector2(2, 2)
 sprite_frames = ExtResource("lm_black_gate")
@@ -219,31 +219,31 @@ animation = &"IDLE"
 autoplay = "IDLE"
 centered = false
 
-[node name="Landmark_MireGate" type="AnimatedSprite2D" parent="MapView/Map"]
-position = Vector2(100, 272)
+[node name="Landmark_MireGate" type="AnimatedSprite2D" parent="MapView/Map" unique_id=1449222827]
+position = Vector2(89, 74)
 scale = Vector2(2, 2)
 sprite_frames = ExtResource("lm_mire_gate")
 animation = &"IDLE"
 autoplay = "IDLE"
 centered = false
 
-[node name="Landmark_GiantFrog" type="AnimatedSprite2D" parent="MapView/Map"]
-position = Vector2(166, 120)
+[node name="Landmark_GiantFrog" type="AnimatedSprite2D" parent="MapView/Map" unique_id=1631693323]
+position = Vector2(162, 68)
 scale = Vector2(2, 2)
 sprite_frames = ExtResource("lm_giant_frog")
 animation = &"IDLE"
 autoplay = "IDLE"
 centered = false
 
-[node name="Landmark_Causeway" type="AnimatedSprite2D" parent="MapView/Map"]
-position = Vector2(260, 132)
+[node name="Landmark_Causeway" type="AnimatedSprite2D" parent="MapView/Map" unique_id=475120518]
+position = Vector2(260, 88)
 scale = Vector2(2, 2)
 sprite_frames = ExtResource("lm_causeway")
 animation = &"IDLE"
 autoplay = "IDLE"
 centered = false
 
-[node name="Landmark_DrownedTrees" type="AnimatedSprite2D" parent="MapView/Map"]
+[node name="Landmark_DrownedTrees" type="AnimatedSprite2D" parent="MapView/Map" unique_id=800591504]
 position = Vector2(374, 198)
 scale = Vector2(2, 2)
 sprite_frames = ExtResource("lm_drowned_trees")
@@ -251,47 +251,47 @@ animation = &"IDLE"
 autoplay = "IDLE"
 centered = false
 
-[node name="Landmark_Scarecrow" type="AnimatedSprite2D" parent="MapView/Map"]
-position = Vector2(342, 420)
+[node name="Landmark_Scarecrow" type="AnimatedSprite2D" parent="MapView/Map" unique_id=1832238948]
+position = Vector2(363, 405)
 scale = Vector2(2, 2)
 sprite_frames = ExtResource("lm_scarecrow")
 animation = &"IDLE"
 autoplay = "IDLE"
 centered = false
 
-[node name="Landmark_HaystackFarm" type="AnimatedSprite2D" parent="MapView/Map"]
-position = Vector2(380, 480)
+[node name="Landmark_HaystackFarm" type="AnimatedSprite2D" parent="MapView/Map" unique_id=81496564]
+position = Vector2(380, 464)
 scale = Vector2(2, 2)
 sprite_frames = ExtResource("lm_haystack_farm")
 animation = &"IDLE"
 autoplay = "IDLE"
 centered = false
 
-[node name="Landmark_WaterMill" type="AnimatedSprite2D" parent="MapView/Map"]
-position = Vector2(434, 416)
+[node name="Landmark_WaterMill" type="AnimatedSprite2D" parent="MapView/Map" unique_id=1593916504]
+position = Vector2(452, 418)
 scale = Vector2(2, 2)
 sprite_frames = ExtResource("lm_water_mill")
 animation = &"IDLE"
 autoplay = "IDLE"
 centered = false
 
-[node name="Landmark_Orchard" type="AnimatedSprite2D" parent="MapView/Map"]
-position = Vector2(608, 528)
+[node name="Landmark_Orchard" type="AnimatedSprite2D" parent="MapView/Map" unique_id=702340313]
+position = Vector2(602, 587)
 scale = Vector2(2, 2)
 sprite_frames = ExtResource("lm_orchard")
 animation = &"IDLE"
 autoplay = "IDLE"
 centered = false
 
-[node name="Landmark_BannerRoad" type="AnimatedSprite2D" parent="MapView/Map"]
-position = Vector2(476, 292)
+[node name="Landmark_BannerRoad" type="AnimatedSprite2D" parent="MapView/Map" unique_id=923400416]
+position = Vector2(498, 279)
 scale = Vector2(2, 2)
 sprite_frames = ExtResource("lm_banner_road")
 animation = &"IDLE"
 autoplay = "IDLE"
 centered = false
 
-[node name="Landmark_BallistaWreck" type="AnimatedSprite2D" parent="MapView/Map"]
+[node name="Landmark_BallistaWreck" type="AnimatedSprite2D" parent="MapView/Map" unique_id=511719398]
 position = Vector2(560, 212)
 scale = Vector2(2, 2)
 sprite_frames = ExtResource("lm_ballista_wreck")
@@ -299,7 +299,7 @@ animation = &"IDLE"
 autoplay = "IDLE"
 centered = false
 
-[node name="Landmark_ScarabMound" type="AnimatedSprite2D" parent="MapView/Map"]
+[node name="Landmark_ScarabMound" type="AnimatedSprite2D" parent="MapView/Map" unique_id=1111236851]
 position = Vector2(666, 358)
 scale = Vector2(2, 2)
 sprite_frames = ExtResource("lm_scarab_mound")
@@ -307,15 +307,15 @@ animation = &"IDLE"
 autoplay = "IDLE"
 centered = false
 
-[node name="Landmark_TwinKeeps" type="AnimatedSprite2D" parent="MapView/Map"]
-position = Vector2(728, 460)
+[node name="Landmark_TwinKeeps" type="AnimatedSprite2D" parent="MapView/Map" unique_id=760403255]
+position = Vector2(742, 439)
 scale = Vector2(2, 2)
 sprite_frames = ExtResource("lm_twin_keeps")
 animation = &"IDLE"
 autoplay = "IDLE"
 centered = false
 
-[node name="Landmark_ObsidianSpires" type="AnimatedSprite2D" parent="MapView/Map"]
+[node name="Landmark_ObsidianSpires" type="AnimatedSprite2D" parent="MapView/Map" unique_id=1083112306]
 position = Vector2(848, 410)
 scale = Vector2(2, 2)
 sprite_frames = ExtResource("lm_obsidian_spires")
@@ -323,24 +323,24 @@ animation = &"IDLE"
 autoplay = "IDLE"
 centered = false
 
-[node name="Landmark_LavaFalls" type="AnimatedSprite2D" parent="MapView/Map"]
-position = Vector2(1034, 376)
+[node name="Landmark_LavaFalls" type="AnimatedSprite2D" parent="MapView/Map" unique_id=1079794720]
+position = Vector2(1033, 363)
 scale = Vector2(2, 2)
 sprite_frames = ExtResource("lm_lava_falls")
 animation = &"IDLE"
 autoplay = "IDLE"
 centered = false
 
-[node name="Landmark_GlassShards" type="AnimatedSprite2D" parent="MapView/Map"]
-position = Vector2(920, 162)
+[node name="Landmark_GlassShards" type="AnimatedSprite2D" parent="MapView/Map" unique_id=1374224992]
+position = Vector2(937, 106)
 scale = Vector2(2, 2)
 sprite_frames = ExtResource("lm_glass_shards")
 animation = &"IDLE"
 autoplay = "IDLE"
 centered = false
 
-[node name="Landmark_TitanHand" type="AnimatedSprite2D" parent="MapView/Map"]
-position = Vector2(686, 136)
+[node name="Landmark_TitanHand" type="AnimatedSprite2D" parent="MapView/Map" unique_id=1491718432]
+position = Vector2(677, 132)
 scale = Vector2(2, 2)
 sprite_frames = ExtResource("lm_titan_hand")
 animation = &"IDLE"
@@ -1418,9 +1418,9 @@ stretch_mode = 5
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 219.0
-offset_top = 431.0
+offset_top = 408.0
 offset_right = 239.0
-offset_bottom = 451.0
+offset_bottom = 428.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 11
@@ -1629,10 +1629,10 @@ stretch_mode = 5
 [node name="Level_013" type="Panel" parent="MapView/Map" unique_id=1711682819]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 194.0
-offset_top = 286.0
-offset_right = 214.0
-offset_bottom = 306.0
+offset_left = 242.0
+offset_top = 312.0
+offset_right = 262.0
+offset_bottom = 332.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 13
@@ -1736,19 +1736,22 @@ stretch_mode = 5
 [node name="Level_014" type="Panel" parent="MapView/Map" unique_id=1044711109]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 114.0
-offset_top = 274.0
-offset_right = 134.0
-offset_bottom = 294.0
+offset_left = 210.0
+offset_top = 264.0
+offset_right = 230.0
+offset_bottom = 284.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 14
+trail_via = PackedVector2Array(252, 296)
 
 [node name="SelectButton" type="Button" parent="MapView/Map/Level_014" unique_id=1916257152]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 1.0
+offset_right = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
@@ -1842,10 +1845,10 @@ stretch_mode = 5
 [node name="Level_015" type="Panel" parent="MapView/Map" unique_id=1089863422]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 82.0
-offset_top = 190.0
-offset_right = 102.0
-offset_bottom = 210.0
+offset_left = 111.0
+offset_top = 200.0
+offset_right = 131.0
+offset_bottom = 220.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 15
@@ -1948,10 +1951,10 @@ stretch_mode = 5
 [node name="Level_016" type="Panel" parent="MapView/Map" unique_id=741927872]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 126.0
-offset_top = 126.0
-offset_right = 146.0
-offset_bottom = 146.0
+offset_left = 113.0
+offset_top = 130.0
+offset_right = 133.0
+offset_bottom = 150.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 16
@@ -2054,10 +2057,10 @@ stretch_mode = 5
 [node name="Level_017" type="Panel" parent="MapView/Map" unique_id=773245989]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 206.0
-offset_top = 98.0
-offset_right = 226.0
-offset_bottom = 118.0
+offset_left = 182.0
+offset_top = 109.0
+offset_right = 202.0
+offset_bottom = 129.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 17
@@ -2160,10 +2163,10 @@ stretch_mode = 5
 [node name="Level_018" type="Panel" parent="MapView/Map" unique_id=16314349]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 290.0
-offset_top = 114.0
-offset_right = 310.0
-offset_bottom = 134.0
+offset_left = 242.0
+offset_top = 106.0
+offset_right = 262.0
+offset_bottom = 126.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 18
@@ -2267,13 +2270,14 @@ stretch_mode = 5
 [node name="Level_019" type="Panel" parent="MapView/Map" unique_id=92052716]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 194.0
-offset_top = 183.0
-offset_right = 214.0
-offset_bottom = 203.0
+offset_left = 198.0
+offset_top = 191.0
+offset_right = 218.0
+offset_bottom = 211.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 19
+trail_via = PackedVector2Array(228, 140, 204, 148)
 
 [node name="SelectButton" type="Button" parent="MapView/Map/Level_019" unique_id=580854082]
 layout_mode = 1
@@ -2373,9 +2377,9 @@ stretch_mode = 5
 [node name="Level_020" type="Panel" parent="MapView/Map" unique_id=1770895428]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 319.0
+offset_left = 295.0
 offset_top = 183.0
-offset_right = 339.0
+offset_right = 315.0
 offset_bottom = 203.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
@@ -2479,10 +2483,10 @@ stretch_mode = 5
 [node name="Level_021" type="Panel" parent="MapView/Map" unique_id=1616340369]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 418.0
-offset_top = 170.0
-offset_right = 438.0
-offset_bottom = 190.0
+offset_left = 429.0
+offset_top = 169.0
+offset_right = 449.0
+offset_bottom = 189.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 21
@@ -2586,10 +2590,10 @@ stretch_mode = 5
 [node name="Level_022" type="Panel" parent="MapView/Map" unique_id=1758539265]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 386.0
-offset_top = 234.0
-offset_right = 406.0
-offset_bottom = 254.0
+offset_left = 402.0
+offset_top = 246.0
+offset_right = 422.0
+offset_bottom = 266.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 22
@@ -2694,12 +2698,13 @@ stretch_mode = 5
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 374.0
-offset_top = 298.0
+offset_top = 314.0
 offset_right = 394.0
-offset_bottom = 318.0
+offset_bottom = 334.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 23
+trail_via = PackedVector2Array(380, 292)
 
 [node name="SelectButton" type="Button" parent="MapView/Map/Level_023" unique_id=971831314]
 layout_mode = 1
@@ -2799,10 +2804,10 @@ stretch_mode = 5
 [node name="Level_024" type="Panel" parent="MapView/Map" unique_id=130829452]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 438.0
-offset_top = 334.0
-offset_right = 458.0
-offset_bottom = 354.0
+offset_left = 463.0
+offset_top = 352.0
+offset_right = 483.0
+offset_bottom = 372.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 24
@@ -2905,13 +2910,14 @@ stretch_mode = 5
 [node name="Level_025" type="Panel" parent="MapView/Map" unique_id=2001173489]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 374.0
-offset_top = 422.0
-offset_right = 394.0
-offset_bottom = 442.0
+offset_left = 380.0
+offset_top = 462.0
+offset_right = 400.0
+offset_bottom = 482.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 25
+trail_via = PackedVector2Array(412, 368, 352, 428, 352, 444)
 
 [node name="SelectButton" type="Button" parent="MapView/Map/Level_025" unique_id=1338573748]
 layout_mode = 1
@@ -3011,10 +3017,10 @@ stretch_mode = 5
 [node name="Level_026" type="Panel" parent="MapView/Map" unique_id=1525245845]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 422.0
-offset_top = 474.0
-offset_right = 442.0
-offset_bottom = 494.0
+offset_left = 416.0
+offset_top = 500.0
+offset_right = 436.0
+offset_bottom = 520.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 26
@@ -3117,13 +3123,14 @@ stretch_mode = 5
 [node name="Level_027" type="Panel" parent="MapView/Map" unique_id=514563881]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 478.0
-offset_top = 450.0
-offset_right = 498.0
-offset_bottom = 470.0
+offset_left = 493.0
+offset_top = 416.0
+offset_right = 513.0
+offset_bottom = 436.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 27
+trail_via = PackedVector2Array(444, 496, 444, 460, 444, 444, 412, 416, 416, 400, 424, 392, 468, 392)
 
 [node name="SelectButton" type="Button" parent="MapView/Map/Level_027" unique_id=968099374]
 layout_mode = 1
@@ -3223,10 +3230,10 @@ stretch_mode = 5
 [node name="Level_028" type="Panel" parent="MapView/Map" unique_id=1982207238]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 538.0
-offset_top = 466.0
-offset_right = 558.0
-offset_bottom = 486.0
+offset_left = 551.0
+offset_top = 473.0
+offset_right = 571.0
+offset_bottom = 493.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 28
@@ -3330,9 +3337,9 @@ stretch_mode = 5
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
 offset_left = 582.0
-offset_top = 526.0
+offset_top = 517.0
 offset_right = 602.0
-offset_bottom = 546.0
+offset_bottom = 537.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 29
@@ -3435,10 +3442,10 @@ stretch_mode = 5
 [node name="Level_030" type="Panel" parent="MapView/Map" unique_id=364976290]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 614.0
-offset_top = 590.0
-offset_right = 634.0
-offset_bottom = 610.0
+offset_left = 598.0
+offset_top = 578.0
+offset_right = 618.0
+offset_bottom = 598.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 30
@@ -3541,10 +3548,10 @@ stretch_mode = 5
 [node name="Level_031" type="Panel" parent="MapView/Map" unique_id=12697147]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 654.0
-offset_top = 554.0
-offset_right = 674.0
-offset_bottom = 574.0
+offset_left = 618.0
+offset_top = 630.0
+offset_right = 638.0
+offset_bottom = 650.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 31
@@ -3647,10 +3654,10 @@ stretch_mode = 5
 [node name="Level_032" type="Panel" parent="MapView/Map" unique_id=732232885]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 638.0
-offset_top = 502.0
-offset_right = 658.0
-offset_bottom = 522.0
+offset_left = 643.0
+offset_top = 530.0
+offset_right = 663.0
+offset_bottom = 550.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 32
@@ -3660,6 +3667,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 1.0
+offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"MapNodeButton"
@@ -3753,10 +3764,10 @@ stretch_mode = 5
 [node name="Level_033" type="Panel" parent="MapView/Map" unique_id=1594717937]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 622.0
-offset_top = 442.0
-offset_right = 642.0
-offset_bottom = 462.0
+offset_left = 638.0
+offset_top = 467.0
+offset_right = 658.0
+offset_bottom = 487.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 33
@@ -3859,10 +3870,10 @@ stretch_mode = 5
 [node name="Level_034" type="Panel" parent="MapView/Map" unique_id=460538968]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 586.0
-offset_top = 378.0
-offset_right = 606.0
-offset_bottom = 398.0
+offset_left = 577.0
+offset_top = 397.0
+offset_right = 597.0
+offset_bottom = 417.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 34
@@ -3965,10 +3976,10 @@ stretch_mode = 5
 [node name="Level_035" type="Panel" parent="MapView/Map" unique_id=82252637]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 538.0
-offset_top = 322.0
-offset_right = 558.0
-offset_bottom = 342.0
+offset_left = 549.0
+offset_top = 324.0
+offset_right = 569.0
+offset_bottom = 344.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 35
@@ -4177,10 +4188,10 @@ stretch_mode = 5
 [node name="Level_037" type="Panel" parent="MapView/Map" unique_id=1380928376]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 510.0
-offset_top = 190.0
-offset_right = 530.0
-offset_bottom = 210.0
+offset_left = 477.0
+offset_top = 222.0
+offset_right = 497.0
+offset_bottom = 242.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 37
@@ -4284,10 +4295,10 @@ stretch_mode = 5
 [node name="Level_038" type="Panel" parent="MapView/Map" unique_id=137288489]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 562.0
-offset_top = 210.0
-offset_right = 582.0
-offset_bottom = 230.0
+offset_left = 543.0
+offset_top = 195.0
+offset_right = 563.0
+offset_bottom = 215.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 38
@@ -4496,10 +4507,10 @@ stretch_mode = 5
 [node name="Level_040" type="Panel" parent="MapView/Map" unique_id=1039280920]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 662.0
-offset_top = 278.0
-offset_right = 682.0
-offset_bottom = 298.0
+offset_left = 663.0
+offset_top = 287.0
+offset_right = 683.0
+offset_bottom = 307.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 40
@@ -4602,10 +4613,10 @@ stretch_mode = 5
 [node name="Level_041" type="Panel" parent="MapView/Map" unique_id=1353156292]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 710.0
-offset_top = 310.0
-offset_right = 730.0
-offset_bottom = 330.0
+offset_left = 631.0
+offset_top = 324.0
+offset_right = 651.0
+offset_bottom = 344.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 41
@@ -4708,13 +4719,14 @@ stretch_mode = 5
 [node name="Level_042" type="Panel" parent="MapView/Map" unique_id=2145641059]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 682.0
-offset_top = 354.0
-offset_right = 702.0
-offset_bottom = 374.0
+offset_left = 690.0
+offset_top = 361.0
+offset_right = 710.0
+offset_bottom = 381.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 42
+trail_via = PackedVector2Array(640, 368)
 
 [node name="SelectButton" type="Button" parent="MapView/Map/Level_042" unique_id=97594588]
 layout_mode = 1
@@ -4814,9 +4826,9 @@ stretch_mode = 5
 [node name="Level_043" type="Panel" parent="MapView/Map" unique_id=1758648881]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 682.0
+offset_left = 727.0
 offset_top = 406.0
-offset_right = 702.0
+offset_right = 747.0
 offset_bottom = 426.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
@@ -4920,10 +4932,10 @@ stretch_mode = 5
 [node name="Level_044" type="Panel" parent="MapView/Map" unique_id=829433381]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 738.0
-offset_top = 434.0
-offset_right = 758.0
-offset_bottom = 454.0
+offset_left = 713.0
+offset_top = 453.0
+offset_right = 733.0
+offset_bottom = 473.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 44
@@ -5026,10 +5038,10 @@ stretch_mode = 5
 [node name="Level_045" type="Panel" parent="MapView/Map" unique_id=74166638]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 778.0
-offset_top = 478.0
-offset_right = 798.0
-offset_bottom = 498.0
+offset_left = 770.0
+offset_top = 483.0
+offset_right = 790.0
+offset_bottom = 503.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 45
@@ -5132,10 +5144,10 @@ stretch_mode = 5
 [node name="Level_046" type="Panel" parent="MapView/Map" unique_id=1861508114]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 750.0
-offset_top = 522.0
-offset_right = 770.0
-offset_bottom = 542.0
+offset_left = 700.0
+offset_top = 505.0
+offset_right = 720.0
+offset_bottom = 525.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 46
@@ -5238,13 +5250,14 @@ stretch_mode = 5
 [node name="Level_047" type="Panel" parent="MapView/Map" unique_id=1896729996]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 730.0
-offset_top = 570.0
-offset_right = 750.0
-offset_bottom = 590.0
+offset_left = 735.0
+offset_top = 575.0
+offset_right = 755.0
+offset_bottom = 595.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 47
+trail_via = PackedVector2Array(732, 516, 752, 532)
 
 [node name="SelectButton" type="Button" parent="MapView/Map/Level_047" unique_id=1108174615]
 layout_mode = 1
@@ -5344,10 +5357,10 @@ stretch_mode = 5
 [node name="Level_048" type="Panel" parent="MapView/Map" unique_id=1890275908]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 794.0
-offset_top = 554.0
-offset_right = 814.0
-offset_bottom = 574.0
+offset_left = 824.0
+offset_top = 537.0
+offset_right = 844.0
+offset_bottom = 557.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 48
@@ -5450,10 +5463,10 @@ stretch_mode = 5
 [node name="Level_049" type="Panel" parent="MapView/Map" unique_id=604128908]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 918.0
-offset_top = 526.0
-offset_right = 938.0
-offset_bottom = 546.0
+offset_left = 892.0
+offset_top = 522.0
+offset_right = 912.0
+offset_bottom = 542.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 49
@@ -5556,10 +5569,10 @@ stretch_mode = 5
 [node name="Level_050" type="Panel" parent="MapView/Map" unique_id=2058115306]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 866.0
-offset_top = 450.0
-offset_right = 886.0
-offset_bottom = 470.0
+offset_left = 871.0
+offset_top = 463.0
+offset_right = 891.0
+offset_bottom = 483.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 50
@@ -5662,10 +5675,10 @@ stretch_mode = 5
 [node name="Level_051" type="Panel" parent="MapView/Map" unique_id=1810272875]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 962.0
-offset_top = 462.0
-offset_right = 982.0
-offset_bottom = 482.0
+offset_left = 998.0
+offset_top = 481.0
+offset_right = 1018.0
+offset_bottom = 501.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 51
@@ -5768,10 +5781,10 @@ stretch_mode = 5
 [node name="Level_052" type="Panel" parent="MapView/Map" unique_id=1531433866]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 1046.0
-offset_top = 410.0
-offset_right = 1066.0
-offset_bottom = 430.0
+offset_left = 1059.0
+offset_top = 420.0
+offset_right = 1079.0
+offset_bottom = 440.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 52
@@ -5874,13 +5887,14 @@ stretch_mode = 5
 [node name="Level_053" type="Panel" parent="MapView/Map" unique_id=2054060220]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 1050.0
-offset_top = 322.0
-offset_right = 1070.0
-offset_bottom = 342.0
+offset_left = 1066.0
+offset_top = 323.0
+offset_right = 1086.0
+offset_bottom = 343.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 53
+trail_via = PackedVector2Array(1112, 412, 1112, 360)
 
 [node name="SelectButton" type="Button" parent="MapView/Map/Level_053" unique_id=975416515]
 layout_mode = 1
@@ -5980,10 +5994,10 @@ stretch_mode = 5
 [node name="Level_054" type="Panel" parent="MapView/Map" unique_id=1425179493]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 1006.0
-offset_top = 234.0
-offset_right = 1026.0
-offset_bottom = 254.0
+offset_left = 1073.0
+offset_top = 248.0
+offset_right = 1093.0
+offset_bottom = 268.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 54
@@ -6086,10 +6100,10 @@ stretch_mode = 5
 [node name="Level_055" type="Panel" parent="MapView/Map" unique_id=1903813164]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 934.0
-offset_top = 166.0
-offset_right = 954.0
-offset_bottom = 186.0
+offset_left = 947.0
+offset_top = 153.0
+offset_right = 967.0
+offset_bottom = 173.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 55
@@ -6192,10 +6206,10 @@ stretch_mode = 5
 [node name="Level_056" type="Panel" parent="MapView/Map" unique_id=83782886]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 838.0
-offset_top = 146.0
-offset_right = 858.0
-offset_bottom = 166.0
+offset_left = 843.0
+offset_top = 152.0
+offset_right = 863.0
+offset_bottom = 172.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 56
@@ -6298,10 +6312,10 @@ stretch_mode = 5
 [node name="Level_057" type="Panel" parent="MapView/Map" unique_id=666597914]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 738.0
-offset_top = 158.0
-offset_right = 758.0
-offset_bottom = 178.0
+offset_left = 712.0
+offset_top = 192.0
+offset_right = 732.0
+offset_bottom = 212.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 57
@@ -6404,13 +6418,14 @@ stretch_mode = 5
 [node name="Level_058" type="Panel" parent="MapView/Map" unique_id=847386606]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 754.0
-offset_top = 218.0
-offset_right = 774.0
-offset_bottom = 238.0
+offset_left = 769.0
+offset_top = 263.0
+offset_right = 789.0
+offset_bottom = 283.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 58
+trail_via = PackedVector2Array(752, 240)
 
 [node name="SelectButton" type="Button" parent="MapView/Map/Level_058" unique_id=864551299]
 layout_mode = 1
@@ -6510,13 +6525,14 @@ stretch_mode = 5
 [node name="Level_059" type="Panel" parent="MapView/Map" unique_id=1505838779]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 822.0
-offset_top = 294.0
-offset_right = 842.0
-offset_bottom = 314.0
+offset_left = 840.0
+offset_top = 336.0
+offset_right = 860.0
+offset_bottom = 356.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 59
+trail_via = PackedVector2Array(792, 284, 800, 348)
 
 [node name="SelectButton" type="Button" parent="MapView/Map/Level_059" unique_id=2074841749]
 layout_mode = 1
@@ -6616,13 +6632,14 @@ stretch_mode = 5
 [node name="Level_060" type="Panel" parent="MapView/Map" unique_id=1727515897]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 0
-offset_left = 918.0
-offset_top = 330.0
-offset_right = 938.0
-offset_bottom = 350.0
+offset_left = 952.0
+offset_top = 313.0
+offset_right = 972.0
+offset_bottom = 333.0
 theme_type_variation = &"EmptyPanel"
 script = ExtResource("2_uc0yk")
 level_number = 60
+trail_via = PackedVector2Array(916, 348)
 
 [node name="SelectButton" type="Button" parent="MapView/Map/Level_060" unique_id=277945950]
 layout_mode = 1

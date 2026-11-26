@@ -1,15 +1,15 @@
-[gd_resource type="Resource" script_class="LevelData" format=3]
+[gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://g7kf7yg2nvq2"]
 
 [ext_resource type="Script" uid="uid://cpw7ia3ek2yvs" path="res://scenes/level/level_data/wave_data.gd" id="0_wave"]
 [ext_resource type="Script" uid="uid://c0cehaxum4b45" path="res://scenes/level/level_data/level_data.gd" id="1_level"]
 [ext_resource type="Script" uid="uid://bu8xwv71c6bbj" path="res://scenes/level/level_data/puffe_line.gd" id="9_line"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/modes/level_042_hard.tres" id="hard_mode"]
 [ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_042_wave_1.tres" id="w1"]
 [ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_042_wave_2.tres" id="w2"]
 [ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_042_wave_3.tres" id="w3"]
 [ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_042_wave_4.tres" id="w4"]
 [ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_042_wave_5.tres" id="w5"]
 [ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_042_wave_6.tres" id="w6"]
-[ext_resource type="Resource" path="res://scenes/level/level_data/modes/level_042_hard.tres" id="hard_mode"]
 
 [sub_resource type="Resource" id="PuffeLine_1"]
 script = ExtResource("9_line")
@@ -37,6 +37,6 @@ puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResou
 first_wave_health = 1.7
 last_wave_health = 10.6
 hard_mode = ExtResource("hard_mode")
-sandstorm_every = 60.0
 health_scale = 1.254
 hard_health_scale = 1.593
+sandstorm_every = 60.0

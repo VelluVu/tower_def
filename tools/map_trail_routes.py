@@ -1,4 +1,6 @@
-"""Keeps the world map's dotted trails off water (2026-11-25, the user: a trail over a lake is not ok).
+"""Keeps the world map's dotted trails off water and off the landmark pictures (2026-11-25, the user: a trail over a
+lake is not ok; 2026-11-26: round the landmarks too). Landmarks are every AnimatedSprite2D under MapView/Map (the
+Landmark_* nodes and the WyrmThrone): their first frame's opaque pixels count as water for the trails.
 
     python tools/map_trail_routes.py           report the trails whose dots land on water
     python tools/map_trail_routes.py --fix     reroute those: A* over the map art round the water (bridges are not
@@ -6,6 +8,7 @@
                                                `trail_via` in game_world_map.tscn
     python tools/map_trail_routes.py --fix --all   reroute every trail, not only the wet ones
     python tools/map_trail_routes.py --fix --levels 10,21   reroute these trails (wet or not)
+    python tools/map_trail_routes.py --water-only     ignore the landmarks (water alone, as before 2026-11-26)
     python tools/map_trail_routes.py --preview out.png   the map at 2x with every trail's dots (wet ones red)
 
 Mirrors MapTrails (_bowed, _through, the dot spacing and clearance); keep the constants in step with map_trails.gd.
@@ -40,6 +43,56 @@ SHY_COST = 2.0
 # routes keep clear of other nodes (art pixels) so a trail never runs over a token
 NODE_RADIUS = 7
 NODE_COST = 12.0
+# a trail may cross the landmark of the node it leaves or reaches within this many map units of it
+HOME_REACH = 40.0
+# the water alone, set by main when landmarks are added to the mask
+WATER_MASK = None
+HOME_DIST = None
+
+
+def res_path(path):
+    return os.path.join(ROOT, path.replace("res://", ""))
+
+
+def landmark_pixels(head, sections, size):
+    """Art pixels covered by a landmark picture (first frame, alpha > 0), as a set of (x, y)."""
+    resources = {}
+    for s in sections:
+        if s.kind == "ext_resource":
+            resources[s.attributes.get("id")] = s.attributes.get("path")
+    covered = set()
+    for s in sections:
+        a = s.attributes
+        if s.kind != "node" or a.get("parent") != "MapView/Map" or a.get("type") != "AnimatedSprite2D":
+            continue
+        frames_ref = s.get("sprite_frames") or ""
+        if "ExtResource" not in frames_ref:
+            continue
+        frames_path = resources.get(frames_ref[frames_ref.index('"') + 1:frames_ref.rindex('"')])
+        if not frames_path:
+            continue
+        frames_head, frames_sections = tres_edit.load(res_path(frames_path))
+        sheet = next(f.attributes.get("path") for f in frames_sections if f.kind == "ext_resource")
+        atlas = next(f for f in frames_sections if f.kind == "sub_resource" and f.attributes.get("type") == "AtlasTexture")
+        rx, ry, rw, rh = [int(float(n)) for n in atlas.get("region")[6:-1].split(",")]
+        picture = Image.open(res_path(sheet)).convert("RGBA").crop((rx, ry, rx + rw, ry + rh))
+        position = [float(n) for n in (s.get("position") or "Vector2(0, 0)")[8:-1].split(",")]
+        scale = [float(n) for n in (s.get("scale") or "Vector2(1, 1)")[8:-1].split(",")]
+        if s.get("centered") != "false":
+            position = [position[0] - rw * scale[0] / 2.0, position[1] - rh * scale[1] / 2.0]
+        alpha = picture.load()
+        step = scale[0] / UNITS_PER_PIXEL
+        for y in range(rh):
+            for x in range(rw):
+                if alpha[x, y][3] == 0:
+                    continue
+                for sy in range(max(1, int(step))):
+                    for sx in range(max(1, int(step))):
+                        px = int(position[0] / UNITS_PER_PIXEL + x * step) + sx
+                        py = int(position[1] / UNITS_PER_PIXEL + y * step) + sy
+                        if 0 <= px < size[0] and 0 <= py < size[1]:
+                            covered.add((px, py))
+    return covered
 
 
 def load_nodes():
@@ -152,11 +205,14 @@ def distance_to_water(mask):
 
 
 def wet_dots(mask, points):
+    """Dots on water or a landmark; near the trail's own two nodes only water counts (a node may sit on its landmark)."""
     h, w = len(mask), len(mask[0])
     wet = []
     for d in dots(points):
         px, py = int(d[0] // UNITS_PER_PIXEL), int(d[1] // UNITS_PER_PIXEL)
-        if any(mask[y][x] for y in range(max(0, py - DOT_REACH), min(h, py + DOT_REACH + 1))
+        home = WATER_MASK is not None and min(math.dist(d, points[0]), math.dist(d, points[-1])) <= HOME_REACH
+        check = WATER_MASK if home else mask
+        if any(check[y][x] for y in range(max(0, py - DOT_REACH), min(h, py + DOT_REACH + 1))
                for x in range(max(0, px - DOT_REACH), min(w, px + DOT_REACH + 1))):
             wet.append(d)
     return wet
@@ -168,12 +224,16 @@ def route(dist, start, end, others):
     sx, sy = int(start[0] // UNITS_PER_PIXEL), int(start[1] // UNITS_PER_PIXEL)
     ex, ey = int(end[0] // UNITS_PER_PIXEL), int(end[1] // UNITS_PER_PIXEL)
     other_pixels = [(o[0] / UNITS_PER_PIXEL, o[1] / UNITS_PER_PIXEL) for o in others]
+    home_reach = HOME_REACH / UNITS_PER_PIXEL
 
     def cost(x, y):
         d = dist[y][x]
         # a node may sit on the shore, its token over the water: let the route leave and reach it (the dots
         # start NODE_CLEARANCE out, past the token)
         near_end = max(abs(x - sx), abs(y - sy)) <= 6 or max(abs(x - ex), abs(y - ey)) <= 6
+        home = HOME_DIST is not None and min(math.hypot(x - sx, y - sy), math.hypot(x - ex, y - ey)) <= home_reach
+        if home:
+            d = HOME_DIST[y][x]
         if d <= BLOCK_RADIUS and not near_end:
             return None
         c = 1.0 + (SHY_COST * (SHY_RADIUS + 1 - d) / SHY_RADIUS if d <= SHY_RADIUS else 0.0)
@@ -237,6 +297,9 @@ def reroute(mask, dist, nodes, level):
         return None
     for epsilon in (8.0, 6.0, 4.0, 3.0, 2.0):
         waypoints = simplify(path, epsilon)[1:-1]
+        if not waypoints:
+            # no via means the bowed default, not a straight line: keep one point on the route
+            waypoints = [path[len(path) // 2]]
         via = [(round(x / UNITS_PER_PIXEL) * UNITS_PER_PIXEL, round(y / UNITS_PER_PIXEL) * UNITS_PER_PIXEL) for x, y in waypoints]
         if not wet_dots(mask, through(start, via, end)):
             return via
@@ -269,6 +332,11 @@ def main(args):
     image = Image.open(MAP_ART).convert("RGBA")
     mask = water_mask(image)
     head, sections, nodes = load_nodes()
+    global WATER_MASK, HOME_DIST
+    if "--water-only" not in args:
+        WATER_MASK = [row[:] for row in mask]
+        for px, py in landmark_pixels(head, sections, image.size):
+            mask[py][px] = True
     # underground trails (MapLevelElement.trail_underground) pass under water by design
     wet_levels = [level for level in sorted(nodes) if level - 1 in nodes and not nodes[level]["underground"]
                   and wet_dots(mask, trail_points(nodes, level))]
@@ -276,10 +344,12 @@ def main(args):
         preview(image, mask, nodes, args[args.index("--preview") + 1])
     if "--fix" not in args:
         for level in wet_levels:
-            print("level %d: %d dots on water" % (level, len(wet_dots(mask, trail_points(nodes, level)))))
-        print("%d trails cross water" % len(wet_levels))
+            print("level %d: %d dots on water or a landmark" % (level, len(wet_dots(mask, trail_points(nodes, level)))))
+        print("%d trails cross water or a landmark" % len(wet_levels))
         return
     dist = distance_to_water(mask)
+    if WATER_MASK is not None:
+        HOME_DIST = distance_to_water(WATER_MASK)
     targets = [level for level in sorted(nodes) if level - 1 in nodes] if "--all" in args else wet_levels
     if "--levels" in args:
         targets = [int(n) for n in args[args.index("--levels") + 1].split(",")]

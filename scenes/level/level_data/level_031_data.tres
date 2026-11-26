@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="LevelData" format=3]
+[gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://ds73xx2ct0kl2"]
 
 [ext_resource type="Script" uid="uid://cpw7ia3ek2yvs" path="res://scenes/level/level_data/wave_data.gd" id="0_wave"]
 [ext_resource type="Script" uid="uid://c0cehaxum4b45" path="res://scenes/level/level_data/level_data.gd" id="1_level"]
 [ext_resource type="Script" uid="uid://bu8xwv71c6bbj" path="res://scenes/level/level_data/puffe_line.gd" id="9_line"]
+[ext_resource type="Resource" path="res://scenes/level/level_data/modes/level_031_hard.tres" id="hard_mode"]
 [ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_031_wave_1.tres" id="w1"]
 [ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_031_wave_2.tres" id="w2"]
 [ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_031_wave_3.tres" id="w3"]
@@ -10,7 +11,6 @@
 [ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_031_wave_5.tres" id="w5"]
 [ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_031_wave_6.tres" id="w6"]
 [ext_resource type="Resource" path="res://scenes/level/level_data/waves/level_031_wave_7.tres" id="w7"]
-[ext_resource type="Resource" path="res://scenes/level/level_data/modes/level_031_hard.tres" id="hard_mode"]
 
 [sub_resource type="Resource" id="PuffeLine_1"]
 script = ExtResource("9_line")
@@ -32,7 +32,6 @@ mood = 3
 
 [resource]
 script = ExtResource("1_level")
-hard_mode = ExtResource("hard_mode")
 level_name = "Orchard Wall"
 story_text = "An apple orchard behind dry-stone walls. The road weaves between the rows, and eagles nest in the old trees."
 starting_gold = 29.0
@@ -40,5 +39,6 @@ waves = Array[ExtResource("0_wave")]([ExtResource("w1"), ExtResource("w2"), ExtR
 puffe_lines = Array[ExtResource("9_line")]([SubResource("PuffeLine_1"), SubResource("PuffeLine_2"), SubResource("PuffeLine_u1125_crossbow_sniper")])
 first_wave_health = 1.5
 last_wave_health = 4.5
+hard_mode = ExtResource("hard_mode")
 health_scale = 1.376
-hard_health_scale = 1.680
+hard_health_scale = 1.68

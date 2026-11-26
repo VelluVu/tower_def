@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="LevelData" format=3]
+[gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://bxl5yxpi5isaq"]
 
 [ext_resource type="Script" uid="uid://cpw7ia3ek2yvs" path="res://scenes/level/level_data/wave_data.gd" id="0_wave"]
 [ext_resource type="Script" uid="uid://c0cehaxum4b45" path="res://scenes/level/level_data/level_data.gd" id="1_level"]
@@ -14,6 +14,11 @@ script = ExtResource("9_line")
 trigger = 0
 text = "Humans! They have barricaded the bridge, and now they are coming over it. The great cave is right behind us: hold this castle, or they reach the eggs behind our backs."
 mood = 3
+
+[sub_resource type="Resource" id="PuffeLine_hatchery"]
+script = ExtResource("9_line")
+text = "Meet the Hatchery! Its hatchlings are raised on beetle mash and vitamins. Put them on the bridge and they will hold it, one human each."
+mood = 1
 
 [sub_resource type="Resource" id="PuffeLine_2"]
 script = ExtResource("9_line")
@@ -38,12 +43,6 @@ script = ExtResource("9_line")
 trigger = 3
 wave_number = 5
 text = "One last push. Hold the bridge, and we can go down into the great cave."
-mood = 1
-
-[sub_resource type="Resource" id="PuffeLine_hatchery"]
-script = ExtResource("9_line")
-trigger = 1
-text = "Meet the Hatchery! Its hatchlings are raised on beetle mash and vitamins. Put them on the bridge and they will hold it, one human each."
 mood = 1
 
 [resource]

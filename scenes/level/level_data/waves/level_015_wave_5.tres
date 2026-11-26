@@ -1,10 +1,10 @@
-[gd_resource type="Resource" script_class="WaveData" format=3]
+[gd_resource type="Resource" script_class="WaveData" format=3 uid="uid://c3vilr0480bun"]
 
 [ext_resource type="Script" uid="uid://cpw7ia3ek2yvs" path="res://scenes/level/level_data/wave_data.gd" id="1_wave"]
 [ext_resource type="Script" uid="uid://bbhd3iyjav4h2" path="res://scenes/level/level_data/spawn_group_data.gd" id="2_group"]
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/giant_wasp.tscn" id="3_giant_wasp"]
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/plaguepig.tscn" id="4_plaguepig"]
-[ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/swampling.tscn" id="5_swampling"]
+[ext_resource type="PackedScene" uid="uid://ddq4tsy8ik5n5" path="res://scenes/unit/enemy/enemies/swampling.tscn" id="5_swampling"]
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/leechling.tscn" id="e_push_leechling"]
 [ext_resource type="PackedScene" path="res://scenes/unit/enemy/enemies/snapping_turtle.tscn" id="e_u1125_snapping_turtle"]
 
@@ -24,7 +24,6 @@ interval = 1.4
 script = ExtResource("2_group")
 enemy_scene = ExtResource("4_plaguepig")
 count = 6
-interval = 3.0
 delay = 12.0
 spawner_id = 1
 
