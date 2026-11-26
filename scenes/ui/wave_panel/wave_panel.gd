@@ -28,6 +28,11 @@ const START_WAVE_TOOLTIP : String = "Start wave  [%s]
 Sends the next wave."
 const EARLY_START_TOOLTIP : String = "Early start  [%s]
 Sends the next wave now, while this one is still out. Pays %d bonus gold."
+## Auto start (2026-11-26, the user): every wave after the first goes out as soon as it can, as an early start.
+const AUTO_ON_TEXT : String = "Auto: On"
+const AUTO_OFF_TEXT : String = "Auto: Off"
+const AUTO_TOOLTIP : String = "Auto start
+Sends every wave after the first as soon as it can go, each one an early start with its bonus gold. The first wave always waits for you."
 
 @onready var wave_value : Label = $MarginContainer/Panel/MarginContainer/VBoxContainer/WaveValue
 @onready var start_wave_button : Button = $MarginContainer/Panel/MarginContainer/VBoxContainer/StartWaveButton
@@ -45,6 +50,11 @@ var is_early_open : bool = false
 var early_bonus_shown : float = 0.0
 var glow_tween : Tween = null
 var notice_tween : Tween = null
+var auto_button : Button = null
+#a plain bool, so it stays on from level to level for the session
+static var is_auto_start : bool = false
+#set by an auto start until the next wave_state_changed, so one open start never sends two waves
+var is_auto_waiting : bool = false
 
 
 func _ready() -> void:
@@ -60,6 +70,7 @@ func _ready() -> void:
 	wave_box.add_child(early_count_label)
 	wave_box.move_child(early_count_label, start_wave_button.get_index() + 1)
 	_make_early_notice()
+	_make_auto_button()
 	InputManager.shortcut_pressed.connect(_on_shortcut_pressed)
 
 
@@ -86,6 +97,43 @@ func _make_early_notice() -> void:
 	add_child(early_notice)
 
 
+func _make_auto_button() -> void:
+	auto_button = RichTooltipButton.new()
+	auto_button.toggle_mode = true
+	auto_button.button_pressed = is_auto_start
+	auto_button.tooltip_text = AUTO_TOOLTIP
+	wave_box.add_child(auto_button)
+	wave_box.move_child(auto_button, start_wave_button.get_index() + 1)
+	auto_button.toggled.connect(_on_auto_toggled)
+	_show_auto_state()
+
+
+func _on_auto_toggled(is_on : bool) -> void:
+	is_auto_start = is_on
+	_show_auto_state()
+
+
+func _show_auto_state() -> void:
+	auto_button.text = AUTO_ON_TEXT if is_auto_start else AUTO_OFF_TEXT
+
+
+#checked every frame rather than on wave_state_changed: a card choice may pause the game just as a wave could go
+func _process(_delta : float) -> void:
+	if is_auto_start:
+		_try_auto_start()
+
+
+## Sends the next wave when auto start is on and the button could: never the first wave (the build phase is the player's).
+func _try_auto_start() -> void:
+	if not is_auto_start or is_auto_waiting or not is_inside_tree() or not start_wave_button.visible or start_wave_button.disabled:
+		return
+	var level : Level = _current_level()
+	if level == null or level.wave_runner.wave_number < 1 or get_tree().paused:
+		return
+	is_auto_waiting = true
+	_on_start_wave_pressed()
+
+
 func _on_shortcut_pressed(action : StringName) -> void:
 	#the same rules as the button: only while it shows and can start a wave
 	if action == InputManager.ACTION_START_WAVE and start_wave_button.visible and not start_wave_button.disabled:
@@ -107,6 +155,7 @@ func _on_mouse_exited() -> void:
 
 
 func _on_wave_state_changed(wave_number : int, wave_count : int, can_start_next : bool, early_start_bonus : float) -> void:
+	is_auto_waiting = false
 	#a wave count of 0: Survival, the waves never end
 	var is_endless : bool = wave_count <= 0
 	wave_value.text = ENDLESS_WAVE_TEXT % wave_number if is_endless else WAVE_TEXT % [wave_number, wave_count]
@@ -124,6 +173,7 @@ func _on_wave_state_changed(wave_number : int, wave_count : int, can_start_next 
 " + WavePreview.describe(next_wave)
 	_show_early_start(start_wave_button.visible and can_start_next and early_start_bonus > 0.0, early_start_bonus, key)
 	_show_early_count(wave_count)
+	auto_button.visible = start_wave_button.visible
 
 
 func _show_early_start(is_open : bool, bonus : float, key : String) -> void:

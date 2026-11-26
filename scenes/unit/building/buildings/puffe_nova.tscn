@@ -502,7 +502,7 @@ stat_type = 7
 script = ExtResource("24_2wu8h")
 calculate_type = 1
 stat_type = 2
-value = 0.25
+value = 0.18
 
 [node name="EvolveBranch2" type="Node" parent="EvolveTree"]
 script = ExtResource("18_1q0mh")
@@ -524,7 +524,7 @@ tiers = Array[ExtResource("tier_script")]([ExtResource("tier_fire_t2"), ExtResou
 script = ExtResource("24_2wu8h")
 calculate_type = 1
 stat_type = 2
-value = 0.15
+value = 0.11
 
 [node name="EvolveBranch3" type="Node" parent="EvolveTree"]
 script = ExtResource("18_1q0mh")
@@ -546,7 +546,7 @@ tiers = Array[ExtResource("tier_script")]([ExtResource("tier_frost_t2"), ExtReso
 script = ExtResource("24_2wu8h")
 calculate_type = 1
 stat_type = 2
-value = 0.1
+value = 0.07
 
 [node name="EvolveBranch4" type="Node" parent="EvolveTree"]
 script = ExtResource("18_1q0mh")

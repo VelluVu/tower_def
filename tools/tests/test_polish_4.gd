@@ -47,7 +47,7 @@ func test_scene_buttons_use_rich_tooltips(kit : TestKit) -> void:
 func test_upgrade_tooltips_say_what_they_give(kit : TestKit) -> void:
 	var data : BuildingUpgradeData = load(BOLTER_DATA)
 	var plain : String = UpgradeTooltipText.for_upgrade(data, false)
-	kit.check(plain.contains("Damage +30%") and plain.contains("Attack Speed +10%"), "plain upgrade: %s" % plain)
+	kit.check(plain.contains("Damage +20%") and plain.contains("Attack Speed +10%"), "plain upgrade: %s" % plain)
 	kit.check(not plain.contains("Potency") and plain.contains(UpgradeTooltipText.THIS_TOWER_TEXT), "no potency before the element, this tower only")
 	kit.check(UpgradeTooltipText.for_upgrade(data, true).contains("Effect Potency +30%"), "Up 3 after the element adds potency")
 	kit.check(UpgradeTooltipText.for_upgrade(load(WALL_DATA), false).contains(UpgradeTooltipText.EVERY_WALL_TEXT), "a wall upgrade is for every wall")
@@ -56,7 +56,7 @@ func test_upgrade_tooltips_say_what_they_give(kit : TestKit) -> void:
 	var fire : ElementEvolveLeaf = bolter.find_child("FireElementEvolveLeaf", true, false)
 	var physical : ElementEvolveLeaf = bolter.find_child("PhysicalElementEvolveLeaf", true, false)
 	var fire_text : String = UpgradeTooltipText.for_element(fire)
-	kit.check(fire_text.contains("burning") and fire_text.contains("Damage ×15%"), "Fire: %s" % fire_text)
+	kit.check(fire_text.contains("burning") and fire_text.contains("Damage ×11%"), "Fire: %s" % fire_text)
 	var physical_text : String = UpgradeTooltipText.for_element(physical)
 	kit.check(physical_text.contains("Critical Chance +10%"), "a flat chance reads as percent: %s" % physical_text)
 

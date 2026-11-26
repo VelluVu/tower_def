@@ -38,11 +38,11 @@ FLAT, MULTIPLY = 0, 1
 DAMAGE_STAT, KNOCKBACK, PATCH_DURATION, PATCH_SHARE, CONE_WIDTH = 2, 24, 25, 26, 31
 # the element leaves (design doc, New Towers: roar with knockback / burning ground / stacks toward a freeze / a cloud)
 LEAF_MODIFIERS = {
-    "physical": [("DamageModifier", MULTIPLY, DAMAGE_STAT, 0.15), ("RoarModifier", FLAT, KNOCKBACK, 1.0)],
-    "fire": [("DamageModifier", MULTIPLY, DAMAGE_STAT, 0.1), ("PatchModifier", FLAT, PATCH_DURATION, 1.5),
+    "physical": [("DamageModifier", MULTIPLY, DAMAGE_STAT, 0.11), ("RoarModifier", FLAT, KNOCKBACK, 1.0)],
+    "fire": [("DamageModifier", MULTIPLY, DAMAGE_STAT, 0.07), ("PatchModifier", FLAT, PATCH_DURATION, 1.5),
              ("PatchShareModifier", FLAT, PATCH_SHARE, 0.2)],
     # the slow stacks come with every tick (the damage data's)
-    "frost": [("DamageModifier", MULTIPLY, DAMAGE_STAT, 0.05)],
+    "frost": [("DamageModifier", MULTIPLY, DAMAGE_STAT, 0.04)],
     "poison": [("CloudModifier", FLAT, PATCH_DURATION, 2.0), ("CloudShareModifier", FLAT, PATCH_SHARE, 0.15)],
 }
 

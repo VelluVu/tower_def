@@ -46,11 +46,11 @@ FLAT, MULTIPLY = 0, 1
 DAMAGE_STAT, CRIT_STAT, SPLASH, KNOCKBACK, PATCH_DURATION, PATCH_SHARE = 2, 7, 20, 24, 25, 26
 # the element leaves (design doc, New Towers: bigger splash and knockback / burning patch / area slow / gas cloud)
 LEAF_MODIFIERS = {
-    "physical": [("DamageModifier", MULTIPLY, DAMAGE_STAT, 0.15), ("BlastModifier", FLAT, SPLASH, 0.25)],
-    "fire": [("DamageModifier", MULTIPLY, DAMAGE_STAT, 0.1), ("PatchModifier", FLAT, PATCH_DURATION, 1.5),
+    "physical": [("DamageModifier", MULTIPLY, DAMAGE_STAT, 0.11), ("BlastModifier", FLAT, SPLASH, 0.25)],
+    "fire": [("DamageModifier", MULTIPLY, DAMAGE_STAT, 0.07), ("PatchModifier", FLAT, PATCH_DURATION, 1.5),
              ("PatchShareModifier", FLAT, PATCH_SHARE, 0.2)],
     # the slow comes with every enemy in the blast (the damage data's slow stacks)
-    "frost": [("DamageModifier", MULTIPLY, DAMAGE_STAT, 0.05)],
+    "frost": [("DamageModifier", MULTIPLY, DAMAGE_STAT, 0.04)],
     "poison": [("CloudModifier", FLAT, PATCH_DURATION, 2.0), ("CloudShareModifier", FLAT, PATCH_SHARE, 0.15)],
 }
 LEAF = {"physical": "PhysicalElementEvolveLeaf", "fire": "FireElementEvolveLeaf",

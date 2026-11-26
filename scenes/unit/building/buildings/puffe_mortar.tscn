@@ -369,7 +369,7 @@ tiers = Array[ExtResource("tier_script")]([ExtResource("tier_physical_t2"), ExtR
 script = ExtResource("24_v32av")
 calculate_type = 1
 stat_type = 2
-value = 0.15
+value = 0.11
 
 [node name="BlastModifier" type="Node" parent="EvolveTree/EvolveBranch/PhysicalElementEvolveLeaf"]
 script = ExtResource("24_v32av")
@@ -396,7 +396,7 @@ tiers = Array[ExtResource("tier_script")]([ExtResource("tier_fire_t2"), ExtResou
 script = ExtResource("24_v32av")
 calculate_type = 1
 stat_type = 2
-value = 0.1
+value = 0.07
 
 [node name="PatchModifier" type="Node" parent="EvolveTree/EvolveBranch2/FireElementEvolveLeaf"]
 script = ExtResource("24_v32av")
@@ -429,7 +429,7 @@ tiers = Array[ExtResource("tier_script")]([ExtResource("tier_frost_t2"), ExtReso
 script = ExtResource("24_v32av")
 calculate_type = 1
 stat_type = 2
-value = 0.05
+value = 0.04
 
 [node name="EvolveBranch4" type="Node" parent="EvolveTree"]
 script = ExtResource("17_bv0np")

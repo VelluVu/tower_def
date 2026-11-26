@@ -35,7 +35,7 @@ BLAST_SKILL_TYPE = 1024  # Utils.SkillType.Blast
 FLAT, MULTIPLY = 0, 1
 DAMAGE_STAT, EFFECT_STACKS, SPLASH, FREEZE_CHANCE, FREEZE_TIME, PATCH_TIME, PATCH_SHARE = 2, 13, 20, 21, 22, 25, 26
 LEAF_MODIFIERS = {
-    "physical": [("DamageModifier", MULTIPLY, DAMAGE_STAT, 0.15), ("WideBlastModifier", FLAT, SPLASH, 0.25)],
+    "physical": [("DamageModifier", MULTIPLY, DAMAGE_STAT, 0.11), ("WideBlastModifier", FLAT, SPLASH, 0.25)],
     "fire": [("FirePitModifier", FLAT, PATCH_TIME, 2.0), ("FirePitHeatModifier", FLAT, PATCH_SHARE, 0.1)],
     "frost": [("FreezeModifier", FLAT, FREEZE_CHANCE, 1.0), ("FreezeTimeModifier", FLAT, FREEZE_TIME, 1.0)],
     "poison": [("GasModifier", FLAT, PATCH_TIME, 3.0), ("GasVenomModifier", FLAT, PATCH_SHARE, 0.1), ("StacksModifier", FLAT, EFFECT_STACKS, 1.0)],

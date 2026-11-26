@@ -39,8 +39,8 @@ LEAF_INFO = {
     "poison": "Poison: venom on the spikes poisons all on the field",
 }
 LEAF_MODIFIERS = {
-    "physical": [("DamageModifier", MULTIPLY, DAMAGE_STAT, 0.2)],
-    "fire": [("DamageModifier", MULTIPLY, DAMAGE_STAT, 0.1)],
+    "physical": [("DamageModifier", MULTIPLY, DAMAGE_STAT, 0.14)],
+    "fire": [("DamageModifier", MULTIPLY, DAMAGE_STAT, 0.07)],
     "frost": [("SpeedModifier", FLAT, ATTACK_SPEED, 0.1)],
     "poison": [("SpeedModifier", FLAT, ATTACK_SPEED, 0.1)],
 }

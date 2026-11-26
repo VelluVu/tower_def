@@ -15,5 +15,5 @@ elements = 15
 modify_stat_type = 2
 modify_type = 2
 is_percent = true
-modify_value = 0.08
+modify_value = 0.05
 evolve_name = "Damage"

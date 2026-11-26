@@ -40,7 +40,7 @@ DAMAGE_STAT, EFFECT_DURATION, EFFECT_STACKS = 2, 12, 13
 GUARD_HEALTH_STAT, GUARD_COUNT_STAT = 36, 37
 GUARD_SKILL_TYPE = 512  # Utils.SkillType.Guard
 LEAF_MODIFIERS = {
-    "physical": [("DamageModifier", MULTIPLY, DAMAGE_STAT, 0.15), ("ToughHideModifier", MULTIPLY, GUARD_HEALTH_STAT, 0.3)],
+    "physical": [("DamageModifier", MULTIPLY, DAMAGE_STAT, 0.11), ("ToughHideModifier", MULTIPLY, GUARD_HEALTH_STAT, 0.3)],
     "fire": [("FieryClawsModifier", FLAT, EFFECT_DURATION, 1.0)],
     "frost": [("ColdClawsModifier", FLAT, EFFECT_DURATION, 1.0)],
     "poison": [("VenomClawsModifier", FLAT, EFFECT_STACKS, 1.0)],

@@ -18,6 +18,9 @@ const XP_STEP : float = 20.0
 const SOFT_CAP_EFFICIENCY : float = 0.5
 #a rare card's chance to be drawn into an offer, against 1.0 for a common one
 const RARE_OFFER_WEIGHT : float = 0.35
+#a plain damage card's chance against 1.0 for the other common cards (no drawback, Damage stat): the offers lean to
+#range, speed, crits and effects, so damage grows slower inside a level while the card count stays (the user, 2026-11-26)
+const DAMAGE_OFFER_WEIGHT : float = 0.6
 #a building sold after the wave or build break it was placed in gets this share of its price back
 const LATE_SELL_SHARE : float = 0.75
 
@@ -87,8 +90,16 @@ static func fits_tower(resource : EvolveResource, skill : Skill, element : Utils
 ## A weighted draw without replacement (Efraimidis-Spirakis): sort the pool by this key, highest first.
 ## roll is a random number in (0, 1); passed in so the rule can be tested.
 static func offer_key(resource : EvolveResource, roll : float) -> float:
-	var weight : float = RARE_OFFER_WEIGHT if resource.rarity == EvolveResource.Rarity.Rare else 1.0
-	return pow(roll, 1.0 / weight)
+	return pow(roll, 1.0 / offer_weight(resource))
+
+
+## How often a card comes up in an offer, against 1.0 for a plain common card.
+static func offer_weight(resource : EvolveResource) -> float:
+	if resource.rarity == EvolveResource.Rarity.Rare:
+		return RARE_OFFER_WEIGHT
+	if resource.modify_stat_type == Utils.StatType.Damage and not resource.has_drawback and resource.card_target == EvolveResource.CardTarget.Buildings:
+		return DAMAGE_OFFER_WEIGHT
+	return 1.0
 
 
 ## upgrades_before_next_tier upgrades come before the next evolve tier (BuildingUpgradeData.upgrades_before_tier).

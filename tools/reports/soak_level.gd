@@ -44,6 +44,14 @@ const SPIKE_FIELD : String = "spike_field"
 ## The Hoard Keeper covers nothing: it goes on a free cell off the routes.
 const HOARD : String = "puffe_hoard"
 const HOARD_MIN_TOWERS : int = 4
+## A build's first CORE_TYPES tower types are its core; each later type (the newer towers, Buffer, Hoard) may stand
+## at most once per EXTRA_PER_CORE core towers. Without it the bot spread over seven types on late levels and lost
+## 48 and 60, which it won flawlessly with the core three (2026-11-26).
+const CORE_TYPES : int = 3
+const EXTRA_PER_CORE : int = 2
+## Towers that deal no damage count their purchases this many times when the bot picks the least upgraded tower,
+## so they get a share of the upgrades, not an equal one (19-35 Hoard Keeper steps on level 12, 2026-11-26).
+const SUPPORT_UPGRADE_WEIGHT : int = 2
 const WALL : String = "wall"
 ## Element walls (_buy_wall_step): from this many walls, tried on this share of the spending turns.
 const WALL_ELEMENT_MIN_WALLS : int = 4
@@ -432,7 +440,7 @@ func _spend(kit : TestKit, level : Level) -> void:
 
 	var behind : Building = null
 	for tower in towers:
-		if is_instance_valid(tower) and _has_options(level, tower) and (behind == null or purchases.get(tower, 0) < purchases.get(behind, 0)):
+		if is_instance_valid(tower) and _has_options(level, tower) and (behind == null or _upgrade_rank(tower) < _upgrade_rank(behind)):
 			behind = tower
 	if behind != null and purchases.get(behind, 0) < int(options.depth):
 		await _buy_next(level, behind)
@@ -479,6 +487,12 @@ func _place_tower(kit : TestKit, level : Level) -> bool:
 			if index > 0:
 				type_order.push_front(type_order.pop_at(index))
 			break
+	#nothing wanted is affordable yet: wait for the first wanted type, never place an extra over the core
+	if not _is_wanted_now(types[type_order[0]]):
+		for index in type_order.size():
+			if _is_wanted_now(types[type_order[index]]):
+				type_order.push_front(type_order.pop_at(index))
+				break
 	var type : int = type_order[0]
 	var scene_name : String = types[type]
 	if not level.player_stats.has_enough_gold(_placement_price(level, scene_name)):
@@ -511,9 +525,30 @@ func _place_tower(kit : TestKit, level : Level) -> bool:
 	return true
 
 
-## False for a Hoard Keeper before HOARD_MIN_TOWERS shooting towers stand (gold before guns).
+## False for a Hoard Keeper before HOARD_MIN_TOWERS shooting towers stand (gold before guns), and for a type past
+## the core while the core has fewer than EXTRA_PER_CORE towers per extra one.
 func _is_wanted_now(scene_name : String) -> bool:
-	return scene_name != HOARD or towers.size() >= HOARD_MIN_TOWERS
+	if scene_name == HOARD and towers.size() < HOARD_MIN_TOWERS:
+		return false
+	var types : Array[String] = _tower_types()
+	if types.find(scene_name) < CORE_TYPES:
+		return true
+	var core : int = 0
+	var extra : int = 0
+	for tower in towers:
+		if not is_instance_valid(tower):
+			continue
+		if types.find(tower.scene_file_path.get_file().get_basename()) < CORE_TYPES:
+			core += 1
+		else:
+			extra += 1
+	return (extra + 1) * EXTRA_PER_CORE <= core
+
+
+## How far along a tower counts when the bot picks the least upgraded one: support towers count double.
+func _upgrade_rank(tower : Building) -> int:
+	var bought : int = purchases.get(tower, 0)
+	return bought * SUPPORT_UPGRADE_WEIGHT if tower is HoardKeeper or tower is Buffer else bought
 
 
 #PlayerStats takes the price itself when the building is placed

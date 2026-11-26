@@ -33,3 +33,30 @@ func test_early_start_is_noticeable(kit : TestKit) -> void:
 	kit.check(not panel.start_wave_button.has_theme_color_override(&"font_color"), "the button's text is plain again")
 	panel.queue_free()
 	await kit.frames(2)
+
+
+## Auto start (2026-11-26, the user): with the toggle on, every wave after the first goes out as soon as it can.
+func test_auto_start_sends_waves_after_the_first(kit : TestKit) -> void:
+	await kit.load_level(2)
+	var panel : WavePanel = (load(PANEL_SCENE) as PackedScene).instantiate()
+	kit.root.add_child(panel)
+	await kit.frames(2)
+	var starts : Array[int] = [0]
+	var on_start : Callable = func() -> void: starts[0] += 1
+	UISignals.start_wave_pressed.connect(on_start)
+	panel.auto_button.button_pressed = true
+	kit.check(WavePanel.is_auto_start and panel.auto_button.text == WavePanel.AUTO_ON_TEXT, "the toggle turns auto start on")
+	GameSignals.wave_state_changed.emit(0, 5, true, 0.0)
+	await kit.frames(3)
+	kit.check(starts[0] == 0, "the first wave waits for the player")
+	kit.level.wave_runner.start_next_wave()
+	GameSignals.wave_state_changed.emit(1, 5, true, 6.0)
+	await kit.frames(3)
+	kit.check(starts[0] == 1, "the next wave goes out by itself: %d" % starts[0])
+	panel.auto_button.button_pressed = false
+	GameSignals.wave_state_changed.emit(1, 5, true, 6.0)
+	await kit.frames(3)
+	kit.check(starts[0] == 1 and not WavePanel.is_auto_start, "off again, it waits")
+	UISignals.start_wave_pressed.disconnect(on_start)
+	panel.queue_free()
+	await kit.frames(2)

@@ -42,7 +42,7 @@ DAMAGE_STAT, CRIT_MULTIPLIER, EFFECT_DURATION, EFFECT_STACKS, PENETRATION = 2, 8
 MARK_SHARE, EXECUTE_BELOW = 32, 33
 # the element leaves (the user's pick 2026-11-24: the mark plus the element; Physical pierces armour)
 LEAF_MODIFIERS = {
-    "physical": [("DamageModifier", MULTIPLY, DAMAGE_STAT, 0.1), ("PiercingModifier", FLAT, PENETRATION, 0.15),
+    "physical": [("DamageModifier", MULTIPLY, DAMAGE_STAT, 0.07), ("PiercingModifier", FLAT, PENETRATION, 0.15),
                  ("CritModifier", FLAT, CRIT_MULTIPLIER, 0.5)],
     "fire": [("MarkModifier", FLAT, MARK_SHARE, 0.1)],
     "frost": [("MarkModifier", FLAT, MARK_SHARE, 0.1), ("LongSlowModifier", FLAT, EFFECT_DURATION, 2.0)],

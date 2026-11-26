@@ -21,9 +21,13 @@ func test_each_card_fits_only_its_tower(kit : TestKit) -> void:
 
 
 func test_rare_cards_are_drawn_less_often(kit : TestKit) -> void:
-	var common : EvolveResource = load(TestKit.CARD_PATH % "damage")
+	var common : EvolveResource = load(TestKit.CARD_PATH % "attack_speed")
 	var rare : EvolveResource = load(TestKit.CARD_PATH % "ricochet")
 	kit.check_near(UpgradeRules.offer_key(common, 0.5), 0.5, "a common card's key is its roll")
+	#plain damage cards come up less often too (2026-11-26); a trade-off damage card does not
+	kit.check_near(UpgradeRules.offer_weight(load(TestKit.CARD_PATH % "damage")), UpgradeRules.DAMAGE_OFFER_WEIGHT, "a damage card's weight")
+	kit.check_near(UpgradeRules.offer_weight(load(TestKit.CARD_PATH % "projectile_damage")), UpgradeRules.DAMAGE_OFFER_WEIGHT, "a skill damage card's weight")
+	kit.check_near(UpgradeRules.offer_weight(load(TestKit.CARD_PATH % "heavy_blows")), 1.0, "a trade-off card keeps its weight")
 	kit.check(UpgradeRules.offer_key(rare, 0.5) < 0.2, "a rare card's key is lower for the same roll")
 	#against one common card, a rare one wins the draw weight / (weight + 1) of the time
 	var wins : int = 0

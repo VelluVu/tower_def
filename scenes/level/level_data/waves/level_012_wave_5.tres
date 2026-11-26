@@ -41,7 +41,7 @@ delay = 4.0
 [sub_resource type="Resource" id="Resource_group5"]
 script = ExtResource("2_group")
 enemy_scene = ExtResource("e_batling")
-count = 16
+count = 10
 interval = 1.1
 delay = 8.0
 spawner_id = 2

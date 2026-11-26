@@ -45,7 +45,7 @@ DAMAGE_STAT, EFFECT_DURATION, EFFECT_STACKS, KNOCKBACK = 2, 12, 13, 24
 TETHER_TIME, TETHER_SLOW_STAT = 34, 35
 # the element leaves (the user's pick 2026-11-24: hook + element)
 LEAF_MODIFIERS = {
-    "physical": [("DamageModifier", MULTIPLY, DAMAGE_STAT, 0.15), ("YankModifier", FLAT, KNOCKBACK, 1.0)],
+    "physical": [("DamageModifier", MULTIPLY, DAMAGE_STAT, 0.11), ("YankModifier", FLAT, KNOCKBACK, 1.0)],
     "fire": [("BurningChainModifier", FLAT, EFFECT_DURATION, 1.0)],
     "frost": [("DeepChillModifier", FLAT, TETHER_SLOW_STAT, 0.15), ("LongChainModifier", FLAT, TETHER_TIME, 1.0)],
     "poison": [("BarbedHookModifier", FLAT, EFFECT_STACKS, 1.0)],

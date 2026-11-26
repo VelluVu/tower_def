@@ -377,7 +377,7 @@ tiers = Array[ExtResource("tier_script")]([ExtResource("tier_physical_t2"), ExtR
 script = ExtResource("24_v32av")
 calculate_type = 1
 stat_type = 2
-value = 0.15
+value = 0.11
 
 [node name="ToughHideModifier" type="Node" parent="EvolveTree/EvolveBranch/PhysicalElementEvolveLeaf"]
 script = ExtResource("24_v32av")

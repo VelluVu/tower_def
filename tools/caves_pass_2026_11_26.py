@@ -26,8 +26,14 @@ def g(enemy, count, interval, spawner=0, delay=0.0):
 
 # level -> (first wave health, last wave health); the wave health ramp, health_scale 1.0
 # a wave 1 must fall to what the start gold builds: the first bot check lost 8, 10 and 12 at wave 1 with x2.9-3.4
+# second pass (2026-11-26, the full bot test): 8 fewer tanks, 9's wave 2 swarms apart, 11 softer and richer (START_GOLD),
+# 12 fewer batlings (flyers decided it for every build without anti-air before T2)
 RAMPS = {1: (1.0, 2.4), 2: (1.3, 2.9), 3: (1.6, 3.4), 4: (1.9, 4.6), 5: (2.2, 5.2), 6: (2.5, 5.0),
-         7: (2.2, 5.0), 8: (1.8, 5.6), 9: (2.2, 5.9), 10: (2.3, 6.2), 11: (3.0, 6.0), 12: (2.3, 6.8)}
+         7: (2.2, 5.0), 8: (1.8, 5.0), 9: (2.0, 5.9), 10: (2.3, 6.2), 11: (2.4, 5.4), 12: (2.3, 6.8)}
+
+# level -> starting gold where the pass sets it: 11's humans pay like weaklings and come in smaller waves (257 kill
+# gold against 626-813 on 8-12)
+START_GOLD = {11: 32.0}
 
 # level -> waves -> groups; spawner ids per level (python tools/match_spawns.py's kinds):
 # 1, 2 caves 0-2 | 3 roost 0, caves 1-2 | 4 cave 0, den 1 | 5 hollow 0, den 1, cave 2 | 6 cave 0, den 1, roost 2,
@@ -93,18 +99,18 @@ WAVES = {
     # Crystal Deep: burrowers (wave 2), crystal brutes and wall crawlers (3), destroyerlings (4); no roost
     8: [[g("weakling", 12, 2.6, 1), g("beefling", 3, 3.6, 0, 10.0), g("fastling", 8, 1.8, 1, 16.0)],
         [g("burrower", 8, 2.2, 1), g("beefling", 5, 3.4, 0), g("weakling", 14, 2.0, 1, 4.0)],
-        [g("crystal_brute", 5, 3.8, 0), g("fastling", 18, 1.2, 1), g("burrower", 10, 1.8, 1, 10.0),
+        [g("crystal_brute", 2, 3.8, 0), g("fastling", 18, 1.2, 1), g("burrower", 10, 1.8, 1, 10.0),
          g("wall_crawler", 6, 2.0, 1, 20.0)],
-        [g("destroyerling", 5, 3.6, 1), g("beefling", 10, 2.8, 0), g("weakling", 22, 1.4, 1, 6.0),
+        [g("destroyerling", 3, 3.6, 1), g("beefling", 8, 2.8, 0), g("weakling", 22, 1.4, 1, 6.0),
          g("wall_crawler", 8, 1.8, 1, 24.0)],
-        [g("crystal_brute", 6, 3.4, 0), g("burrower", 14, 1.4, 1), g("fastling", 24, 1.0, 1, 4.0),
-         g("destroyerling", 5, 3.4, 1, 12.0), g("wall_crawler", 6, 1.8, 1, 30.0)],
-        [g("crystal_brute", 7, 3.0, 0), g("destroyerling", 6, 3.0, 1), g("burrower", 16, 1.3, 1, 6.0),
+        [g("crystal_brute", 4, 3.4, 0), g("burrower", 14, 1.4, 1), g("fastling", 24, 1.0, 1, 4.0),
+         g("destroyerling", 3, 3.4, 1, 12.0), g("wall_crawler", 6, 1.8, 1, 30.0)],
+        [g("crystal_brute", 5, 3.0, 0), g("destroyerling", 4, 3.0, 1), g("burrower", 16, 1.3, 1, 6.0),
          g("fastling", 26, 0.9, 1, 14.0), g("beefling", 12, 2.4, 0, 20.0), g("wall_crawler", 8, 1.6, 1, 34.0)]],
     # Collapsed Tunnels: everything so far from four mouths, the cave shamans (wave 5)
     9: [[g("weakling", 16, 2.2, 0), g("fastling", 12, 1.6, 3, 8.0)],
-        [g("weakling", 14, 1.8, 0), g("swarmling", 8, 0.4, 2, 8.0), g("batling", 8, 1.8, 2, 14.0),
-         g("burrower", 6, 2.2, 3, 18.0), g("swarmling", 8, 0.4, 2, 30.0)],
+        [g("weakling", 14, 1.8, 0), g("swarmling", 6, 0.4, 2, 14.0), g("batling", 6, 1.8, 2, 22.0),
+         g("burrower", 6, 2.2, 3, 26.0), g("swarmling", 6, 0.4, 2, 44.0)],
         [g("beefling", 10, 2.8, 1), g("fastling", 22, 1.1, 0), g("batling", 12, 1.4, 2, 8.0),
          g("burrower", 8, 1.8, 3, 16.0)],
         [g("beefling", 12, 2.6, 1), g("weakling", 24, 1.3, 0), g("batling", 14, 1.3, 2, 4.0),
@@ -143,15 +149,15 @@ WAVES = {
          [g("beefling", 6, 3.2, 1), g("weakling", 18, 1.6, 2), g("swarmling", 14, 0.3, 0, 6.0),
           g("burrower", 8, 2.0, 0, 16.0)],
          [g("fastling", 20, 1.2, 0), g("beefling", 8, 3.0, 1), g("swarmling", 12, 0.3, 2, 6.0),
-          g("batling", 10, 1.6, 2, 10.0), g("swarmling", 12, 0.3, 0, 24.0), g("wall_crawler", 6, 1.8, 2, 28.0)],
+          g("batling", 6, 1.6, 2, 10.0), g("swarmling", 12, 0.3, 0, 24.0), g("wall_crawler", 6, 1.8, 2, 28.0)],
          [g("beefling", 10, 2.8, 1), g("fastling", 22, 1.2, 2), g("weakling", 18, 1.4, 0, 6.0),
           g("cave_shaman", 3, 5.0, 0, 10.0), g("crystal_brute", 3, 3.4, 1, 20.0),
           g("destroyerling", 3, 3.4, 2, 26.0)],
          [g("beefling", 16, 2.2, 1), g("fastling", 28, 0.9, 0), g("weakling", 24, 1.2, 2, 4.0),
-          g("swarmling", 16, 0.3, 0, 4.0), g("batling", 16, 1.1, 2, 8.0), g("wall_crawler", 8, 1.6, 0, 14.0),
+          g("swarmling", 16, 0.3, 0, 4.0), g("batling", 10, 1.1, 2, 8.0), g("wall_crawler", 8, 1.6, 0, 14.0),
           g("swarmling", 16, 0.3, 2, 24.0), g("tunnel_rat", 14, 0.4, 0, 30.0)],
          [g("beefling", 10, 2.8, 1), g("fastling", 20, 1.2, 2), g("weakling", 18, 1.4, 0),
-          g("batling", 12, 1.4, 2, 8.0), g("cave_shaman", 3, 5.0, 0, 12.0), g("broodmother", 1, 1.0, 1, 20.0)]],
+          g("batling", 8, 1.4, 2, 8.0), g("cave_shaman", 3, 5.0, 0, 12.0), g("broodmother", 1, 1.0, 1, 20.0)]],
 }
 
 
@@ -190,7 +196,10 @@ def write_level(level):
     data = DATA_FILE % level
     text = open(data, encoding="utf-8").read()
     first, last = RAMPS[level]
-    for key, value in (("first_wave_health", first), ("last_wave_health", last), ("health_scale", 1.0)):
+    values = [("first_wave_health", first), ("last_wave_health", last), ("health_scale", 1.0)]
+    if level in START_GOLD:
+        values.append(("starting_gold", START_GOLD[level]))
+    for key, value in values:
         line = "%s = %r" % (key, float(value))
         if re.search(r"^%s = " % key, text, re.M):
             text = re.sub(r"^%s = .*$" % key, line, text, flags=re.M)
