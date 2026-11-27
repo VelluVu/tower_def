@@ -9,6 +9,7 @@ extends Node
 ## The Level creates it before LevelUpgrades, so a new per-type building gets its upgrades before the XP cards check it.
 
 const UPGRADE_TITLE_TEXT : String = "Up %d"
+const RANK_TITLE_TEXT : String = "Rank %d"
 #a wall's element: bought per wall once the shared wall line is at Up 2 (the design doc's Wall evolves)
 const WALL_ELEMENT_MIN_UPGRADES : int = 2
 const WALL_ELEMENT_PRICE : float = 2.0
@@ -43,6 +44,8 @@ const BUFFER_TRACK_TEXT : String = "Towers and traps in the aura: %s +%s a pip (
 class UpgradeState:
 	var upgrades_bought : int = 0
 	var tiers_evolved : int = 0
+	#repeatable ranks after the last step (RankData)
+	var ranks : int = 0
 	#path from the building to the element leaf it evolved into, empty before the first tier
 	var element_leaf_path : NodePath = NodePath()
 
@@ -53,6 +56,8 @@ var wall_element_tiers : Dictionary[Utils.Element, int] = {}
 var building_states : Dictionary[Building, UpgradeState] = {}
 #gold spent on each tower's and trap's own upgrades and tiers (Salvage refunds a share of it)
 var upgrade_gold : Dictionary[Building, float] = {}
+#the rank modifiers on each building, swapped for new ones on every rank
+var rank_modifiers : Dictionary[Building, Array] = {}
 var selected_unit : Node2D = null
 var options : Array[GoldUpgradeOption] = []
 
@@ -128,6 +133,7 @@ func _on_building_placed(building : Building) -> void:
 	#per-type buildings (walls) have no element tiers, so no evolved upgrades either
 	for i in state.upgrades_bought:
 		_apply_upgrade(building, false)
+	_apply_ranks(building, state.ranks)
 
 	_update_pips(building, state)
 	building.stats_changed.emit()
@@ -135,6 +141,7 @@ func _on_building_placed(building : Building) -> void:
 
 func _on_building_removed(building : Building) -> void:
 	building_states.erase(building)
+	rank_modifiers.erase(building)
 
 	if building != selected_unit:
 		return
@@ -184,7 +191,9 @@ func _on_gold_upgrade_pressed(index : int) -> void:
 	var type_key : String = selected_unit.scene_file_path
 	var state : UpgradeState = _get_state(selected_unit)
 
-	if option.is_evolve:
+	if option.is_rank:
+		state.ranks += 1
+	elif option.is_evolve:
 		state.tiers_evolved += 1
 		if state.element_leaf_path.is_empty():
 			state.element_leaf_path = option.element_leaf_path
@@ -199,7 +208,9 @@ func _on_gold_upgrade_pressed(index : int) -> void:
 				targets.append(building)
 
 	for building in targets:
-		if option.tier > 0:
+		if option.is_rank:
+			_apply_ranks(building, state.ranks)
+		elif option.tier > 0:
 			_apply_tier(building, option.element_leaf_path, option.tier - 1)
 		elif option.is_evolve:
 			_apply_evolve(building, option.element_leaf_path)
@@ -281,10 +292,52 @@ func _build_options() -> Array[GoldUpgradeOption]:
 			tier_option.description = UpgradeTooltipText.for_wall_tier(building.element, WALL_ELEMENTS[building.element][0], next_tier, tier_option.is_locked)
 			new_options.append(tier_option)
 
+	var rank_option : GoldUpgradeOption = _rank_option(building, data, state, new_options, building_price)
+	if rank_option != null:
+		new_options.append(rank_option)
+
 	for option in new_options:
 		option.is_affordable = not option.is_locked and level.player_stats.has_enough_gold(option.cost)
 
 	return new_options
+
+
+## The next rank, once nothing else on the building's own line can be bought: every step is bought, or the next is
+## a tier its talent node has not opened. Element choices of a wall do not count (they are bought per wall).
+func _rank_option(building : Building, data : BuildingUpgradeData, state : UpgradeState, line_options : Array[GoldUpgradeOption],
+		building_price : float) -> GoldUpgradeOption:
+	var ranks : RankData = data.rank_data
+	if ranks == null or ranks.steps.is_empty() or state.ranks >= ranks.get_max_ranks():
+		return null
+	for option in line_options:
+		if not option.is_locked and option.wall_element == Utils.Element.None:
+			return null
+	var price : float = UpgradeRules.gold_price(building_price, ranks.get_cost_ratio(state.ranks) * _price_share())
+	var option : GoldUpgradeOption = GoldUpgradeOption.upgrade(RANK_TITLE_TEXT % (state.ranks + 1), data.upgrade_icon, price)
+	option.is_rank = true
+	option.description = UpgradeTooltipText.for_rank(ranks, state.ranks, _is_per_type(building))
+	return option
+
+
+## Swaps the building's rank modifiers for ones worth ranks ranks (each step capped).
+func _apply_ranks(building : Building, ranks : int) -> void:
+	var data : BuildingUpgradeData = building.evolve_tree.upgrade_data
+	if data.rank_data == null:
+		return
+	var missing_health : float = building.stats.get_stat_value(Utils.StatType.MaxHealth) - building.stats.get_stat_value(Utils.StatType.Health)
+	for modifier : ModifierData in rank_modifiers.get(building, []):
+		building.modifier_manager.remove_modifier(modifier)
+	var modifiers : Array[ModifierData] = []
+	if ranks > 0:
+		for index in data.rank_data.steps.size():
+			var modifier : ModifierData = data.rank_data.steps[index].get_modifier_data()
+			modifier.value = data.rank_data.get_total(index, ranks)
+			building.modifier_manager.add_modifier(modifier)
+			modifiers.append(modifier)
+	rank_modifiers[building] = modifiers
+	var health : Stat = building.stats.get_stat(Utils.StatType.Health)
+	if health != null:
+		health.value = building.stats.get_stat_value(Utils.StatType.MaxHealth) - missing_health
 
 
 ## A Buffer: one button per track that has room (pips from the budget, the price rising with every pip), and the
@@ -441,7 +494,15 @@ func get_upgrade_steps(building : Building) -> int:
 		return 0
 	#read only: never make a state for a building nothing was bought for
 	var state : UpgradeState = type_states.get(building.scene_file_path) if _is_per_type(building) else building_states.get(building)
-	return state.upgrades_bought + state.tiers_evolved if state != null else 0
+	return state.upgrades_bought + state.tiers_evolved + state.ranks if state != null else 0
+
+
+## Ranks bought for the building (per type for walls).
+func get_ranks(building : Building) -> int:
+	if not _is_upgradable(building):
+		return 0
+	var state : UpgradeState = type_states.get(building.scene_file_path) if _is_per_type(building) else building_states.get(building)
+	return state.ranks if state != null else 0
 
 
 func _get_state(building : Building) -> UpgradeState:

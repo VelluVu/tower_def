@@ -9,6 +9,8 @@ const THIS_WALL_TEXT : String = "For this wall only; it stays until sold."
 const EVERY_ELEMENT_WALL_FORMAT : String = "For every %s, placed now or later."
 const LOCKED_NOTE : String = "Learn the talent node to unlock it."
 const STAT_LINE_FORMAT : String = "%s %s"
+const RANK_INTRO_TEXT : String = "A rank: buy it again and again, each one dearer, until every stat is at its cap."
+const RANK_LINE_FORMAT : String = "%s %s (now %s, at most %s)"
 ## Flat modifiers on these stats are chances, shown as percent.
 const CHANCE_STATS : Array[Utils.StatType] = [Utils.StatType.CriticalChance, Utils.StatType.EffectChance]
 
@@ -66,6 +68,20 @@ static func for_wall_tier(element : Utils.Element, wall_name : String, tier : in
 	var lines : PackedStringArray = [effects[tier - 2] if tier - 2 < effects.size() else "", EVERY_ELEMENT_WALL_FORMAT % wall_name.to_lower()]
 	if is_locked:
 		lines.append(LOCKED_NOTE)
+	return "\n".join(lines)
+
+
+## "Damage +5% (now +15%, at most +50%)" per rank step, then who it reaches.
+static func for_rank(data : RankData, ranks_bought : int, is_per_type : bool) -> String:
+	var lines : PackedStringArray = [RANK_INTRO_TEXT]
+	for index in data.steps.size():
+		var step : EvolveResource = data.steps[index]
+		var cap : float = data.caps[index] if index < data.caps.size() else INF
+		var now : float = data.get_total(index, ranks_bought)
+		var gain : float = data.get_total(index, ranks_bought + 1) - now
+		lines.append(RANK_LINE_FORMAT % [step.evolve_name, UpgradeCard._format_value(gain, step.modify_type, step.is_percent),
+			UpgradeCard._format_value(now, step.modify_type, step.is_percent), UpgradeCard._format_value(cap, step.modify_type, step.is_percent)])
+	lines.append(EVERY_WALL_TEXT if is_per_type else THIS_TOWER_TEXT)
 	return "\n".join(lines)
 
 

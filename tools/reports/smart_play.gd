@@ -327,6 +327,20 @@ func _actions(level : Level) -> Array[Dictionary]:
 
 ## The unit's next gold step: an upgrade (its modifiers' gain), the element that fits the coming wave
 ## best, or the next tier.
+## The next rank's gain as a factor on the unit's power: each step's capped total before and after it (damage and
+## attack speed multiply the power; the base attack speed counts as 1).
+func _rank_factor(unit : Building, ranks : int) -> float:
+	var data : RankData = unit.evolve_tree.upgrade_data.rank_data
+	var factor : float = 1.0
+	for index in data.steps.size():
+		var now : float = data.get_total(index, ranks)
+		var next : float = data.get_total(index, ranks + 1)
+		match data.steps[index].modify_stat_type:
+			Utils.StatType.Damage, Utils.StatType.AttackSpeed:
+				factor *= (1.0 + next) / (1.0 + now)
+	return factor
+
+
 func _upgrade_action(level : Level, unit : Building, routes : Array[Vector2i], threat : Dictionary) -> Dictionary:
 	var upgrades : BuildingTypeUpgrades = level.building_type_upgrades
 	upgrades._on_unit_selected(unit)
@@ -364,7 +378,9 @@ func _upgrade_action(level : Level, unit : Building, routes : Array[Vector2i], t
 			continue
 		var factor : float = 1.0
 		var synergy : float = 0.0
-		if not option.is_evolve:
+		if option.is_rank:
+			factor = _rank_factor(unit, upgrades.get_ranks(unit))
+		elif not option.is_evolve:
 			factor = _power(unit, _upgrade_modifiers(unit)) / maxf(_power(unit), 0.001)
 		elif not option.element_leaf_path.is_empty() and not unit.evolve_tree.is_element_chosen:
 			var element_name : String = _leaf_element(option.element_leaf_path)

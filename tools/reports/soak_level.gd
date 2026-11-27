@@ -31,6 +31,9 @@ extends RefCounted
 ##   play=rules|smart   rules: the fixed rules above; smart: smart_play.gd values every action by the damage it
 ##                       adds per gold and buys the best (ignores depth, min_towers, the wall share and
 ##                       wall_min_towers; walls=0 still turns walls off), picks cards by their gain, starts early when safe
+##   style=towers|maze   a player's style, setting defaults for the options above unless they are given (STYLES):
+##                       maze: three towers first (two lost level 5 on wave 1), most gold in walls, wall pairs and walls beside the route, wall
+##                       upgrades, and walls with any gold left once the towers are bought out
 ##   smart=smart_play    the smart player's script in tools/reports/ (smart_play_v2: pair walls, a knapsack per
 ##                       build break, sells towers the route has left)
 
@@ -68,6 +71,14 @@ const DIGITS : String = "0123456789"
 const LEAF_META : StringName = &"soak_leaf"
 const RANGE_META : StringName = &"soak_range"
 const WALL_COVER_WEIGHT : int = 1000
+## Play styles (style=): option defaults, overridden by options given on the command line. The extra
+## behaviour of a style is in _spend and _best_wall_cell (maze: is_maze_style).
+const STYLES : Dictionary[String, Dictionary] = {
+	"towers": {},
+	"maze": {"walls": "0.8", "wall_min_towers": "3", "min_towers": "3"},
+}
+## The maze style buys wall upgrades and elements this often (the default bot: WALL_ELEMENT_CHANCE).
+const MAZE_WALL_STEP_CHANCE : float = 0.4
 ## Synergy habits (design doc Synergies): a partner nearby is worth this many route cells to a tower's cell (at
 ## most two partners), a trap of another kind beside a trap cell this many towers reaching it.
 const SYNERGY_CELLS : float = 3.0
@@ -100,7 +111,7 @@ var options : Dictionary[String, String] = {
 	"level": "1", "mode": "normal", "build": "mixed", "cards": "random", "economy": "real", "talents": "none", "health": "1.0", "speed": "1.0", "life": "",
 	"rotation": "0", "order": "fixed", "towers": "40", "traps": "5", "min_towers": "3", "depth": "3", "wall_min_towers": "5",
 	"walls": "0.3", "early": "0", "unlocked": "level", "seed": "1", "speed_up": "3.0", "play": "rules", "types": "",
-	"smart": "smart_play", "chaos": "0", "trap": "mixed",
+	"smart": "smart_play", "chaos": "0", "trap": "mixed", "style": "towers",
 }
 #chaos=N: every N game seconds of a wave a random building is sold, so shots, beams and effects lose their tower mid-fight
 var chaos_interval : float = 0.0
@@ -111,6 +122,9 @@ var smart : RefCounted = null
 var towers : Array[Building] = []
 var traps : int = 0
 var walls : int = 0
+#ranks bought over the game (towers and the wall line), towers lost to the enemies
+var ranks_bought : int = 0
+var towers_lost : int = 0
 var purchases : Dictionary[Building, int] = {}
 var prices : Dictionary[String, float] = {}
 var type_order : Array[int] = []
@@ -120,6 +134,7 @@ var wall_gold : float = 0.0
 var cached_paths : Array[PackedVector2Array] = []
 var cached_ids : Dictionary[int, bool] = {}
 var is_wall_exhausted : bool = false
+var is_maze_style : bool = false
 
 var reactions : Dictionary[String, int] = {}
 var tower_damage : Dictionary[String, float] = {}
@@ -143,6 +158,12 @@ func run(kit : TestKit, args : PackedStringArray) -> void:
 			options[parts[0]] = parts[1]
 			given[parts[0]] = true
 	build = BUILDS.get(options.build, {})
+	var style : Dictionary = STYLES.get(options.style, {})
+	for key : String in style:
+		if not given.has(key):
+			options[key] = style[key]
+			given[key] = true
+	is_maze_style = options.style == "maze"
 	#the build's wall share, unless walls= was given
 	if build.has("walls") and not given.has("walls"):
 		options.walls = str(build.walls)
@@ -259,6 +280,7 @@ func run(kit : TestKit, args : PackedStringArray) -> void:
 		result, wave_text, level.player_stats.life, starting_life, cards, level.early_starts, level.player_stats.gold])
 	print("SOAK built %d towers, %d traps, %d walls (%.0f of %.0f gold), route %d -> %d cells, purchases %s, elements %s" % [
 		towers.size(), traps, walls, wall_gold, gold_spent, start_length, _route_length(level), bought, elements])
+	print("SOAK ranks %d bought, %d towers lost" % [ranks_bought, towers_lost])
 	if smart != null:
 		print("SOAK smart bought %s" % smart.bought)
 		#each kind's real damage over its stats' promise: SHEET_BASE_DPS against walking enemies
@@ -426,9 +448,20 @@ func _chaos_sell(level : Level) -> void:
 ## their share of the gold, then upgrades up to depth, then the next tower or trap.
 ## Waits (saves gold) when the chosen action costs more than it has.
 func _spend(kit : TestKit, level : Level) -> void:
+	_forget_destroyed_towers()
 	var tower_cap : int = int(options.towers)
-	if towers.size() < int(options.min_towers):
+	if towers.size() < mini(int(options.min_towers), tower_cap):
 		await _place_tower(kit, level)
+		return
+
+	var behind : Building = null
+	for tower in towers:
+		if is_instance_valid(tower) and _has_options(level, tower) and (behind == null or _upgrade_rank(tower) < _upgrade_rank(behind)):
+			behind = tower
+	#a mazer still keeps its few towers up to depth first: walls before upgrades lost levels 1, 6, 11 and 12
+	#that the default bot won with the same four towers (2026-11-27)
+	if is_maze_style and behind != null and purchases.get(behind, 0) < int(options.depth):
+		await _buy_next(level, behind)
 		return
 
 	var wall_share : float = float(options.walls)
@@ -443,16 +476,13 @@ func _spend(kit : TestKit, level : Level) -> void:
 		else:
 			return
 
-	var behind : Building = null
-	for tower in towers:
-		if is_instance_valid(tower) and _has_options(level, tower) and (behind == null or _upgrade_rank(tower) < _upgrade_rank(behind)):
-			behind = tower
-	if behind != null and purchases.get(behind, 0) < int(options.depth):
+	if not is_maze_style and behind != null and purchases.get(behind, 0) < int(options.depth):
 		await _buy_next(level, behind)
 		return
 
 	#element walls, now and then: the shared line to Up 2, then a random element on a random plain wall
-	if walls >= WALL_ELEMENT_MIN_WALLS and randf() < WALL_ELEMENT_CHANCE and _buy_wall_step(level):
+	var wall_step_chance : float = MAZE_WALL_STEP_CHANCE if is_maze_style else WALL_ELEMENT_CHANCE
+	if walls >= WALL_ELEMENT_MIN_WALLS and randf() < wall_step_chance and _buy_wall_step(level):
 		return
 
 	var trap_name : String = _next_trap()
@@ -469,6 +499,27 @@ func _spend(kit : TestKit, level : Level) -> void:
 		return
 	if behind != null:
 		await _buy_next(level, behind)
+		return
+	#a mazer with every tower bought out puts the rest into the maze, past the wall share
+	if is_maze_style and wall_share > 0.0 and not is_wall_exhausted and level.player_stats.has_enough_gold(_price_of(WALL)):
+		var cell : Vector2i = _best_wall_cell(level)
+		if cell == Vector2i.MAX:
+			is_wall_exhausted = true
+		else:
+			await _place(kit, level, WALL, cell)
+			walls += 1
+
+
+#towers the enemies destroyed no longer count against the tower cap, so the bot builds again (level 8's
+#destroyerlings left a four-tower bot with one Nova and 167 gold, 2026-11-27)
+func _forget_destroyed_towers() -> void:
+	var standing : Array[Building] = []
+	for tower : Variant in towers:
+		if is_instance_valid(tower) and not (tower as Building).is_dead:
+			standing.append(tower)
+	if standing.size() < towers.size():
+		towers_lost += towers.size() - standing.size()
+		towers = standing
 
 
 ## False when there is no cell left for the next tower (not enough gold only waits).
@@ -582,15 +633,23 @@ func _buy_next(level : Level, tower : Building) -> void:
 	var offered : Array[GoldUpgradeOption] = upgrades.options
 	if offered.is_empty():
 		return
-	var index : int = 0
+	#the first button it may buy (a locked T2 comes before the ranks), its build's element at the choice
+	var index : int = -1
 	for o in offered.size():
-		if str(offered[o].element_leaf_path).ends_with(tower.get_meta(LEAF_META, "")):
+		if not offered[o].is_locked and index < 0:
 			index = o
+		if not offered[o].is_locked and str(offered[o].element_leaf_path).ends_with(tower.get_meta(LEAF_META, "")):
+			index = o
+	if index < 0:
+		return
 	var gold_before : float = level.player_stats.gold
+	var is_rank : bool = offered[index].is_rank
 	upgrades._on_gold_upgrade_pressed(index)
 	if level.player_stats.gold < gold_before:
 		gold_spent += gold_before - level.player_stats.gold
 		purchases[tower] = purchases.get(tower, 0) + 1
+		if is_rank:
+			ranks_bought += 1
 
 
 func _has_options(level : Level, tower : Building) -> bool:
@@ -785,19 +844,54 @@ func _best_wall_cell(level : Level) -> Vector2i:
 		ends[level.grid.world_position_to_grid(spawner.global_position)] = true
 		ends[level.grid.world_position_to_grid(spawner.end_point.global_position)] = true
 
-	for cell in _route_cells(level):
-		if ends.has(cell) or not _is_free_to_build(level, cell):
-			continue
-		level.grid.set_cell_weight(cell, BLOCKED_WEIGHT)
-		var routes : Array[Array] = _open_routes(level)
-		level.grid.set_cell_weight(cell, 1.0)
-		if routes.is_empty():
-			continue
-		var score : float = _wall_score(routes, _maze_cells(level, [cell]), hold)
+	var candidates : Array[Vector2i] = _wall_candidates(level, ends)
+	for cell in candidates:
+		var score : float = _score_walls(level, [cell], hold)
 		if score > best_score:
 			best_score = score
 			best = cell
+	if best != Vector2i.MAX or not is_maze_style:
+		return best
+	#no single wall helps: a mazer looks for two that do together (a wall beside a wall turns the route,
+	#one alone in open ground is only walked round), and builds the first; the next call finds the second
+	for cell in candidates:
+		for neighbour in level.grid.get_surrounding_cells(cell):
+			if neighbour < cell or not candidates.has(neighbour):
+				continue
+			var score : float = _score_walls(level, [cell, neighbour], hold)
+			if score > best_score:
+				best_score = score
+				best = cell
 	return best
+
+
+#the cells a wall may go: on the route, and for a mazer beside it too (lining a route makes it maze)
+func _wall_candidates(level : Level, ends : Dictionary[Vector2i, bool]) -> Array[Vector2i]:
+	var cells : Dictionary[Vector2i, bool] = {}
+	for cell in _route_cells(level):
+		cells[cell] = true
+		if is_maze_style:
+			for neighbour in level.grid.get_surrounding_cells(cell):
+				cells[neighbour] = true
+	var free : Array[Vector2i] = []
+	for cell in cells:
+		if not ends.has(cell) and _is_free_to_build(level, cell):
+			free.append(cell)
+	return free
+
+
+#the wall score with these walls counted as placed; -1 when they would close a route
+func _score_walls(level : Level, cells : Array[Vector2i], hold : float) -> float:
+	var weights : Array[float] = []
+	for cell in cells:
+		weights.append(level.grid.astar_grid.get_point_weight_scale(cell))
+		level.grid.set_cell_weight(cell, BLOCKED_WEIGHT)
+	var routes : Array[Array] = _open_routes(level)
+	for index in cells.size():
+		level.grid.set_cell_weight(cells[index], weights[index])
+	if routes.is_empty():
+		return -1.0
+	return _wall_score(routes, _maze_cells(level, cells), hold)
 
 
 #route cells in each tower's reach (a cell two towers reach counts twice) count far more than the
@@ -933,7 +1027,8 @@ func _buy_wall_step(level : Level) -> bool:
 		var option : GoldUpgradeOption = upgrades.options[index]
 		if option.wall_element != Utils.Element.None and option.is_affordable:
 			choices.append(index)
-	if choices.is_empty() and upgrades.get_upgrade_steps(wall) < BuildingTypeUpgrades.WALL_ELEMENT_MIN_UPGRADES:
+	#a mazer buys the whole line and its ranks too (the wall sink, 2026-11-27)
+	if choices.is_empty() and (is_maze_style or upgrades.get_upgrade_steps(wall) < BuildingTypeUpgrades.WALL_ELEMENT_MIN_UPGRADES):
 		for index in upgrades.options.size():
 			var option : GoldUpgradeOption = upgrades.options[index]
 			if option.wall_element == Utils.Element.None and not option.is_evolve and option.is_affordable:
@@ -942,10 +1037,14 @@ func _buy_wall_step(level : Level) -> bool:
 	if choices.is_empty():
 		return false
 	var gold_before : float = level.player_stats.gold
-	upgrades._on_gold_upgrade_pressed(choices.pick_random())
+	var choice : int = choices.pick_random()
+	var is_rank : bool = upgrades.options[choice].is_rank
+	upgrades._on_gold_upgrade_pressed(choice)
 	var spent : float = gold_before - level.player_stats.gold
 	gold_spent += spent
 	wall_gold += spent
+	if is_rank and spent > 0.0:
+		ranks_bought += 1
 	return spent > 0.0
 
 

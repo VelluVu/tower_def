@@ -20,7 +20,7 @@ func test_tier_waits_for_its_talent(kit : TestKit) -> void:
 	await kit.load_level(3)
 	var nova : Building = await _to_up_3(kit, "puffe_nova", FIRE_LEAF_NAME)
 	var options : Array[GoldUpgradeOption] = kit.level.building_type_upgrades.options
-	kit.check(options.size() == 1 and options[0].tier == 1, "after Up 3 comes T2")
+	kit.check(options.size() == 2 and options[0].tier == 1 and options[1].is_rank, "after Up 3 comes T2 (locked), and a rank beside it")
 	kit.check(options[0].is_locked and not options[0].is_affordable, "locked without Nova T2 in the Fire tree")
 	kit.check(options[0].title.contains("Nova T2"), "the button names the talent: %s" % options[0].title)
 	var gold : float = kit.level.player_stats.gold
@@ -46,7 +46,8 @@ func test_fire_nova_tiers(kit : TestKit) -> void:
 	kit.check(options.size() == 1 and options[0].tier == 2 and not options[0].is_locked, "then T3")
 	_buy(kit, 0)
 	kit.check(roundi(nova.stats.get_stat_value(Utils.StatType.ExtraShots)) == 1, "T3: a second burst")
-	kit.check(kit.level.building_type_upgrades.options.is_empty(), "nothing after T3")
+	var after : Array[GoldUpgradeOption] = kit.level.building_type_upgrades.options
+	kit.check(after.size() == 1 and after[0].is_rank, "only ranks after T3")
 	_set_ranks(saved)
 
 

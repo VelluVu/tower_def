@@ -24,6 +24,8 @@ var wall_element : Utils.Element = Utils.Element.None
 var wall_tier : int = 0
 #a Buffer's pip on this track (Utils.StatType); -1 for every other option
 var buffer_stat : int = -1
+#the next rank (RankData), after the building's last step
+var is_rank : bool = false
 
 var is_evolve : bool :
 	get:

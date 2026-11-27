@@ -374,6 +374,10 @@ type = 8
 script = ExtResource("10_7keqx")
 type = 9
 
+[node name="EffectPotency" type="Node" parent="Stats"]
+script = ExtResource("10_7keqx")
+type = 10
+
 [node name="EvolveTree" type="Node" parent="."]
 script = ExtResource("11_0j38t")
 upgrade_data = ExtResource("0_upgradedata")

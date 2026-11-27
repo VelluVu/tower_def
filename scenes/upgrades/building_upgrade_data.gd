@@ -26,3 +26,5 @@ func upgrades_before_tier(tier_index : int) -> int:
 #true: one purchase upgrades every building of the type (walls); false: only the selected building
 @export var is_per_type : bool = false
 @export var upgrade_icon : Texture2D = null
+#the repeatable ranks after the last step (RankData); null = none (the Buffer has its pips, the Hoard Keeper pays gold)
+@export var rank_data : RankData = null

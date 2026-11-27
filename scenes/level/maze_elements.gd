@@ -38,7 +38,8 @@ func _tick() -> void:
 			hit_elements.append(wall.element)
 			var hit : DamageData = DamageData.new()
 			hit.damage_type = DAMAGE_TYPES[wall.element]
-			hit.damage = GROUND_DAMAGE[wall.element]
+			#wall ranks raise the wall line's EffectPotency (RankData)
+			hit.damage = GROUND_DAMAGE[wall.element] * (1.0 + wall.stats.get_stat_value(Utils.StatType.EffectPotency))
 			hit.is_overtime = true
 			hit.source = wall
 			enemy.take_damage(hit)
