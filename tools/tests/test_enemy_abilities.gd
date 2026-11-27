@@ -6,6 +6,8 @@ const MAGMA_BLOB_FILE : String = "magma_blob.tscn"
 
 
 func _cell_near(kit : TestKit, from : Vector2, min_tiles : float, max_tiles : float, taken : Array[Vector2i] = []) -> Vector2i:
+	#these tests want towers right by the spawn so its enemies reach them at once, not the spawn mouth rule
+	kit.level.grid.spawn_clear_cells.clear()
 	return kit.find_cell(func(c : Vector2i) -> bool:
 		var world : Vector2 = kit.level.grid.grid_position_to_world(c)
 		var tiles : float = world.distance_to(from) / Utils.TILE_SIZE

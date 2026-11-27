@@ -317,6 +317,14 @@ type = 29
 script = ExtResource("17_m7bv2")
 type = 30
 
+[node name="MarkShare" type="Node" parent="Stats"]
+script = ExtResource("17_m7bv2")
+type = 32
+
+[node name="ExecuteBelow" type="Node" parent="Stats"]
+script = ExtResource("17_m7bv2")
+type = 33
+
 [node name="EffectChance" type="Node" parent="Stats"]
 script = ExtResource("17_m7bv2")
 type = 11

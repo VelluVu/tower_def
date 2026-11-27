@@ -69,6 +69,8 @@ enum StatType
 	GuardCount,
 	#the Buffer's radius track (2026-11-26): tiles its throws reach past its own range (a pip key, no tower has it)
 	AuraRadius,
+	#the Buffer's mend track (2026-11-27): share of max health a second it heals walls in its aura (a pip key)
+	WallMend,
 }
 
 enum TileType

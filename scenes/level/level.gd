@@ -67,6 +67,8 @@ func _ready() -> void:
 	grid = LevelGrid.new(tiles, all_buildings)
 	for spawner in get_spawners():
 		grid.reserve_cells(spawner.get_footprint_cells(grid))
+		for cell in spawner.get_clear_cells(grid):
+			grid.spawn_clear_cells[cell] = true
 	for child in get_children():
 		if child is BogCrossing:
 			grid.bog_crossings.append(child)

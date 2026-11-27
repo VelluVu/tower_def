@@ -9,6 +9,12 @@ scales are gone). The curve (design doc, Normal's difficulty curve): each level 
 the Broodmother's lair (12) the peak. More enemies, in surges from several spawners with gaps, the later cave kinds
 mixed in towards 12; each kind still first comes on the level and wave whose Puffe line introduces it. No elites:
 they are first met in Wasp Hollow (19). Then: python tools/match_spawns.py (nothing should move) and gd.py levels.
+
+Third pass (2026-11-27, the user: "scale the level difficulty and waves up based on level 1"): level 1's waves 2 and 3
+come from two and three caves a little faster (the user's own change), and the rest follows it: 2 and 4 (flawless for
+the bot) in level 1's style, from several caves a little faster; 3's wave 2 swarm and 9's wave 3 (walls the bot lost
+every game) softer; 5, 6, 8 and 10 denser through PRESSURE. health_scale is left as it is: the level tuner owns it.
+Bot checks with talents=budget:3*(level-1), the average player's points by then.
 """
 import os
 import re
@@ -28,7 +34,8 @@ def g(enemy, count, interval, spawner=0, delay=0.0):
 # a wave 1 must fall to what the start gold builds: the first bot check lost 8, 10 and 12 at wave 1 with x2.9-3.4
 # second pass (2026-11-26, the full bot test): 8 fewer tanks, 9's wave 2 swarms apart, 11 softer and richer (START_GOLD),
 # 12 fewer batlings (flyers decided it for every build without anti-air before T2)
-RAMPS = {1: (1.0, 2.4), 2: (1.3, 2.9), 3: (1.6, 3.4), 4: (1.9, 4.6), 5: (2.2, 5.2), 6: (2.5, 5.0),
+# third pass (2026-11-27): 2, 4, 5 and 6 tougher (the bot won them flawless or nearly)
+RAMPS = {1: (1.0, 2.4), 2: (1.5, 3.4), 3: (1.6, 3.4), 4: (2.2, 5.4), 5: (2.4, 5.6), 6: (2.7, 5.6),
          7: (2.2, 5.0), 8: (1.8, 5.0), 9: (2.0, 5.9), 10: (2.3, 6.2), 11: (2.4, 5.4), 12: (2.3, 6.8)}
 
 # level -> starting gold where the pass sets it: 11's humans pay like weaklings and come in smaller waves (257 kill
@@ -42,27 +49,30 @@ START_GOLD = {11: 32.0}
 WAVES = {
     # Puffe's Hollow: the tutorial, weaklings only, Bolters only
     1: [[g("weakling", 12, 3.0, 0)],
-        [g("weakling", 18, 2.6, 1)],
-        [g("weakling", 12, 2.6, 2), g("weakling", 6, 2.6, 0, 14.0)]],
+        [g("weakling", 9, 2.4, 1), g("weakling", 9, 2.4, 0)],
+        [g("weakling", 6, 2.2, 2), g("weakling", 6, 2.2, 0), g("weakling", 6, 2.2, 1)]],
     # Mossy Keep: the fastlings (wave 3), the Beamer
-    2: [[g("weakling", 14, 3.0, 1)],
-        [g("weakling", 20, 2.4, 2)],
-        [g("fastling", 22, 1.5, 0)],
-        [g("fastling", 14, 1.4, 1), g("weakling", 12, 2.2, 0, 2.0), g("weakling", 8, 2.0, 2, 10.0)]],
+    2: [[g("weakling", 9, 2.6, 1), g("weakling", 9, 2.6, 0)],
+        [g("weakling", 8, 2.2, 0), g("weakling", 8, 2.2, 1), g("weakling", 8, 2.2, 2)],
+        [g("fastling", 12, 1.4, 0), g("weakling", 8, 2.2, 1), g("fastling", 12, 1.4, 2, 4.0)],
+        [g("fastling", 14, 1.2, 1), g("weakling", 14, 2.0, 0, 2.0), g("weakling", 12, 1.8, 2, 4.0),
+         g("fastling", 10, 1.2, 0, 6.0)]],
     # Stonebrook Castle: the swarms (wave 2), the Nova
     3: [[g("weakling", 16, 3.0, 1)],
-        [g("swarmling", 12, 0.3, 0), g("weakling", 12, 2.4, 2, 3.0), g("swarmling", 12, 0.3, 0, 14.0)],
+        [g("swarmling", 8, 0.3, 0), g("weakling", 10, 2.4, 2, 3.0), g("weakling", 8, 2.4, 1, 6.0),
+         g("swarmling", 8, 0.3, 0, 20.0)],
         [g("fastling", 14, 1.5, 2), g("swarmling", 12, 0.3, 0, 4.0), g("weakling", 10, 2.2, 1, 6.0),
          g("swarmling", 12, 0.3, 0, 18.0)],
         [g("weakling", 16, 1.8, 1), g("swarmling", 14, 0.3, 0, 2.0), g("fastling", 12, 1.4, 2, 6.0),
          g("swarmling", 14, 0.3, 0, 14.0), g("swarmling", 14, 0.3, 0, 26.0)]],
     # Forest Fork: the beeflings (wave 2), the Leopard Trap
-    4: [[g("weakling", 16, 2.4, 0), g("fastling", 6, 1.8, 0, 20.0)],
-        [g("beefling", 5, 3.6, 1), g("weakling", 12, 2.6, 0)],
-        [g("fastling", 20, 1.4, 0), g("swarmling", 12, 0.3, 1, 4.0), g("swarmling", 12, 0.3, 1, 16.0)],
-        [g("beefling", 9, 3.4, 1), g("weakling", 18, 1.8, 0), g("fastling", 10, 1.3, 0, 18.0)],
-        [g("beefling", 12, 2.8, 1), g("weakling", 20, 1.6, 0), g("swarmling", 14, 0.3, 1, 6.0),
-         g("fastling", 14, 1.2, 0, 12.0), g("swarmling", 14, 0.3, 1, 24.0)]],
+    4: [[g("weakling", 18, 2.2, 0), g("fastling", 8, 1.6, 0, 16.0)],
+        [g("beefling", 6, 3.2, 1), g("weakling", 16, 2.2, 0), g("fastling", 8, 1.6, 0, 14.0)],
+        [g("fastling", 22, 1.2, 0), g("swarmling", 14, 0.3, 1, 4.0), g("beefling", 4, 3.0, 1, 8.0),
+         g("swarmling", 14, 0.3, 1, 16.0)],
+        [g("beefling", 11, 3.0, 1), g("weakling", 22, 1.6, 0), g("fastling", 14, 1.2, 0, 14.0)],
+        [g("beefling", 14, 2.5, 1), g("weakling", 24, 1.4, 0), g("swarmling", 16, 0.3, 1, 6.0),
+         g("fastling", 18, 1.1, 0, 12.0), g("swarmling", 16, 0.3, 1, 24.0)]],
     # Crossroads: the spore carriers (wave 4), the Spike Field
     5: [[g("weakling", 10, 3.0, 2), g("weakling", 10, 3.0, 2, 15.0), g("fastling", 6, 2.0, 2, 30.0)],
         [g("beefling", 5, 3.6, 1), g("weakling", 18, 1.8, 2), g("swarmling", 12, 0.3, 0, 10.0)],
@@ -111,10 +121,10 @@ WAVES = {
     9: [[g("weakling", 16, 2.2, 0), g("fastling", 12, 1.6, 3, 8.0)],
         [g("weakling", 14, 1.8, 0), g("swarmling", 6, 0.4, 2, 14.0), g("batling", 6, 1.8, 2, 22.0),
          g("burrower", 6, 2.2, 3, 26.0), g("swarmling", 6, 0.4, 2, 44.0)],
-        [g("beefling", 10, 2.8, 1), g("fastling", 22, 1.1, 0), g("batling", 12, 1.4, 2, 8.0),
-         g("burrower", 8, 1.8, 3, 16.0)],
-        [g("beefling", 12, 2.6, 1), g("weakling", 24, 1.3, 0), g("batling", 14, 1.3, 2, 4.0),
-         g("swarmling", 14, 0.3, 2, 12.0), g("wall_crawler", 6, 1.8, 3, 18.0), g("glow_moth", 12, 0.5, 2, 24.0)],
+        [g("beefling", 8, 3.0, 1), g("fastling", 18, 1.2, 0), g("batling", 6, 1.5, 2, 8.0),
+         g("burrower", 6, 2.0, 3, 16.0)],
+        [g("beefling", 12, 2.6, 1), g("weakling", 24, 1.3, 0), g("batling", 10, 1.3, 2, 4.0),
+         g("swarmling", 14, 0.3, 2, 12.0), g("wall_crawler", 6, 1.8, 3, 18.0), g("glow_moth", 8, 0.5, 2, 24.0)],
         [g("beefling", 15, 2.3, 1), g("fastling", 26, 1.0, 3), g("swarmling", 14, 0.3, 2, 4.0),
          g("batling", 16, 1.2, 2, 6.0), g("cave_shaman", 3, 5.0, 0, 10.0), g("weakling", 16, 1.4, 0, 14.0),
          g("swarmling", 14, 0.3, 2, 24.0)],
@@ -161,6 +171,18 @@ WAVES = {
 }
 
 
+# level -> (count factor, interval factor, first wave): denser waves for the levels the bot won too easily (third pass)
+PRESSURE = {5: (1.1, 0.9, 2), 6: (1.15, 0.9, 1), 8: (1.15, 0.9, 1), 10: (1.1, 0.95, 2)}
+
+
+def pressed(level, number, groups):
+    count_factor, interval_factor, first = PRESSURE.get(level, (1.0, 1.0, 99))
+    if number < first:
+        return groups
+    return [(enemy, max(1, round(count * count_factor)), round(interval * interval_factor, 2), spawner, delay)
+            for enemy, count, interval, spawner, delay in groups]
+
+
 def wave_text(uid, bonus, groups):
     kinds = sorted({group[0] for group in groups})
     lines = ['[gd_resource type="Resource" script_class="WaveData" format=3%s]' % (' uid="%s"' % uid if uid else ""), "",
@@ -192,11 +214,11 @@ def write_level(level):
         uid = re.search(r'^\[gd_resource[^\]]*uid="([^"]+)"', old)
         bonus = re.search(r"^early_start_bonus = (\S+)", old, re.M)
         with open(path, "w", encoding="utf-8", newline="\n") as file:
-            file.write(wave_text(uid[1] if uid else "", bonus[1] if bonus else "", groups))
+            file.write(wave_text(uid[1] if uid else "", bonus[1] if bonus else "", pressed(level, number, groups)))
     data = DATA_FILE % level
     text = open(data, encoding="utf-8").read()
     first, last = RAMPS[level]
-    values = [("first_wave_health", first), ("last_wave_health", last), ("health_scale", 1.0)]
+    values = [("first_wave_health", first), ("last_wave_health", last)]
     if level in START_GOLD:
         values.append(("starting_gold", START_GOLD[level]))
     for key, value in values:

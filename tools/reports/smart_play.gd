@@ -19,9 +19,10 @@ extends RefCounted
 ## A second round of 48 games set them closer (their medians: Nova 1.0, Breather 0.63, Mortar 0.33, Elder 1.83,
 ## Spotter 0.65, Bolter 0.42, Beamer 0.51, Leopard 0.1). These are averages over crowds: _fit moves a kind up or
 ## down from a usual crowd (TYPICAL_SWARM), so the crowds are not counted twice.
+## Spotter 1.0 since 2026-11-27: its base hit went 1.75 -> 3 (x1.7) and its +50% maze bonus went away.
 ## The Hoard Keeper and the Buffer deal none: their worth is gold and the buffed towers (_hoard_gain, _buffer_gain).
 const SHEET_BASE_DPS : Dictionary[String, float] = {"PuffeBolter": 0.42, "PuffeNova": 1.0, "PuffeBeamer": 0.51, "PuffeMortar": 0.33,
-	"PuffeBreather": 0.63, "PuffeSpotter": 0.65, "PuffeHarpooner": 0.19, "PuffeHatchery": 0.25, "PuffeShredder": 0.14, "PuffeElderDrake": 1.83,
+	"PuffeBreather": 0.63, "PuffeSpotter": 1.0, "PuffeHarpooner": 0.19, "PuffeHatchery": 0.25, "PuffeShredder": 0.14, "PuffeElderDrake": 1.83,
 	"LeopardTrap": 0.1, "EggBomb": 0.12, "SpikeField": 0.06, "PuffeHoardKeeper": 0.0, "PuffeBuffer": 0.0}
 ## The swarm share of an average wave's health, which the measured SHEET_BASE_DPS already has in.
 const TYPICAL_SWARM : float = 0.5
@@ -60,7 +61,7 @@ const TRAITS : Dictionary[String, Dictionary] = {
 	#the Mortar's misses on walking enemies are in its SHEET_BASE_DPS now (measured in games)
 	"PuffeNova": {"air": "tier2", "swarm": 1.5}, "PuffeMortar": {"air": false, "swarm": 1.5},
 	"PuffeBreather": {"swarm": 1.5}, "PuffeShredder": {"swarm": 1.0}, "PuffeElderDrake": {"swarm": 0.5},
-	"PuffeHatchery": {"air": false}, "PuffeHarpooner": {"flyers": 1.0, "fast": TowerNiches.HARPOON_HUNT_BONUS}, "PuffeSpotter": {"elites": 1.0},
+	"PuffeHatchery": {"air": false}, "PuffeHarpooner": {"flyers": 1.0}, "PuffeSpotter": {"elites": 1.0},
 	"LeopardTrap": {"air": "tier2"}, "SpikeField": {"air": false, "swarm": 1.0}, "EggBomb": {"swarm": 2.0},
 }
 ## Route cells in reach count fully up to about this many, then less and less (_covered).
@@ -720,10 +721,7 @@ func _hold_gain(cell : Vector2i, range_tiles : float, routes : Array[Vector2i], 
 	var gain : float = 0.0
 	for unit in units:
 		if is_instance_valid(unit) and not unit is Buffer and not unit is HoardKeeper:
-			#a held enemy is pinned: the Mortar's niche (TowerNiches.is_pinned)
-			var is_mortar : bool = unit is Tower and unit.skill != null and unit.skill.skill_type & Utils.SkillType.Artillery != 0
-			var pinned : float = TowerNiches.MORTAR_PINNED_BONUS / HOLD_VALUE if is_mortar else 0.0
-			gain += _unit_dps(unit) * _overlap(unit, hold_cells, routes) * (1.0 + pinned)
+			gain += _unit_dps(unit) * _overlap(unit, hold_cells, routes)
 	return gain * HOLD_VALUE * (1.0 - threat.flyers)
 
 
@@ -1178,9 +1176,6 @@ func _evolve_niche_factor(level : Level, unit : Building, element_name : String,
 	var key : String = _key_of(unit)
 	if key == "PuffeHarpooner":
 		return NICHES.harpoon_hits(to_tier, harpoon_multiplier) / NICHES.harpoon_hits(to_tier - 1, harpoon_multiplier)
-	if to_tier == 1 and element_name == "Frost" and key in ["PuffeNova", "PuffeMortar"]:
-		var bonus : float = TowerNiches.NOVA_CORNER_BONUS if key == "PuffeNova" else TowerNiches.MORTAR_PINNED_BONUS
-		return (1.0 + bonus) / maxf(_niche_share(level, unit, routes), 1.0)
 	return 1.0
 
 

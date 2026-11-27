@@ -39,6 +39,9 @@ enum CameraMode {Static, Free}
 @export var level_frame_margin : float = 48.0
 ## The start view zooms out to fit the path, but never closer than this.
 @export var level_frame_max_zoom : float = 2.0
+## How far the view may scroll past the level's edges, in screen pixels (the 640x360 UI): about
+## the HUD's size, so the wave panel, resource bar and build tray never hide part of the map for good.
+@export var hud_overscroll : Vector2 = Vector2(104.0, 40.0)
 
 #whole zoom steps keep every art pixel the same number of screen pixels
 var zoom_step : float = 1.0
@@ -86,6 +89,8 @@ var leak_glide_cooldown_left : float = 0.0
 var is_placing_building : bool = false
 #kept from the level's load for the frame-the-level key
 var level_path_bounds : Rect2 = Rect2()
+#half the level's background size; the limits add the HUD overscroll at the current zoom
+var level_half_size : Vector2 = Vector2.ZERO
 
 
 func _ready() -> void:
@@ -231,6 +236,7 @@ func _zoom_at(screen_point : Vector2, new_zoom : float) -> void:
 	#the player's own zoom ends a glide: its target was clamped to the old zoom's limits
 	is_gliding = false
 	zoom = Vector2.ONE * new_zoom
+	_update_limits()
 	global_position = _clamp_to_limits(world_point - from_center / zoom)
 	move_target_position = global_position
 	if is_panning:
@@ -249,6 +255,15 @@ func _get_zoom_anchor() -> Vector2:
 
 func _get_min_zoom() -> float:
 	return maxf(zoom_min.x, level_min_zoom)
+
+
+## The level's edges plus the HUD overscroll, which shrinks in world pixels as the view zooms in.
+func _update_limits() -> void:
+	var half_size : Vector2 = level_half_size + (hud_overscroll / zoom).round()
+	limit_left = -roundi(half_size.x)
+	limit_top = -roundi(half_size.y)
+	limit_right = roundi(half_size.x)
+	limit_bottom = roundi(half_size.y)
 
 
 func _clamp_to_limits(target : Vector2) -> Vector2:
@@ -371,11 +386,8 @@ func _on_level_loaded(level : Level) -> void:
 	level_min_zoom = ceilf(maxf(zoom_min.x, viewport_size.x / (half_size.x * 2.0)))
 	#a level lower than the view at the widest zoom gets the backdrop above and below it
 	half_size.y = maxf(half_size.y, ceilf(viewport_size.y / level_min_zoom * 0.5))
-	#whole pixels already (rounded above), so the int limits lose nothing
-	limit_left = -roundi(half_size.x)
-	limit_top = -roundi(half_size.y)
-	limit_right = roundi(half_size.x)
-	limit_bottom = roundi(half_size.y)
+	level_half_size = half_size
+	_update_limits()
 	is_gliding = false
 	level_path_bounds = level.get_path_bounds()
 	_frame_level(level_path_bounds)
@@ -390,6 +402,7 @@ func _frame_level(bounds : Rect2) -> void:
 	#rounded down to a whole zoom so the framed path stays in view
 	var start_zoom : float = clampf(floorf(fit), level_min_zoom, maxf(level_min_zoom, level_frame_max_zoom))
 	zoom = Vector2.ONE * start_zoom
+	_update_limits()
 	global_position = _clamp_to_limits(framed.get_center())
 	move_target_position = global_position
 

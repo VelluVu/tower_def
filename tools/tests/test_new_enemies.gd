@@ -17,6 +17,8 @@ func test_every_new_enemy_spawns_and_walks(kit : TestKit) -> void:
 
 func test_bloater_bursts_on_nearby_towers(kit : TestKit) -> void:
 	await kit.load_level(14)
+	#these tests want towers right by the spawn so its enemies reach them at once, not the spawn mouth rule
+	kit.level.grid.spawn_clear_cells.clear()
 	var spawn : Vector2 = kit.level.get_spawners()[0].global_position
 	var cell : Vector2i = kit.find_cell(func(c : Vector2i) -> bool:
 		var world : Vector2 = kit.level.grid.grid_position_to_world(c)

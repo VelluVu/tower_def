@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="EvolveResource" format=3]
+
+[ext_resource type="Script" path="res://scenes/unit/evolve_tree/evolve_resource.gd" id="1_evolve"]
+[ext_resource type="Texture2D" path="res://assets/art/ui/card_icons/critical_multiplier_icon.png" id="2_icon"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_evolve")
+evolve_icon = ExtResource("2_icon")
+card_target = 0
+max_picks = 2
+modifier_type = 0
+skill_type = 0
+elements = 15
+modify_stat_type = 33
+modify_type = 0
+is_randomized_modify_value = false
+is_percent = true
+modify_value = 0.08
+evolve_name = "Executioner"
+rarity = 1
+description = "Hits finish enemies under {value}% health (not bosses)"

@@ -4,7 +4,8 @@ extends Resource
 ## Buildings: a stat modifier on every building the card fits. Gold: gold once, when picked.
 ## Xp: more XP from every kill for the rest of the level. MazeDamage: enemies in the maze (next to a
 ## building) take more damage from towers. MazeSlow: enemies in the maze walk slower.
-enum CardTarget { Buildings, Gold, Xp, MazeDamage, MazeSlow }
+#level-wide since 2026-11-27: KillGold (Bounty, a chance of 1 more gold a kill), UpgradeDiscount (Thrift), WallArmor (Stonemason)
+enum CardTarget { Buildings, Gold, Xp, MazeDamage, MazeSlow, KillGold, UpgradeDiscount, WallArmor }
 ## Rare cards come up less often in an offer (UpgradeRules.RARE_OFFER_WEIGHT) and are marked on the card.
 enum Rarity { Common, Rare }
 
@@ -41,7 +42,8 @@ enum Rarity { Common, Rare }
 @export var talent_ranks : int = 0
 
 @export_group("Drawback")
-## A trade-off card: the bonus comes with this penalty on another stat, never capped, never rolled.
+## A trade-off card: the bonus comes with this penalty on another stat, never capped, never rolled. A positive value
+## makes it a paired card's second stat instead (Flash Freeze's freeze time, Split Shot's shard share; 2026-11-27).
 @export var has_drawback : bool = false
 @export var drawback_stat_type : Utils.StatType = Utils.StatType.AttackRange
 @export var drawback_modify_type : Utils.ModifyType = Utils.ModifyType.Additive

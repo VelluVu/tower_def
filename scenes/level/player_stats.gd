@@ -83,6 +83,10 @@ func _on_enemy_destroyed(enemy : Enemy) -> void:
 		return
 
 	var reward : float = enemy.stats.get_stat_value(Utils.StatType.Price)
+	#Bounty (card): a chance of 1 more gold, so kill gold stays whole
+	var level : Level = get_parent() as Level
+	if level != null and level.upgrades != null and randf() < level.upgrades.kill_gold_chance:
+		reward += 1.0
 	gold += reward
 	GameSignals.resource_change.emit(gold, 0)
 	GameSignals.gold_earned.emit(enemy.global_position, reward)

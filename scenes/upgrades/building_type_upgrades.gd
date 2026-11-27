@@ -36,6 +36,7 @@ const UPGRADE_FLASH_COLOR : Color = Color("fee761")
 const UPGRADE_FLASH_SECONDS : float = 0.3
 const UPGRADE_PIPS_NAME : String = "UpgradePips"
 const BUFFER_TRACK_TITLE : String = "%s %d/%d"
+const BUFFER_MEND_TEXT : String = "Walls in the aura heal %s of their max health a second a pip (now %s); towers and traps a quarter of it, siege attackers halve it. Pips left: %d of %d."
 const BUFFER_TRACK_TEXT : String = "Towers and traps in the aura: %s +%s a pip (now +%s). Several Buffers never stack: each stat takes the strongest. Pips left: %d of %d."
 
 
@@ -69,6 +70,8 @@ func _ready() -> void:
 	GameSignals.sell_building.connect(_on_building_removed)
 	GameSignals.building_destroyed.connect(_on_building_removed)
 	GameSignals.resource_change.connect(_on_resource_change)
+	#a Thrift card changes the prices shown
+	GameSignals.upgrade_cards_closed.connect(_on_upgrade_cards_closed)
 	UISignals.gold_upgrade_pressed.connect(_on_gold_upgrade_pressed)
 	UISignals.target_tactic_selected.connect(_on_target_tactic_selected)
 	UISignals.rally_pressed.connect(_on_rally_pressed)
@@ -212,6 +215,11 @@ func _on_gold_upgrade_pressed(index : int) -> void:
 	_emit_options()
 
 
+func _on_upgrade_cards_closed() -> void:
+	if selected_unit != null:
+		_emit_options()
+
+
 func _emit_options() -> void:
 	options.clear()
 	
@@ -294,8 +302,12 @@ func _build_buffer_options(buffer : Buffer, data : BuildingUpgradeData, state : 
 			var option : GoldUpgradeOption = GoldUpgradeOption.upgrade(BUFFER_TRACK_TITLE % [Buffer.TRACK_NAMES[stat], pips, Buffer.MAX_PIPS],
 				load(Buffer.TRACK_ICONS[stat]), pip_price)
 			option.buffer_stat = stat
-			option.description = BUFFER_TRACK_TEXT % [Buffer.TRACK_NAMES[stat].to_lower(), _buff_text(stat, float(Buffer.PIP_VALUES[stat][1])),
-				_buff_text(stat, buffer.get_buff(stat)), buffer.pip_budget - total, buffer.pip_budget]
+			if stat == Utils.StatType.WallMend:
+				option.description = BUFFER_MEND_TEXT % [_buff_text(stat, float(Buffer.PIP_VALUES[stat][1])), _buff_text(stat, buffer.get_mend_rate()),
+					buffer.pip_budget - total, buffer.pip_budget]
+			else:
+				option.description = BUFFER_TRACK_TEXT % [Buffer.TRACK_NAMES[stat].to_lower(), _buff_text(stat, float(Buffer.PIP_VALUES[stat][1])),
+					_buff_text(stat, buffer.get_buff(stat)), buffer.pip_budget - total, buffer.pip_budget]
 			new_options.append(option)
 	if state.tiers_evolved < tier_count and total >= data.upgrades_before_tier(state.tiers_evolved):
 		var evolve_price : float = UpgradeRules.gold_price(building_price, data.evolve_cost_ratios[state.tiers_evolved] * _price_share())
@@ -318,6 +330,8 @@ static func _buff_text(stat : Utils.StatType, value : float) -> String:
 			return "%d points" % roundi(value * 100.0)
 		Utils.StatType.AttackRange:
 			return "%s tiles" % String.num(value, 2)
+		Utils.StatType.WallMend:
+			return "%s%%" % String.num(value * 100.0, 1)
 	return String.num(value, 2)
 
 
@@ -340,9 +354,12 @@ func _first_upgrade_share(building : Building, state : UpgradeState) -> float:
 	return 1.0 - level.talents.get_total(TalentEffect.Kind.FirstUpgradeDiscount)
 
 
-#Haggling (talent): the share of the price left
+#Haggling (talent) and Thrift (card): the share of the price left
 func _price_share() -> float:
-	return 1.0 - (level.talents.get_total(TalentEffect.Kind.UpgradeDiscount) if level.talents != null else 0.0)
+	var discount : float = level.talents.get_total(TalentEffect.Kind.UpgradeDiscount) if level.talents != null else 0.0
+	if level.upgrades != null:
+		discount += level.upgrades.upgrade_discount
+	return 1.0 - minf(discount, LevelUpgrades.MAX_UPGRADE_DISCOUNT)
 
 
 func _apply_upgrade(building : Building, is_evolved : bool) -> void:

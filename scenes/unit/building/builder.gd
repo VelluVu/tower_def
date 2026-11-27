@@ -517,7 +517,7 @@ func _is_position_buildable(_pos : Vector2) -> bool:
 	if not level.grid.is_position_in_bounds(_pos):
 		return false
 	
-	var is_buildable = level.grid.is_position_buildable(_pos) if current_building is not Trap else level.grid.is_position_walkable(_pos)
+	var is_buildable = level.grid.is_position_buildable(_pos) if current_building is not Trap else level.grid.is_position_trappable(_pos)
 	
 	return is_buildable
 

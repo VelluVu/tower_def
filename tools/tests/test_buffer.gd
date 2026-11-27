@@ -189,3 +189,62 @@ func test_buffer_throws_timed_buffs(kit : TestKit) -> void:
 	buffer.add_pip(Utils.StatType.AuraRadius)
 	kit.check_near(buffer.radius - radius, 0.5 * Utils.TILE_SIZE, "a radius pip reaches half a tile further")
 	kit.check_near(buffer.get_buff(Utils.StatType.AuraRadius), 0.0, "radius is no buff on the towers")
+
+
+#Mend track (2026-11-27): walls in the aura heal at a fixed rate, towers and traps a quarter of it, the strongest
+#covering Buffer only, half while a siege attacker hits the wall
+func test_mend_heals_walls_in_the_aura(kit : TestKit) -> void:
+	await kit.load_level(1)
+	var taken : Array[Vector2i] = []
+	var buffer_cell : Vector2i = _buildable(kit, taken)
+	taken.append(buffer_cell)
+	var buffer : Buffer = await kit.place("puffe_buffer", buffer_cell)
+	var wall_cell : Vector2i = _cell_beside(kit, buffer_cell, 1, 1, taken)
+	taken.append(wall_cell)
+	var wall : Wall = await kit.place("wall", wall_cell)
+	var tower_cell : Vector2i = _cell_beside(kit, buffer_cell, 2, 1, taken)
+	taken.append(tower_cell)
+	var tower : Building = await kit.place("puffe_bolter", tower_cell)
+	await _settle(kit)
+	var wall_health : Stat = wall.stats.get_stat(Utils.StatType.Health)
+	var wall_max : float = wall.stats.get_stat_value(Utils.StatType.MaxHealth)
+	var tower_health : Stat = tower.stats.get_stat(Utils.StatType.Health)
+	var tower_max : float = tower.stats.get_stat_value(Utils.StatType.MaxHealth)
+	kit.check(buffer.get_buff(Utils.StatType.WallMend) == 0.0, "mend is no buff on the towers")
+
+	wall_health.value = wall_max * 0.5
+	buffer.mend()
+	kit.check_near(wall_health.value, wall_max * 0.5, "no Mend pips, no healing")
+
+	for i in 4:
+		buffer.add_pip(Utils.StatType.WallMend)
+	kit.check_near(buffer.get_mend_rate(), 0.04, "four pips mend 4% a second")
+	buffer.mend()
+	kit.check_near(wall_health.value, wall_max * 0.54, "a wall heals the full rate")
+	tower_health.value = tower_max * 0.5
+	buffer.mend()
+	kit.check_near(tower_health.value, tower_max * 0.51, "a tower heals a quarter of it")
+
+	#a second, weaker Buffer covering the same wall adds nothing
+	var second_cell : Vector2i = _cell_beside(kit, wall_cell, 2, 1, taken)
+	taken.append(second_cell)
+	var second : Buffer = await kit.place("puffe_buffer", second_cell)
+	second.add_pip(Utils.StatType.WallMend)
+	await _settle(kit)
+	wall_health.value = wall_max * 0.5
+	second.mend()
+	kit.check_near(wall_health.value, wall_max * 0.5, "a weaker mender leaves the wall to the strongest")
+	buffer.mend()
+	kit.check_near(wall_health.value, wall_max * 0.54, "the strongest mender heals it")
+
+	#a battering ram's hit halves the mend
+	var ram : Enemy = kit.spawn_enemy("battering_ram", 0)
+	kit.level.buffer_auras.on_building_hit(wall, ram)
+	wall_health.value = wall_max * 0.5
+	buffer.mend()
+	kit.check_near(wall_health.value, wall_max * 0.52, "under siege the wall heals half")
+	await kit.run_until(func() -> bool: return not kit.level.buffer_auras.is_sieged(wall), BufferAuras.SIEGE_SECONDS + 1.0)
+	kit.check(not kit.level.buffer_auras.is_sieged(wall), "the siege wears off")
+	wall_health.value = wall_max
+	buffer.mend()
+	kit.check_near(wall_health.value, wall_max, "never past max health")

@@ -9,14 +9,15 @@ extends RefCounted
 ## The Buffer got no factor (the user's pick: flat pips; it throws timed buffs instead, BufferAuras).
 ## A factor on a tower's own hit (no effect ticks, no reactions; flyers are above the maze), applied in Enemy.take_damage.
 ## Stacked enemies already feed the Mortar through its burst; a big maze keeps more of the Spotter's long reach on maze cells.
+## 2026-11-27 (the user): the towers' damage bonuses are gone (Spotter in the maze, Mortar on pinned enemies, Nova at
+## corners, Harpooner on flyers and fast runners); the traps' maze bonus stays, and the Breather's corridor bonus at 1.5x
+## ("the breath bounces from the walls and deals 1.5x damage"). The Harpooner's longer tether on fast runners and the
+## Shredder's rules (TowerHitEffects) stay.
 
 #starting numbers, to tune with the bots
-const SPOTTER_MAZE_BONUS : float = 0.5
-const BREATHER_CORRIDOR_BONUS : float = 0.75
-const MORTAR_PINNED_BONUS : float = 0.5
 const TRAP_MAZE_BONUS : float = 0.4
-const NOVA_CORNER_BONUS : float = 0.5
-const HARPOON_HUNT_BONUS : float = 0.6
+#the breath bounces off the corridor's sides
+const BREATHER_CORRIDOR_BONUS : float = 0.5
 #a base speed from this counts as fast (scouts, cavalry, assault dogs, bone riders, ash runners)
 const FAST_SPEED : float = 28.0
 #a fast enemy's harpoon tether lasts this much longer
@@ -35,28 +36,14 @@ static func get_factor(enemy : Enemy, hit : DamageData) -> float:
 	var source : Variant = hit.source
 	if not is_instance_valid(source) or not source is Building:
 		return 1.0
-	var building : Building = source
-	var grid : LevelGrid = enemy.level.grid
-	if building.skill != null and building.skill.skill_type & Utils.SkillType.Harpoon:
-		return 1.0 + HARPOON_HUNT_BONUS if enemy.is_flying or is_fast(enemy) else 1.0
-	#the rest is about the ground: flyers are above the maze, its corners and corridors
+	#flyers are above the maze and its corridors
 	if enemy.is_flying:
 		return 1.0
+	var building : Building = source
 	if building is Trap:
-		return 1.0 + TRAP_MAZE_BONUS if grid.is_maze_cell(enemy.grid_position) else 1.0
-	if building.skill == null:
-		return 1.0
-	var skill_type : int = building.skill.skill_type
-	if skill_type & Utils.SkillType.Sniper:
-		return 1.0 + SPOTTER_MAZE_BONUS if grid.is_maze_cell(enemy.grid_position) else 1.0
-	if skill_type & Utils.SkillType.Breath:
-		return 1.0 + BREATHER_CORRIDOR_BONUS if grid.is_corridor_cell(enemy.grid_position) else 1.0
-	if skill_type & Utils.SkillType.Artillery:
-		return 1.0 + MORTAR_PINNED_BONUS if is_pinned(enemy) else 1.0
-	#the Nova: enemies turning a corner of the maze round it, or slowed by Frost, stay in its burst
-	if skill_type & Utils.SkillType.Area and building is not Shredder:
-		var is_slowed : bool = enemy.is_frozen or TalentEffect.enemy_in(enemy, TalentEffect.Condition.Chilled)
-		return 1.0 + NOVA_CORNER_BONUS if is_slowed or grid.is_corner_cell(enemy.grid_position) else 1.0
+		return 1.0 + TRAP_MAZE_BONUS if enemy.level.grid.is_maze_cell(enemy.grid_position) else 1.0
+	if building.skill != null and building.skill.skill_type & Utils.SkillType.Breath:
+		return 1.0 + BREATHER_CORRIDOR_BONUS if enemy.level.grid.is_corridor_cell(enemy.grid_position) else 1.0
 	return 1.0
 
 

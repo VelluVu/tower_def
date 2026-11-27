@@ -20,7 +20,8 @@ func test_each_tower_costs_more(kit : TestKit) -> void:
 	kit.check_near(first.stats.get_stat_value(Utils.StatType.Price), base, "the first tower costs its base price")
 
 	var second : Building = await kit.place("puffe_nova", cells[1])
-	kit.check_near(second.stats.get_stat_value(Utils.StatType.Price), base + 1.0, "every tower type counts")
+	#its own base price (the Nova costs 5 since 2026-11-27) plus the one tower already standing
+	kit.check_near(second.stats.get_stat_value(Utils.StatType.Price), second.stats.get_stat(Utils.StatType.Price).base_value + 1.0, "every tower type counts")
 
 	var wall : Building = await kit.place("wall", cells[2])
 	kit.check_near(wall.stats.get_stat_value(Utils.StatType.Price), wall.stats.get_stat(Utils.StatType.Price).base_value, "walls have no step")

@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="EvolveResource" format=3]
+
+[ext_resource type="Script" path="res://scenes/unit/evolve_tree/evolve_resource.gd" id="1_evolve"]
+[ext_resource type="Texture2D" path="res://assets/art/ui/card_icons/area_damage_icon.png" id="2_icon"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_evolve")
+evolve_icon = ExtResource("2_icon")
+card_target = 0
+max_picks = 3
+modifier_type = 0
+skill_type = 0
+elements = 15
+modify_stat_type = 20
+modify_type = 0
+is_randomized_modify_value = true
+is_percent = false
+modify_value = 0.5
+evolve_name = "Shrapnel"
+rarity = 0
+description = "Hits splash half their damage on enemies within {value} tiles"

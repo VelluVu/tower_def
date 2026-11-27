@@ -31,3 +31,15 @@ func test_sell_after_a_wave_refunds_a_share(kit : TestKit) -> void:
 	GameSignals.sell_building.emit(tower)
 	kit.check_near(kit.level.player_stats.gold - gold, UpgradeRules.sell_refund(price, false), "sold a round later")
 	kit.check(UpgradeRules.sell_refund(price, false) < price, "less than the price (%s)" % price)
+
+
+## A tower picked from the tray sits right under the Level while placing; the selection card asks
+## for its sell refund then, which crashed when Building.level took the grandparent (2026-11-27).
+func test_placing_preview_finds_its_level(kit : TestKit) -> void:
+	await kit.load_level(1)
+	var preview : Building = load(TestKit.BUILDING_PATH % "puffe_bolter").instantiate()
+	kit.level.add_child(preview)
+	await kit.frames()
+	kit.check(preview.level == kit.level, "the preview's level is the Level")
+	kit.check(preview.get_sell_refund() >= 0.0, "the refund can be read while placing")
+	preview.free()

@@ -87,8 +87,10 @@ def godot(args, timeout, raw=False, quiet_ok=False, silent=False):
         output += "\nTIMEOUT after %d s (a test probably hit a script error after an await and never returned)" % timeout
         code = 124
     finally:
-        if os.path.exists(MUTE_FLAG):
+        try:
             os.remove(MUTE_FLAG)
+        except FileNotFoundError:
+            pass  # a parallel run removed it first
     text = output if raw else filter_output(output)
     if silent:
         return code

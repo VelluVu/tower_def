@@ -105,6 +105,10 @@ func test_gust_runs_and_ends(kit : TestKit) -> void:
 	await kit.load_level(1)
 	var breather : Tower = await _place_breather(kit)
 	var breath : Breath = breather.skill
+	#no crits: one crit among the four hits (x3) took the total past the check's room (a flaky run, 2026-11-27)
+	var crit : Stat = breath.stats.get_stat(Utils.StatType.CriticalChance)
+	crit.base_value = 0.0
+	crit.value = 0.0
 	var enemy : Enemy = await _tough(kit, "weakling", breather.global_position + Vector2(breath.get_reach() * 0.5, 0.0))
 	breather.targets.append(enemy)
 	breath.target = enemy
@@ -112,6 +116,6 @@ func test_gust_runs_and_ends(kit : TestKit) -> void:
 	kit.check(breath.is_breathing, "the gust starts")
 	await kit.run_until(func() -> bool: return not breath.is_breathing, 3.0)
 	kit.check(not breath.is_breathing, "the gust ends by itself")
-	#a corridor where it stands (the Breather beside it can make one) adds the Breather's niche bonus (TowerNiches)
+	#a corridor where it stands (the Breather beside it can make one): the breath bounces off its sides (TowerNiches)
 	var niche : float = 1.0 + TowerNiches.BREATHER_CORRIDOR_BONUS if kit.level.grid.is_corridor_cell(enemy.grid_position) else 1.0
 	kit.check_near(_lost(enemy), breath.stats.get_stat_value(Utils.StatType.Damage) * Breath.GUST_TICKS * niche, "four hits a gust", 0.5 * Breath.GUST_TICKS * breath.stats.get_stat_value(Utils.StatType.Damage))

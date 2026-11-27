@@ -58,17 +58,17 @@ func test_each_tower_shines_in_its_niche(kit : TestKit) -> void:
 	kit.check_near(_factor(enemy, breather, open), 1.0, "the Breather: nothing extra on open ground")
 	await kit.place("wall", centre + Vector2i.LEFT)
 	await kit.place("wall", centre + Vector2i.UP)
-	kit.check_near(_factor(enemy, spotter, centre), 1.0 + TowerNiches.SPOTTER_MAZE_BONUS, "the Spotter in the maze")
-	kit.check_near(_factor(enemy, nova, centre), 1.0 + TowerNiches.NOVA_CORNER_BONUS, "the Nova at a corner")
+	kit.check_near(_factor(enemy, spotter, centre), 1.0, "the Spotter: nothing extra in the maze (2026-11-27)")
+	kit.check_near(_factor(enemy, nova, centre), 1.0, "the Nova: nothing extra at a corner")
 	await kit.place("wall", centre + Vector2i.RIGHT)
-	kit.check_near(_factor(enemy, breather, centre), 1.0 + TowerNiches.BREATHER_CORRIDOR_BONUS, "the Breather in a corridor")
+	kit.check_near(_factor(enemy, breather, centre), 1.0 + TowerNiches.BREATHER_CORRIDOR_BONUS, "the Breather in a corridor: 1.5x")
 	#the Mortar: the open cell is beside no building, then the enemy is frozen
 	var far : Vector2i = kit.find_cell(func(c : Vector2i) -> bool:
 		return grid.is_cell_walkable(c) and grid.get_move_speed_factor(c) == 1.0 and Vector2(c - centre).length() > 6.0)
 	kit.check_near(_factor(enemy, mortar, far), 1.0, "the Mortar: nothing extra on a free-walking enemy")
 	enemy.freeze_for(1.0)
-	kit.check_near(_factor(enemy, mortar, far), 1.0 + TowerNiches.MORTAR_PINNED_BONUS, "the Mortar on a frozen enemy")
-	kit.check_near(_factor(enemy, nova, far), 1.0 + TowerNiches.NOVA_CORNER_BONUS, "the Nova on a frozen enemy")
+	kit.check_near(_factor(enemy, mortar, far), 1.0, "the Mortar: nothing extra on a frozen enemy")
+	kit.check_near(_factor(enemy, nova, far), 1.0, "the Nova: nothing extra on a frozen enemy")
 
 
 func test_traps_shine_in_the_maze_and_ticks_get_nothing(kit : TestKit) -> void:
@@ -220,5 +220,5 @@ func test_harpooner_prey_and_buffer_cluster(kit : TestKit) -> void:
 	var cell : Vector2i = centre + Vector2i(0, 1)
 	kit.check_near(_factor(weakling, harpooner, cell), 1.0, "a slow walker is no prey")
 	kit.check(TowerNiches.is_fast(scout), "a scout is fast")
-	kit.check_near(_factor(scout, harpooner, cell), 1.0 + TowerNiches.HARPOON_HUNT_BONUS, "a scout is prey")
-	kit.check_near(_factor(batling, harpooner, cell), 1.0 + TowerNiches.HARPOON_HUNT_BONUS, "a flyer is prey")
+	kit.check_near(_factor(scout, harpooner, cell), 1.0, "a scout: no damage bonus (2026-11-27)")
+	kit.check_near(_factor(batling, harpooner, cell), 1.0, "a flyer: no damage bonus")

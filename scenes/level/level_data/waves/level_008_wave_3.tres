@@ -11,28 +11,28 @@
 script = ExtResource("2_group")
 enemy_scene = ExtResource("e_crystal_brute")
 count = 2
-interval = 3.8
+interval = 3.42
 
 [sub_resource type="Resource" id="Resource_group2"]
 script = ExtResource("2_group")
 enemy_scene = ExtResource("e_fastling")
-count = 18
-interval = 1.2
+count = 21
+interval = 1.08
 spawner_id = 1
 
 [sub_resource type="Resource" id="Resource_group3"]
 script = ExtResource("2_group")
 enemy_scene = ExtResource("e_burrower")
-count = 10
-interval = 1.8
+count = 12
+interval = 1.62
 delay = 10.0
 spawner_id = 1
 
 [sub_resource type="Resource" id="Resource_group4"]
 script = ExtResource("2_group")
 enemy_scene = ExtResource("e_wall_crawler")
-count = 6
-interval = 2.0
+count = 7
+interval = 1.8
 delay = 20.0
 spawner_id = 1
 

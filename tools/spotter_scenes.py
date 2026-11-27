@@ -31,7 +31,7 @@ ELITE_TACTIC = 7  # Utils.TargetTactic.Elite
 
 # the Spotter's numbers (placeholders until playtests): a slow, heavy, long-range single shot
 PRICE = 6.0
-DAMAGE = 13.0
+DAMAGE = 24.0  # the old scale (divide by 8 after a rerun: 3.0 in the scene since 2026-11-27)
 RANGE_TILES = 6.0
 CRIT_CHANCE = 0.15
 CAST_SECONDS = 0.5

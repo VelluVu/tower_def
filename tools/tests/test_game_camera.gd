@@ -136,3 +136,18 @@ func test_zoom_and_building_end_a_glide(kit : TestKit) -> void:
 	camera._on_building_placement_change(false)
 	kit.check(camera.glide_to(Vector2(camera.limit_left, 0)), "and again once it is placed")
 	camera.queue_free()
+
+
+## The HUD (wave panel, resource bar, build tray) covers the view's edges, so the view may scroll past
+## the level by the HUD's size at every zoom: the level's right edge can come out from under the wave panel.
+func test_view_scrolls_past_the_level_by_the_hud(kit : TestKit) -> void:
+	var camera : GameCamera = await _make_camera(kit, 2)
+	var size : Vector2 = camera.get_viewport_rect().size
+	var level_right : float = camera.level_half_size.x
+	for zoom_level in [camera._get_min_zoom(), 3.0]:
+		camera._zoom_at(size * 0.5, zoom_level)
+		camera.global_position = camera._clamp_to_limits(Vector2(1.0e6, 1.0e6))
+		var right_edge_on_screen : float = (level_right - camera.global_position.x) * camera.zoom.x + size.x * 0.5
+		kit.check(right_edge_on_screen <= size.x - camera.hud_overscroll.x + camera.zoom.x,
+				"at %sx the level's right edge clears the wave panel (%s)" % [zoom_level, right_edge_on_screen])
+	camera.queue_free()

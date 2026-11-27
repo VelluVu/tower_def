@@ -316,6 +316,8 @@ func _kill(enemy : Enemy) -> void:
 
 #a buildable cell within reach of the first spawner, so the enemies there are near a tower placed on it
 func _buildable_cell(kit : TestKit) -> Vector2i:
+	#these tests want towers right by the spawn so its enemies reach them at once, not the spawn mouth rule
+	kit.level.grid.spawn_clear_cells.clear()
 	var spawn : Vector2 = kit.level.get_spawners()[0].global_position
 	return kit.find_cell(func(c : Vector2i) -> bool:
 		var world : Vector2 = kit.level.grid.grid_position_to_world(c)

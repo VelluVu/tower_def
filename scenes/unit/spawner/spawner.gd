@@ -40,6 +40,18 @@ func get_footprint_cells(grid : LevelGrid) -> Array[Vector2i]:
 	return cells
 
 
+## The mouth and the cells around it outside the art: kept free so nothing is built in a cave's mouth.
+func get_clear_cells(grid : LevelGrid) -> Array[Vector2i]:
+	var mouth : Vector2i = grid.world_position_to_grid(global_position)
+	var footprint : Array[Vector2i] = get_footprint_cells(grid)
+	var cells : Array[Vector2i] = []
+	for y in range(mouth.y - 1, mouth.y + 2):
+		for x in range(mouth.x - 1, mouth.x + 2):
+			if not footprint.has(Vector2i(x, y)):
+				cells.append(Vector2i(x, y))
+	return cells
+
+
 #each spawner starts on a random frame, so neighbouring caves do not blink together
 func _play_art() -> void:
 	var frames : SpriteFrames = art_sprite.sprite_frames

@@ -7,7 +7,10 @@ extends Building
 ## its radius and the throws' rhythm decide how many. The towers in reach get the Buffer's tracks: pips bought one at a time from a budget, at most
 ## MAX_PIPS per track, so a focused or a broad buff is the player's choice. Several Buffers never stack: a building
 ## takes the strongest value per stat (BufferAuras). Its element passes on as a chance on hit; T2 weakens the enemies
-## in the aura, T3 roars now and then (Commander's Roar).
+## in the aura, T3 roars now and then (Commander's Roar). The Mend track (2026-11-27, the user: a maxed wall and Buffer
+## hold well, but a stack of attackers the towers cannot thin out overwhelms the block) heals the walls in its aura at a
+## fixed rate, towers and traps a quarter of it; siege attackers (bosses, enemies no guard holds) halve it on the wall
+## they hit.
 
 signal aura_changed
 
@@ -17,7 +20,7 @@ const BUFF_SECONDS : float = 6.0
 const MAX_PIPS : int = 5
 ## The tracks in the selection card's order.
 const TRACKS : Array[Utils.StatType] = [Utils.StatType.Damage, Utils.StatType.AttackSpeed, Utils.StatType.AttackRange,
-	Utils.StatType.CriticalChance, Utils.StatType.EffectPotency, Utils.StatType.AuraRadius]
+	Utils.StatType.CriticalChance, Utils.StatType.EffectPotency, Utils.StatType.AuraRadius, Utils.StatType.WallMend]
 ## What one pip gives a buffed building: [modify type, value]. Damage is Additive like cards and upgrades, the rest
 ## Flat like the tower stats whose base is 0 (attack speed, crit, potency) or a reach in tiles (range).
 const PIP_VALUES : Dictionary[Utils.StatType, Array] = {
@@ -28,6 +31,8 @@ const PIP_VALUES : Dictionary[Utils.StatType, Array] = {
 	Utils.StatType.EffectPotency: [Utils.ModifyType.Flat, 0.06],
 	#its own reach in tiles, not a buff on the towers
 	Utils.StatType.AuraRadius: [Utils.ModifyType.Flat, 0.5],
+	#its own healing, a share of max health a second, not a buff on the towers
+	Utils.StatType.WallMend: [Utils.ModifyType.Flat, 0.01],
 }
 const TRACK_NAMES : Dictionary[Utils.StatType, String] = {
 	Utils.StatType.Damage: "Damage",
@@ -36,6 +41,7 @@ const TRACK_NAMES : Dictionary[Utils.StatType, String] = {
 	Utils.StatType.CriticalChance: "Critical Chance",
 	Utils.StatType.EffectPotency: "Effect Potency",
 	Utils.StatType.AuraRadius: "Radius",
+	Utils.StatType.WallMend: "Mend",
 }
 const TRACK_ICONS : Dictionary[Utils.StatType, String] = {
 	Utils.StatType.Damage: "res://assets/art/ui/card_icons/damage_icon.png",
@@ -44,6 +50,8 @@ const TRACK_ICONS : Dictionary[Utils.StatType, String] = {
 	Utils.StatType.CriticalChance: "res://assets/art/ui/card_icons/critical_chance_icon.png",
 	Utils.StatType.EffectPotency: "res://assets/art/ui/card_icons/effect_potency_icon.png",
 	Utils.StatType.AuraRadius: "res://assets/art/ui/card_icons/long_sight_icon.png",
+	#borrowed until a mend icon is drawn
+	Utils.StatType.WallMend: "res://assets/art/ui/card_icons/tangled_maze_icon.png",
 }
 ## Each pip's price as a share of the Buffer's price, by how many pips it already has.
 const PIP_COST_RATIOS : Array[float] = [0.4, 0.5, 0.6, 0.7, 0.8, 1.0, 1.2, 1.4]
@@ -58,9 +66,13 @@ const ROAR_INTERVAL : float = 12.0
 const ROAR_SECONDS : float = 3.0
 const ROAR_ATTACK_SPEED : float = 0.4
 const ROAR_ANIMATION : StringName = &"ROAR"
+const MEND_SECONDS : float = 1.0
+## Towers and traps in the aura mend this share of a wall's rate.
+const MEND_TOWER_SHARE : float = 0.25
 
 var pips : Dictionary[Utils.StatType, int] = {}
 var throw_timer : CustomTimer = null
+var mend_timer : CustomTimer = null
 
 var total_pips : int :
 	get:
@@ -92,6 +104,10 @@ func _ready() -> void:
 	add_child(throw_timer)
 	throw_timer.unscaled_base_value = THROW_SECONDS
 	throw_timer.timeout.connect(throw_buff)
+	mend_timer = CustomTimer.new()
+	add_child(mend_timer)
+	mend_timer.unscaled_base_value = MEND_SECONDS
+	mend_timer.timeout.connect(mend)
 	if evolve_tree != null:
 		evolve_tree.element_changed.connect(func(_element : Utils.Element) -> void: aura_changed.emit())
 		evolve_tree.tier_changed.connect(func(_tier : int) -> void: aura_changed.emit())
@@ -115,12 +131,24 @@ func add_pip(stat : Utils.StatType) -> void:
 ## What this Buffer gives a building in its aura for the stat (0 with no pips): its pips, made stronger by the
 ## Rallying Cry talents; potency also takes the Buffer's own EffectPotency (the Song talents).
 func get_buff(stat : Utils.StatType) -> float:
-	if not PIP_VALUES.has(stat) or stat == Utils.StatType.AuraRadius:
+	if not PIP_VALUES.has(stat) or stat == Utils.StatType.AuraRadius or stat == Utils.StatType.WallMend:
 		return 0.0
 	var value : float = get_pips(stat) * float(PIP_VALUES[stat][1]) * (1.0 + _talent_bonus(TalentEffect.Kind.BufferStrength))
 	if stat == Utils.StatType.EffectPotency:
 		value += stats.get_stat_value(Utils.StatType.EffectPotency)
 	return value
+
+
+## The share of a wall's max health it heals a second (0 with no Mend pips), made stronger by the Rallying Cry talents.
+func get_mend_rate() -> float:
+	return get_pips(Utils.StatType.WallMend) * float(PIP_VALUES[Utils.StatType.WallMend][1]) * (1.0 + _talent_bonus(TalentEffect.Kind.BufferStrength))
+
+
+## One mend tick: every hurt building in its aura heals (BufferAuras.mend_from).
+func mend() -> void:
+	if not is_placed or is_dead or level == null or level.buffer_auras == null or get_pips(Utils.StatType.WallMend) == 0:
+		return
+	level.buffer_auras.mend_from(self, MEND_SECONDS)
 
 
 ## The share of resistances a Physical Buffer's aura ignores (plus its own ResistancePenetration, Sharp Orders).
@@ -178,5 +206,6 @@ func _enable_tower() -> void:
 	#the first throw at once, then one every THROW_SECONDS
 	throw_buff.call_deferred()
 	throw_timer.start()
+	mend_timer.start()
 	if animation_control != null and animation_control.sprite_frames.has_animation(GlobalAnimationNames.IDLE_ANIMATION):
 		animation_control.play_animation(GlobalAnimationNames.IDLE_ANIMATION)

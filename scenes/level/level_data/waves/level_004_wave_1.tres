@@ -8,15 +8,15 @@
 [sub_resource type="Resource" id="Resource_group1"]
 script = ExtResource("2_group")
 enemy_scene = ExtResource("e_weakling")
-count = 16
-interval = 2.4
+count = 18
+interval = 2.2
 
 [sub_resource type="Resource" id="Resource_group2"]
 script = ExtResource("2_group")
 enemy_scene = ExtResource("e_fastling")
-count = 6
-interval = 1.8
-delay = 20.0
+count = 8
+interval = 1.6
+delay = 16.0
 
 [resource]
 script = ExtResource("1_wave")

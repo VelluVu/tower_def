@@ -6,7 +6,8 @@ extends Node
 ## Gives every tower and trap a Buffer's throw holds that Buffer's tracks: one modifier per stat, the
 ## strongest Buffer's value (several Buffers never stack). Also the element a Buffer passes on (a chance on a direct
 ## hit to add its element's stack; Physical: resistance penetration), the T2 weakening of enemies in the aura and the
-## T3 Commander's Roar. Recomputed whenever a building comes, goes or a Buffer changes.
+## T3 Commander's Roar. Recomputed whenever a building comes, goes or a Buffer changes. The Mend track's healing
+## (mend_from): only the strongest covering mender heals a building, at half rate while a siege attacker hits it.
 
 ## The element stacks a Buffer passes on: the Bolter's element hits (burn, slow, poison stacks).
 const PASS_ON_DATA : Dictionary[Utils.Element, PackedScene] = {
@@ -14,6 +15,10 @@ const PASS_ON_DATA : Dictionary[Utils.Element, PackedScene] = {
 	Utils.Element.Frost: preload("res://scenes/unit/evolve_tree/puffe_bolter_evolve/blue_puffe_bolter_evolve_damage_data.tscn"),
 	Utils.Element.Poison: preload("res://scenes/unit/evolve_tree/puffe_bolter_evolve/green_puffe_bolter_evolve_damage_data.tscn"),
 }
+## Seconds a wall counts as under siege after a siege attacker's hit, and the share of the mend it then gets.
+const SIEGE_SECONDS : float = 2.0
+const SIEGE_MEND_SHARE : float = 0.5
+
 const ELEMENT_DAMAGE : Dictionary[Utils.Element, Utils.DamageType] = {
 	Utils.Element.Fire: Utils.DamageType.Fire,
 	Utils.Element.Frost: Utils.DamageType.Frost,
@@ -38,6 +43,8 @@ var roar_end_timer : CustomTimer = null
 var is_roaring : bool = false
 #building instance id -> {buffer instance id: seconds its last throw still holds}
 var held : Dictionary = {}
+#building instance id -> seconds it still counts as under siege
+var sieged : Dictionary = {}
 
 
 func _ready() -> void:
@@ -56,9 +63,13 @@ func _ready() -> void:
 
 
 func _process(delta : float) -> void:
+	var step : float = delta * (Utils.game_control.time_scale if Utils.game_control != null else 1.0)
+	for building_id in sieged.keys():
+		sieged[building_id] -= step
+		if sieged[building_id] <= 0.0:
+			sieged.erase(building_id)
 	if held.is_empty():
 		return
-	var step : float = delta * (Utils.game_control.time_scale if Utils.game_control != null else 1.0)
 	var expired : bool = false
 	for building_id in held.keys():
 		var holds : Dictionary = held[building_id]
@@ -91,6 +102,47 @@ func throw_from(buffer : Buffer) -> void:
 	queue_refresh()
 
 
+## A Mend tick of this Buffer: every hurt building in its aura that no stronger mender covers heals the Buffer's
+## rate of its max health for these seconds (towers and traps Buffer.MEND_TOWER_SHARE of it, under siege half).
+func mend_from(buffer : Buffer, seconds : float) -> void:
+	var rate : float = buffer.get_mend_rate()
+	if rate <= 0.0:
+		return
+	for building in level.all_buildings:
+		if not is_instance_valid(building) or not building.is_placed or building.is_dead or building is Buffer 				or building.is_queued_for_deletion() or not buffer.covers(building.global_position):
+			continue
+		if _strongest_mender(building) != buffer:
+			continue
+		var health : Stat = building.stats.get_stat(Utils.StatType.Health)
+		var max_health : float = building.stats.get_stat_value(Utils.StatType.MaxHealth)
+		if health == null or health.value >= max_health:
+			continue
+		var share : float = rate * seconds * (1.0 if building is Wall else Buffer.MEND_TOWER_SHARE)
+		if sieged.has(building.get_instance_id()):
+			share *= SIEGE_MEND_SHARE
+		health.value = minf(health.value + max_health * share, max_health)
+
+
+#the covering Buffer with the highest mend rate (the first placed on a tie)
+func _strongest_mender(building : Building) -> Buffer:
+	var best : Buffer = null
+	for buffer in buffers:
+		if is_instance_valid(buffer) and buffer.covers(building.global_position) 				and buffer.get_mend_rate() > (best.get_mend_rate() if best != null else 0.0):
+			best = buffer
+	return best
+
+
+## A siege attacker (a boss, or an enemy no guard can hold: the battering ram) hit this building: it mends at half
+## rate for SIEGE_SECONDS.
+func on_building_hit(building : Building, attacker : Enemy) -> void:
+	if attacker.is_boss or not attacker.can_be_held:
+		sieged[building.get_instance_id()] = SIEGE_SECONDS
+
+
+func is_sieged(building : Building) -> bool:
+	return sieged.has(building.get_instance_id())
+
+
 ## Seconds the Buffer's last throw still holds on the building (0 when none).
 func get_hold(building : Building, buffer : Buffer) -> float:
 	return float(held.get(building.get_instance_id(), {}).get(buffer.get_instance_id(), 0.0))
@@ -107,6 +159,7 @@ func _on_building_changed(building : Building) -> void:
 
 
 func _on_building_removed(building : Building) -> void:
+	sieged.erase(building.get_instance_id())
 	_drop(building.get_instance_id())
 	#the building is still in the tree this frame: the refresh skips it by its removal
 	queue_refresh()

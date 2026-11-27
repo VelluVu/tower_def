@@ -17,8 +17,9 @@ const FIRST_LEVEL_XP : float = 150.0
 const XP_STEP : float = 20.0
 #the share of a card's value that still counts past the stat's soft cap
 const SOFT_CAP_EFFICIENCY : float = 0.5
-#a rare card's chance to be drawn into an offer, against 1.0 for a common one
-const RARE_OFFER_WEIGHT : float = 0.35
+#a rare card's chance to be drawn into an offer, against 1.0 for a common one (0.35 until 2026-11-27, the user: rares came
+#too often; 0.1 keeps the rate halved with the five rares added that day: 10-24% of offers had one, now 8-12%)
+const RARE_OFFER_WEIGHT : float = 0.1
 #a plain damage card's chance against 1.0 for the other common cards (no drawback, Damage stat): the offers lean to
 #range, speed, crits and effects, so damage grows slower inside a level while the card count stays (the user, 2026-11-26)
 const DAMAGE_OFFER_WEIGHT : float = 0.6

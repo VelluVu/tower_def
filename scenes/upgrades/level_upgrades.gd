@@ -8,6 +8,8 @@ const CARD_COUNT : int = 4
 const NO_CARDS_WARNING : String = " no upgrade cards fit the placed towers, skipping level "
 const MIXED_MODIFY_TYPE_WARNING : String = " cards of one stat should share a modify type, this one is added as the first card's: "
 const CARD_CAPS : CardCaps = preload("res://scenes/upgrades/card_caps.tres")
+const MAX_UPGRADE_DISCOUNT : float = 0.5
+const MAX_WALL_ARMOR : float = 0.75
 
 var xp : float = 0.0
 var upgrade_level : int = 1
@@ -21,6 +23,11 @@ var xp_bonus : float = 0.0
 #and the maze slows enemies this much more (LevelGrid.maze_speed_factor)
 var maze_damage_bonus : float = 0.0
 var maze_slow_bonus : float = 0.0
+#the level-wide cards of 2026-11-27: the chance a kill drops 1 more gold (Bounty), the share off every upgrade and
+#evolve price (Thrift), the share less damage walls take (Stonemason)
+var kill_gold_chance : float = 0.0
+var upgrade_discount : float = 0.0
+var wall_armor : float = 0.0
 #building -> ModifierData: one capped modifier per stat sums the cards that fit the building,
 #then one uncapped modifier per stat sums the trade-off cards' drawbacks
 var applied_modifiers : Dictionary[Building, Array] = {}
@@ -129,6 +136,12 @@ func _on_upgrade_card_selected(index : int) -> void:
 	elif card.resource.card_target == EvolveResource.CardTarget.MazeSlow:
 		maze_slow_bonus = _get_target_total(EvolveResource.CardTarget.MazeSlow)
 		level.grid.maze_speed_factor = LevelGrid.MAZE_SPEED_FACTOR * (1.0 - maze_slow_bonus)
+	elif card.resource.card_target == EvolveResource.CardTarget.KillGold:
+		kill_gold_chance = minf(_get_target_total(EvolveResource.CardTarget.KillGold), 1.0)
+	elif card.resource.card_target == EvolveResource.CardTarget.UpgradeDiscount:
+		upgrade_discount = minf(_get_target_total(EvolveResource.CardTarget.UpgradeDiscount), MAX_UPGRADE_DISCOUNT)
+	elif card.resource.card_target == EvolveResource.CardTarget.WallArmor:
+		wall_armor = minf(_get_target_total(EvolveResource.CardTarget.WallArmor), MAX_WALL_ARMOR)
 	else:
 		for building in _get_upgradable_buildings():
 			_refresh_cards(building)
@@ -189,14 +202,14 @@ func _can_offer(resource : EvolveResource, new_level : int) -> bool:
 	if resource.talent_ranks > 0 and LevelTalents.get_tree_ranks(resource.talent_tree) < resource.talent_ranks:
 		return false
 
-	if resource.card_target == EvolveResource.CardTarget.Gold:
+	if resource.card_target in [EvolveResource.CardTarget.Gold, EvolveResource.CardTarget.KillGold, EvolveResource.CardTarget.UpgradeDiscount]:
 		return true
 
 	if resource.card_target == EvolveResource.CardTarget.Xp:
 		return xp_bonus < CARD_CAPS.xp_hard_cap
 
 	#the maze cards wait for a maze: at least one wall
-	if resource.card_target == EvolveResource.CardTarget.MazeDamage or resource.card_target == EvolveResource.CardTarget.MazeSlow:
+	if resource.card_target in [EvolveResource.CardTarget.MazeDamage, EvolveResource.CardTarget.MazeSlow, EvolveResource.CardTarget.WallArmor]:
 		#untyped: a freed building in a typed lambda parameter is a script error before is_instance_valid runs
 		return level.all_buildings.any(func(building) -> bool: return is_instance_valid(building) and building is Wall)
 

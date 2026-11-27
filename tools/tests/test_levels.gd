@@ -35,3 +35,16 @@ func test_levels_load_and_route(kit : TestKit) -> void:
 			for group in data.waves[wave_index].spawn_groups:
 				kit.check(group.enemy_scene != null, "level %d wave %d has an enemy" % [number, wave_index + 1])
 				kit.check(spawner_ids.has(group.spawner_id), "level %d wave %d uses spawner %d" % [number, wave_index + 1, group.spawner_id])
+
+
+## Nothing is built in a spawn's mouth or on the ground right in front of it; enemies still walk out (2026-11-27).
+func test_no_building_in_spawn_mouths(kit : TestKit) -> void:
+	await kit.load_level(1)
+	var grid : LevelGrid = kit.level.grid
+	for spawner in kit.level.get_spawners():
+		var mouth : Vector2i = grid.world_position_to_grid(spawner.global_position)
+		var in_front : Vector2i = mouth + Vector2i.DOWN
+		kit.check(not grid.is_position_buildable(grid.grid_position_to_world(mouth)), "no building in spawn %s's mouth" % spawner.id)
+		kit.check(not grid.is_position_buildable(grid.grid_position_to_world(in_front)), "no building in front of spawn %s" % spawner.id)
+		kit.check(not grid.is_position_trappable(grid.grid_position_to_world(in_front)), "no trap in front of spawn %s" % spawner.id)
+		kit.check(grid.is_cell_walkable(mouth), "spawn %s's mouth is still walkable" % spawner.id)

@@ -66,8 +66,12 @@ var placed_round : int = -1
 
 var level : Level :
 	get :
+		#a placing preview sits right under the Level, a placed building under its Buildings node
 		if level == null:
-			level = get_parent().get_parent()
+			var node : Node = get_parent()
+			while node != null and not node is Level:
+				node = node.get_parent()
+			level = node as Level
 		return level
 
 var is_valid_placement : bool :
@@ -116,12 +120,13 @@ func take_damage(damage_data : DamageData) -> void:
 		return
 	damage_data.drop_freed_source()
 
-	#talents: weakened attackers hit softer, armoured walls take less
+	#talents: weakened attackers hit softer, armoured walls take less (Stonemason cards too)
 	if damage_data.damage > 0.0 and level != null and level.talents != null:
 		if damage_data.source is Enemy:
 			damage_data.damage *= 1.0 - level.talents.get_weakness(damage_data.source)
 		if self is Wall:
-			damage_data.damage *= 1.0 - level.talents.get_wall_armor(damage_data)
+			var armor : float = level.talents.get_wall_armor(damage_data) + (level.upgrades.wall_armor if level.upgrades != null else 0.0)
+			damage_data.damage *= 1.0 - minf(armor, LevelUpgrades.MAX_WALL_ARMOR)
 	var health : Stat = stats.get_stat(Utils.StatType.Health)
 	var maxHealth : Stat = stats.get_stat(Utils.StatType.MaxHealth)
 	health.value -= damage_data.damage
@@ -136,6 +141,9 @@ func take_damage(damage_data : DamageData) -> void:
 		animation_control.play_hit_animation()
 		if damage_data.source != null:
 			damage_data.source.dealt_damage(self, damage_data)
+		#a siege attacker halves the Buffer's mend on this building (BufferAuras.on_building_hit)
+		if damage_data.source is Enemy and level != null and level.buffer_auras != null:
+			level.buffer_auras.on_building_hit(self, damage_data.source)
 	
 	if stats.get_stat_value(Utils.StatType.Health) <= 0.0:
 		destroy_building()

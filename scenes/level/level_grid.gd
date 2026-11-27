@@ -29,6 +29,8 @@ var astar_grid : AStarGrid2D = null
 var buildings : Array[Building] = []
 #cells taken by level objects drawn over the ground (spawn point caves): no walking, no building
 var reserved_cells : Dictionary[Vector2i, bool] = {}
+#a spawn's mouth and the ground right in front of it: walkable, but no building or trap (2026-11-27)
+var spawn_clear_cells : Dictionary[Vector2i, bool] = {}
 #walkable cells nothing may be built on (a bog crossing's far shore: a wader on the stones cannot reach a wall there)
 var unbuildable_cells : Dictionary[Vector2i, bool] = {}
 #MAZE_SPEED_FACTOR, lowered by the maze slow card (LevelUpgrades)
@@ -221,7 +223,7 @@ func is_position_in_bounds(_pos : Vector2) -> bool:
 
 func is_position_buildable(_pos : Vector2) -> bool:
 	var cell : Vector2i = world_position_to_grid(_pos)
-	if reserved_cells.has(cell) or unbuildable_cells.has(cell):
+	if reserved_cells.has(cell) or unbuildable_cells.has(cell) or spawn_clear_cells.has(cell):
 		return false
 
 	var flags : int = _get_cell_flags(cell)
@@ -230,6 +232,11 @@ func is_position_buildable(_pos : Vector2) -> bool:
 		return true
 
 	return has_flag(flags, Utils.TileType.Normal) and not has_flag(flags, Utils.TileType.Blocking | Utils.TileType.OnlyWalkable)
+
+
+## A trap goes on any walkable cell but a spawn's mouth and the ground in front of it.
+func is_position_trappable(_position : Vector2) -> bool:
+	return is_position_walkable(_position) and not spawn_clear_cells.has(world_position_to_grid(_position))
 
 
 func is_position_walkable(_position : Vector2) -> bool:
