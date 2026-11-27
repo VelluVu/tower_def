@@ -170,8 +170,8 @@ script = ExtResource("16_uqw4x")
 
 [node name="Damage" type="Node" parent="LaunchProjectile/Stats"]
 script = ExtResource("17_m7bv2")
-base_value = 1.1
-value = 1.1
+base_value = 1.3
+value = 1.3
 type = 2
 
 [node name="AttackRange" type="Node" parent="LaunchProjectile/Stats"]

@@ -35,7 +35,7 @@ LIST_ID = 10
 
 # the Mortar's numbers (placeholders until playtests): a slow, long-range lob that hits groups
 PRICE = 6.0
-DAMAGE = 8.0
+DAMAGE = 10.4  # 1.3 in game (small numbers: divide by 8); 1.1 until 2026-11-27
 RANGE_TILES = 4.5
 MIN_RANGE_TILES = 1.5
 CRIT_CHANCE = 0.05

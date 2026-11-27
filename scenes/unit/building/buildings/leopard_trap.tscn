@@ -506,6 +506,7 @@ shape = SubResource("CircleShape2D_wlrxm")
 attack_size = 32.0
 actor = NodePath("..")
 activate_sound = ExtResource("snd_activate")
+base_cooldown = 6.0
 
 [node name="Stats" type="Node" parent="LeopardClaws"]
 script = ExtResource("11_5kva3")
